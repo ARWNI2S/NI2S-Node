@@ -1,2 +1,2 @@
-# NI2S-Node
-Narrative Simulator Engine cluster no de.
+# NI2S Node
+Narrative Simulator Engine cluster node.
