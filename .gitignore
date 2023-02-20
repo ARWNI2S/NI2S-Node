@@ -3,6 +3,16 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+# Tool Runtime Dir
+/[Tt]ools/
+/src/[Bb]ootstrap/
+
+# NI2S code-gen files
+*.codegen.cs
+*.codegen.fs
+*.codegen.vb
+src/SDK/VSIX/
+
 # User-specific files
 *.rsuser
 *.suo
@@ -21,23 +31,30 @@ mono_crash.*
 [Dd]ebugPublic/
 [Rr]elease/
 [Rr]eleases/
+Binaries/
 x64/
 x86/
-[Aa][Rr][Mm]/
-[Aa][Rr][Mm]64/
 bld/
 [Bb]in/
 [Oo]bj/
 [Ll]og/
 [Ll]ogs/
+[Aa]rtifacts/
 
-# Visual Studio 2015/2017 cache/options directory
+# Visual Studio 2015+ cache/options directory
 .vs/
+# VisualStudio Code cache/options directory
+.vscode/
+# IntelliJ cache/options directory
+.idea/
 # Uncomment if you have tasks that create the project's static files in wwwroot
 #wwwroot/
 
 # Visual Studio 2017 auto generated files
 Generated\ Files/
+
+# Roslyn cache directories
+*.ide/
 
 # MSTest test Results
 [Tt]est[Rr]esult*/
@@ -57,11 +74,10 @@ dlldata.c
 BenchmarkDotNet.Artifacts/
 
 # .NET Core
-project.lock.json
-project.fragment.lock.json
-artifacts/
+*.lock.json
 
 # StyleCop
+[Ss]tyle[Cc]op.*
 StyleCopReport.xml
 
 # Files built by Visual Studio
@@ -126,6 +142,9 @@ $tf/
 _ReSharper*/
 *.[Rr]e[Ss]harper
 *.DotSettings.user
+
+# JustCode is a .NET coding addin-in
+.JustCode
 
 # TeamCity is a build add-in
 _TeamCity*
@@ -192,6 +211,8 @@ PublishScripts/
 !**/[Pp]ackages/build/
 # Uncomment if necessary however generally it will be regenerated when needed
 #!**/[Pp]ackages/repositories.config
+# Auto-downloaded nuget.exe
+**/[Nn]u[Gg]et.exe
 # NuGet v3's project.json files produces more ignorable files
 *.nuget.props
 *.nuget.targets
@@ -220,6 +241,7 @@ _pkginfo.txt
 !?*.[Cc]ache/
 
 # Others
+sql/
 ClientBin/
 ~$*
 *~
@@ -228,7 +250,7 @@ ClientBin/
 *.jfm
 *.pfx
 *.publishsettings
-orleans.codegen.cs
+patch.diff
 
 # Including strong name files can present a security risk
 # (https://github.com/github/gitignore/pull/2483#issue-259490424)
@@ -327,6 +349,12 @@ OpenCover/
 
 # Azure Stream Analytics local run output
 ASALocalRun/
+
+# Temporary working files
+**/pingme.txt
+src/SetupTestScriptOutput.txt
+
+\.DS_Store
 
 # MSBuild Binary and Structured Log
 *.binlog
