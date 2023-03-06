@@ -1,0 +1,34 @@
+<Project>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    <!-- Shared Package Versions -->
+    <FrameworkCommonVersion>7.0.0</FrameworkCommonVersion>
+    <FrameworkNextVersion>7.0.1</FrameworkNextVersion>
+    <FrameworkLatestVersion>7.0.3</FrameworkLatestVersion>
+    <SourceLinkVersion>1.1.1</SourceLinkVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- System packages -->
+    <PackageVersion Include="System.IO.Hashing" Version="$(FrameworkCommonVersion)" />
+    <PackageVersion Include="System.IO.Pipelines" Version="$(FrameworkCommonVersion)" />
+    <PackageVersion Include="System.Memory.Data" Version="$(FrameworkCommonVersion)" />
+    <!-- Microsoft packages -->
+    <PackageVersion Include="Microsoft.AspNetCore.Connections.Abstractions" Version="$(FrameworkLatestVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration.Abstractions" Version="$(FrameworkCommonVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="$(FrameworkCommonVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.DependencyModel" Version="$(FrameworkCommonVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="$(FrameworkNextVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.Hosting.Abstractions" Version="$(FrameworkCommonVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.Logging" Version="$(FrameworkCommonVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="$(FrameworkCommonVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.ObjectPool" Version="$(FrameworkLatestVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.Options" Version="$(FrameworkNextVersion)" />
+    <!-- 3rd party packages -->
+    <PackageVersion Include="Newtonsoft.Json" Version="13.0.2" />
+    <!-- Test related packages -->
+    <!-- Tooling related packages -->
+    <PackageVersion Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.0" />
+    <PackageVersion Include="Microsoft.SourceLink.AzureRepos.Git" Version="$(SourceLinkVersion)" />
+    <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="$(SourceLinkVersion)" />
+  </ItemGroup>
+</Project>
