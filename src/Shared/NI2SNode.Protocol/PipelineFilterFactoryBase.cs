@@ -1,11 +1,9 @@
-using System;
-
 namespace NI2S.Node.Protocol
 {
     public abstract class PipelineFilterFactoryBase<TPackageInfo> : IPipelineFilterFactory<TPackageInfo>
     {
         protected IPackageDecoder<TPackageInfo>? PackageDecoder { get; private set; }
-        
+
         public PipelineFilterFactoryBase(IServiceProvider serviceProvider)
         {
             PackageDecoder = serviceProvider.GetService(typeof(IPackageDecoder<TPackageInfo>)) as IPackageDecoder<TPackageInfo>;

@@ -1,5 +1,4 @@
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using NI2S.Node.Client;
 using NI2S.Node.Configuration.Options;
 using NI2S.Node.Hosting;

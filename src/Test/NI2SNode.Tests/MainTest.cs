@@ -1,25 +1,17 @@
-using System;
-using System.IO;
-using System.Net;
-using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using NI2S.Node.Configuration.Options;
 using NI2S.Node.Protocol;
+using NI2S.Node.Protocol.Session;
+using NI2S.Node.Server;
+using System.Net.Sockets;
+using System.Security.Authentication;
+using System.Text;
 using Xunit;
 using Xunit.Abstractions;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using NI2S.Node;
-using NI2S.Node.Server;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
-using Microsoft.Extensions.Hosting.Internal;
-using System.Linq;
-using System.Collections.Generic;
-using System.Security.Authentication;
-using NI2S.Node.Protocol.Session;
-using NI2S.Node.Configuration.Options;
 
 /// <summary>
 /// Run selected test case by command
@@ -34,11 +26,11 @@ namespace NI2S.Node.Tests
         public MainTest(ITestOutputHelper outputHelper)
             : base(outputHelper)
         {
-            
+
         }
 
         [Fact]
-        public async Task TestSessionCount() 
+        public async Task TestSessionCount()
         {
             using (var server = CreateSocketServerBuilder<TextPackageInfo, LinePipelineFilter>()
                 .UsePackageHandler(async (s, p) =>
@@ -76,7 +68,7 @@ namespace NI2S.Node.Tests
         }
 
         [Fact]
-        public void TestCustomConfigOptions() 
+        public void TestCustomConfigOptions()
         {
             var hostConfigurator = new RegularHostConfigurator();
             var propName = "testPropName";
@@ -101,7 +93,7 @@ namespace NI2S.Node.Tests
         //[InlineData("Tls11, Tls12", SslProtocols.Tls11 | SslProtocols.Tls12, false)]
         //[InlineData("Tls11,Tls12", SslProtocols.Tls11 | SslProtocols.Tls12, false)]
         //[InlineData("Tls11|Tls12", SslProtocols.Tls11 | SslProtocols.Tls12, true)]        
-        public async Task TestSecurityOptions(string security, SslProtocols protocols, bool expectException) 
+        public async Task TestSecurityOptions(string security, SslProtocols protocols, bool expectException)
         {
             var hostConfigurator = new SecureHostConfigurator();
             var listener = default(ListenOptions);
@@ -129,14 +121,14 @@ namespace NI2S.Node.Tests
                 server = createServer();
             else
             {
-                var exce = Assert.ThrowsAny<Exception>(() => 
+                var exce = Assert.ThrowsAny<Exception>(() =>
                 {
                     server = createServer();
                 });
 
                 return;
             }
-            
+
             Assert.NotNull(listener);
             Assert.Equal(protocols, listener.Security);
 
@@ -155,7 +147,7 @@ namespace NI2S.Node.Tests
                     var socketStream = await hostConfigurator.GetClientStream(socket);
                     await Task.Delay(500);
                     Assert.Equal(1, server.SessionCount);
-                    OutputHelper.WriteLine("SessionCount:" + server.SessionCount);              
+                    OutputHelper.WriteLine("SessionCount:" + server.SessionCount);
                 }
 
                 await Task.Delay(500);
@@ -163,13 +155,13 @@ namespace NI2S.Node.Tests
                 OutputHelper.WriteLine("SessionCount:" + server.SessionCount);
 
                 await server.StopAsync();
-            }            
+            }
         }
 
         [Theory]
         [InlineData(typeof(RegularHostConfigurator))]
         [InlineData(typeof(UdpHostConfigurator))]
-        public async Task TestSessionHandlers(Type hostConfiguratorType) 
+        public async Task TestSessionHandlers(Type hostConfiguratorType)
         {
             var connected = false;
             var hostConfigurator = CreateObject<IHostConfigurator>(hostConfiguratorType);
@@ -187,7 +179,7 @@ namespace NI2S.Node.Tests
                 .UsePackageHandler(async (s, p) =>
                 {
                     if (p.Text == "CLOSE")
-                        await s.CloseAsync(Protocol.Channel.CloseReason.LocalClosing);            
+                        await s.CloseAsync(Protocol.Channel.CloseReason.LocalClosing);
                 }).BuildAsServer())
             {
                 Assert.Equal("TestServer", server.Name);
@@ -199,7 +191,7 @@ namespace NI2S.Node.Tests
                 var outputStream = default(Stream);
 
                 if (hostConfigurator is UdpHostConfigurator)
-                {                    
+                {
                     var buffer = Encoding.ASCII.GetBytes("HELLO\r\n");
                     outputStream = await hostConfigurator.GetClientStream(client);
                     outputStream.Write(buffer, 0, buffer.Length);
@@ -213,7 +205,7 @@ namespace NI2S.Node.Tests
                 Assert.True(connected);
 
                 if (outputStream != null)
-                {                    
+                {
                     var buffer = Encoding.ASCII.GetBytes("CLOSE\r\n");
                     outputStream.Write(buffer, 0, buffer.Length);
                     outputStream.Flush();
@@ -222,7 +214,7 @@ namespace NI2S.Node.Tests
                 {
                     client.Shutdown(SocketShutdown.Both);
                     client.Close();
-                }                
+                }
 
                 await Task.Delay(1000);
 
@@ -238,7 +230,7 @@ namespace NI2S.Node.Tests
         }
 
         [Fact]
-        public async Task TestUseHostedService() 
+        public async Task TestUseHostedService()
         {
             var connected = false;
 
@@ -278,11 +270,11 @@ namespace NI2S.Node.Tests
                 Assert.False(connected);
 
                 await server.StopAsync();
-            }            
+            }
         }
 
         [Fact]
-        public async Task TestConfigureSocketOptions() 
+        public async Task TestConfigureSocketOptions()
         {
             var connected = false;
             var s = default(Socket);
@@ -294,7 +286,7 @@ namespace NI2S.Node.Tests
                     await Task.CompletedTask;
                 }, async (s, e) =>
                 {
-                    connected = false;                    
+                    connected = false;
                     await Task.CompletedTask;
                 })
                 .ConfigureSocketOptions(socket =>
@@ -345,12 +337,12 @@ namespace NI2S.Node.Tests
                 {
                     await s.SendAsync(Utf8Encoding.GetBytes("Hello World\r\n"));
                 }).BuildAsServer() as INode)
-            {            
+            {
                 Assert.True(await server.StartAsync());
                 Assert.Equal(0, server.SessionCount);
 
                 var client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                await client.ConnectAsync(hostConfigurator.GetServerEndPoint());                
+                await client.ConnectAsync(hostConfigurator.GetServerEndPoint());
                 using (var stream = await hostConfigurator.GetClientStream(client))
                 using (var streamReader = new StreamReader(stream, Utf8Encoding, true))
                 using (var streamWriter = new StreamWriter(stream, Utf8Encoding, 1024 * 1024 * 4))
@@ -377,12 +369,12 @@ namespace NI2S.Node.Tests
                     await s.SendAsync(Utf8Encoding.GetBytes("Hello World\r\n"));
                     await s.CloseAsync(Protocol.Channel.CloseReason.LocalClosing);
                 }).BuildAsServer() as INode)
-            {            
+            {
                 Assert.True(await server.StartAsync());
                 Assert.Equal(0, server.SessionCount);
 
                 var client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                await client.ConnectAsync(hostConfigurator.GetServerEndPoint());                
+                await client.ConnectAsync(hostConfigurator.GetServerEndPoint());
                 using (var stream = await hostConfigurator.GetClientStream(client))
                 using (var streamReader = new StreamReader(stream, Utf8Encoding, true))
                 using (var streamWriter = new StreamWriter(stream, Utf8Encoding, 1024 * 1024 * 4))
@@ -426,7 +418,7 @@ namespace NI2S.Node.Tests
                         });
                 });
 
-            using(var host = hostBuilder.Build())
+            using (var host = hostBuilder.Build())
             {
                 await host.StartAsync();
                 await host.StopAsync();
@@ -442,17 +434,17 @@ namespace NI2S.Node.Tests
                 {
                     services.AddSingleton<IHostConfigurator, RegularHostConfigurator>();
                 }).BuildAsServer() as INode)
-            {            
-                Assert.True(await server.StartAsync()); 
+            {
+                Assert.True(await server.StartAsync());
 
                 Assert.IsType<RegularHostConfigurator>(server.ServiceProvider.GetService<IHostConfigurator>());
-                
+
                 await server.StopAsync();
             }
         }
 
         [Fact]
-        public async Task TestStartWithDefaultConfig() 
+        public async Task TestStartWithDefaultConfig()
         {
             var server = default(INode);
 
@@ -503,7 +495,7 @@ namespace NI2S.Node.Tests
             public SuperSocketServiceB(IServiceProvider serviceProvider, IOptions<ServerOptions> serverOptions)
                 : base(serviceProvider, serverOptions)
             {
-                
+
             }
         }
 
@@ -585,13 +577,13 @@ namespace NI2S.Node.Tests
                     loggingBuilder.AddDebug();
                 });
 
-            using(var host = hostBuilder.Build())
+            using (var host = hostBuilder.Build())
             {
                 await host.StartAsync();
 
                 var client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 await client.ConnectAsync(GetDefaultServerEndPoint());
-                
+
                 using (var stream = new NetworkStream(client))
                 using (var streamReader = new StreamReader(stream, Utf8Encoding, true))
                 using (var streamWriter = new StreamWriter(stream, Utf8Encoding, 1024 * 1024 * 4))
@@ -599,10 +591,10 @@ namespace NI2S.Node.Tests
                     var line = await streamReader.ReadLineAsync();
                     Assert.Equal(serverName1, line);
                 }
-                
+
                 client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 await client.ConnectAsync(GetAlternativeServerEndPoint());
-                
+
                 using (var stream = new NetworkStream(client))
                 using (var streamReader = new StreamReader(stream, Utf8Encoding, true))
                 using (var streamWriter = new StreamWriter(stream, Utf8Encoding, 1024 * 1024 * 4))
@@ -617,7 +609,7 @@ namespace NI2S.Node.Tests
 
                 var hostAppLifetime = server1.ServiceProvider.GetService<IHostApplicationLifetime>();
                 Assert.NotNull(hostAppLifetime);
-                
+
                 var hostLifetime = server1.ServiceProvider.GetService<IHostLifetime>();
                 Assert.NotNull(hostLifetime);
 

@@ -1,5 +1,3 @@
-using System;
-
 namespace NI2S.Node.Command
 {
     public class CommandMetadata
@@ -17,7 +15,7 @@ namespace NI2S.Node.Command
         public CommandMetadata(string name)
             : this(name, name)
         {
-            
+
         }
     }
 }

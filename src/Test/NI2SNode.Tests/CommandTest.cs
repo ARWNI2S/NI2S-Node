@@ -1,24 +1,11 @@
-using System;
-using System.Linq;
-using System.IO;
-using System.Net;
-using System.Net.Sockets;
-using System.Text;
-using System.Buffers;
-using System.Threading.Tasks;
-using System.Reflection;
-using System.Collections.Generic;
-using NI2S.Node;
 using NI2S.Node.Command;
 using NI2S.Node.Protocol;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.DependencyInjection;
+using NI2S.Node.Protocol.Session;
+using NI2S.Node.Tests.Command;
+using System.Net.Sockets;
+using System.Reflection;
 using Xunit;
 using Xunit.Abstractions;
-using NI2S.Node.Server;
-using System.Threading;
-using NI2S.Node.Tests.Command;
-using NI2S.Node.Protocol.Session;
 
 namespace NI2S.Node.Tests
 {
@@ -131,7 +118,7 @@ namespace NI2S.Node.Tests
                 .UseCommand(commandOptions =>
                 {
                     // register all commands in one assembly
-                    commandOptions.Assemblies = new [] { new CommandAssemblyConfig { Name = "NI2SNode.Tests.Command" } };
+                    commandOptions.Assemblies = new[] { new CommandAssemblyConfig { Name = "NI2SNode.Tests.Command" } };
                 }).BuildAsServer())
             {
 
@@ -306,7 +293,7 @@ namespace NI2S.Node.Tests
         {
             public override void OnCommandExecuted(CommandExecutingContext commandContext)
             {
-      
+
             }
 
             public override bool OnCommandExecuting(CommandExecutingContext commandContext)

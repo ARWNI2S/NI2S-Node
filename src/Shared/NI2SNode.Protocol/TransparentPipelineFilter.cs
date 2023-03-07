@@ -1,5 +1,4 @@
 using System.Buffers;
-using System.Text;
 
 namespace NI2S.Node.Protocol
 {

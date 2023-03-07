@@ -1,5 +1,5 @@
-using System.Net;
 using NI2S.Node.Protocol;
+using System.Net;
 
 namespace NI2S.Node
 {

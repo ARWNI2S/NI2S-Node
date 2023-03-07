@@ -1,5 +1,3 @@
-using System;
-
 namespace NI2S.Node.Command
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]

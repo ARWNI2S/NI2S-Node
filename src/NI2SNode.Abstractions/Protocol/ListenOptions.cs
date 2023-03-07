@@ -1,5 +1,5 @@
-using System.Security.Authentication;
 using NI2S.Node.Protocol.Security;
+using System.Security.Authentication;
 
 namespace NI2S.Node.Protocol
 {

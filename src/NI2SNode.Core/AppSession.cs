@@ -1,5 +1,4 @@
 using Microsoft.Extensions.Logging;
-using NI2S.Node;
 using NI2S.Node.Async;
 using NI2S.Node.Protocol;
 using NI2S.Node.Protocol.Channel;

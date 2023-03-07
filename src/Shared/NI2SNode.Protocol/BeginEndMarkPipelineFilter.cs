@@ -1,4 +1,3 @@
-using System;
 using System.Buffers;
 
 namespace NI2S.Node.Protocol
@@ -11,13 +10,13 @@ namespace NI2S.Node.Protocol
         private readonly ReadOnlyMemory<byte> _endMark;
 
         private bool _foundBeginMark;
-        
+
         protected BeginEndMarkPipelineFilter(ReadOnlyMemory<byte> beginMark, ReadOnlyMemory<byte> endMark)
         {
             _beginMark = beginMark;
             _endMark = endMark;
         }
-        
+
         public override TPackageInfo? Filter(ref SequenceReader<byte> reader)
         {
             if (!_foundBeginMark)
@@ -32,7 +31,7 @@ namespace NI2S.Node.Protocol
                 _foundBeginMark = true;
             }
 
-            var endMark =  _endMark.Span;
+            var endMark = _endMark.Span;
 
             if (!reader.TryReadTo(out ReadOnlySequence<byte> pack, endMark, advancePastDelimiter: false))
             {
@@ -45,7 +44,7 @@ namespace NI2S.Node.Protocol
 
         public override void Reset()
         {
-            base.Reset();            
+            base.Reset();
             _foundBeginMark = false;
         }
     }

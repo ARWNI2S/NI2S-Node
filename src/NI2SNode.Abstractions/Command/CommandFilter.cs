@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace NI2S.Node.Command
+﻿namespace NI2S.Node.Command
 {
     public interface ICommandFilter
     {

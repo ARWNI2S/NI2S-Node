@@ -1,11 +1,6 @@
-using System;
+using NI2S.Node.Protocol;
 using System.Buffers;
 using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Hosting;
-using NI2S.Node;
-using NI2S.Node.Protocol;
-using NI2S.Node.Server;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -114,7 +109,7 @@ namespace NI2S.Node.Tests
                 {
                     await s.SendAsync(Utf8Encoding.GetBytes(p.Text + "\r\n"));
                 }).BuildAsServer() as INode;
-                
+
             return server;
         }
 

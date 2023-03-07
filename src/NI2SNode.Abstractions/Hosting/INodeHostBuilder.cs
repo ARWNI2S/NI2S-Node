@@ -1,9 +1,9 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using NI2S.Node.Middleware;
 using NI2S.Node.Protocol;
 using NI2S.Node.Protocol.Session;
-using NI2S.Node.Middleware;
 
 namespace NI2S.Node.Hosting
 {

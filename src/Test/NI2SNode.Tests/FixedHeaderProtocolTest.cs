@@ -1,12 +1,7 @@
-using System;
-using System.Buffers;
-using System.Collections.Generic;
-using System.Text;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
-using NI2S.Node;
 using NI2S.Node.Protocol;
-using NI2S.Node.Server;
+using System.Buffers;
+using System.Text;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -47,7 +42,7 @@ namespace NI2S.Node.Tests
 
         protected override INode CreateServer(IHostConfigurator hostConfigurator)
         {
-            return CreateSocketServerBuilder<TextPackageInfo, MyFixedHeaderPipelineFilter>(hostConfigurator)                
+            return CreateSocketServerBuilder<TextPackageInfo, MyFixedHeaderPipelineFilter>(hostConfigurator)
                 .UsePackageHandler(async (s, p) =>
                 {
                     await s.SendAsync(Utf8Encoding.GetBytes(p.Text + "\r\n"));

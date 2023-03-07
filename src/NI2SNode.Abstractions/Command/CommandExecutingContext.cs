@@ -1,5 +1,4 @@
 ﻿using NI2S.Node.Protocol.Session;
-using System;
 
 namespace NI2S.Node.Command
 {

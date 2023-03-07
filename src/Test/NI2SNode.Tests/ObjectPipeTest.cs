@@ -1,6 +1,6 @@
+using NI2S.Node.Protocol.Channel;
 using Xunit;
 using Xunit.Abstractions;
-using NI2S.Node.Protocol.Channel;
 
 namespace NI2S.Node.Tests
 {

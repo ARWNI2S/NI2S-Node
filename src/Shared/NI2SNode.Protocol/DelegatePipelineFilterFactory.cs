@@ -1,5 +1,3 @@
-using System;
-
 namespace NI2S.Node.Protocol
 {
     public class DelegatePipelineFilterFactory<TPackageInfo> : PipelineFilterFactoryBase<TPackageInfo>

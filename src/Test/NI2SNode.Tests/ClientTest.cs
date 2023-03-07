@@ -1,6 +1,4 @@
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging.Abstractions;
-using NI2S.Node.Client;
 using NI2S.Node.Command;
 using NI2S.Node.Protocol;
 using NI2S.Node.Protocol.Channel;

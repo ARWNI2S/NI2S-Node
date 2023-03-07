@@ -1,6 +1,6 @@
-﻿using NI2S.Node.Resources;
-using NI2S.Node.Protocol;
+﻿using NI2S.Node.Protocol;
 using NI2S.Node.Protocol.Channel;
+using NI2S.Node.Resources;
 using System.Net.Sockets;
 
 namespace NI2S.Node.Client
