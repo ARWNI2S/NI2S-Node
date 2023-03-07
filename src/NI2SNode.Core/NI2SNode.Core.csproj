@@ -8,11 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Configuration\Options\NodeHostOptions.cs" />
-    <Compile Remove="Host\HostBuilderAdapter.cs" />
-    <Compile Remove="Host\IMinimalApiHostBuilder.cs" />
-    <Compile Remove="Host\INodeHostBuilder.cs" />
-    <Compile Remove="Host\NodeHostBuilder.cs" />
     <Compile Remove="NodeHost.cs" />
     <Compile Remove="NodeService.cs" />
   </ItemGroup>
@@ -24,8 +19,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Configuration\Options\" />
-    <Folder Include="Host\" />
+    <ProjectReference Include="..\NI2SNode.Abstractions\NI2SNode.Abstractions.csproj" />
+    <ProjectReference Include="..\Shared\NI2SNode.Protocol\NI2SNode.Protocol.csproj" />
   </ItemGroup>
 
 </Project>

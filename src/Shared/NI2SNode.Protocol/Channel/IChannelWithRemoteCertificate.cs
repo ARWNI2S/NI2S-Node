@@ -4,6 +4,6 @@ namespace NI2S.Node.Protocol.Channel
 {
     public interface IChannelWithRemoteCertificate
     {
-        X509Certificate RemoteCertificate { get; }
+        X509Certificate? RemoteCertificate { get; }
     }
 }
