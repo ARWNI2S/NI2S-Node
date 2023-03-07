@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\NI2SNode.Abstractions\NI2SNode.Abstractions.csproj" />
+    <ProjectReference Include="..\..\src\NI2SNode.Abstractions\NI2SNode.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>

@@ -4,9 +4,17 @@
     <SourceRoot>$(MSBuildThisFileDirectory)</SourceRoot>
   </PropertyGroup>
 
+  <Import Project="Dependencies.props" />
+  
+  <PropertyGroup>
+    <LangVersion>11.0</LangVersion>
+    <TargetFrameworks>net7.0</TargetFrameworks>
+  </PropertyGroup>
+
   <!-- Set common properties regarding assembly information and nuget packages -->
   <PropertyGroup>
     <Authors>ManOguaR</Authors>
+    <Owners>ManOguaR</Owners>
     <Product>Narrative Interactive Intelligent Simulator</Product>
     <Copyright>© Alternate Reality Worlds. All rights reserved.</Copyright>
     <PublicRepositoryUrl>https://github.com/arwni2s/ni2s-node</PublicRepositoryUrl>
@@ -48,5 +56,9 @@
     <VersionSuffix Condition=" '$(VersionSuffix)'=='' ">dev</VersionSuffix>
     <VersionSuffix Condition=" '$(VersionDateSuffix)'!='' ">$(VersionSuffix)-$(VersionDateSuffix)</VersionSuffix>
   </PropertyGroup>
+
+  <ItemGroup Condition="$(IsPackable) != False AND '$(OutputType)' != 'Exe'">
+    <Compile Include="$(MSBuildThisFileDirectory)\InternalsVisibleTo.Test.cs" />
+  </ItemGroup>
 
 </Project>

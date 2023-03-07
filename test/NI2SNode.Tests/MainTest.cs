@@ -32,39 +32,37 @@ namespace NI2S.Node.Tests
         [Fact]
         public async Task TestSessionCount()
         {
-            using (var server = CreateSocketServerBuilder<TextPackageInfo, LinePipelineFilter>()
+            using var server = CreateSocketServerBuilder<TextPackageInfo, LinePipelineFilter>()
                 .UsePackageHandler(async (s, p) =>
                 {
                     await s.SendAsync(Utf8Encoding.GetBytes("Hello World\r\n"));
-                }).BuildAsServer())
-            {
-                Assert.Equal("TestServer", server.Name);
+                }).BuildAsServer();
+            Assert.Equal("TestServer", server.Name);
 
-                Assert.True(await server.StartAsync());
-                OutputHelper.WriteLine("Started.");
+            Assert.True(await server.StartAsync());
+            OutputHelper.WriteLine("Started.");
 
-                Assert.Equal(0, server.SessionCount);
-                OutputHelper.WriteLine("SessionCount:" + server.SessionCount);
+            Assert.Equal(0, server.SessionCount);
+            OutputHelper.WriteLine("SessionCount:" + server.SessionCount);
 
-                var client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                await client.ConnectAsync(GetDefaultServerEndPoint());
-                OutputHelper.WriteLine("Connected.");
+            var client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            await client.ConnectAsync(GetDefaultServerEndPoint());
+            OutputHelper.WriteLine("Connected.");
 
-                await Task.Delay(1000);
+            await Task.Delay(1000);
 
-                Assert.Equal(1, server.SessionCount);
-                OutputHelper.WriteLine("SessionCount:" + server.SessionCount);
+            Assert.Equal(1, server.SessionCount);
+            OutputHelper.WriteLine("SessionCount:" + server.SessionCount);
 
-                client.Shutdown(SocketShutdown.Both);
-                client.Close();
+            client.Shutdown(SocketShutdown.Both);
+            client.Close();
 
-                await Task.Delay(1000);
+            await Task.Delay(1000);
 
-                Assert.Equal(0, server.SessionCount);
-                OutputHelper.WriteLine("SessionCount:" + server.SessionCount);
+            Assert.Equal(0, server.SessionCount);
+            OutputHelper.WriteLine("SessionCount:" + server.SessionCount);
 
-                await server.StopAsync();
-            }
+            await server.StopAsync();
         }
 
         [Fact]
@@ -74,17 +72,15 @@ namespace NI2S.Node.Tests
             var propName = "testPropName";
             var propValue = "testPropValue";
 
-            using (var server = CreateSocketServerBuilder<TextPackageInfo, LinePipelineFilter>(hostConfigurator)
+            using var server = CreateSocketServerBuilder<TextPackageInfo, LinePipelineFilter>(hostConfigurator)
                 .ConfigureAppConfiguration((HostBuilder, configBuilder) =>
                     {
                         configBuilder.AddInMemoryCollection(new Dictionary<string, string>
                         {
                             { $"serverOptions:values:{propName}", propValue }
                         });
-                    }).BuildAsServer())
-            {
-                Assert.Equal(propValue, server.Options.Values[propName]);
-            }
+                    }).BuildAsServer();
+            Assert.Equal(propValue, server.Options.Values[propName]);
         }
 
         [Theory]
@@ -166,7 +162,7 @@ namespace NI2S.Node.Tests
             var connected = false;
             var hostConfigurator = CreateObject<IHostConfigurator>(hostConfiguratorType);
 
-            using (var server = CreateSocketServerBuilder<TextPackageInfo, LinePipelineFilter>(hostConfigurator)
+            using var server = CreateSocketServerBuilder<TextPackageInfo, LinePipelineFilter>(hostConfigurator)
                 .UseSessionHandler((s) =>
                 {
                     connected = true;
@@ -180,53 +176,51 @@ namespace NI2S.Node.Tests
                 {
                     if (p.Text == "CLOSE")
                         await s.CloseAsync(Protocol.Channel.CloseReason.LocalClosing);
-                }).BuildAsServer())
+                }).BuildAsServer();
+            Assert.Equal("TestServer", server.Name);
+
+            Assert.True(await server.StartAsync());
+            OutputHelper.WriteLine("Started.");
+
+            var client = hostConfigurator.CreateClient();
+            var outputStream = default(Stream);
+
+            if (hostConfigurator is UdpHostConfigurator)
             {
-                Assert.Equal("TestServer", server.Name);
-
-                Assert.True(await server.StartAsync());
-                OutputHelper.WriteLine("Started.");
-
-                var client = hostConfigurator.CreateClient();
-                var outputStream = default(Stream);
-
-                if (hostConfigurator is UdpHostConfigurator)
-                {
-                    var buffer = Encoding.ASCII.GetBytes("HELLO\r\n");
-                    outputStream = await hostConfigurator.GetClientStream(client);
-                    outputStream.Write(buffer, 0, buffer.Length);
-                    outputStream.Flush();
-                }
-
-                OutputHelper.WriteLine("Connected.");
-
-                await Task.Delay(1000);
-
-                Assert.True(connected);
-
-                if (outputStream != null)
-                {
-                    var buffer = Encoding.ASCII.GetBytes("CLOSE\r\n");
-                    outputStream.Write(buffer, 0, buffer.Length);
-                    outputStream.Flush();
-                }
-                else
-                {
-                    client.Shutdown(SocketShutdown.Both);
-                    client.Close();
-                }
-
-                await Task.Delay(1000);
-
-                if (outputStream != null)
-                {
-                    client.Close();
-                }
-
-                Assert.False(connected);
-
-                await server.StopAsync();
+                var buffer = Encoding.ASCII.GetBytes("HELLO\r\n");
+                outputStream = await hostConfigurator.GetClientStream(client);
+                outputStream.Write(buffer, 0, buffer.Length);
+                outputStream.Flush();
             }
+
+            OutputHelper.WriteLine("Connected.");
+
+            await Task.Delay(1000);
+
+            Assert.True(connected);
+
+            if (outputStream != null)
+            {
+                var buffer = Encoding.ASCII.GetBytes("CLOSE\r\n");
+                outputStream.Write(buffer, 0, buffer.Length);
+                outputStream.Flush();
+            }
+            else
+            {
+                client.Shutdown(SocketShutdown.Both);
+                client.Close();
+            }
+
+            await Task.Delay(1000);
+
+            if (outputStream != null)
+            {
+                client.Close();
+            }
+
+            Assert.False(connected);
+
+            await server.StopAsync();
         }
 
         [Fact]
@@ -234,7 +228,7 @@ namespace NI2S.Node.Tests
         {
             var connected = false;
 
-            using (var server = CreateSocketServerBuilder<TextPackageInfo, LinePipelineFilter>()
+            using var server = CreateSocketServerBuilder<TextPackageInfo, LinePipelineFilter>()
                 .UseSessionHandler((s) =>
                 {
                     connected = true;
@@ -245,32 +239,30 @@ namespace NI2S.Node.Tests
                     return new ValueTask();
                 })
                 .UseHostedService<SuperSocketServiceA>()
-                .BuildAsServer())
-            {
-                Assert.Equal("TestServer", server.Name);
+                .BuildAsServer();
+            Assert.Equal("TestServer", server.Name);
 
-                Assert.True(await server.StartAsync());
-                OutputHelper.WriteLine("Started.");
+            Assert.True(await server.StartAsync());
+            OutputHelper.WriteLine("Started.");
 
-                var client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                await client.ConnectAsync(GetDefaultServerEndPoint());
-                OutputHelper.WriteLine("Connected.");
+            var client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            await client.ConnectAsync(GetDefaultServerEndPoint());
+            OutputHelper.WriteLine("Connected.");
 
-                await Task.Delay(1000);
+            await Task.Delay(1000);
 
-                Assert.True(connected);
+            Assert.True(connected);
 
-                Assert.IsType<SuperSocketServiceA>(server);
+            Assert.IsType<SuperSocketServiceA>(server);
 
-                client.Shutdown(SocketShutdown.Both);
-                client.Close();
+            client.Shutdown(SocketShutdown.Both);
+            client.Close();
 
-                await Task.Delay(1000);
+            await Task.Delay(1000);
 
-                Assert.False(connected);
+            Assert.False(connected);
 
-                await server.StopAsync();
-            }
+            await server.StopAsync();
         }
 
         [Fact]
@@ -279,7 +271,7 @@ namespace NI2S.Node.Tests
             var connected = false;
             var s = default(Socket);
 
-            using (var server = CreateSocketServerBuilder<TextPackageInfo, LinePipelineFilter>()
+            using var server = CreateSocketServerBuilder<TextPackageInfo, LinePipelineFilter>()
                 .UseSessionHandler(async (s) =>
                 {
                     connected = true;
@@ -296,34 +288,32 @@ namespace NI2S.Node.Tests
                     socket.SetSocketOption(SocketOptionLevel.Tcp, SocketOptionName.TcpKeepAliveInterval, 5);
                     socket.SetSocketOption(SocketOptionLevel.Tcp, SocketOptionName.TcpKeepAliveRetryCount, 7);
                 })
-                .BuildAsServer())
-            {
-                Assert.Equal("TestServer", server.Name);
+                .BuildAsServer();
+            Assert.Equal("TestServer", server.Name);
 
-                Assert.True(await server.StartAsync());
-                OutputHelper.WriteLine("Started.");
+            Assert.True(await server.StartAsync());
+            OutputHelper.WriteLine("Started.");
 
-                var client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                await client.ConnectAsync(GetDefaultServerEndPoint());
-                OutputHelper.WriteLine("Connected.");
+            var client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            await client.ConnectAsync(GetDefaultServerEndPoint());
+            OutputHelper.WriteLine("Connected.");
 
-                await Task.Delay(1000);
+            await Task.Delay(1000);
 
-                Assert.True(connected);
+            Assert.True(connected);
 
-                Assert.Equal(10, (int)s.GetSocketOption(SocketOptionLevel.Tcp, SocketOptionName.TcpKeepAliveTime));
-                Assert.Equal(5, (int)s.GetSocketOption(SocketOptionLevel.Tcp, SocketOptionName.TcpKeepAliveInterval));
-                Assert.Equal(7, (int)s.GetSocketOption(SocketOptionLevel.Tcp, SocketOptionName.TcpKeepAliveRetryCount));
+            Assert.Equal(10, (int)s.GetSocketOption(SocketOptionLevel.Tcp, SocketOptionName.TcpKeepAliveTime));
+            Assert.Equal(5, (int)s.GetSocketOption(SocketOptionLevel.Tcp, SocketOptionName.TcpKeepAliveInterval));
+            Assert.Equal(7, (int)s.GetSocketOption(SocketOptionLevel.Tcp, SocketOptionName.TcpKeepAliveRetryCount));
 
-                client.Shutdown(SocketShutdown.Both);
-                client.Close();
+            client.Shutdown(SocketShutdown.Both);
+            client.Close();
 
-                await Task.Delay(1000);
+            await Task.Delay(1000);
 
-                Assert.False(connected);
+            Assert.False(connected);
 
-                await server.StopAsync();
-            }
+            await server.StopAsync();
         }
 
         [Theory]
@@ -332,29 +322,27 @@ namespace NI2S.Node.Tests
         public async Task TestConsoleProtocol(Type hostConfiguratorType)
         {
             var hostConfigurator = CreateObject<IHostConfigurator>(hostConfiguratorType);
-            using (var server = CreateSocketServerBuilder<TextPackageInfo, LinePipelineFilter>(hostConfigurator)
+            using var server = CreateSocketServerBuilder<TextPackageInfo, LinePipelineFilter>(hostConfigurator)
                 .UsePackageHandler(async (ISession s, TextPackageInfo p) =>
                 {
                     await s.SendAsync(Utf8Encoding.GetBytes("Hello World\r\n"));
-                }).BuildAsServer() as INode)
+                }).BuildAsServer() as INode;
+            Assert.True(await server.StartAsync());
+            Assert.Equal(0, server.SessionCount);
+
+            var client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            await client.ConnectAsync(hostConfigurator.GetServerEndPoint());
+            using (var stream = await hostConfigurator.GetClientStream(client))
+            using (var streamReader = new StreamReader(stream, Utf8Encoding, true))
+            using (var streamWriter = new StreamWriter(stream, Utf8Encoding, 1024 * 1024 * 4))
             {
-                Assert.True(await server.StartAsync());
-                Assert.Equal(0, server.SessionCount);
-
-                var client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                await client.ConnectAsync(hostConfigurator.GetServerEndPoint());
-                using (var stream = await hostConfigurator.GetClientStream(client))
-                using (var streamReader = new StreamReader(stream, Utf8Encoding, true))
-                using (var streamWriter = new StreamWriter(stream, Utf8Encoding, 1024 * 1024 * 4))
-                {
-                    await streamWriter.WriteAsync("Hello World\r\n");
-                    await streamWriter.FlushAsync();
-                    var line = await streamReader.ReadLineAsync();
-                    Assert.Equal("Hello World", line);
-                }
-
-                await server.StopAsync();
+                await streamWriter.WriteAsync("Hello World\r\n");
+                await streamWriter.FlushAsync();
+                var line = await streamReader.ReadLineAsync();
+                Assert.Equal("Hello World", line);
             }
+
+            await server.StopAsync();
         }
 
         [Theory]
@@ -363,30 +351,28 @@ namespace NI2S.Node.Tests
         public async Task TestCloseAfterSend(Type hostConfiguratorType)
         {
             var hostConfigurator = CreateObject<IHostConfigurator>(hostConfiguratorType);
-            using (var server = CreateSocketServerBuilder<TextPackageInfo, LinePipelineFilter>(hostConfigurator)
+            using var server = CreateSocketServerBuilder<TextPackageInfo, LinePipelineFilter>(hostConfigurator)
                 .UsePackageHandler(async (ISession s, TextPackageInfo p) =>
                 {
                     await s.SendAsync(Utf8Encoding.GetBytes("Hello World\r\n"));
                     await s.CloseAsync(Protocol.Channel.CloseReason.LocalClosing);
-                }).BuildAsServer() as INode)
+                }).BuildAsServer() as INode;
+            Assert.True(await server.StartAsync());
+            Assert.Equal(0, server.SessionCount);
+
+            var client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            await client.ConnectAsync(hostConfigurator.GetServerEndPoint());
+            using (var stream = await hostConfigurator.GetClientStream(client))
+            using (var streamReader = new StreamReader(stream, Utf8Encoding, true))
+            using (var streamWriter = new StreamWriter(stream, Utf8Encoding, 1024 * 1024 * 4))
             {
-                Assert.True(await server.StartAsync());
-                Assert.Equal(0, server.SessionCount);
-
-                var client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                await client.ConnectAsync(hostConfigurator.GetServerEndPoint());
-                using (var stream = await hostConfigurator.GetClientStream(client))
-                using (var streamReader = new StreamReader(stream, Utf8Encoding, true))
-                using (var streamWriter = new StreamWriter(stream, Utf8Encoding, 1024 * 1024 * 4))
-                {
-                    await streamWriter.WriteAsync("Hello World\r\n");
-                    await streamWriter.FlushAsync();
-                    var line = await streamReader.ReadLineAsync();
-                    Assert.Equal("Hello World", line);
-                }
-
-                await server.StopAsync();
+                await streamWriter.WriteAsync("Hello World\r\n");
+                await streamWriter.FlushAsync();
+                var line = await streamReader.ReadLineAsync();
+                Assert.Equal("Hello World", line);
             }
+
+            await server.StopAsync();
         }
 
         [Theory]
@@ -418,29 +404,25 @@ namespace NI2S.Node.Tests
                         });
                 });
 
-            using (var host = hostBuilder.Build())
-            {
-                await host.StartAsync();
-                await host.StopAsync();
-            }
+            using var host = hostBuilder.Build();
+            await host.StartAsync();
+            await host.StopAsync();
         }
 
         [Fact]
         [Trait("Category", "TestServiceProvider")]
         public async Task TestServiceProvider()
         {
-            using (var server = CreateSocketServerBuilder<TextPackageInfo, LinePipelineFilter>()
+            using var server = CreateSocketServerBuilder<TextPackageInfo, LinePipelineFilter>()
                 .ConfigureServices((ctx, services) =>
                 {
                     services.AddSingleton<IHostConfigurator, RegularHostConfigurator>();
-                }).BuildAsServer() as INode)
-            {
-                Assert.True(await server.StartAsync());
+                }).BuildAsServer() as INode;
+            Assert.True(await server.StartAsync());
 
-                Assert.IsType<RegularHostConfigurator>(server.ServiceProvider.GetService<IHostConfigurator>());
+            Assert.IsType<RegularHostConfigurator>(server.ServiceProvider.GetService<IHostConfigurator>());
 
-                await server.StopAsync();
-            }
+            await server.StopAsync();
         }
 
         [Fact]
@@ -448,37 +430,35 @@ namespace NI2S.Node.Tests
         {
             var server = default(INode);
 
-            using (var host = SuperSocketHostBuilder.Create<TextPackageInfo, LinePipelineFilter>()
+            using var host = SuperSocketHostBuilder.Create<TextPackageInfo, LinePipelineFilter>()
                 .UseSessionHandler(s =>
                 {
                     server = s.Server as INode;
                     return new ValueTask();
                 })
-                .Build())
-            {
-                await host.StartAsync();
+                .Build();
+            await host.StartAsync();
 
-                var client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                await client.ConnectAsync(GetDefaultServerEndPoint());
-                OutputHelper.WriteLine("Connected.");
+            var client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            await client.ConnectAsync(GetDefaultServerEndPoint());
+            OutputHelper.WriteLine("Connected.");
 
-                await Task.Delay(1000);
+            await Task.Delay(1000);
 
-                Assert.Equal("TestServer", server.Name);
+            Assert.Equal("TestServer", server.Name);
 
-                Assert.Equal(1, server.SessionCount);
-                OutputHelper.WriteLine("SessionCount:" + server.SessionCount);
+            Assert.Equal(1, server.SessionCount);
+            OutputHelper.WriteLine("SessionCount:" + server.SessionCount);
 
-                client.Shutdown(SocketShutdown.Both);
-                client.Close();
+            client.Shutdown(SocketShutdown.Both);
+            client.Close();
 
-                await Task.Delay(1000);
+            await Task.Delay(1000);
 
-                Assert.Equal(0, server.SessionCount);
-                OutputHelper.WriteLine("SessionCount:" + server.SessionCount);
+            Assert.Equal(0, server.SessionCount);
+            OutputHelper.WriteLine("SessionCount:" + server.SessionCount);
 
-                await host.StopAsync();
-            }
+            await host.StopAsync();
         }
 
         class SuperSocketServiceA : SuperSocketService<TextPackageInfo>
@@ -577,73 +557,71 @@ namespace NI2S.Node.Tests
                     loggingBuilder.AddDebug();
                 });
 
-            using (var host = hostBuilder.Build())
+            using var host = hostBuilder.Build();
+            await host.StartAsync();
+
+            var client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            await client.ConnectAsync(GetDefaultServerEndPoint());
+
+            using (var stream = new NetworkStream(client))
+            using (var streamReader = new StreamReader(stream, Utf8Encoding, true))
+            using (var streamWriter = new StreamWriter(stream, Utf8Encoding, 1024 * 1024 * 4))
             {
-                await host.StartAsync();
-
-                var client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                await client.ConnectAsync(GetDefaultServerEndPoint());
-
-                using (var stream = new NetworkStream(client))
-                using (var streamReader = new StreamReader(stream, Utf8Encoding, true))
-                using (var streamWriter = new StreamWriter(stream, Utf8Encoding, 1024 * 1024 * 4))
-                {
-                    var line = await streamReader.ReadLineAsync();
-                    Assert.Equal(serverName1, line);
-                }
-
-                client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                await client.ConnectAsync(GetAlternativeServerEndPoint());
-
-                using (var stream = new NetworkStream(client))
-                using (var streamReader = new StreamReader(stream, Utf8Encoding, true))
-                using (var streamWriter = new StreamWriter(stream, Utf8Encoding, 1024 * 1024 * 4))
-                {
-                    var line = await streamReader.ReadLineAsync();
-                    Assert.Equal(serverName2, line);
-                }
-
-                var hostEnv = server1.ServiceProvider.GetService<IHostEnvironment>();
-                Assert.NotNull(hostEnv);
-                Assert.Equal(actualHostEvn.ContentRootPath, hostEnv.ContentRootPath);
-
-                var hostAppLifetime = server1.ServiceProvider.GetService<IHostApplicationLifetime>();
-                Assert.NotNull(hostAppLifetime);
-
-                var hostLifetime = server1.ServiceProvider.GetService<IHostLifetime>();
-                Assert.NotNull(hostLifetime);
-
-                var hostFromServices = server1.ServiceProvider.GetService<IHost>();
-                Assert.NotNull(hostFromServices);
-
-                Assert.NotSame(server1.GetSessionContainer(), server2.GetSessionContainer());
-
-                var loggerFactory0 = host.Services.GetService<ILoggerFactory>();
-                var loggerFactory1 = server1.ServiceProvider.GetService<ILoggerFactory>();
-                var loggerFactory2 = server2.ServiceProvider.GetService<ILoggerFactory>();
-
-                Assert.Equal(loggerFactory0, loggerFactory1);
-                Assert.Equal(loggerFactory1, loggerFactory2);
-
-                var testService0 = host.Services.GetService<MyTestService>();
-                testService0.Name = "SameInstance";
-                testService0.Version = 1;
-
-                var testService1 = server1.ServiceProvider.GetService<MyTestService>();
-                Assert.Equal(testService0.Name, testService1.Name);
-                Assert.Equal(1, testService1.Version);
-                testService1.Version = 2;
-                Assert.Same(server1, server1.ServiceProvider.GetService<INodeInfo>());
-                Assert.Same(server1, server1.ServiceProvider.GetService<MyLocalTestService>().Server);
-
-                var testService2 = server2.ServiceProvider.GetService<MyTestService>();
-                Assert.Equal(testService0.Name, testService2.Name);
-                Assert.Equal(2, testService2.Version);
-                Assert.Same(server2, server2.ServiceProvider.GetService<INodeInfo>());
-                Assert.Same(server2, server2.ServiceProvider.GetService<MyLocalTestService>().Server);
-
-                await host.StopAsync();
+                var line = await streamReader.ReadLineAsync();
+                Assert.Equal(serverName1, line);
             }
+
+            client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            await client.ConnectAsync(GetAlternativeServerEndPoint());
+
+            using (var stream = new NetworkStream(client))
+            using (var streamReader = new StreamReader(stream, Utf8Encoding, true))
+            using (var streamWriter = new StreamWriter(stream, Utf8Encoding, 1024 * 1024 * 4))
+            {
+                var line = await streamReader.ReadLineAsync();
+                Assert.Equal(serverName2, line);
+            }
+
+            var hostEnv = server1.ServiceProvider.GetService<IHostEnvironment>();
+            Assert.NotNull(hostEnv);
+            Assert.Equal(actualHostEvn.ContentRootPath, hostEnv.ContentRootPath);
+
+            var hostAppLifetime = server1.ServiceProvider.GetService<IHostApplicationLifetime>();
+            Assert.NotNull(hostAppLifetime);
+
+            var hostLifetime = server1.ServiceProvider.GetService<IHostLifetime>();
+            Assert.NotNull(hostLifetime);
+
+            var hostFromServices = server1.ServiceProvider.GetService<IHost>();
+            Assert.NotNull(hostFromServices);
+
+            Assert.NotSame(server1.GetSessionContainer(), server2.GetSessionContainer());
+
+            var loggerFactory0 = host.Services.GetService<ILoggerFactory>();
+            var loggerFactory1 = server1.ServiceProvider.GetService<ILoggerFactory>();
+            var loggerFactory2 = server2.ServiceProvider.GetService<ILoggerFactory>();
+
+            Assert.Equal(loggerFactory0, loggerFactory1);
+            Assert.Equal(loggerFactory1, loggerFactory2);
+
+            var testService0 = host.Services.GetService<MyTestService>();
+            testService0.Name = "SameInstance";
+            testService0.Version = 1;
+
+            var testService1 = server1.ServiceProvider.GetService<MyTestService>();
+            Assert.Equal(testService0.Name, testService1.Name);
+            Assert.Equal(1, testService1.Version);
+            testService1.Version = 2;
+            Assert.Same(server1, server1.ServiceProvider.GetService<INodeInfo>());
+            Assert.Same(server1, server1.ServiceProvider.GetService<MyLocalTestService>().Server);
+
+            var testService2 = server2.ServiceProvider.GetService<MyTestService>();
+            Assert.Equal(testService0.Name, testService2.Name);
+            Assert.Equal(2, testService2.Version);
+            Assert.Same(server2, server2.ServiceProvider.GetService<INodeInfo>());
+            Assert.Same(server2, server2.ServiceProvider.GetService<MyLocalTestService>().Server);
+
+            await host.StopAsync();
         }
     }
 }

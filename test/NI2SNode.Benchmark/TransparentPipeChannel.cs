@@ -6,8 +6,8 @@ namespace NI2S.Node.Benchmarks
 {
     public class TransparentPipeChannel<TPackageInfo> : PipeChannel<TPackageInfo>
     {
-        private TaskCompletionSource<int> _tcs;
-        private Task<int> _channelTask;
+        private readonly TaskCompletionSource<int> _tcs;
+        private readonly Task<int> _channelTask;
 
         public TransparentPipeChannel(IPipelineFilter<TPackageInfo> pipelineFilter, ChannelOptions options)
             : base(pipelineFilter, options)

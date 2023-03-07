@@ -38,9 +38,9 @@ namespace NI2S.Node.Command
         where TNetPackageInfo : class
         where TKey : notnull
     {
-        private Dictionary<TKey, ICommandSet> _commands;
+        private readonly Dictionary<TKey, ICommandSet> _commands;
 
-        private ILogger _logger;
+        private readonly ILogger _logger;
 
         protected IPackageMapper<TNetPackageInfo, TPackageInfo> PackageMapper { get; private set; }
 

@@ -14,7 +14,7 @@ namespace NI2S.Node.Benchmarks
         [Params(1, 3, 5, 10, 50)]
         public int S;
 
-        private Encoding _encoding = Encoding.ASCII;
+        private readonly Encoding _encoding = Encoding.ASCII;
         private SequenceSegment? _head;
         private SequenceSegment? _tail;
 

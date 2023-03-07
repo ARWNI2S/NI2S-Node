@@ -14,7 +14,7 @@ namespace NI2S.Node.Tests
     [Trait("Category", "Client")]
     public class ClientTest : TestClassBase
     {
-        private static Random _rd = new Random();
+        private static readonly Random _rd = new Random();
 
         public ClientTest(ITestOutputHelper outputHelper)
             : base(outputHelper)
@@ -34,7 +34,7 @@ namespace NI2S.Node.Tests
             var serverSessionEvent = new AutoResetEvent(false);
 
             var hostConfigurator = CreateObject<IHostConfigurator>(hostConfiguratorType);
-            using (var server = CreateSocketServerBuilder<TextPackageInfo, LinePipelineFilter>(hostConfigurator)
+            using var server = CreateSocketServerBuilder<TextPackageInfo, LinePipelineFilter>(hostConfigurator)
                 .UsePackageHandler(async (s, p) =>
                 {
                     await s.SendAsync(Utf8Encoding.GetBytes(p.Text + "\r\n"));
@@ -50,42 +50,40 @@ namespace NI2S.Node.Tests
                         serverSessionEvent.Set();
                         return ValueTask.CompletedTask;
                     })
-                .BuildAsServer())
+                .BuildAsServer();
+
+            Assert.Equal("TestServer", server.Name);
+
+            Assert.True(await server.StartAsync());
+            OutputHelper.WriteLine("Server started.");
+
+            var options = new ChannelOptions
             {
+                Logger = NullLogger.Instance,
+                ReadAsDemand = clientReadAsDemand
+            };
 
-                Assert.Equal("TestServer", server.Name);
+            var client = hostConfigurator.ConfigureEasyClient(new LinePipelineFilter(), options);
 
-                Assert.True(await server.StartAsync());
-                OutputHelper.WriteLine("Server started.");
+            var connected = await client.ConnectAsync(new IPEndPoint(IPAddress.Loopback, hostConfigurator.Listener.Port));
 
-                var options = new ChannelOptions
-                {
-                    Logger = NullLogger.Instance,
-                    ReadAsDemand = clientReadAsDemand
-                };
+            Assert.True(connected);
 
-                var client = hostConfigurator.ConfigureEasyClient(new LinePipelineFilter(), options);
+            Assert.True(serverSessionEvent.WaitOne(1000));
 
-                var connected = await client.ConnectAsync(new IPEndPoint(IPAddress.Loopback, hostConfigurator.Listener.Port));
+            for (var i = 0; i < 100; i++)
+            {
+                var msg = Guid.NewGuid().ToString();
+                await client.SendAsync(Utf8Encoding.GetBytes(msg + "\r\n"));
 
-                Assert.True(connected);
-
-                Assert.True(serverSessionEvent.WaitOne(1000));
-
-                for (var i = 0; i < 100; i++)
-                {
-                    var msg = Guid.NewGuid().ToString();
-                    await client.SendAsync(Utf8Encoding.GetBytes(msg + "\r\n"));
-
-                    var package = await client.ReceiveAsync();
-                    Assert.NotNull(package);
-                    Assert.Equal(msg, package.Text);
-                }
-
-                await client.CloseAsync();
-                Assert.True(serverSessionEvent.WaitOne(1000));
-                await server.StopAsync();
+                var package = await client.ReceiveAsync();
+                Assert.NotNull(package);
+                Assert.Equal(msg, package.Text);
             }
+
+            await client.CloseAsync();
+            Assert.True(serverSessionEvent.WaitOne(1000));
+            await server.StopAsync();
         }
 
         [Theory]
@@ -97,64 +95,62 @@ namespace NI2S.Node.Tests
             ISession session = default;
 
             var hostConfigurator = CreateObject<IHostConfigurator>(hostConfiguratorType);
-            using (var server = CreateSocketServerBuilder<StringPackageInfo, CommandLinePipelineFilter>(hostConfigurator)
+            using var server = CreateSocketServerBuilder<StringPackageInfo, CommandLinePipelineFilter>(hostConfigurator)
             .UseSessionHandler(async s =>
             {
                 session = s;
                 await Task.CompletedTask;
             })
-            .BuildAsServer())
+            .BuildAsServer();
+
+            Assert.Equal("TestServer", server.Name);
+
+            Assert.True(await server.StartAsync());
+            OutputHelper.WriteLine("Server started.");
+
+            var pipelineFilter = new CommandLinePipelineFilter
             {
+                Decoder = new DefaultStringPackageDecoder()
+            };
 
-                Assert.Equal("TestServer", server.Name);
+            var options = new ChannelOptions
+            {
+                Logger = DefaultLoggerFactory.CreateLogger(nameof(TestBindLocalEndPoint))
+            };
 
-                Assert.True(await server.StartAsync());
-                OutputHelper.WriteLine("Server started.");
+            var client = hostConfigurator.ConfigureEasyClient(pipelineFilter, options);
+            var connected = false;
+            var localPort = 0;
 
-                var pipelineFilter = new CommandLinePipelineFilter
+            for (var i = 0; i < 3; i++)
+            {
+                localPort = _rd.Next(40000, 50000);
+                client.LocalEndPoint = new IPEndPoint(IPAddress.Loopback, localPort);
+
+                try
                 {
-                    Decoder = new DefaultStringPackageDecoder()
-                };
-
-                var options = new ChannelOptions
+                    connected = await client.ConnectAsync(new IPEndPoint(IPAddress.Loopback, hostConfigurator.Listener.Port));
+                }
+                catch (SocketException e)
                 {
-                    Logger = DefaultLoggerFactory.CreateLogger(nameof(TestBindLocalEndPoint))
-                };
+                    if (e.SocketErrorCode == SocketError.AccessDenied || e.SocketErrorCode == SocketError.AddressAlreadyInUse)
+                        continue;
 
-                var client = hostConfigurator.ConfigureEasyClient(pipelineFilter, options);
-                var connected = false;
-                var localPort = 0;
-
-                for (var i = 0; i < 3; i++)
-                {
-                    localPort = _rd.Next(40000, 50000);
-                    client.LocalEndPoint = new IPEndPoint(IPAddress.Loopback, localPort);
-
-                    try
-                    {
-                        connected = await client.ConnectAsync(new IPEndPoint(IPAddress.Loopback, hostConfigurator.Listener.Port));
-                    }
-                    catch (SocketException e)
-                    {
-                        if (e.SocketErrorCode == SocketError.AccessDenied || e.SocketErrorCode == SocketError.AddressAlreadyInUse)
-                            continue;
-
-                        throw e;
-                    }
-
-                    break;
+                    throw e;
                 }
 
-                Assert.True(connected);
-
-                await Task.Delay(500);
-
-                Assert.NotNull(session);
-                Assert.Equal(localPort, (session.RemoteEndPoint as IPEndPoint).Port);
-
-                await client.CloseAsync();
-                await server.StopAsync();
+                break;
             }
+
+            Assert.True(connected);
+
+            await Task.Delay(500);
+
+            Assert.NotNull(session);
+            Assert.Equal(localPort, (session.RemoteEndPoint as IPEndPoint).Port);
+
+            await client.CloseAsync();
+            await server.StopAsync();
         }
 
         //[Fact]
@@ -254,80 +250,78 @@ namespace NI2S.Node.Tests
         public async Task TestDetachableChannel(Type hostConfiguratorType)
         {
             var hostConfigurator = CreateObject<IHostConfigurator>(hostConfiguratorType);
-            using (var server = CreateSocketServerBuilder<TextPackageInfo, LinePipelineFilter>(hostConfigurator)
+            using var server = CreateSocketServerBuilder<TextPackageInfo, LinePipelineFilter>(hostConfigurator)
                 .UsePackageHandler(async (s, p) =>
                 {
                     await s.SendAsync(Utf8Encoding.GetBytes("PRE-" + p.Text + "\r\n"));
-                }).BuildAsServer())
+                }).BuildAsServer();
+
+            Assert.Equal("TestServer", server.Name);
+
+            Assert.True(await server.StartAsync());
+            OutputHelper.WriteLine("Server started.");
+
+            var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            await socket.ConnectAsync(hostConfigurator.GetServerEndPoint());
+            var stream = await hostConfigurator.GetClientStream(socket);
+
+            var channel = new StreamPipeChannel<TextPackageInfo>(stream, socket.RemoteEndPoint, socket.LocalEndPoint, new LinePipelineFilter(), new ChannelOptions
             {
+                Logger = DefaultLoggerFactory.CreateLogger(nameof(TestDetachableChannel)),
+                ReadAsDemand = true
+            });
 
-                Assert.Equal("TestServer", server.Name);
+            channel.Start();
 
-                Assert.True(await server.StartAsync());
-                OutputHelper.WriteLine("Server started.");
+            var msg = Guid.NewGuid().ToString();
+            await channel.SendAsync(Utf8Encoding.GetBytes(msg + "\r\n"));
 
-                var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                await socket.ConnectAsync(hostConfigurator.GetServerEndPoint());
-                var stream = await hostConfigurator.GetClientStream(socket);
+            var round = 0;
 
-                var channel = new StreamPipeChannel<TextPackageInfo>(stream, socket.RemoteEndPoint, socket.LocalEndPoint, new LinePipelineFilter(), new ChannelOptions
-                {
-                    Logger = DefaultLoggerFactory.CreateLogger(nameof(TestDetachableChannel)),
-                    ReadAsDemand = true
-                });
+            await foreach (var package in channel.RunAsync())
+            {
+                Assert.NotNull(package);
+                Assert.Equal("PRE-" + msg, package.Text);
+                round++;
 
-                channel.Start();
+                if (round >= 10)
+                    break;
 
-                var msg = Guid.NewGuid().ToString();
+                msg = Guid.NewGuid().ToString();
                 await channel.SendAsync(Utf8Encoding.GetBytes(msg + "\r\n"));
-
-                var round = 0;
-
-                await foreach (var package in channel.RunAsync())
-                {
-                    Assert.NotNull(package);
-                    Assert.Equal("PRE-" + msg, package.Text);
-                    round++;
-
-                    if (round >= 10)
-                        break;
-
-                    msg = Guid.NewGuid().ToString();
-                    await channel.SendAsync(Utf8Encoding.GetBytes(msg + "\r\n"));
-                }
-
-
-                OutputHelper.WriteLine("Before DetachAsync");
-
-                await channel.DetachAsync();
-
-                // the connection is still alive in the server
-                Assert.Equal(1, server.SessionCount);
-
-                // socket.Connected is is still connected
-                Assert.True(socket.Connected);
-
-                var ns = stream as DerivedNetworkStream;
-                Assert.True(ns.Socket.Connected);
-
-                // the stream is still usable
-                using (var streamReader = new StreamReader(stream, Utf8Encoding, true))
-                using (var streamWriter = new StreamWriter(stream, Utf8Encoding, 1024 * 1024 * 4))
-                {
-                    for (var i = 0; i < 10; i++)
-                    {
-                        var txt = Guid.NewGuid().ToString();
-                        await streamWriter.WriteAsync(txt + "\r\n");
-                        await streamWriter.FlushAsync();
-                        OutputHelper.WriteLine($"Sent {(i + 1)} message over the detached network stream");
-                        var line = await streamReader.ReadLineAsync();
-                        Assert.Equal("PRE-" + txt, line);
-                        OutputHelper.WriteLine($"Received {(i + 1)} message over the detached network stream");
-                    }
-                }
-
-                await server.StopAsync();
             }
+
+
+            OutputHelper.WriteLine("Before DetachAsync");
+
+            await channel.DetachAsync();
+
+            // the connection is still alive in the server
+            Assert.Equal(1, server.SessionCount);
+
+            // socket.Connected is is still connected
+            Assert.True(socket.Connected);
+
+            var ns = stream as DerivedNetworkStream;
+            Assert.True(ns.Socket.Connected);
+
+            // the stream is still usable
+            using (var streamReader = new StreamReader(stream, Utf8Encoding, true))
+            using (var streamWriter = new StreamWriter(stream, Utf8Encoding, 1024 * 1024 * 4))
+            {
+                for (var i = 0; i < 10; i++)
+                {
+                    var txt = Guid.NewGuid().ToString();
+                    await streamWriter.WriteAsync(txt + "\r\n");
+                    await streamWriter.FlushAsync();
+                    OutputHelper.WriteLine($"Sent {(i + 1)} message over the detached network stream");
+                    var line = await streamReader.ReadLineAsync();
+                    Assert.Equal("PRE-" + txt, line);
+                    OutputHelper.WriteLine($"Received {(i + 1)} message over the detached network stream");
+                }
+            }
+
+            await server.StopAsync();
         }
     }
 }

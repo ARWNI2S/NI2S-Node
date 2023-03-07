@@ -5,8 +5,9 @@ namespace NI2S.Node.Protocol.Compression
     public class GZipReadWriteStream : Stream
     {
         public Stream BaseStream { get; }
-        GZipStream? readStream = null;
-        GZipStream? writeStream = null;
+
+        readonly GZipStream? readStream = null;
+        readonly GZipStream? writeStream = null;
         public GZipReadWriteStream(Stream stream, bool leaveOpen)
         {
             readStream = new GZipStream(stream, CompressionMode.Decompress, leaveOpen);

@@ -21,7 +21,7 @@ namespace NI2S.Node.Tests
 
         public ListenOptions Listener { get; private set; }
 
-        private static Random _rd = new Random();
+        private static readonly Random _rd = new Random();
 
         public void Configure(INodeHostBuilder hostBuilder)
         {

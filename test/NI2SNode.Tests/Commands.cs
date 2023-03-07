@@ -37,7 +37,7 @@ namespace NI2S.Node.Tests
 
     public class SUB : IAsyncCommand<StringPackageInfo>
     {
-        private IPackageEncoder<string> _encoder;
+        private readonly IPackageEncoder<string> _encoder;
 
         public SUB(IPackageEncoder<string> encoder)
         {
@@ -57,7 +57,7 @@ namespace NI2S.Node.Tests
 
     public class DIV : IAsyncCommand<MySession, StringPackageInfo>
     {
-        private IPackageEncoder<string> _encoder;
+        private readonly IPackageEncoder<string> _encoder;
 
         public DIV(IPackageEncoder<string> encoder)
         {

@@ -7,7 +7,7 @@ namespace NI2S.Node.Tests
     {
         public UdpPipeChannel<TextPackageInfo> Channel { get; }
 
-        private IAsyncEnumerator<TextPackageInfo> _packageEnumerator;
+        private readonly IAsyncEnumerator<TextPackageInfo> _packageEnumerator;
 
         public UdpTextReader(UdpPipeChannel<TextPackageInfo> channel)
         {

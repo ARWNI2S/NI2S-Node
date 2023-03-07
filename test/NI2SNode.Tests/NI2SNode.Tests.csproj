@@ -5,6 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <DebugType>portable</DebugType>
     <IsPackable>false</IsPackable>
+    <RootNamespace>NI2S.Node.Tests</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -21,16 +22,19 @@
   <ItemGroup>
     <PackageReference Include="Autofac" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
-    <PackageReference Include="coverlet.collector" />
     <PackageReference Include="xunit" />
     <PackageReference Include="xunit.runner.visualstudio" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\NI2SNode.Client\NI2SNode.Client.csproj" />
-    <ProjectReference Include="..\..\NI2SNode.Core\NI2SNode.Core.csproj" />
-    <ProjectReference Include="..\..\Shared\NI2SNode.Protocol\NI2SNode.Protocol.csproj" />
+    <ProjectReference Include="..\..\src\NI2SNode.Abstractions\NI2SNode.Abstractions.csproj" />
+    <ProjectReference Include="..\..\src\NI2SNode.Client\NI2SNode.Client.csproj" />
+    <ProjectReference Include="..\..\src\NI2SNode.Core\NI2SNode.Core.csproj" />
+    <ProjectReference Include="..\..\src\Shared\NI2SNode.Protocol\NI2SNode.Protocol.csproj" />
     <ProjectReference Include="..\NI2SNode.Tests.Command\NI2SNode.Tests.Command.csproj" />
   </ItemGroup>
 

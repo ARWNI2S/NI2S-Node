@@ -59,7 +59,7 @@ namespace NI2S.Node.Protocol
                     return false;
 
                 v += unit * b;
-                unit = unit / 256;
+                unit /= 256;
             }
 
             value = (uint)v;
@@ -82,7 +82,7 @@ namespace NI2S.Node.Protocol
                     return false;
 
                 v += unit * b;
-                unit = unit / 256;
+                unit /= 256;
             }
 
             value = (ulong)v;
@@ -103,7 +103,7 @@ namespace NI2S.Node.Protocol
                     foreach (var segment in sequence)
                     {
                         var count = encoding.GetChars(segment.Span, span);
-                        span = span.Slice(count);
+                        span = span[count..];
                     }
                 });
             }
@@ -115,7 +115,7 @@ namespace NI2S.Node.Protocol
             {
                 var charBuff = (new char[piece.Length]).AsSpan();
                 var len = decoder.GetChars(piece.Span, charBuff, false);
-                sb.Append(new string(len == charBuff.Length ? charBuff : charBuff.Slice(0, len)));
+                sb.Append(new string(len == charBuff.Length ? charBuff : charBuff[..len]));
             }
 
             return sb.ToString();
@@ -136,7 +136,7 @@ namespace NI2S.Node.Protocol
                 encoder.Convert(text, span, false, out int charsUsed, out int bytesUsed, out completed);
 
                 if (charsUsed > 0)
-                    text = text.Slice(charsUsed);
+                    text = text[charsUsed..];
 
                 totalBytes += bytesUsed;
                 writer.Advance(bytesUsed);

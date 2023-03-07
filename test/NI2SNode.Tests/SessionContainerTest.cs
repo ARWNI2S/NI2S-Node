@@ -66,7 +66,7 @@ namespace NI2S.Node.Tests
         {
             var sessionStateEvent = new AutoResetEvent(false);
             var hostConfigurator = new RegularHostConfigurator();
-            using (var server = CreateSocketServerBuilder<StringPackageInfo, MyPipelineFilter>(hostConfigurator)
+            using var server = CreateSocketServerBuilder<StringPackageInfo, MyPipelineFilter>(hostConfigurator)
                 .UseCommand<string, StringPackageInfo>(commandOptions =>
                 {
                     commandOptions.AddCommand<SESS>();
@@ -87,58 +87,56 @@ namespace NI2S.Node.Tests
                 .ConfigureServices((ctx, services) =>
                     services.AddSingleton<SessionContainerDependentService>()
                 )
-                .BuildAsServer())
+                .BuildAsServer();
+            Assert.Equal("TestServer", server.Name);
+
+            var sessionContainer = server.GetSessionContainer();
+            Assert.NotNull(sessionContainer);
+
+            var sessionContainerDependentService = server.ServiceProvider.GetService<SessionContainerDependentService>();
+            Assert.NotNull(sessionContainerDependentService);
+            Assert.NotNull(sessionContainerDependentService.SessionContainer);
+            var asyncSessionContainer = sessionContainerDependentService.AsyncSessionContainer as SyncToAsyncSessionContainerWrapper;
+            Assert.NotNull(asyncSessionContainer);
+            Assert.Same(sessionContainerDependentService.SessionContainer, asyncSessionContainer.SessionContainer);
+            Assert.Same(sessionContainer, sessionContainerDependentService.SessionContainer);
+
+            Assert.True(await server.StartAsync());
+            OutputHelper.WriteLine("Server started.");
+
+            var client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            await client.ConnectAsync(hostConfigurator.GetServerEndPoint());
+            OutputHelper.WriteLine("Connected.");
+
+            Assert.True(sessionStateEvent.WaitOne(1000));
+
+            Assert.Equal(1, sessionContainer.GetSessionCount());
+
+            var sessionID = string.Empty;
+
+            using (var stream = await hostConfigurator.GetClientStream(client))
+            using (var streamReader = new StreamReader(stream, Utf8Encoding, true))
+            using (var streamWriter = new StreamWriter(stream, Utf8Encoding, 1024 * 1024 * 4))
             {
-                Assert.Equal("TestServer", server.Name);
+                await streamWriter.WriteAsync("SESS\r\n");
+                await streamWriter.FlushAsync();
+                sessionID = await streamReader.ReadLineAsync();
 
-                var sessionContainer = server.GetSessionContainer();
-                Assert.NotNull(sessionContainer);
+                Assert.False(string.IsNullOrEmpty(sessionID));
 
-                var sessionContainerDependentService = server.ServiceProvider.GetService<SessionContainerDependentService>();
-                Assert.NotNull(sessionContainerDependentService);
-                Assert.NotNull(sessionContainerDependentService.SessionContainer);
-                var asyncSessionContainer = sessionContainerDependentService.AsyncSessionContainer as SyncToAsyncSessionContainerWrapper;
-                Assert.NotNull(asyncSessionContainer);
-                Assert.Same(sessionContainerDependentService.SessionContainer, asyncSessionContainer.SessionContainer);
-                Assert.Same(sessionContainer, sessionContainerDependentService.SessionContainer);
+                var session = sessionContainer.GetSessionByID(sessionID);
 
-                Assert.True(await server.StartAsync());
-                OutputHelper.WriteLine("Server started.");
+                Assert.NotNull(session);
+                Assert.Equal(sessionID, session.SessionID);
 
-                var client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                await client.ConnectAsync(hostConfigurator.GetServerEndPoint());
-                OutputHelper.WriteLine("Connected.");
+                await session.CloseAsync(CloseReason.LocalClosing);
 
-                Assert.True(sessionStateEvent.WaitOne(1000));
-
-                Assert.Equal(1, sessionContainer.GetSessionCount());
-
-                var sessionID = string.Empty;
-
-                using (var stream = await hostConfigurator.GetClientStream(client))
-                using (var streamReader = new StreamReader(stream, Utf8Encoding, true))
-                using (var streamWriter = new StreamWriter(stream, Utf8Encoding, 1024 * 1024 * 4))
-                {
-                    await streamWriter.WriteAsync("SESS\r\n");
-                    await streamWriter.FlushAsync();
-                    sessionID = await streamReader.ReadLineAsync();
-
-                    Assert.False(string.IsNullOrEmpty(sessionID));
-
-                    var session = sessionContainer.GetSessionByID(sessionID);
-
-                    Assert.NotNull(session);
-                    Assert.Equal(sessionID, session.SessionID);
-
-                    await session.CloseAsync(CloseReason.LocalClosing);
-
-                    Assert.True(sessionStateEvent.WaitOne(500));
-                    Assert.Equal(0, sessionContainer.GetSessionCount());
-                    Assert.Null(sessionContainer.GetSessionByID(sessionID));
-                }
-
-                await server.StopAsync();
+                Assert.True(sessionStateEvent.WaitOne(500));
+                Assert.Equal(0, sessionContainer.GetSessionCount());
+                Assert.Null(sessionContainer.GetSessionByID(sessionID));
             }
+
+            await server.StopAsync();
         }
     }
 }

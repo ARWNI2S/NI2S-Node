@@ -14,7 +14,7 @@ namespace NI2S.Node.Command
 
         public List<ICommandSource> CommandSources { get; set; }
 
-        private List<Type> _globalCommandFilterTypes;
+        private readonly List<Type> _globalCommandFilterTypes;
 
         public IReadOnlyList<Type> GlobalCommandFilterTypes
         {
@@ -69,7 +69,7 @@ namespace NI2S.Node.Command
 
     public abstract class AssemblyBaseCommandSource
     {
-        public IEnumerable<Type> GetCommandTypesFromAssembly(Assembly assembly)
+        public static IEnumerable<Type> GetCommandTypesFromAssembly(Assembly assembly)
         {
             return assembly.GetExportedTypes();
         }

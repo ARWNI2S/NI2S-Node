@@ -4,7 +4,7 @@ namespace NI2S.Node.Protocol.Session
 {
     public class InProcSessionContainerMiddleware : MiddlewareBase, ISessionContainer
     {
-        private ConcurrentDictionary<string, ISession> _sessions;
+        private readonly ConcurrentDictionary<string, ISession> _sessions;
 
         public InProcSessionContainerMiddleware(IServiceProvider serviceProvider)
         {

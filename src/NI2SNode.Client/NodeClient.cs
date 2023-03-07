@@ -134,11 +134,7 @@ namespace NI2S.Node.Client
                 return false;
             }
 
-            var socket = state.Socket;
-
-            if (socket == null)
-                throw new Exception("Socket is null.");
-
+            _ = state.Socket ?? throw new Exception("Socket is null.");
             var channelOptions = Options;
             SetupChannel(state.CreateChannel<TReceivePackage>(_pipelineFilter, channelOptions));
             return true;
@@ -250,8 +246,7 @@ namespace NI2S.Node.Client
 
         protected virtual async ValueTask OnPackageReceived(TReceivePackage package)
         {
-            var handler = PackageHandler;
-            if (handler == null) throw new InvalidOperationException(string.Format(LocalizedStrings.Error_ObjectIsNull_Format, nameof(PackageHandler)));
+            var handler = PackageHandler ?? throw new InvalidOperationException(string.Format(LocalizedStrings.Error_ObjectIsNull_Format, nameof(PackageHandler)));
             try
             {
                 await handler.Invoke(this, package);

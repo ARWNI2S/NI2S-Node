@@ -9,7 +9,7 @@ namespace NI2S.Node.Protocol.Channel.Udp
 {
     class UdpChannelCreator : IChannelCreator
     {
-        private ILogger _logger;
+        private readonly ILogger _logger;
 
         private Socket? _listenSocket;
 
@@ -31,9 +31,9 @@ namespace NI2S.Node.Protocol.Channel.Udp
 
         private TaskCompletionSource<bool>? _stopTaskCompletionSource;
 
-        private IUdpSessionIdentifierProvider _udpSessionIdentifierProvider;
+        private readonly IUdpSessionIdentifierProvider _udpSessionIdentifierProvider;
 
-        private IAsyncSessionContainer _sessionContainer;
+        private readonly IAsyncSessionContainer _sessionContainer;
 
         public UdpChannelCreator(ListenOptions options, ChannelOptions channelOptions, Func<Socket, IPEndPoint, string, ValueTask<IVirtualChannel>> channelFactory, ILogger logger, IUdpSessionIdentifierProvider udpSessionIdentifierProvider, IAsyncSessionContainer sessionContainer)
         {

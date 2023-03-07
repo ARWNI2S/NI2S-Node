@@ -9,16 +9,16 @@ namespace NI2S.Node.Tests
     [Trait("Category", "Protocol.SwitchProtocol")]
     public class SwitchProtocolTest : ProtocolTestBase
     {
-        private static Random _rd = new Random();
+        private static readonly Random _rd = new Random();
 
         private const char _beginFlagA = '$';
         private const char _beginFlagB = '*';
 
         class SwitchPipelineFilter : PipelineFilterBase<TextPackageInfo>
         {
-            private IPipelineFilter<TextPackageInfo> _filterA;
+            private readonly IPipelineFilter<TextPackageInfo> _filterA;
 
-            private IPipelineFilter<TextPackageInfo> _filterB;
+            private readonly IPipelineFilter<TextPackageInfo> _filterB;
 
             public SwitchPipelineFilter()
             {
@@ -119,27 +119,23 @@ namespace NI2S.Node.Tests
         {
             var hostConfigurator = CreateObject<IHostConfigurator>(hostConfiguratorType);
 
-            using (var server = CreateServer(hostConfigurator))
+            using var server = CreateServer(hostConfigurator);
+            await server.StartAsync();
+
+            using (var socket = CreateClient(hostConfigurator))
             {
-                await server.StartAsync();
+                using var socketStream = await hostConfigurator.GetClientStream(socket);
+                using var reader = hostConfigurator.GetStreamReader(socketStream, Utf8Encoding);
+                using var writer = new ConsoleWriter(socketStream, Utf8Encoding, 1024 * 8);
+                var line = Guid.NewGuid().ToString();
+                writer.Write(CreateRequest(line));
+                writer.Flush();
 
-                using (var socket = CreateClient(hostConfigurator))
-                {
-                    using (var socketStream = await hostConfigurator.GetClientStream(socket))
-                    using (var reader = hostConfigurator.GetStreamReader(socketStream, Utf8Encoding))
-                    using (var writer = new ConsoleWriter(socketStream, Utf8Encoding, 1024 * 8))
-                    {
-                        var line = Guid.NewGuid().ToString();
-                        writer.Write(CreateRequest(line));
-                        writer.Flush();
-
-                        var receivedLine = await reader.ReadLineAsync();
-                        Assert.Equal(line, receivedLine);
-                    }
-                }
-
-                await server.StopAsync();
+                var receivedLine = await reader.ReadLineAsync();
+                Assert.Equal(line, receivedLine);
             }
+
+            await server.StopAsync();
         }
     }
 }
