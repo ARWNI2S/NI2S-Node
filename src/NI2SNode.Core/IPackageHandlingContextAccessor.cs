@@ -1,11 +1,11 @@
-﻿using NI2S.Node;
+﻿using NI2S.Node.Protocol.Session;
 
-namespace SuperSocket.Server
+namespace NI2S.Node.Server
 {
 
     public interface IPackageHandlingContextAccessor<TPackageInfo>
     {
-        PackageHandlingContext<IAppSession, TPackageInfo>? PackageHandlingContext { get; set; }
+        PackageHandlingContext<ISession, TPackageInfo>? PackageHandlingContext { get; set; }
     }
 
 

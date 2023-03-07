@@ -8,7 +8,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using NI2S.Node.Protocol;
-using NI2S.Node.Client.Resources;
+using NI2S.Node.Resources;
 
 namespace NI2S.Node.Client.Proxy
 {

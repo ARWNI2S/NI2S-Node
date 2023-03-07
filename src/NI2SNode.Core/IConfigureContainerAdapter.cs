@@ -1,7 +1,7 @@
 using System;
 using Microsoft.Extensions.Hosting;
 
-namespace SuperSocket.Server
+namespace NI2S.Node.Server
 {
     internal interface IConfigureContainerAdapter
     {

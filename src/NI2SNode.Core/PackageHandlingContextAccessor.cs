@@ -1,6 +1,6 @@
-﻿using NI2S.Node;
+﻿using NI2S.Node.Protocol.Session;
 
-namespace SuperSocket.Server
+namespace NI2S.Node.Server
 {
 
 
@@ -9,7 +9,7 @@ namespace SuperSocket.Server
         private static AsyncLocal<PackageHandlingContextHolder> AppSessionCurrent { get; set; } = new AsyncLocal<PackageHandlingContextHolder>();
 
         /// <inheritdoc/>
-        PackageHandlingContext<IAppSession, TPackageInfo>? IPackageHandlingContextAccessor<TPackageInfo>.PackageHandlingContext
+        PackageHandlingContext<ISession, TPackageInfo>? IPackageHandlingContextAccessor<TPackageInfo>.PackageHandlingContext
         {
             get
             {
@@ -32,7 +32,7 @@ namespace SuperSocket.Server
 
         private class PackageHandlingContextHolder
         {
-            public PackageHandlingContext<IAppSession, TPackageInfo>? Context { get; set; }
+            public PackageHandlingContext<ISession, TPackageInfo>? Context { get; set; }
         }
     }
 

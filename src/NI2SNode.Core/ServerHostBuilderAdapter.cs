@@ -1,8 +1,9 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NI2S.Node;
+using NI2S.Node.Hosting;
 
-namespace SuperSocket.Server
+namespace NI2S.Node.Server
 {
     public interface IServerHostBuilderAdapter
     {
@@ -124,7 +125,7 @@ namespace SuperSocket.Server
         protected override void RegisterHostedService<THostedService>(IServiceCollection servicesInHost)
         {
             _currentServices.AddSingleton<IHostedService, THostedService>();
-            _currentServices.AddSingleton(s => (IServerInfo)s.GetService<IHostedService>()!);
+            _currentServices.AddSingleton(s => (INodeInfo)s.GetService<IHostedService>()!);
             servicesInHost.AddHostedService(s => GetHostedService<THostedService>());
         }
 
@@ -138,7 +139,7 @@ namespace SuperSocket.Server
             return (THostedService)_serviceProvider.GetService<IHostedService>()!;
         }
 
-        public override ISuperSocketHostBuilder<TReceivePackage> UseHostedService<THostedService>()
+        public override INodeHostBuilder<TReceivePackage> UseHostedService<THostedService>()
         {
             RegisterHostedService<THostedService>();
             return this;

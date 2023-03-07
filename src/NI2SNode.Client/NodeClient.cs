@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
-using NI2S.Node.Client.Resources;
+using NI2S.Node.Resources;
 using NI2S.Node.Protocol;
 using NI2S.Node.Protocol.Channel;
 using System.Buffers;

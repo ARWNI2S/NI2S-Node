@@ -1,11 +1,11 @@
 using Microsoft.Extensions.DependencyInjection;
-using NI2S.Node;
+using NI2S.Node.Protocol.Session;
 using System;
 
-namespace SuperSocket.Server
+namespace NI2S.Node.Server
 {
     public class GenericSessionFactory<TSession> : ISessionFactory
-        where TSession : IAppSession
+        where TSession : ISession
     {
         public Type SessionType => typeof(TSession);
 
@@ -16,7 +16,7 @@ namespace SuperSocket.Server
             ServiceProvider = serviceProvider;
         }
 
-        public IAppSession Create()
+        public ISession Create()
         {
             return ActivatorUtilities.CreateInstance<TSession>(ServiceProvider);
         }

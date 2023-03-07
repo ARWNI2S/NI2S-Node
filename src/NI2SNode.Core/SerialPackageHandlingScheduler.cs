@@ -1,11 +1,11 @@
-using NI2S.Node;
+using NI2S.Node.Protocol.Session;
 using System.Threading.Tasks;
 
-namespace SuperSocket.Server
+namespace NI2S.Node.Server
 {
     public class SerialPackageHandlingScheduler<TPackageInfo> : PackageHandlingSchedulerBase<TPackageInfo>
     {
-        public override async ValueTask HandlePackage(IAppSession session, TPackageInfo package)
+        public override async ValueTask HandlePackage(ISession session, TPackageInfo package)
         {
             await HandlePackageInternal(session, package);
         }

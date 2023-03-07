@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace NI2S.Node.Client.Resources {
+namespace NI2S.Node.Resources {
     using System;
     
     
@@ -79,6 +79,15 @@ namespace NI2S.Node.Client.Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a FillPipeWithDataAsync is not supported in udp pipe channels.
+        /// </summary>
+        internal static string Error_FillPipeWithDataAsyncNotSupportedUdp {
+            get {
+                return ResourceManager.GetString("Error_FillPipeWithDataAsyncNotSupportedUdp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Can&apos;t cast {0} to {1}..
         /// </summary>
         internal static string Error_InvalidCast_Format {
@@ -93,6 +102,15 @@ namespace NI2S.Node.Client.Resources {
         internal static string Error_ObjectIsNull_Format {
             get {
                 return ResourceManager.GetString("Error_ObjectIsNull_Format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a {0} is null.
+        /// </summary>
+        internal static string Error_ObjectIsNull_Format1 {
+            get {
+                return ResourceManager.GetString("Error_ObjectIsNull_Format1", resourceCulture);
             }
         }
         

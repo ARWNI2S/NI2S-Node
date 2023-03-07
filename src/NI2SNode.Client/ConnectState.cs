@@ -1,4 +1,4 @@
-﻿using NI2S.Node.Client.Resources;
+﻿using NI2S.Node.Resources;
 using NI2S.Node.Protocol;
 using NI2S.Node.Protocol.Channel;
 using System.Net.Sockets;

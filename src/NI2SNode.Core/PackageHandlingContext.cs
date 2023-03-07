@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SuperSocket.Server
+namespace NI2S.Node.Server
 {
     public class PackageHandlingContext<TAppSession, TPackageInfo>
     {

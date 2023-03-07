@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -6,6 +6,11 @@
     <Nullable>enable</Nullable>
     <RootNamespace>NI2S.Node.Client</RootNamespace>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
+    <PackageReference Include="System.IO.Pipelines" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Shared\NI2SNode.Protocol\NI2SNode.Protocol.csproj" />
@@ -23,6 +28,7 @@
     <EmbeddedResource Update="Resources\LocalizedStrings.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>LocalizedStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>NI2S.Node.Resources</CustomToolNamespace>
     </EmbeddedResource>
   </ItemGroup>
 

@@ -1,12 +1,14 @@
 using Microsoft.Extensions.Logging;
 using NI2S.Node;
+using NI2S.Node.Async;
 using NI2S.Node.Protocol;
 using NI2S.Node.Protocol.Channel;
+using NI2S.Node.Protocol.Session;
 using System.Net;
 
-namespace SuperSocket.Server
+namespace NI2S.Node.Server
 {
-    public class AppSession : IAppSession, ILogger, ILoggerAccessor
+    public class AppSession : ISession, ILogger, ILoggerAccessor
     {
         private IChannel? _channel;
 
@@ -20,7 +22,7 @@ namespace SuperSocket.Server
 
         }
 
-        void IAppSession.Initialize(IServerInfo server, IChannel channel)
+        void ISession.Initialize(INodeInfo server, IChannel channel)
         {
             if (channel is IChannelWithSessionIdentifier channelWithSessionIdentifier)
                 SessionID = channelWithSessionIdentifier.SessionIdentifier;
@@ -39,9 +41,9 @@ namespace SuperSocket.Server
 
         public SessionState State { get; private set; } = SessionState.None;
 
-        public IServerInfo? Server { get; private set; }
+        public INodeInfo? Server { get; private set; }
 
-        IChannel? IAppSession.Channel
+        IChannel? ISession.Channel
         {
             get { return _channel; }
         }
@@ -134,21 +136,21 @@ namespace SuperSocket.Server
             await connectedEventHandler.Invoke(this, EventArgs.Empty);
         }
 
-        ValueTask IAppSession.SendAsync(ReadOnlyMemory<byte> data)
+        ValueTask ISession.SendAsync(ReadOnlyMemory<byte> data)
         {
             if (_channel == null) throw new InvalidOperationException(); //TODO: Message
 
             return _channel.SendAsync(data);
         }
 
-        ValueTask IAppSession.SendAsync<TPackage>(IPackageEncoder<TPackage> packageEncoder, TPackage package)
+        ValueTask ISession.SendAsync<TPackage>(IPackageEncoder<TPackage> packageEncoder, TPackage package)
         {
             if (_channel == null) throw new InvalidOperationException(); //TODO: Message
 
             return _channel.SendAsync(packageEncoder, package);
         }
 
-        void IAppSession.Reset()
+        void ISession.Reset()
         {
             ClearEvent(ref Connected);
             ClearEvent(ref Closed);
@@ -156,7 +158,7 @@ namespace SuperSocket.Server
             State = SessionState.None;
             _channel = null;
             DataContext = null;
-            StartTime = default(DateTimeOffset);
+            StartTime = default;
             Server = null;
 
             Reset();
@@ -167,7 +169,7 @@ namespace SuperSocket.Server
 
         }
 
-        private void ClearEvent<TEventHandler>(ref TEventHandler? sessionEvent)
+        private static void ClearEvent<TEventHandler>(ref TEventHandler? sessionEvent)
             where TEventHandler : Delegate
         {
             if (sessionEvent == null)

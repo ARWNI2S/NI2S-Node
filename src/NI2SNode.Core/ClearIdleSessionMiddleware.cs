@@ -1,10 +1,10 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using NI2S.Node;
+using NI2S.Node.Configuration.Options;
 using NI2S.Node.Protocol.Channel;
 
-namespace SuperSocket.Server
+namespace NI2S.Node.Server
 {
     class ClearIdleSessionMiddleware : MiddlewareBase
     {
@@ -27,7 +27,7 @@ namespace SuperSocket.Server
             _logger = loggerFactory.CreateLogger<ClearIdleSessionMiddleware>();
         }
 
-        public override void Start(IServer server)
+        public override void Start(INode server)
         {
             _timer = new Timer(OnTimerCallback, null, _serverOptions.ClearIdleSessionInterval * 1000, _serverOptions.ClearIdleSessionInterval * 1000);
         }
@@ -67,7 +67,7 @@ namespace SuperSocket.Server
             _timer?.Change(_serverOptions.ClearIdleSessionInterval * 1000, _serverOptions.ClearIdleSessionInterval * 1000);
         }
 
-        public override void Shutdown(IServer server)
+        public override void Shutdown(INode server)
         {
             _timer?.Change(Timeout.Infinite, Timeout.Infinite);
             _timer?.Dispose();

@@ -2,7 +2,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NI2S.Node.Protocol;
 
-namespace SuperSocket.Server
+namespace NI2S.Node.Server
 {
     public class MultipleServerHostBuilder : HostBuilderAdapter<MultipleServerHostBuilder>
     {

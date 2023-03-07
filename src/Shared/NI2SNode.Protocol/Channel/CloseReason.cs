@@ -43,7 +43,7 @@
         ProtocolError = 7,
 
         /// <summary>
-        /// SuperSocket internal error
+        /// NI2S Node internal error
         /// </summary>
         InternalError = 8,
     }

@@ -1,7 +1,7 @@
 using System;
 using System.Net.Sockets;
 
-namespace SuperSocket.Server
+namespace NI2S.Node.Server
 {
     class SocketOptionsSetter
     {

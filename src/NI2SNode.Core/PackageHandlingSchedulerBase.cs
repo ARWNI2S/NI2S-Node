@@ -1,23 +1,23 @@
-using NI2S.Node;
 using NI2S.Node.Protocol.Channel;
+using NI2S.Node.Protocol.Session;
 
-namespace SuperSocket.Server
+namespace NI2S.Node.Server
 {
     public abstract class PackageHandlingSchedulerBase<TPackageInfo> : IPackageHandlingScheduler<TPackageInfo>
     {
         public IPackageHandler<TPackageInfo>? PackageHandler { get; private set; }
 
-        public Func<IAppSession, PackageHandlingException<TPackageInfo>, ValueTask<bool>>? ErrorHandler { get; private set; }
+        public Func<ISession, PackageHandlingException<TPackageInfo>, ValueTask<bool>>? ErrorHandler { get; private set; }
 
-        public abstract ValueTask HandlePackage(IAppSession session, TPackageInfo package);
+        public abstract ValueTask HandlePackage(ISession session, TPackageInfo package);
 
-        public virtual void Initialize(IPackageHandler<TPackageInfo> packageHandler, Func<IAppSession, PackageHandlingException<TPackageInfo>, ValueTask<bool>> errorHandler)
+        public virtual void Initialize(IPackageHandler<TPackageInfo> packageHandler, Func<ISession, PackageHandlingException<TPackageInfo>, ValueTask<bool>> errorHandler)
         {
             PackageHandler = packageHandler;
             ErrorHandler = errorHandler;
         }
 
-        protected async ValueTask HandlePackageInternal(IAppSession session, TPackageInfo package)
+        protected async ValueTask HandlePackageInternal(ISession session, TPackageInfo package)
         {
             var packageHandler = PackageHandler;
             var errorHandler = ErrorHandler;

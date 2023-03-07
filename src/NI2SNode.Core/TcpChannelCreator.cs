@@ -1,10 +1,10 @@
 using Microsoft.Extensions.Logging;
-using NI2S.Node;
+using NI2S.Node.Protocol;
 using NI2S.Node.Protocol.Channel;
 using System.Net.Sockets;
 using System.Security.Authentication;
 
-namespace SuperSocket.Server
+namespace NI2S.Node.Server
 {
     public class TcpChannelCreator : IChannelCreator
     {
@@ -16,7 +16,7 @@ namespace SuperSocket.Server
         public ListenOptions Options { get; }
         private readonly ILogger _logger;
 
-        public TcpChannelCreator(ListenOptions options, Func<Socket, ValueTask<IChannel>> channelFactory, ILogger logger)
+        public TcpChannelCreator(ListenOptions? options, Func<Socket, ValueTask<IChannel>> channelFactory, ILogger logger)
         {
             Options = options ?? throw new ArgumentNullException(nameof(options));
             _channelFactory = channelFactory;

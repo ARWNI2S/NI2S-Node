@@ -1,14 +1,17 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using NI2S.Node;
+using NI2S.Node.Configuration.Options;
+using NI2S.Node.Protocol;
+using NI2S.Node.Protocol.Channel;
+using NI2S.Node.Protocol.Session;
 using System.Net;
 using System.Net.Sockets;
 
-namespace SuperSocket
+namespace NI2S.Node
 {
     public static class SuperSocketExtensions
     {
-        public static async ValueTask<bool> ActiveConnect(this IServer server, EndPoint remoteEndpoint)
+        public static async ValueTask<bool> ActiveConnect(this INode server, EndPoint remoteEndpoint)
         {
             var socket = new Socket(remoteEndpoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
 
@@ -29,7 +32,7 @@ namespace SuperSocket
             }
         }
 
-        public static ILogger GetDefaultLogger(this IAppSession session)
+        public static ILogger GetDefaultLogger(this ISession session)
         {
             return ((ILoggerAccessor)session.Server!).Logger;
         }

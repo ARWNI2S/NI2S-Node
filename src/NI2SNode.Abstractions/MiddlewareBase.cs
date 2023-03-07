@@ -1,5 +1,5 @@
-
-using System.Threading.Tasks;
+using NI2S.Node.Middleware;
+using NI2S.Node.Protocol.Session;
 
 namespace NI2S.Node
 {
@@ -7,22 +7,22 @@ namespace NI2S.Node
     {
         public int Order { get; protected set; } = 0;
 
-        public virtual void Start(IServer server)
+        public virtual void Start(INode server)
         {
 
         }
 
-        public virtual void Shutdown(IServer server)
+        public virtual void Shutdown(INode server)
         {
-            
+
         }
-        
-        public virtual ValueTask<bool> RegisterSession(IAppSession session)
+
+        public virtual ValueTask<bool> RegisterSession(ISession session)
         {
             return new ValueTask<bool>(true);
         }
 
-        public virtual ValueTask<bool> UnRegisterSession(IAppSession session)
+        public virtual ValueTask<bool> UnRegisterSession(ISession session)
         {
             return new ValueTask<bool>(true);
         }

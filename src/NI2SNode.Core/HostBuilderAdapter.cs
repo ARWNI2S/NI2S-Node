@@ -4,7 +4,7 @@ using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 
-namespace SuperSocket.Server
+namespace NI2S.Node.Server
 {
     public abstract class HostBuilderAdapter<THostBuilder> : IHostBuilder
         where THostBuilder : HostBuilderAdapter<THostBuilder>

@@ -2,13 +2,16 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
-using NI2S.Node;
+using NI2S.Node.Configuration.Options;
+using NI2S.Node.Hosting;
+using NI2S.Node.Middleware;
 using NI2S.Node.Protocol;
-using SuperSocket.Server;
+using NI2S.Node.Protocol.Session;
+using NI2S.Node.Server;
 
-namespace SuperSocket
+namespace NI2S.Node
 {
-    public class SuperSocketHostBuilder<TReceivePackage> : HostBuilderAdapter<SuperSocketHostBuilder<TReceivePackage>>, ISuperSocketHostBuilder<TReceivePackage>, IHostBuilder
+    public class SuperSocketHostBuilder<TReceivePackage> : HostBuilderAdapter<SuperSocketHostBuilder<TReceivePackage>>, INodeHostBuilder<TReceivePackage>, IHostBuilder
     {
         private Func<HostBuilderContext, IConfiguration, IConfiguration>? _serverOptionsReader;
 
@@ -61,13 +64,13 @@ namespace SuperSocket
             return HostBuilder.Build();
         }
 
-        public ISuperSocketHostBuilder<TReceivePackage> ConfigureSupplementServices(Action<HostBuilderContext, IServiceCollection> configureDelegate)
+        public INodeHostBuilder<TReceivePackage> ConfigureSupplementServices(Action<HostBuilderContext, IServiceCollection> configureDelegate)
         {
             ConfigureSupplementServicesActions.Add(configureDelegate);
             return this;
         }
 
-        ISuperSocketHostBuilder ISuperSocketHostBuilder.ConfigureSupplementServices(Action<HostBuilderContext, IServiceCollection> configureDelegate)
+        INodeHostBuilder INodeHostBuilder.ConfigureSupplementServices(Action<HostBuilderContext, IServiceCollection> configureDelegate)
         {
             return ConfigureSupplementServices(configureDelegate);
         }
@@ -138,17 +141,17 @@ namespace SuperSocket
             where THostedService : class, IHostedService
         {
             servicesInHost.AddSingleton<THostedService, THostedService>();
-            servicesInHost.AddSingleton(s => (IServerInfo)s.GetService<THostedService>()!);
+            servicesInHost.AddSingleton(s => (INodeInfo)s.GetService<THostedService>()!);
             servicesInHost.AddHostedService(s => s.GetService<THostedService>()!);
         }
 
-        public ISuperSocketHostBuilder<TReceivePackage> ConfigureServerOptions(Func<HostBuilderContext, IConfiguration, IConfiguration> serverOptionsReader)
+        public INodeHostBuilder<TReceivePackage> ConfigureServerOptions(Func<HostBuilderContext, IConfiguration, IConfiguration> serverOptionsReader)
         {
             _serverOptionsReader = serverOptionsReader;
             return this;
         }
 
-        ISuperSocketHostBuilder<TReceivePackage> ISuperSocketHostBuilder<TReceivePackage>.ConfigureServices(Action<HostBuilderContext, IServiceCollection> configureDelegate)
+        INodeHostBuilder<TReceivePackage> INodeHostBuilder<TReceivePackage>.ConfigureServices(Action<HostBuilderContext, IServiceCollection> configureDelegate)
         {
             return ConfigureServices(configureDelegate);
         }
@@ -159,7 +162,7 @@ namespace SuperSocket
             return this;
         }
 
-        public virtual ISuperSocketHostBuilder<TReceivePackage> UsePipelineFilter<TPipelineFilter>()
+        public virtual INodeHostBuilder<TReceivePackage> UsePipelineFilter<TPipelineFilter>()
             where TPipelineFilter : IPipelineFilter<TReceivePackage>, new()
         {
             return this.ConfigureServices((ctx, services) =>
@@ -168,7 +171,7 @@ namespace SuperSocket
             });
         }
 
-        public virtual ISuperSocketHostBuilder<TReceivePackage> UsePipelineFilterFactory<TPipelineFilterFactory>()
+        public virtual INodeHostBuilder<TReceivePackage> UsePipelineFilterFactory<TPipelineFilterFactory>()
             where TPipelineFilterFactory : class, IPipelineFilterFactory<TReceivePackage>
         {
             return this.ConfigureServices((ctx, services) =>
@@ -177,13 +180,13 @@ namespace SuperSocket
             });
         }
 
-        public virtual ISuperSocketHostBuilder<TReceivePackage> UseSession<TSession>()
-            where TSession : IAppSession
+        public virtual INodeHostBuilder<TReceivePackage> UseSession<TSession>()
+            where TSession : ISession
         {
             return this.UseSessionFactory<GenericSessionFactory<TSession>>();
         }
 
-        public virtual ISuperSocketHostBuilder<TReceivePackage> UseSessionFactory<TSessionFactory>()
+        public virtual INodeHostBuilder<TReceivePackage> UseSessionFactory<TSessionFactory>()
             where TSessionFactory : class, ISessionFactory
         {
             return this.ConfigureServices(
@@ -194,7 +197,7 @@ namespace SuperSocket
             );
         }
 
-        public virtual ISuperSocketHostBuilder<TReceivePackage> UseHostedService<THostedService>()
+        public virtual INodeHostBuilder<TReceivePackage> UseHostedService<THostedService>()
             where THostedService : class, IHostedService
         {
             if (!typeof(SuperSocketService<TReceivePackage>).IsAssignableFrom(typeof(THostedService)))
@@ -209,7 +212,7 @@ namespace SuperSocket
         }
 
 
-        public virtual ISuperSocketHostBuilder<TReceivePackage> UsePackageDecoder<TPackageDecoder>()
+        public virtual INodeHostBuilder<TReceivePackage> UsePackageDecoder<TPackageDecoder>()
             where TPackageDecoder : class, IPackageDecoder<TReceivePackage>
         {
             return this.ConfigureServices(
@@ -220,7 +223,7 @@ namespace SuperSocket
             );
         }
 
-        public virtual ISuperSocketHostBuilder<TReceivePackage> UseMiddleware<TMiddleware>()
+        public virtual INodeHostBuilder<TReceivePackage> UseMiddleware<TMiddleware>()
             where TMiddleware : class, IMiddleware
         {
             return this.ConfigureServices((ctx, services) =>
@@ -229,7 +232,7 @@ namespace SuperSocket
             });
         }
 
-        public ISuperSocketHostBuilder<TReceivePackage> UsePackageHandlingScheduler<TPackageHandlingScheduler>()
+        public INodeHostBuilder<TReceivePackage> UsePackageHandlingScheduler<TPackageHandlingScheduler>()
             where TPackageHandlingScheduler : class, IPackageHandlingScheduler<TReceivePackage>
         {
             return this.ConfigureServices(
@@ -240,7 +243,7 @@ namespace SuperSocket
             );
         }
 
-        public ISuperSocketHostBuilder<TReceivePackage> UsePackageHandlingContextAccessor()
+        public INodeHostBuilder<TReceivePackage> UsePackageHandlingContextAccessor()
         {
             return this.ConfigureServices(
                  (hostCtx, services) =>
@@ -253,13 +256,13 @@ namespace SuperSocket
 
     public static class SuperSocketHostBuilder
     {
-        public static ISuperSocketHostBuilder<TReceivePackage> Create<TReceivePackage>(string[]? args = null)
+        public static INodeHostBuilder<TReceivePackage> Create<TReceivePackage>(string[]? args = null)
              where TReceivePackage : class
         {
             return new SuperSocketHostBuilder<TReceivePackage>(args);
         }
 
-        public static ISuperSocketHostBuilder<TReceivePackage> Create<TReceivePackage, TPipelineFilter>(string[]? args = null)
+        public static INodeHostBuilder<TReceivePackage> Create<TReceivePackage, TPipelineFilter>(string[]? args = null)
             where TPipelineFilter : IPipelineFilter<TReceivePackage>, new()
         {
             return new SuperSocketHostBuilder<TReceivePackage>(args)

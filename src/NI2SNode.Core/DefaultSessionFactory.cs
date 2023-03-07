@@ -1,15 +1,15 @@
 using System;
 using System.Threading.Tasks;
-using NI2S.Node;
 using NI2S.Node.Protocol.Channel;
+using NI2S.Node.Protocol.Session;
 
-namespace SuperSocket.Server
+namespace NI2S.Node.Server
 {
     class DefaultSessionFactory : ISessionFactory
     {
         public Type SessionType => typeof(AppSession);
 
-        public IAppSession Create()
+        public ISession Create()
         {
             return new AppSession();
         }

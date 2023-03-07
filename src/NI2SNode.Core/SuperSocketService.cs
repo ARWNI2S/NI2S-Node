@@ -2,13 +2,15 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using NI2S.Node;
+using NI2S.Node.Configuration.Options;
+using NI2S.Node.Middleware;
 using NI2S.Node.Protocol;
 using NI2S.Node.Protocol.Channel;
+using NI2S.Node.Protocol.Session;
 
-namespace SuperSocket.Server
+namespace NI2S.Node.Server
 {
-    public class SuperSocketService<TReceivePackageInfo> : IHostedService, IServer, IChannelRegister, ILoggerAccessor, ISessionEventHost
+    public class SuperSocketService<TReceivePackageInfo> : IHostedService, INode, IChannelRegister, ILoggerAccessor, ISessionEventHost
     {
         private readonly IServiceProvider _serviceProvider;
 
@@ -90,7 +92,7 @@ namespace SuperSocket.Server
             }
             else
             {
-                var errorHandler = serviceProvider.GetService<Func<IAppSession, PackageHandlingException<TReceivePackageInfo>, ValueTask<bool>>>()
+                var errorHandler = serviceProvider.GetService<Func<ISession, PackageHandlingException<TReceivePackageInfo>, ValueTask<bool>>>()
                 ?? OnSessionErrorAsync;
 
                 _packageHandlingScheduler = serviceProvider.GetService<IPackageHandlingScheduler<TReceivePackageInfo>>()
@@ -172,7 +174,7 @@ namespace SuperSocket.Server
             AcceptNewChannel(channel);
         }
 
-        protected virtual object CreatePipelineContext(IAppSession session)
+        protected virtual object CreatePipelineContext(ISession session)
         {
             return session;
         }
@@ -209,7 +211,7 @@ namespace SuperSocket.Server
             }
         }
 
-        private async ValueTask<bool> RegisterSessionInMiddlewares(IAppSession session)
+        private async ValueTask<bool> RegisterSessionInMiddlewares(ISession session)
         {
             var middlewares = _middlewares;
 
@@ -230,7 +232,7 @@ namespace SuperSocket.Server
             return true;
         }
 
-        private async ValueTask UnRegisterSessionFromMiddlewares(IAppSession session)
+        private async ValueTask UnRegisterSessionFromMiddlewares(ISession session)
         {
             var middlewares = _middlewares;
 
@@ -257,7 +259,7 @@ namespace SuperSocket.Server
 
         #endregion
 
-        private async ValueTask<bool> InitializeSession(IAppSession session, IChannel channel)
+        private async ValueTask<bool> InitializeSession(ISession session, IChannel channel)
         {
             session.Initialize(this, channel);
 
@@ -284,7 +286,7 @@ namespace SuperSocket.Server
         }
 
 
-        protected virtual ValueTask OnSessionConnectedAsync(IAppSession session)
+        protected virtual ValueTask OnSessionConnectedAsync(ISession session)
         {
             var connectedHandler = _sessionHandlers?.Connected;
 
@@ -294,12 +296,12 @@ namespace SuperSocket.Server
             return new ValueTask();
         }
 
-        private void OnChannelClosed(IAppSession session, CloseEventArgs e)
+        private void OnChannelClosed(ISession session, CloseEventArgs e)
         {
             FireSessionClosedEvent((AppSession)session, e.Reason).DoNotAwait();
         }
 
-        protected virtual ValueTask OnSessionClosedAsync(IAppSession session, CloseEventArgs e)
+        protected virtual ValueTask OnSessionClosedAsync(ISession session, CloseEventArgs e)
         {
             var closedHandler = _sessionHandlers?.Closed;
 
@@ -385,7 +387,7 @@ namespace SuperSocket.Server
                 {
                     if (_packageHandlingContextAccessor != null)
                     {
-                        _packageHandlingContextAccessor.PackageHandlingContext = new PackageHandlingContext<IAppSession, TReceivePackageInfo>(session, p);
+                        _packageHandlingContextAccessor.PackageHandlingContext = new PackageHandlingContext<ISession, TReceivePackageInfo>(session, p);
                     }
                     if (packageHandlingScheduler != null)
                         await packageHandlingScheduler.HandlePackage(session, p);
@@ -397,7 +399,7 @@ namespace SuperSocket.Server
             }
         }
 
-        protected virtual ValueTask<bool> OnSessionErrorAsync(IAppSession session, PackageHandlingException<TReceivePackageInfo> exception)
+        protected virtual ValueTask<bool> OnSessionErrorAsync(ISession session, PackageHandlingException<TReceivePackageInfo> exception)
         {
             _logger.LogError(exception, $"Session[{session.SessionID}]: session exception.");
             return new ValueTask<bool>(true);
@@ -479,13 +481,13 @@ namespace SuperSocket.Server
             _state = ServerState.Stopped;
         }
 
-        async Task<bool> IServer.StartAsync()
+        async Task<bool> INode.StartAsync()
         {
             await StartAsync(CancellationToken.None);
             return true;
         }
 
-        async Task IServer.StopAsync()
+        async Task INode.StopAsync()
         {
             await StopAsync(CancellationToken.None);
         }

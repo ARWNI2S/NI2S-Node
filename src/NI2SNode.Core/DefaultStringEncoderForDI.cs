@@ -1,8 +1,9 @@
 using Microsoft.Extensions.Options;
-using NI2S.Node;
+using NI2S.Node.Configuration.Options;
+using NI2S.Node.Protocol;
 using System.Text;
 
-namespace SuperSocket
+namespace NI2S.Node
 {
     class DefaultStringEncoderForDI : DefaultStringEncoder
     {
