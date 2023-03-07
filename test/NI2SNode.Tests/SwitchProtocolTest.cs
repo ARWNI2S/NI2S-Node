@@ -9,7 +9,7 @@ namespace NI2S.Node.Tests
     [Trait("Category", "Protocol.SwitchProtocol")]
     public class SwitchProtocolTest : ProtocolTestBase
     {
-        private static readonly Random _rd = new Random();
+        private static readonly Random _rd = new();
 
         private const char _beginFlagA = '$';
         private const char _beginFlagB = '*';

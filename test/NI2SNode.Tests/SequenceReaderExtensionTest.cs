@@ -17,7 +17,7 @@ namespace NI2S.Node.Tests
             ushort value2 = ushort.MinValue;
 
             BinaryPrimitives.WriteUInt16BigEndian(span, value1);
-            BinaryPrimitives.WriteUInt16BigEndian(span.Slice(2), value2);
+            BinaryPrimitives.WriteUInt16BigEndian(span[2..], value2);
 
             var sequence = new ReadOnlySequence<byte>(arr);
             var reader = new SequenceReader<byte>(sequence);
@@ -39,7 +39,7 @@ namespace NI2S.Node.Tests
             uint value2 = uint.MinValue;
 
             BinaryPrimitives.WriteUInt32BigEndian(span, value1);
-            BinaryPrimitives.WriteUInt32BigEndian(span.Slice(4), value2);
+            BinaryPrimitives.WriteUInt32BigEndian(span[4..], value2);
 
             var sequence = new ReadOnlySequence<byte>(arr);
             var reader = new SequenceReader<byte>(sequence);
@@ -61,7 +61,7 @@ namespace NI2S.Node.Tests
             ulong value2 = ulong.MinValue;
 
             BinaryPrimitives.WriteUInt64BigEndian(span, value1);
-            BinaryPrimitives.WriteUInt64BigEndian(span.Slice(8), value2);
+            BinaryPrimitives.WriteUInt64BigEndian(span[8..], value2);
 
             var sequence = new ReadOnlySequence<byte>(arr);
             var reader = new SequenceReader<byte>(sequence);

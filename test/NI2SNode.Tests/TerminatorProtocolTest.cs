@@ -19,7 +19,7 @@ namespace NI2S.Node.Tests
 
         protected override INode CreateServer(IHostConfigurator hostConfigurator)
         {
-            var server = CreateSocketServerBuilder<TextPackageInfo>((x) => new TerminatorTextPipelineFilter(new[] { (byte)'#', (byte)'#' }), hostConfigurator)
+            var server = CreateSocketServerBuilder((x) => new TerminatorTextPipelineFilter("##"u8.ToArray()), hostConfigurator)
                 .UsePackageHandler(async (s, p) =>
                 {
                     await s.SendAsync(Utf8Encoding.GetBytes(p.Text + "\r\n"));

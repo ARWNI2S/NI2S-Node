@@ -98,9 +98,8 @@ namespace NI2S.Node.Tests
             var fieldInfo = type.GetField(eventName, allBindings);
             var value = fieldInfo.GetValue(objectWithEvent);
 
-            var handler = value as Delegate;
 
-            if (handler == null)
+            if (value is not Delegate handler)
                 return 0;
 
             return handler.GetInvocationList().Length;

@@ -26,7 +26,7 @@ namespace NI2S.Node.Tests
         class MyPipelineFilter : TerminatorPipelineFilter<StringPackageInfo>
         {
             public MyPipelineFilter()
-                : base(new[] { (byte)'\r', (byte)'\n' })
+                : base("\r\n"u8.ToArray())
             {
 
             }
