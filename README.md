@@ -2,7 +2,7 @@
 Narrative Simulator Engine cluster node.
 
 [![Build](https://img.shields.io/github/actions/workflow/status/arwni2s/ni2s-node/build.yml?style=plastic)](https://github.com/arwni2s/ni2s-node/actions?query=workflow%3Abuild)
-![GitHub issues](https://img.shields.io/github/issues/arwni2s/ni2s-node?style=plastic)
+[![GitHub issues](https://img.shields.io/github/issues/arwni2s/ni2s-node?style=plastic)](https://github.com/ARWNI2S/ni2s-node/issues)
 ![GitHub](https://img.shields.io/github/license/arwni2s/ni2s-node?style=plastic)
 ![GitHub contributors](https://img.shields.io/github/contributors/arwni2s/ni2s-node?style=plastic)
 ![GitHub last commit](https://img.shields.io/github/last-commit/arwni2s/ni2s-node?style=plastic)
@@ -20,3 +20,4 @@ This repository contains the source code for build the cluster node host for the
 ![GitHub watchers](https://img.shields.io/github/watchers/arwni2s/ni2s-node?style=social)
 ![GitHub forks](https://img.shields.io/github/forks/arwni2s/ni2s-node?style=social)
 ![GitHub Sponsors](https://img.shields.io/github/sponsors/arwni2s?logo=github&style=social)
+
