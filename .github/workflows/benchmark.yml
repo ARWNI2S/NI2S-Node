@@ -20,4 +20,4 @@ jobs:
             - name: Run benchmark
               run: |
                 cd test/NI2SNode.Benchmark
-                dotnet run -c Release --filter '*' -f net5.0
+                dotnet run -c Release --filter '*' -f net7.0
