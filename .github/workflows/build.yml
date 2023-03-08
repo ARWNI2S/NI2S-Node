@@ -26,7 +26,7 @@ jobs:
                 echo "DOTNET_hostBuilder:reloadConfigOnChange=false" >> $GITHUB_ENV
             - name: Clean
               run: |
-                dotnet clean ./NI2SNode.sln --configuration Release
+                dotnet clean ./NI2S-Node.sln --configuration Release
                 dotnet nuget locals all --clear
             - name: Build
               run: dotnet build -c Release
