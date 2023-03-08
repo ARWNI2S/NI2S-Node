@@ -21,7 +21,8 @@ namespace NI2S.Node.Protocol.Channel
             : base(pipelineFilter, options)
         {
             _socket = socket;
-            _enableSendingPipe = "true".Equals(options.Values?["enableSendingPipe"], StringComparison.OrdinalIgnoreCase);
+            _enableSendingPipe = (options.Values.ContainsKey("enableSendingPipe")
+                && "true".Equals(options.Values?["enableSendingPipe"], StringComparison.OrdinalIgnoreCase));
             RemoteEndPoint = remoteEndPoint;
             SessionIdentifier = sessionIdentifier;
         }

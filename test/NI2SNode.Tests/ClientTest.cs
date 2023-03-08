@@ -14,7 +14,7 @@ namespace NI2S.Node.Tests
     [Trait("Category", "Client")]
     public class ClientTest : TestClassBase
     {
-        private static readonly Random _rd = new Random();
+        private static readonly Random _rd = new();
 
         public ClientTest(ITestOutputHelper outputHelper)
             : base(outputHelper)
@@ -26,8 +26,8 @@ namespace NI2S.Node.Tests
         [Trait("Category", "Client.TestEcho")]
         [InlineData(typeof(RegularHostConfigurator), false)]
         [InlineData(typeof(SecureHostConfigurator), false)]
-        //[InlineData(typeof(GzipHostConfigurator), false)]
-        //[InlineData(typeof(GzipSecureHostConfigurator), false)]
+        [InlineData(typeof(GzipHostConfigurator), false)]
+        [InlineData(typeof(GzipSecureHostConfigurator), false)]
         [InlineData(typeof(RegularHostConfigurator), true)]
         public async Task TestEcho(Type hostConfiguratorType, bool clientReadAsDemand)
         {
@@ -88,7 +88,7 @@ namespace NI2S.Node.Tests
 
         [Theory]
         [InlineData(typeof(RegularHostConfigurator))]
-        //[InlineData(typeof(GzipHostConfigurator))]
+        [InlineData(typeof(GzipHostConfigurator))]
         [Trait("Category", "Client.TestBindLocalEndPoint")]
         public async Task TestBindLocalEndPoint(Type hostConfiguratorType)
         {
@@ -183,8 +183,8 @@ namespace NI2S.Node.Tests
         [Theory]
         [InlineData(typeof(RegularHostConfigurator))]
         [InlineData(typeof(SecureHostConfigurator))]
-        //[InlineData(typeof(GzipSecureHostConfigurator))]
-        //[InlineData(typeof(GzipHostConfigurator))]
+        [InlineData(typeof(GzipSecureHostConfigurator))]
+        [InlineData(typeof(GzipHostConfigurator))]
         public async Task TestCommandLine(Type hostConfiguratorType)
         {
             var packageEvent = new AutoResetEvent(false);

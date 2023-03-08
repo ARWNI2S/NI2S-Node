@@ -32,8 +32,8 @@ namespace NI2S.Node.Tests
 
                     listener.CertificateOptions = new CertificateOptions
                     {
-                        FilePath = "supersocket.pfx",
-                        Password = "supersocket"
+                        FilePath = "arwni2s.pfx",
+                        Password = "AK47@ffline"
                     };
                 });
             });
@@ -44,7 +44,7 @@ namespace NI2S.Node.Tests
         {
             var stream = new SslStream(new DerivedNetworkStream(socket), false);
             var options = new SslClientAuthenticationOptions();
-            options.TargetHost = "supersocket";
+            options.TargetHost = "arwni2s";
             options.EnabledSslProtocols = GetClientEnabledSslProtocols();
             options.RemoteCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => true;
             await stream.AuthenticateAsClientAsync(options);
@@ -66,7 +66,7 @@ namespace NI2S.Node.Tests
             var client = new EasyClient<TPackageInfo>(pipelineFilter, options);
             client.Security = new SecurityOptions
             {
-                TargetHost = "supersocket",
+                TargetHost = "arwni2s",
                 EnabledSslProtocols = GetClientEnabledSslProtocols(),
                 RemoteCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => true
             };

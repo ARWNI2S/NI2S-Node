@@ -34,8 +34,8 @@ namespace NI2S.Node.Tests
 
                     listener.CertificateOptions = new CertificateOptions
                     {
-                        FilePath = "supersocket.pfx",
-                        Password = "supersocket"
+                        FilePath = "arwni2s.pfx",
+                        Password = "AK47@ffline"
                     };
                 });
             });

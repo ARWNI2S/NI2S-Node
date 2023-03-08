@@ -239,9 +239,8 @@ namespace NI2S.Node.Tests
         [Theory]
         [InlineData(typeof(RegularHostConfigurator))]
         [InlineData(typeof(SecureHostConfigurator))]
-        //TODO: Gzip
-        //[InlineData(typeof(GzipSecureHostConfigurator))]
-        //[InlineData(typeof(GzipHostConfigurator))]
+        [InlineData(typeof(GzipSecureHostConfigurator))]
+        [InlineData(typeof(GzipHostConfigurator))]
         public async Task TestBreakRequest2(Type hostConfiguratorType)
         {
             var hostConfigurator = CreateObject<IHostConfigurator>(hostConfiguratorType);
