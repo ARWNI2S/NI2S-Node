@@ -44,21 +44,21 @@ namespace NI2S.Node.Tests
         }
 
 
-        protected SuperSocketHostBuilder<TPackageInfo> CreateSocketServerBuilder<TPackageInfo>(Func<object, IPipelineFilter<TPackageInfo>> filterFactory, IHostConfigurator configurator = null)
+        protected NodeHostBuilder<TPackageInfo> CreateSocketServerBuilder<TPackageInfo>(Func<object, IPipelineFilter<TPackageInfo>> filterFactory, IHostConfigurator configurator = null)
             where TPackageInfo : class
         {
-            var hostBuilder = SuperSocketHostBuilder.Create<TPackageInfo>();
+            var hostBuilder = NodeHostBuilder.Create<TPackageInfo>();
             hostBuilder.UsePipelineFilterFactory(filterFactory);
-            return Configure(hostBuilder, configurator) as SuperSocketHostBuilder<TPackageInfo>;
+            return Configure(hostBuilder, configurator) as NodeHostBuilder<TPackageInfo>;
         }
 
-        protected SuperSocketHostBuilder<TPackageInfo> CreateSocketServerBuilder<TPackageInfo, TPipelineFilter>(IHostConfigurator configurator = null)
+        protected NodeHostBuilder<TPackageInfo> CreateSocketServerBuilder<TPackageInfo, TPipelineFilter>(IHostConfigurator configurator = null)
             where TPackageInfo : class
             where TPipelineFilter : IPipelineFilter<TPackageInfo>, new()
         {
-            var hostBuilder = SuperSocketHostBuilder.Create<TPackageInfo>();
+            var hostBuilder = NodeHostBuilder.Create<TPackageInfo>();
             hostBuilder.UsePipelineFilter<TPipelineFilter>();
-            return Configure(hostBuilder, configurator) as SuperSocketHostBuilder<TPackageInfo>;
+            return Configure(hostBuilder, configurator) as NodeHostBuilder<TPackageInfo>;
         }
 
         protected T CreateObject<T>(Type type)

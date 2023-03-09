@@ -1,3 +1,4 @@
+using NI2S.Node.Hosting;
 using NI2S.Node.Protocol;
 using System.Buffers;
 using System.Text;

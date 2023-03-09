@@ -1,9 +1,9 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using NI2S.Node.Command;
+using NI2S.Node.Configuration.Options;
 using NI2S.Node.Hosting;
 using NI2S.Node.Protocol;
 using NI2S.Node.Protocol.Session;
-using NI2S.Node.Server;
 using System.Net.Sockets;
 using System.Text;
 using Xunit;
@@ -22,13 +22,13 @@ namespace NI2S.Node.Tests
         public async Task TestUsePackageHandlingContextAccessor()
         {
 
-            INodeHostBuilder<StringPackageInfo> superSocketHostBuilder = CreateSocketServerBuilder<StringPackageInfo, CommandLinePipelineFilter>()
+            INodeHostBuilder<StringPackageInfo> nodeHostBuilder = CreateSocketServerBuilder<StringPackageInfo, CommandLinePipelineFilter>()
                             .UseCommand(commandOptions =>
                             {
                                 commandOptions.AddCommand<TestCommand>();
                             })
                             .UsePackageHandlingContextAccessor();
-            using var server = superSocketHostBuilder.BuildAsServer();
+            using var server = nodeHostBuilder.BuildAsServer();
             var packageHandlingContextAccessor = server.ServiceProvider.GetService<IPackageHandlingContextAccessor<StringPackageInfo>>();
             Assert.NotNull(packageHandlingContextAccessor);
             Assert.Equal("TestServer", server.Name);

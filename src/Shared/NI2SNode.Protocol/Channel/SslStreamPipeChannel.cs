@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
+using NI2S.Node.Configuration.Options;
 
 namespace NI2S.Node.Protocol.Channel
 {

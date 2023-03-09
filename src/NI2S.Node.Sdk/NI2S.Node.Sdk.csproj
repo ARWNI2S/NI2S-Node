@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <PackageId>NI2S.Node.Sdk</PackageId>
+    <Description>NI2S Node meta package to bring in the base NI2S Node packages for all project types.</Description>
+    <TargetFrameworks>$(DefaultTargetFrameworks)</TargetFrameworks>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <NoPackageAnalysis>true</NoPackageAnalysis>
+    <IncludeSymbols>false</IncludeSymbols>
+    <IncludeSource>false</IncludeSource>
+    <IsNI2SFrameworkPart>false</IsNI2SFrameworkPart>
+    <NoWarn>MSB3277</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NI2SNode.Core\NI2SNode.Core.csproj" />
+  </ItemGroup>
+
+</Project>

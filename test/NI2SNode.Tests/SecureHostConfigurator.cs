@@ -1,9 +1,9 @@
 using Microsoft.Extensions.DependencyInjection;
 using NI2S.Node.Client;
+using NI2S.Node.Client.Options;
 using NI2S.Node.Configuration.Options;
 using NI2S.Node.Hosting;
 using NI2S.Node.Protocol;
-using NI2S.Node.Protocol.Channel;
 using NI2S.Node.Protocol.Security;
 using System.Net.Security;
 using System.Net.Sockets;
@@ -61,9 +61,9 @@ namespace NI2S.Node.Tests
             return SslProtocols.Tls13 | SslProtocols.Tls12;
         }
 
-        public override IEasyClient<TPackageInfo> ConfigureEasyClient<TPackageInfo>(IPipelineFilter<TPackageInfo> pipelineFilter, ChannelOptions options) where TPackageInfo : class
+        public override INodeClient<TPackageInfo> ConfigureNodeClient<TPackageInfo>(IPipelineFilter<TPackageInfo> pipelineFilter, ChannelOptions options) where TPackageInfo : class
         {
-            var client = new EasyClient<TPackageInfo>(pipelineFilter, options);
+            var client = new NodeClient<TPackageInfo>(pipelineFilter, options);
             client.Security = new SecurityOptions
             {
                 TargetHost = "arwni2s",

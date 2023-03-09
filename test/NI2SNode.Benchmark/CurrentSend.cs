@@ -1,6 +1,7 @@
 using BenchmarkDotNet.Attributes;
 using NI2S.Node.Protocol;
 using NI2S.Node.Protocol.Channel;
+using NI2S.Node.Configuration.Options;
 using System.Buffers;
 using System.Text;
 

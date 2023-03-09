@@ -1,10 +1,9 @@
 using Microsoft.Extensions.DependencyInjection;
 using NI2S.Node.Client;
-using NI2S.Node.Client.GZip;
+using NI2S.Node.Client.Options;
 using NI2S.Node.Configuration.Options;
 using NI2S.Node.Hosting;
 using NI2S.Node.Protocol;
-using NI2S.Node.Protocol.Channel;
 using NI2S.Node.Protocol.Compression;
 using NI2S.Node.Protocol.Security;
 using System.Net.Security;
@@ -47,7 +46,7 @@ namespace NI2S.Node.Tests
         {
             var stream = new SslStream(new DerivedNetworkStream(socket), false);
             var options = new SslClientAuthenticationOptions();
-            options.TargetHost = "supersocket";
+            options.TargetHost = "debug.arwni2s.com";
             options.EnabledSslProtocols = GetClientEnabledSslProtocols();
             options.RemoteCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => true;
             await stream.AuthenticateAsClientAsync(options);
@@ -65,12 +64,12 @@ namespace NI2S.Node.Tests
             return SslProtocols.Tls13 | SslProtocols.Tls12;
         }
 
-        public override IEasyClient<TPackageInfo> ConfigureEasyClient<TPackageInfo>(IPipelineFilter<TPackageInfo> pipelineFilter, ChannelOptions options) where TPackageInfo : class
+        public override INodeClient<TPackageInfo> ConfigureNodeClient<TPackageInfo>(IPipelineFilter<TPackageInfo> pipelineFilter, ChannelOptions options) where TPackageInfo : class
         {
-            var client = new GZipEasyClient<TPackageInfo>(pipelineFilter, options);
+            var client = new GZipNodeClient<TPackageInfo>(pipelineFilter, options);
             client.Security = new SecurityOptions
             {
-                TargetHost = "supersocket",
+                TargetHost = "debug.arwni2s.com",
                 EnabledSslProtocols = GetClientEnabledSslProtocols(),
                 RemoteCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => true
             };

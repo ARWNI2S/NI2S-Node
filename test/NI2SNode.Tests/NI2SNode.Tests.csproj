@@ -1,15 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <DebugType>portable</DebugType>
-    <IsPackable>false</IsPackable>
     <RootNamespace>NI2S.Node.Tests</RootNamespace>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <NoWarn>1701;1702</NoWarn>
-    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
   </PropertyGroup>
 
   <ItemGroup>
@@ -50,9 +42,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Update="Config\multiple_server.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="xunit.runner.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

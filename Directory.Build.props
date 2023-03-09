@@ -4,8 +4,7 @@
     <SourceRoot>$(MSBuildThisFileDirectory)</SourceRoot>
   </PropertyGroup>
 
-  <Import Project="Dependencies.props" />
-  
+  <!-- Setup versions -->
   <PropertyGroup>
     <LangVersion>11.0</LangVersion>
     <TargetFrameworks>net7.0</TargetFrameworks>
@@ -13,8 +12,8 @@
 
   <!-- Set common properties regarding assembly information and nuget packages -->
   <PropertyGroup>
-    <Authors>ManOguaR</Authors>
-    <Owners>ManOguaR</Owners>
+    <Authors>ManOguaR and contributors</Authors>
+    <Owners>Eduardo Ridao (a.k.a ManOguaR)</Owners>
     <Product>Narrative Interactive Intelligent Simulator</Product>
     <Copyright>© Alternate Reality Worlds. All rights reserved.</Copyright>
     <PublicRepositoryUrl>https://github.com/arwni2s/ni2s-node</PublicRepositoryUrl>
@@ -24,9 +23,22 @@
     <LangVersion>11</LangVersion>
     <Features>strict</Features>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <PackageProjectUrl>$(PublicRepositoryUrl)</PackageProjectUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release'">
     <DebugType>embedded</DebugType>
     <IncludeSymbols>false</IncludeSymbols>
     <IncludeSource>false</IncludeSource>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug'">
+    <DebugType>full</DebugType>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <IncludeSource>true</IncludeSource>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TF_BUILD)' == 'true' or '$(GITHUB_ACTIONS)' == 'true'">
@@ -57,8 +69,53 @@
     <VersionSuffix Condition=" '$(VersionDateSuffix)'!='' ">$(VersionSuffix)-$(VersionDateSuffix)</VersionSuffix>
   </PropertyGroup>
 
-  <ItemGroup Condition="$(IsPackable) != False AND '$(OutputType)' != 'Exe'">
+  <!-- Enable testing -->
+  <ItemGroup Condition="$(IsPackable) != False AND '$(OutputType)' != 'Exe' AND '$(IsNI2SFrameworkPart)' != False">
     <Compile Include="$(MSBuildThisFileDirectory)\InternalsVisibleTo.Test.cs" />
   </ItemGroup>
+
+  <Import Condition=" '$(OrleansBuildTimeCodeGen)' == 'true' " Project="$(MSBuildThisFileDirectory)src/Orleans.CodeGenerator/build/Microsoft.Orleans.CodeGenerator.props" />
+
+  <!-- Set output folder for created NuGet packages -->
+  <PropertyGroup>
+    <PackageOutputPath Condition=" '$(PackageOutputPath)'=='' ">$(SourceRoot)/Artifacts/$(Configuration)</PackageOutputPath>
+  </PropertyGroup>
+
+  <!-- Set output folder for distributed test apps -->
+  <PropertyGroup>
+    <DistributedTestsOutputPath Condition=" '$(DistributedTestsOutputPath)'=='' ">$(SourceRoot)/Artifacts/DistributedTests</DistributedTestsOutputPath>
+  </PropertyGroup>
+
+  <Choose>
+    <When Condition="'$(OfficialBuild)' != 'true'">
+      <!-- On non-official builds we don't burn in a git sha.  In large part because it
+           hurts our determinism efforts as binaries which should be the same between
+           builds will not (due to developers building against different HEAD
+           values -->
+      <PropertyGroup>
+        <GitHeadSha>&lt;developer build&gt;</GitHeadSha>
+      </PropertyGroup>
+    </When>
+    <When Condition="'$(BUILD_SOURCEVERSION)' != ''">
+      <PropertyGroup>
+        <GitHeadSha>$(BUILD_SOURCEVERSION)</GitHeadSha>
+      </PropertyGroup>
+    </When>
+    <When Condition="'$(BUILD_SOURCEVERSION)' == '' AND '$(GIT_COMMIT)' != ''">
+      <PropertyGroup>
+        <GitHeadSha>$(GIT_COMMIT)</GitHeadSha>
+      </PropertyGroup>
+    </When>
+    <Otherwise>
+      <PropertyGroup>
+        <GitHeadSha>Not found</GitHeadSha>
+        <DotGitDir>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory).git'))</DotGitDir>
+        <HeadFileContent Condition="Exists('$(DotGitDir)/HEAD')">$([System.IO.File]::ReadAllText('$(DotGitDir)/HEAD').Trim())</HeadFileContent>
+        <RefPath Condition="$(HeadFileContent.StartsWith('ref: '))">$(DotGitDir)/$(HeadFileContent.Substring(5))</RefPath>
+        <GitHeadSha Condition="'$(RefPath)' != '' AND Exists('$(RefPath)')">$([System.IO.File]::ReadAllText('$(RefPath)').Trim())</GitHeadSha>
+        <GitHeadSha Condition="'$(HeadFileContent)' != '' AND '$(RefPath)' == ''">$(HeadFileContent)</GitHeadSha>
+      </PropertyGroup>
+    </Otherwise>
+  </Choose>
 
 </Project>

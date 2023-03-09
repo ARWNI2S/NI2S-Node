@@ -3,7 +3,6 @@ using NI2S.Node.Client;
 using NI2S.Node.Configuration.Options;
 using NI2S.Node.Hosting;
 using NI2S.Node.Protocol;
-using NI2S.Node.Protocol.Channel;
 using System.Net.Sockets;
 using System.Text;
 
@@ -43,7 +42,7 @@ namespace NI2S.Node.Tests
             return new StreamReader(stream, encoding, true);
         }
 
-        public abstract IEasyClient<TPackageInfo> ConfigureEasyClient<TPackageInfo>(IPipelineFilter<TPackageInfo> pipelineFilter, ChannelOptions options)
+        public abstract INodeClient<TPackageInfo> ConfigureNodeClient<TPackageInfo>(IPipelineFilter<TPackageInfo> pipelineFilter, ChannelOptions options)
             where TPackageInfo : class;
 
         public abstract ValueTask<Stream> GetClientStream(Socket socket);

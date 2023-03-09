@@ -4,9 +4,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using NI2S.Node.Configuration.Options;
+using NI2S.Node.Hosting;
 using NI2S.Node.Protocol;
 using NI2S.Node.Protocol.Session;
-using NI2S.Node.Server;
 using System.Net.Sockets;
 using System.Security.Authentication;
 using System.Text;
@@ -104,7 +104,7 @@ namespace NI2S.Node.Tests
                             { "serverOptions:listeners:0:security", security }
                         });
                     })
-                    .ConfigureSuperSocket(serverOptions =>
+                    .ConfigureNode(serverOptions =>
                     {
                         listener = serverOptions.Listeners.FirstOrDefault();
                     })
@@ -238,7 +238,7 @@ namespace NI2S.Node.Tests
                     connected = false;
                     return new ValueTask();
                 })
-                .UseHostedService<SuperSocketServiceA>()
+                .UseHostedService<NodeServiceA>()
                 .BuildAsServer();
             Assert.Equal("TestServer", server.Name);
 
@@ -253,7 +253,7 @@ namespace NI2S.Node.Tests
 
             Assert.True(connected);
 
-            Assert.IsType<SuperSocketServiceA>(server);
+            Assert.IsType<NodeServiceA>(server);
 
             client.Shutdown(SocketShutdown.Both);
             client.Close();
@@ -430,7 +430,7 @@ namespace NI2S.Node.Tests
         {
             var server = default(INode);
 
-            using var host = SuperSocketHostBuilder.Create<TextPackageInfo, LinePipelineFilter>()
+            using var host = NodeHostBuilder.Create<TextPackageInfo, LinePipelineFilter>()
                 .UseSessionHandler(s =>
                 {
                     server = s.Server as INode;
@@ -461,18 +461,18 @@ namespace NI2S.Node.Tests
             await host.StopAsync();
         }
 
-        class SuperSocketServiceA : SuperSocketService<TextPackageInfo>
+        class NodeServiceA : NodeService<TextPackageInfo>
         {
-            public SuperSocketServiceA(IServiceProvider serviceProvider, IOptions<ServerOptions> serverOptions)
+            public NodeServiceA(IServiceProvider serviceProvider, IOptions<ServerOptions> serverOptions)
                 : base(serviceProvider, serverOptions)
             {
 
             }
         }
 
-        class SuperSocketServiceB : SuperSocketService<TextPackageInfo>
+        class NodeServiceB : NodeService<TextPackageInfo>
         {
-            public SuperSocketServiceB(IServiceProvider serviceProvider, IOptions<ServerOptions> serverOptions)
+            public NodeServiceB(IServiceProvider serviceProvider, IOptions<ServerOptions> serverOptions)
                 : base(serviceProvider, serverOptions)
             {
 
@@ -523,7 +523,7 @@ namespace NI2S.Node.Tests
                 {
                     services.AddSingleton<MyTestService>();
                 })
-                .AddServer<SuperSocketServiceA, TextPackageInfo, LinePipelineFilter>(builder =>
+                .AddServer<NodeServiceA, TextPackageInfo, LinePipelineFilter>(builder =>
                 {
                     builder
                     .ConfigureServerOptions((ctx, config) =>
@@ -537,7 +537,7 @@ namespace NI2S.Node.Tests
                     .UseInProcSessionContainer()
                     .ConfigureServices((ctx, services) => services.AddSingleton<MyLocalTestService>());
                 })
-                .AddServer<SuperSocketServiceB, TextPackageInfo, LinePipelineFilter>(builder =>
+                .AddServer<NodeServiceB, TextPackageInfo, LinePipelineFilter>(builder =>
                 {
                     builder
                     .ConfigureServerOptions((ctx, config) =>

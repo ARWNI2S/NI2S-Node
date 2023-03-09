@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="C:\Users\manog\source\repos\ARWNI2S\NI2S-Node\\InternalsVisibleTo.Test.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NI2S.Node.Sdk\NI2S.Node.Sdk.csproj" />
+  </ItemGroup>
+
+</Project>

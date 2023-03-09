@@ -1,5 +1,4 @@
 using NI2S.Node.Protocol;
-using NI2S.Node.Protocol.Channel;
 using System.Text;
 
 namespace NI2S.Node.Configuration.Options

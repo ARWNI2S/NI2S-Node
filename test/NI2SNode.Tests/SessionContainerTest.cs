@@ -1,6 +1,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using NI2S.Node.Async;
 using NI2S.Node.Command;
+using NI2S.Node.Configuration.Options;
+using NI2S.Node.Hosting;
 using NI2S.Node.Protocol;
 using NI2S.Node.Protocol.Channel;
 using NI2S.Node.Protocol.Session;

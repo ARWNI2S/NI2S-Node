@@ -1,3 +1,4 @@
+using NI2S.Node.Hosting;
 using NI2S.Node.Protocol;
 using System.Buffers;
 using System.Text;
@@ -127,6 +128,12 @@ namespace NI2S.Node.Tests
         }
 
 
+        [Theory]
+        [InlineData(typeof(RegularHostConfigurator))]
+        [InlineData(typeof(SecureHostConfigurator))]
+        [InlineData(typeof(UdpHostConfigurator))]
+        [InlineData(typeof(GzipSecureHostConfigurator))]
+        [InlineData(typeof(GzipHostConfigurator))]
         public override async Task TestNormalRequest(Type hostConfiguratorType)
         {
             var hostConfigurator = CreateObject<IHostConfigurator>(hostConfiguratorType);
@@ -152,6 +159,12 @@ namespace NI2S.Node.Tests
             await server.StopAsync();
         }
 
+        [Theory]
+        [InlineData(typeof(RegularHostConfigurator))]
+        [InlineData(typeof(SecureHostConfigurator))]
+        [InlineData(typeof(UdpHostConfigurator))]
+        [InlineData(typeof(GzipSecureHostConfigurator))]
+        [InlineData(typeof(GzipHostConfigurator))]
         public override async Task TestMiddleBreak(Type hostConfiguratorType)
         {
             var hostConfigurator = CreateObject<IHostConfigurator>(hostConfiguratorType);
@@ -172,6 +185,12 @@ namespace NI2S.Node.Tests
             await server.StopAsync();
         }
 
+        [Theory]
+        [InlineData(typeof(RegularHostConfigurator))]
+        [InlineData(typeof(SecureHostConfigurator))]
+        [InlineData(typeof(UdpHostConfigurator))]
+        [InlineData(typeof(GzipSecureHostConfigurator))]
+        [InlineData(typeof(GzipHostConfigurator))]
         public override async Task TestFragmentRequest(Type hostConfiguratorType)
         {
             var hostConfigurator = CreateObject<IHostConfigurator>(hostConfiguratorType);
@@ -194,6 +213,12 @@ namespace NI2S.Node.Tests
             await server.StopAsync();
         }
 
+        [Theory]
+        [InlineData(typeof(RegularHostConfigurator))]
+        [InlineData(typeof(SecureHostConfigurator))]
+        [InlineData(typeof(UdpHostConfigurator))]
+        [InlineData(typeof(GzipSecureHostConfigurator))]
+        [InlineData(typeof(GzipHostConfigurator))]
         public override async Task TestBatchRequest(Type hostConfiguratorType)
         {
             var hostConfigurator = CreateObject<IHostConfigurator>(hostConfiguratorType);
@@ -231,17 +256,12 @@ namespace NI2S.Node.Tests
             await server.StopAsync();
         }
 
-        public override Task TestBreakRequest(Type hostConfiguratorType)
-        {
-            return Task.CompletedTask;
-        }
-
         [Theory]
         [InlineData(typeof(RegularHostConfigurator))]
         [InlineData(typeof(SecureHostConfigurator))]
         [InlineData(typeof(GzipSecureHostConfigurator))]
         [InlineData(typeof(GzipHostConfigurator))]
-        public async Task TestBreakRequest2(Type hostConfiguratorType)
+        public override async Task TestBreakRequest(Type hostConfiguratorType)
         {
             var hostConfigurator = CreateObject<IHostConfigurator>(hostConfiguratorType);
 

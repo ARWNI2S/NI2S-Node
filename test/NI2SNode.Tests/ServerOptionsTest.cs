@@ -1,3 +1,4 @@
+using NI2S.Node.Hosting;
 using NI2S.Node.Protocol;
 using System.Net.Sockets;
 using Xunit;
@@ -22,7 +23,7 @@ namespace NI2S.Node.Tests
             var hostConfigurator = CreateObject<IHostConfigurator>(hostConfiguratorType);
 
             using var server = CreateSocketServerBuilder<TextPackageInfo, LinePipelineFilter>(hostConfigurator)
-                .ConfigureSuperSocket((options) =>
+                .ConfigureNode((options) =>
                 {
                     options.MaxPackageLength = 100;
                 })

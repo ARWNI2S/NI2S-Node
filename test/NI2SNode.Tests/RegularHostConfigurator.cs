@@ -1,6 +1,6 @@
 using NI2S.Node.Client;
 using NI2S.Node.Protocol;
-using NI2S.Node.Protocol.Channel;
+using NI2S.Node.Configuration.Options;
 using System.Net.Sockets;
 
 namespace NI2S.Node.Tests
@@ -12,9 +12,9 @@ namespace NI2S.Node.Tests
             WebSocketSchema = "ws";
         }
 
-        public override IEasyClient<TPackageInfo> ConfigureEasyClient<TPackageInfo>(IPipelineFilter<TPackageInfo> pipelineFilter, ChannelOptions options) where TPackageInfo : class
+        public override INodeClient<TPackageInfo> ConfigureNodeClient<TPackageInfo>(IPipelineFilter<TPackageInfo> pipelineFilter, ChannelOptions options) where TPackageInfo : class
         {
-            return new EasyClient<TPackageInfo>(pipelineFilter, options);
+            return new NodeClient<TPackageInfo>(pipelineFilter, options);
         }
 
         public override ValueTask<Stream> GetClientStream(Socket socket)

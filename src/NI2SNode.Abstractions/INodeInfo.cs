@@ -14,6 +14,6 @@ namespace NI2S.Node
 
         IServiceProvider ServiceProvider { get; }
 
-        ServerState State { get; }
+        NodeState State { get; }
     }
 }

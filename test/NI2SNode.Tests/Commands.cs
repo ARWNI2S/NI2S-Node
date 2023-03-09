@@ -1,12 +1,11 @@
 using NI2S.Node.Command;
 using NI2S.Node.Protocol;
 using NI2S.Node.Protocol.Session;
-using NI2S.Node.Server;
 using System.Text;
 
 namespace NI2S.Node.Tests
 {
-    public class MySession : AppSession
+    public class MySession : Session
     {
 
     }

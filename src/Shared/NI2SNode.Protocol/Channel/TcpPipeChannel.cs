@@ -1,5 +1,6 @@
 ﻿using System.Buffers;
 using System.Net.Sockets;
+using NI2S.Node.Configuration.Options;
 
 namespace NI2S.Node.Protocol.Channel
 {

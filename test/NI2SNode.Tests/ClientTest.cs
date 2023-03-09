@@ -1,5 +1,6 @@
 using Microsoft.Extensions.Logging.Abstractions;
-using NI2S.Node.Command;
+using NI2S.Node.Configuration.Options;
+using NI2S.Node.Hosting;
 using NI2S.Node.Protocol;
 using NI2S.Node.Protocol.Channel;
 using NI2S.Node.Protocol.Session;
@@ -63,7 +64,7 @@ namespace NI2S.Node.Tests
                 ReadAsDemand = clientReadAsDemand
             };
 
-            var client = hostConfigurator.ConfigureEasyClient(new LinePipelineFilter(), options);
+            var client = hostConfigurator.ConfigureNodeClient(new LinePipelineFilter(), options);
 
             var connected = await client.ConnectAsync(new IPEndPoint(IPAddress.Loopback, hostConfigurator.Listener.Port));
 
@@ -118,7 +119,7 @@ namespace NI2S.Node.Tests
                 Logger = DefaultLoggerFactory.CreateLogger(nameof(TestBindLocalEndPoint))
             };
 
-            var client = hostConfigurator.ConfigureEasyClient(pipelineFilter, options);
+            var client = hostConfigurator.ConfigureNodeClient(pipelineFilter, options);
             var connected = false;
             var localPort = 0;
 
@@ -165,7 +166,7 @@ namespace NI2S.Node.Tests
         //    {
         //        Logger = DefaultLoggerFactory.CreateLogger(nameof(TestBindLocalEndPoint))
         //    };
-        //    var ea = new EasyClient<WebSocketPackage>(new WebSocketPipelineFilter());
+        //    var ea = new NodeClient<WebSocketPackage>(new WebSocketPipelineFilter());
         //    var client = ea.AsClient();
         //    var localPort = 0;
 
@@ -211,7 +212,7 @@ namespace NI2S.Node.Tests
                 {
                     Logger = DefaultLoggerFactory.CreateLogger(nameof(TestCommandLine))
                 };
-                var client = hostConfigurator.ConfigureEasyClient(pipelineFilter, options);
+                var client = hostConfigurator.ConfigureNodeClient(pipelineFilter, options);
 
                 StringPackageInfo package = null;
 

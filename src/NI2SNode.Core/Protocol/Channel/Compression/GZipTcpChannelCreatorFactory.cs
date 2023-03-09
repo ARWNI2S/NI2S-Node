@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using NI2S.Node.Protocol.Compression;
-using NI2S.Node.Server;
+using NI2S.Node.Configuration.Options;
 using System.Net.Security;
 using System.Net.Sockets;
 using System.Security.Authentication;

@@ -1,0 +1,8 @@
+<Project>
+
+  <ItemGroup Condition="'$(ImplicitUsings)' == 'enable' or '$(ImplicitUsings)' == 'true'">
+    <Using Include="NI2S.Node"/>
+    <Using Include="NI2S.Node.Hosting"/>
+  </ItemGroup>
+
+</Project>

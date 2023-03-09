@@ -1,7 +1,7 @@
 using NI2S.Node.Client;
 using NI2S.Node.Hosting;
 using NI2S.Node.Protocol;
-using NI2S.Node.Protocol.Channel;
+using NI2S.Node.Configuration.Options;
 using System.Net.Sockets;
 using System.Text;
 
@@ -25,7 +25,7 @@ namespace NI2S.Node.Tests
 
         ListenOptions Listener { get; }
 
-        IEasyClient<TPackageInfo> ConfigureEasyClient<TPackageInfo>(IPipelineFilter<TPackageInfo> pipelineFilter, ChannelOptions options)
+        INodeClient<TPackageInfo> ConfigureNodeClient<TPackageInfo>(IPipelineFilter<TPackageInfo> pipelineFilter, ChannelOptions options)
             where TPackageInfo : class;
     }
 }

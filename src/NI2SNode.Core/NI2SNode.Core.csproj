@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Compile Remove="NodeHost.cs" />
-    <Compile Remove="NodeService.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -19,10 +18,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\NI2SNode.Abstractions\NI2SNode.Abstractions.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Command\" />
   </ItemGroup>
 
 </Project>

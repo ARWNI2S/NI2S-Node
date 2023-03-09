@@ -1,4 +1,5 @@
-﻿using NI2S.Node.Protocol.Resources;
+﻿using NI2S.Node.Configuration.Options;
+using NI2S.Node.Protocol.Resources;
 using System.Buffers;
 using System.IO.Pipelines;
 using System.Net;

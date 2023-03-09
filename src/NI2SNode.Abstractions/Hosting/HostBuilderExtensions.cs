@@ -8,7 +8,7 @@ namespace NI2S.Node.Hosting
 {
     public static class HostBuilderExtensions
     {
-        public static INodeHostBuilder? AsSuperSocketBuilder(this IHostBuilder hostBuilder)
+        public static INodeHostBuilder? AsNodeHostBuilder(this IHostBuilder hostBuilder)
         {
             return hostBuilder as INodeHostBuilder;
         }
@@ -19,7 +19,7 @@ namespace NI2S.Node.Hosting
             return builder.ConfigureServices((ctx, services) =>
             {
                 services.TryAddEnumerable(ServiceDescriptor.Singleton<IMiddleware, TMiddleware>());
-            }).AsSuperSocketBuilder();
+            }).AsNodeHostBuilder();
         }
 
         public static INodeHostBuilder? UseMiddleware<TMiddleware>(this INodeHostBuilder builder, Func<IServiceProvider, TMiddleware> implementationFactory)
@@ -28,7 +28,7 @@ namespace NI2S.Node.Hosting
             return builder.ConfigureServices((ctx, services) =>
             {
                 services.TryAddEnumerable(ServiceDescriptor.Singleton<IMiddleware, TMiddleware>(implementationFactory));
-            }).AsSuperSocketBuilder();
+            }).AsNodeHostBuilder();
         }
         public static INodeHostBuilder? UseChannelCreatorFactory<TChannelCreatorFactory>(this INodeHostBuilder builder)
             where TChannelCreatorFactory : class, IChannelCreatorFactory
@@ -36,7 +36,7 @@ namespace NI2S.Node.Hosting
             return builder.ConfigureServices((ctx, services) =>
             {
                 services.AddSingleton<IChannelCreatorFactory, TChannelCreatorFactory>();
-            }).AsSuperSocketBuilder();
+            }).AsNodeHostBuilder();
         }
     }
 }

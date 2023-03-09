@@ -1,16 +1,17 @@
-﻿using NI2S.Node.Protocol;
+﻿using NI2S.Node.Client.Options;
+using NI2S.Node.Protocol;
 using System.Net;
 
 namespace NI2S.Node.Client
 {
-    public interface INodeClient<TReceivePackage, TSendPackage> : IEasyClient<TReceivePackage>
+    public interface INodeClient<TReceivePackage, TSendPackage> : INodeClient<TReceivePackage>
         where TReceivePackage : class
     {
         ValueTask SendAsync(TSendPackage package);
     }
 
 
-    public interface IEasyClient<TReceivePackage>
+    public interface INodeClient<TReceivePackage>
         where TReceivePackage : class
     {
         ValueTask<bool> ConnectAsync(EndPoint remoteEndPoint, CancellationToken cancellationToken = default);

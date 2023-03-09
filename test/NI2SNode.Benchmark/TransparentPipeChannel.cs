@@ -1,5 +1,6 @@
 using NI2S.Node.Protocol;
 using NI2S.Node.Protocol.Channel;
+using NI2S.Node.Configuration.Options;
 using System.Buffers;
 
 namespace NI2S.Node.Benchmarks

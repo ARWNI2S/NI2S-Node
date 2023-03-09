@@ -1,3 +1,5 @@
+using NI2S.Node.Configuration.Options;
+
 namespace NI2S.Node.Protocol.Channel
 {
     public delegate void NewClientAcceptHandler(IChannelCreator listener, IChannel channel);

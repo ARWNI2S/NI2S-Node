@@ -1,10 +1,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using NI2S.Node.Client;
-using NI2S.Node.Client.GZip;
 using NI2S.Node.Configuration.Options;
 using NI2S.Node.Hosting;
 using NI2S.Node.Protocol;
-using NI2S.Node.Protocol.Channel;
 using NI2S.Node.Protocol.Compression;
 using System.Net.Sockets;
 using System.Security.Authentication;
@@ -49,9 +47,9 @@ namespace NI2S.Node.Tests
             return SslProtocols.Tls13 | SslProtocols.Tls12;
         }
 
-        public override IEasyClient<TPackageInfo> ConfigureEasyClient<TPackageInfo>(IPipelineFilter<TPackageInfo> pipelineFilter, ChannelOptions options) where TPackageInfo : class
+        public override INodeClient<TPackageInfo> ConfigureNodeClient<TPackageInfo>(IPipelineFilter<TPackageInfo> pipelineFilter, ChannelOptions options) where TPackageInfo : class
         {
-            return new GZipEasyClient<TPackageInfo>(pipelineFilter, options);
+            return new GZipNodeClient<TPackageInfo>(pipelineFilter, options);
         }
     }
 

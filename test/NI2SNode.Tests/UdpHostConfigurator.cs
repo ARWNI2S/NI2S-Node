@@ -38,9 +38,9 @@ namespace NI2S.Node.Tests
                 );
         }
 
-        public IEasyClient<TPackageInfo> ConfigureEasyClient<TPackageInfo>(IPipelineFilter<TPackageInfo> pipelineFilter, ChannelOptions options) where TPackageInfo : class
+        public INodeClient<TPackageInfo> ConfigureNodeClient<TPackageInfo>(IPipelineFilter<TPackageInfo> pipelineFilter, ChannelOptions options) where TPackageInfo : class
         {
-            return new EasyClient<TPackageInfo>(pipelineFilter, options);
+            return new NodeClient<TPackageInfo>(pipelineFilter, options);
         }
 
         public Socket CreateClient()

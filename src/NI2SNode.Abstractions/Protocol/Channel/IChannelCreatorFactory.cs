@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Logging;
+using NI2S.Node.Configuration.Options;
 
 namespace NI2S.Node.Protocol.Channel
 {
