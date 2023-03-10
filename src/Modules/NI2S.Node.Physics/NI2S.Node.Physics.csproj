@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\NI2S.Node.Core\NI2S.Node.Core.csproj" />
+    <ProjectReference Include="..\NI2S.Node.Module.Abstractions\NI2S.Node.Module.Abstractions.csproj" />
+  </ItemGroup>
+
+</Project>
