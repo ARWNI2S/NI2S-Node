@@ -1,9 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+    <PackageId>NI2S.Node.Network</PackageId>
+    <Title>NI2S Node Network</Title>
+    <Description>NI2S Node Network Module</Description>
+    <PackageTags>$(PackageTags) Module Network</PackageTags>
+    <TargetFrameworks>$(DefaultTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <AssemblyName>NI2S.Node.Network</AssemblyName>
+    <RootNamespace>NI2S.Node.Networking</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(SourceRoot)src\NI2S.Node.Runtime\NI2S.Node.Runtime.csproj" />
+    <ProjectReference Include="$(SourceRoot)src\Modules\NI2S.Node.Network.Abstractions\NI2S.Node.Network.Abstractions.csproj" />
+  </ItemGroup>
 </Project>

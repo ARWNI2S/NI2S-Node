@@ -1,9 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
     <PackageId>NI2S.Node.Sdk</PackageId>
     <Description>NI2S Node meta package to bring in the base NI2S Node packages for all project types.</Description>
+    <TargetFrameworks>$(DefaultTargetFrameworks)</TargetFrameworks>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <NoPackageAnalysis>true</NoPackageAnalysis>
     <IncludeSymbols>false</IncludeSymbols>
@@ -11,5 +11,27 @@
     <IsNI2SFrameworkPart>false</IsNI2SFrameworkPart>
     <NoWarn>MSB3277</NoWarn>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="buildTransitive\NI2S.Node.Sdk.targets">
+      <PackagePath>%(Identity)</PackagePath>
+      <Visible>true</Visible>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="build\NI2S.Node.Sdk.targets">
+      <Pack>true</Pack>
+      <PackagePath>%(Identity)</PackagePath>
+      <Visible>true</Visible>
+    </Content>
+    <Content Include="buildMultiTargeting\NI2S.Node.Sdk.targets">
+      <Pack>true</Pack>
+      <PackagePath>%(Identity)</PackagePath>
+      <Visible>true</Visible>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NI2S.Node.Core\NI2S.Node.Core.csproj" />
+  </ItemGroup>
 
 </Project>

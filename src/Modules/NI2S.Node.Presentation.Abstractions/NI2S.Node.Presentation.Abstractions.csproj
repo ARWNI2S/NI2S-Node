@@ -1,13 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <PackageId>NI2S.Node.Presentation.Abstractions</PackageId>
+    <Title>NI2S Node Presentation Abstractions</Title>
+    <Description>NI2S Node Presentation Module Abstractions</Description>
+    <PackageTags>$(PackageTags) Module Artificial-Intelligence Abstractions</PackageTags>
+    <TargetFrameworks>$(DefaultTargetFrameworks)</TargetFrameworks>
+  </PropertyGroup>
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+    <AssemblyName>NI2S.Node.Presentation.Abstractions</AssemblyName>
+    <RootNamespace>NI2S.Node.Presentation</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\NI2S.Node.Core.Abstractions\NI2S.Node.Core.Abstractions.csproj" />
+    <ProjectReference Include="$(SourceRoot)src\NI2S.Node.Runtime\NI2S.Node.Runtime.csproj" />
   </ItemGroup>
-
 </Project>

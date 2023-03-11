@@ -1,0 +1,39 @@
+<Project>
+  <!-- Setup parent directory build props path -->
+  <PropertyGroup>
+    <_ParentDirectoryBuildPropsPath Condition="'$(_DirectoryBuildPropsFile)' != ''">$([System.IO.Path]::Combine('..', '$(_DirectoryBuildPropsFile)'))</_ParentDirectoryBuildPropsPath>
+  </PropertyGroup>
+
+  <!-- Import parent directory build props (if exists) -->
+  <Import Project="$(_ParentDirectoryBuildPropsPath)" Condition="Exists('$(_ParentDirectoryBuildPropsPath)')"/>
+
+  <!-- Set common project properties -->
+  <PropertyGroup>
+    <WarningLevel>3</WarningLevel>
+    <AnalysisLevel>preview</AnalysisLevel>
+    <Features>strict</Features>
+  </PropertyGroup>
+
+  <!-- Set target frameworks -->
+  <PropertyGroup>
+    <CompatibilityTargetFrameworks>netstandard2.0</CompatibilityTargetFrameworks>
+    <DefaultTargetFrameworks>net7.0</DefaultTargetFrameworks>
+  </PropertyGroup>
+
+  <!-- TODO 0 - BEGIN -->
+  <!-- Do not generate debug packages -->
+  <PropertyGroup>
+    <IsPackable>true</IsPackable>
+  </PropertyGroup>
+
+  <!-- Do not generate debug documentation files -->
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+  <!-- TODO 0 - END -->
+
+  <PropertyGroup>
+    <SourceLinkCreate>true</SourceLinkCreate>
+    <SourceLinkOriginUrl>https://github.com/arwni2s/ni2s-node</SourceLinkOriginUrl>
+  </PropertyGroup>
+</Project>

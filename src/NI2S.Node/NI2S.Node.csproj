@@ -1,22 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+    <PackageId>NI2S.Node</PackageId>
+    <Title>NI2S Node Libraries</Title>
+    <Description>Collection of NI2S Node libraries and files needed for the system.</Description>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <NoPackageAnalysis>true</NoPackageAnalysis>
+    <IncludeSymbols>false</IncludeSymbols>
+    <IncludeSource>false</IncludeSource>
+    <TargetFrameworks>$(DefaultTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="C:\Users\manog\source\repos\ARWNI2S\NI2S-Node\\InternalsVisibleTo.Test.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Modules\NI2S.Node.AI\NI2S.Node.AI.csproj" />
-    <ProjectReference Include="..\Modules\NI2S.Node.Network\NI2S.Node.Network.csproj" />
-    <ProjectReference Include="..\Modules\NI2S.Node.Physics\NI2S.Node.Physics.csproj" />
-    <ProjectReference Include="..\Modules\NI2S.Node.Presentation\NI2S.Node.Presentation.csproj" />
-    <ProjectReference Include="..\NI2S.Node.Core\NI2S.Node.Core.csproj" />
     <ProjectReference Include="..\NI2S.Node.Sdk\NI2S.Node.Sdk.csproj" />
   </ItemGroup>
-
 </Project>

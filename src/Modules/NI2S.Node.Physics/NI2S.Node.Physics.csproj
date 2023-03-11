@@ -1,14 +1,19 @@
 <Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <PackageId>NI2S.Node.Physics</PackageId>
+    <Title>NI2S Node Physics</Title>
+    <Description>NI2S Node Physics Module</Description>
+    <PackageTags>$(PackageTags) Module Physics</PackageTags>
+    <TargetFrameworks>$(DefaultTargetFrameworks)</TargetFrameworks>
+  </PropertyGroup>
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+    <AssemblyName>NI2S.Node.Physics</AssemblyName>
+    <RootNamespace>NI2S.Node.Physics</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\NI2S.Node.Core\NI2S.Node.Core.csproj" />
-    <ProjectReference Include="..\NI2S.Node.Module.Abstractions\NI2S.Node.Module.Abstractions.csproj" />
+    <ProjectReference Include="$(SourceRoot)src\NI2S.Node.Runtime\NI2S.Node.Runtime.csproj" />
+    <ProjectReference Include="$(SourceRoot)src\Modules\NI2S.Node.Physics.Abstractions\NI2S.Node.Physics.Abstractions.csproj" />
   </ItemGroup>
-
 </Project>

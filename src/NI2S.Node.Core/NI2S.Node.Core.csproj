@@ -1,13 +1,16 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+    <PackageId>NI2S.Node.Core</PackageId>
+    <Title>NI2S Node Core Library</Title>
+    <Description>Core library of NI2S used every Node.</Description>
+    <TargetFrameworks>$(DefaultTargetFrameworks)</TargetFrameworks>
+    <RootNamespace>NI2S.Node</RootNamespace>
+    <NI2SBuildTimeCodeGen>true</NI2SBuildTimeCodeGen>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NI2S.Node.Core.Abstractions\NI2S.Node.Core.Abstractions.csproj" />
+    <ProjectReference Include="$(SourceRoot)src\NI2S.Node.Core.Abstractions\NI2S.Node.Core.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>

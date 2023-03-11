@@ -1,9 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+    <PackageId>NI2S.Node.AI</PackageId>
+    <Title>NI2S Node AI</Title>
+    <Description>NI2S Node AI Module</Description>
+    <PackageTags>$(PackageTags) Module Artificial-Intelligence</PackageTags>
+    <TargetFrameworks>$(DefaultTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <AssemblyName>NI2S.Node.AI</AssemblyName>
+    <RootNamespace>NI2S.Node.AI</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(SourceRoot)src\NI2S.Node.Runtime\NI2S.Node.Runtime.csproj" />
+    <ProjectReference Include="$(SourceRoot)src\Modules\NI2S.Node.AI.Abstractions\NI2S.Node.AI.Abstractions.csproj" />
+  </ItemGroup>
 </Project>

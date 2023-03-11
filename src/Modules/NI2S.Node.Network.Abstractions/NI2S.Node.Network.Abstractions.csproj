@@ -1,9 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+    <PackageId>NI2S.Node.Network.Abstractions</PackageId>
+    <Title>NI2S Node Network Abstractions</Title>
+    <Description>NI2S Node Network Module Abstractions</Description>
+    <PackageTags>$(PackageTags) Module Artificial-Intelligence Abstractions</PackageTags>
+    <TargetFrameworks>$(DefaultTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <AssemblyName>NI2S.Node.Network.Abstractions</AssemblyName>
+    <RootNamespace>NI2S.Node.Networking</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(SourceRoot)src\NI2S.Node.Runtime\NI2S.Node.Runtime.csproj" />
+  </ItemGroup>
 </Project>
