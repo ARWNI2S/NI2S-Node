@@ -3,7 +3,7 @@
     <PackageId>NI2S.Node.Analyzers</PackageId>
     <Title>NI2S Node Analyzers</Title>
     <Description>C# Analyzers for NI2S Node.</Description>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>$(CompatibilityTargetFrameworks)</TargetFramework>
     <NoPackageAnalysis>true</NoPackageAnalysis>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <DevelopmentDependency>true</DevelopmentDependency>

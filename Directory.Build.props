@@ -93,12 +93,23 @@
     <VersionSuffix Condition=" '$(VersionDateSuffix)'!='' ">$(VersionSuffix)-$(VersionDateSuffix)</VersionSuffix>
   </PropertyGroup>
 
+  <!-- Set target frameworks -->
+  <PropertyGroup>
+    <CompatibilityTargetFrameworks>netstandard2.0</CompatibilityTargetFrameworks>
+    <DefaultTargetFrameworks>net7.0</DefaultTargetFrameworks>
+    <FullCompatibility>$(DefaultTargetFrameworks);$(CompatibilityTargetFrameworks)</FullCompatibility>
+  </PropertyGroup>
+
+  <!-- TODO 1 - BEGIN -->
   <!-- Enable testing -->
   <!--<ItemGroup Condition="$(IsPackable) != False AND '$(OutputType)' != 'Exe' AND '$(IsNI2SFrameworkPart)' != False">-->
   <!--<Compile Include="$(MSBuildThisFileDirectory)\InternalsVisibleTo.Test.cs" />-->
   <!--</ItemGroup>-->
+  <!-- TODO 1 - END -->
 
+  <!-- TODO 2 - BEGIN -->
   <!--<Import Condition=" '$(NI2SBuildTimeCodeGen)' == 'true' " Project="$(MSBuildThisFileDirectory)src/Orleans.CodeGenerator/build/Microsoft.Orleans.CodeGenerator.props" />-->
+  <!-- TODO 2 - END -->
 
   <!-- Set output folders -->
   <PropertyGroup>

@@ -14,12 +14,6 @@
     <Features>strict</Features>
   </PropertyGroup>
 
-  <!-- Set target frameworks -->
-  <PropertyGroup>
-    <CompatibilityTargetFrameworks>netstandard2.0</CompatibilityTargetFrameworks>
-    <DefaultTargetFrameworks>net7.0</DefaultTargetFrameworks>
-  </PropertyGroup>
-
   <!-- TODO 0 - BEGIN -->
   <!-- Do not generate debug packages -->
   <PropertyGroup>
