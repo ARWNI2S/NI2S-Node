@@ -11,8 +11,4 @@
     <AssemblyName>NI2S.Node.AI.Abstractions</AssemblyName>
     <RootNamespace>NI2S.Node.AI</RootNamespace>
   </PropertyGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="$(SourceRoot)src\NI2S.Node.Runtime\NI2S.Node.Runtime.csproj" />
-  </ItemGroup>
 </Project>

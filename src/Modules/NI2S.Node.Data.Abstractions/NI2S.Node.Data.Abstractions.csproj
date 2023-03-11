@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <PackageId>NI2S.Node.Data.Abstractions</PackageId>
+    <Title>NI2S Node Data Abstractions</Title>
+    <Description>NI2S Node Data Module Abstractions</Description>
+    <PackageTags>$(PackageTags) Module Data Abstractions</PackageTags>
+    <TargetFrameworks>$(DefaultTargetFrameworks)</TargetFrameworks>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <AssemblyName>NI2S.Node.Data.Abstractions</AssemblyName>
+    <RootNamespace>NI2S.Node.Data</RootNamespace>
+  </PropertyGroup>
+</Project>

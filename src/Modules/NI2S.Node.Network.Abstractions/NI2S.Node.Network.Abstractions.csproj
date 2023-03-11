@@ -3,7 +3,7 @@
     <PackageId>NI2S.Node.Network.Abstractions</PackageId>
     <Title>NI2S Node Network Abstractions</Title>
     <Description>NI2S Node Network Module Abstractions</Description>
-    <PackageTags>$(PackageTags) Module Artificial-Intelligence Abstractions</PackageTags>
+    <PackageTags>$(PackageTags) Module Network Abstractions</PackageTags>
     <TargetFrameworks>$(DefaultTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
 
@@ -11,8 +11,4 @@
     <AssemblyName>NI2S.Node.Network.Abstractions</AssemblyName>
     <RootNamespace>NI2S.Node.Networking</RootNamespace>
   </PropertyGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="$(SourceRoot)src\NI2S.Node.Runtime\NI2S.Node.Runtime.csproj" />
-  </ItemGroup>
 </Project>

@@ -1,10 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <PackageId>NI2S.Node.Runtime</PackageId>
-    <Title>NI2S Node Runtime</Title>
-    <Description>Core runtime library of NI2S Node that hosts and executes grains within a silo.</Description>
+    <Title>NI2S Node Runtime Module</Title>
+    <Description>Core runtime library of NI2S Node that hosts and executes entities within a node.</Description>
     <TargetFrameworks>$(DefaultTargetFrameworks)</TargetFrameworks>
-    <OrleansBuildTimeCodeGen>true</OrleansBuildTimeCodeGen>
+    <NI2SBuildTimeCodeGen>true</NI2SBuildTimeCodeGen>
   </PropertyGroup>
 
   <ItemGroup>

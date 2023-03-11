@@ -1,9 +1,13 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Worker">
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
   <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>dotnet-NI2SNode-fc3ad58c-caea-4502-a3e2-ca5b6f18ee23</UserSecretsId>
-    <RootNamespace>NI2S.Node</RootNamespace>
-    <TargetFrameworks>$(DefaultTargetFrameworks)</TargetFrameworks>
+    <UserSecretsId>dotnet-NI2SNode-56a28862-fc45-4ea1-9234-5e888fea03bc</UserSecretsId>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Hosting" />
+  </ItemGroup>
 </Project>

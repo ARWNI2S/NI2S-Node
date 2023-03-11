@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <PackageId>NI2S.Node.Data</PackageId>
+    <Title>NI2S Node Data</Title>
+    <Description>NI2S Node Data Module</Description>
+    <PackageTags>$(PackageTags) Module Data</PackageTags>
+    <TargetFrameworks>$(DefaultTargetFrameworks)</TargetFrameworks>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <AssemblyName>NI2S.Node.Data</AssemblyName>
+    <RootNamespace>NI2S.Node.Data</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(SourceRoot)src\NI2S.Node.Runtime\NI2S.Node.Runtime.csproj" />
+    <ProjectReference Include="$(SourceRoot)src\Modules\NI2S.Node.Data.Abstractions\NI2S.Node.Data.Abstractions.csproj" />
+  </ItemGroup>
+</Project>
