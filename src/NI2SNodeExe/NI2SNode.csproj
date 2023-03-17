@@ -1,13 +1,28 @@
-<Project Sdk="Microsoft.NET.Sdk.Worker">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
-    <Nullable>enable</Nullable>
+    <OutputType>Exe</OutputType>
+    <Title>NI2S Node Executable</Title>
+    <Description>Executable file for NI2S Node.</Description>
+    <TargetFrameworks>$(DefaultTargetFrameworks)</TargetFrameworks>
+    <RootNamespace>NI2S.Node</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>dotnet-NI2SNode-56a28862-fc45-4ea1-9234-5e888fea03bc</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Hosting" />
+    <Compile Remove="NI2SNodeApp.cs" />
   </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Mono.Options" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Configuration\Options\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NI2S.Node.Core\NI2S.Node.Core.csproj" />
+  </ItemGroup>
+
 </Project>

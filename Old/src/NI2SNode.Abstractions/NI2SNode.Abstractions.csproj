@@ -18,8 +18,4 @@
     <Folder Include="Plugins\" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Shared\NI2SNode.Protocol\NI2SNode.Protocol.csproj" />
-  </ItemGroup>
-
 </Project>

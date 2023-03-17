@@ -7,7 +7,7 @@ namespace NI2S.Node.Protocol.Compression
     {
 
         // move to extensions
-        public static INodeHostBuilderOld? UseGZip(this INodeHostBuilderOld hostBuilder)
+        public static INodeHostBuilder? UseGZip(this INodeHostBuilder hostBuilder)
         {
             return hostBuilder.UseChannelCreatorFactory<GZipTcpChannelCreatorFactory>();
         }

@@ -1,5 +1,5 @@
-﻿using System.IO.Pipelines;
-using NI2S.Node.Configuration.Options;
+﻿using NI2S.Node.Configuration.Options;
+using System.IO.Pipelines;
 
 namespace NI2S.Node.Protocol.Channel
 {

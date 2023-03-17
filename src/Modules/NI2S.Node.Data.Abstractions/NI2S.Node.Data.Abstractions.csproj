@@ -11,4 +11,9 @@
     <AssemblyName>NI2S.Node.Data.Abstractions</AssemblyName>
     <RootNamespace>NI2S.Node.Data</RootNamespace>
   </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\NI2S.Node.Core.Abstractions\NI2S.Node.Core.Abstractions.csproj" />
+  </ItemGroup>
+
 </Project>

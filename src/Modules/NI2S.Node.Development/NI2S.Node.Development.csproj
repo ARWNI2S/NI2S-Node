@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <PackageId>NI2S.Node.Development</PackageId>
+    <Title>NI2S Node Development</Title>
+    <Description>NI2S Node Development Module</Description>
+    <PackageTags>$(PackageTags) Module Development</PackageTags>
+    <TargetFrameworks>$(DefaultTargetFrameworks)</TargetFrameworks>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <AssemblyName>NI2S.Node.Development</AssemblyName>
+    <RootNamespace>NI2S.Node.Services</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(SourceRoot)src\NI2S.Node.Runtime\NI2S.Node.Runtime.csproj" />
+    <ProjectReference Include="$(SourceRoot)src\Modules\NI2S.Node.Development.Abstractions\NI2S.Node.Development.Abstractions.csproj" />
+  </ItemGroup>
+
+</Project>

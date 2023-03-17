@@ -1,5 +1,5 @@
-﻿using System.Collections.Concurrent;
-using NI2S.Node.Middleware;
+﻿using NI2S.Node.Middleware;
+using System.Collections.Concurrent;
 
 namespace NI2S.Node.Protocol.Session
 {

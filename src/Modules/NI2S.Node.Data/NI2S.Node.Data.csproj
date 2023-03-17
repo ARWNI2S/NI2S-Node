@@ -16,4 +16,8 @@
     <ProjectReference Include="$(SourceRoot)src\NI2S.Node.Runtime\NI2S.Node.Runtime.csproj" />
     <ProjectReference Include="$(SourceRoot)src\Modules\NI2S.Node.Data.Abstractions\NI2S.Node.Data.Abstractions.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Domain\" />
+  </ItemGroup>
 </Project>

@@ -8,6 +8,7 @@
     <IncludeSymbols>false</IncludeSymbols>
     <IncludeSource>false</IncludeSource>
     <TargetFrameworks>$(DefaultTargetFrameworks)</TargetFrameworks>
+    <GenerateDocumentationFile>False</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

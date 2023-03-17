@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <PackageId>NI2S.Node.Development.Abstractions</PackageId>
+    <Title>NI2S Node Development Abstractions</Title>
+    <Description>NI2S Node Development Module Abstractions</Description>
+    <PackageTags>$(PackageTags) Module Development Abstractions</PackageTags>
+    <TargetFrameworks>$(DefaultTargetFrameworks)</TargetFrameworks>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <AssemblyName>NI2S.Node.Development.Abstractions</AssemblyName>
+    <RootNamespace>NI2S.Node.Services</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\NI2S.Node.Core.Abstractions\NI2S.Node.Core.Abstractions.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -10,6 +10,7 @@
     <IncludeSource>false</IncludeSource>
     <IsNI2SFrameworkPart>false</IsNI2SFrameworkPart>
     <NoWarn>MSB3277</NoWarn>
+    <GenerateDocumentationFile>False</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

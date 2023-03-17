@@ -1,6 +1,6 @@
+using NI2S.Node.Configuration.Options;
 using System.Buffers;
 using System.IO.Pipelines;
-using NI2S.Node.Configuration.Options;
 
 namespace NI2S.Node.Protocol.Channel
 {

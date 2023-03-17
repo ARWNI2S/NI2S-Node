@@ -9,7 +9,7 @@ using NI2S.Node.Protocol.Session;
 
 namespace NI2S.Node.Hosting
 {
-    public class NodeHostBuilder<TReceivePackage> : HostBuilderAdapter<NodeHostBuilder<TReceivePackage>>, INodeHostBuilderOld<TReceivePackage>, IHostBuilder
+    public class NodeHostBuilder<TReceivePackage> : HostBuilderAdapter<NodeHostBuilder<TReceivePackage>>, INodeHostBuilder<TReceivePackage>, IHostBuilder
     {
         private Func<HostBuilderContext, IConfiguration, IConfiguration>? _serverOptionsReader;
 
@@ -51,7 +51,7 @@ namespace NI2S.Node.Hosting
             });
         }
 
-        void IMinimalApiHostBuilderOld.ConfigureHostBuilder()
+        void IMinimalApiHostBuilder.ConfigureHostBuilder()
         {
             ConfigureHostBuilder();
         }
@@ -62,13 +62,13 @@ namespace NI2S.Node.Hosting
             return HostBuilder.Build();
         }
 
-        public INodeHostBuilderOld<TReceivePackage> ConfigureSupplementServices(Action<HostBuilderContext, IServiceCollection> configureDelegate)
+        public INodeHostBuilder<TReceivePackage> ConfigureSupplementServices(Action<HostBuilderContext, IServiceCollection> configureDelegate)
         {
             ConfigureSupplementServicesActions.Add(configureDelegate);
             return this;
         }
 
-        INodeHostBuilderOld INodeHostBuilderOld.ConfigureSupplementServices(Action<HostBuilderContext, IServiceCollection> configureDelegate)
+        INodeHostBuilder INodeHostBuilder.ConfigureSupplementServices(Action<HostBuilderContext, IServiceCollection> configureDelegate)
         {
             return ConfigureSupplementServices(configureDelegate);
         }
@@ -143,13 +143,13 @@ namespace NI2S.Node.Hosting
             servicesInHost.AddHostedService(s => s.GetService<THostedService>()!);
         }
 
-        public INodeHostBuilderOld<TReceivePackage> ConfigureServerOptions(Func<HostBuilderContext, IConfiguration, IConfiguration> serverOptionsReader)
+        public INodeHostBuilder<TReceivePackage> ConfigureServerOptions(Func<HostBuilderContext, IConfiguration, IConfiguration> serverOptionsReader)
         {
             _serverOptionsReader = serverOptionsReader;
             return this;
         }
 
-        INodeHostBuilderOld<TReceivePackage> INodeHostBuilderOld<TReceivePackage>.ConfigureServices(Action<HostBuilderContext, IServiceCollection> configureDelegate)
+        INodeHostBuilder<TReceivePackage> INodeHostBuilder<TReceivePackage>.ConfigureServices(Action<HostBuilderContext, IServiceCollection> configureDelegate)
         {
             return ConfigureServices(configureDelegate);
         }
@@ -160,7 +160,7 @@ namespace NI2S.Node.Hosting
             return this;
         }
 
-        public virtual INodeHostBuilderOld<TReceivePackage> UsePipelineFilter<TPipelineFilter>()
+        public virtual INodeHostBuilder<TReceivePackage> UsePipelineFilter<TPipelineFilter>()
             where TPipelineFilter : IPipelineFilter<TReceivePackage>, new()
         {
             return ConfigureServices((ctx, services) =>
@@ -169,7 +169,7 @@ namespace NI2S.Node.Hosting
             });
         }
 
-        public virtual INodeHostBuilderOld<TReceivePackage> UsePipelineFilterFactory<TPipelineFilterFactory>()
+        public virtual INodeHostBuilder<TReceivePackage> UsePipelineFilterFactory<TPipelineFilterFactory>()
             where TPipelineFilterFactory : class, IPipelineFilterFactory<TReceivePackage>
         {
             return ConfigureServices((ctx, services) =>
@@ -178,13 +178,13 @@ namespace NI2S.Node.Hosting
             });
         }
 
-        public virtual INodeHostBuilderOld<TReceivePackage> UseSession<TSession>()
+        public virtual INodeHostBuilder<TReceivePackage> UseSession<TSession>()
             where TSession : ISession
         {
             return UseSessionFactory<GenericSessionFactory<TSession>>();
         }
 
-        public virtual INodeHostBuilderOld<TReceivePackage> UseSessionFactory<TSessionFactory>()
+        public virtual INodeHostBuilder<TReceivePackage> UseSessionFactory<TSessionFactory>()
             where TSessionFactory : class, ISessionFactory
         {
             return ConfigureServices(
@@ -195,7 +195,7 @@ namespace NI2S.Node.Hosting
             );
         }
 
-        public virtual INodeHostBuilderOld<TReceivePackage> UseHostedService<THostedService>()
+        public virtual INodeHostBuilder<TReceivePackage> UseHostedService<THostedService>()
             where THostedService : class, IHostedService
         {
             if (!typeof(NodeService<TReceivePackage>).IsAssignableFrom(typeof(THostedService)))
@@ -210,7 +210,7 @@ namespace NI2S.Node.Hosting
         }
 
 
-        public virtual INodeHostBuilderOld<TReceivePackage> UsePackageDecoder<TPackageDecoder>()
+        public virtual INodeHostBuilder<TReceivePackage> UsePackageDecoder<TPackageDecoder>()
             where TPackageDecoder : class, IPackageDecoder<TReceivePackage>
         {
             return ConfigureServices(
@@ -221,7 +221,7 @@ namespace NI2S.Node.Hosting
             );
         }
 
-        public virtual INodeHostBuilderOld<TReceivePackage> UseMiddleware<TMiddleware>()
+        public virtual INodeHostBuilder<TReceivePackage> UseMiddleware<TMiddleware>()
             where TMiddleware : class, IMiddleware
         {
             return ConfigureServices((ctx, services) =>
@@ -230,7 +230,7 @@ namespace NI2S.Node.Hosting
             });
         }
 
-        public INodeHostBuilderOld<TReceivePackage> UsePackageHandlingScheduler<TPackageHandlingScheduler>()
+        public INodeHostBuilder<TReceivePackage> UsePackageHandlingScheduler<TPackageHandlingScheduler>()
             where TPackageHandlingScheduler : class, IPackageHandlingScheduler<TReceivePackage>
         {
             return ConfigureServices(
@@ -241,7 +241,7 @@ namespace NI2S.Node.Hosting
             );
         }
 
-        public INodeHostBuilderOld<TReceivePackage> UsePackageHandlingContextAccessor()
+        public INodeHostBuilder<TReceivePackage> UsePackageHandlingContextAccessor()
         {
             return ConfigureServices(
                  (hostCtx, services) =>
@@ -254,13 +254,13 @@ namespace NI2S.Node.Hosting
 
     public static class NodeHostBuilder
     {
-        public static INodeHostBuilderOld<TReceivePackage> Create<TReceivePackage>(string[]? args = null)
+        public static INodeHostBuilder<TReceivePackage> Create<TReceivePackage>(string[]? args = null)
              where TReceivePackage : class
         {
             return new NodeHostBuilder<TReceivePackage>(args);
         }
 
-        public static INodeHostBuilderOld<TReceivePackage> Create<TReceivePackage, TPipelineFilter>(string[]? args = null)
+        public static INodeHostBuilder<TReceivePackage> Create<TReceivePackage, TPipelineFilter>(string[]? args = null)
             where TPipelineFilter : IPipelineFilter<TReceivePackage>, new()
         {
             return new NodeHostBuilder<TReceivePackage>(args)

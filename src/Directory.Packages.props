@@ -10,10 +10,19 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- System packages -->
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Logging" Version="7.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Logging.Console" Version="7.0.0" />
+    <PackageVersion Include="System.Configuration.ConfigurationManager" Version="7.0.0" />
+    <PackageVersion Include="System.IO.Pipelines" Version="$(FrameworkCommonVersion)" />
     <!-- Microsoft packages -->
+    <PackageVersion Include="Microsoft.AspNetCore.Server.Kestrel" Version="2.2.0" />
     <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="$(MicrosoftCodeAnalysisVersion)" />
     <PackageVersion Include="Microsoft.Extensions.Hosting" Version="$(FrameworkNextVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.Hosting.Abstractions" Version="$(FrameworkCommonVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="$(FrameworkCommonVersion)" />
     <!-- 3rd party packages -->
+    <PackageVersion Include="Mono.Options" Version="6.12.0.148" />
     <!-- Test related packages -->
     <!-- Tooling related packages -->
     <PackageVersion Include="Microsoft.SourceLink.AzureRepos.Git" Version="$(SourceLinkVersion)" />

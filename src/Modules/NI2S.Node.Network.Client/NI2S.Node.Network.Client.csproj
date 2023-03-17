@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <PackageId>NI2S.Node.Network.Client</PackageId>
+    <Title>NI2S Node Network Client</Title>
+    <Description>NI2S Node Network Client Module</Description>
+    <PackageTags>$(PackageTags) Module Network Client</PackageTags>
+    <TargetFrameworks>$(DefaultTargetFrameworks)</TargetFrameworks>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <AssemblyName>NI2S.Node.Network.Client</AssemblyName>
+    <RootNamespace>NI2S.Node.Client</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(SourceRoot)src\Modules\NI2S.Node.Network.Abstractions\NI2S.Node.Network.Abstractions.csproj" />
+  </ItemGroup>
+
+</Project>

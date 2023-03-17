@@ -137,7 +137,7 @@ namespace NI2S.Node.Hosting
             return (THostedService)_serviceProvider.GetService<IHostedService>()!;
         }
 
-        public override INodeHostBuilderOld<TReceivePackage> UseHostedService<THostedService>()
+        public override INodeHostBuilder<TReceivePackage> UseHostedService<THostedService>()
         {
             RegisterHostedService<THostedService>();
             return this;

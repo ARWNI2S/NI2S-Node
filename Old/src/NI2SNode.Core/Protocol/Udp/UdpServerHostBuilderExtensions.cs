@@ -12,14 +12,14 @@ namespace NI2S.Node
 {
     public static class UdpServerHostBuilderExtensions
     {
-        public static INodeHostBuilderOld<TReceivePackage> UseUdp<TReceivePackage>(this INodeHostBuilderOld<TReceivePackage> hostBuilder)
+        public static INodeHostBuilder<TReceivePackage> UseUdp<TReceivePackage>(this INodeHostBuilder<TReceivePackage> hostBuilder)
         {
-            return (INodeHostBuilderOld<TReceivePackage>)((INodeHostBuilderOld)hostBuilder).UseUdp();
+            return (INodeHostBuilder<TReceivePackage>)((INodeHostBuilder)hostBuilder).UseUdp();
         }
 
-        public static INodeHostBuilderOld UseUdp(this INodeHostBuilderOld hostBuilder)
+        public static INodeHostBuilder UseUdp(this INodeHostBuilder hostBuilder)
         {
-            return ((INodeHostBuilderOld)hostBuilder.ConfigureServices((context, services) =>
+            return ((INodeHostBuilder)hostBuilder.ConfigureServices((context, services) =>
             {
                 services.AddSingleton<IChannelCreatorFactory, UdpChannelCreatorFactory>();
             }))

@@ -11,9 +11,9 @@ namespace NI2S.Node.Hosting
 {
     public static class HostBuilderExtensions
     {
-        public static INodeHostBuilderOld<TReceivePackage> AsNodeHostBuilder<TReceivePackage>(this IHostBuilder hostBuilder)
+        public static INodeHostBuilder<TReceivePackage> AsNodeHostBuilder<TReceivePackage>(this IHostBuilder hostBuilder)
         {
-            if (hostBuilder is INodeHostBuilderOld<TReceivePackage> ssHostBuilder)
+            if (hostBuilder is INodeHostBuilder<TReceivePackage> ssHostBuilder)
             {
                 return ssHostBuilder;
             }
@@ -21,10 +21,10 @@ namespace NI2S.Node.Hosting
             return new NodeHostBuilder<TReceivePackage>(hostBuilder);
         }
 
-        public static INodeHostBuilderOld<TReceivePackage> AsNodeHostBuilder<TReceivePackage, TPipelineFilter>(this IHostBuilder hostBuilder)
+        public static INodeHostBuilder<TReceivePackage> AsNodeHostBuilder<TReceivePackage, TPipelineFilter>(this IHostBuilder hostBuilder)
             where TPipelineFilter : IPipelineFilter<TReceivePackage>, new()
         {
-            if (hostBuilder is INodeHostBuilderOld<TReceivePackage> ssHostBuilder)
+            if (hostBuilder is INodeHostBuilder<TReceivePackage> ssHostBuilder)
             {
                 return ssHostBuilder;
             }
@@ -33,7 +33,7 @@ namespace NI2S.Node.Hosting
                 .UsePipelineFilter<TPipelineFilter>();
         }
 
-        public static INodeHostBuilderOld<TReceivePackage> UsePipelineFilterFactory<TReceivePackage>(this INodeHostBuilderOld<TReceivePackage> hostBuilder, Func<object, IPipelineFilter<TReceivePackage>> filterFactory)
+        public static INodeHostBuilder<TReceivePackage> UsePipelineFilterFactory<TReceivePackage>(this INodeHostBuilder<TReceivePackage> hostBuilder, Func<object, IPipelineFilter<TReceivePackage>> filterFactory)
         {
             hostBuilder.ConfigureServices(
                 (hostCtx, services) =>
@@ -45,12 +45,12 @@ namespace NI2S.Node.Hosting
             return hostBuilder.UsePipelineFilterFactory<DelegatePipelineFilterFactory<TReceivePackage>>();
         }
 
-        public static INodeHostBuilderOld<TReceivePackage> UseClearIdleSession<TReceivePackage>(this INodeHostBuilderOld<TReceivePackage> hostBuilder)
+        public static INodeHostBuilder<TReceivePackage> UseClearIdleSession<TReceivePackage>(this INodeHostBuilder<TReceivePackage> hostBuilder)
         {
             return hostBuilder.UseMiddleware<ClearIdleSessionMiddleware>();
         }
 
-        public static INodeHostBuilderOld<TReceivePackage> UseSessionHandler<TReceivePackage>(this INodeHostBuilderOld<TReceivePackage> hostBuilder, Func<ISession, ValueTask>? onConnected = null, Func<ISession, CloseEventArgs, ValueTask>? onClosed = null)
+        public static INodeHostBuilder<TReceivePackage> UseSessionHandler<TReceivePackage>(this INodeHostBuilder<TReceivePackage> hostBuilder, Func<ISession, ValueTask>? onConnected = null, Func<ISession, CloseEventArgs, ValueTask>? onClosed = null)
         {
             return hostBuilder.ConfigureServices(
                 (hostCtx, services) =>
@@ -64,7 +64,7 @@ namespace NI2S.Node.Hosting
             );
         }
 
-        public static INodeHostBuilderOld<TReceivePackage> ConfigureNode<TReceivePackage>(this INodeHostBuilderOld<TReceivePackage> hostBuilder, Action<ServerOptions> configurator)
+        public static INodeHostBuilder<TReceivePackage> ConfigureNode<TReceivePackage>(this INodeHostBuilder<TReceivePackage> hostBuilder, Action<ServerOptions> configurator)
         {
             return hostBuilder.ConfigureServices(
                 (hostCtx, services) =>
@@ -74,7 +74,7 @@ namespace NI2S.Node.Hosting
             );
         }
 
-        public static INodeHostBuilderOld<TReceivePackage> ConfigureSocketOptions<TReceivePackage>(this INodeHostBuilderOld<TReceivePackage> hostBuilder, Action<Socket> socketOptionsSetter)
+        public static INodeHostBuilder<TReceivePackage> ConfigureSocketOptions<TReceivePackage>(this INodeHostBuilder<TReceivePackage> hostBuilder, Action<Socket> socketOptionsSetter)
             where TReceivePackage : class
         {
             return hostBuilder.ConfigureServices(
@@ -96,7 +96,7 @@ namespace NI2S.Node.Hosting
             return host.Services.GetService<IEnumerable<IHostedService>>()?.OfType<INode>().FirstOrDefault();
         }
 
-        public static INodeHostBuilderOld<TReceivePackage> ConfigureErrorHandler<TReceivePackage>(this INodeHostBuilderOld<TReceivePackage> hostBuilder, Func<ISession, PackageHandlingException<TReceivePackage>, ValueTask<bool>> errorHandler)
+        public static INodeHostBuilder<TReceivePackage> ConfigureErrorHandler<TReceivePackage>(this INodeHostBuilder<TReceivePackage> hostBuilder, Func<ISession, PackageHandlingException<TReceivePackage>, ValueTask<bool>> errorHandler)
         {
             return hostBuilder.ConfigureServices(
                 (hostCtx, services) =>
@@ -107,7 +107,7 @@ namespace NI2S.Node.Hosting
         }
 
         // move to extensions
-        public static INodeHostBuilderOld<TReceivePackage> UsePackageHandler<TReceivePackage>(this INodeHostBuilderOld<TReceivePackage> hostBuilder, Func<ISession, TReceivePackage, ValueTask> packageHandler, Func<ISession, PackageHandlingException<TReceivePackage>, ValueTask<bool>>? errorHandler = null)
+        public static INodeHostBuilder<TReceivePackage> UsePackageHandler<TReceivePackage>(this INodeHostBuilder<TReceivePackage> hostBuilder, Func<ISession, TReceivePackage, ValueTask> packageHandler, Func<ISession, PackageHandlingException<TReceivePackage>, ValueTask<bool>>? errorHandler = null)
         {
             return hostBuilder.ConfigureServices(
                 (hostCtx, services) =>
@@ -126,7 +126,7 @@ namespace NI2S.Node.Hosting
             return new MultipleServerHostBuilder(hostBuilder);
         }
 
-        public static IMinimalApiHostBuilderOld AsMinimalApiHostBuilder(this INodeHostBuilderOld hostBuilder)
+        public static IMinimalApiHostBuilder AsMinimalApiHostBuilder(this INodeHostBuilder hostBuilder)
         {
             return hostBuilder;
         }

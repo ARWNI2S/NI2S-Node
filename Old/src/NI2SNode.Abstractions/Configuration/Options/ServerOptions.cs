@@ -1,4 +1,3 @@
-using NI2S.Node.Protocol;
 using System.Text;
 
 namespace NI2S.Node.Configuration.Options

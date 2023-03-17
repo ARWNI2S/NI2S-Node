@@ -1,5 +1,5 @@
-﻿using System.Reflection;
-using NI2S.Node.Command;
+﻿using NI2S.Node.Command;
+using System.Reflection;
 
 namespace NI2S.Node.Configuration.Options
 {

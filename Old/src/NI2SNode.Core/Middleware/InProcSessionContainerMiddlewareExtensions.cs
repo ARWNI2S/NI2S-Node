@@ -6,9 +6,9 @@ namespace NI2S.Node
 {
     public static class InProcSessionContainerMiddlewareExtensions
     {
-        public static INodeHostBuilderOld UseInProcSessionContainer(this INodeHostBuilderOld builder)
+        public static INodeHostBuilder UseInProcSessionContainer(this INodeHostBuilder builder)
         {
-            return (INodeHostBuilderOld)builder
+            return (INodeHostBuilder)builder
                 .UseMiddleware(s => s.GetRequiredService<InProcSessionContainerMiddleware>())!
                 .ConfigureServices((ctx, services) =>
                 {

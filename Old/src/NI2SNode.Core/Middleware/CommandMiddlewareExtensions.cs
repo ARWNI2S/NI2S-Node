@@ -19,27 +19,27 @@ namespace NI2S.Node
                 : keyInterface.GetGenericArguments().FirstOrDefault()!;
         }
 
-        private static INodeHostBuilderOld ConfigureCommand(this INodeHostBuilderOld builder)
+        private static INodeHostBuilder ConfigureCommand(this INodeHostBuilder builder)
         {
-            return (INodeHostBuilderOld)builder.ConfigureServices((hostCxt, services) =>
+            return (INodeHostBuilder)builder.ConfigureServices((hostCxt, services) =>
                 {
                     services.Configure<CommandOptions>(hostCxt.Configuration?.GetSection("serverOptions")?.GetSection("commands")!);
                 });
         }
 
-        public static INodeHostBuilderOld<TPackageInfo> UseCommand<TPackageInfo>(this INodeHostBuilderOld<TPackageInfo> builder)
+        public static INodeHostBuilder<TPackageInfo> UseCommand<TPackageInfo>(this INodeHostBuilder<TPackageInfo> builder)
             where TPackageInfo : class
         {
             var keyType = GetKeyType<TPackageInfo>();
 
-            var useCommandMethod = typeof(CommandMiddlewareExtensions).GetMethod("UseCommand", new Type[] { typeof(INodeHostBuilderOld) });
+            var useCommandMethod = typeof(CommandMiddlewareExtensions).GetMethod("UseCommand", new Type[] { typeof(INodeHostBuilder) });
             useCommandMethod = useCommandMethod?.MakeGenericMethod(keyType, typeof(TPackageInfo));
 
-            var hostBuilder = useCommandMethod?.Invoke(null, new object[] { builder }) as INodeHostBuilderOld;
-            return (INodeHostBuilderOld<TPackageInfo>)hostBuilder!.ConfigureCommand();
+            var hostBuilder = useCommandMethod?.Invoke(null, new object[] { builder }) as INodeHostBuilder;
+            return (INodeHostBuilder<TPackageInfo>)hostBuilder!.ConfigureCommand();
         }
 
-        public static INodeHostBuilderOld<TPackageInfo> UseCommand<TPackageInfo>(this INodeHostBuilderOld<TPackageInfo> builder, Action<CommandOptions> configurator)
+        public static INodeHostBuilder<TPackageInfo> UseCommand<TPackageInfo>(this INodeHostBuilder<TPackageInfo> builder, Action<CommandOptions> configurator)
             where TPackageInfo : class
         {
             return builder.UseCommand()
@@ -49,7 +49,7 @@ namespace NI2S.Node
                });
         }
 
-        public static INodeHostBuilderOld<TPackageInfo> UseCommand<TKey, TPackageInfo>(this INodeHostBuilderOld<TPackageInfo> builder, Action<CommandOptions> configurator, IEqualityComparer<TKey> comparer)
+        public static INodeHostBuilder<TPackageInfo> UseCommand<TKey, TPackageInfo>(this INodeHostBuilder<TPackageInfo> builder, Action<CommandOptions> configurator, IEqualityComparer<TKey> comparer)
             where TPackageInfo : class, IKeyedPackageInfo<TKey>
         {
             return builder.UseCommand(configurator)
@@ -59,15 +59,15 @@ namespace NI2S.Node
                 });
         }
 
-        public static INodeHostBuilderOld<TPackageInfo> UseCommand<TKey, TPackageInfo>(this INodeHostBuilderOld builder)
+        public static INodeHostBuilder<TPackageInfo> UseCommand<TKey, TPackageInfo>(this INodeHostBuilder builder)
             where TPackageInfo : class, IKeyedPackageInfo<TKey>
             where TKey : notnull
         {
-            return (INodeHostBuilderOld<TPackageInfo>)builder.UseMiddleware<CommandMiddleware<TKey, TPackageInfo>>()!
+            return (INodeHostBuilder<TPackageInfo>)builder.UseMiddleware<CommandMiddleware<TKey, TPackageInfo>>()!
                 .ConfigureCommand();
         }
 
-        public static INodeHostBuilderOld<TPackageInfo> UseCommand<TKey, TPackageInfo>(this INodeHostBuilderOld builder, Action<CommandOptions> configurator)
+        public static INodeHostBuilder<TPackageInfo> UseCommand<TKey, TPackageInfo>(this INodeHostBuilder builder, Action<CommandOptions> configurator)
             where TPackageInfo : class, IKeyedPackageInfo<TKey>
             where TKey : notnull
         {
@@ -78,7 +78,7 @@ namespace NI2S.Node
                });
         }
 
-        public static INodeHostBuilderOld<TPackageInfo> UseCommand<TKey, TPackageInfo>(this INodeHostBuilderOld builder, Action<CommandOptions> configurator, IEqualityComparer<TKey> comparer)
+        public static INodeHostBuilder<TPackageInfo> UseCommand<TKey, TPackageInfo>(this INodeHostBuilder builder, Action<CommandOptions> configurator, IEqualityComparer<TKey> comparer)
             where TPackageInfo : class, IKeyedPackageInfo<TKey>
             where TKey : notnull
         {
