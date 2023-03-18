@@ -1,10 +1,11 @@
 ﻿namespace NI2S.Node.Configuration.Options
 {
-    public class NI2SNodeHostOptions
+    /// <summary>
+    /// Represents a node host options subset of the command line arguments.
+    /// </summary>
+    public class NodeHostOptions : ICommandLineOptions
     {
-        /// <summary>
-        /// The command line arguments.
-        /// </summary>
+        /// <inheritdoc/>
         public string[]? Args { get; init; }
 
         /// <summary>
@@ -25,6 +26,6 @@
         /// <summary>
         /// The web root path.
         /// </summary>
-        public string? WebRootPath { get; init; }
+        public string? EngineRootPath { get; init; }
     }
 }
