@@ -4,8 +4,6 @@ dotnet: 3.1.100
 sudo: required
 script:
     - dotnet build
-    - cd samples
-    - dotnet build
     - cd ../test/Test
     - dotnet test
 global:

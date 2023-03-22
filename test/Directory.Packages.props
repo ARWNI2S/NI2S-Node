@@ -1,0 +1,18 @@
+<Project>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    <!-- Shared Package Versions -->
+    <MicrosoftCodeAnalysisVersion>4.5.0</MicrosoftCodeAnalysisVersion>
+    <FrameworkCommonVersion>7.0.0</FrameworkCommonVersion>
+    <FrameworkNextVersion>7.0.1</FrameworkNextVersion>
+    <FrameworkLatestVersion>7.0.3</FrameworkLatestVersion>
+    <SourceLinkVersion>1.1.1</SourceLinkVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- System packages -->
+    <!-- Microsoft packages -->
+    <!-- 3rd party packages -->
+    <!-- Test related packages -->
+    <!-- Tooling related packages -->
+  </ItemGroup>
+</Project>

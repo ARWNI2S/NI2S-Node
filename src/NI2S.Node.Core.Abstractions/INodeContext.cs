@@ -11,7 +11,7 @@ namespace NI2S.Node
 
         object DataContext { get; set; }
 
-        int SessionCount { get; }
+        //int SessionCount { get; }
 
         IServiceProvider ServiceProvider { get; }
 

@@ -32,7 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NI2S.Node.Core\NI2S.Node.Core.csproj" />
+    <ProjectReference Include="$(SourceRoot)src\NI2S.Node.Core\NI2S.Node.Core.csproj" />
   </ItemGroup>
 
 </Project>

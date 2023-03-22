@@ -12,6 +12,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NI2S.Node.Sdk\NI2S.Node.Sdk.csproj" />
+    <ProjectReference Include="$(SourceRoot)src\Packs\NI2S.Node.Sdk\NI2S.Node.Sdk.csproj" />
   </ItemGroup>
 </Project>

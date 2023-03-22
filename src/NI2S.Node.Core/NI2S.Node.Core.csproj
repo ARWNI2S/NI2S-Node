@@ -10,6 +10,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Infrastructure\AppDomainTypeFinder.cs" />
+    <Compile Remove="Infrastructure\HostPlatform.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
     <PackageReference Include="Microsoft.Extensions.Hosting" />
     <PackageReference Include="Microsoft.Extensions.Logging" />
