@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
-using NI2S.Node.Networking;
 using NI2S.Node.Configuration.Options;
+using NI2S.Node.Networking;
 using System.Security.Authentication;
 
 namespace NI2S.Node.Client

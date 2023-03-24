@@ -12,7 +12,7 @@ namespace NI2S.Node.Networking
             _size = size;
         }
 
-        public override TPackageInfo? Filter(ref SequenceReader<byte> reader)
+        public override TPackageInfo Filter(ref SequenceReader<byte> reader)
         {
             if (reader.Length < _size)
                 return null;

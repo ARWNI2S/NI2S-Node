@@ -193,8 +193,8 @@ namespace NI2S.Node.Networking.Channel
 
                         if (!CloseReason.HasValue)
                         {
-                            CloseReason = cts.IsCancellationRequested
-                                ? Channel.CloseReason.LocalClosing : Channel.CloseReason.SocketError;
+                            CloseReason = cts.IsCancellationRequested ?
+                                 Channel.CloseReason.LocalClosing : Channel.CloseReason.SocketError;
                         }
                     }
                     else if (!CloseReason.HasValue)
@@ -243,7 +243,7 @@ namespace NI2S.Node.Networking.Channel
             await Task.WhenAll(reading, writing).ConfigureAwait(false);
         }
 
-        protected async ValueTask<bool> ProcessOutputRead(PipeReader reader, CancellationTokenSource? cts)
+        protected async ValueTask<bool> ProcessOutputRead(PipeReader reader, CancellationTokenSource cts)
         {
             var result = await reader.ReadAsync(CancellationToken.None).ConfigureAwait(false);
 
@@ -527,7 +527,7 @@ namespace NI2S.Node.Networking.Channel
             _isDetaching = false;
         }
 
-        protected void OnError(string message, Exception? e = null)
+        protected void OnError(string message, Exception e = null)
         {
             if (e != null)
                 Logger?.LogError(e, message);

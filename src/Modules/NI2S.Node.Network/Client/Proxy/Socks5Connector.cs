@@ -18,9 +18,9 @@ namespace NI2S.Node.Client.Proxy
     /// </summary>
     public class Socks5Connector : ProxyConnectorBase
     {
-        private readonly string? _username;
+        private readonly string _username;
 
-        private readonly string? _password;
+        private readonly string _password;
 
         readonly static byte[] _authenHandshakeRequest = new byte[] { 0x05, 0x02, 0x00, 0x02 };
 
@@ -37,7 +37,7 @@ namespace NI2S.Node.Client.Proxy
             _password = password;
         }
 
-        protected override async ValueTask<ConnectState?> ConnectProxyAsync(EndPoint remoteEndPoint, ConnectState? state, CancellationToken cancellationToken)
+        protected override async ValueTask<ConnectState> ConnectProxyAsync(EndPoint remoteEndPoint, ConnectState state, CancellationToken cancellationToken)
         {
             ArgumentNullException.ThrowIfNull(state, nameof(remoteEndPoint));
 
@@ -51,7 +51,7 @@ namespace NI2S.Node.Client.Proxy
 
             var response = await packStream.ReceiveAsync();
 
-            if (!HandleResponse(response, Socket5ResponseType.Handshake, out string? errorMessage))
+            if (!HandleResponse(response, Socket5ResponseType.Handshake, out string errorMessage))
             {
                 await channel.CloseAsync(CloseReason.ProtocolError);
 
@@ -104,7 +104,7 @@ namespace NI2S.Node.Client.Proxy
             return state;
         }
 
-        private static bool HandleResponse(Socks5Pack response, Socket5ResponseType responseType, out string? errorMessage)
+        private static bool HandleResponse(Socks5Pack response, Socket5ResponseType responseType, out string errorMessage)
         {
             errorMessage = null;
 
@@ -246,9 +246,9 @@ namespace NI2S.Node.Client.Proxy
 
         public class Socks5Address
         {
-            public IPAddress? IPAddress { get; set; }
+            public IPAddress IPAddress { get; set; }
 
-            public string? DomainName { get; set; }
+            public string DomainName { get; set; }
         }
 
         public class Socks5Pack
@@ -259,7 +259,7 @@ namespace NI2S.Node.Client.Proxy
 
             public byte Reserve { get; set; }
 
-            public Socks5Address? DestAddr { get; set; }
+            public Socks5Address DestAddr { get; set; }
 
             public short DestPort { get; set; }
         }

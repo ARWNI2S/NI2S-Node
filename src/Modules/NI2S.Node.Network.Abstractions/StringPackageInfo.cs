@@ -6,6 +6,6 @@ namespace NI2S.Node.Networking
 
         public string Body { get; set; } = string.Empty;
 
-        public string[]? Parameters { get; set; }
+        public string[] Parameters { get; set; }
     }
 }

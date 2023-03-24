@@ -7,7 +7,7 @@ namespace NI2S.Node.Networking
     {
         private bool disposedValue;
 
-        private readonly byte[]? _pooledBuffer;
+        private readonly byte[] _pooledBuffer;
 
         private readonly bool _pooled = false;
 

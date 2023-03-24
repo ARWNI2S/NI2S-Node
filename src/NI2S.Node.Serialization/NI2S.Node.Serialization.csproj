@@ -1,0 +1,82 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <PackageId>NI2S.Node.Core</PackageId>
+    <Title>NI2S Node Core Library</Title>
+    <Description>Core library of NI2S used every Node.</Description>
+    <TargetFrameworks>$(DefaultTargetFrameworks);$(CompatibilityTargetFrameworks)</TargetFrameworks>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <RootNamespace>NI2S.Node</RootNamespace>
+    <NI2SBuildTimeCodeGen>true</NI2SBuildTimeCodeGen>
+    <IsNI2SFrameworkPart>false</IsNI2SFrameworkPart>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Activators\**" />
+    <Compile Remove="Buffers\**" />
+    <Compile Remove="Cloning\**" />
+    <Compile Remove="Codecs\**" />
+    <Compile Remove="Configuration\**" />
+    <Compile Remove="GeneratedCodeHelpers\**" />
+    <Compile Remove="Hosting\**" />
+    <Compile Remove="Invocation\**" />
+    <Compile Remove="ISerializableSerializer\**" />
+    <Compile Remove="Serializers\**" />
+    <Compile Remove="Session\**" />
+    <Compile Remove="TypeSystem\**" />
+    <Compile Remove="Utilities\**" />
+    <Compile Remove="WireProtocol\**" />
+    <EmbeddedResource Remove="Activators\**" />
+    <EmbeddedResource Remove="Buffers\**" />
+    <EmbeddedResource Remove="Cloning\**" />
+    <EmbeddedResource Remove="Codecs\**" />
+    <EmbeddedResource Remove="Configuration\**" />
+    <EmbeddedResource Remove="GeneratedCodeHelpers\**" />
+    <EmbeddedResource Remove="Hosting\**" />
+    <EmbeddedResource Remove="Invocation\**" />
+    <EmbeddedResource Remove="ISerializableSerializer\**" />
+    <EmbeddedResource Remove="Serializers\**" />
+    <EmbeddedResource Remove="Session\**" />
+    <EmbeddedResource Remove="TypeSystem\**" />
+    <EmbeddedResource Remove="Utilities\**" />
+    <EmbeddedResource Remove="WireProtocol\**" />
+    <None Remove="Activators\**" />
+    <None Remove="Buffers\**" />
+    <None Remove="Cloning\**" />
+    <None Remove="Codecs\**" />
+    <None Remove="Configuration\**" />
+    <None Remove="GeneratedCodeHelpers\**" />
+    <None Remove="Hosting\**" />
+    <None Remove="Invocation\**" />
+    <None Remove="ISerializableSerializer\**" />
+    <None Remove="Serializers\**" />
+    <None Remove="Session\**" />
+    <None Remove="TypeSystem\**" />
+    <None Remove="Utilities\**" />
+    <None Remove="WireProtocol\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Exceptions.cs" />
+    <Compile Remove="Serializer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
+    <PackageReference Include="Microsoft.Extensions.DependencyModel" />
+    <PackageReference Include="Microsoft.Extensions.Options" />
+    <PackageReference Include="Microsoft.Extensions.ObjectPool" />
+    <PackageReference Include="System.IO.Hashing" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.1'">
+    <PackageReference Include="System.Collections.Immutable" />
+    <PackageReference Include="Microsoft.DotNet.PlatformAbstractions" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(SourceRoot)src\NI2S.Node.Serialization.Abstractions\NI2S.Node.Serialization.Abstractions.csproj" />
+  </ItemGroup>
+
+
+</Project>

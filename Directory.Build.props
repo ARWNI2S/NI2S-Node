@@ -3,10 +3,17 @@
   <PropertyGroup>
     <!-- Set the repository root into a variable -->
     <SourceRoot>$(MSBuildThisFileDirectory)</SourceRoot>
+    <!-- Set the ni2s msbuild imports folder into a variable -->
+    <NI2SMSBuildPath>$(SourceRoot)/build</NI2SMSBuildPath>
     <!-- Set the tools folder into a variable -->
     <ToolsPath>$(SourceRoot)/Programs</ToolsPath>
     <!-- Set the templates folder into a variable -->
     <TemplatesPath>$(SourceRoot)/Templates</TemplatesPath>
+    <!-- Set the project folders into variables -->
+    <SourceProjectsPath>$(SourceRoot)/src</SourceProjectsPath>
+    <ModuleProjectsPath>$(SourceProjectsPath)/Modules</ModuleProjectsPath>
+    <PackageProjectsPath>$(SourceProjectsPath)/Packs</PackageProjectsPath>
+
   </PropertyGroup>
 
   <!-- Set common properties regarding assembly information -->

@@ -12,7 +12,7 @@ namespace NI2S.Node.Networking.Channel
         {
         }
 
-        public SslStreamPipeChannel(SslStream stream, EndPoint remoteEndPoint, EndPoint? localEndPoint, IPipelineFilter<TPackageInfo> pipelineFilter, ChannelOptions options)
+        public SslStreamPipeChannel(SslStream stream, EndPoint remoteEndPoint, EndPoint localEndPoint, IPipelineFilter<TPackageInfo> pipelineFilter, ChannelOptions options)
             : base(stream, remoteEndPoint, localEndPoint, pipelineFilter, options)
         {
             if (stream.IsAuthenticated || stream.IsMutuallyAuthenticated)
@@ -21,6 +21,6 @@ namespace NI2S.Node.Networking.Channel
             }
         }
 
-        public X509Certificate? RemoteCertificate { get; }
+        public X509Certificate RemoteCertificate { get; }
     }
 }

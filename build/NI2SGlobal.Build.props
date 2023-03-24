@@ -1,0 +1,19 @@
+<Project>
+  <!-- TODO 1 - BEGIN -->
+  <!-- Enable testing -->
+  <!--<ItemGroup Condition="$(IsPackable) != False AND '$(OutputType)' != 'Exe' AND '$(IsNI2SFrameworkPart)' != False">-->
+  <!--<Compile Include="$(MSBuildThisFileDirectory)\InternalsVisibleTo.Test.cs" />-->
+  <!--</ItemGroup>-->
+  <!-- TODO 1 - END -->
+
+  <!-- TODO 2 - BEGIN -->
+  <!--<Import Condition=" '$(NI2SBuildTimeCodeGen)' == 'true' " Project="$(MSBuildThisFileDirectory)src/Orleans.CodeGenerator/build/Microsoft.Orleans.CodeGenerator.props" />-->
+  <!-- TODO 2 - END -->
+
+  <!-- Set output folders -->
+  <PropertyGroup>
+    <!-- for publishers -->
+    <PublishOutputPath Condition="'$(PublishOutputPath)'==''">$(SourceRoot)/Binaries/$(Configuration)</PublishOutputPath>
+  </PropertyGroup>
+
+</Project>

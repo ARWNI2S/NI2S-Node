@@ -32,9 +32,9 @@ namespace NI2S.Node.Configuration.Options
 
         public ILogger Logger { get; set; } = default!;
 
-        public Pipe? In { get; set; }
+        public Pipe In { get; set; }
 
-        public Pipe? Out { get; set; }
+        public Pipe Out { get; set; }
 
         public Dictionary<string, string> Values { get; set; } = new();
     }

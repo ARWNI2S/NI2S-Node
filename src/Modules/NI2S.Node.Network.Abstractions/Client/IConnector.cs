@@ -1,13 +1,13 @@
 ﻿using System.Net;
-using System.Threading.Tasks;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace NI2S.Node.Client
 {
     public interface IConnector
     {
-        ValueTask<ConnectState?> ConnectAsync(EndPoint remoteEndPoint, ConnectState? state = null, CancellationToken cancellationToken = default);
+        ValueTask<ConnectState> ConnectAsync(EndPoint remoteEndPoint, ConnectState state = null, CancellationToken cancellationToken = default);
 
-        IConnector? NextConnector { get; }
+        IConnector NextConnector { get; }
     }
 }

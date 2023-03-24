@@ -11,7 +11,7 @@ namespace NI2S.Node.Networking.Channel
         {
             public T[] Array { get; private set; }
 
-            public BufferSegment? Next { get; set; }
+            public BufferSegment Next { get; set; }
 
             public int Offset { get; set; }
 
@@ -34,8 +34,8 @@ namespace NI2S.Node.Networking.Channel
         }
 
         private const int _segmentSize = 5;
-        private BufferSegment? _first;
-        private BufferSegment? _current;
+        private BufferSegment _first;
+        private BufferSegment _current;
         private readonly object _syncRoot = new();
         private static readonly ArrayPool<T> _pool = ArrayPool<T>.Shared;
         private ManualResetValueTaskSourceCore<T> _taskSourceCore;
@@ -173,7 +173,7 @@ namespace NI2S.Node.Networking.Channel
             return _taskSourceCore.GetStatus(token);
         }
 
-        void IValueTaskSource<T>.OnCompleted(Action<object?> continuation, object? state, short token, ValueTaskSourceOnCompletedFlags flags)
+        void IValueTaskSource<T>.OnCompleted(Action<object> continuation, object state, short token, ValueTaskSourceOnCompletedFlags flags)
         {
             _taskSourceCore.OnCompleted(continuation, state, token, flags);
         }
@@ -281,7 +281,7 @@ namespace NI2S.Node.Networking.Channel
             return _taskSourceCore.GetStatus(token);
         }
 
-        void IValueTaskSource.OnCompleted(Action<object?> continuation, object? state, short token, ValueTaskSourceOnCompletedFlags flags)
+        void IValueTaskSource.OnCompleted(Action<object> continuation, object state, short token, ValueTaskSourceOnCompletedFlags flags)
         {
             _taskSourceCore.OnCompleted(continuation, state, token, flags);
         }

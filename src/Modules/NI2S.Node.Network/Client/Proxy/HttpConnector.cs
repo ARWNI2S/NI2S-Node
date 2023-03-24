@@ -15,8 +15,8 @@ namespace NI2S.Node.Client.Proxy
         private const string _requestTemplate = "CONNECT {0}:{1} HTTP/1.1\r\nHost: {0}:{1}\r\nProxy-Connection: Keep-Alive\r\n";
         private const string _responsePrefix = "HTTP/1.";
         private const char _space = ' ';
-        private readonly string? _username;
-        private readonly string? _password;
+        private readonly string _username;
+        private readonly string _password;
 
         public HttpConnector(EndPoint proxyEndPoint)
             : base(proxyEndPoint)
@@ -31,7 +31,7 @@ namespace NI2S.Node.Client.Proxy
             _password = password;
         }
 
-        protected override async ValueTask<ConnectState?> ConnectProxyAsync(EndPoint remoteEndPoint, ConnectState? state, CancellationToken cancellationToken)
+        protected override async ValueTask<ConnectState> ConnectProxyAsync(EndPoint remoteEndPoint, ConnectState state, CancellationToken cancellationToken)
         {
             var encoding = Encoding.ASCII;
             var request = string.Empty;

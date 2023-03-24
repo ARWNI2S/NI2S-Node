@@ -41,12 +41,12 @@
   <!--<ItemGroup Condition="'$(TemporaryMark)' != 'true'">-->
     <!-- Enable code generator -->
   <!--<ProjectReference
-      Include="$(SourceRoot)src/Orleans.CodeGenerator/Orleans.CodeGenerator.csproj"
+      Include="$(SourceProjectsPath)/Orleans.CodeGenerator/Orleans.CodeGenerator.csproj"
       ReferenceOutputAssembly="false"
       OutputItemType="Analyzer"
       Condition=" '$(OrleansBuildTimeCodeGen)' == 'True' "/>-->
     <!--<ProjectReference
-      Include="$(SourceRoot)src/Orleans.Analyzers/Orleans.Analyzers.csproj"
+      Include="$(SourceProjectsPath)/NI2S.Node.Analyzers/NI2S.Node.Analyzers.csproj"
       ReferenceOutputAssembly="false"
       AssetTargetFallback="netstandard2.0"
       UndefineProperties="TargetFramework"

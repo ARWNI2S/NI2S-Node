@@ -10,8 +10,8 @@ namespace NI2S.Node.Networking.Compression
     {
         public Stream BaseStream { get; }
 
-        readonly GZipStream? readStream = null;
-        readonly GZipStream? writeStream = null;
+        readonly GZipStream readStream = null;
+        readonly GZipStream writeStream = null;
         public GZipReadWriteStream(Stream stream, bool leaveOpen)
         {
             readStream = new GZipStream(stream, CompressionMode.Decompress, leaveOpen);
@@ -61,11 +61,11 @@ namespace NI2S.Node.Networking.Compression
         {
             return readStream!.Read(buffer);
         }
-        public override IAsyncResult BeginRead(byte[] buffer, int offset, int count, AsyncCallback? callback, object? state)
+        public override IAsyncResult BeginRead(byte[] buffer, int offset, int count, AsyncCallback callback, object state)
         {
             return readStream!.BeginRead(buffer, offset, count, callback, state);
         }
-        public override IAsyncResult BeginWrite(byte[] buffer, int offset, int count, AsyncCallback? callback, object? state)
+        public override IAsyncResult BeginWrite(byte[] buffer, int offset, int count, AsyncCallback callback, object state)
         {
             return writeStream!.BeginWrite(buffer, offset, count, callback, state);
         }

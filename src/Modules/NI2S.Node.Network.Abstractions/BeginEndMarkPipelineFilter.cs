@@ -18,7 +18,7 @@ namespace NI2S.Node.Networking
             _endMark = endMark;
         }
 
-        public override TPackageInfo? Filter(ref SequenceReader<byte> reader)
+        public override TPackageInfo Filter(ref SequenceReader<byte> reader)
         {
             if (!_foundBeginMark)
             {

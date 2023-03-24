@@ -5,6 +5,6 @@ namespace NI2S.Node.Client.Options
 {
     public class SecurityOptions : SslClientAuthenticationOptions
     {
-        public NetworkCredential? Credential { get; set; }
+        public NetworkCredential Credential { get; set; }
     }
 }

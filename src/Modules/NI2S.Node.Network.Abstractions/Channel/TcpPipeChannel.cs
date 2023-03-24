@@ -11,9 +11,9 @@ namespace NI2S.Node.Networking.Channel
     public class TcpPipeChannel<TPackageInfo> : PipeChannel<TPackageInfo>
     {
 
-        private Socket? _socket;
+        private Socket _socket;
 
-        private List<ArraySegment<byte>>? _segmentsForSend;
+        private List<ArraySegment<byte>> _segmentsForSend;
 
         public TcpPipeChannel(Socket socket, IPipelineFilter<TPackageInfo> pipelineFilter, ChannelOptions options)
             : base(pipelineFilter, options)
@@ -34,7 +34,7 @@ namespace NI2S.Node.Networking.Channel
             return await ReceiveAsync(_socket, memory, SocketFlags.None, cancellationToken);
         }
 
-        private async ValueTask<int> ReceiveAsync(Socket? socket, Memory<byte> memory, SocketFlags socketFlags, CancellationToken cancellationToken)
+        private async ValueTask<int> ReceiveAsync(Socket socket, Memory<byte> memory, SocketFlags socketFlags, CancellationToken cancellationToken)
         {
             ArgumentNullException.ThrowIfNull(socket, nameof(socket));
 

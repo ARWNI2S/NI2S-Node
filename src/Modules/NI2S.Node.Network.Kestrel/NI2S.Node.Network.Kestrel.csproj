@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="$(SourceRoot)src\NI2S.Node.Core.Abstractions\NI2S.Node.Core.Abstractions.csproj" />
+    <ProjectReference Include="$(SourceProjectsPath)\NI2S.Node.Core.Abstractions\NI2S.Node.Core.Abstractions.csproj" />
   </ItemGroup>
 
 

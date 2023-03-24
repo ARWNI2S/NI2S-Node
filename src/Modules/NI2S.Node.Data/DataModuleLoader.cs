@@ -1,7 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using NI2S.Node.Hosting;
-using NI2S.Node.Hosting.Modules;
 
 namespace NI2S.Node.Data
 {

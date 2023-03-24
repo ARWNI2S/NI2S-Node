@@ -13,8 +13,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="$(SourceRoot)src\NI2S.Node.Core\NI2S.Node.Core.csproj" />
-    <ProjectReference Include="$(SourceRoot)src\Modules\NI2S.Node.Data.Abstractions\NI2S.Node.Data.Abstractions.csproj" />
+    <Compile Remove="DataModuleLoader.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(ModuleProjectsPath)\NI2S.Node.Data.Abstractions\NI2S.Node.Data.Abstractions.csproj" />
+    <ProjectReference Include="$(PackageProjectsPath)\NI2S.Node.Sdk\NI2S.Node.Sdk.csproj" />
   </ItemGroup>
 
   <ItemGroup>

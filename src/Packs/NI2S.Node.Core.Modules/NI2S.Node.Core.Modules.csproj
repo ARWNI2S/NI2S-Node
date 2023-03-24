@@ -11,7 +11,7 @@
     <GenerateDocumentationFile>False</GenerateDocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="$(SourceRoot)src\Modules\NI2S.Node.Data\NI2S.Node.Data.csproj" />
-    <ProjectReference Include="$(SourceRoot)src\Modules\NI2S.Node.Network\NI2S.Node.Network.csproj" />
+    <ProjectReference Include="$(ModuleProjectsPath)\NI2S.Node.Data\NI2S.Node.Data.csproj" />
+    <ProjectReference Include="$(ModuleProjectsPath)\NI2S.Node.Network\NI2S.Node.Network.csproj" />
   </ItemGroup>
 </Project>

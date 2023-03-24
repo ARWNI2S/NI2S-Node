@@ -4,7 +4,7 @@ namespace NI2S.Node.Networking
 {
     public abstract class PipelineFilterFactoryBase<TPackageInfo> : IPipelineFilterFactory<TPackageInfo>
     {
-        protected IPackageDecoder<TPackageInfo>? PackageDecoder { get; private set; }
+        protected IPackageDecoder<TPackageInfo> PackageDecoder { get; private set; }
 
         public PipelineFilterFactoryBase(IServiceProvider serviceProvider)
         {

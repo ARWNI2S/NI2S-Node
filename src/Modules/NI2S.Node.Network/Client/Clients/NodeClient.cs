@@ -1,18 +1,18 @@
 ﻿using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
+using NI2S.Node.Client.Options;
+using NI2S.Node.Configuration.Options;
 using NI2S.Node.Networking;
 using NI2S.Node.Networking.Channel;
-using NI2S.Node.Configuration.Options;
 using NI2S.Node.Resources;
+using System;
 using System.Buffers;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Security.Authentication;
-using NI2S.Node.Client.Options;
 using System.Threading;
-using System;
 using System.Threading.Tasks;
-using System.Collections.Generic;
 
 namespace NI2S.Node.Client
 {
@@ -63,7 +63,7 @@ namespace NI2S.Node.Client
 
         IAsyncEnumerator<TReceivePackage> _packageStream = default!;
 
-        public event PackageHandler<TReceivePackage>? PackageHandler;
+        public event PackageHandler<TReceivePackage> PackageHandler;
 
         public IPEndPoint LocalEndPoint { get; set; } = default!;
 
@@ -147,7 +147,7 @@ namespace NI2S.Node.Client
             return true;
         }
 
-        public void AsUdp(IPEndPoint remoteEndPoint, ArrayPool<byte>? bufferPool = null, int bufferSize = 4096)
+        public void AsUdp(IPEndPoint remoteEndPoint, ArrayPool<byte> bufferPool = null, int bufferSize = 4096)
         {
             var localEndPoint = LocalEndPoint;
 
@@ -165,7 +165,7 @@ namespace NI2S.Node.Client
             UdpReceive(socket, channel, bufferPool, bufferSize);
         }
 
-        private async void UdpReceive(Socket socket, UdpPipeChannel<TReceivePackage> channel, ArrayPool<byte>? bufferPool, int bufferSize)
+        private async void UdpReceive(Socket socket, UdpPipeChannel<TReceivePackage> channel, ArrayPool<byte> bufferPool, int bufferSize)
         {
             bufferPool ??= ArrayPool<byte>.Shared;
 
@@ -264,7 +264,7 @@ namespace NI2S.Node.Client
             }
         }
 
-        private void OnChannelClosed(object? sender, EventArgs e)
+        private void OnChannelClosed(object sender, EventArgs e)
         {
             Channel.Closed -= OnChannelClosed;
             OnClosed(this, e);
@@ -283,7 +283,7 @@ namespace NI2S.Node.Client
             }
         }
 
-        protected virtual void OnError(Exception? exception, string message, params object[] args)
+        protected virtual void OnError(Exception exception, string message, params object[] args)
         {
             Logger?.LogError(exception, message, args);
         }
@@ -313,7 +313,7 @@ namespace NI2S.Node.Client
             await Channel.SendAsync(packageEncoder, package);
         }
 
-        public event EventHandler? Closed;
+        public event EventHandler Closed;
 
         public virtual async ValueTask CloseAsync()
         {

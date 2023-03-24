@@ -13,7 +13,7 @@ namespace NI2S.Node.Networking
             _terminator = terminator;
         }
 
-        public override TPackageInfo? Filter(ref SequenceReader<byte> reader)
+        public override TPackageInfo Filter(ref SequenceReader<byte> reader)
         {
             var terminator = _terminator;
             var terminatorSpan = terminator.Span;

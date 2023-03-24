@@ -18,7 +18,7 @@ namespace NI2S.Node.Client
         {
         }
 
-        protected override ValueTask<ConnectState?> ConnectAsync(EndPoint remoteEndPoint, ConnectState? state, CancellationToken cancellationToken)
+        protected override ValueTask<ConnectState> ConnectAsync(EndPoint remoteEndPoint, ConnectState state, CancellationToken cancellationToken)
         {
             var stream = state?.Stream;
 
@@ -38,11 +38,11 @@ namespace NI2S.Node.Client
             {
                 var gzipStream = new GZipReadWriteStream(stream, true);
                 state!.Stream = gzipStream;
-                return new ValueTask<ConnectState?>(state);
+                return new ValueTask<ConnectState>(state);
             }
             catch (Exception e)
             {
-                return new ValueTask<ConnectState?>(new ConnectState
+                return new ValueTask<ConnectState>(new ConnectState
                 {
                     Result = false,
                     Exception = e

@@ -10,8 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Infrastructure\AppDomainTypeFinder.cs" />
-    <Compile Remove="Infrastructure\HostPlatform.cs" />
+    <Compile Remove="GlobalSuppressions.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="$(SourceRoot)src\NI2S.Node.Core.Abstractions\NI2S.Node.Core.Abstractions.csproj" />
+    <ProjectReference Include="$(SourceProjectsPath)\NI2S.Node.Core.Abstractions\NI2S.Node.Core.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>

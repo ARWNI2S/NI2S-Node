@@ -5,15 +5,15 @@ namespace NI2S.Node.Networking
     public abstract class PackagePartsPipelineFilter<TPackageInfo> : IPipelineFilter<TPackageInfo>
         where TPackageInfo : class
     {
-        private IPackagePartReader<TPackageInfo>? _currentPartReader;
+        private IPackagePartReader<TPackageInfo> _currentPartReader;
 
-        protected TPackageInfo? CurrentPackage { get; private set; }
+        protected TPackageInfo CurrentPackage { get; private set; }
 
         protected abstract TPackageInfo CreatePackage();
 
         protected abstract IPackagePartReader<TPackageInfo> GetFirstPartReader();
 
-        public virtual TPackageInfo? Filter(ref SequenceReader<byte> reader)
+        public virtual TPackageInfo Filter(ref SequenceReader<byte> reader)
         {
             var package = CurrentPackage;
             var currentPartReader = _currentPartReader;
@@ -57,10 +57,10 @@ namespace NI2S.Node.Networking
             _currentPartReader = null;
         }
 
-        public object? Context { get; set; }
+        public object Context { get; set; }
 
-        public IPackageDecoder<TPackageInfo>? Decoder { get; set; }
+        public IPackageDecoder<TPackageInfo> Decoder { get; set; }
 
-        public IPipelineFilter<TPackageInfo>? NextFilter { get; protected set; }
+        public IPipelineFilter<TPackageInfo> NextFilter { get; protected set; }
     }
 }

@@ -1,0 +1,49 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <PackageId>NI2S.Node.Analyzers</PackageId>
+    <Title>NI2S Node Analyzers</Title>
+    <Description>C# Analyzers for NI2S Node.</Description>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <NoPackageAnalysis>true</NoPackageAnalysis>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <DevelopmentDependency>true</DevelopmentDependency>
+    <IsNI2SFrameworkPart>false</IsNI2SFrameworkPart>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="AbstractPropertiesCannotBeSerializedAnalyzer.cs" />
+    <Compile Remove="AlwaysInterleaveDiagnosticAnalyzer.cs" />
+    <Compile Remove="AtMostOneOrleansConstructorAnalyzer.cs" />
+    <Compile Remove="Constants.cs" />
+    <Compile Remove="GenerateGenerateSerializerAttributeAnalyzer.cs" />
+    <Compile Remove="GenerateSerializationAttributesAnalyzer.cs" />
+    <Compile Remove="GenerateSerializationAttributesCodeFix.cs" />
+    <Compile Remove="GrainInterfaceMethodReturnTypeDiagnosticAnalyzer.cs" />
+    <Compile Remove="GrainInterfacePropertyDiagnosticAnalyzer.cs" />
+    <Compile Remove="NoRefParamsDiagnosticAnalyzer.cs" />
+    <Compile Remove="Resources.Designer.cs" />
+    <Compile Remove="SerializationAttributesHelper.cs" />
+    <Compile Remove="SyntaxHelpers.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="Resources.resx" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" PrivateAssets="all" />
+    <PackageReference Update="NETStandard.Library" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="AnalyzerReleases.Shipped.md" />
+    <None Remove="AnalyzerReleases.Unshipped.md" />
+    <None Remove="bin\Debug\netstandard2.0\\NI2S.Node.Analyzers.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+  </ItemGroup>
+
+</Project>

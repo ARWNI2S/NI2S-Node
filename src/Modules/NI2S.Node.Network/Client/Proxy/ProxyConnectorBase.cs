@@ -14,14 +14,14 @@ namespace NI2S.Node.Client.Proxy
             _proxyEndPoint = proxyEndPoint;
         }
 
-        protected abstract ValueTask<ConnectState?> ConnectProxyAsync(EndPoint remoteEndPoint, ConnectState? state, CancellationToken cancellationToken);
+        protected abstract ValueTask<ConnectState> ConnectProxyAsync(EndPoint remoteEndPoint, ConnectState state, CancellationToken cancellationToken);
 
-        protected override async ValueTask<ConnectState?> ConnectAsync(EndPoint remoteEndPoint, ConnectState? state, CancellationToken cancellationToken)
+        protected override async ValueTask<ConnectState> ConnectAsync(EndPoint remoteEndPoint, ConnectState state, CancellationToken cancellationToken)
         {
             var socketConnector = new SocketConnector() as IConnector;
             var proxyEndPoint = _proxyEndPoint;
 
-            ConnectState? result;
+            ConnectState result;
 
             try
             {

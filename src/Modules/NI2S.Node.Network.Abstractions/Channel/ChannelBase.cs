@@ -23,7 +23,7 @@ namespace NI2S.Node.Networking.Channel
 
         public EndPoint RemoteEndPoint { get; protected set; } = default!;
 
-        public EndPoint? LocalEndPoint { get; protected set; }
+        public EndPoint LocalEndPoint { get; protected set; }
 
         public CloseReason? CloseReason { get; protected set; }
 
@@ -46,7 +46,7 @@ namespace NI2S.Node.Networking.Channel
             closed.Invoke(this, new CloseEventArgs(closeReason));
         }
 
-        public event EventHandler<CloseEventArgs>? Closed;
+        public event EventHandler<CloseEventArgs> Closed;
 
         public abstract ValueTask CloseAsync(CloseReason closeReason);
 

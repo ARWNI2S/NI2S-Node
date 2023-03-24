@@ -12,7 +12,7 @@ namespace NI2S.Node.Networking.Channel
 {
     public class StreamPipeChannel<TPackageInfo> : PipeChannel<TPackageInfo>
     {
-        private Stream? _stream;
+        private Stream _stream;
 
         public StreamPipeChannel(Stream stream, EndPoint remoteEndPoint, IPipelineFilter<TPackageInfo> pipelineFilter, ChannelOptions options)
             : this(stream, remoteEndPoint, null, pipelineFilter, options)
@@ -20,7 +20,7 @@ namespace NI2S.Node.Networking.Channel
 
         }
 
-        public StreamPipeChannel(Stream stream, EndPoint remoteEndPoint, EndPoint? localEndPoint, IPipelineFilter<TPackageInfo> pipelineFilter, ChannelOptions options)
+        public StreamPipeChannel(Stream stream, EndPoint remoteEndPoint, EndPoint localEndPoint, IPipelineFilter<TPackageInfo> pipelineFilter, ChannelOptions options)
             : base(pipelineFilter, options)
         {
             _stream = stream;

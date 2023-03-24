@@ -24,7 +24,7 @@ namespace NI2S.Node.Client
             Options = options;
         }
 
-        protected override async ValueTask<ConnectState?> ConnectAsync(EndPoint remoteEndPoint, ConnectState? state, CancellationToken cancellationToken)
+        protected override async ValueTask<ConnectState> ConnectAsync(EndPoint remoteEndPoint, ConnectState state, CancellationToken cancellationToken)
         {
             ArgumentNullException.ThrowIfNull(state, nameof(state));
 

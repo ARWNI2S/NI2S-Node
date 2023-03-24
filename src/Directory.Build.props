@@ -12,20 +12,24 @@
     <WarningLevel>3</WarningLevel>
     <AnalysisLevel>preview</AnalysisLevel>
     <Features>strict</Features>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
   </PropertyGroup>
 
-  <!-- TODO 0 - BEGIN -->
   <!-- Do not generate debug packages -->
-  <PropertyGroup>
-    <IsPackable>true</IsPackable>
-  </PropertyGroup>
-
-  <!-- Do not generate debug documentation files -->
-  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
-  </PropertyGroup>
-  <!-- TODO 0 - END -->
+  <Choose>
+    <When Condition=" '$(Configuration)' == 'Debug'">
+      <PropertyGroup>
+        <IsPackable>false</IsPackable>
+        <GenerateDocumentationFile>false</GenerateDocumentationFile>
+      </PropertyGroup>
+    </When>
+    <Otherwise>
+      <PropertyGroup>
+        <IsPackable>true</IsPackable>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+      </PropertyGroup>
+    </Otherwise>
+  </Choose>
 
   <PropertyGroup>
     <SourceLinkCreate>true</SourceLinkCreate>

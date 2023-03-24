@@ -1,9 +1,9 @@
-﻿using NI2S.Node.Networking;
+﻿using NI2S.Node.Configuration.Options;
+using NI2S.Node.Networking;
 using NI2S.Node.Networking.Channel;
-using NI2S.Node.Configuration.Options;
-using System.Net.Sockets;
-using System.IO;
 using System;
+using System.IO;
+using System.Net.Sockets;
 
 namespace NI2S.Node.Client
 {
@@ -23,11 +23,11 @@ namespace NI2S.Node.Client
 
         public bool Cancelled { get; private set; }
 
-        public Exception? Exception { get; set; }
+        public Exception Exception { get; set; }
 
-        public Socket? Socket { get; set; }
+        public Socket Socket { get; set; }
 
-        public Stream? Stream { get; set; }
+        public Stream Stream { get; set; }
 
         public static readonly ConnectState CancelledState = new(false);
 

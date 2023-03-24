@@ -18,13 +18,13 @@ namespace NI2S.Node.Networking.Channel
 
         ValueTask CloseAsync(CloseReason closeReason);
 
-        event EventHandler<CloseEventArgs>? Closed;
+        event EventHandler<CloseEventArgs> Closed;
 
         bool IsClosed { get; }
 
-        EndPoint? RemoteEndPoint { get; }
+        EndPoint RemoteEndPoint { get; }
 
-        EndPoint? LocalEndPoint { get; }
+        EndPoint LocalEndPoint { get; }
 
         DateTimeOffset LastActiveTime { get; }
 

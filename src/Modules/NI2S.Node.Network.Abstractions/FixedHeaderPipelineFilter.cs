@@ -15,7 +15,7 @@ namespace NI2S.Node.Networking
             _headerSize = headerSize;
         }
 
-        public override TPackageInfo? Filter(ref SequenceReader<byte> reader)
+        public override TPackageInfo Filter(ref SequenceReader<byte> reader)
         {
             if (!_foundHeader)
             {

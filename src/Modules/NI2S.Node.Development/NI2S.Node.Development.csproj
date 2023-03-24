@@ -14,8 +14,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="$(SourceRoot)src\NI2S.Node.Core\NI2S.Node.Core.csproj" />
-    <ProjectReference Include="$(SourceRoot)src\Modules\NI2S.Node.Development.Abstractions\NI2S.Node.Development.Abstractions.csproj" />
+    <ProjectReference Include="$(SourceProjectsPath)\NI2S.Node.Core\NI2S.Node.Core.csproj" />
+    <ProjectReference Include="$(ModuleProjectsPath)\NI2S.Node.Development.Abstractions\NI2S.Node.Development.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>
