@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright (c) Alternate Reality Worlds. All rights reserved.
+  
+  Licensed under the MIT license.
+-->
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup>
+    <UsingNI2SSdk>true</UsingNI2SSdk>
+    
+    <!-- Don't automatically reference assembly packages since NoTargets don't need reference assemblies -->
+    <AutomaticallyUseReferenceAssemblyPackages Condition="'$(AutomaticallyUseReferenceAssemblyPackages)' == ''">false</AutomaticallyUseReferenceAssemblyPackages>
+  </PropertyGroup>
+
+  <Import Project="$(CustomBeforeNI2SProps)" Condition=" '$(CustomBeforeNI2SProps)' != '' And Exists('$(CustomBeforeNI2SProps)') " />
+
+  <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
+
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildToolsVersion)' != 'Current'">$(MSBuildAllProjects);$(MsBuildThisFileFullPath)</MSBuildAllProjects>
+
+    <!--
+      A list of project names that are considered traversal projects.  Add to this list if you name your projects something other than "dirs.proj"
+    -->
+    <NI2SProjectNames Condition=" '$(NI2SProjectNames)' == '' ">dirs.proj</NI2SProjectNames>
+
+    <IsNI2S Condition=" '$(IsNI2S)' == '' And $(NI2SProjectNames.IndexOf($(MSBuildProjectFile), System.StringComparison.OrdinalIgnoreCase)) >= 0 ">true</IsNI2S>
+
+    <!--
+      NuGet should always restore NI2S projects with "PackageReference" style restore.  Setting this property will cause the right thing to happen even if there aren't any PackageReference items in the project.
+    -->
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+    
+    <!-- Targeting packs shouldn't be referenced as traversal projects don't compile. -->
+    <DisableImplicitFrameworkReferences Condition="'$(DisableImplicitFrameworkReferences)' == ''">true</DisableImplicitFrameworkReferences>
+  </PropertyGroup>
+
+  <ItemDefinitionGroup Condition=" '$(NI2SDoNotReferenceOutputAssemblies)' != 'false' ">
+    <ProjectReference>
+      <!--
+        Setting ReferenceOutputAssembly skips adding the outputs of the referenced project to an item
+      -->
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <!--
+        Setting SkipGetTargetFrameworkProperties skips target framework cross-project validation in NuGet
+      -->
+      <SkipGetTargetFrameworkProperties>true</SkipGetTargetFrameworkProperties>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  
+  <!-- For CPS/VS support. Importing in .props allows any subsequent targets to redefine this if needed -->
+  <Target Name="CompileDesignTime" />
+
+  <Import Project="$(CustomAfterNI2SProps)" Condition=" '$(CustomAfterNI2SProps)' != '' And Exists('$(CustomAfterNI2SProps)') " />
+</Project>
