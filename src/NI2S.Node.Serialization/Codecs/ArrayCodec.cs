@@ -1,12 +1,12 @@
 using System;
 using System.Buffers;
 using System.Runtime.InteropServices;
-using Orleans.Serialization.Buffers;
-using Orleans.Serialization.Cloning;
-using Orleans.Serialization.GeneratedCodeHelpers;
-using Orleans.Serialization.WireProtocol;
+using NI2S.Node.Serialization.Buffers;
+using NI2S.Node.Serialization.Cloning;
+using NI2S.Node.Serialization.GeneratedCodeHelpers;
+using NI2S.Node.Serialization.WireProtocol;
 
-namespace Orleans.Serialization.Codecs
+namespace NI2S.Node.Serialization.Codecs
 {
     /// <summary>
     /// Serializer for arrays of rank 1.
@@ -24,7 +24,7 @@ namespace Orleans.Serialization.Codecs
         /// <param name="fieldCodec">The field codec.</param>
         public ArrayCodec(IFieldCodec<T> fieldCodec)
         {
-            _fieldCodec = OrleansGeneratedCodeHelper.UnwrapService(this, fieldCodec);
+            _fieldCodec = NI2SGeneratedCodeHelper.UnwrapService(this, fieldCodec);
         }
 
         /// <inheritdoc/>
@@ -140,7 +140,7 @@ namespace Orleans.Serialization.Codecs
         /// <param name="elementCopier">The element copier.</param>
         public ArrayCopier(IDeepCopier<T> elementCopier)
         {
-            _elementCopier = OrleansGeneratedCodeHelper.UnwrapService(this, elementCopier);
+            _elementCopier = NI2SGeneratedCodeHelper.UnwrapService(this, elementCopier);
         }
 
         /// <inheritdoc/>
@@ -179,7 +179,7 @@ namespace Orleans.Serialization.Codecs
         /// <param name="fieldCodec">The field codec.</param>
         public ReadOnlyMemoryCodec(IFieldCodec<T> fieldCodec)
         {
-            _fieldCodec = OrleansGeneratedCodeHelper.UnwrapService(this, fieldCodec);
+            _fieldCodec = NI2SGeneratedCodeHelper.UnwrapService(this, fieldCodec);
         }
 
         /// <inheritdoc/>
@@ -290,7 +290,7 @@ namespace Orleans.Serialization.Codecs
         /// <param name="elementCopier">The element copier.</param>
         public ReadOnlyMemoryCopier(IDeepCopier<T> elementCopier)
         {
-            _elementCopier = OrleansGeneratedCodeHelper.UnwrapService(this, elementCopier);
+            _elementCopier = NI2SGeneratedCodeHelper.UnwrapService(this, elementCopier);
         }
 
         /// <inheritdoc/>
@@ -341,7 +341,7 @@ namespace Orleans.Serialization.Codecs
         /// <param name="fieldCodec">The field codec.</param>
         public MemoryCodec(IFieldCodec<T> fieldCodec)
         {
-            _fieldCodec = OrleansGeneratedCodeHelper.UnwrapService(this, fieldCodec);
+            _fieldCodec = NI2SGeneratedCodeHelper.UnwrapService(this, fieldCodec);
         }
 
         /// <inheritdoc/>
@@ -452,7 +452,7 @@ namespace Orleans.Serialization.Codecs
         /// <param name="elementCopier">The element copier.</param>
         public MemoryCopier(IDeepCopier<T> elementCopier)
         {
-            _elementCopier = OrleansGeneratedCodeHelper.UnwrapService(this, elementCopier);
+            _elementCopier = NI2SGeneratedCodeHelper.UnwrapService(this, elementCopier);
         }
 
         /// <inheritdoc/>
@@ -503,7 +503,7 @@ namespace Orleans.Serialization.Codecs
         /// <param name="fieldCodec">The field codec.</param>
         public ArraySegmentCodec(IFieldCodec<T> fieldCodec)
         {
-            _fieldCodec = OrleansGeneratedCodeHelper.UnwrapService(this, fieldCodec);
+            _fieldCodec = NI2SGeneratedCodeHelper.UnwrapService(this, fieldCodec);
         }
 
         /// <inheritdoc/>
@@ -617,7 +617,7 @@ namespace Orleans.Serialization.Codecs
         /// <param name="elementCopier">The element copier.</param>
         public ArraySegmentCopier(IDeepCopier<T> elementCopier)
         {
-            _elementCopier = OrleansGeneratedCodeHelper.UnwrapService(this, elementCopier);
+            _elementCopier = NI2SGeneratedCodeHelper.UnwrapService(this, elementCopier);
         }
 
         /// <inheritdoc/>

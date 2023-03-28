@@ -1,5 +1,5 @@
 using Microsoft.Extensions.Options;
-using NI2S.Node.Configuration.Options;
+using NI2S.Node.Configuration;
 using System.Text;
 
 namespace NI2S.Node.Protocol

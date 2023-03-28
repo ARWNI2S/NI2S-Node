@@ -1,0 +1,138 @@
+﻿using System;
+using System.IO;
+using System.Reflection.PortableExecutable;
+using System.Threading.Tasks;
+using System.Threading;
+using System.Collections;
+
+namespace NI2S.Node.Dummy
+{
+    /// <summary>
+    /// Represents the incoming side of an individual HTTP request.
+    /// </summary>
+    public abstract class DummyRequest
+    {
+        /// <summary>
+        /// Gets the <see cref="DummyContext"/> for this request.
+        /// </summary>
+        public abstract DummyContext DummyContext { get; }
+
+        /// <summary>
+        /// Gets or sets the HTTP method.
+        /// </summary>
+        /// <returns>The HTTP method.</returns>
+        public abstract string Method { get; set; }
+
+        /// <summary>
+        /// Gets or sets the HTTP request scheme.
+        /// </summary>
+        /// <returns>The HTTP request scheme.</returns>
+        public abstract string Scheme { get; set; }
+
+        /// <summary>
+        /// Returns true if the RequestScheme is https.
+        /// </summary>
+        /// <returns>true if this request is using https; otherwise, false.</returns>
+        public abstract bool IsHttps { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Host header. May include the port.
+        /// </summary>
+        /// <return>The Host header.</return>
+        public abstract string Host { get; set; }
+
+        /// <summary>
+        /// Gets or sets the base path for the request. The path base should not end with a trailing slash.
+        /// </summary>
+        /// <returns>The base path for the request.</returns>
+        public abstract string PathBase { get; set; }
+
+        /// <summary>
+        /// Gets or sets the portion of the request path that identifies the requested resource.
+        /// <para>
+        /// The value may be <see cref="PathString.Empty"/> if <see cref="PathBase"/> contains the full path,
+        /// or for 'OPTIONS *' requests.
+        /// The path is fully decoded by the server except for '%2F', which would decode to '/' and
+        /// change the meaning of the path segments. '%2F' can only be replaced after splitting the path into segments.
+        /// </para>
+        /// </summary>
+        public abstract string Path { get; set; }
+
+        /// <summary>
+        /// Gets or sets the raw query string used to create the query collection in Request.Query.
+        /// </summary>
+        /// <returns>The raw query string.</returns>
+        public abstract string QueryString { get; set; }
+
+        /// <summary>
+        /// Gets the query value collection parsed from Request.QueryString.
+        /// </summary>
+        /// <returns>The query value collection parsed from Request.QueryString.</returns>
+        public abstract ICollection Query { get; set; }
+
+        /// <summary>
+        /// Gets or sets the request protocol (e.g. HTTP/1.1).
+        /// </summary>
+        /// <returns>The request protocol.</returns>
+        public abstract string Protocol { get; set; }
+
+        /// <summary>
+        /// Gets the request headers.
+        /// </summary>
+        /// <returns>The request headers.</returns>
+        public abstract IDictionary Headers { get; }
+
+        /// <summary>
+        /// Gets the collection of Cookies for this request.
+        /// </summary>
+        /// <returns>The collection of Cookies for this request.</returns>
+        public abstract ICollection Cookies { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Content-Length header.
+        /// </summary>
+        /// <returns>The value of the Content-Length header, if any.</returns>
+        public abstract long? ContentLength { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Content-Type header.
+        /// </summary>
+        /// <returns>The Content-Type header.</returns>
+        public abstract string ContentType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the request body <see cref="Stream"/>.
+        /// </summary>
+        /// <value>The request body <see cref="Stream"/>.</value>
+        public abstract Stream Body { get; set; }
+
+        /// <summary>
+        /// Gets the request body <see cref="PipeReader"/>.
+        /// </summary>
+        /// <value>The request body <see cref="PipeReader"/>.</value>
+        //public virtual PipeReader BodyReader { get => throw new NotImplementedException(); }
+
+        /// <summary>
+        /// Checks the Content-Type header for form types.
+        /// </summary>
+        /// <returns>true if the Content-Type header represents a form content type; otherwise, false.</returns>
+        public abstract bool HasFormContentType { get; }
+
+        /// <summary>
+        /// Gets or sets the request body as a form.
+        /// </summary>
+        public abstract ICollection Form { get; set; }
+
+        /// <summary>
+        /// Reads the request body if it is a form.
+        /// </summary>
+        /// <returns></returns>
+        public abstract Task<ICollection> ReadFormAsync(CancellationToken cancellationToken = new CancellationToken());
+
+        /// <summary>
+        /// Gets the collection of route values for this request.
+        /// </summary>
+        /// <returns>The collection of route values for this request.</returns>
+        //public virtual RouteValueDictionary RouteValues { get; set; } = null!;
+    }
+}

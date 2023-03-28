@@ -1,11 +1,11 @@
-using Orleans.Serialization.Buffers;
-using Orleans.Serialization.Session;
-using Orleans.Serialization.WireProtocol;
+using NI2S.Node.Serialization.Buffers;
+using NI2S.Node.Serialization.Session;
+using NI2S.Node.Serialization.WireProtocol;
 using System;
 using System.Buffers;
 using System.Runtime.CompilerServices;
 
-namespace Orleans.Serialization.Codecs
+namespace NI2S.Node.Serialization.Codecs
 {
     /// <summary>
     /// Functionality for reading and writing object references.

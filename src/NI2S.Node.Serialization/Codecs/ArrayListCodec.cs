@@ -1,8 +1,8 @@
 using System.Collections;
-using Orleans.Serialization.Cloning;
-using Orleans.Serialization.Serializers;
+using NI2S.Node.Serialization.Cloning;
+using NI2S.Node.Serialization.Serializers;
 
-namespace Orleans.Serialization.Codecs
+namespace NI2S.Node.Serialization.Codecs
 {
     /// <summary>
     /// Serializer for <see cref="ArrayList"/>.

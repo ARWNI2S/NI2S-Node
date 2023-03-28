@@ -8,9 +8,9 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
-using Orleans.Serialization.Buffers;
+using NI2S.Node.Serialization.Buffers;
 
-namespace Orleans.Serialization.TypeSystem
+namespace NI2S.Node.Serialization.TypeSystem
 {
     /// <summary>
     /// Functionality for serializing and deserializing types.

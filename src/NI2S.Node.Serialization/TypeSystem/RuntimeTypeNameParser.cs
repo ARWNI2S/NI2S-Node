@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Orleans.Serialization.TypeSystem;
+namespace NI2S.Node.Serialization.TypeSystem;
 
 /// <summary>
 /// Utility class for parsing type names, as formatted by <see cref="RuntimeTypeNameFormatter"/>.

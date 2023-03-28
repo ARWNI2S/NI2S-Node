@@ -1,6 +1,6 @@
-using Orleans.Serialization.WireProtocol;
+using NI2S.Node.Serialization.WireProtocol;
 
-namespace Orleans.Serialization.Codecs
+namespace NI2S.Node.Serialization.Codecs
 {
     /// <summary>
     /// Marker object used to denote an unknown field and its position into a stream of data.

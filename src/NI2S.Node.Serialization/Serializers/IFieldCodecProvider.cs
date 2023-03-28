@@ -1,7 +1,7 @@
-using Orleans.Serialization.Codecs;
+using NI2S.Node.Serialization.Codecs;
 using System;
 
-namespace Orleans.Serialization.Serializers
+namespace NI2S.Node.Serialization.Serializers
 {
     /// <summary>
     /// Provides access to field codecs.

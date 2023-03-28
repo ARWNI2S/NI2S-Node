@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using NI2S.Node.Async;
-using NI2S.Node.Configuration.Options;
+using NI2S.Node.Configuration;
 using NI2S.Node.Protocol.Udp;
 using System.Buffers;
 using System.Net;

@@ -1,7 +1,7 @@
 using System;
-using Orleans.Serialization.Codecs;
+using NI2S.Node.Serialization.Codecs;
 
-namespace Orleans.Serialization.Serializers
+namespace NI2S.Node.Serialization.Serializers
 {
     /// <summary>
     /// A codec which supports multiple types.

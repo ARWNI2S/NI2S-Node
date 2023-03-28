@@ -1,4 +1,4 @@
-namespace Orleans.Serialization.WireProtocol
+namespace NI2S.Node.Serialization.WireProtocol
 {
     /// <summary>
     /// Represents an extended wire type

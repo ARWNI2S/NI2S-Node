@@ -1,9 +1,9 @@
-using Orleans.Serialization.Cloning;
-using Orleans.Serialization.Serializers;
+using NI2S.Node.Serialization.Cloning;
+using NI2S.Node.Serialization.Serializers;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace Orleans.Serialization.Codecs
+namespace NI2S.Node.Serialization.Codecs
 {
     [RegisterSerializer]
     public sealed class ReadOnlyDictionaryCodec<TKey, TValue> : GeneralizedReferenceTypeSurrogateCodec<ReadOnlyDictionary<TKey, TValue>, ReadOnlyDictionarySurrogate<TKey, TValue>>

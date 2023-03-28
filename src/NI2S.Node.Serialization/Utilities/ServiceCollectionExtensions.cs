@@ -1,7 +1,7 @@
 using System;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Orleans.Serialization.Utilities.Internal;
+namespace NI2S.Node.Serialization.Utilities.Internal;
 
 /// <summary>
 /// Extension methods for configuring dependency injection.

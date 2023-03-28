@@ -27,6 +27,6 @@
 
   <PropertyGroup>
     <SourceLinkCreate>true</SourceLinkCreate>
-    <SourceLinkOriginUrl>https://github.com/arwni2s/ni2s-node</SourceLinkOriginUrl>
+    <SourceLinkOriginUrl>https://github.com/arwniis/niis-node</SourceLinkOriginUrl>
   </PropertyGroup>
 </Project>

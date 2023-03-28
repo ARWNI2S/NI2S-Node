@@ -1,9 +1,9 @@
-#nullable enable
+﻿#nullable enable
 using System;
 using System.Reflection;
 using System.Threading.Tasks;
 
-namespace Orleans.Serialization.Invocation
+namespace NI2S.Node.Serialization.Invocation
 {
     /// <summary>
     /// Represents an object which can be invoked asynchronously.

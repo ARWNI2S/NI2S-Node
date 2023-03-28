@@ -1,4 +1,4 @@
-using NI2S.Node.Configuration.Options;
+using NI2S.Node.Configuration;
 
 namespace NI2S.Node.Protocol.Channel
 {

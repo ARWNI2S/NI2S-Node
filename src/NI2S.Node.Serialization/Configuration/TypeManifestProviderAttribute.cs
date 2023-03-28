@@ -1,6 +1,6 @@
 using System;
 
-namespace Orleans.Serialization.Configuration
+namespace NI2S.Node.Serialization.Configuration
 {
     /// <summary>
     /// Defines a metadata provider for this assembly.

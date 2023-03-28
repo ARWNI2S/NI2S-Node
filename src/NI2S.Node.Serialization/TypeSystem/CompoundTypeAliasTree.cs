@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Orleans.Serialization.TypeSystem;
+namespace NI2S.Node.Serialization.TypeSystem;
 
 /// <summary>
 /// Represents a compound type aliases as a prefix tree.

@@ -1,11 +1,11 @@
 using System;
 using System.Buffers;
 using System.Runtime.CompilerServices;
-using Orleans.Serialization.Cloning;
-using Orleans.Serialization.GeneratedCodeHelpers;
-using Orleans.Serialization.WireProtocol;
+using NI2S.Node.Serialization.Cloning;
+using NI2S.Node.Serialization.GeneratedCodeHelpers;
+using NI2S.Node.Serialization.WireProtocol;
 
-namespace Orleans.Serialization.Codecs
+namespace NI2S.Node.Serialization.Codecs
 {
     /// <summary>
     /// Serializer for <see cref="Uri"/>.

@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using Orleans.Serialization.TypeSystem;
+using NI2S.Node.Serialization.TypeSystem;
 
-namespace Orleans.Serialization.Configuration
+namespace NI2S.Node.Serialization.Configuration
 {
     /// <summary>
     /// Configuration of all types which are known to the code generator.

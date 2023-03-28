@@ -1,6 +1,6 @@
-using Microsoft.Extensions.ObjectPool;
+﻿using Microsoft.Extensions.ObjectPool;
 
-namespace Orleans.Serialization.Invocation
+namespace NI2S.Node.Serialization.Invocation
 {
     internal readonly struct DefaultConcurrentObjectPoolPolicy<T> : IPooledObjectPolicy<T> where T : class, new()
     {

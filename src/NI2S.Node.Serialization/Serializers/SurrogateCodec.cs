@@ -1,13 +1,13 @@
 using System;
 using System.Buffers;
 using System.Diagnostics.CodeAnalysis;
-using Orleans.Serialization.Buffers;
-using Orleans.Serialization.Cloning;
-using Orleans.Serialization.Codecs;
-using Orleans.Serialization.GeneratedCodeHelpers;
-using Orleans.Serialization.WireProtocol;
+using NI2S.Node.Serialization.Buffers;
+using NI2S.Node.Serialization.Cloning;
+using NI2S.Node.Serialization.Codecs;
+using NI2S.Node.Serialization.GeneratedCodeHelpers;
+using NI2S.Node.Serialization.WireProtocol;
 
-namespace Orleans.Serialization.Serializers;
+namespace NI2S.Node.Serialization.Serializers;
 
 /// <summary>
 /// Surrogate serializer for <typeparamref name="TField"/>.

@@ -1,11 +1,11 @@
-﻿using Orleans.Serialization.Configuration;
-using Orleans.Serialization.Serializers;
+﻿using NI2S.Node.Serialization.Configuration;
+using NI2S.Node.Serialization.Serializers;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Threading.Tasks;
 
-namespace Orleans.Serialization
+namespace NI2S.Node.Serialization
 {
     /// <summary>
     /// Analyzes serializer configuration to find likely configuration issues.

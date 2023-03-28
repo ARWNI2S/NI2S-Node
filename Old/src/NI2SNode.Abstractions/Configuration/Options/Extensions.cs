@@ -1,6 +1,6 @@
 using System.Net;
 
-namespace NI2S.Node.Configuration.Options
+namespace NI2S.Node.Configuration
 {
     public static class Extensions
     {

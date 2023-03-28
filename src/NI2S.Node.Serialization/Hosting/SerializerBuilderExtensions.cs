@@ -1,11 +1,11 @@
-using Orleans.Serialization.Configuration;
+using NI2S.Node.Serialization.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
 using Microsoft.Extensions.Options;
 
-namespace Orleans.Serialization
+namespace NI2S.Node.Serialization
 {
     /// <summary>
     /// Extensions for <see cref="ISerializerBuilder"/>.

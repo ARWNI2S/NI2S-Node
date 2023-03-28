@@ -4,7 +4,7 @@ using System.Reflection;
 using System.Runtime.Serialization;
 using System.Security;
 
-namespace Orleans.Serialization
+namespace NI2S.Node.Serialization
 {
     internal class ValueTypeSerializerFactory
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace Orleans.Serialization.Session
+namespace NI2S.Node.Serialization.Session
 {
     /// <summary>
     /// Collection of referenced <see cref="Type"/> instances.

@@ -1,10 +1,10 @@
-using Orleans.Serialization.Cloning;
-using Orleans.Serialization.GeneratedCodeHelpers;
-using Orleans.Serialization.Serializers;
+using NI2S.Node.Serialization.Cloning;
+using NI2S.Node.Serialization.GeneratedCodeHelpers;
+using NI2S.Node.Serialization.Serializers;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 
-namespace Orleans.Serialization.Codecs
+namespace NI2S.Node.Serialization.Codecs
 {
     /// <summary>
     /// Serializer for <see cref="ImmutableSortedSet{T}"/>.
@@ -64,7 +64,7 @@ namespace Orleans.Serialization.Codecs
     {
         private readonly IDeepCopier<T> _copier;
 
-        public ImmutableSortedSetCopier(IDeepCopier<T> copier) => _copier = OrleansGeneratedCodeHelper.GetOptionalCopier(copier);
+        public ImmutableSortedSetCopier(IDeepCopier<T> copier) => _copier = NI2SGeneratedCodeHelper.GetOptionalCopier(copier);
 
         public bool IsShallowCopyable() => _copier is null;
 

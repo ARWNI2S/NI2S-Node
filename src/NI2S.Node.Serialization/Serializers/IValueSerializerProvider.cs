@@ -1,4 +1,4 @@
-namespace Orleans.Serialization.Serializers
+namespace NI2S.Node.Serialization.Serializers
 {
     /// <summary>
     /// Provides access to value type serializers.

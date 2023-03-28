@@ -1,8 +1,8 @@
-using Orleans.Serialization.Serializers;
-using Orleans.Serialization.TypeSystem;
+﻿using NI2S.Node.Serialization.Serializers;
+using NI2S.Node.Serialization.TypeSystem;
 using System;
 
-namespace Orleans.Serialization.Session
+namespace NI2S.Node.Serialization.Session
 {
     /// <summary>
     /// Contextual information for a serializer operation.

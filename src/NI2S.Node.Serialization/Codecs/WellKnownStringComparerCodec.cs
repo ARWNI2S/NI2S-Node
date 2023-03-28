@@ -3,17 +3,17 @@ using System.Buffers;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
-using Orleans.Serialization.Buffers;
-using Orleans.Serialization.Cloning;
-using Orleans.Serialization.GeneratedCodeHelpers;
-using Orleans.Serialization.Serializers;
-using Orleans.Serialization.WireProtocol;
+using NI2S.Node.Serialization.Buffers;
+using NI2S.Node.Serialization.Cloning;
+using NI2S.Node.Serialization.GeneratedCodeHelpers;
+using NI2S.Node.Serialization.Serializers;
+using NI2S.Node.Serialization.WireProtocol;
 
 #if !NET6_0_OR_GREATER
 using System.Runtime.Serialization;
 #endif
 
-namespace Orleans.Serialization.Codecs
+namespace NI2S.Node.Serialization.Codecs
 {
     /// <summary>
     /// Serializer for well-known <see cref="StringComparer"/> types.

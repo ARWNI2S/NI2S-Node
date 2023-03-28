@@ -1,11 +1,10 @@
+using NI2S.Node.Serialization.Buffers;
+using NI2S.Node.Serialization.WireProtocol;
 using System;
 using System.Buffers;
 using System.Globalization;
-using Orleans.Serialization.Buffers;
-using Orleans.Serialization.Cloning;
-using Orleans.Serialization.WireProtocol;
 
-namespace Orleans.Serialization.Codecs
+namespace NI2S.Node.Serialization.Codecs
 {
     /// <summary>
     /// Serializer for <see cref="CompareInfo"/>.

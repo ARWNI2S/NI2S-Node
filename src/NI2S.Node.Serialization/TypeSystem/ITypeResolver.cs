@@ -1,6 +1,6 @@
 using System;
 
-namespace Orleans.Serialization.TypeSystem
+namespace NI2S.Node.Serialization.TypeSystem
 {
     /// <summary>
     /// Provides methods for resolving a <see cref="Type"/> from a string.

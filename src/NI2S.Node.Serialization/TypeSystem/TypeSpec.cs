@@ -4,7 +4,7 @@ using System;
 using System.Linq;
 using System.Text;
 
-namespace Orleans.Serialization.TypeSystem
+namespace NI2S.Node.Serialization.TypeSystem
 {
     /// <summary>
     /// Represents a type.

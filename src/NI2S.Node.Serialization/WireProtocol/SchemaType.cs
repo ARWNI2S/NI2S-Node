@@ -1,4 +1,4 @@
-namespace Orleans.Serialization.WireProtocol
+namespace NI2S.Node.Serialization.WireProtocol
 {
     /// <summary>
     /// Identifies the runtime type (schema type) of a field.

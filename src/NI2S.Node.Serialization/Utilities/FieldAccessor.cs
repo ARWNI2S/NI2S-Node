@@ -2,7 +2,7 @@ using System;
 using System.Reflection;
 using System.Reflection.Emit;
 
-namespace Orleans.Serialization.Utilities
+namespace NI2S.Node.Serialization.Utilities
 {
     /// <summary>
     /// The delegate used to set fields in value types.

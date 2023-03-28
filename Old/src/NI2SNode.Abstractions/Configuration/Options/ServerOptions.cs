@@ -1,6 +1,6 @@
 using System.Text;
 
-namespace NI2S.Node.Configuration.Options
+namespace NI2S.Node.Configuration
 {
     public class ServerOptions : ChannelOptions
     {

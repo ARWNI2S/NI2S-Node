@@ -6,15 +6,15 @@ using System.Collections.ObjectModel;
 using System.Runtime.ExceptionServices;
 using System.Runtime.Serialization;
 using Microsoft.Extensions.Options;
-using Orleans.Serialization.Buffers;
-using Orleans.Serialization.Cloning;
-using Orleans.Serialization.Codecs;
-using Orleans.Serialization.GeneratedCodeHelpers;
-using Orleans.Serialization.Serializers;
-using Orleans.Serialization.TypeSystem;
-using Orleans.Serialization.WireProtocol;
+using NI2S.Node.Serialization.Buffers;
+using NI2S.Node.Serialization.Cloning;
+using NI2S.Node.Serialization.Codecs;
+using NI2S.Node.Serialization.GeneratedCodeHelpers;
+using NI2S.Node.Serialization.Serializers;
+using NI2S.Node.Serialization.TypeSystem;
+using NI2S.Node.Serialization.WireProtocol;
 
-namespace Orleans.Serialization
+namespace NI2S.Node.Serialization
 {
     /// <summary>
     /// Serializer for <see cref="Exception"/> types.

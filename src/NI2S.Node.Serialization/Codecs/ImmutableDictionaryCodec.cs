@@ -1,10 +1,10 @@
-using Orleans.Serialization.Cloning;
-using Orleans.Serialization.GeneratedCodeHelpers;
-using Orleans.Serialization.Serializers;
+using NI2S.Node.Serialization.Cloning;
+using NI2S.Node.Serialization.GeneratedCodeHelpers;
+using NI2S.Node.Serialization.Serializers;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 
-namespace Orleans.Serialization.Codecs
+namespace NI2S.Node.Serialization.Codecs
 {
     /// <summary>
     /// Serializer for <see cref="ImmutableDictionary{TKey, TValue}"/>.
@@ -60,8 +60,8 @@ namespace Orleans.Serialization.Codecs
 
         public ImmutableDictionaryCopier(IDeepCopier<TKey> keyCopier, IDeepCopier<TValue> valueCopier)
         {
-            _keyCopier = OrleansGeneratedCodeHelper.GetOptionalCopier(keyCopier);
-            _valueCopier = OrleansGeneratedCodeHelper.GetOptionalCopier(valueCopier);
+            _keyCopier = NI2SGeneratedCodeHelper.GetOptionalCopier(keyCopier);
+            _valueCopier = NI2SGeneratedCodeHelper.GetOptionalCopier(valueCopier);
         }
 
         public bool IsShallowCopyable() => _keyCopier is null && _valueCopier is null;

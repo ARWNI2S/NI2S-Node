@@ -1,6 +1,6 @@
 using System;
 
-namespace Orleans.Serialization
+namespace NI2S.Node.Serialization
 {
     [GenerateSerializer]
     internal struct SerializationEntrySurrogate

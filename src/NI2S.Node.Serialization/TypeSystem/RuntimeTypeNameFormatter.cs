@@ -3,7 +3,7 @@ using System.Collections.Concurrent;
 using System.Reflection;
 using System.Text;
 
-namespace Orleans.Serialization.TypeSystem;
+namespace NI2S.Node.Serialization.TypeSystem;
 
 /// <summary>
 /// Utility methods for formatting <see cref="Type"/> and <see cref="TypeInfo"/> instances in a way which can be parsed by

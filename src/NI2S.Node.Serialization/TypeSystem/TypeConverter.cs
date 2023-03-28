@@ -7,13 +7,13 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using Microsoft.Extensions.Options;
-using Orleans.Serialization.Activators;
-using Orleans.Serialization.Cloning;
-using Orleans.Serialization.Codecs;
-using Orleans.Serialization.Configuration;
-using Orleans.Serialization.Serializers;
+using NI2S.Node.Serialization.Activators;
+using NI2S.Node.Serialization.Cloning;
+using NI2S.Node.Serialization.Codecs;
+using NI2S.Node.Serialization.Configuration;
+using NI2S.Node.Serialization.Serializers;
 
-namespace Orleans.Serialization.TypeSystem
+namespace NI2S.Node.Serialization.TypeSystem
 {
     /// <summary>
     /// Formats and parses <see cref="Type"/> instances using configured rules.

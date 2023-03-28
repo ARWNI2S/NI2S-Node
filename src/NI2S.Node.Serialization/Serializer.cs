@@ -1,16 +1,16 @@
-using Orleans.Serialization.Buffers;
-using Orleans.Serialization.Buffers.Adaptors;
-using Orleans.Serialization.Cloning;
-using Orleans.Serialization.Codecs;
-using Orleans.Serialization.GeneratedCodeHelpers;
-using Orleans.Serialization.Serializers;
-using Orleans.Serialization.Session;
-using Orleans.Serialization.WireProtocol;
+using NI2S.Node.Serialization.Buffers;
+using NI2S.Node.Serialization.Buffers.Adaptors;
+using NI2S.Node.Serialization.Cloning;
+using NI2S.Node.Serialization.Codecs;
+using NI2S.Node.Serialization.GeneratedCodeHelpers;
+using NI2S.Node.Serialization.Serializers;
+using NI2S.Node.Serialization.Session;
+using NI2S.Node.Serialization.WireProtocol;
 using System;
 using System.Buffers;
 using System.IO;
 
-namespace Orleans.Serialization
+namespace NI2S.Node.Serialization
 {
     /// <summary>
     /// Serializes and deserializes values.
@@ -486,7 +486,7 @@ namespace Orleans.Serialization
         /// <param name="sessionPool">The session pool.</param>
         public Serializer(SerializerSessionPool sessionPool)
         {
-            _codec = OrleansGeneratedCodeHelper.UnwrapService(null, sessionPool.CodecProvider.GetCodec<T>());
+            _codec = NI2SGeneratedCodeHelper.UnwrapService(null, sessionPool.CodecProvider.GetCodec<T>());
             _sessionPool = sessionPool;
         }
 
@@ -863,7 +863,7 @@ namespace Orleans.Serialization
         public ValueSerializer(IValueSerializerProvider codecProvider, SerializerSessionPool sessionPool)
         {
             _sessionPool = sessionPool;
-            _codec = OrleansGeneratedCodeHelper.UnwrapService(null, codecProvider.GetValueSerializer<T>());
+            _codec = NI2SGeneratedCodeHelper.UnwrapService(null, codecProvider.GetValueSerializer<T>());
         }
 
         /// <summary>

@@ -2,7 +2,7 @@ using System;
 using System.Runtime.Serialization;
 using System.Security;
 
-namespace Orleans.Serialization
+namespace NI2S.Node.Serialization
 {
     /// <summary>
     /// Thrown when a type has no serialization constructor.

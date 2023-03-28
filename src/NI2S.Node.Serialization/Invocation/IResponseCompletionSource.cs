@@ -1,4 +1,4 @@
-namespace Orleans.Serialization.Invocation
+﻿namespace NI2S.Node.Serialization.Invocation
 {
     /// <summary>
     /// Represents a fulfillable promise for a response to a request.
@@ -14,6 +14,6 @@ namespace Orleans.Serialization.Invocation
         /// <summary>
         /// Sets the result to the default value.
         /// </summary>
-        void Complete(); 
+        void Complete();
     }
 }

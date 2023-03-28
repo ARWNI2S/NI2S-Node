@@ -1,7 +1,7 @@
-using Orleans.Serialization.Cloning;
+﻿using NI2S.Node.Serialization.Cloning;
 using System;
 
-namespace Orleans.Serialization.Serializers
+namespace NI2S.Node.Serialization.Serializers
 {
     /// <summary>
     /// Provides functionality for accessing codecs, activators, and copiers.

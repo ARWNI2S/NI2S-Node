@@ -10,7 +10,7 @@ using System.Reflection;
 using System.Runtime.Loader;
 #endif
 
-namespace Orleans.Serialization
+namespace NI2S.Node.Serialization
 {
     internal static class ReferencedAssemblyHelper
     {
@@ -123,7 +123,7 @@ namespace Orleans.Serialization
 
             foreach (var lib in dependencyContext.RuntimeLibraries)
             {
-                if (!lib.Name.Contains("Orleans.Serialization", StringComparison.Ordinal) && !lib.Dependencies.Any(dep => dep.Name.Contains("Orleans.Serialization", StringComparison.Ordinal)))
+                if (!lib.Name.Contains("NI2S.Node.Serialization", StringComparison.Ordinal) && !lib.Dependencies.Any(dep => dep.Name.Contains("NI2S.Node.Serialization", StringComparison.Ordinal)))
                 {
                     continue;
                 }

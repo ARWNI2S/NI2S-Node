@@ -2,7 +2,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
-using NI2S.Node.Configuration.Options;
+using NI2S.Node.Configuration;
 using NI2S.Node.Middleware;
 using NI2S.Node.Protocol;
 using NI2S.Node.Protocol.Session;

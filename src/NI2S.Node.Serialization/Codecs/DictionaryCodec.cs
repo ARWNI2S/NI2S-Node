@@ -1,13 +1,13 @@
 using System;
 using System.Buffers;
 using System.Collections.Generic;
-using Orleans.Serialization.Buffers;
-using Orleans.Serialization.Cloning;
-using Orleans.Serialization.GeneratedCodeHelpers;
-using Orleans.Serialization.Session;
-using Orleans.Serialization.WireProtocol;
+using NI2S.Node.Serialization.Buffers;
+using NI2S.Node.Serialization.Cloning;
+using NI2S.Node.Serialization.GeneratedCodeHelpers;
+using NI2S.Node.Serialization.Session;
+using NI2S.Node.Serialization.WireProtocol;
 
-namespace Orleans.Serialization.Codecs
+namespace NI2S.Node.Serialization.Codecs
 {
     /// <summary>
     /// Serializer for <see cref="Dictionary{TKey, TValue}"/>.
@@ -35,9 +35,9 @@ namespace Orleans.Serialization.Codecs
             IFieldCodec<TValue> valueCodec,
             IFieldCodec<IEqualityComparer<TKey>> comparerCodec)
         {
-            _keyCodec = OrleansGeneratedCodeHelper.UnwrapService(this, keyCodec);
-            _valueCodec = OrleansGeneratedCodeHelper.UnwrapService(this, valueCodec);
-            _comparerCodec = OrleansGeneratedCodeHelper.UnwrapService(this, comparerCodec);
+            _keyCodec = NI2SGeneratedCodeHelper.UnwrapService(this, keyCodec);
+            _valueCodec = NI2SGeneratedCodeHelper.UnwrapService(this, valueCodec);
+            _comparerCodec = NI2SGeneratedCodeHelper.UnwrapService(this, comparerCodec);
         }
 
         /// <inheritdoc/>

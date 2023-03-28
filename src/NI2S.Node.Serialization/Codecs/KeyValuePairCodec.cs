@@ -1,12 +1,12 @@
 using System;
 using System.Buffers;
 using System.Collections.Generic;
-using Orleans.Serialization.Buffers;
-using Orleans.Serialization.Cloning;
-using Orleans.Serialization.GeneratedCodeHelpers;
-using Orleans.Serialization.WireProtocol;
+using NI2S.Node.Serialization.Buffers;
+using NI2S.Node.Serialization.Cloning;
+using NI2S.Node.Serialization.GeneratedCodeHelpers;
+using NI2S.Node.Serialization.WireProtocol;
 
-namespace Orleans.Serialization.Codecs
+namespace NI2S.Node.Serialization.Codecs
 {
     /// <summary>
     /// Serializer for <see cref="KeyValuePair{TKey, TValue}"/>.
@@ -28,8 +28,8 @@ namespace Orleans.Serialization.Codecs
         /// <param name="valueCodec">The value codec.</param>
         public KeyValuePairCodec(IFieldCodec<TKey> keyCodec, IFieldCodec<TValue> valueCodec)
         {
-            _keyCodec = OrleansGeneratedCodeHelper.UnwrapService(this, keyCodec);
-            _valueCodec = OrleansGeneratedCodeHelper.UnwrapService(this, valueCodec);
+            _keyCodec = NI2SGeneratedCodeHelper.UnwrapService(this, keyCodec);
+            _valueCodec = NI2SGeneratedCodeHelper.UnwrapService(this, valueCodec);
         }
 
         /// <inheritdoc/>
@@ -100,8 +100,8 @@ namespace Orleans.Serialization.Codecs
         /// <param name="valueCopier">The value copier.</param>
         public KeyValuePairCopier(IDeepCopier<TKey> keyCopier, IDeepCopier<TValue> valueCopier)
         {
-            _keyCopier = OrleansGeneratedCodeHelper.GetOptionalCopier(keyCopier);
-            _valueCopier = OrleansGeneratedCodeHelper.GetOptionalCopier(valueCopier);
+            _keyCopier = NI2SGeneratedCodeHelper.GetOptionalCopier(keyCopier);
+            _valueCopier = NI2SGeneratedCodeHelper.GetOptionalCopier(valueCopier);
         }
 
         public bool IsShallowCopyable() => _keyCopier is null && _valueCopier is null;

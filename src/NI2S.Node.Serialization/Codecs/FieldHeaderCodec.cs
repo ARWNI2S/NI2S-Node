@@ -1,10 +1,10 @@
 using System;
 using System.Runtime.CompilerServices;
-using Orleans.Serialization.Buffers;
-using Orleans.Serialization.TypeSystem;
-using Orleans.Serialization.WireProtocol;
+using NI2S.Node.Serialization.Buffers;
+using NI2S.Node.Serialization.TypeSystem;
+using NI2S.Node.Serialization.WireProtocol;
 
-namespace Orleans.Serialization.Buffers
+namespace NI2S.Node.Serialization.Buffers
 {
     public ref partial struct Writer<TBufferWriter>
     {
@@ -81,7 +81,7 @@ namespace Orleans.Serialization.Buffers
     }
 }
 
-namespace Orleans.Serialization.Codecs
+namespace NI2S.Node.Serialization.Codecs
 {
     /// <summary>
     /// Codec for operating with the wire format.

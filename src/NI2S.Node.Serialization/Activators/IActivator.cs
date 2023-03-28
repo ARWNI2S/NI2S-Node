@@ -1,5 +1,4 @@
-
-namespace Orleans.Serialization.Activators
+﻿namespace NI2S.Node.Serialization.Activators
 {
     /// <summary>
     /// Functionality for creating object instances.

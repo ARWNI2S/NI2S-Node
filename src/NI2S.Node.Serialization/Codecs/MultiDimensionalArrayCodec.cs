@@ -1,12 +1,12 @@
 using System;
 using System.Buffers;
-using Orleans.Serialization.Buffers;
-using Orleans.Serialization.Cloning;
-using Orleans.Serialization.GeneratedCodeHelpers;
-using Orleans.Serialization.Serializers;
-using Orleans.Serialization.WireProtocol;
+using NI2S.Node.Serialization.Buffers;
+using NI2S.Node.Serialization.Cloning;
+using NI2S.Node.Serialization.GeneratedCodeHelpers;
+using NI2S.Node.Serialization.Serializers;
+using NI2S.Node.Serialization.WireProtocol;
 
-namespace Orleans.Serialization.Codecs
+namespace NI2S.Node.Serialization.Codecs
 {
     /// <summary>
     /// Serializer for multi-dimensional arrays.
@@ -27,8 +27,8 @@ namespace Orleans.Serialization.Codecs
         /// <param name="elementCodec">The element codec.</param>
         public MultiDimensionalArrayCodec(IFieldCodec<int[]> intArrayCodec, IFieldCodec<T> elementCodec)
         {
-            _intArrayCodec = OrleansGeneratedCodeHelper.UnwrapService(this, intArrayCodec);
-            _elementCodec = OrleansGeneratedCodeHelper.UnwrapService(this, elementCodec);
+            _intArrayCodec = NI2SGeneratedCodeHelper.UnwrapService(this, intArrayCodec);
+            _elementCodec = NI2SGeneratedCodeHelper.UnwrapService(this, elementCodec);
         }
 
         /// <inheritdoc/>

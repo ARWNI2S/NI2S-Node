@@ -2,7 +2,7 @@ using System;
 using System.Buffers;
 using System.IO;
 
-namespace Orleans.Serialization.Buffers.Adaptors
+namespace NI2S.Node.Serialization.Buffers.Adaptors
 {
     /// <summary>
     /// An implementation of <see cref="IBufferWriter{T}"/> which writes to a <see cref="Stream"/>, using an array as an intermediate buffer.

@@ -1,10 +1,10 @@
-using Orleans.Serialization.Buffers;
-using Orleans.Serialization.Serializers;
-using Orleans.Serialization.WireProtocol;
+using NI2S.Node.Serialization.Buffers;
+using NI2S.Node.Serialization.Serializers;
+using NI2S.Node.Serialization.WireProtocol;
 using System;
 using System.Buffers;
 
-namespace Orleans.Serialization.Codecs
+namespace NI2S.Node.Serialization.Codecs
 {
     /// <summary>
     /// Surrogate serializer for <typeparamref name="TField"/> and all sub-types.

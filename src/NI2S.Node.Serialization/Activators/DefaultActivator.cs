@@ -3,7 +3,7 @@ using System.Reflection.Emit;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 
-namespace Orleans.Serialization.Activators
+namespace NI2S.Node.Serialization.Activators
 {
     internal sealed class DefaultActivator<T> : IActivator<T> where T : class
     {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using NI2S.Node.Command;
-using NI2S.Node.Configuration.Options;
+using NI2S.Node.Configuration;
 using NI2S.Node.Hosting;
 using NI2S.Node.Protocol;
 

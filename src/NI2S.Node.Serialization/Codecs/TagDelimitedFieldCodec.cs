@@ -1,8 +1,8 @@
 using System;
 using System.Runtime.CompilerServices;
-using Orleans.Serialization.WireProtocol;
+using NI2S.Node.Serialization.WireProtocol;
 
-namespace Orleans.Serialization.Buffers
+namespace NI2S.Node.Serialization.Buffers
 {
     public ref partial struct Writer<TBufferWriter>
     {

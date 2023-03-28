@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using NI2S.Node.Configuration.Options;
+using NI2S.Node.Configuration;
 using NI2S.Node.Middleware;
 using NI2S.Node.Protocol;
 using NI2S.Node.Protocol.Session;

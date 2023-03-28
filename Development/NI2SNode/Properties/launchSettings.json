@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "NI2SNode": {
+      "commandName": "Project"
+    },
+    "NI2SNode Args": {
+      "commandName": "Project",
+      "commandLineArgs": "worldName"
+    }
+  }
+}

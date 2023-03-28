@@ -1,7 +1,7 @@
-using Orleans.Serialization.Buffers;
+using NI2S.Node.Serialization.Buffers;
 using System.Buffers;
 
-namespace Orleans.Serialization.Serializers
+namespace NI2S.Node.Serialization.Serializers
 {
     /// <summary>
     /// Functionality for serializing a value type.

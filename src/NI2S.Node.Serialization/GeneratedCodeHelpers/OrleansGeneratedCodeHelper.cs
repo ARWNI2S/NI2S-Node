@@ -5,19 +5,19 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using Microsoft.Extensions.DependencyInjection;
-using Orleans.Serialization.Activators;
-using Orleans.Serialization.Buffers;
-using Orleans.Serialization.Cloning;
-using Orleans.Serialization.Codecs;
-using Orleans.Serialization.Serializers;
-using Orleans.Serialization.WireProtocol;
+using NI2S.Node.Serialization.Activators;
+using NI2S.Node.Serialization.Buffers;
+using NI2S.Node.Serialization.Cloning;
+using NI2S.Node.Serialization.Codecs;
+using NI2S.Node.Serialization.Serializers;
+using NI2S.Node.Serialization.WireProtocol;
 
-namespace Orleans.Serialization.GeneratedCodeHelpers
+namespace NI2S.Node.Serialization.GeneratedCodeHelpers
 {
     /// <summary>
     /// Utilities for use by generated code.
     /// </summary>
-    public static class OrleansGeneratedCodeHelper
+    public static class NI2SGeneratedCodeHelper
     {
         private static readonly ThreadLocal<RecursiveServiceResolutionState> ResolutionState = new ThreadLocal<RecursiveServiceResolutionState>(() => new RecursiveServiceResolutionState());
 

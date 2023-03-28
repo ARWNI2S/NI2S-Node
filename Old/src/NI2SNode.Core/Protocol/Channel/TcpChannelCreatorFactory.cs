@@ -1,7 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NI2S.Node.Configuration;
-using NI2S.Node.Configuration.Options;
+using NI2S.Node.Configuration;
 using System.Net.Security;
 using System.Net.Sockets;
 using System.Security.Authentication;

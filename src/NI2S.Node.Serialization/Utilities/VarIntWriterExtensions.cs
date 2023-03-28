@@ -1,6 +1,6 @@
 using System.Runtime.CompilerServices;
 
-namespace Orleans.Serialization.Buffers
+namespace NI2S.Node.Serialization.Buffers
 {
     public ref partial struct Writer<TBufferWriter>
     {

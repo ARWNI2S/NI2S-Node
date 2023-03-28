@@ -1,8 +1,8 @@
 using System;
 using System.Net;
-using Orleans.Serialization.Invocation;
+using NI2S.Node.Serialization.Invocation;
 
-namespace Orleans.Serialization.Configuration
+namespace NI2S.Node.Serialization.Configuration
 {
     internal class DefaultTypeManifestProvider : ITypeManifestProvider
     {

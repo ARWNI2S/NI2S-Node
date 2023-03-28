@@ -2,7 +2,7 @@ using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace Orleans.Serialization.Utilities
+namespace NI2S.Node.Serialization.Utilities
 {
 #if NETCOREAPP3_1_OR_GREATER
 #else

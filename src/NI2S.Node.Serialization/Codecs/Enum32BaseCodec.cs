@@ -1,16 +1,16 @@
 using System;
 using System.Buffers;
 using System.Runtime.InteropServices;
-using Orleans.Serialization.Buffers;
-using Orleans.Serialization.WireProtocol;
+using NI2S.Node.Serialization.Buffers;
+using NI2S.Node.Serialization.WireProtocol;
 
-namespace Orleans.Serialization.Codecs
+namespace NI2S.Node.Serialization.Codecs
 {
     /// <summary>
     /// Serializer for enum types with a 32-bit base.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    /// <seealso cref="Orleans.Serialization.Codecs.IFieldCodec{T}" />
+    /// <seealso cref="NI2S.Node.Serialization.Codecs.IFieldCodec{T}" />
     public abstract class Enum32BaseCodec<T> : IFieldCodec<T> where T : unmanaged, Enum
     {
         private readonly Type CodecFieldType = typeof(T);

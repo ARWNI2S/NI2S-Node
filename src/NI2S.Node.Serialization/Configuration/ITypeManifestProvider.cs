@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Options;
 
-namespace Orleans.Serialization.Configuration
+namespace NI2S.Node.Serialization.Configuration
 {
     /// <summary>
     /// Provides type manifest information.

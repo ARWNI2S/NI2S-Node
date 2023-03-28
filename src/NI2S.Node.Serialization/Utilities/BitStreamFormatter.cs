@@ -1,13 +1,13 @@
-using Orleans.Serialization.Buffers;
-using Orleans.Serialization.Codecs;
-using Orleans.Serialization.Session;
-using Orleans.Serialization.WireProtocol;
+using NI2S.Node.Serialization.Buffers;
+using NI2S.Node.Serialization.Codecs;
+using NI2S.Node.Serialization.Session;
+using NI2S.Node.Serialization.WireProtocol;
 using System;
 using System.Buffers;
 using System.IO;
 using System.Text;
 
-namespace Orleans.Serialization.Utilities
+namespace NI2S.Node.Serialization.Utilities
 {
     /// <summary>
     /// Utilities for formatting an encoded bitstream in a textual manner.

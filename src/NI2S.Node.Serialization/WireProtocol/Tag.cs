@@ -1,6 +1,6 @@
 using System.Runtime.CompilerServices;
 
-namespace Orleans.Serialization.WireProtocol
+namespace NI2S.Node.Serialization.WireProtocol
 {
     /// <summary>
     /// <see langword="abstract" />Tag is the

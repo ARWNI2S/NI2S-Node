@@ -1,7 +1,7 @@
 using System;
 using System.Buffers;
 
-namespace Orleans.Serialization.Buffers.Adaptors
+namespace NI2S.Node.Serialization.Buffers.Adaptors
 {
     /// <summary>
     /// A special-purpose <see cref="IBufferWriter{T}"/> implementation for supporting <see cref="Span{T}"/> in <see cref="Writer{TBufferWriter}"/>.

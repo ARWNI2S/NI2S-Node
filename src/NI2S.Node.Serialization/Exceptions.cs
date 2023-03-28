@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace Orleans.Serialization
+namespace NI2S.Node.Serialization
 {
     internal static class ExceptionHelper
     {

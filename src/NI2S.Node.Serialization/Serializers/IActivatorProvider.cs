@@ -1,6 +1,6 @@
-using Orleans.Serialization.Activators;
+using NI2S.Node.Serialization.Activators;
 
-namespace Orleans.Serialization.Serializers
+namespace NI2S.Node.Serialization.Serializers
 {
     /// <summary>
     /// Provides activators.

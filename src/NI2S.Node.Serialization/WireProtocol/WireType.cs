@@ -1,4 +1,4 @@
-namespace Orleans.Serialization.WireProtocol
+namespace NI2S.Node.Serialization.WireProtocol
 {
     /// <summary>
     /// Represents a 3-bit wire type, shifted into position 

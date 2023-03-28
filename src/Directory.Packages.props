@@ -5,7 +5,7 @@
     <MicrosoftCodeAnalysisVersion>4.5.0</MicrosoftCodeAnalysisVersion>
     <FrameworkCommonVersion>7.0.0</FrameworkCommonVersion>
     <FrameworkNextVersion>7.0.1</FrameworkNextVersion>
-    <FrameworkLatestVersion>7.0.3</FrameworkLatestVersion>
+    <FrameworkLatestVersion>7.0.4</FrameworkLatestVersion>
     <SourceLinkVersion>1.1.1</SourceLinkVersion>
   </PropertyGroup>
   <ItemGroup>
@@ -15,19 +15,21 @@
     <PackageVersion Include="System.IO.Hashing" Version="$(FrameworkCommonVersion)" NoWarn="NU5104" />
     <PackageVersion Include="System.IO.Pipelines" Version="$(FrameworkCommonVersion)" />
     <!-- Microsoft packages -->
+    <PackageVersion Include="Microsoft.AspNetCore.Connections.Abstractions" Version="$(FrameworkLatestVersion)" />
     <PackageVersion Include="Microsoft.AspNetCore.Server.Kestrel" Version="2.2.0" />
     <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="$(MicrosoftCodeAnalysisVersion)" />
     <PackageVersion Include="Microsoft.DotNet.PlatformAbstractions" Version="3.1.6" />
     <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="$(FrameworkCommonVersion)" />
     <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="$(FrameworkCommonVersion)" />
     <PackageVersion Include="Microsoft.Extensions.DependencyModel" Version="$(FrameworkCommonVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.FileProviders.Composite" Version="$(FrameworkCommonVersion)" />
     <PackageVersion Include="Microsoft.Extensions.Hosting" Version="$(FrameworkNextVersion)" />
     <PackageVersion Include="Microsoft.Extensions.Hosting.Abstractions" Version="$(FrameworkCommonVersion)" />
     <PackageVersion Include="Microsoft.Extensions.Logging" Version="$(FrameworkCommonVersion)" />
     <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="$(FrameworkCommonVersion)" />
     <PackageVersion Include="Microsoft.Extensions.Logging.Console" Version="$(FrameworkCommonVersion)" />
-    <PackageVersion Include="Microsoft.Extensions.ObjectPool" Version="$(FrameworkCommonVersion)" />
-    <PackageVersion Include="Microsoft.Extensions.Options" Version="$(FrameworkCommonVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.ObjectPool" Version="$(FrameworkLatestVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.Options" Version="$(FrameworkNextVersion)" />
     <!-- 3rd party packages -->
     <PackageVersion Include="Mono.Options" Version="6.12.0.148" />
     <!-- Test related packages -->

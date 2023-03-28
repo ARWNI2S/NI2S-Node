@@ -1,13 +1,13 @@
 using System;
 using System.Buffers;
 using System.Collections.Generic;
-using Orleans.Serialization.Buffers;
-using Orleans.Serialization.Cloning;
-using Orleans.Serialization.GeneratedCodeHelpers;
-using Orleans.Serialization.Session;
-using Orleans.Serialization.WireProtocol;
+using NI2S.Node.Serialization.Buffers;
+using NI2S.Node.Serialization.Cloning;
+using NI2S.Node.Serialization.GeneratedCodeHelpers;
+using NI2S.Node.Serialization.Session;
+using NI2S.Node.Serialization.WireProtocol;
 
-namespace Orleans.Serialization.Codecs
+namespace NI2S.Node.Serialization.Codecs
 {
     /// <summary>
     /// Serializer for <see cref="HashSet{T}"/>.
@@ -28,8 +28,8 @@ namespace Orleans.Serialization.Codecs
         /// <param name="comparerCodec">The comparer codec.</param>
         public HashSetCodec(IFieldCodec<T> fieldCodec, IFieldCodec<IEqualityComparer<T>> comparerCodec)
         {
-            _fieldCodec = OrleansGeneratedCodeHelper.UnwrapService(this, fieldCodec);
-            _comparerCodec = OrleansGeneratedCodeHelper.UnwrapService(this, comparerCodec);
+            _fieldCodec = NI2SGeneratedCodeHelper.UnwrapService(this, fieldCodec);
+            _comparerCodec = NI2SGeneratedCodeHelper.UnwrapService(this, comparerCodec);
         }
 
         /// <inheritdoc/>

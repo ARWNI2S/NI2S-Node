@@ -1,11 +1,11 @@
-using Orleans.Serialization.Buffers;
-using Orleans.Serialization.Codecs;
+using NI2S.Node.Serialization.Buffers;
+using NI2S.Node.Serialization.Codecs;
 using System;
 using System.Buffers;
 using System.Runtime.Serialization;
 using System.Security;
 
-namespace Orleans.Serialization
+namespace NI2S.Node.Serialization
 {
     internal abstract class ValueTypeSerializer
     {

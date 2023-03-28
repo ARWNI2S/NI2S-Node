@@ -1,8 +1,8 @@
+﻿using Microsoft.Extensions.ObjectPool;
 using System.Collections.Generic;
 using System.Threading;
-using Microsoft.Extensions.ObjectPool;
 
-namespace Orleans.Serialization.Invocation
+namespace NI2S.Node.Serialization.Invocation
 {
     internal sealed class ConcurrentObjectPool<T> : ConcurrentObjectPool<T, DefaultConcurrentObjectPoolPolicy<T>> where T : class, new()
     {

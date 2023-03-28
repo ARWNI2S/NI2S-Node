@@ -1,11 +1,11 @@
 using System;
 using System.Buffers;
-using Orleans.Serialization.Buffers;
-using Orleans.Serialization.Cloning;
-using Orleans.Serialization.GeneratedCodeHelpers;
-using Orleans.Serialization.WireProtocol;
+using NI2S.Node.Serialization.Buffers;
+using NI2S.Node.Serialization.Cloning;
+using NI2S.Node.Serialization.GeneratedCodeHelpers;
+using NI2S.Node.Serialization.WireProtocol;
 
-namespace Orleans.Serialization.Codecs
+namespace NI2S.Node.Serialization.Codecs
 {
     /// <summary>
     /// Serializer for <see cref="ValueTuple"/>.
@@ -51,7 +51,7 @@ namespace Orleans.Serialization.Codecs
         /// <param name="valueCodec">The value codec.</param>
         public ValueTupleCodec(IFieldCodec<T> valueCodec)
         {
-            _valueCodec = OrleansGeneratedCodeHelper.UnwrapService(this, valueCodec);
+            _valueCodec = NI2SGeneratedCodeHelper.UnwrapService(this, valueCodec);
         }
 
         /// <inheritdoc />
@@ -113,7 +113,7 @@ namespace Orleans.Serialization.Codecs
         /// Initializes a new instance of the <see cref="ValueTupleCopier{T}"/> class.
         /// </summary>
         /// <param name="copier">The copier.</param>
-        public ValueTupleCopier(IDeepCopier<T> copier) => _copier = OrleansGeneratedCodeHelper.GetOptionalCopier(copier);
+        public ValueTupleCopier(IDeepCopier<T> copier) => _copier = NI2SGeneratedCodeHelper.GetOptionalCopier(copier);
 
         public bool IsShallowCopyable() => _copier is null;
 
@@ -148,8 +148,8 @@ namespace Orleans.Serialization.Codecs
         /// <param name="item2Codec">The <typeparamref name="T2"/> codec.</param>
         public ValueTupleCodec(IFieldCodec<T1> item1Codec, IFieldCodec<T2> item2Codec)
         {
-            _item1Codec = OrleansGeneratedCodeHelper.UnwrapService(this, item1Codec);
-            _item2Codec = OrleansGeneratedCodeHelper.UnwrapService(this, item2Codec);
+            _item1Codec = NI2SGeneratedCodeHelper.UnwrapService(this, item1Codec);
+            _item2Codec = NI2SGeneratedCodeHelper.UnwrapService(this, item2Codec);
         }
 
         /// <inheritdoc />
@@ -216,8 +216,8 @@ namespace Orleans.Serialization.Codecs
         /// <param name="copier2">The copier for <typeparamref name="T2"/>.</param>
         public ValueTupleCopier(IDeepCopier<T1> copier1, IDeepCopier<T2> copier2)
         {
-            _copier1 = OrleansGeneratedCodeHelper.GetOptionalCopier(copier1);
-            _copier2 = OrleansGeneratedCodeHelper.GetOptionalCopier(copier2);
+            _copier1 = NI2SGeneratedCodeHelper.GetOptionalCopier(copier1);
+            _copier2 = NI2SGeneratedCodeHelper.GetOptionalCopier(copier2);
         }
 
         public bool IsShallowCopyable() => _copier1 is null && _copier2 is null;
@@ -261,9 +261,9 @@ namespace Orleans.Serialization.Codecs
             IFieldCodec<T2> item2Codec,
             IFieldCodec<T3> item3Codec)
         {
-            _item1Codec = OrleansGeneratedCodeHelper.UnwrapService(this, item1Codec);
-            _item2Codec = OrleansGeneratedCodeHelper.UnwrapService(this, item2Codec);
-            _item3Codec = OrleansGeneratedCodeHelper.UnwrapService(this, item3Codec);
+            _item1Codec = NI2SGeneratedCodeHelper.UnwrapService(this, item1Codec);
+            _item2Codec = NI2SGeneratedCodeHelper.UnwrapService(this, item2Codec);
+            _item3Codec = NI2SGeneratedCodeHelper.UnwrapService(this, item3Codec);
         }
 
         /// <inheritdoc />
@@ -338,9 +338,9 @@ namespace Orleans.Serialization.Codecs
             IDeepCopier<T2> copier2,
             IDeepCopier<T3> copier3)
         {
-            _copier1 = OrleansGeneratedCodeHelper.GetOptionalCopier(copier1);
-            _copier2 = OrleansGeneratedCodeHelper.GetOptionalCopier(copier2);
-            _copier3 = OrleansGeneratedCodeHelper.GetOptionalCopier(copier3);
+            _copier1 = NI2SGeneratedCodeHelper.GetOptionalCopier(copier1);
+            _copier2 = NI2SGeneratedCodeHelper.GetOptionalCopier(copier2);
+            _copier3 = NI2SGeneratedCodeHelper.GetOptionalCopier(copier3);
         }
 
         public bool IsShallowCopyable() => _copier1 is null && _copier2 is null && _copier3 is null;
@@ -390,10 +390,10 @@ namespace Orleans.Serialization.Codecs
             IFieldCodec<T3> item3Codec,
             IFieldCodec<T4> item4Codec)
         {
-            _item1Codec = OrleansGeneratedCodeHelper.UnwrapService(this, item1Codec);
-            _item2Codec = OrleansGeneratedCodeHelper.UnwrapService(this, item2Codec);
-            _item3Codec = OrleansGeneratedCodeHelper.UnwrapService(this, item3Codec);
-            _item4Codec = OrleansGeneratedCodeHelper.UnwrapService(this, item4Codec);
+            _item1Codec = NI2SGeneratedCodeHelper.UnwrapService(this, item1Codec);
+            _item2Codec = NI2SGeneratedCodeHelper.UnwrapService(this, item2Codec);
+            _item3Codec = NI2SGeneratedCodeHelper.UnwrapService(this, item3Codec);
+            _item4Codec = NI2SGeneratedCodeHelper.UnwrapService(this, item4Codec);
         }
 
         /// <inheritdoc />
@@ -474,10 +474,10 @@ namespace Orleans.Serialization.Codecs
             IDeepCopier<T3> copier3,
             IDeepCopier<T4> copier4)
         {
-            _copier1 = OrleansGeneratedCodeHelper.GetOptionalCopier(copier1);
-            _copier2 = OrleansGeneratedCodeHelper.GetOptionalCopier(copier2);
-            _copier3 = OrleansGeneratedCodeHelper.GetOptionalCopier(copier3);
-            _copier4 = OrleansGeneratedCodeHelper.GetOptionalCopier(copier4);
+            _copier1 = NI2SGeneratedCodeHelper.GetOptionalCopier(copier1);
+            _copier2 = NI2SGeneratedCodeHelper.GetOptionalCopier(copier2);
+            _copier3 = NI2SGeneratedCodeHelper.GetOptionalCopier(copier3);
+            _copier4 = NI2SGeneratedCodeHelper.GetOptionalCopier(copier4);
         }
 
         public bool IsShallowCopyable() => _copier1 is null && _copier2 is null && _copier3 is null && _copier4 is null;
@@ -533,11 +533,11 @@ namespace Orleans.Serialization.Codecs
             IFieldCodec<T4> item4Codec,
             IFieldCodec<T5> item5Codec)
         {
-            _item1Codec = OrleansGeneratedCodeHelper.UnwrapService(this, item1Codec);
-            _item2Codec = OrleansGeneratedCodeHelper.UnwrapService(this, item2Codec);
-            _item3Codec = OrleansGeneratedCodeHelper.UnwrapService(this, item3Codec);
-            _item4Codec = OrleansGeneratedCodeHelper.UnwrapService(this, item4Codec);
-            _item5Codec = OrleansGeneratedCodeHelper.UnwrapService(this, item5Codec);
+            _item1Codec = NI2SGeneratedCodeHelper.UnwrapService(this, item1Codec);
+            _item2Codec = NI2SGeneratedCodeHelper.UnwrapService(this, item2Codec);
+            _item3Codec = NI2SGeneratedCodeHelper.UnwrapService(this, item3Codec);
+            _item4Codec = NI2SGeneratedCodeHelper.UnwrapService(this, item4Codec);
+            _item5Codec = NI2SGeneratedCodeHelper.UnwrapService(this, item5Codec);
         }
 
         /// <inheritdoc />
@@ -623,11 +623,11 @@ namespace Orleans.Serialization.Codecs
             IDeepCopier<T4> copier4,
             IDeepCopier<T5> copier5)
         {
-            _copier1 = OrleansGeneratedCodeHelper.GetOptionalCopier(copier1);
-            _copier2 = OrleansGeneratedCodeHelper.GetOptionalCopier(copier2);
-            _copier3 = OrleansGeneratedCodeHelper.GetOptionalCopier(copier3);
-            _copier4 = OrleansGeneratedCodeHelper.GetOptionalCopier(copier4);
-            _copier5 = OrleansGeneratedCodeHelper.GetOptionalCopier(copier5);
+            _copier1 = NI2SGeneratedCodeHelper.GetOptionalCopier(copier1);
+            _copier2 = NI2SGeneratedCodeHelper.GetOptionalCopier(copier2);
+            _copier3 = NI2SGeneratedCodeHelper.GetOptionalCopier(copier3);
+            _copier4 = NI2SGeneratedCodeHelper.GetOptionalCopier(copier4);
+            _copier5 = NI2SGeneratedCodeHelper.GetOptionalCopier(copier5);
         }
 
         public bool IsShallowCopyable() => _copier1 is null && _copier2 is null && _copier3 is null && _copier4 is null && _copier5 is null;
@@ -689,12 +689,12 @@ namespace Orleans.Serialization.Codecs
             IFieldCodec<T5> item5Codec,
             IFieldCodec<T6> item6Codec)
         {
-            _item1Codec = OrleansGeneratedCodeHelper.UnwrapService(this, item1Codec);
-            _item2Codec = OrleansGeneratedCodeHelper.UnwrapService(this, item2Codec);
-            _item3Codec = OrleansGeneratedCodeHelper.UnwrapService(this, item3Codec);
-            _item4Codec = OrleansGeneratedCodeHelper.UnwrapService(this, item4Codec);
-            _item5Codec = OrleansGeneratedCodeHelper.UnwrapService(this, item5Codec);
-            _item6Codec = OrleansGeneratedCodeHelper.UnwrapService(this, item6Codec);
+            _item1Codec = NI2SGeneratedCodeHelper.UnwrapService(this, item1Codec);
+            _item2Codec = NI2SGeneratedCodeHelper.UnwrapService(this, item2Codec);
+            _item3Codec = NI2SGeneratedCodeHelper.UnwrapService(this, item3Codec);
+            _item4Codec = NI2SGeneratedCodeHelper.UnwrapService(this, item4Codec);
+            _item5Codec = NI2SGeneratedCodeHelper.UnwrapService(this, item5Codec);
+            _item6Codec = NI2SGeneratedCodeHelper.UnwrapService(this, item6Codec);
         }
 
         /// <inheritdoc />
@@ -787,12 +787,12 @@ namespace Orleans.Serialization.Codecs
             IDeepCopier<T5> copier5,
             IDeepCopier<T6> copier6)
         {
-            _copier1 = OrleansGeneratedCodeHelper.GetOptionalCopier(copier1);
-            _copier2 = OrleansGeneratedCodeHelper.GetOptionalCopier(copier2);
-            _copier3 = OrleansGeneratedCodeHelper.GetOptionalCopier(copier3);
-            _copier4 = OrleansGeneratedCodeHelper.GetOptionalCopier(copier4);
-            _copier5 = OrleansGeneratedCodeHelper.GetOptionalCopier(copier5);
-            _copier6 = OrleansGeneratedCodeHelper.GetOptionalCopier(copier6);
+            _copier1 = NI2SGeneratedCodeHelper.GetOptionalCopier(copier1);
+            _copier2 = NI2SGeneratedCodeHelper.GetOptionalCopier(copier2);
+            _copier3 = NI2SGeneratedCodeHelper.GetOptionalCopier(copier3);
+            _copier4 = NI2SGeneratedCodeHelper.GetOptionalCopier(copier4);
+            _copier5 = NI2SGeneratedCodeHelper.GetOptionalCopier(copier5);
+            _copier6 = NI2SGeneratedCodeHelper.GetOptionalCopier(copier6);
         }
 
         public bool IsShallowCopyable() => _copier1 is null && _copier2 is null && _copier3 is null && _copier4 is null && _copier5 is null && _copier6 is null;
@@ -860,13 +860,13 @@ namespace Orleans.Serialization.Codecs
             IFieldCodec<T6> item6Codec,
             IFieldCodec<T7> item7Codec)
         {
-            _item1Codec = OrleansGeneratedCodeHelper.UnwrapService(this, item1Codec);
-            _item2Codec = OrleansGeneratedCodeHelper.UnwrapService(this, item2Codec);
-            _item3Codec = OrleansGeneratedCodeHelper.UnwrapService(this, item3Codec);
-            _item4Codec = OrleansGeneratedCodeHelper.UnwrapService(this, item4Codec);
-            _item5Codec = OrleansGeneratedCodeHelper.UnwrapService(this, item5Codec);
-            _item6Codec = OrleansGeneratedCodeHelper.UnwrapService(this, item6Codec);
-            _item7Codec = OrleansGeneratedCodeHelper.UnwrapService(this, item7Codec);
+            _item1Codec = NI2SGeneratedCodeHelper.UnwrapService(this, item1Codec);
+            _item2Codec = NI2SGeneratedCodeHelper.UnwrapService(this, item2Codec);
+            _item3Codec = NI2SGeneratedCodeHelper.UnwrapService(this, item3Codec);
+            _item4Codec = NI2SGeneratedCodeHelper.UnwrapService(this, item4Codec);
+            _item5Codec = NI2SGeneratedCodeHelper.UnwrapService(this, item5Codec);
+            _item6Codec = NI2SGeneratedCodeHelper.UnwrapService(this, item6Codec);
+            _item7Codec = NI2SGeneratedCodeHelper.UnwrapService(this, item7Codec);
         }
 
         /// <inheritdoc />
@@ -967,13 +967,13 @@ namespace Orleans.Serialization.Codecs
             IDeepCopier<T6> copier6,
             IDeepCopier<T7> copier7)
         {
-            _copier1 = OrleansGeneratedCodeHelper.GetOptionalCopier(copier1);
-            _copier2 = OrleansGeneratedCodeHelper.GetOptionalCopier(copier2);
-            _copier3 = OrleansGeneratedCodeHelper.GetOptionalCopier(copier3);
-            _copier4 = OrleansGeneratedCodeHelper.GetOptionalCopier(copier4);
-            _copier5 = OrleansGeneratedCodeHelper.GetOptionalCopier(copier5);
-            _copier6 = OrleansGeneratedCodeHelper.GetOptionalCopier(copier6);
-            _copier7 = OrleansGeneratedCodeHelper.GetOptionalCopier(copier7);
+            _copier1 = NI2SGeneratedCodeHelper.GetOptionalCopier(copier1);
+            _copier2 = NI2SGeneratedCodeHelper.GetOptionalCopier(copier2);
+            _copier3 = NI2SGeneratedCodeHelper.GetOptionalCopier(copier3);
+            _copier4 = NI2SGeneratedCodeHelper.GetOptionalCopier(copier4);
+            _copier5 = NI2SGeneratedCodeHelper.GetOptionalCopier(copier5);
+            _copier6 = NI2SGeneratedCodeHelper.GetOptionalCopier(copier6);
+            _copier7 = NI2SGeneratedCodeHelper.GetOptionalCopier(copier7);
         }
 
         public bool IsShallowCopyable() => _copier1 is null && _copier2 is null && _copier3 is null && _copier4 is null && _copier5 is null && _copier6 is null && _copier7 is null;
@@ -1047,14 +1047,14 @@ namespace Orleans.Serialization.Codecs
             IFieldCodec<T7> item7Codec,
             IFieldCodec<T8> item8Codec)
         {
-            _item1Codec = OrleansGeneratedCodeHelper.UnwrapService(this, item1Codec);
-            _item2Codec = OrleansGeneratedCodeHelper.UnwrapService(this, item2Codec);
-            _item3Codec = OrleansGeneratedCodeHelper.UnwrapService(this, item3Codec);
-            _item4Codec = OrleansGeneratedCodeHelper.UnwrapService(this, item4Codec);
-            _item5Codec = OrleansGeneratedCodeHelper.UnwrapService(this, item5Codec);
-            _item6Codec = OrleansGeneratedCodeHelper.UnwrapService(this, item6Codec);
-            _item7Codec = OrleansGeneratedCodeHelper.UnwrapService(this, item7Codec);
-            _item8Codec = OrleansGeneratedCodeHelper.UnwrapService(this, item8Codec);
+            _item1Codec = NI2SGeneratedCodeHelper.UnwrapService(this, item1Codec);
+            _item2Codec = NI2SGeneratedCodeHelper.UnwrapService(this, item2Codec);
+            _item3Codec = NI2SGeneratedCodeHelper.UnwrapService(this, item3Codec);
+            _item4Codec = NI2SGeneratedCodeHelper.UnwrapService(this, item4Codec);
+            _item5Codec = NI2SGeneratedCodeHelper.UnwrapService(this, item5Codec);
+            _item6Codec = NI2SGeneratedCodeHelper.UnwrapService(this, item6Codec);
+            _item7Codec = NI2SGeneratedCodeHelper.UnwrapService(this, item7Codec);
+            _item8Codec = NI2SGeneratedCodeHelper.UnwrapService(this, item8Codec);
         }
 
         /// <inheritdoc />
@@ -1160,14 +1160,14 @@ namespace Orleans.Serialization.Codecs
             IDeepCopier<T7> copier7,
             IDeepCopier<T8> copier8)
         {
-            _copier1 = OrleansGeneratedCodeHelper.GetOptionalCopier(copier1);
-            _copier2 = OrleansGeneratedCodeHelper.GetOptionalCopier(copier2);
-            _copier3 = OrleansGeneratedCodeHelper.GetOptionalCopier(copier3);
-            _copier4 = OrleansGeneratedCodeHelper.GetOptionalCopier(copier4);
-            _copier5 = OrleansGeneratedCodeHelper.GetOptionalCopier(copier5);
-            _copier6 = OrleansGeneratedCodeHelper.GetOptionalCopier(copier6);
-            _copier7 = OrleansGeneratedCodeHelper.GetOptionalCopier(copier7);
-            _copier8 = OrleansGeneratedCodeHelper.GetOptionalCopier(copier8);
+            _copier1 = NI2SGeneratedCodeHelper.GetOptionalCopier(copier1);
+            _copier2 = NI2SGeneratedCodeHelper.GetOptionalCopier(copier2);
+            _copier3 = NI2SGeneratedCodeHelper.GetOptionalCopier(copier3);
+            _copier4 = NI2SGeneratedCodeHelper.GetOptionalCopier(copier4);
+            _copier5 = NI2SGeneratedCodeHelper.GetOptionalCopier(copier5);
+            _copier6 = NI2SGeneratedCodeHelper.GetOptionalCopier(copier6);
+            _copier7 = NI2SGeneratedCodeHelper.GetOptionalCopier(copier7);
+            _copier8 = NI2SGeneratedCodeHelper.GetOptionalCopier(copier8);
         }
 
         public bool IsShallowCopyable() => _copier1 is null && _copier2 is null && _copier3 is null && _copier4 is null && _copier5 is null && _copier6 is null && _copier7 is null && _copier8 is null;

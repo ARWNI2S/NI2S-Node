@@ -1,18 +1,19 @@
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+using NI2S.Node.Serialization.Activators;
+using NI2S.Node.Serialization.Cloning;
+using NI2S.Node.Serialization.Codecs;
+using NI2S.Node.Serialization.Configuration;
+using NI2S.Node.Serialization.GeneratedCodeHelpers;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Reflection;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
-using Orleans.Serialization.Activators;
-using Orleans.Serialization.Cloning;
-using Orleans.Serialization.Codecs;
-using Orleans.Serialization.Configuration;
-using Orleans.Serialization.GeneratedCodeHelpers;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Orleans.Serialization.Serializers
+namespace NI2S.Node.Serialization.Serializers
 {
     /// <summary>
     /// Provides access to serializers and related objects.
@@ -402,7 +403,7 @@ namespace Orleans.Serialization.Serializers
             object[] constructorArguments = null;
             if (_baseCopiers.TryGetValue(searchType, out var copierType))
             {
-               // Use the detected copier type. 
+                // Use the detected copier type. 
                 if (copierType.IsGenericTypeDefinition)
                 {
                     copierType = copierType.MakeGenericType(concreteType.GetGenericArguments());
@@ -468,7 +469,7 @@ namespace Orleans.Serialization.Serializers
 
         private object GetServiceOrCreateInstance(Type type, object[] constructorArguments = null)
         {
-            var result = OrleansGeneratedCodeHelper.TryGetService(type);
+            var result = NI2SGeneratedCodeHelper.TryGetService(type);
             if (result != null)
             {
                 return result;

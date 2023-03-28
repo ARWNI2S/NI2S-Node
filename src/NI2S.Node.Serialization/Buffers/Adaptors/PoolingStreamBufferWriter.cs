@@ -3,7 +3,7 @@ using System.Buffers;
 using System.IO;
 using System.Runtime.CompilerServices;
 
-namespace Orleans.Serialization.Buffers.Adaptors
+namespace NI2S.Node.Serialization.Buffers.Adaptors
 {
     /// <summary>
     /// An implementation of <see cref="IBufferWriter{T}"/> for writing to a <see cref="Stream"/>, using pooled arrays as an intermediate buffer.

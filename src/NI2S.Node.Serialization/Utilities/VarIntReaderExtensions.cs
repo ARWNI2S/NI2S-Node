@@ -1,9 +1,9 @@
-using Orleans.Serialization.Buffers;
-using Orleans.Serialization.Codecs;
-using Orleans.Serialization.WireProtocol;
+using NI2S.Node.Serialization.Buffers;
+using NI2S.Node.Serialization.Codecs;
+using NI2S.Node.Serialization.WireProtocol;
 using System.Runtime.CompilerServices;
 
-namespace Orleans.Serialization.Buffers
+namespace NI2S.Node.Serialization.Buffers
 {
     /// <summary>
     /// Extension method for working with variable-width integers.

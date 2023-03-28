@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Orleans.Serialization.TypeSystem;
+namespace NI2S.Node.Serialization.TypeSystem;
 
 /// <summary>
 /// Rewrites <see cref="TypeSpec"/> graphs.

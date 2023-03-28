@@ -13,4 +13,10 @@
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Engine\Plugins\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="$(SourceProjectsPath)\NI2S.Node.Serialization\NI2S.Node.Serialization.csproj" />
+  </ItemGroup>
 </Project>

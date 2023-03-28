@@ -1,9 +1,9 @@
 using System;
 using System.Buffers;
-using Orleans.Serialization.Buffers;
-using Orleans.Serialization.WireProtocol;
+using NI2S.Node.Serialization.Buffers;
+using NI2S.Node.Serialization.WireProtocol;
 
-namespace Orleans.Serialization.Codecs
+namespace NI2S.Node.Serialization.Codecs
 {
     /// <summary>
     /// A serializer which skips all fields which it encounters.

@@ -1,7 +1,7 @@
 using NI2S.Node.Protocol.Security;
 using System.Security.Authentication;
 
-namespace NI2S.Node.Configuration.Options
+namespace NI2S.Node.Configuration
 {
     public class ListenOptions
     {

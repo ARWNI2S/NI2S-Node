@@ -3,7 +3,7 @@
   <PropertyGroup>
     <!-- Set the repository root into a variable -->
     <SourceRoot>$(MSBuildThisFileDirectory)</SourceRoot>
-    <!-- Set the ni2s msbuild imports folder into a variable -->
+    <!-- Set the niis msbuild imports folder into a variable -->
     <NI2SMSBuildPath>$(SourceRoot)/build</NI2SMSBuildPath>
     <!-- Set the tools folder into a variable -->
     <ToolsPath>$(SourceRoot)/Programs</ToolsPath>
@@ -27,7 +27,7 @@
     <Product>Narrative Interactive Intelligent Simulator</Product>
     <Copyright>© Alternate Reality Worlds. All rights reserved.</Copyright>
     <!-- Repository -->
-    <PublicRepositoryUrl>https://github.com/arwni2s/ni2s-node</PublicRepositoryUrl>
+    <PublicRepositoryUrl>https://github.com/arwniis/niis-node</PublicRepositoryUrl>
     <PrivateRepositoryUrl>$(PublicRepositoryUrl)</PrivateRepositoryUrl>
     <RepositoryUrl>$(PublicRepositoryUrl)</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
@@ -42,8 +42,8 @@
   <PropertyGroup Condition="'$(IsPackable)' != 'false' AND '$(OutputType)' != 'Exe' ">
     <!-- Package -->
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/arwni2s/ni2s-node</PackageProjectUrl>
-    <PackageIcon>ni2s_128.png</PackageIcon>
+    <PackageProjectUrl>https://github.com/arwniis/niis-node</PackageProjectUrl>
+    <PackageIcon>niis_128.png</PackageIcon>
     <PackageTags>NI2S Narrative-Simulation Distributed-Systems C# .NET</PackageTags>
     <PackageReleaseNotes></PackageReleaseNotes>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
@@ -52,7 +52,7 @@
 
   <!-- Set nuget packages assets -->
   <ItemGroup Condition="'$(IsPackable)' != 'false' AND '$(OutputType)' != 'Exe' ">
-      <None Include="$(SourceRoot)/assets/ni2s_128.png" Pack="true" Visible="false" PackagePath="/" />
+      <None Include="$(SourceRoot)/assets/niis_128.png" Pack="true" Visible="false" PackagePath="/" />
   </ItemGroup>
   
   <!-- Set continuous integration build tag -->

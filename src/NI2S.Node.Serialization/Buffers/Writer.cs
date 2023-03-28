@@ -1,19 +1,23 @@
-using System;
-using System.Buffers;
+﻿using System;
 using System.Buffers.Binary;
+using System.Buffers;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 #if NETCOREAPP3_1_OR_GREATER
 using System.Numerics;
 #else
-using Orleans.Serialization.Utilities;
+using NI2S.Node.Serialization.Utilities;
 #endif
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using Orleans.Serialization.Buffers.Adaptors;
-using Orleans.Serialization.Session;
+using System.Text;
+using System.Threading.Tasks;
+using NI2S.Node.Serialization.Session;
+using NI2S.Node.Serialization.Buffers.Adaptors;
 
-namespace Orleans.Serialization.Buffers
+namespace NI2S.Node.Serialization.Buffers
 {
     /// <summary>
     /// Helper methods for creating <see cref="Writer{TBufferWriter}"/> instances.

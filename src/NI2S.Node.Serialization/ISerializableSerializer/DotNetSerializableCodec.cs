@@ -1,15 +1,15 @@
-using Orleans.Serialization.Buffers;
-using Orleans.Serialization.Codecs;
-using Orleans.Serialization.Serializers;
-using Orleans.Serialization.TypeSystem;
-using Orleans.Serialization.WireProtocol;
+using NI2S.Node.Serialization.Buffers;
+using NI2S.Node.Serialization.Codecs;
+using NI2S.Node.Serialization.Serializers;
+using NI2S.Node.Serialization.TypeSystem;
+using NI2S.Node.Serialization.WireProtocol;
 using System;
 using System.Buffers;
 using System.Collections.Concurrent;
 using System.Runtime.Serialization;
 using System.Security;
 
-namespace Orleans.Serialization
+namespace NI2S.Node.Serialization
 {
     /// <summary>
     /// Serializer for types which implement the <see cref="ISerializable"/> pattern.

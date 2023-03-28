@@ -1,10 +1,10 @@
 using Microsoft.Extensions.Options;
-using Orleans.Serialization.Configuration;
+using NI2S.Node.Serialization.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Orleans.Serialization.Session
+namespace NI2S.Node.Serialization.Session
 {
     /// <summary>
     /// Collection of well-known types.
