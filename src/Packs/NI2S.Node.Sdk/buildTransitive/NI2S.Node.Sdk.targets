@@ -1,3 +1,0 @@
-<Project>
-  <Import Project="..\build\NI2S.Node.Sdk.targets" />
-</Project>
