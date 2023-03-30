@@ -1,0 +1,67 @@
+<Project>
+  <!-- Setup parent directory build targets path -->
+  <PropertyGroup>
+    <_ParentDirectoryBuildTargetsPath Condition="'$(_DirectoryBuildTargetsFile)' != ''">$([System.IO.Path]::Combine('..', '$(_DirectoryBuildTargetsFile)'))</_ParentDirectoryBuildTargetsPath>
+  </PropertyGroup>
+
+  <!-- Import parent directory build targets (if exists) -->
+  <Import Project="$(_ParentDirectoryBuildTargetsPath)" Condition="Exists('$(_ParentDirectoryBuildTargetsPath)')"/>
+
+  <!-- Set InformationVersion here, since $(Version) is already set at this point. -->
+  <PropertyGroup>
+    <InformationalVersion>$(Version). Commit Hash: $(GitHeadSha)</InformationalVersion>
+  </PropertyGroup>
+
+  <!-- TODO 1 - BEGIN -->
+
+  <!-- Begin NI2S: Without these lines the project won't build properly -->
+  <!-- Set path to code generator -->
+  <!-- <PropertyGroup>
+    <NI2SGenerateCodeDependsOn Condition=" '$(NI2SBuildTimeCodeGen)' == 'msbuild' ">$(NI2SGenerateCodeDependsOn)</NI2SGenerateCodeDependsOn>
+  </PropertyGroup>-->
+
+  <!--<PropertyGroup Condition=" '$(NI2SBuildTimeCodeGen)' == 'msbuild' ">
+    <DotNetHost Condition="'$(DotNetHost)' == ''">dotnet</DotNetHost>
+    <Asm>NI2S.CodeGenerator.MSBuild.Bootstrap</Asm>
+    <NI2SCodeGenCoreAssembly>$(MSBuildThisFileDirectory)src/BootstrapBuild/$(Asm)/bin/$(Configuration)/publish/net7.0/$(Asm).dll</NI2SCodeGenCoreAssembly>
+    <NI2SCodeGenTasksAssembly>$(MSBuildThisFileDirectory)src/BootstrapBuild/$(Asm)/bin/$(Configuration)/publish/net7.0/NI2S.CodeGenerator.MSBuild.Tasks.dll</NI2SCodeGenTasksAssembly>
+    <NI2SBootstrapBuildProject>$(MSBuildThisFileDirectory)src/BootstrapBuild/NI2S.CodeGenerator.MSBuild.Bootstrap/NI2S.CodeGenerator.MSBuild.Bootstrap.csproj</NI2SBootstrapBuildProject>
+  </PropertyGroup>-->
+
+  <!--<ItemGroup>
+    <ProjectReference Include="$(NI2SBootstrapBuildProject)" Condition=" '$(NI2SBuildTimeCodeGen)' == 'msbuild' ">
+      <Project>{CB36EF45-6E90-443F-AEE4-394677068147}</Project>
+      <Name>NI2S.CodeGenerator.MSBuild.Bootstrap</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <AssetTargetFallback>net7.0</AssetTargetFallback>
+      <Visible>false</Visible>-->
+      <!-- Workaround. See: https://github.com/dotnet/sdk/issues/939#issuecomment-284641613 -->
+      <!-- This causes the 'Dependency' node in VS to show a warning icon. See https://github.com/dotnet/project-system/issues/2928 -->
+  <!--<SkipGetTargetFrameworkProperties>true</SkipGetTargetFrameworkProperties>
+      <UndefineProperties>TargetFramework;RuntimeIdentifier;TargetFrameworks;RuntimeIdentifiers</UndefineProperties>-->
+      <!-- /Workaround -->
+  <!--</ProjectReference>
+  </ItemGroup>-->
+
+  <!--<Import Condition=" '$(NI2SBuildTimeCodeGen)' == 'true' " Project="$(MSBuildThisFileDirectory)src/NI2S.Node.CodeGenerator/build/NI2S.Node.CodeGenerator.props" />-->
+  <!--<Import Condition=" '$(NI2SBuildTimeCodeGen)' == 'msbuild' " Project="$(MSBuildThisFileDirectory)src/NI2S.Node.CodeGenerator.MSBuild/build/NI2S.Node.CodeGenerator.MSBuild.targets" />-->
+  <!--<Import Condition=" '$(NI2SBuildTimeCodeGen)' == 'true' or '$(NI2SBuildTimeCodeGen)' == 'msbuild' " Project="$(MSBuildThisFileDirectory)src/NI2S.Node.Sdk/build/Microsoft.NI2S.Node.Sdk.targets" />-->
+  <!--<ItemGroup Condition="'$(TemporaryMark)' != 'true'">-->
+    <!-- Enable code generator -->
+  <!--<ProjectReference
+      Include="$(SourceProjectsPath)/NI2S.Node.CodeGenerator/NI2S.Node.CodeGenerator.csproj"
+      ReferenceOutputAssembly="false"
+      OutputItemType="Analyzer"
+      Condition=" '$(NI2SBuildTimeCodeGen)' == 'True' "/>-->
+    <!--<ProjectReference
+      Include="$(SourceProjectsPath)/NI2S.Node.Analyzers/NI2S.Node.Analyzers.csproj"
+      ReferenceOutputAssembly="false"
+      AssetTargetFallback="netstandard2.0"
+      UndefineProperties="TargetFramework"
+      SkipGetTargetFrameworkProperties="true"
+      OutputItemType="Analyzer"
+      Condition=" '$(NI2SBuildTimeCodeGen)' == 'true' or '$(NI2SBuildTimeCodeGen)' == 'msbuild' "/>-->
+ <!-- </ItemGroup>-->
+
+  <!-- TODO 1 - END -->
+</Project>

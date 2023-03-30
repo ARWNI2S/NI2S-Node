@@ -1,0 +1,11 @@
+<Project>
+  <!-- Repository folder structure -->
+  <PropertyGroup>
+    <!-- Set the repository root into a variable -->
+    <RepoRoot>$(MSBuildThisFileDirectory)</RepoRoot>
+    <!-- Set the third party root folder into a variable -->
+    <ThirdPartyRoot>$(RepoRoot)/ThirdParty</ThirdPartyRoot>
+    <!-- Set the third party binaries root folder into a variable -->
+    <ThirdPartyPackagesRoot>$(ThirdPartyPath)/Binaries</ThirdPartyPackagesRoot>
+  </PropertyGroup>
+</Project>

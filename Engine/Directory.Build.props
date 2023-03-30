@@ -1,0 +1,173 @@
+<Project>
+  <!-- Setup parent directory build props path -->
+  <PropertyGroup>
+    <_ParentDirectoryBuildPropsPath Condition="'$(_DirectoryBuildPropsFile)' != ''">$([System.IO.Path]::Combine('..', '$(_DirectoryBuildPropsFile)'))</_ParentDirectoryBuildPropsPath>
+  </PropertyGroup>
+
+  <!-- Import parent directory build props (if exists) -->
+  <Import Project="$(_ParentDirectoryBuildPropsPath)" Condition="Exists('$(_ParentDirectoryBuildPropsPath)')"/>
+
+  <!-- Repository folder structure -->
+  <PropertyGroup>
+    <!-- Set the solution root into a variable -->
+    <SolutionRoot>$(MSBuildThisFileDirectory)</SolutionRoot>
+    <!-- Set the niis msbuild imports folder into a variable -->
+    <NI2SMSBuildPath>$(SolutionRoot)/build</NI2SMSBuildPath>
+    <!-- Set the project source root folder into a variable -->
+    <SourceProjectsPath>$(SolutionRoot)/src</SourceProjectsPath>
+  </PropertyGroup>
+
+
+  <PropertyGroup>
+    <!-- Set the tools folder into a variable -->
+    <ToolsPath>$(SolutionRoot)/Programs</ToolsPath>
+    <!-- Set the templates folder into a variable -->
+    <TemplatesPath>$(SolutionRoot)/Templates</TemplatesPath>
+    <ModuleProjectsPath>$(SourceProjectsPath)/Modules</ModuleProjectsPath>
+    <PackageProjectsPath>$(SourceProjectsPath)/Packs</PackageProjectsPath>
+  </PropertyGroup>
+
+  <!-- Set common properties regarding assembly information -->
+  <PropertyGroup>
+    <LangVersion>11</LangVersion>
+    <Features>strict</Features>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <!-- Authoring and Copyright -->
+    <Authors>ManOguaR and contributors</Authors>
+    <Owners>Eduardo Ridao (a.k.a ManOguaR)</Owners>
+    <Product>Narrative Interactive Intelligent Simulator</Product>
+    <Copyright>© Alternate Reality Worlds. All rights reserved.</Copyright>
+    <!-- Repository -->
+    <PublicRepositoryUrl>https://github.com/arwni2s/ni2s-node</PublicRepositoryUrl>
+    <PrivateRepositoryUrl>$(PublicRepositoryUrl)</PrivateRepositoryUrl>
+    <RepositoryUrl>$(PublicRepositoryUrl)</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+  </PropertyGroup>
+
+  <!-- Do not generate debug packages -->
+  <PropertyGroup Condition="'$(IsPackable)' == '' AND '$(Configuration)' == 'Debug'">
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <!-- Set properties regarding nuget packages -->
+  <PropertyGroup Condition="'$(IsPackable)' != 'false' AND '$(OutputType)' != 'Exe' ">
+    <!-- Package -->
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/arwni2s/ni2s-node</PackageProjectUrl>
+    <PackageIcon>niis_128.png</PackageIcon>
+    <PackageTags>NI2S Narrative-Simulation Distributed-Systems C# .NET</PackageTags>
+    <PackageReleaseNotes></PackageReleaseNotes>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <IncludePackageReferencesDuringMarkupCompilation>true</IncludePackageReferencesDuringMarkupCompilation>
+  </PropertyGroup>
+
+  <!-- Set nuget packages assets -->
+  <ItemGroup Condition="'$(IsPackable)' != 'false' AND '$(OutputType)' != 'Exe' ">
+      <None Include="$(RepoRoot)/assets/assets/ni2s_128.png" Pack="true" Visible="false" PackagePath="/" />
+  </ItemGroup>
+  
+  <!-- Set continuous integration build tag -->
+  <PropertyGroup Condition="'$(TF_BUILD)' == 'true' or '$(GITHUB_ACTIONS)' == 'true'">
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+  </PropertyGroup>
+
+  <!-- Common compile parameters -->
+  <Choose>
+    <When Condition=" '$(Configuration)' == 'Debug'">
+      <PropertyGroup>
+        <DebugType>full</DebugType>
+        <IncludeSymbols>true</IncludeSymbols>
+        <IncludeSource>true</IncludeSource>
+        <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+        <NoWarn>$(NoWarn);1591;2003</NoWarn>
+      </PropertyGroup>
+    </When>
+    <Otherwise>
+      <PropertyGroup>
+        <DebugType>embedded</DebugType>
+        <IncludeSymbols>false</IncludeSymbols>
+        <IncludeSource>false</IncludeSource>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <NoWarn>$(NoWarn);1591;2003</NoWarn>
+      </PropertyGroup>
+    </Otherwise>
+  </Choose>
+
+  <!-- FSharp SDK overrides -->
+  <PropertyGroup>
+    <DisableImplicitSystemValueTupleReference>true</DisableImplicitSystemValueTupleReference>
+    <DisableImplicitFSharpCoreReference>true</DisableImplicitFSharpCoreReference>
+  </PropertyGroup>
+
+  <!-- Versioning properties -->
+  <PropertyGroup>
+    <AssemblyVersion>0.1.1.0</AssemblyVersion>
+    <VersionPrefix Condition=" '$(VersionPrefix)'=='' ">0.1.1</VersionPrefix>
+  </PropertyGroup>
+
+  <!-- For Debug builds generated a date/time dependent version suffix -->
+  <PropertyGroup Condition=" '$(Configuration)'=='Debug' ">
+    <VersionSuffix Condition=" '$(VersionSuffix)'=='' ">dev</VersionSuffix>
+    <VersionSuffix Condition=" '$(VersionDateSuffix)'!='' ">$(VersionSuffix)-$(VersionDateSuffix)</VersionSuffix>
+  </PropertyGroup>
+
+  <!-- Set target frameworks -->
+  <PropertyGroup>
+    <CompatibilityTargetFrameworks>netstandard2.0</CompatibilityTargetFrameworks>
+    <DefaultTargetFrameworks>net7.0</DefaultTargetFrameworks>
+    <FullCompatibility>$(DefaultTargetFrameworks);$(CompatibilityTargetFrameworks)</FullCompatibility>
+  </PropertyGroup>
+
+  <!-- Enable testing -->
+  <ItemGroup Condition="$(IsPackable) != False AND '$(OutputType)' != 'Exe' AND '$(IsNI2SFrameworkPart)' != False">
+    <Compile Include="$(MSBuildThisFileDirectory)\InternalsVisibleTo.Test.cs" />
+  </ItemGroup>
+
+  <!-- TODO 2 - BEGIN -->
+  <!--<Import Condition=" '$(NI2SBuildTimeCodeGen)' == 'true' " Project="$(MSBuildThisFileDirectory)src/NI2S.Node.CodeGenerator/build/NI2S.Node.CodeGenerator.props" />-->
+  <!-- TODO 2 - END -->
+
+  <!-- Set output folders -->
+  <PropertyGroup>
+    <!-- for created NuGet packages -->
+    <PackageOutputPath Condition="'$(PackageOutputPath)'==''">$(SolutionRoot)/Artifacts/$(Configuration)</PackageOutputPath>
+    <!-- for distributed test apps -->
+    <DistributedTestsOutputPath Condition="'$(DistributedTestsOutputPath)'==''">$(SolutionRoot)/Artifacts/DistributedTests</DistributedTestsOutputPath>
+    <!-- for NI2S tools -->
+    <NI2SToolsOutputPath Condition="'$(NI2SToolsOutputPath)'==''">$(SolutionRoot)/Artifacts/Tools/$(Configuration)</NI2SToolsOutputPath>
+  </PropertyGroup>
+
+  <!-- Set GitHeadSha -->
+  <Choose>
+    <When Condition="'$(OfficialBuild)' != 'true'">
+      <!-- On non-official builds we don't burn in a git sha.  In large part because it
+           hurts our determinism efforts as binaries which should be the same between
+           builds will not (due to developers building against different HEAD
+           values -->
+      <PropertyGroup>
+        <GitHeadSha>&lt;developer build&gt;</GitHeadSha>
+      </PropertyGroup>
+    </When>
+    <When Condition="'$(BUILD_SOURCEVERSION)' != ''">
+      <PropertyGroup>
+        <GitHeadSha>$(BUILD_SOURCEVERSION)</GitHeadSha>
+      </PropertyGroup>
+    </When>
+    <When Condition="'$(BUILD_SOURCEVERSION)' == '' AND '$(GIT_COMMIT)' != ''">
+      <PropertyGroup>
+        <GitHeadSha>$(GIT_COMMIT)</GitHeadSha>
+      </PropertyGroup>
+    </When>
+    <Otherwise>
+      <PropertyGroup>
+        <GitHeadSha>Not found</GitHeadSha>
+        <DotGitDir>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory).git'))</DotGitDir>
+        <HeadFileContent Condition="Exists('$(DotGitDir)/HEAD')">$([System.IO.File]::ReadAllText('$(DotGitDir)/HEAD').Trim())</HeadFileContent>
+        <RefPath Condition="$(HeadFileContent.StartsWith('ref: '))">$(DotGitDir)/$(HeadFileContent.Substring(5))</RefPath>
+        <GitHeadSha Condition="'$(RefPath)' != '' AND Exists('$(RefPath)')">$([System.IO.File]::ReadAllText('$(RefPath)').Trim())</GitHeadSha>
+        <GitHeadSha Condition="'$(HeadFileContent)' != '' AND '$(RefPath)' == ''">$(HeadFileContent)</GitHeadSha>
+      </PropertyGroup>
+    </Otherwise>
+  </Choose>
+
+</Project>
