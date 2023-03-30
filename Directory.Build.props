@@ -10,4 +10,10 @@
     <!-- Set the third party nuget packages folder into a variable -->
     <ThirdPartyPackageRoot>$(ThirdPartyRoot)\Packages</ThirdPartyPackageRoot>
   </PropertyGroup>
+
+  <!-- Set output folder for created NuGet packages -->
+  <PropertyGroup>
+    <PackageOutputPath Condition=" '$(PackageOutputPath)'=='' AND '$(ThirdPartyPackageRoot)' != ''">$(ThirdPartyPackageRoot)\$(Configuration)\$(SolutionName)</PackageOutputPath>
+  </PropertyGroup>
+
 </Project>

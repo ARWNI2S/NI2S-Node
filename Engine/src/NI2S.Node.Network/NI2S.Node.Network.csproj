@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <PackageId>NI2S.Node.Network</PackageId>
+    <Title>NI2S Node Network Library</Title>
+    <Description>Network library of NI2S Nodes.</Description>
+    <TargetFrameworks>$(DefaultTargetFrameworks)</TargetFrameworks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NI2S.SocketServer" />
+  </ItemGroup>
+
+</Project>

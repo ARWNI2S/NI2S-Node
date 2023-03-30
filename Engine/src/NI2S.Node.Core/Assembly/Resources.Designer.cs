@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace NI2S.Node.Assembly {
+namespace NI2S.Node.Core {
     using System;
     
     
