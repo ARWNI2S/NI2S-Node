@@ -8,13 +8,11 @@
     <FrameworkLatestVersion>7.0.4</FrameworkLatestVersion>
     <SourceLinkVersion>1.1.1</SourceLinkVersion>
     <SocketServerVersion>1.0.0</SocketServerVersion>
+    <NI2SOrleansVersion>$(FrameworkCommonVersion)-ni2s-dev-202303301914</NI2SOrleansVersion>
   </PropertyGroup>
   <ItemGroup>
     <!-- System packages -->
     <PackageVersion Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageVersion Include="NI2S.Orleans.Sdk" Version="7.0.0-ni2s-dev-202303301914" />
-    <PackageVersion Include="NI2S.Orleans.Server" Version="7.0.0-ni2s-dev-202303301914" />
-    <PackageVersion Include="NI2S.SocketServer" Version="$(SocketServerVersion)" />
     <PackageVersion Include="System.Collections.Immutable" Version="$(FrameworkCommonVersion)" />
     <PackageVersion Include="System.Configuration.ConfigurationManager" Version="$(FrameworkCommonVersion)" />
     <PackageVersion Include="System.IO.Hashing" Version="$(FrameworkCommonVersion)" NoWarn="NU5104" />
@@ -38,6 +36,9 @@
     <PackageVersion Include="Microsoft.Extensions.Options" Version="$(FrameworkNextVersion)" />
     <!-- 3rd party packages -->
     <PackageVersion Include="Mono.Options" Version="6.12.0.148" />
+    <PackageVersion Include="NI2S.Orleans.Sdk" Version="$(NI2SOrleansVersion)" />
+    <PackageVersion Include="NI2S.Orleans.Server" Version="$(NI2SOrleansVersion)" />
+    <PackageVersion Include="NI2S.SocketServer" Version="$(SocketServerVersion)" />
     <!-- Test related packages -->
     <!-- Tooling related packages -->
     <PackageVersion Include="Microsoft.SourceLink.AzureRepos.Git" Version="$(SourceLinkVersion)" />

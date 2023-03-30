@@ -18,7 +18,6 @@
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
     <PackageReference Include="Newtonsoft.Json" />
-    <PackageReference Include="NI2S.Orleans.Sdk" />
   </ItemGroup>
 
 </Project>
