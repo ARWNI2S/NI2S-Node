@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\NI2S.Node.Core\NI2S.Node.Core.csproj" />
+    <ProjectReference Include="..\..\src\NI2S.Node.Runtime\NI2S.Node.Runtime.csproj" />
   </ItemGroup>
 
 </Project>

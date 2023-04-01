@@ -13,13 +13,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "msbuild", "msbuild", "{0167
 	ProjectSection(SolutionItems) = preProject
 		..\Directory.Build.props = ..\Directory.Build.props
 		..\Directory.Build.targets = ..\Directory.Build.targets
+		..\Directory.Packages.props = ..\Directory.Packages.props
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "engine", "engine", "{AC2AA17C-6276-4CF8-AE70-07B898C2F5E9}"
 	ProjectSection(SolutionItems) = preProject
 		Directory.Build.props = Directory.Build.props
 		Directory.Build.targets = Directory.Build.targets
-		Directory.Packages.props = Directory.Packages.props
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{1F6A94A3-1E8B-4899-BEB5-C9D711480B02}"
@@ -36,11 +36,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestNode", "test\TestNode\T
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{7732AE3A-A978-49F3-AFDE-F58908875F0D}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{6824B714-2F33-45C5-AC48-037DA78B732E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NI2S.Node.Runtime", "src\NI2S.Node.Runtime\NI2S.Node.Runtime.csproj", "{89B2F8E4-1E71-46DC-A1CC-6F5D48E4CFCC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NI2S.Node.Network", "src\NI2S.Node.Network\NI2S.Node.Network.csproj", "{167F93B0-DA87-49B3-802F-C71C726EEAA5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NI2S.Node.Network", "src\NI2S.Node.Network\NI2S.Node.Network.csproj", "{8D1F60A4-C9E2-41F8-824C-75B95A7365D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NI2S.Node.Runtime", "src\NI2S.Node.Runtime\NI2S.Node.Runtime.csproj", "{89B2F8E4-1E71-46DC-A1CC-6F5D48E4CFCC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NI2S.Node.Network.Tests", "test\NI2S.Node.Network.Tests\NI2S.Node.Network.Tests.csproj", "{DBE60A87-41EB-4FDF-AA08-DD0F1C3077BD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{35EB752D-B276-453E-96E3-CB9F0F1E0397}"
+	ProjectSection(SolutionItems) = preProject
+		src\Shared\CopyOnWriteDictionary.cs = src\Shared\CopyOnWriteDictionary.cs
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -60,14 +65,18 @@ Global
 		{AC186A63-CC4A-4F2C-ACCB-3733F94F11AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AC186A63-CC4A-4F2C-ACCB-3733F94F11AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AC186A63-CC4A-4F2C-ACCB-3733F94F11AA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{167F93B0-DA87-49B3-802F-C71C726EEAA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{167F93B0-DA87-49B3-802F-C71C726EEAA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{167F93B0-DA87-49B3-802F-C71C726EEAA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{167F93B0-DA87-49B3-802F-C71C726EEAA5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{89B2F8E4-1E71-46DC-A1CC-6F5D48E4CFCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{89B2F8E4-1E71-46DC-A1CC-6F5D48E4CFCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{89B2F8E4-1E71-46DC-A1CC-6F5D48E4CFCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{89B2F8E4-1E71-46DC-A1CC-6F5D48E4CFCC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D1F60A4-C9E2-41F8-824C-75B95A7365D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D1F60A4-C9E2-41F8-824C-75B95A7365D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D1F60A4-C9E2-41F8-824C-75B95A7365D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D1F60A4-C9E2-41F8-824C-75B95A7365D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DBE60A87-41EB-4FDF-AA08-DD0F1C3077BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBE60A87-41EB-4FDF-AA08-DD0F1C3077BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBE60A87-41EB-4FDF-AA08-DD0F1C3077BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBE60A87-41EB-4FDF-AA08-DD0F1C3077BD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -80,9 +89,10 @@ Global
 		{99F21FF7-DBA1-4A40-AE92-D7D25F3EBB31} = {AC2AA17C-6276-4CF8-AE70-07B898C2F5E9}
 		{AC186A63-CC4A-4F2C-ACCB-3733F94F11AA} = {ADFBD620-F60D-4C23-A523-00A308D6D4BA}
 		{7732AE3A-A978-49F3-AFDE-F58908875F0D} = {AC2AA17C-6276-4CF8-AE70-07B898C2F5E9}
-		{6824B714-2F33-45C5-AC48-037DA78B732E} = {9F9850F4-46A8-4060-8AE7-6C9FEA728C2D}
-		{167F93B0-DA87-49B3-802F-C71C726EEAA5} = {6824B714-2F33-45C5-AC48-037DA78B732E}
 		{89B2F8E4-1E71-46DC-A1CC-6F5D48E4CFCC} = {9F9850F4-46A8-4060-8AE7-6C9FEA728C2D}
+		{8D1F60A4-C9E2-41F8-824C-75B95A7365D4} = {9F9850F4-46A8-4060-8AE7-6C9FEA728C2D}
+		{DBE60A87-41EB-4FDF-AA08-DD0F1C3077BD} = {ADFBD620-F60D-4C23-A523-00A308D6D4BA}
+		{35EB752D-B276-453E-96E3-CB9F0F1E0397} = {9F9850F4-46A8-4060-8AE7-6C9FEA728C2D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B00E5345-6AC1-4299-85BA-F1E02926D364}

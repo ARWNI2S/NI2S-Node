@@ -1,0 +1,71 @@
+<Project>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    <!-- Shared Package Versions -->
+    <MicrosoftCodeAnalysisVersion>4.5.0</MicrosoftCodeAnalysisVersion>
+    <FrameworkCommonVersion>7.0.0</FrameworkCommonVersion>
+    <FrameworkNextVersion>7.0.1</FrameworkNextVersion>
+    <FrameworkLatestVersion>7.0.4</FrameworkLatestVersion>
+    <SourceLinkVersion>1.1.1</SourceLinkVersion>
+    <xUnitVersion>2.4.2</xUnitVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <!-- Debug Package Versions -->
+    <SocketServerVersion>0.1.1-dev-202303310859</SocketServerVersion>
+    <NI2SOrleansVersion>$(FrameworkCommonVersion)-ni2s-dev-202303301914</NI2SOrleansVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <!-- Release Package Versions -->
+    <SocketServerVersion>0.1.1</SocketServerVersion>
+    <NI2SOrleansVersion>$(FrameworkCommonVersion)</NI2SOrleansVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- System packages -->
+    <PackageVersion Include="System.Collections.Immutable" Version="$(FrameworkCommonVersion)" />
+    <PackageVersion Include="System.Configuration.ConfigurationManager" Version="$(FrameworkCommonVersion)" />
+    <PackageVersion Include="System.IO.Hashing" Version="$(FrameworkCommonVersion)" NoWarn="NU5104" />
+    <PackageVersion Include="System.IO.Pipelines" Version="$(FrameworkCommonVersion)" />
+    <PackageVersion Include="System.Text.Json" Version="7.0.2" />
+    <!-- Microsoft packages -->
+    <PackageVersion Include="Microsoft.AspNetCore.Connections.Abstractions" Version="$(FrameworkLatestVersion)" />
+    <PackageVersion Include="Microsoft.AspNetCore.Engine.Kestrel" Version="2.2.0" />
+    <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="$(MicrosoftCodeAnalysisVersion)" />
+    <PackageVersion Include="Microsoft.DotNet.PlatformAbstractions" Version="3.1.6" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration" Version="$(FrameworkCommonVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration.Binder" Version="$(FrameworkLatestVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="$(FrameworkCommonVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="$(FrameworkCommonVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.DependencyModel" Version="$(FrameworkCommonVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.Features" Version="$(FrameworkLatestVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.FileProviders.Composite" Version="$(FrameworkCommonVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="$(FrameworkNextVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.Hosting.Abstractions" Version="$(FrameworkCommonVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.Logging" Version="$(FrameworkCommonVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="$(FrameworkCommonVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.Logging.Console" Version="$(FrameworkCommonVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.ObjectPool" Version="$(FrameworkLatestVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.Options" Version="$(FrameworkNextVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="$(FrameworkCommonVersion)" />
+    <!-- 3rd party packages -->
+    <PackageVersion Include="Autofac.Extensions.DependencyInjection" Version="8.0.0" />
+    <PackageVersion Include="Mono.Options" Version="6.12.0.148" />
+    <PackageVersion Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageVersion Include="NI2S.Orleans.Sdk" Version="$(NI2SOrleansVersion)" />
+    <PackageVersion Include="NI2S.Orleans.Server" Version="$(NI2SOrleansVersion)" />
+    <PackageVersion Include="NI2S.SocketServer" Version="$(SocketServerVersion)" />
+    <PackageVersion Include="NI2S.SocketServer.Client" Version="$(SocketServerVersion)" />
+    <PackageVersion Include="NI2S.SocketServer.Udp" Version="$(SocketServerVersion)" />
+    <!-- Test related packages -->
+    <PackageVersion Include="BenchmarkDotNet" Version="0.13.5" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.3.2" />
+    <PackageVersion Include="xunit" Version="$(xUnitVersion)" />
+    <PackageVersion Include="xunit.assert" Version="$(xUnitVersion)" />
+    <PackageVersion Include="xunit.extensibility.core" Version="$(xUnitVersion)" />
+    <PackageVersion Include="xunit.extensibility.execution" Version="$(xUnitVersion)" />
+    <PackageVersion Include="xunit.runner.visualstudio" Version="2.4.5" />
+    <!-- Tooling related packages -->
+    <PackageVersion Include="Microsoft.SourceLink.AzureRepos.Git" Version="$(SourceLinkVersion)" />
+    <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="$(SourceLinkVersion)" />
+    <PackageVersion Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.2" />
+  </ItemGroup>
+</Project>

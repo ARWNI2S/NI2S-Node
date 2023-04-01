@@ -9,9 +9,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="..\Shared\CopyOnWriteDictionary.cs" Link="Hosting\Builder\CopyOnWriteDictionary.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Core\Globalization\" />
     <Folder Include="Helpers\" />
-    <Folder Include="Hosting\Builder\" />
   </ItemGroup>
 
   <ItemGroup>

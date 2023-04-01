@@ -3,12 +3,25 @@
   <PropertyGroup>
     <PackageId>NI2S.Node.Network</PackageId>
     <Title>NI2S Node Network Library</Title>
-    <Description>Network library of NI2S Nodes.</Description>
+    <Description>Network library of NI2S Node.</Description>
     <TargetFrameworks>$(DefaultTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="NI2S.SocketServer" />
+    <PackageReference Include="NI2S.SocketServer.Client" />
+    <PackageReference Include="NI2S.SocketServer.Udp" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Hosting\Builder\" />
+    <Folder Include="Protocol\Udp\" />
+    <Folder Include="Routing\" />
+    <Folder Include="Server\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NI2S.Node.Core.Abstractions\NI2S.Node.Core.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>

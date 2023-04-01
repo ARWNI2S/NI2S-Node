@@ -11,13 +11,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Hosting\Builder\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
     <PackageReference Include="Newtonsoft.Json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Core\Infrastructure\" />
+    <Folder Include="Hosting\Builder\" />
   </ItemGroup>
 
 </Project>
