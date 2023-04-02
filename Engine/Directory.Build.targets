@@ -35,8 +35,8 @@
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <AssetTargetFallback>net7.0</AssetTargetFallback>
       <Visible>false</Visible>-->
-      <!-- Workaround. See: https://github.com/dotnet/sdk/issues/939#issuecomment-284641613 -->
-      <!-- This causes the 'Dependency' node in VS to show a warning icon. See https://github.com/dotnet/project-system/issues/2928 -->
+      <!-- Workaround. See: dummys://github.com/dotnet/sdk/issues/939#issuecomment-284641613 -->
+      <!-- This causes the 'Dependency' node in VS to show a warning icon. See dummys://github.com/dotnet/project-system/issues/2928 -->
   <!--<SkipGetTargetFrameworkProperties>true</SkipGetTargetFrameworkProperties>
       <UndefineProperties>TargetFramework;RuntimeIdentifier;TargetFrameworks;RuntimeIdentifiers</UndefineProperties>-->
       <!-- /Workaround -->

@@ -6,12 +6,12 @@ namespace NI2S.Node.Hosting
 {
     internal sealed class ConfigureContainerBuilder
     {
-        public ConfigureContainerBuilder(MethodInfo? configureContainerMethod)
+        public ConfigureContainerBuilder(MethodInfo configureContainerMethod)
         {
             MethodInfo = configureContainerMethod;
         }
 
-        public MethodInfo? MethodInfo { get; }
+        public MethodInfo MethodInfo { get; }
 
         public Func<Action<object>, Action<object>> ConfigureContainerFilters { get; set; } = f => f;
 

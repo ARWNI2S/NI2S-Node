@@ -1,7 +1,10 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using NI2S.Node.Builder;
 using NI2S.Node.Configuration;
+using NI2S.Node.Core;
+using NI2S.Node.Core.Configuration;
 using NI2S.Node.Core.Infrastructure;
-using NI2S.Node.Hosting.Builder;
 using System;
 using System.Linq;
 using System.Net;
@@ -17,19 +20,19 @@ namespace NI2S.Node.Infrastructure.Extensions
         /// Configure base application settings
         /// </summary>
         /// <param name="services">Collection of service descriptors</param>
-        /// <param name="builder">A builder for web applications and services</param>
-        public static void ConfigureApplicationSettings(this IServiceCollection services,
-            WebApplicationBuilder builder)
+        /// <param name="builder">A builder for node engine and services</param>
+        public static void ConfigureEngineSettings(this IServiceCollection services,
+            NodeEngineBuilder builder)
         {
             //let the operating system decide what TLS protocol version to use
-            //see https://docs.microsoft.com/dotnet/framework/network-programming/tls
+            //see dummys://docs.microsoft.com/dotnet/framework/network-programming/tls
             ServicePointManager.SecurityProtocol = SecurityProtocolType.SystemDefault;
 
             //create default file provider
-            CommonHelper.DefaultFileProvider = new NopFileProvider(builder.Environment);
+            CommonHelper.DefaultFileProvider = new NI2SFileProvider(builder.Environment);
 
             //register type finder
-            var typeFinder = new WebAppTypeFinder();
+            var typeFinder = new NodeAppTypeFinder();
             Singleton<ITypeFinder>.Instance = typeFinder;
             services.AddSingleton<ITypeFinder>(typeFinder);
 
@@ -50,18 +53,18 @@ namespace NI2S.Node.Infrastructure.Extensions
         /// Add services to the application and configure service provider
         /// </summary>
         /// <param name="services">Collection of service descriptors</param>
-        /// <param name="builder">A builder for web applications and services</param>
-        public static void ConfigureApplicationServices(this IServiceCollection services,
-            WebApplicationBuilder builder)
+        /// <param name="builder">A builder for node engine and services</param>
+        public static void ConfigureEngineServices(this IServiceCollection services,
+            NodeEngineBuilder builder)
         {
-            //add accessor to HttpContext
-            services.AddHttpContextAccessor();
+            //add accessor to DummyContext
+            services.AddDummyContextAccessor();
 
             //initialize plugins
-            var mvcCoreBuilder = services.AddMvcCore();
+            //var mvcCoreBuilder = services.AddMvcCore();
             var pluginConfig = new PluginConfig();
             builder.Configuration.GetSection(nameof(PluginConfig)).Bind(pluginConfig, options => options.BindNonPublicProperties = true);
-            mvcCoreBuilder.PartManager.InitializePlugins(pluginConfig);
+            //mvcCoreBuilder.PartManager.InitializePlugins(pluginConfig);
 
             //create engine and configure service provider
             var engine = EngineContext.Create();
@@ -70,12 +73,12 @@ namespace NI2S.Node.Infrastructure.Extensions
         }
 
         /// <summary>
-        /// Register HttpContextAccessor
+        /// Register DummyContextAccessor
         /// </summary>
         /// <param name="services">Collection of service descriptors</param>
-        public static void AddHttpContextAccessor(this IServiceCollection services)
+        public static void AddDummyContextAccessor(this IServiceCollection services)
         {
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            //services.AddSingleton<IDummyContextAccessor, DummyContextAccessor>();
         }
 
         /// <summary>
@@ -87,7 +90,7 @@ namespace NI2S.Node.Infrastructure.Extensions
         //    //override cookie name
         //    services.AddAntiforgery(options =>
         //    {
-        //        options.Cookie.Name = $"{NopCookieDefaults.Prefix}{NopCookieDefaults.AntiforgeryCookie}";
+        //        options.Cookie.Name = $"{NI2SCookieDefaults.Prefix}{NI2SCookieDefaults.AntiforgeryCookie}";
         //        options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
         //    });
         //}
@@ -96,12 +99,12 @@ namespace NI2S.Node.Infrastructure.Extensions
         /// Adds services required for application session state
         /// </summary>
         /// <param name="services">Collection of service descriptors</param>
-        //public static void AddHttpSession(this IServiceCollection services)
+        //public static void AddDummySession(this IServiceCollection services)
         //{
         //    services.AddSession(options =>
         //    {
-        //        options.Cookie.Name = $"{NopCookieDefaults.Prefix}{NopCookieDefaults.SessionCookie}";
-        //        options.Cookie.HttpOnly = true;
+        //        options.Cookie.Name = $"{NI2SCookieDefaults.Prefix}{NI2SCookieDefaults.SessionCookie}";
+        //        options.Cookie.DummyOnly = true;
         //        options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
         //    });
         //}
@@ -171,14 +174,14 @@ namespace NI2S.Node.Infrastructure.Extensions
         /// Adds data protection services
         /// </summary>
         /// <param name="services">Collection of service descriptors</param>
-        //public static void AddNopDataProtection(this IServiceCollection services)
+        //public static void AddNI2SDataProtection(this IServiceCollection services)
         //{
         //    var appSettings = Singleton<AppSettings>.Instance;
         //    if (appSettings.Get<AzureBlobConfig>().Enabled && appSettings.Get<AzureBlobConfig>().StoreDataProtectionKeys)
         //    {
         //        var blobServiceClient = new BlobServiceClient(appSettings.Get<AzureBlobConfig>().ConnectionString);
         //        var blobContainerClient = blobServiceClient.GetBlobContainerClient(appSettings.Get<AzureBlobConfig>().DataProtectionKeysContainerName);
-        //        var blobClient = blobContainerClient.GetBlobClient(NopDataProtectionDefaults.AzureDataProtectionKeyFile);
+        //        var blobClient = blobContainerClient.GetBlobClient(NI2SDataProtectionDefaults.AzureDataProtectionKeyFile);
 
         //        var dataProtectionBuilder = services.AddDataProtection().PersistKeysToAzureBlobStorage(blobClient);
 
@@ -193,7 +196,7 @@ namespace NI2S.Node.Infrastructure.Extensions
         //    }
         //    else
         //    {
-        //        var dataProtectionKeysPath = CommonHelper.DefaultFileProvider.MapPath(NopDataProtectionDefaults.DataProtectionKeysPath);
+        //        var dataProtectionKeysPath = CommonHelper.DefaultFileProvider.MapPath(NI2SDataProtectionDefaults.DataProtectionKeysPath);
         //        var dataProtectionKeysFolder = new System.IO.DirectoryInfo(dataProtectionKeysPath);
 
         //        //configure the data protection system to persist keys to the specified directory
@@ -205,34 +208,34 @@ namespace NI2S.Node.Infrastructure.Extensions
         /// Adds authentication service
         /// </summary>
         /// <param name="services">Collection of service descriptors</param>
-        //public static void AddNopAuthentication(this IServiceCollection services)
+        //public static void AddNI2SAuthentication(this IServiceCollection services)
         //{
         //    //set default authentication schemes
         //    var authenticationBuilder = services.AddAuthentication(options =>
         //    {
-        //        options.DefaultChallengeScheme = NopAuthenticationDefaults.AuthenticationScheme;
-        //        options.DefaultScheme = NopAuthenticationDefaults.AuthenticationScheme;
-        //        options.DefaultSignInScheme = NopAuthenticationDefaults.ExternalAuthenticationScheme;
+        //        options.DefaultChallengeScheme = NI2SAuthenticationDefaults.AuthenticationScheme;
+        //        options.DefaultScheme = NI2SAuthenticationDefaults.AuthenticationScheme;
+        //        options.DefaultSignInScheme = NI2SAuthenticationDefaults.ExternalAuthenticationScheme;
         //    });
 
         //    //add main cookie authentication
-        //    authenticationBuilder.AddCookie(NopAuthenticationDefaults.AuthenticationScheme, options =>
+        //    authenticationBuilder.AddCookie(NI2SAuthenticationDefaults.AuthenticationScheme, options =>
         //    {
-        //        options.Cookie.Name = $"{NopCookieDefaults.Prefix}{NopCookieDefaults.AuthenticationCookie}";
-        //        options.Cookie.HttpOnly = true;
+        //        options.Cookie.Name = $"{NI2SCookieDefaults.Prefix}{NI2SCookieDefaults.AuthenticationCookie}";
+        //        options.Cookie.DummyOnly = true;
         //        options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
-        //        options.LoginPath = NopAuthenticationDefaults.LoginPath;
-        //        options.AccessDeniedPath = NopAuthenticationDefaults.AccessDeniedPath;
+        //        options.LoginPath = NI2SAuthenticationDefaults.LoginPath;
+        //        options.AccessDeniedPath = NI2SAuthenticationDefaults.AccessDeniedPath;
         //    });
 
         //    //add external authentication
-        //    authenticationBuilder.AddCookie(NopAuthenticationDefaults.ExternalAuthenticationScheme, options =>
+        //    authenticationBuilder.AddCookie(NI2SAuthenticationDefaults.ExternalAuthenticationScheme, options =>
         //    {
-        //        options.Cookie.Name = $"{NopCookieDefaults.Prefix}{NopCookieDefaults.ExternalAuthenticationCookie}";
-        //        options.Cookie.HttpOnly = true;
+        //        options.Cookie.Name = $"{NI2SCookieDefaults.Prefix}{NI2SCookieDefaults.ExternalAuthenticationCookie}";
+        //        options.Cookie.DummyOnly = true;
         //        options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
-        //        options.LoginPath = NopAuthenticationDefaults.LoginPath;
-        //        options.AccessDeniedPath = NopAuthenticationDefaults.AccessDeniedPath;
+        //        options.LoginPath = NI2SAuthenticationDefaults.LoginPath;
+        //        options.AccessDeniedPath = NI2SAuthenticationDefaults.AccessDeniedPath;
         //    });
 
         //    //register and configure external authentication plugins now
@@ -250,7 +253,7 @@ namespace NI2S.Node.Infrastructure.Extensions
         /// </summary>
         /// <param name="services">Collection of service descriptors</param>
         /// <returns>A builder for configuring MVC services</returns>
-        //public static IMvcBuilder AddNopMvc(this IServiceCollection services)
+        //public static IMvcBuilder AddNI2SMvc(this IServiceCollection services)
         //{
         //    //add basic MVC feature
         //    var mvcBuilder = services.AddControllersWithViews();
@@ -268,7 +271,7 @@ namespace NI2S.Node.Infrastructure.Extensions
         //        //use cookie-based temp data provider
         //        mvcBuilder.AddCookieTempDataProvider(options =>
         //        {
-        //            options.Cookie.Name = $"{NopCookieDefaults.Prefix}{NopCookieDefaults.TempDataCookie}";
+        //            options.Cookie.Name = $"{NI2SCookieDefaults.Prefix}{NI2SCookieDefaults.TempDataCookie}";
         //            options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
         //        });
         //    }
@@ -281,24 +284,24 @@ namespace NI2S.Node.Infrastructure.Extensions
         //    //set some options
         //    mvcBuilder.AddMvcOptions(options =>
         //    {
-        //        //we'll use this until https://github.com/dotnet/aspnetcore/issues/6566 is solved 
+        //        //we'll use this until dummys://github.com/dotnet/aspnetcore/issues/6566 is solved 
         //        options.ModelBinderProviders.Insert(0, new InvariantNumberModelBinderProvider());
         //        options.ModelBinderProviders.Insert(1, new CustomPropertiesModelBinderProvider());
         //        //add custom display metadata provider 
-        //        options.ModelMetadataDetailsProviders.Add(new NopMetadataProvider());
+        //        options.ModelMetadataDetailsProviders.Add(new NI2SMetadataProvider());
 
         //        //in .NET model binding for a non-nullable property may fail with an error message "The value '' is invalid"
         //        //here we set the locale name as the message, we'll replace it with the actual one later when not-null validation failed
-        //        options.ModelBindingMessageProvider.SetValueMustNotBeNullAccessor(_ => NopValidationDefaults.NotNullValidationLocaleName);
+        //        options.ModelBindingMessageProvider.SetValueMustNotBeNullAccessor(_ => NI2SValidationDefaults.NotNullValidationLocaleName);
         //    });
 
         //    //add fluent validation
         //    services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
 
-        //    //register all available validators from Nop assemblies
+        //    //register all available validators from NI2S assemblies
         //    var assemblies = mvcBuilder.PartManager.ApplicationParts
         //        .OfType<AssemblyPart>()
-        //        .Where(part => part.Name.StartsWith("Nop", StringComparison.InvariantCultureIgnoreCase))
+        //        .Where(part => part.Name.StartsWith("NI2S", StringComparison.InvariantCultureIgnoreCase))
         //        .Select(part => part.Assembly);
         //    services.AddValidatorsFromAssemblies(assemblies);
 
@@ -312,17 +315,17 @@ namespace NI2S.Node.Infrastructure.Extensions
         /// Register custom RedirectResultExecutor
         /// </summary>
         /// <param name="services">Collection of service descriptors</param>
-        //public static void AddNopRedirectResultExecutor(this IServiceCollection services)
+        //public static void AddNI2SRedirectResultExecutor(this IServiceCollection services)
         //{
         //    //we use custom redirect executor as a workaround to allow using non-ASCII characters in redirect URLs
-        //    services.AddScoped<IActionResultExecutor<RedirectResult>, NopRedirectResultExecutor>();
+        //    services.AddScoped<IActionResultExecutor<RedirectResult>, NI2SRedirectResultExecutor>();
         //}
 
         /// <summary>
         /// Add and configure MiniProfiler service
         /// </summary>
         /// <param name="services">Collection of service descriptors</param>
-        //public static void AddNopMiniProfiler(this IServiceCollection services)
+        //public static void AddNI2SMiniProfiler(this IServiceCollection services)
         //{
         //    //whether database is already installed
         //    if (!DataSettingsManager.IsDatabaseInstalled())
@@ -343,23 +346,23 @@ namespace NI2S.Node.Infrastructure.Extensions
         //}
 
         /// <summary>
-        /// Add and configure WebMarkupMin service
+        /// Add and configure NodeMarkupMin service
         /// </summary>
         /// <param name="services">Collection of service descriptors</param>
-        //public static void AddNopWebMarkupMin(this IServiceCollection services)
+        //public static void AddNI2SNodeMarkupMin(this IServiceCollection services)
         //{
         //    //check whether database is installed
         //    if (!DataSettingsManager.IsDatabaseInstalled())
         //        return;
 
         //    services
-        //        .AddWebMarkupMin(options =>
+        //        .AddNodeMarkupMin(options =>
         //        {
         //            options.AllowMinificationInDevelopmentEnvironment = true;
         //            options.AllowCompressionInDevelopmentEnvironment = true;
         //            options.DisableMinification = !EngineContext.Current.Resolve<CommonSettings>().EnableHtmlMinification;
         //            options.DisableCompression = true;
-        //            options.DisablePoweredByHttpHeaders = true;
+        //            options.DisablePoweredByDummyHeaders = true;
         //        })
         //        .AddHtmlMinification(options =>
         //        {
@@ -377,14 +380,14 @@ namespace NI2S.Node.Infrastructure.Extensions
         //}
 
         /// <summary>
-        /// Adds WebOptimizer to the specified <see cref="IServiceCollection"/> and enables CSS and JavaScript minification.
+        /// Adds NodeOptimizer to the specified <see cref="IServiceCollection"/> and enables CSS and JavaScript minification.
         /// </summary>
         /// <param name="services">Collection of service descriptors</param>
-        //public static void AddNopWebOptimizer(this IServiceCollection services)
+        //public static void AddNI2SNodeOptimizer(this IServiceCollection services)
         //{
         //    var appSettings = Singleton<AppSettings>.Instance;
-        //    var cssBundling = appSettings.Get<WebOptimizerConfig>().EnableCssBundling;
-        //    var jsBundling = appSettings.Get<WebOptimizerConfig>().EnableJavaScriptBundling;
+        //    var cssBundling = appSettings.Get<NodeOptimizerConfig>().EnableCssBundling;
+        //    var jsBundling = appSettings.Get<NodeOptimizerConfig>().EnableJavaScriptBundling;
 
         //    //add minification & bundling
         //    var cssSettings = new CssBundlingSettings
@@ -399,26 +402,26 @@ namespace NI2S.Node.Infrastructure.Extensions
         //        AdjustRelativePaths = false //disable this feature because it breaks function names that have "Url(" at the end
         //    };
 
-        //    services.AddWebOptimizer(null, cssSettings, codeSettings);
+        //    services.AddNodeOptimizer(null, cssSettings, codeSettings);
         //}
 
         /// <summary>
         /// Add and configure default HTTP clients
         /// </summary>
         /// <param name="services">Collection of service descriptors</param>
-        //public static void AddNopHttpClients(this IServiceCollection services)
+        //public static void AddNI2SDummyClients(this IServiceCollection services)
         //{
         //    //default client
-        //    services.AddHttpClient(NopHttpDefaults.DefaultHttpClient).WithProxy();
+        //    services.AddDummyClient(NI2SDummyDefaults.DefaultDummyClient).WithProxy();
 
         //    //client to request current store
-        //    services.AddHttpClient<StoreHttpClient>();
+        //    services.AddDummyClient<StoreDummyClient>();
 
         //    //client to request nopCommerce official site
-        //    services.AddHttpClient<NopHttpClient>().WithProxy();
+        //    services.AddDummyClient<NI2SDummyClient>().WithProxy();
 
         //    //client to request reCAPTCHA service
-        //    services.AddHttpClient<CaptchaHttpClient>().WithProxy();
+        //    services.AddDummyClient<CaptchaDummyClient>().WithProxy();
         //}
     }
 }

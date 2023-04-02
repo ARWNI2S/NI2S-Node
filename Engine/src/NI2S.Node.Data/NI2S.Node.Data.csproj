@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <PackageId>NI2S.Node.Data</PackageId>
+    <Title>NI2S Node Data Library</Title>
+    <Description>Data library of NI2S Node.</Description>
+    <TargetFrameworks>$(DefaultTargetFrameworks)</TargetFrameworks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Configuration\**" />
+    <Compile Remove="Mapping\**" />
+    <EmbeddedResource Remove="Configuration\**" />
+    <EmbeddedResource Remove="Mapping\**" />
+    <None Remove="Configuration\**" />
+    <None Remove="Mapping\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="DataProviderType.cs" />
+    <Compile Remove="DataSettingsManager.cs" />
+    <Compile Remove="NopDataSettingsDefaults.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(SourceProjectsPath)\NI2S.Node.Core\NI2S.Node.Core.csproj" />
+  </ItemGroup>
+
+</Project>

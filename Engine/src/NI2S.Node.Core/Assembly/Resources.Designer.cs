@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace NI2S.Node.Core {
+namespace NI2S.Node.Internal {
     using System;
     
     
@@ -57,6 +57,249 @@ namespace NI2S.Node.Core {
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Argument_NullOrEmpty.
+        /// </summary>
+        internal static string Argument_NullOrEmpty {
+            get {
+                return ResourceManager.GetString("Argument_NullOrEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a ArgumentCannotBeNullOrEmpty : {0}.
+        /// </summary>
+        internal static string ArgumentCannotBeNullOrEmpty {
+            get {
+                return ResourceManager.GetString("ArgumentCannotBeNullOrEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Exception_PortMustBeGreaterThanZero.
+        /// </summary>
+        internal static string Exception_PortMustBeGreaterThanZero {
+            get {
+                return ResourceManager.GetString("Exception_PortMustBeGreaterThanZero", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a FormatApplicationPartFactory_InvalidFactoryType : {0} {1} {2}.
+        /// </summary>
+        internal static string FormatApplicationPartFactory_InvalidFactoryType {
+            get {
+                return ResourceManager.GetString("FormatApplicationPartFactory_InvalidFactoryType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a FormatException_PathMustStartWithSlash : {0}.
+        /// </summary>
+        internal static string FormatException_PathMustStartWithSlash {
+            get {
+                return ResourceManager.GetString("FormatException_PathMustStartWithSlash", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a FormatMapGroup_CustomEndpointUnsupported : {0}.
+        /// </summary>
+        internal static string FormatMapGroup_CustomEndpointUnsupported {
+            get {
+                return ResourceManager.GetString("FormatMapGroup_CustomEndpointUnsupported", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a FormatMapGroup_RepeatedDictionaryEntry : {0} {1} {2}.
+        /// </summary>
+        internal static string FormatMapGroup_RepeatedDictionaryEntry {
+            get {
+                return ResourceManager.GetString("FormatMapGroup_RepeatedDictionaryEntry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a FormatRelatedAssemblyAttribute_AssemblyCannotReferenceSelf : {0} {1}.
+        /// </summary>
+        internal static string FormatRelatedAssemblyAttribute_AssemblyCannotReferenceSelf {
+            get {
+                return ResourceManager.GetString("FormatRelatedAssemblyAttribute_AssemblyCannotReferenceSelf", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a FormatRoutePattern_InvalidConstraintReference : {0} {1}.
+        /// </summary>
+        internal static string FormatRoutePattern_InvalidConstraintReference {
+            get {
+                return ResourceManager.GetString("FormatRoutePattern_InvalidConstraintReference", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a FormatRouteValueDictionary_DuplicateKey : {0} {1}.
+        /// </summary>
+        internal static string FormatRouteValueDictionary_DuplicateKey {
+            get {
+                return ResourceManager.GetString("FormatRouteValueDictionary_DuplicateKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a FormatRouteValueDictionary_DuplicatePropertyName : {0} {1} {2} {3}.
+        /// </summary>
+        internal static string FormatRouteValueDictionary_DuplicatePropertyName {
+            get {
+                return ResourceManager.GetString("FormatRouteValueDictionary_DuplicatePropertyName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a FormatTemplateRoute_CannotHaveDefaultValueSpecifiedInlineAndExplicitly : {0}.
+        /// </summary>
+        internal static string FormatTemplateRoute_CannotHaveDefaultValueSpecifiedInlineAndExplicitly {
+            get {
+                return ResourceManager.GetString("FormatTemplateRoute_CannotHaveDefaultValueSpecifiedInlineAndExplicitly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a FormatTemplateRoute_InvalidLiteral : {0}.
+        /// </summary>
+        internal static string FormatTemplateRoute_InvalidLiteral {
+            get {
+                return ResourceManager.GetString("FormatTemplateRoute_InvalidLiteral", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a FormatTemplateRoute_InvalidParameterName : {0}.
+        /// </summary>
+        internal static string FormatTemplateRoute_InvalidParameterName {
+            get {
+                return ResourceManager.GetString("FormatTemplateRoute_InvalidParameterName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a FormatTemplateRoute_OptionalParameterCanbBePrecededByPeriod : {0} {1} {2}.
+        /// </summary>
+        internal static string FormatTemplateRoute_OptionalParameterCanbBePrecededByPeriod {
+            get {
+                return ResourceManager.GetString("FormatTemplateRoute_OptionalParameterCanbBePrecededByPeriod", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a FormatTemplateRoute_OptionalParameterHasTobeTheLast : {0} {1} {2}.
+        /// </summary>
+        internal static string FormatTemplateRoute_OptionalParameterHasTobeTheLast {
+            get {
+                return ResourceManager.GetString("FormatTemplateRoute_OptionalParameterHasTobeTheLast", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a FormatTemplateRoute_RepeatedParameter : {0}.
+        /// </summary>
+        internal static string FormatTemplateRoute_RepeatedParameter {
+            get {
+                return ResourceManager.GetString("FormatTemplateRoute_RepeatedParameter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a NodeHostBuilder_SingleInstance.
+        /// </summary>
+        internal static string NodeHostBuilder_SingleInstance {
+            get {
+                return ResourceManager.GetString("NodeHostBuilder_SingleInstance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a TemplateRoute_CannotHaveCatchAllInMultiSegment.
+        /// </summary>
+        internal static string TemplateRoute_CannotHaveCatchAllInMultiSegment {
+            get {
+                return ResourceManager.GetString("TemplateRoute_CannotHaveCatchAllInMultiSegment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a TemplateRoute_CannotHaveConsecutiveParameters.
+        /// </summary>
+        internal static string TemplateRoute_CannotHaveConsecutiveParameters {
+            get {
+                return ResourceManager.GetString("TemplateRoute_CannotHaveConsecutiveParameters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a TemplateRoute_CannotHaveConsecutiveSeparators.
+        /// </summary>
+        internal static string TemplateRoute_CannotHaveConsecutiveSeparators {
+            get {
+                return ResourceManager.GetString("TemplateRoute_CannotHaveConsecutiveSeparators", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a TemplateRoute_CatchAllCannotBeOptional.
+        /// </summary>
+        internal static string TemplateRoute_CatchAllCannotBeOptional {
+            get {
+                return ResourceManager.GetString("TemplateRoute_CatchAllCannotBeOptional", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a TemplateRoute_CatchAllMustBeLast.
+        /// </summary>
+        internal static string TemplateRoute_CatchAllMustBeLast {
+            get {
+                return ResourceManager.GetString("TemplateRoute_CatchAllMustBeLast", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a TemplateRoute_InvalidRouteTemplate.
+        /// </summary>
+        internal static string TemplateRoute_InvalidRouteTemplate {
+            get {
+                return ResourceManager.GetString("TemplateRoute_InvalidRouteTemplate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a TemplateRoute_MismatchedParameter.
+        /// </summary>
+        internal static string TemplateRoute_MismatchedParameter {
+            get {
+                return ResourceManager.GetString("TemplateRoute_MismatchedParameter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a TemplateRoute_OptionalCannotHaveDefaultValue.
+        /// </summary>
+        internal static string TemplateRoute_OptionalCannotHaveDefaultValue {
+            get {
+                return ResourceManager.GetString("TemplateRoute_OptionalCannotHaveDefaultValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a TemplateRoute_UnescapedBrace.
+        /// </summary>
+        internal static string TemplateRoute_UnescapedBrace {
+            get {
+                return ResourceManager.GetString("TemplateRoute_UnescapedBrace", resourceCulture);
             }
         }
     }

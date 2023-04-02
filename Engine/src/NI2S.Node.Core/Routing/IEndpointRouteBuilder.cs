@@ -1,5 +1,5 @@
-﻿using NI2S.Node.Hosting;
-using NI2S.Node.Hosting.Builder;
+﻿using NI2S.Node.Builder;
+using NI2S.Node.Dummy;
 using System;
 using System.Collections.Generic;
 
@@ -12,10 +12,10 @@ namespace NI2S.Node.Routing
     public interface IEndpointRouteBuilder
     {
         /// <summary>
-        /// Creates a new <see cref="IApplicationBuilder"/>.
+        /// Creates a new <see cref="IEngineBuilder"/>.
         /// </summary>
-        /// <returns>The new <see cref="IApplicationBuilder"/>.</returns>
-        IApplicationBuilder CreateApplicationBuilder();
+        /// <returns>The new <see cref="IEngineBuilder"/>.</returns>
+        IEngineBuilder CreateEngineBuilder();
 
         /// <summary>
         /// Gets the <see cref="IServiceProvider"/> used to resolve services for routes.

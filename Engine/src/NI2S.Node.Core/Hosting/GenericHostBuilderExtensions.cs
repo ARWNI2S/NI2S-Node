@@ -17,23 +17,23 @@ namespace NI2S.Node.Hosting
         /// The following defaults are applied to the <see cref="IHostBuilder"/>:
         /// <list type="bullet">
         ///     <item><description>use Kestrel as the web server and configure it using the application's configuration providers</description></item>
-        ///     <item><description>configure <see cref="IWebHostEnvironment.WebRootFileProvider"/> to include static web assets from projects referenced by the entry assembly during development</description></item>
+        ///     <item><description>configure <see cref="INodeHostEnvironment.NodeRootFileProvider"/> to include static web assets from projects referenced by the entry assembly during development</description></item>
         ///     <item><description>adds the HostFiltering middleware</description></item>
-        ///     <item><description>adds the ForwardedHeaders middleware if ASPNETCORE_FORWARDEDHEADERS_ENABLED=true,</description></item>
+        ///     <item><description>adds the ForwardedHeaders middleware if DOTNET_FORWARDEDHEADERS_ENABLED=true,</description></item>
         ///     <item><description>enable IIS integration</description></item>
         ///   </list>
         /// </remarks>
         /// <param name="builder">The <see cref="IHostBuilder" /> instance to configure.</param>
         /// <param name="configure">The configure callback</param>
         /// <returns>A reference to the <paramref name="builder"/> after the operation has completed.</returns>
-        public static IHostBuilder ConfigureWebHostDefaults(this IHostBuilder builder, Action<IWebHostBuilder> configure)
+        public static IHostBuilder ConfigureNodeHostDefaults(this IHostBuilder builder, Action<INodeHostBuilder> configure)
         {
             if (configure is null)
             {
                 throw new ArgumentNullException(nameof(configure));
             }
 
-            return builder.ConfigureWebHostDefaults(configure, _ => { });
+            return builder.ConfigureNodeHostDefaults(configure, _ => { });
         }
 
         /// <summary>
@@ -45,28 +45,28 @@ namespace NI2S.Node.Hosting
         /// The following defaults are applied to the <see cref="IHostBuilder"/>:
         /// <list type="bullet">
         ///     <item><description>use Kestrel as the web server and configure it using the application's configuration providers</description></item>
-        ///     <item><description>configure <see cref="IWebHostEnvironment.WebRootFileProvider"/> to include static web assets from projects referenced by the entry assembly during development</description></item>
+        ///     <item><description>configure <see cref="INodeHostEnvironment.NodeRootFileProvider"/> to include static web assets from projects referenced by the entry assembly during development</description></item>
         ///     <item><description>adds the HostFiltering middleware</description></item>
-        ///     <item><description>adds the ForwardedHeaders middleware if ASPNETCORE_FORWARDEDHEADERS_ENABLED=true,</description></item>
+        ///     <item><description>adds the ForwardedHeaders middleware if DOTNET_FORWARDEDHEADERS_ENABLED=true,</description></item>
         ///     <item><description>enable IIS integration</description></item>
         ///   </list>
         /// </remarks>
         /// <param name="builder">The <see cref="IHostBuilder" /> instance to configure.</param>
         /// <param name="configure">The configure callback</param>
-        /// <param name="configureOptions">The delegate that configures the <see cref="WebHostBuilderOptions"/>.</param>
+        /// <param name="configureOptions">The delegate that configures the <see cref="NodeHostBuilderOptions"/>.</param>
         /// <returns>A reference to the <paramref name="builder"/> after the operation has completed.</returns>
-        public static IHostBuilder ConfigureWebHostDefaults(this IHostBuilder builder, Action<IWebHostBuilder> configure, Action<WebHostBuilderOptions> configureOptions)
+        public static IHostBuilder ConfigureNodeHostDefaults(this IHostBuilder builder, Action<INodeHostBuilder> configure, Action<NodeHostBuilderOptions> configureOptions)
         {
             if (configure is null)
             {
                 throw new ArgumentNullException(nameof(configure));
             }
 
-            return builder.ConfigureWebHost(webHostBuilder =>
+            return builder.ConfigureNodeHost(nodeHostBuilder =>
             {
-                WebHost.ConfigureWebDefaults(webHostBuilder);
+                NodeHost.ConfigureNodeDefaults(nodeHostBuilder);
 
-                configure(webHostBuilder);
+                configure(nodeHostBuilder);
             }, configureOptions);
         }
     }

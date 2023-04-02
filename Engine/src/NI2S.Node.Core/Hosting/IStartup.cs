@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using NI2S.Node.Hosting.Builder;
+using NI2S.Node.Builder;
 using System;
 
 namespace NI2S.Node.Hosting
@@ -18,7 +18,7 @@ namespace NI2S.Node.Hosting
         /// <summary>
         /// Configures the application.
         /// </summary>
-        /// <param name="app">An <see cref="IApplicationBuilder"/> for the app to configure.</param>
-        void Configure(IApplicationBuilder app);
+        /// <param name="app">An <see cref="IEngineBuilder"/> for the app to configure.</param>
+        void Configure(IEngineBuilder app);
     }
 }

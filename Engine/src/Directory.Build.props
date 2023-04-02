@@ -33,6 +33,6 @@
 
   <PropertyGroup>
     <SourceLinkCreate>true</SourceLinkCreate>
-    <SourceLinkOriginUrl>https://github.com/arwni2s/ni2s-node</SourceLinkOriginUrl>
+    <SourceLinkOriginUrl>dummys://github.com/arwni2s/ni2s-node</SourceLinkOriginUrl>
   </PropertyGroup>
 </Project>

@@ -9,12 +9,42 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="..\Shared\CopyOnWriteDictionary.cs" Link="Hosting\Builder\CopyOnWriteDictionary.cs" />
+    <Compile Remove="Assembly\**" />
+    <Compile Remove="Builder\**" />
+    <Compile Remove="Core\**" />
+    <Compile Remove="Diagnostics\**" />
+    <Compile Remove="Dummy\**" />
+    <Compile Remove="Helpers\**" />
+    <Compile Remove="Hosting\**" />
+    <Compile Remove="Routing\**" />
+    <EmbeddedResource Remove="Assembly\**" />
+    <EmbeddedResource Remove="Builder\**" />
+    <EmbeddedResource Remove="Core\**" />
+    <EmbeddedResource Remove="Diagnostics\**" />
+    <EmbeddedResource Remove="Dummy\**" />
+    <EmbeddedResource Remove="Helpers\**" />
+    <EmbeddedResource Remove="Hosting\**" />
+    <EmbeddedResource Remove="Routing\**" />
+    <None Remove="Assembly\**" />
+    <None Remove="Builder\**" />
+    <None Remove="Core\**" />
+    <None Remove="Diagnostics\**" />
+    <None Remove="Dummy\**" />
+    <None Remove="Helpers\**" />
+    <None Remove="Hosting\**" />
+    <None Remove="Routing\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Core\Globalization\" />
-    <Folder Include="Helpers\" />
+    <Compile Remove="HostingPathResolver.cs" />
+    <Compile Remove="NI2SVersion.cs" />
+    <Compile Remove="RunExtensions.cs" />
+    <Compile Remove="StartupLinkerOptions.cs" />
+    <Compile Remove="TypeNameHelper.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="$(SourceProjectsPath)\Shared\CopyOnWriteDictionary.cs" Link="CopyOnWriteDictionary.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,22 +54,6 @@
 
   <ItemGroup>
     <ProjectReference Include="$(SourceProjectsPath)\NI2S.Node.Core.Abstractions\NI2S.Node.Core.Abstractions.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="Assembly\Resources.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Update="Assembly\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <CustomToolNamespace>NI2S.Node.Core</CustomToolNamespace>
-    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

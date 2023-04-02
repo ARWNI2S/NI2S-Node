@@ -59,8 +59,8 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema id="root" xmlns="" xmlns:xsd="dummy://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="dummy://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
@@ -117,4 +117,85 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ArgumentCannotBeNullOrEmpty" xml:space="preserve">
+    <value>ArgumentCannotBeNullOrEmpty : {0}</value>
+  </data>
+  <data name="Argument_NullOrEmpty" xml:space="preserve">
+    <value>Argument_NullOrEmpty</value>
+  </data>
+  <data name="Exception_PortMustBeGreaterThanZero" xml:space="preserve">
+    <value>Exception_PortMustBeGreaterThanZero</value>
+  </data>
+  <data name="FormatApplicationPartFactory_InvalidFactoryType" xml:space="preserve">
+    <value>FormatApplicationPartFactory_InvalidFactoryType : {0} {1} {2}</value>
+  </data>
+  <data name="FormatException_PathMustStartWithSlash" xml:space="preserve">
+    <value>FormatException_PathMustStartWithSlash : {0}</value>
+  </data>
+  <data name="FormatMapGroup_CustomEndpointUnsupported" xml:space="preserve">
+    <value>FormatMapGroup_CustomEndpointUnsupported : {0}</value>
+  </data>
+  <data name="FormatMapGroup_RepeatedDictionaryEntry" xml:space="preserve">
+    <value>FormatMapGroup_RepeatedDictionaryEntry : {0} {1} {2}</value>
+  </data>
+  <data name="FormatRelatedAssemblyAttribute_AssemblyCannotReferenceSelf" xml:space="preserve">
+    <value>FormatRelatedAssemblyAttribute_AssemblyCannotReferenceSelf : {0} {1}</value>
+  </data>
+  <data name="FormatRoutePattern_InvalidConstraintReference" xml:space="preserve">
+    <value>FormatRoutePattern_InvalidConstraintReference : {0} {1}</value>
+  </data>
+  <data name="FormatRouteValueDictionary_DuplicateKey" xml:space="preserve">
+    <value>FormatRouteValueDictionary_DuplicateKey : {0} {1}</value>
+  </data>
+  <data name="FormatRouteValueDictionary_DuplicatePropertyName" xml:space="preserve">
+    <value>FormatRouteValueDictionary_DuplicatePropertyName : {0} {1} {2} {3}</value>
+  </data>
+  <data name="FormatTemplateRoute_CannotHaveDefaultValueSpecifiedInlineAndExplicitly" xml:space="preserve">
+    <value>FormatTemplateRoute_CannotHaveDefaultValueSpecifiedInlineAndExplicitly : {0}</value>
+  </data>
+  <data name="FormatTemplateRoute_InvalidLiteral" xml:space="preserve">
+    <value>FormatTemplateRoute_InvalidLiteral : {0}</value>
+  </data>
+  <data name="FormatTemplateRoute_InvalidParameterName" xml:space="preserve">
+    <value>FormatTemplateRoute_InvalidParameterName : {0}</value>
+  </data>
+  <data name="FormatTemplateRoute_OptionalParameterCanbBePrecededByPeriod" xml:space="preserve">
+    <value>FormatTemplateRoute_OptionalParameterCanbBePrecededByPeriod : {0} {1} {2}</value>
+  </data>
+  <data name="FormatTemplateRoute_OptionalParameterHasTobeTheLast" xml:space="preserve">
+    <value>FormatTemplateRoute_OptionalParameterHasTobeTheLast : {0} {1} {2}</value>
+  </data>
+  <data name="FormatTemplateRoute_RepeatedParameter" xml:space="preserve">
+    <value>FormatTemplateRoute_RepeatedParameter : {0}</value>
+  </data>
+  <data name="NodeHostBuilder_SingleInstance" xml:space="preserve">
+    <value>NodeHostBuilder_SingleInstance</value>
+  </data>
+  <data name="TemplateRoute_CannotHaveCatchAllInMultiSegment" xml:space="preserve">
+    <value>TemplateRoute_CannotHaveCatchAllInMultiSegment</value>
+  </data>
+  <data name="TemplateRoute_CannotHaveConsecutiveParameters" xml:space="preserve">
+    <value>TemplateRoute_CannotHaveConsecutiveParameters</value>
+  </data>
+  <data name="TemplateRoute_CannotHaveConsecutiveSeparators" xml:space="preserve">
+    <value>TemplateRoute_CannotHaveConsecutiveSeparators</value>
+  </data>
+  <data name="TemplateRoute_CatchAllCannotBeOptional" xml:space="preserve">
+    <value>TemplateRoute_CatchAllCannotBeOptional</value>
+  </data>
+  <data name="TemplateRoute_CatchAllMustBeLast" xml:space="preserve">
+    <value>TemplateRoute_CatchAllMustBeLast</value>
+  </data>
+  <data name="TemplateRoute_InvalidRouteTemplate" xml:space="preserve">
+    <value>TemplateRoute_InvalidRouteTemplate</value>
+  </data>
+  <data name="TemplateRoute_MismatchedParameter" xml:space="preserve">
+    <value>TemplateRoute_MismatchedParameter</value>
+  </data>
+  <data name="TemplateRoute_OptionalCannotHaveDefaultValue" xml:space="preserve">
+    <value>TemplateRoute_OptionalCannotHaveDefaultValue</value>
+  </data>
+  <data name="TemplateRoute_UnescapedBrace" xml:space="preserve">
+    <value>TemplateRoute_UnescapedBrace</value>
+  </data>
 </root>

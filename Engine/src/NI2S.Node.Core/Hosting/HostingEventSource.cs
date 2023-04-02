@@ -9,10 +9,12 @@ namespace NI2S.Node.Hosting
     {
         public static readonly HostingEventSource Log = new();
 
-        private IncrementingPollingCounter? _requestsPerSecondCounter;
-        private PollingCounter? _totalRequestsCounter;
-        private PollingCounter? _failedRequestsCounter;
-        private PollingCounter? _currentRequestsCounter;
+#pragma warning disable IDE0052 // Quitar miembros privados no leídos
+        private IncrementingPollingCounter _requestsPerSecondCounter;
+        private PollingCounter _totalRequestsCounter;
+        private PollingCounter _failedRequestsCounter;
+        private PollingCounter _currentRequestsCounter;
+#pragma warning restore IDE0052 // Quitar miembros privados no leídos
 
         private long _totalRequests;
         private long _currentRequests;
@@ -33,7 +35,7 @@ namespace NI2S.Node.Hosting
         // - The 'Start' and 'Stop' suffixes on the following event names have special meaning in EventSource. They
         //   enable creating 'activities'.
         //   For more information, take a look at the following blog post:
-        //   https://blogs.msdn.microsoft.com/vancem/2015/09/14/exploring-eventsource-activity-correlation-and-causation-features/
+        //   dummys://blogs.msdn.microsoft.com/vancem/2015/09/14/exploring-eventsource-activity-correlation-and-causation-features/
         // - A stop event's event id must be next one after its start event.
 
         [Event(1, Level = EventLevel.Informational)]

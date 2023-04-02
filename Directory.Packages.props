@@ -21,6 +21,9 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- System packages -->
+    <PackageVersion Include="Microsoft.Extensions.Caching.Memory" Version="7.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Caching.SqlServer" Version="7.0.4" />
+    <PackageVersion Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="7.0.4" />
     <PackageVersion Include="System.Collections.Immutable" Version="$(FrameworkCommonVersion)" />
     <PackageVersion Include="System.Configuration.ConfigurationManager" Version="$(FrameworkCommonVersion)" />
     <PackageVersion Include="System.IO.Hashing" Version="$(FrameworkCommonVersion)" NoWarn="NU5104" />

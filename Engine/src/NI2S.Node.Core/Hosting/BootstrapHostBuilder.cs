@@ -59,25 +59,25 @@ namespace NI2S.Node.Hosting
 
         public IHost Build()
         {
-            // ConfigureWebHostDefaults should never call this.
+            // ConfigureNodeHostDefaults should never call this.
             throw new InvalidOperationException();
         }
 
         public IHostBuilder ConfigureContainer<TContainerBuilder>(Action<HostBuilderContext, TContainerBuilder> configureDelegate)
         {
-            // ConfigureWebHostDefaults should never call this.
+            // ConfigureNodeHostDefaults should never call this.
             throw new InvalidOperationException();
         }
 
         public IHostBuilder UseServiceProviderFactory<TContainerBuilder>(IServiceProviderFactory<TContainerBuilder> factory) where TContainerBuilder : notnull
         {
-            // ConfigureWebHostDefaults should never call this.
+            // ConfigureNodeHostDefaults should never call this.
             throw new InvalidOperationException();
         }
 
         public IHostBuilder UseServiceProviderFactory<TContainerBuilder>(Func<HostBuilderContext, IServiceProviderFactory<TContainerBuilder>> factory) where TContainerBuilder : notnull
         {
-            // ConfigureWebHostDefaults should never call this.
+            // ConfigureNodeHostDefaults should never call this.
             throw new InvalidOperationException();
         }
 
@@ -100,22 +100,22 @@ namespace NI2S.Node.Hosting
                 configureServicesAction(Context, _builder.Services);
             }
 
-            ServiceDescriptor genericWebHostServiceDescriptor = null;
+            ServiceDescriptor genericNodeHostServiceDescriptor = null;
 
             for (int i = _builder.Services.Count - 1; i >= 0; i--)
             {
                 var descriptor = _builder.Services[i];
                 if (descriptor.ServiceType == typeof(IHostedService))
                 {
-                    Debug.Assert(descriptor.ImplementationType?.Name == "GenericWebHostService");
+                    Debug.Assert(descriptor.ImplementationType?.Name == "GenericNodeHostService");
 
-                    genericWebHostServiceDescriptor = descriptor;
+                    genericNodeHostServiceDescriptor = descriptor;
                     _builder.Services.RemoveAt(i);
                     break;
                 }
             }
 
-            return genericWebHostServiceDescriptor ?? throw new InvalidOperationException($"GenericWebHostedService must exist in the {nameof(IServiceCollection)}");
+            return genericNodeHostServiceDescriptor ?? throw new InvalidOperationException($"GenericNodeHostedService must exist in the {nameof(IServiceCollection)}");
         }
     }
 }

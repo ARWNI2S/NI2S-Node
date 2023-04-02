@@ -8,7 +8,7 @@ namespace NI2S.Node.Hosting.Server
     /// Represents an application.
     /// </summary>
     /// <typeparam name="TContext">The context associated with the application.</typeparam>
-    public interface IHttpApplication<TContext> where TContext : notnull
+    public interface IDummyApplication<TContext> where TContext : notnull
     {
         /// <summary>
         /// Create a TContext given a collection of HTTP features.
@@ -28,6 +28,6 @@ namespace NI2S.Node.Hosting.Server
         /// </summary>
         /// <param name="context">The TContext to be disposed.</param>
         /// <param name="exception">The Exception thrown when processing did not complete successfully, otherwise null.</param>
-        void DisposeContext(TContext context, Exception? exception);
+        void DisposeContext(TContext context, Exception exception);
     }
 }

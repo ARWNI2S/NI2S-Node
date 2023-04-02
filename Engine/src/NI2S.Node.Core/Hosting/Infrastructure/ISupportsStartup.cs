@@ -1,12 +1,12 @@
-﻿using NI2S.Node.Hosting.Builder;
+﻿using NI2S.Node.Builder;
 using System;
 using System.Diagnostics.CodeAnalysis;
 
 namespace NI2S.Node.Hosting.Infrastructure
 {
     /// <summary>
-    /// An interface implemented by IWebHostBuilders that handle <see cref="WebHostBuilderExtensions.Configure(IWebHostBuilder, Action{IApplicationBuilder})"/>,
-    /// <see cref="WebHostBuilderExtensions.UseStartup(IWebHostBuilder, Type)"/> and <see cref="WebHostBuilderExtensions.UseStartup{TStartup}(IWebHostBuilder, Func{WebHostBuilderContext, TStartup})"/>
+    /// An interface implemented by INodeHostBuilders that handle <see cref="NodeHostBuilderExtensions.Configure(INodeHostBuilder, Action{IEngineBuilder})"/>,
+    /// <see cref="NodeHostBuilderExtensions.UseStartup(INodeHostBuilder, Type)"/> and <see cref="NodeHostBuilderExtensions.UseStartup{TStartup}(INodeHostBuilder, Func{NodeHostBuilderContext, TStartup})"/>
     /// directly.
     /// </summary>
     public interface ISupportsStartup
@@ -14,30 +14,30 @@ namespace NI2S.Node.Hosting.Infrastructure
         /// <summary>
         /// Specify the startup method to be used to configure the web application.
         /// </summary>
-        /// <param name="configure">The delegate that configures the <see cref="IApplicationBuilder"/>.</param>
-        /// <returns>The <see cref="IWebHostBuilder"/>.</returns>
-        IWebHostBuilder Configure(Action<IApplicationBuilder> configure);
+        /// <param name="configure">The delegate that configures the <see cref="IEngineBuilder"/>.</param>
+        /// <returns>The <see cref="INodeHostBuilder"/>.</returns>
+        INodeHostBuilder Configure(Action<IEngineBuilder> configure);
 
         /// <summary>
         /// Specify the startup method to be used to configure the web application.
         /// </summary>
-        /// <param name="configure">The delegate that configures the <see cref="IApplicationBuilder"/>.</param>
-        /// <returns>The <see cref="IWebHostBuilder"/>.</returns>
-        IWebHostBuilder Configure(Action<WebHostBuilderContext, IApplicationBuilder> configure);
+        /// <param name="configure">The delegate that configures the <see cref="IEngineBuilder"/>.</param>
+        /// <returns>The <see cref="INodeHostBuilder"/>.</returns>
+        INodeHostBuilder Configure(Action<NodeHostBuilderContext, IEngineBuilder> configure);
 
         /// <summary>
         /// Specify the startup type to be used by the web host.
         /// </summary>
         /// <param name="startupType">The <see cref="Type"/> to be used.</param>
-        /// <returns>The <see cref="IWebHostBuilder"/>.</returns>
-        IWebHostBuilder UseStartup([DynamicallyAccessedMembers(StartupLinkerOptions.Accessibility)] Type startupType);
+        /// <returns>The <see cref="INodeHostBuilder"/>.</returns>
+        INodeHostBuilder UseStartup([DynamicallyAccessedMembers(StartupLinkerOptions.Accessibility)] Type startupType);
 
         /// <summary>
         /// Specify a factory that creates the startup instance to be used by the web host.
         /// </summary>
         /// <param name="startupFactory">A delegate that specifies a factory for the startup class.</param>
-        /// <returns>The <see cref="IWebHostBuilder"/>.</returns>
+        /// <returns>The <see cref="INodeHostBuilder"/>.</returns>
         /// <remarks>When using the IL linker, all public methods of <typeparamref name="TStartup"/> are preserved. This should match the Startup type directly (and not a base type).</remarks>
-        IWebHostBuilder UseStartup<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicMethods)] TStartup>(Func<WebHostBuilderContext, TStartup> startupFactory);
+        INodeHostBuilder UseStartup<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicMethods)] TStartup>(Func<NodeHostBuilderContext, TStartup> startupFactory);
     }
 }

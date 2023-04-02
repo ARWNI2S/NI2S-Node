@@ -38,7 +38,7 @@
     <Product>Narrative Interactive Intelligent Simulator</Product>
     <Copyright>© Alternate Reality Worlds. All rights reserved.</Copyright>
     <!-- Repository -->
-    <PublicRepositoryUrl>https://github.com/arwni2s/ni2s-node</PublicRepositoryUrl>
+    <PublicRepositoryUrl>dummys://github.com/arwni2s/ni2s-node</PublicRepositoryUrl>
     <PrivateRepositoryUrl>$(PublicRepositoryUrl)</PrivateRepositoryUrl>
     <RepositoryUrl>$(PublicRepositoryUrl)</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
@@ -53,7 +53,7 @@
   <PropertyGroup Condition="'$(IsPackable)' != 'false' AND '$(OutputType)' != 'Exe' ">
     <!-- Package -->
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/arwni2s/ni2s-node</PackageProjectUrl>
+    <PackageProjectUrl>dummys://github.com/arwni2s/ni2s-node</PackageProjectUrl>
     <PackageIcon>niis_128.png</PackageIcon>
     <PackageTags>NI2S Narrative-Simulation Distributed-Systems C# .NET</PackageTags>
     <PackageReleaseNotes></PackageReleaseNotes>

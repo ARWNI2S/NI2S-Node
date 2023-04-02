@@ -35,7 +35,7 @@ namespace NI2S.Node.Hosting
         //
         // If the Startup class ConfigureServices returns an <see cref="IServiceProvider"/> and there is at least an <see cref="IStartupConfigureServicesFilter"/> registered we
         // throw as the filters can't be applied.
-        public static StartupMethods LoadMethods(IServiceProvider hostingServiceProvider, [DynamicallyAccessedMembers(StartupLinkerOptions.Accessibility)] Type startupType, string environmentName, object? instance = null)
+        public static StartupMethods LoadMethods(IServiceProvider hostingServiceProvider, [DynamicallyAccessedMembers(StartupLinkerOptions.Accessibility)] Type startupType, string environmentName, object instance = null)
         {
             var configureMethod = FindConfigureDelegate(startupType, environmentName);
 
@@ -113,7 +113,7 @@ namespace NI2S.Node.Hosting
             }
 
             Func<IServiceCollection, IServiceProvider> ConfigureServices(
-                Func<IServiceCollection, IServiceProvider?> configureServicesCallback,
+                Func<IServiceCollection, IServiceProvider> configureServicesCallback,
                 Action<object> configureContainerCallback)
             {
                 return ConfigureServicesWithContainerConfiguration;
@@ -148,11 +148,11 @@ namespace NI2S.Node.Hosting
                 }
             }
 
-            private Func<IServiceCollection, IServiceProvider?> BuildStartupServicesFilterPipeline(Func<IServiceCollection, IServiceProvider?> startup)
+            private Func<IServiceCollection, IServiceProvider> BuildStartupServicesFilterPipeline(Func<IServiceCollection, IServiceProvider> startup)
             {
                 return RunPipeline;
 
-                IServiceProvider? RunPipeline(IServiceCollection services)
+                IServiceProvider RunPipeline(IServiceCollection services)
                 {
 #pragma warning disable CS0612 // Type or member is obsolete
                     var filters = HostingServiceProvider.GetRequiredService<IEnumerable<IStartupConfigureServicesFilter>>()
@@ -230,12 +230,7 @@ namespace NI2S.Node.Hosting
                         nameof(startupAssemblyName));
             }
 
-            var assembly = Assembly.Load(new AssemblyName(startupAssemblyName));
-            if (assembly == null)
-            {
-                throw new InvalidOperationException($"The assembly '{startupAssemblyName}' failed to load.");
-            }
-
+            var assembly = Assembly.Load(new AssemblyName(startupAssemblyName)) ?? throw new InvalidOperationException($"The assembly '{startupAssemblyName}' failed to load.");
             var startupNameWithEnv = "Startup" + environmentName;
             var startupNameWithoutEnv = "Startup";
 
@@ -298,7 +293,7 @@ namespace NI2S.Node.Hosting
             return new ConfigureServicesBuilder(servicesMethod);
         }
 
-        private static MethodInfo? FindMethod([DynamicallyAccessedMembers(StartupLinkerOptions.Accessibility)] Type startupType, string methodName, string environmentName, Type? returnType = null, bool required = true)
+        private static MethodInfo FindMethod([DynamicallyAccessedMembers(StartupLinkerOptions.Accessibility)] Type startupType, string methodName, string environmentName, Type returnType = null, bool required = true)
         {
             var methodNameWithEnv = string.Format(CultureInfo.InvariantCulture, methodName, environmentName);
             var methodNameWithNoEnv = string.Format(CultureInfo.InvariantCulture, methodName, "");

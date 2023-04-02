@@ -47,6 +47,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{35EB75
 		src\Shared\CopyOnWriteDictionary.cs = src\Shared\CopyOnWriteDictionary.cs
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NI2S.Node.Data", "src\NI2S.Node.Data\NI2S.Node.Data.csproj", "{CF0EA8FB-A291-4270-B59A-0B15E557FA1F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -77,6 +79,10 @@ Global
 		{DBE60A87-41EB-4FDF-AA08-DD0F1C3077BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DBE60A87-41EB-4FDF-AA08-DD0F1C3077BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DBE60A87-41EB-4FDF-AA08-DD0F1C3077BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF0EA8FB-A291-4270-B59A-0B15E557FA1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF0EA8FB-A291-4270-B59A-0B15E557FA1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF0EA8FB-A291-4270-B59A-0B15E557FA1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF0EA8FB-A291-4270-B59A-0B15E557FA1F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -93,6 +99,7 @@ Global
 		{8D1F60A4-C9E2-41F8-824C-75B95A7365D4} = {9F9850F4-46A8-4060-8AE7-6C9FEA728C2D}
 		{DBE60A87-41EB-4FDF-AA08-DD0F1C3077BD} = {ADFBD620-F60D-4C23-A523-00A308D6D4BA}
 		{35EB752D-B276-453E-96E3-CB9F0F1E0397} = {9F9850F4-46A8-4060-8AE7-6C9FEA728C2D}
+		{CF0EA8FB-A291-4270-B59A-0B15E557FA1F} = {9F9850F4-46A8-4060-8AE7-6C9FEA728C2D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B00E5345-6AC1-4299-85BA-F1E02926D364}

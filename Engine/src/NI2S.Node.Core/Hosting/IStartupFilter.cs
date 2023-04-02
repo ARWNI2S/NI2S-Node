@@ -1,4 +1,4 @@
-﻿using NI2S.Node.Hosting.Builder;
+﻿using NI2S.Node.Builder;
 using System;
 
 namespace NI2S.Node.Hosting
@@ -16,6 +16,6 @@ namespace NI2S.Node.Hosting
         /// </summary>
         /// <param name="next">The Configure method to extend.</param>
         /// <returns>A modified <see cref="Action"/>.</returns>
-        Action<IApplicationBuilder> Configure(Action<IApplicationBuilder> next);
+        Action<IEngineBuilder> Configure(Action<IEngineBuilder> next);
     }
 }
