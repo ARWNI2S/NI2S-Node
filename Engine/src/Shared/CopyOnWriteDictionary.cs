@@ -38,11 +38,7 @@ internal sealed class CopyOnWriteDictionary<TKey, TValue> : IDictionary<TKey, TV
     {
         get
         {
-            if (_innerDictionary == null)
-            {
-                _innerDictionary = new Dictionary<TKey, TValue>(_sourceDictionary,
-                                                                _comparer);
-            }
+            _innerDictionary ??= new Dictionary<TKey, TValue>(_sourceDictionary, _comparer);
 
             return _innerDictionary;
         }

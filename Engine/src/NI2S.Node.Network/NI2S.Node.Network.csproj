@@ -9,27 +9,40 @@
 
   <ItemGroup>
     <Compile Remove="Hosting\**" />
-    <Compile Remove="Protocol\**" />
     <Compile Remove="Routing\**" />
     <Compile Remove="Server\**" />
     <EmbeddedResource Remove="Hosting\**" />
-    <EmbeddedResource Remove="Protocol\**" />
     <EmbeddedResource Remove="Routing\**" />
     <EmbeddedResource Remove="Server\**" />
     <None Remove="Hosting\**" />
-    <None Remove="Protocol\**" />
     <None Remove="Routing\**" />
     <None Remove="Server\**" />
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="Server\Commands\CommandBase.cs" />
+    <Compile Include="Server\Commands\INodeCommand.cs" />
+    <Compile Include="Server\NodeServerExtensions.cs" />
+    <Compile Include="Server\Session\INodeSession.cs" />
+    <Compile Include="Server\Session\NodeSessionBase.cs" />
+    <Compile Include="Server\Session\UserSession.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="NI2S.SocketServer" />
     <PackageReference Include="NI2S.SocketServer.Client" />
+    <PackageReference Include="NI2S.SocketServer.Command" />
     <PackageReference Include="NI2S.SocketServer.Udp" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="$(SourceProjectsPath)\NI2S.Node.Core.Abstractions\NI2S.Node.Core.Abstractions.csproj" />
+    <ProjectReference Include="..\NI2S.Node.Math\NI2S.Node.Math.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Engine\" />
+    <Folder Include="Protocol\Udp\" />
   </ItemGroup>
 
 </Project>

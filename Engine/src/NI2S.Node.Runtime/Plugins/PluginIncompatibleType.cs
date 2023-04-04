@@ -1,4 +1,4 @@
-﻿namespace NI2S.Node.Plugins
+﻿namespace Nop.Services.Plugins
 {
     public enum PluginIncompatibleType
     {

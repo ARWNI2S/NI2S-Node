@@ -1,15 +1,15 @@
-﻿using Newtonsoft.Json;
-using NI2S.Node.Core;
-using NI2S.Node.Core.Infrastructure;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using Nop.Core;
+using Nop.Core.Infrastructure;
 
-namespace NI2S.Node.Plugins
+namespace Nop.Services.Plugins
 {
     /// <summary>
     /// Represents an information about plugins
@@ -22,7 +22,7 @@ namespace NI2S.Node.Plugins
         private List<string> _installedPluginNames = new();
         private IList<PluginDescriptorBaseInfo> _installedPlugins = new List<PluginDescriptorBaseInfo>();
 
-        protected readonly INI2SFileProvider _fileProvider;
+        protected readonly INopFileProvider _fileProvider;
 
         #endregion
 
@@ -38,11 +38,11 @@ namespace NI2S.Node.Plugins
         protected virtual IList<string> GetObsoleteInstalledPluginNames()
         {
             //check whether file exists
-            var filePath = _fileProvider.MapPath(NI2SPluginDefaults.InstalledPluginsFilePath);
+            var filePath = _fileProvider.MapPath(NopPluginDefaults.InstalledPluginsFilePath);
             if (!_fileProvider.FileExists(filePath))
             {
                 //if not, try to parse the file that was used in previous nopCommerce versions
-                filePath = _fileProvider.MapPath(NI2SPluginDefaults.ObsoleteInstalledPluginsFilePath);
+                filePath = _fileProvider.MapPath(NopPluginDefaults.ObsoleteInstalledPluginsFilePath);
                 if (!_fileProvider.FileExists(filePath))
                     return new List<string>();
 
@@ -111,7 +111,7 @@ namespace NI2S.Node.Plugins
                 return false;
 
             //directory is directly in plugins directory
-            if (!_fileProvider.GetDirectoryNameOnly(parent).Equals(NI2SPluginDefaults.PathName, StringComparison.InvariantCultureIgnoreCase))
+            if (!_fileProvider.GetDirectoryNameOnly(parent).Equals(NopPluginDefaults.PathName, StringComparison.InvariantCultureIgnoreCase))
                 return false;
 
             return true;
@@ -130,7 +130,7 @@ namespace NI2S.Node.Plugins
             var result = new List<(string DescriptionFile, PluginDescriptor PluginDescriptor)>();
 
             //try to find description files in the plugin directory
-            var files = _fileProvider.GetFiles(directoryName, NI2SPluginDefaults.DescriptionFileName, false);
+            var files = _fileProvider.GetFiles(directoryName, NopPluginDefaults.DescriptionFileName, false);
 
             //populate result list
             foreach (var descriptionFile in files)
@@ -147,7 +147,7 @@ namespace NI2S.Node.Plugins
             }
 
             //sort list by display order. NOTE: Lowest DisplayOrder will be first i.e 0 , 1, 1, 1, 5, 10
-            //it's required: dummys://www.nopcommerce.com/boards/topic/17455/load-plugins-based-on-their-displayorder-on-startup
+            //it's required: https://www.nopcommerce.com/boards/topic/17455/load-plugins-based-on-their-displayorder-on-startup
             result = result.OrderBy(item => item.PluginDescriptor.DisplayOrder).ToList();
 
             return result;
@@ -156,8 +156,8 @@ namespace NI2S.Node.Plugins
         #endregion
 
         #region Ctor
-
-        public PluginsInfo(INI2SFileProvider fileProvider)
+        
+        public PluginsInfo(INopFileProvider fileProvider)
         {
             _fileProvider = fileProvider ?? CommonHelper.DefaultFileProvider;
         }
@@ -175,7 +175,7 @@ namespace NI2S.Node.Plugins
         public virtual void LoadPluginInfo()
         {
             //check whether plugins info file exists
-            var filePath = _fileProvider.MapPath(NI2SPluginDefaults.PluginsInfoFilePath);
+            var filePath = _fileProvider.MapPath(NopPluginDefaults.PluginsInfoFilePath);
             if (!_fileProvider.FileExists(filePath))
             {
                 //file doesn't exist, so try to get only installed plugin names from the obsolete file
@@ -197,7 +197,7 @@ namespace NI2S.Node.Plugins
             var incompatiblePlugins = new Dictionary<string, PluginIncompatibleType>();
 
             //ensure plugins directory is created
-            var pluginsDirectory = _fileProvider.MapPath(NI2SPluginDefaults.Path);
+            var pluginsDirectory = _fileProvider.MapPath(NopPluginDefaults.Path);
             _fileProvider.CreateDirectory(pluginsDirectory);
 
             //load plugin descriptors from the plugin directory
@@ -211,7 +211,7 @@ namespace NI2S.Node.Plugins
                     continue;
 
                 //ensure that plugin is compatible with the current version
-                if (!pluginDescriptor.SupportedVersions.Contains(NI2SVersion.CURRENT_VERSION, StringComparer.InvariantCultureIgnoreCase))
+                if (!pluginDescriptor.SupportedVersions.Contains(NopVersion.CURRENT_VERSION, StringComparer.InvariantCultureIgnoreCase))
                 {
                     incompatiblePlugins.Add(pluginDescriptor.SystemName, PluginIncompatibleType.NotCompatibleWithCurrentVersion);
                     continue;
@@ -299,7 +299,7 @@ namespace NI2S.Node.Plugins
         public virtual async Task SaveAsync()
         {
             //save the file
-            var filePath = _fileProvider.MapPath(NI2SPluginDefaults.PluginsInfoFilePath);
+            var filePath = _fileProvider.MapPath(NopPluginDefaults.PluginsInfoFilePath);
             var text = JsonConvert.SerializeObject(this, Formatting.Indented);
             await _fileProvider.WriteAllTextAsync(filePath, text, Encoding.UTF8);
         }
@@ -310,7 +310,7 @@ namespace NI2S.Node.Plugins
         public virtual void Save()
         {
             //save the file
-            var filePath = _fileProvider.MapPath(NI2SPluginDefaults.PluginsInfoFilePath);
+            var filePath = _fileProvider.MapPath(NopPluginDefaults.PluginsInfoFilePath);
             var text = JsonConvert.SerializeObject(this, Formatting.Indented);
             _fileProvider.WriteAllText(filePath, text, Encoding.UTF8);
         }

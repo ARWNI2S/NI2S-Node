@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace NI2S.Node.Plugins
+namespace Nop.Services.Plugins
 {
     /// <summary>
     /// Represents an information about plugins
@@ -22,7 +22,7 @@ namespace NI2S.Node.Plugins
         /// The true if data are loaded, otherwise False
         /// </returns>
         void LoadPluginInfo();
-
+        
         /// <summary>
         /// Save plugins info to the file
         /// </summary>
@@ -33,7 +33,7 @@ namespace NI2S.Node.Plugins
         /// </summary>
         /// <param name="pluginsInfo">Plugins info</param>
         void CopyFrom(IPluginsInfo pluginsInfo);
-
+        
         /// <summary>
         /// Gets or sets the list of all installed plugin
         /// </summary>

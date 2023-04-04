@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace NI2S.Node.Plugins
+namespace Nop.Services.Plugins
 {
     /// <summary>
     /// Represents an information about assembly which loaded by plugins
@@ -36,7 +36,7 @@ namespace NI2S.Node.Plugins
         /// Gets the short assembly name
         /// </summary>
         public string ShortName { get; }
-
+        
         /// <summary>
         /// Gets a list of all mentioned plugin-assembly pairs
         /// </summary>

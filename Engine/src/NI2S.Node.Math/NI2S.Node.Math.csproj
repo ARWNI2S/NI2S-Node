@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <PackageId>NI2S.Node.Math</PackageId>
+    <Title>NI2S Mathematics Library</Title>
+    <Description>Mathematics library for NI2S.</Description>
+    <TargetFrameworks>$(DefaultTargetFrameworks)</TargetFrameworks>
+    <RootNamespace>NI2S.Mathematics</RootNamespace>
+  </PropertyGroup>
+
+</Project>

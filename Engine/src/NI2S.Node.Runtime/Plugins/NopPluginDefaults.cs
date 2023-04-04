@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
+using Nop.Core.Caching;
 
-namespace NI2S.Node.Plugins
+namespace Nop.Services.Plugins
 {
     /// <summary>
     /// Represents default values related to plugins
     /// </summary>
-    public static partial class NI2SPluginDefaults
+    public static partial class NopPluginDefaults
     {
         /// <summary>
         /// Gets the path to file that contained (in previous versions) installed plugin system names
@@ -83,11 +84,11 @@ namespace NI2S.Node.Plugins
         /// <remarks>
         /// {0} : customer identifier
         /// </remarks>
-        public static CacheKey AdminNavigationPluginsCacheKey => new("NI2S.plugins.adminnavigation.{0}", AdminNavigationPluginsPrefix);
+        public static CacheKey AdminNavigationPluginsCacheKey => new("Nop.plugins.adminnavigation.{0}", AdminNavigationPluginsPrefix);
 
         /// <summary>
         /// Gets a key pattern to clear cache
         /// </summary>
-        public static string AdminNavigationPluginsPrefix => "NI2S.plugins.adminnavigation.";
+        public static string AdminNavigationPluginsPrefix => "Nop.plugins.adminnavigation.";
     }
 }

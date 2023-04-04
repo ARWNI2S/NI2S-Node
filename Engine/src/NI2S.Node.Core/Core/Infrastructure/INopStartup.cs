@@ -7,7 +7,7 @@ namespace NI2S.Node.Core.Infrastructure
     /// <summary>
     /// Represents object for the configuring services and middleware on application startup
     /// </summary>
-    public partial interface INI2SStartup
+    public partial interface INodeStartup
     {
         /// <summary>
         /// Add and configure any of the middleware

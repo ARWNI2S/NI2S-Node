@@ -1,12 +1,12 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
+using Newtonsoft.Json;
 
-namespace NI2S.Node.Plugins
+namespace Nop.Services.Plugins
 {
     /// <summary>
     /// Represents base info of plugin descriptor
     /// </summary>
-    public partial class PluginDescriptorBaseInfo : IComparable<PluginDescriptorBaseInfo>
+    public partial class PluginDescriptorBaseInfo: IComparable<PluginDescriptorBaseInfo>
     {
         /// <summary>
         /// Gets or sets the plugin system name

@@ -7,19 +7,21 @@ using NI2S.Node.Builder;
 using NI2S.Node.Hosting.Server;
 using NI2S.Node.Hosting.Server.Features;
 using NI2S.Node.Dummy;
-using NI2S.Node.Routing;
+using NI2S.Node.Clustering;
 using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using NI2S.Node.Core.Infrastructure;
+using NI2S.Node.Engine.Modules;
 
 namespace NI2S.Node.Hosting
 {
     /// <summary>
-    /// The web application used to configure the HTTP pipeline, and routes.
+    /// The node engine used to configure the message handler pipeline, and cluster routes.
     /// </summary>
     /// <remarks>Was <see cref="NodeEngine"/></remarks>
-    public sealed class NodeEngine : IHost, IEngineBuilder, IEndpointRouteBuilder, IAsyncDisposable
+    public sealed class NodeEngine : IHost, IEngineBuilder, IClusterNodeBuilder, IAsyncDisposable
     {
         internal const string GlobalEndpointRouteBuilderKey = "__GlobalEndpointRouteBuilder";
 
@@ -60,29 +62,24 @@ namespace NI2S.Node.Hosting
         /// </summary>
         public ILogger Logger { get; }
 
-        /// <summary>
-        /// The list of URLs that the HTTP server is bound to.
-        /// </summary>
-        public ICollection<string> Urls => ServerFeatures.GetRequiredFeature<IServerAddressesFeature>().Addresses;
-
         IServiceProvider IEngineBuilder.EngineServices
         {
             get => EngineBuilder.EngineServices;
             set => EngineBuilder.EngineServices = value;
         }
 
-        internal IFeatureCollection ServerFeatures => _host.Services.GetRequiredService<IServer>().Features;
-        IFeatureCollection IEngineBuilder.ServerFeatures => ServerFeatures;
+        internal IModuleCollection EngineModules => _host.Services.GetRequiredService<IEngine>().Modules;
+        IModuleCollection IEngineBuilder.EngineModules => EngineModules;
 
         internal IDictionary<string, object> Properties => EngineBuilder.Properties;
         IDictionary<string, object> IEngineBuilder.Properties => Properties;
 
         internal ICollection<EndpointDataSource> DataSources => _dataSources;
-        ICollection<EndpointDataSource> IEndpointRouteBuilder.DataSources => DataSources;
+        ICollection<EndpointDataSource> IClusterNodeBuilder.DataSources => DataSources;
 
         internal EngineBuilder EngineBuilder { get; }
 
-        IServiceProvider IEndpointRouteBuilder.ServiceProvider => Services;
+        IServiceProvider IClusterNodeBuilder.ServiceProvider => Services;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NodeEngine"/> class with preconfigured defaults.
@@ -193,7 +190,7 @@ namespace NI2S.Node.Hosting
             return this;
         }
 
-        IEngineBuilder IEndpointRouteBuilder.CreateEngineBuilder() => ((IEngineBuilder)this).New();
+        IEngineBuilder IClusterNodeBuilder.CreateEngineBuilder() => ((IEngineBuilder)this).New();
 
         private void Listen(string url)
         {

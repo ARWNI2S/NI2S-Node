@@ -1,4 +1,6 @@
-﻿using System.Runtime.CompilerServices;
+﻿// Copyrigth (c) 2023 Alternate Reality Worlds. Narrative Interactive Intelligent Simulator.
+
+using System.Runtime.CompilerServices;
 
 namespace NI2S.Node.Core.Infrastructure
 {

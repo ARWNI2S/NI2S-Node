@@ -1,4 +1,4 @@
-﻿namespace NI2S.Node.Plugins
+﻿namespace Nop.Services.Plugins
 {
     /// <summary>
     /// Represents descriptor of the application extension (plugin or theme)
@@ -13,6 +13,6 @@
         /// <summary>
         /// Gets or sets the friendly name
         /// </summary>
-        string FriendlyName { get; set; }
+         string FriendlyName { get; set; }
     }
 }

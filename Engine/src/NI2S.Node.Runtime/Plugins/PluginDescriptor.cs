@@ -1,13 +1,13 @@
-﻿using Newtonsoft.Json;
-using NI2S.Node.Core;
-using NI2S.Node.Core.Infrastructure;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using Newtonsoft.Json;
+using Nop.Core;
+using Nop.Core.Infrastructure;
 
-namespace NI2S.Node.Plugins
+namespace Nop.Services.Plugins
 {
     /// <summary>
     /// Represents a plugin descriptor
@@ -102,7 +102,7 @@ namespace NI2S.Node.Plugins
             if (OriginalAssemblyFile == null)
                 throw new Exception($"Cannot load original assembly path for {SystemName} plugin.");
 
-            var filePath = fileProvider.Combine(fileProvider.GetDirectoryName(OriginalAssemblyFile), NI2SPluginDefaults.DescriptionFileName);
+            var filePath = fileProvider.Combine(fileProvider.GetDirectoryName(OriginalAssemblyFile), NopPluginDefaults.DescriptionFileName);
             if (!fileProvider.FileExists(filePath))
                 throw new Exception($"Description file for {SystemName} plugin does not exist. {filePath}");
 
@@ -126,7 +126,7 @@ namespace NI2S.Node.Plugins
         /// </summary>
         [JsonProperty(PropertyName = "FriendlyName")]
         public virtual string FriendlyName { get; set; }
-
+        
         /// <summary>
         /// Gets or sets the supported versions of nopCommerce
         /// </summary>
@@ -168,7 +168,7 @@ namespace NI2S.Node.Plugins
         /// </summary>
         [JsonProperty(PropertyName = "LimitedToCustomerRoles")]
         public virtual IList<int> LimitedToCustomerRoles { get; set; }
-
+        
         /// <summary>
         /// Gets or sets the list of plugins' system name that this plugin depends on
         /// </summary>

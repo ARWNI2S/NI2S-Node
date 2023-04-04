@@ -1,17 +1,7 @@
-﻿using Microsoft.Extensions.FileProviders;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using NI2S.Node.Builder;
-using NI2S.Node.Core.Configuration;
+﻿// Copyrigth (c) 2023 Alternate Reality Worlds. Narrative Interactive Intelligent Simulator.
+
 using NI2S.Node.Core.Infrastructure;
-using NI2S.Node.Data;
-using NI2S.Node.Hosting;
-using NI2S.Node.Plugins;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Reflection;
+using NI2S.Node.Hosting.Builder;
 using System.Threading.Tasks;
 
 namespace NI2S.Node.Infrastructure.Extensions
@@ -27,35 +17,39 @@ namespace NI2S.Node.Infrastructure.Extensions
         /// <param name="application">Builder for configuring an application's request pipeline</param>
         public static void ConfigureRequestPipeline(this IEngineBuilder application)
         {
-            EngineContext.Current.ConfigureRequestPipeline(application);
+            //EngineContext.Current.ConfigureRequestPipeline(application);
+        }
+
+        public static void StartEngine(this IEngineBuilder _)
+        {
         }
 
         public static async Task StartEngineAsync(this IEngineBuilder _)
         {
             var engine = EngineContext.Current;
 
-            //further actions are performed only when the database is installed
-            if (DataSettingsManager.IsDatabaseInstalled())
-            {
-                //log application start
-                await engine.Resolve<ILogger>().InformationAsync("Engine started");
+            ////further actions are performed only when the database is installed
+            //if (DataSettingsManager.IsDatabaseInstalled())
+            //{
+            //    //log application start
+            //    await engine.Resolve<ILogger>().InformationAsync("Engine started");
 
-                //install and update plugins
-                var pluginService = engine.Resolve<IPluginService>();
-                await pluginService.InstallPluginsAsync();
-                await pluginService.UpdatePluginsAsync();
+            //    //install and update plugins
+            //    var pluginService = engine.Resolve<IPluginService>();
+            //    await pluginService.InstallPluginsAsync();
+            //    await pluginService.UpdatePluginsAsync();
 
-                //update nopCommerce core and db
-                //var migrationManager = engine.Resolve<IMigrationManager>();
-                //var assembly = Assembly.GetAssembly(typeof(EngineBuilderExtensions));
-                //migrationManager.ApplyUpMigrations(assembly, MigrationProcessType.Update);
-                //assembly = Assembly.GetAssembly(typeof(IMigrationManager));
-                //migrationManager.ApplyUpMigrations(assembly, MigrationProcessType.Update);
+            //    //update nopCommerce core and db
+            //    var migrationManager = engine.Resolve<IMigrationManager>();
+            //    var assembly = Assembly.GetAssembly(typeof(EngineBuilderExtensions));
+            //    migrationManager.ApplyUpMigrations(assembly, MigrationProcessType.Update);
+            //    assembly = Assembly.GetAssembly(typeof(IMigrationManager));
+            //    migrationManager.ApplyUpMigrations(assembly, MigrationProcessType.Update);
 
-                var taskScheduler = engine.Resolve<ITaskScheduler>();
-                await taskScheduler.InitializeAsync();
-                taskScheduler.StartScheduler();
-            }
+            //    var taskScheduler = engine.Resolve<ITaskScheduler>();
+            //    await taskScheduler.InitializeAsync();
+            //    taskScheduler.StartScheduler();
+            //}
         }
 
         /// <summary>
@@ -64,19 +58,19 @@ namespace NI2S.Node.Infrastructure.Extensions
         /// <param name="application">Builder for configuring an application's request pipeline</param>
         public static void UseNI2SExceptionHandler(this IEngineBuilder application)
         {
-            var appSettings = EngineContext.Current.Resolve<AppSettings>();
-            var nodeHostEnvironment = EngineContext.Current.Resolve<INodeHostEnvironment>();
-            var useDetailedExceptionPage = appSettings.Get<CommonConfig>().DisplayFullErrorStack || nodeHostEnvironment.IsDevelopment();
-            if (useDetailedExceptionPage)
-            {
-                //get detailed exceptions for developing and testing purposes
-                //application.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                //or use special exception handler
-                //application.UseExceptionHandler("/Error/Error");
-            }
+            //var appSettings = EngineContext.Current.Resolve<AppSettings>();
+            //var nodeHostEnvironment = EngineContext.Current.Resolve<INodeHostEnvironment>();
+            //var useDetailedExceptionPage = appSettings.Get<CommonConfig>().DisplayFullErrorStack || nodeHostEnvironment.IsDevelopment();
+            //if (useDetailedExceptionPage)
+            //{
+            //    //get detailed exceptions for developing and testing purposes
+            //    application.UseDeveloperExceptionPage();
+            //}
+            //else
+            //{
+            //    //or use special exception handler
+            //    application.UseExceptionHandler("/Error/Error");
+            //}
 
             //TODO: log errors
             //application.UseExceptionHandler(handler =>
@@ -182,8 +176,8 @@ namespace NI2S.Node.Infrastructure.Extensions
         /// <param name="application">Builder for configuring an application's request pipeline</param>
         public static void UseNI2SResponseCompression(this IEngineBuilder application)
         {
-            if (!DataSettingsManager.IsDatabaseInstalled())
-                return;
+            //if (!DataSettingsManager.IsDatabaseInstalled())
+            //    return;
 
             //whether to use compression (gzip by default)
             //if (EngineContext.Current.Resolve<CommonSettings>().UseResponseCompression)
@@ -196,8 +190,8 @@ namespace NI2S.Node.Infrastructure.Extensions
         /// <param name="application">Builder for configuring an application's request pipeline</param>
         public static void UseNI2SNodeOptimizer(this IEngineBuilder application)
         {
-            var fileProvider = EngineContext.Current.Resolve<INI2SFileProvider>();
-            var nodeHostEnvironment = EngineContext.Current.Resolve<INodeHostEnvironment>();
+            //var fileProvider = EngineContext.Current.Resolve<INI2SFileProvider>();
+            //var nodeHostEnvironment = EngineContext.Current.Resolve<INodeHostEnvironment>();
 
             //application.UseNodeOptimizer(nodeHostEnvironment, new[]
             //{
@@ -363,8 +357,8 @@ namespace NI2S.Node.Infrastructure.Extensions
         public static void UseNI2SAuthentication(this IEngineBuilder application)
         {
             //check whether database is installed
-            if (!DataSettingsManager.IsDatabaseInstalled())
-                return;
+            //if (!DataSettingsManager.IsDatabaseInstalled())
+            //    return;
 
             //application.UseMiddleware<AuthenticationMiddleware>();
         }
@@ -374,19 +368,19 @@ namespace NI2S.Node.Infrastructure.Extensions
         /// </summary>
         public static void UseNI2SPdf(this IEngineBuilder _)
         {
-            if (!DataSettingsManager.IsDatabaseInstalled())
-                return;
+            //if (!DataSettingsManager.IsDatabaseInstalled())
+            //    return;
 
-            var fileProvider = EngineContext.Current.Resolve<INI2SFileProvider>();
-            var fontPaths = fileProvider.EnumerateFiles(fileProvider.MapPath("~/App_Data/Pdf/"), "*.ttf") ?? Enumerable.Empty<string>();
+            //var fileProvider = EngineContext.Current.Resolve<INI2SFileProvider>();
+            //var fontPaths = fileProvider.EnumerateFiles(fileProvider.MapPath("~/App_Data/Pdf/"), "*.ttf") ?? Enumerable.Empty<string>();
 
             //write placeholder characters instead of unavailable glyphs for both debug/release configurations
             //QuestPDF.Settings.CheckIfAllTextGlyphsAreAvailable = false;
 
-            foreach (var fp in fontPaths)
-            {
-                //FontManager.RegisterFont(File.OpenRead(fp));
-            }
+            //foreach (var fp in fontPaths)
+            //{
+            //FontManager.RegisterFont(File.OpenRead(fp));
+            //}
         }
 
         /// <summary>
@@ -437,7 +431,7 @@ namespace NI2S.Node.Infrastructure.Extensions
         /// <param name="application">Builder for configuring an application's request pipeline</param>
         public static void UseNI2SProxy(this IEngineBuilder application)
         {
-            var appSettings = EngineContext.Current.Resolve<AppSettings>();
+            //var appSettings = EngineContext.Current.Resolve<AppSettings>();
 
             //if (appSettings.Get<HostingConfig>().UseProxy)
             //{
@@ -479,8 +473,8 @@ namespace NI2S.Node.Infrastructure.Extensions
         public static void UseNI2SNodeMarkupMin(this IEngineBuilder application)
         {
             //check whether database is installed
-            if (!DataSettingsManager.IsDatabaseInstalled())
-                return;
+            //if (!DataSettingsManager.IsDatabaseInstalled())
+            //    return;
 
             //application.UseNodeMarkupMin();
         }

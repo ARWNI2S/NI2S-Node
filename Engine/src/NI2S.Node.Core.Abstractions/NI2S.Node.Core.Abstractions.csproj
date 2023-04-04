@@ -11,21 +11,52 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Configuration\**" />
+    <Compile Remove="Core\Configuration\**" />
     <Compile Remove="Core\**" />
     <Compile Remove="Hosting\**" />
-    <EmbeddedResource Remove="Configuration\**" />
+    <EmbeddedResource Remove="Core\Configuration\**" />
     <EmbeddedResource Remove="Core\**" />
     <EmbeddedResource Remove="Hosting\**" />
-    <None Remove="Configuration\**" />
+    <None Remove="Core\Configuration\**" />
     <None Remove="Core\**" />
     <None Remove="Hosting\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Clustering\ClusterEndpoint.cs" />
+    <Compile Remove="Clustering\EndpointDataSource.cs" />
+    <Compile Remove="Clustering\IClusterNodeBuilder.cs" />
+    <Compile Remove="Engine\EngineContext.cs" />
+    <Compile Remove="Engine\Messaging\MessageHandlerDelegate.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Core\Configuration\IConfig.cs" />
+    <Compile Include="Core\Configuration\ISettings.cs" />
+    <Compile Include="Core\IDescriptor.cs" />
+    <Compile Include="Core\Infrastructure\IEngine.cs" />
+    <Compile Include="Core\Infrastructure\INodeFileProvider.cs" />
+    <Compile Include="Core\Infrastructure\INodeStartup.cs" />
+    <Compile Include="Core\Infrastructure\IStartupTask.cs" />
+    <Compile Include="Core\Infrastructure\ITypeFinder.cs" />
+    <Compile Include="Core\NI2SException.cs" />
+    <Compile Include="Hosting\Builder\IEngineBuilder.cs" />
+    <Compile Include="Core\INodeContextAccessor.cs" />
+    <Compile Include="Hosting\INodeHostEnvironment.cs" />
+    <Compile Include="Core\NodeContext.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
     <PackageReference Include="Newtonsoft.Json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Clustering\" />
+    <Folder Include="Engine\Messaging\" />
+    <Folder Include="Engine\Plugins\" />
+    <Folder Include="Plugins\" />
   </ItemGroup>
 
 </Project>
