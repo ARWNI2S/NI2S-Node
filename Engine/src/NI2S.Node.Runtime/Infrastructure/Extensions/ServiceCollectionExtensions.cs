@@ -1,10 +1,10 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using NI2S.Node.Builder;
-using NI2S.Node.Configuration;
 using NI2S.Node.Core;
 using NI2S.Node.Core.Configuration;
 using NI2S.Node.Core.Infrastructure;
+using NI2S.Node.Hosting;
+using NI2S.Node.Hosting.Builder;
 using System;
 using System.Linq;
 using System.Net;
@@ -22,17 +22,17 @@ namespace NI2S.Node.Infrastructure.Extensions
         /// <param name="services">Collection of service descriptors</param>
         /// <param name="builder">A builder for node engine and services</param>
         public static void ConfigureEngineSettings(this IServiceCollection services,
-            NodeEngineBuilder builder)
+            NodeEngineHostBuilder builder)
         {
             //let the operating system decide what TLS protocol version to use
             //see dummys://docs.microsoft.com/dotnet/framework/network-programming/tls
             ServicePointManager.SecurityProtocol = SecurityProtocolType.SystemDefault;
 
             //create default file provider
-            CommonHelper.DefaultFileProvider = new NI2SFileProvider(builder.Environment);
+            CommonHelper.DefaultFileProvider = builder.Environment.NodeRootFileProvider;
 
             //register type finder
-            var typeFinder = new NodeAppTypeFinder();
+            var typeFinder = new NodeEngineTypeFinder();
             Singleton<ITypeFinder>.Instance = typeFinder;
             services.AddSingleton<ITypeFinder>(typeFinder);
 
@@ -45,7 +45,7 @@ namespace NI2S.Node.Infrastructure.Extensions
             foreach (var config in configurations)
                 builder.Configuration.GetSection(config.Name).Bind(config, options => options.BindNonPublicProperties = true);
 
-            var appSettings = AppSettingsHelper.SaveAppSettings(configurations, CommonHelper.DefaultFileProvider, false);
+            var appSettings = NodeSettingsHelper.SaveNodeSettings(configurations, CommonHelper.DefaultFileProvider, false);
             services.AddSingleton(appSettings);
         }
 
@@ -55,7 +55,7 @@ namespace NI2S.Node.Infrastructure.Extensions
         /// <param name="services">Collection of service descriptors</param>
         /// <param name="builder">A builder for node engine and services</param>
         public static void ConfigureEngineServices(this IServiceCollection services,
-            NodeEngineBuilder builder)
+            NodeEngineHostBuilder builder)
         {
             //add accessor to DummyContext
             services.AddDummyContextAccessor();
@@ -131,43 +131,43 @@ namespace NI2S.Node.Infrastructure.Extensions
         /// <param name="services">Collection of service descriptors</param>
         public static void AddDistributedCache(this IServiceCollection services)
         {
-            var appSettings = Singleton<AppSettings>.Instance;
-            var distributedCacheConfig = appSettings.Get<DistributedCacheConfig>();
+            //    var appSettings = Singleton<AppSettings>.Instance;
+            //    var distributedCacheConfig = appSettings.Get<DistributedCacheConfig>();
 
-            if (!distributedCacheConfig.Enabled)
-                return;
+            //    if (!distributedCacheConfig.Enabled)
+            //        return;
 
-            switch (distributedCacheConfig.DistributedCacheType)
-            {
-                case DistributedCacheType.Memory:
-                    services.AddDistributedMemoryCache();
-                    break;
+            //    switch (distributedCacheConfig.DistributedCacheType)
+            //    {
+            //        case DistributedCacheType.Memory:
+            //            services.AddDistributedMemoryCache();
+            //            break;
 
-                case DistributedCacheType.SqlServer:
-                    services.AddDistributedSqlServerCache(options =>
-                    {
-                        options.ConnectionString = distributedCacheConfig.ConnectionString;
-                        options.SchemaName = distributedCacheConfig.SchemaName;
-                        options.TableName = distributedCacheConfig.TableName;
-                    });
-                    break;
+            //        case DistributedCacheType.SqlServer:
+            //            services.AddDistributedSqlServerCache(options =>
+            //            {
+            //                options.ConnectionString = distributedCacheConfig.ConnectionString;
+            //                options.SchemaName = distributedCacheConfig.SchemaName;
+            //                options.TableName = distributedCacheConfig.TableName;
+            //            });
+            //            break;
 
-                case DistributedCacheType.Redis:
-                    services.AddStackExchangeRedisCache(options =>
-                    {
-                        options.Configuration = distributedCacheConfig.ConnectionString;
-                        options.InstanceName = distributedCacheConfig.InstanceName ?? string.Empty;
-                    });
-                    break;
+            //        case DistributedCacheType.Redis:
+            //            services.AddStackExchangeRedisCache(options =>
+            //            {
+            //                options.Configuration = distributedCacheConfig.ConnectionString;
+            //                options.InstanceName = distributedCacheConfig.InstanceName ?? string.Empty;
+            //            });
+            //            break;
 
-                case DistributedCacheType.RedisSynchronizedMemory:
-                    services.AddStackExchangeRedisCache(options =>
-                    {
-                        options.Configuration = distributedCacheConfig.ConnectionString;
-                        options.InstanceName = distributedCacheConfig.InstanceName ?? string.Empty;
-                    });
-                    break;
-            }
+            //        case DistributedCacheType.RedisSynchronizedMemory:
+            //            services.AddStackExchangeRedisCache(options =>
+            //            {
+            //                options.Configuration = distributedCacheConfig.ConnectionString;
+            //                options.InstanceName = distributedCacheConfig.InstanceName ?? string.Empty;
+            //            });
+            //            break;
+            //    }
         }
 
         /// <summary>

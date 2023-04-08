@@ -16,46 +16,46 @@ namespace NI2S.Node.Core.Infrastructure
     public interface IEngine
     {
         /// <summary>
-        /// Add and configure services
+        /// Add and configure services.
         /// </summary>
-        /// <param name="services">Collection of service descriptors</param>
-        /// <param name="configuration">Configuration of the application</param>
+        /// <param name="services">Collection of service descriptors.</param>
+        /// <param name="configuration">Configuration of the application.</param>
         void ConfigureServices(IServiceCollection services, IConfiguration configuration);
 
         /// <summary>
-        /// Configure message handler pipeline
+        /// Configure message handler pipeline.
         /// </summary>
-        /// <param name="engine">Builder for configuring a engine's message handler pipeline</param>
+        /// <param name="engine">Builder for configuring a engine's message handler pipeline.</param>
         void ConfigureMessageHandlerPipeline(IEngineBuilder engine);
 
         /// <summary>
-        /// Resolve dependency
+        /// Resolve dependency.
         /// </summary>
-        /// <param name="scope">Scope</param>
-        /// <typeparam name="T">Type of resolved service</typeparam>
-        /// <returns>Resolved service</returns>
+        /// <param name="scope">Scope.</param>
+        /// <typeparam name="T">Type of resolved service.</typeparam>
+        /// <returns>Resolved service.</returns>
         T Resolve<T>(IServiceScope scope = null) where T : class;
 
         /// <summary>
-        /// Resolve dependency
+        /// Resolve dependency.
         /// </summary>
-        /// <param name="type">Type of resolved service</param>
-        /// <param name="scope">Scope</param>
-        /// <returns>Resolved service</returns>
+        /// <param name="type">Type of resolved service.</param>
+        /// <param name="scope">Scope.</param>
+        /// <returns>Resolved service.</returns>
         object Resolve(Type type, IServiceScope scope = null);
 
         /// <summary>
-        /// Resolve dependencies
+        /// Resolve dependencies.
         /// </summary>
-        /// <typeparam name="T">Type of resolved services</typeparam>
-        /// <returns>Collection of resolved services</returns>
+        /// <typeparam name="T">Type of resolved services.</typeparam>
+        /// <returns>Collection of resolved services.</returns>
         IEnumerable<T> ResolveAll<T>();
 
         /// <summary>
-        /// Resolve unregistered service
+        /// Resolve unregistered service.
         /// </summary>
-        /// <param name="type">Type of service</param>
-        /// <returns>Resolved service</returns>
+        /// <param name="type">Type of service.</param>
+        /// <returns>Resolved service.</returns>
         object ResolveUnregistered(Type type);
 
     }

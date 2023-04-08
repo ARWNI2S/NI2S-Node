@@ -6,9 +6,9 @@ using System.Buffers;
 
 namespace NI2S.Node.Network.Protocol
 {
-    internal class NI2SPackageDecoder : IPackageDecoder<NI2SPackage>
+    internal class DataPackageDecoder : IPackageDecoder<DataPackage>
     {
-        public NI2SPackage Decode(ref ReadOnlySequence<byte> buffer, object context)
+        public DataPackage Decode(ref ReadOnlySequence<byte> buffer, object context)
         {
             throw new NotImplementedException();
         }

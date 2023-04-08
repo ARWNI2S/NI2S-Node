@@ -2,6 +2,7 @@
 
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
+using NI2S.Node.Core.Infrastructure;
 
 namespace NI2S.Node.Hosting
 {
@@ -20,6 +21,6 @@ namespace NI2S.Node.Hosting
         /// <summary>
         /// Gets or sets an <see cref="IFileProvider"/> pointing at <see cref="NodeRootPath"/>.
         /// </summary>
-        IFileProvider NodeRootFileProvider { get; set; }
+        INodeFileProvider NodeRootFileProvider { get; set; }
     }
 }

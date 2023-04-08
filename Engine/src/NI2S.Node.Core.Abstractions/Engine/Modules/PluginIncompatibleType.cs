@@ -1,6 +1,6 @@
-﻿namespace Nop.Services.Plugins
+﻿namespace NI2S.Engine
 {
-    public enum PluginIncompatibleType
+    public enum ModuleIncompatibleType
     {
         /// <summary>
         /// The plugin isn't compatible with the current version

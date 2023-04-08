@@ -3,7 +3,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NI2S.Engine;
-using NI2S.Node.Builder;
+using NI2S.Node.Hosting.Builder;
 
 namespace NI2S.Node.Core
 {

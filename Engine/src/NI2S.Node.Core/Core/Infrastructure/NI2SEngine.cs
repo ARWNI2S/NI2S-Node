@@ -137,7 +137,7 @@ namespace NI2S.Node.Core.Infrastructure
         /// Configure HTTP request pipeline
         /// </summary>
         /// <param name="application">Builder for configuring an application's request pipeline</param>
-        public virtual void ConfigureRequestPipeline(IEngineBuilder application)
+        public virtual void ConfigureMessageHandlerPipeline(IEngineBuilder application)
         {
             ServiceProvider = application.EngineServices;
 

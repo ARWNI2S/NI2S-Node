@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace NI2S.Node.Network.Protocol
 {
-    internal class NI2SPackageHandler : IPackageHandler<NI2SPackage>
+    internal class DataPackageHandler : IPackageHandler<DataPackage>
     {
-        public ValueTask Handle(IAppSession session, NI2SPackage package)
+        public ValueTask Handle(IAppSession session, DataPackage package)
         {
             throw new NotImplementedException();
         }

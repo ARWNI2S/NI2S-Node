@@ -18,7 +18,9 @@
     <Compile Remove="CacheKey.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Infrastructure\Extensions\NodeEngineExtensions.cs" />
     <Compile Include="Infrastructure\Extensions\EngineBuilderExtensions.cs" />
+    <Compile Include="Infrastructure\Extensions\ServiceCollectionExtensions.cs" />
   </ItemGroup>
 
   <ItemGroup>

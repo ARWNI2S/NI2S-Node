@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Security.Cryptography;
 
-namespace NI2S.Node.Core
+namespace NI2S.Mathematics.Randomizers
 {
     /// <summary>
     ///  Represents the class implementation of cryptographic random number generator derive

@@ -46,18 +46,26 @@
 
   <ItemGroup>
     <Compile Include="$(SourceProjectsPath)\Shared\CopyOnWriteDictionary.cs" Link="CopyOnWriteDictionary.cs" />
+    <Compile Include="Core\CommonHelper.cs" />
     <Compile Include="Core\Configuration\CommonConfig.cs" />
     <Compile Include="Core\Configuration\ConfigurationDefaults.cs" />
+    <Compile Include="Core\Configuration\ISettings.cs" />
     <Compile Include="Core\Configuration\NodeSettings.cs" />
     <Compile Include="Core\Configuration\NodeSettingsHelper.cs" />
+    <Compile Include="Core\Configuration\PluginConfig.cs" />
     <Compile Include="Core\Constants.cs" />
+    <Compile Include="Core\Infrastructure\AppDomainTypeFinder.cs" />
     <Compile Include="Core\Infrastructure\EngineContext.cs" />
     <Compile Include="Core\Infrastructure\NodeFileProvider.cs" />
     <Compile Include="Core\Infrastructure\NI2SEngine.cs" />
     <Compile Include="Core\Infrastructure\Singleton.cs" />
+    <Compile Include="Core\Infrastructure\NodeEngineTypeFinder.cs" />
+    <Compile Include="Hosting\Builder\HostBuilderAdapter.cs" />
     <Compile Include="Hosting\Builder\NodeEngineHostBuilder.cs" />
     <Compile Include="Hosting\Builder\NodeEngineHostOptions.cs" />
+    <Compile Include="Hosting\HostingEnvironment.cs" />
     <Compile Include="Hosting\NodeEngineHost.cs" />
+    <Compile Include="Hosting\NodeHostDefaults.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -67,9 +75,11 @@
 
   <ItemGroup>
     <ProjectReference Include="$(SourceProjectsPath)\NI2S.Node.Core.Abstractions\NI2S.Node.Core.Abstractions.csproj" />
+    <ProjectReference Include="..\NI2S.Node.Math\NI2S.Node.Math.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Assembly\" />
     <Folder Include="Builder\" />
     <Folder Include="Helpers\" />
   </ItemGroup>

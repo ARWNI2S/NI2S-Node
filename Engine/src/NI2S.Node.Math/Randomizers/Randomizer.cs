@@ -4,7 +4,7 @@ using System;
 
 namespace NI2S.Mathematics.Randomizers
 {
-    internal class Randomizer
+    internal static class Randomizer
     {
         private static Random _timeRandom = new(DateTime.UtcNow.Microsecond);
 

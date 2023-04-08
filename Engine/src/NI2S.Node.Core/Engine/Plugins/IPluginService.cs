@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Nop.Core.Domain.Customers;
 
-namespace Nop.Services.Plugins
+namespace NI2S.Engine.Plugins
 {
     /// <summary>
     /// Represents a plugin service
@@ -26,7 +25,7 @@ namespace Nop.Services.Plugins
         /// The task result contains the plugin descriptors
         /// </returns>
         Task<IList<PluginDescriptor>> GetPluginDescriptorsAsync<TPlugin>(LoadPluginsMode loadMode = LoadPluginsMode.InstalledOnly,
-            Customer customer = null, int storeId = 0, string group = null, string dependsOnSystemName = "", string friendlyName = null, string author = null) where TPlugin : class, IPlugin;
+            string group = null, string dependsOnSystemName = "", string friendlyName = null, string author = null) where TPlugin : class, IPlugin;
 
         /// <summary>
         /// Get a plugin descriptor by the system name
@@ -43,7 +42,7 @@ namespace Nop.Services.Plugins
         /// </returns>
         Task<PluginDescriptor> GetPluginDescriptorBySystemNameAsync<TPlugin>(string systemName,
             LoadPluginsMode loadMode = LoadPluginsMode.InstalledOnly,
-            Customer customer = null, int storeId = 0, string group = null) where TPlugin : class, IPlugin;
+            string group = null) where TPlugin : class, IPlugin;
 
         /// <summary>
         /// Get plugins
@@ -58,7 +57,7 @@ namespace Nop.Services.Plugins
         /// The task result contains the plugins
         /// </returns>
         Task<IList<TPlugin>> GetPluginsAsync<TPlugin>(LoadPluginsMode loadMode = LoadPluginsMode.InstalledOnly,
-            Customer customer = null, int storeId = 0, string group = null) where TPlugin : class, IPlugin;
+            string group = null) where TPlugin : class, IPlugin;
 
         /// <summary>
         /// Find a plugin by the type which is located into the same assembly as a plugin
@@ -84,7 +83,7 @@ namespace Nop.Services.Plugins
         /// <param name="customer">Customer</param>
         /// <param name="checkDependencies">Specifies whether to check plugin dependencies</param>
         /// <returns>A task that represents the asynchronous operation</returns>
-        Task PreparePluginToInstallAsync(string systemName, Customer customer = null, bool checkDependencies = true);
+        Task PreparePluginToInstallAsync(string systemName, bool checkDependencies = true);
 
         /// <summary>
         /// Prepare plugin to the uninstallation

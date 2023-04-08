@@ -1,8 +1,10 @@
 ﻿// Copyrigth (c) 2023 Alternate Reality Worlds. Narrative Interactive Intelligent Simulator.
 
 using Microsoft.Extensions.Hosting;
+using NI2S.Engine;
 using NI2S.Node.Hosting.Builder;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -11,13 +13,38 @@ namespace NI2S.Node.Hosting
     /// <summary>
     /// Used to configure the NI2S node engine host.
     /// </summary>
-    public sealed class NodeEngineHost : IHost /*, IEngineBuilder, IClusterNodeBuilder*/, IAsyncDisposable
+    public sealed class NodeEngineHost : IHost, IEngineBuilder, IClusterNodeBuilder, IAsyncDisposable
     {
         private readonly IHost _host;
 
+        internal NodeEngineHost(IHost host)
+        {
+            _host = host;
+        }
+
+        #region IEngineBuilder implementation
+
+        public IServiceProvider EngineServices { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+        public IModuleCollection EngineModules => throw new NotImplementedException();
+
+        public IDictionary<object, object> Properties => throw new NotImplementedException();
+
+        IEngineBuilder IEngineBuilder.New()
+        {
+            throw new NotImplementedException();
+        }
+
+        INodeEngine IEngineBuilder.Build()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
         #region IHost implementation
 
-        public IServiceProvider Services => throw new NotImplementedException();
+        public IServiceProvider Services => _host.Services;
 
         /// <summary>
         /// Start the NI2S node engine host.
@@ -71,14 +98,14 @@ namespace NI2S.Node.Hosting
         /// <param name="args">Command line arguments</param>
         /// <returns>The <see cref="NodeEngineHost"/>.</returns>
         public static NodeEngineHost Create(string[] args = null) =>
-            new NodeEngineHostBuilder(new() { Args = args }).Build();
+            new NodeEngineHostBuilder(args).Build();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NodeEngineHostBuilder"/> class with preconfigured defaults.
         /// </summary>
         /// <returns>The <see cref="NodeEngineHostBuilder"/>.</returns>
         public static NodeEngineHostBuilder CreateBuilder() =>
-            new(new());
+            new(null);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NodeEngineHostBuilder"/> class with preconfigured defaults.
@@ -86,15 +113,7 @@ namespace NI2S.Node.Hosting
         /// <param name="args">Command line arguments</param>
         /// <returns>The <see cref="NodeEngineHostBuilder"/>.</returns>
         public static NodeEngineHostBuilder CreateBuilder(string[] args) =>
-            new(new() { Args = args });
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="NodeEngineHostBuilder"/> class with preconfigured defaults.
-        /// </summary>
-        /// <param name="options">The <see cref="NodeEngineOptions"/> to configure the <see cref="NodeEngineHostBuilder"/>.</param>
-        /// <returns>The <see cref="NodeEngineHostBuilder"/>.</returns>
-        public static NodeEngineHostBuilder CreateBuilder(NodeEngineHostOptions options) =>
-            new(options);
+            new(args);
 
         #endregion
 

@@ -1,7 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 
-namespace Nop.Services.Plugins
+namespace NI2S.Engine.Plugins
 {
     /// <summary>
     /// Represents base info of plugin descriptor

@@ -1,7 +1,11 @@
 ﻿// Copyrigth (c) 2023 Alternate Reality Worlds. Narrative Interactive Intelligent Simulator.
 
+using Microsoft.Extensions.Configuration;
+using NI2S.Node.Core.Configuration;
+using NI2S.Node.Core.Infrastructure;
 using NI2S.Node.Hosting;
 using NI2S.Node.Hosting.Builder;
+using NI2S.Node.Infrastructure.Extensions;
 using System.Threading.Tasks;
 
 namespace NI2S.Node
@@ -44,18 +48,18 @@ namespace NI2S.Node
 
         private static NodeEngineHostBuilder ConfigureNodeEngineBuilder(NodeEngineHostBuilder builder)
         {
-            //builder.Configuration.AddJsonFile(ConfigurationDefaults.NodeSettingsFilePath, true, true);
-            //if (!string.IsNullOrEmpty(builder.Environment?.EnvironmentName))
-            //{
-            //    var path = string.Format(ConfigurationDefaults.NodeSettingsEnvironmentFilePath, builder.Environment.EnvironmentName);
-            //    builder.Configuration.AddJsonFile(path, true, true);
-            //}
-            //builder.Configuration.AddEnvironmentVariables();
+            builder.Configuration.AddJsonFile(ConfigurationDefaults.NodeSettingsFilePath, true, true);
+            if (!string.IsNullOrEmpty(builder.Environment?.EnvironmentName))
+            {
+                var path = string.Format(ConfigurationDefaults.NodeSettingsEnvironmentFilePath, builder.Environment.EnvironmentName);
+                builder.Configuration.AddJsonFile(path, true, true);
+            }
+            builder.Configuration.AddEnvironmentVariables();
 
-            ////load application settings
-            //builder.Services.ConfigureEngineSettings(builder);
+            //load application settings
+            builder.Services.ConfigureEngineSettings(builder);
 
-            //var appSettings = Singleton<NodeSettings>.Instance;
+            var appSettings = Singleton<NodeSettings>.Instance;
             //var useAutofac = appSettings.Get<CommonConfig>().UseAutofac;
 
             //if (useAutofac)
@@ -69,8 +73,8 @@ namespace NI2S.Node
             //        options.ValidateOnBuild = true;
             //    });
 
-            ////add services to the application and configure service provider
-            //builder.Services.ConfigureEngineServices(builder);
+            //add services to the application and configure service provider
+            builder.Services.ConfigureEngineServices(builder);
 
             return builder;
         }

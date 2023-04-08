@@ -1,17 +1,14 @@
 ﻿// Copyrigth (c) 2023 Alternate Reality Worlds. Narrative Interactive Intelligent Simulator.
 
+using NI2S.Node.Network.Protocol.Package;
+using System;
+
 namespace NI2S.Node.Network.Protocol
 {
-    public enum OpCode : byte
+    [Serializable]
+    public class DataPackage
     {
-        Connect = 1,
-        Subscribe = 2,
-        Publish = 3
-    }
-
-    public class NI2SPackage
-    {
-        public OpCode Code { get; set; }
+        public Header Header { get; set; }
 
         public short Sequence { get; set; }
 

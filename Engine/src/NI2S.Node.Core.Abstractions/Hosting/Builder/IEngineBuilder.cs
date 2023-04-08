@@ -1,6 +1,7 @@
 ﻿using NI2S.Engine;
 using System;
 using System.Collections.Generic;
+using Microsoft.Extensions.Configuration;
 
 namespace NI2S.Node.Hosting.Builder
 {
@@ -25,14 +26,7 @@ namespace NI2S.Node.Hosting.Builder
         /// <summary>
         /// Gets a key/value collection that can be used to share data between middleware.
         /// </summary>
-        IDictionary<string, object> Properties { get; }
-
-        /// <summary>
-        /// Adds a middleware delegate to the node engine's message handler pipeline.
-        /// </summary>
-        /// <param name="middleware">The middleware delegate.</param>
-        /// <returns>The <see cref="IEngineBuilder"/>.</returns>
-        //IEngineBuilder Use(Func<MessageHandlerDelegate, MessageHandlerDelegate> middleware);
+        IDictionary<object, object> Properties { get; }
 
         /// <summary>
         /// Creates a new <see cref="IEngineBuilder"/> that shares the <see cref="Properties"/> of this
@@ -45,6 +39,6 @@ namespace NI2S.Node.Hosting.Builder
         /// Builds the delegate used by this node to process engine messages.
         /// </summary>
         /// <returns>The message handling delegate.</returns>
-        //MessageHandlerDelegate Build();
+        INodeEngine Build();
     }
 }

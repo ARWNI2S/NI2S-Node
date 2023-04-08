@@ -36,9 +36,13 @@
         public static readonly string EnvironmentKey = "environment";
 
         /// <summary>
-        /// The configuration key associated with the "webRoot" configuration.
+        /// The configuration key associated with the "noderoot" configuration.
         /// </summary>
-        public static readonly string NodeRootKey = "webroot";
+        public static readonly string NodeRootKey = "noderoot";
+        /// <summary>
+        /// The "noderoot" configuration.
+        /// </summary>
+        public static readonly string NodeRootPath = "niisroot";
 
         /// <summary>
         /// The configuration key associated with the "captureStartupErrors" configuration.
@@ -79,5 +83,6 @@
         /// The configuration key associated with the "StaticNodeAssets" configuration.
         /// </summary>
         public static readonly string StaticNodeAssetsKey = "staticNodeAssets";
+
     }
 }

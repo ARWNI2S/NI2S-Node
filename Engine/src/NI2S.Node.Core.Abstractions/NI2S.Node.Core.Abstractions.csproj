@@ -40,8 +40,10 @@
     <Compile Include="Core\Infrastructure\IStartupTask.cs" />
     <Compile Include="Core\Infrastructure\ITypeFinder.cs" />
     <Compile Include="Core\NI2SException.cs" />
+    <Compile Include="Hosting\Builder\IClusterNodeBuilder.cs" />
     <Compile Include="Hosting\Builder\IEngineBuilder.cs" />
     <Compile Include="Core\INodeContextAccessor.cs" />
+    <Compile Include="Hosting\INodeEngine.cs" />
     <Compile Include="Hosting\INodeHostEnvironment.cs" />
     <Compile Include="Core\NodeContext.cs" />
   </ItemGroup>
@@ -55,7 +57,7 @@
   <ItemGroup>
     <Folder Include="Clustering\" />
     <Folder Include="Engine\Messaging\" />
-    <Folder Include="Engine\Plugins\" />
+    <Folder Include="Engine\Cache\" />
     <Folder Include="Plugins\" />
   </ItemGroup>
 

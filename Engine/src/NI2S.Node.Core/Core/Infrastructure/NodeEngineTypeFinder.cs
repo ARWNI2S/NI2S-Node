@@ -8,7 +8,7 @@ namespace NI2S.Node.Core.Infrastructure
     /// Provides information about types in the current web application. 
     /// Optionally this class can look at all assemblies in the bin folder.
     /// </summary>
-    public partial class NodeAppTypeFinder : AppDomainTypeFinder
+    public partial class NodeEngineTypeFinder : AppDomainTypeFinder
     {
         #region Fields
 
@@ -18,7 +18,7 @@ namespace NI2S.Node.Core.Infrastructure
 
         #region Ctor
 
-        public NodeAppTypeFinder(INI2SFileProvider fileProvider = null) : base(fileProvider)
+        public NodeEngineTypeFinder(INodeFileProvider fileProvider = null) : base(fileProvider)
         {
         }
 

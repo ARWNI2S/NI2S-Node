@@ -7,7 +7,7 @@ using System.Text;
 
 namespace NI2S.Node.Network.Protocol
 {
-    public class NI2SPackageFilter : FixedHeaderPipelineFilter<NI2SPackage>
+    public class DataPackageFilter : FixedHeaderPipelineFilter<DataPackage>
     {
         /// <summary>
         /// Header size is 5
@@ -15,7 +15,7 @@ namespace NI2S.Node.Network.Protocol
         /// 2-3: body length
         /// 4-5: sequence
         /// </summary>
-        public NI2SPackageFilter()
+        public DataPackageFilter()
             : base(5)
         {
 
@@ -32,14 +32,14 @@ namespace NI2S.Node.Network.Protocol
             return len;
         }
 
-        protected override NI2SPackage DecodePackage(ref ReadOnlySequence<byte> buffer)
+        protected override DataPackage DecodePackage(ref ReadOnlySequence<byte> buffer)
         {
-            var package = new NI2SPackage();
+            var package = new DataPackage();
 
             var reader = new SequenceReader<byte>(buffer);
 
             reader.TryRead(out byte opCodeByte);
-            package.Code = (OpCode)opCodeByte;
+            //package.Code = (OpCode)opCodeByte;
 
             // skip the two bytes for length, we don't need length any more
             // because we already get the full data of the package in the buffer

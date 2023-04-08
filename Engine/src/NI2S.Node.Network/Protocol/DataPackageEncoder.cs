@@ -6,9 +6,9 @@ using System.Buffers;
 
 namespace NI2S.Node.Network.Protocol
 {
-    internal class NI2SPackageEncoder : IPackageEncoder<NI2SPackage>
+    internal class DataPackageEncoder : IPackageEncoder<DataPackage>
     {
-        public int Encode(IBufferWriter<byte> writer, NI2SPackage pack)
+        public int Encode(IBufferWriter<byte> writer, DataPackage pack)
         {
             throw new NotImplementedException();
         }

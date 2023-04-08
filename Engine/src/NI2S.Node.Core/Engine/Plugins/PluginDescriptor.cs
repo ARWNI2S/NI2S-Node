@@ -1,13 +1,13 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using NI2S.Node.Core;
+using NI2S.Node.Core.Infrastructure;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using Newtonsoft.Json;
-using Nop.Core;
-using Nop.Core.Infrastructure;
 
-namespace Nop.Services.Plugins
+namespace NI2S.Engine.Plugins
 {
     /// <summary>
     /// Represents a plugin descriptor
@@ -102,7 +102,7 @@ namespace Nop.Services.Plugins
             if (OriginalAssemblyFile == null)
                 throw new Exception($"Cannot load original assembly path for {SystemName} plugin.");
 
-            var filePath = fileProvider.Combine(fileProvider.GetDirectoryName(OriginalAssemblyFile), NopPluginDefaults.DescriptionFileName);
+            var filePath = fileProvider.Combine(fileProvider.GetDirectoryName(OriginalAssemblyFile), NodePluginDefaults.DescriptionFileName);
             if (!fileProvider.FileExists(filePath))
                 throw new Exception($"Description file for {SystemName} plugin does not exist. {filePath}");
 

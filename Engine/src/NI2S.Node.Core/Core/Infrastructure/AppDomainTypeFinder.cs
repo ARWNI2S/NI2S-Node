@@ -17,13 +17,13 @@ namespace NI2S.Node.Core.Infrastructure
         #region Fields
 
         private bool _ignoreReflectionErrors = true;
-        protected INI2SFileProvider _fileProvider;
+        protected INodeFileProvider _fileProvider;
 
         #endregion
 
         #region Ctor
 
-        public AppDomainTypeFinder(INI2SFileProvider fileProvider = null)
+        public AppDomainTypeFinder(INodeFileProvider fileProvider = null)
         {
             _fileProvider = fileProvider ?? CommonHelper.DefaultFileProvider;
         }

@@ -1,6 +1,4 @@
-﻿using NI2S.Node.Configuration;
-
-namespace NI2S.Node.Core.Configuration
+﻿namespace NI2S.Node.Core.Configuration
 {
     /// <summary>
     /// Represents plugin configuration parameters

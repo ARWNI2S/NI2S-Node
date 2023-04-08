@@ -1,9 +1,6 @@
-namespace Nop.Services.Plugins
+﻿namespace NI2S.Engine
 {
-    /// <summary>
-    /// Represents a mode to load plugins
-    /// </summary>
-    public enum LoadPluginsMode
+    public enum LoadModulesMode
     {
         /// <summary>
         /// All (Installed and Not installed)
@@ -19,5 +16,5 @@ namespace Nop.Services.Plugins
         /// Not installed only
         /// </summary>
         NotInstalledOnly = 20
-    }
+  }
 }
