@@ -41,7 +41,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Engine\" />
     <Folder Include="Protocol\Udp\" />
   </ItemGroup>
 

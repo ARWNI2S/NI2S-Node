@@ -252,6 +252,7 @@ namespace NI2S.Node.Core.Infrastructure
         /// <typeparam name="T">Type</typeparam>
         /// <param name="onlyConcreteClasses">A value indicating whether to find only concrete classes</param>
         /// <returns>Result</returns>
+        /* 044 */
         public IEnumerable<Type> FindClassesOfType<T>(bool onlyConcreteClasses = true)
         {
             return FindClassesOfType(typeof(T), onlyConcreteClasses);

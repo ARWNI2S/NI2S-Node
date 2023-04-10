@@ -24,6 +24,7 @@ namespace NI2S.Node.Core.Infrastructure
         /// Initializes a new instance of a <see cref="NodeFileProvider"/>.
         /// </summary>
         /// <param name="nodeHostEnvironment">Hosting environment</param>.
+        /* 042 */
         public NodeFileProvider(INodeHostEnvironment nodeHostEnvironment)
             : base(File.Exists(nodeHostEnvironment.ContentRootPath) ? Path.GetDirectoryName(nodeHostEnvironment.ContentRootPath) : nodeHostEnvironment.ContentRootPath)
         {
@@ -503,7 +504,8 @@ namespace NI2S.Node.Core.Infrastructure
         /// Maps a virtual path to a physical disk path.
         /// </summary>
         /// <param name="path">The path to map. E.g. "~/bin"</param>
-        /// <returns>The physical path. E.g. "c:\inetpub\wwwroot\bin"</returns>
+        /// <returns>The physical path. E.g. "c:\inetpub\niisroot\bin"</returns>
+        /* 048 */
         public virtual string MapPath(string path)
         {
             path = path.Replace("~/", string.Empty).TrimStart('/');

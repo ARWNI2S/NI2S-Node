@@ -10,6 +10,7 @@ using System.Reflection;
 using System.Runtime.ExceptionServices;
 using System;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using NI2S.Node.Hosting.Internal;
 
 namespace NI2S.Node.Hosting
 {
@@ -126,7 +127,7 @@ namespace NI2S.Node.Hosting
         {
             if (_webHostBuilt)
             {
-                throw new InvalidOperationException(Resources.NodeHostBuilder_SingleInstance);
+                throw new InvalidOperationException(/*TODO: Resources.NodeHostBuilder_SingleInstance*/);
             }
             _webHostBuilt = true;
             var hostingServices = BuildCommonServices(out var hostingStartupErrors);
@@ -154,7 +155,7 @@ namespace NI2S.Node.Hosting
 
             AddEngineServices(applicationServices, hostingServiceProvider);
 
-            var host = new Internal.NodeHost(
+            var host = new NodeHost(
                 applicationServices,
                 hostingServiceProvider,
                 _options,
@@ -168,7 +169,7 @@ namespace NI2S.Node.Hosting
                 // service provider, ensuring it will be properly disposed with the provider
                 _ = host.Services.GetService<IConfiguration>();
 
-                var logger = host.Services.GetRequiredService<ILogger<Internal.NodeHost>>();
+                var logger = host.Services.GetRequiredService<ILogger<NodeHost>>();
 
                 // Warn about duplicate HostingStartupAssemblies
                 var assemblyNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
@@ -254,7 +255,7 @@ namespace NI2S.Node.Hosting
             var contentRootPath = ResolveContentRootPath(_options.ContentRootPath, AppContext.BaseDirectory);
 
             // Initialize the hosting environment
-            //((INodeHostEnvironment)_hostingEnvironment).Initialize(contentRootPath, _options);
+            ((INodeHostEnvironment)_hostingEnvironment).Initialize(contentRootPath, _options);
             _context.HostingEnvironment = _hostingEnvironment;
 
             var services = new ServiceCollection();

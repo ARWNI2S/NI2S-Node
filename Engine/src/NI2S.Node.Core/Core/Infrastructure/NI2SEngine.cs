@@ -2,6 +2,7 @@
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using NI2S.Engine;
 using NI2S.Node.Core.Configuration;
 using NI2S.Node.Hosting.Builder;
 using System;
@@ -227,6 +228,8 @@ namespace NI2S.Node.Core.Infrastructure
         /// </summary>
         public virtual IServiceProvider ServiceProvider { get; protected set; }
 
-        #endregion
-    }
+        public IModuleCollection Modules { get; protected set; }
+
+    #endregion
+}
 }

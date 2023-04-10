@@ -18,6 +18,7 @@ namespace NI2S.Node.Core.Infrastructure
 
         #region Ctor
 
+        /* 043 */
         public NodeEngineTypeFinder(INodeFileProvider fileProvider = null) : base(fileProvider)
         {
         }

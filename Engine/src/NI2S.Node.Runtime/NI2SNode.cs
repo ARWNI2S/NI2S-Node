@@ -17,36 +17,37 @@ namespace NI2S.Node
     {
         public static void Run(string[] args)
         {
-            NodeEngineHost nodeEngineHost = CreateDefaultNodeEngineBuilder(args).Build();
+            NodeEngine nodeEngine = CreateDefaultNodeEngineBuilder(args).Build();
 
-            ////configure the application HTTP request pipeline
-            //app.ConfigureRequestPipeline();
-            //app.StartEngine();
+            //configure the application HTTP request pipeline
+            nodeEngine.ConfigureRequestPipeline();
+            nodeEngine.StartEngine();
 
-            nodeEngineHost.Run();
+            nodeEngine.Run();
         }
 
 
 
         public static async Task RunAsync(string[] args)
         {
-            NodeEngineHost nodeEngineHost = CreateDefaultNodeEngineBuilder(args).Build();
+            NodeEngine nodeEngine = CreateDefaultNodeEngineBuilder(args).Build();
 
-            ////configure the application HTTP request pipeline
-            //app.ConfigureRequestPipeline();
-            await nodeEngineHost.StartEngineAsync();
+            //configure the application HTTP request pipeline
+            nodeEngine.ConfigureRequestPipeline();
+            await nodeEngine.StartEngineAsync();
 
-            await nodeEngineHost.RunAsync();
+            await nodeEngine.RunAsync();
         }
 
-        private static NodeEngineHostBuilder CreateNodeEngineBuilder(string[] args)
+        private static NodeEngineBuilder CreateNodeEngineBuilder(string[] args)
         {
-            return NodeEngineHost.CreateBuilder(args);
+            return NodeEngine.CreateBuilder(args);
         }
 
-        private static NodeEngineHostBuilder CreateDefaultNodeEngineBuilder(string[] args) => ConfigureNodeEngineBuilder(CreateNodeEngineBuilder(args));
+        private static NodeEngineBuilder CreateDefaultNodeEngineBuilder(string[] args) => ConfigureNodeEngineBuilder(CreateNodeEngineBuilder(args));
 
-        private static NodeEngineHostBuilder ConfigureNodeEngineBuilder(NodeEngineHostBuilder builder)
+        /* 040 */
+        private static NodeEngineBuilder ConfigureNodeEngineBuilder(NodeEngineBuilder builder)
         {
             builder.Configuration.AddJsonFile(ConfigurationDefaults.NodeSettingsFilePath, true, true);
             if (!string.IsNullOrEmpty(builder.Environment?.EnvironmentName))
@@ -60,7 +61,7 @@ namespace NI2S.Node
             builder.Services.ConfigureEngineSettings(builder);
 
             var appSettings = Singleton<NodeSettings>.Instance;
-            //var useAutofac = appSettings.Get<CommonConfig>().UseAutofac;
+            var useAutofac = appSettings.Get<CommonConfig>().UseAutofac;
 
             //if (useAutofac)
             //    builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());

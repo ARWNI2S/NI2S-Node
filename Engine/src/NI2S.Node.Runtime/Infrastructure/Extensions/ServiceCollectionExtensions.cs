@@ -3,7 +3,6 @@ using Microsoft.Extensions.DependencyInjection;
 using NI2S.Node.Core;
 using NI2S.Node.Core.Configuration;
 using NI2S.Node.Core.Infrastructure;
-using NI2S.Node.Hosting;
 using NI2S.Node.Hosting.Builder;
 using System;
 using System.Linq;
@@ -21,15 +20,16 @@ namespace NI2S.Node.Infrastructure.Extensions
         /// </summary>
         /// <param name="services">Collection of service descriptors</param>
         /// <param name="builder">A builder for node engine and services</param>
+        /* 041 */
         public static void ConfigureEngineSettings(this IServiceCollection services,
-            NodeEngineHostBuilder builder)
+            NodeEngineBuilder builder)
         {
             //let the operating system decide what TLS protocol version to use
             //see dummys://docs.microsoft.com/dotnet/framework/network-programming/tls
             ServicePointManager.SecurityProtocol = SecurityProtocolType.SystemDefault;
 
             //create default file provider
-            CommonHelper.DefaultFileProvider = builder.Environment.NodeRootFileProvider;
+            CommonHelper.DefaultFileProvider = new NodeFileProvider(builder.Environment);
 
             //register type finder
             var typeFinder = new NodeEngineTypeFinder();
@@ -54,8 +54,9 @@ namespace NI2S.Node.Infrastructure.Extensions
         /// </summary>
         /// <param name="services">Collection of service descriptors</param>
         /// <param name="builder">A builder for node engine and services</param>
+        /* 050 */
         public static void ConfigureEngineServices(this IServiceCollection services,
-            NodeEngineHostBuilder builder)
+            NodeEngineBuilder builder)
         {
             //add accessor to DummyContext
             services.AddDummyContextAccessor();

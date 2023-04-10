@@ -16,6 +16,7 @@ namespace NI2S.Node.Hosting
         private readonly List<Action<HostBuilderContext, IConfigurationBuilder>> _configureAppActions = new();
         private readonly List<Action<HostBuilderContext, IServiceCollection>> _configureServicesActions = new();
 
+        /* 002 */
         public BootstrapHostBuilder(HostApplicationBuilder builder)
         {
             _builder = builder;
@@ -39,18 +40,21 @@ namespace NI2S.Node.Hosting
 
         public HostBuilderContext Context { get; }
 
+        /* 007 */
         public IHostBuilder ConfigureHostConfiguration(Action<IConfigurationBuilder> configureDelegate)
         {
             _configureHostActions.Add(configureDelegate ?? throw new ArgumentNullException(nameof(configureDelegate)));
             return this;
         }
 
+        /* 008 */ /* 013 */
         public IHostBuilder ConfigureAppConfiguration(Action<HostBuilderContext, IConfigurationBuilder> configureDelegate)
         {
             _configureAppActions.Add(configureDelegate ?? throw new ArgumentNullException(nameof(configureDelegate)));
             return this;
         }
 
+        /* 009 */ /* 017 */ /* 018 */
         public IHostBuilder ConfigureServices(Action<HostBuilderContext, IServiceCollection> configureDelegate)
         {
             _configureServicesActions.Add(configureDelegate ?? throw new ArgumentNullException(nameof(configureDelegate)));
@@ -81,6 +85,7 @@ namespace NI2S.Node.Hosting
             throw new InvalidOperationException();
         }
 
+        /* 019 */
         public ServiceDescriptor RunDefaultCallbacks()
         {
             foreach (var configureHostAction in _configureHostActions)

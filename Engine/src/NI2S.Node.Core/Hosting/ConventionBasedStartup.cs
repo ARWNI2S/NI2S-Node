@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using NI2S.Node.Builder;
+using NI2S.Node.Hosting.Builder;
 using System;
 using System.Reflection;
 using System.Runtime.ExceptionServices;

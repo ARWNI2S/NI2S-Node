@@ -1,20 +1,18 @@
-﻿using Microsoft.AspNetCore.Http.Features;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Hosting.Internal;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
-using NI2S.Node.Builder;
-using NI2S.Node.Dummy;
-using NI2S.Node.Hosting.Server;
-using NI2S.Node.Hosting.Server.Features;
+using NI2S.Engine;
+using NI2S.Node.Core.Infrastructure;
+using NI2S.Node.Hosting.Builder;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.ExceptionServices;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -22,12 +20,12 @@ namespace NI2S.Node.Hosting.Internal
 {
     internal sealed partial class NodeHost : INodeHost, IAsyncDisposable
     {
-        private const string DeprecatedServerUrlsKey = "server.urls";
+        private const string DeprecatedEngineUrlsKey = "server.urls";
 
         private readonly IServiceCollection _applicationServiceCollection;
         private IStartup _startup;
         private ApplicationLifetime _applicationLifetime;
-        private HostedServiceExecutor _hostedServiceExecutor;
+        //private HostedServiceExecutor _hostedServiceExecutor;
 
         private readonly IServiceProvider _hostingServiceProvider;
         private readonly NodeHostOptions _options;
@@ -39,12 +37,12 @@ namespace NI2S.Node.Hosting.Internal
         private ILogger _logger = NullLogger.Instance;
 
         private bool _stopped;
-        private bool _startedServer;
+        private bool _startedEngine;
 
         // Used for testing only
         internal NodeHostOptions Options => _options;
 
-        private IServer Server { get; set; }
+        private IEngine Engine { get; set; }
 
         public NodeHost(
             IServiceCollection appServices,
@@ -72,7 +70,7 @@ namespace NI2S.Node.Hosting.Internal
             _applicationServiceCollection.AddSingleton<Microsoft.Extensions.Hosting.IApplicationLifetime>(services
                 => services.GetService<ApplicationLifetime>()!);
 #pragma warning restore CS0618 // Type or member is obsolete
-            _applicationServiceCollection.AddSingleton<HostedServiceExecutor>();
+            //_applicationServiceCollection.AddSingleton<HostedServiceExecutor>();
         }
 
         public IServiceProvider Services
@@ -84,12 +82,12 @@ namespace NI2S.Node.Hosting.Internal
             }
         }
 
-        public IFeatureCollection ServerFeatures
+        public IModuleCollection EngineModules
         {
             get
             {
-                EnsureServer();
-                return Server.Features;
+                EnsureEngine();
+                return Engine.Modules;
             }
         }
 
@@ -103,10 +101,7 @@ namespace NI2S.Node.Hosting.Internal
             catch (Exception ex)
             {
                 // EnsureEngineServices may have failed due to a missing or throwing Startup class.
-                if (_applicationServices == null)
-                {
-                    _applicationServices = _applicationServiceCollection.BuildServiceProvider();
-                }
+                _applicationServices ??= _applicationServiceCollection.BuildServiceProvider();
 
                 if (!_options.CaptureStartupErrors)
                 {
@@ -124,49 +119,49 @@ namespace NI2S.Node.Hosting.Internal
 
         public async Task StartAsync(CancellationToken cancellationToken = default)
         {
-            Debug.Assert(_applicationServices != null, "Initialize must be called first.");
+           // Debug.Assert(_applicationServices != null, "Initialize must be called first.");
 
-            HostingEventSource.Log.HostStart();
-            _logger = _applicationServices.GetRequiredService<ILoggerFactory>().CreateLogger("Microsoft.AspNetCore.Hosting.Diagnostics");
-            Log.Starting(_logger);
+           // HostingEventSource.Log.HostStart();
+           // _logger = _applicationServices.GetRequiredService<ILoggerFactory>().CreateLogger("Microsoft.AspNetCore.Hosting.Diagnostics");
+           // Log.Starting(_logger);
 
-            var application = BuildEngine();
+           // var application = BuildEngine();
 
-            _applicationLifetime = _applicationServices.GetRequiredService<ApplicationLifetime>();
-            _hostedServiceExecutor = _applicationServices.GetRequiredService<HostedServiceExecutor>();
+           // _applicationLifetime = _applicationServices.GetRequiredService<ApplicationLifetime>();
+           // _hostedServiceExecutor = _applicationServices.GetRequiredService<HostedServiceExecutor>();
 
-            // Fire IHostedService.Start
-            await _hostedServiceExecutor.StartAsync(cancellationToken).ConfigureAwait(false);
+           // Fire IHostedService.Start
+           //await _hostedServiceExecutor.StartAsync(cancellationToken).ConfigureAwait(false);
 
-            var diagnosticSource = _applicationServices.GetRequiredService<DiagnosticListener>();
-            var activitySource = _applicationServices.GetRequiredService<ActivitySource>();
-            var propagator = _applicationServices.GetRequiredService<DistributedContextPropagator>();
-            var dummyContextFactory = _applicationServices.GetRequiredService<IDummyContextFactory>();
-            var hostingApp = new HostingEngine(application, _logger, diagnosticSource, activitySource, propagator, dummyContextFactory);
-            await Server.StartAsync(hostingApp, cancellationToken).ConfigureAwait(false);
-            _startedServer = true;
+           // var diagnosticSource = _applicationServices.GetRequiredService<DiagnosticListener>();
+           // var activitySource = _applicationServices.GetRequiredService<ActivitySource>();
+           // var propagator = _applicationServices.GetRequiredService<DistributedContextPropagator>();
+           // var dummyContextFactory = _applicationServices.GetRequiredService<IDummyContextFactory>();
+           // var hostingApp = new HostingEngine(application, _logger, diagnosticSource, activitySource, propagator, dummyContextFactory);
+           // await Engine.StartAsync(hostingApp, cancellationToken).ConfigureAwait(false);
+           // _startedEngine = true;
 
-            // Fire IApplicationLifetime.Started
-            _applicationLifetime?.NotifyStarted();
+           // // Fire IApplicationLifetime.Started
+           // _applicationLifetime?.NotifyStarted();
 
-            Log.Started(_logger);
+           // Log.Started(_logger);
 
-            // Log the fact that we did load hosting startup assemblies.
-            if (_logger.IsEnabled(LogLevel.Debug))
-            {
-                foreach (var assembly in _options.GetFinalHostingStartupAssemblies())
-                {
-                    Log.StartupAssemblyLoaded(_logger, assembly);
-                }
-            }
+           // // Log the fact that we did load hosting startup assemblies.
+           // if (_logger.IsEnabled(LogLevel.Debug))
+           // {
+           //     foreach (var assembly in _options.GetFinalHostingStartupAssemblies())
+           //     {
+           //         Log.StartupAssemblyLoaded(_logger, assembly);
+           //     }
+           // }
 
-            if (_hostingStartupErrors != null)
-            {
-                foreach (var exception in _hostingStartupErrors.InnerExceptions)
-                {
-                    _logger.HostingStartupAssemblyError(exception);
-                }
-            }
+           // if (_hostingStartupErrors != null)
+           // {
+           //     foreach (var exception in _hostingStartupErrors.InnerExceptions)
+           //     {
+           //         _logger.HostingStartupAssemblyError(exception);
+           //     }
+           // }
         }
 
         private void EnsureEngineServices()
@@ -196,85 +191,85 @@ namespace NI2S.Node.Hosting.Internal
             _startup = startup;
         }
 
-        [MemberNotNull(nameof(Server))]
-        private RequestDelegate BuildEngine()
+        //[MemberNotNull(nameof(Engine))]
+        //private RequestDelegate BuildEngine()
+        //{
+        //    Debug.Assert(_applicationServices != null, "Initialize must be called first.");
+
+        //    try
+        //    {
+        //        _applicationServicesException?.Throw();
+        //        EnsureEngine();
+
+        //        var builderFactory = _applicationServices.GetRequiredService<IEngineBuilderFactory>();
+        //        var builder = builderFactory.CreateBuilder(Engine.Features);
+        //        builder.EngineServices = _applicationServices;
+
+        //        var startupFilters = _applicationServices.GetService<IEnumerable<IStartupFilter>>();
+        //        Action<IEngineBuilder> configure = _startup!.Configure;
+        //        if (startupFilters != null)
+        //        {
+        //            foreach (var filter in startupFilters.Reverse())
+        //            {
+        //                configure = filter.Configure(configure);
+        //            }
+        //        }
+
+        //        configure(builder);
+
+        //        return builder.Build();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        if (!_options.SuppressStatusMessages)
+        //        {
+        //            // Write errors to standard out so they can be retrieved when not in development mode.
+        //            Console.WriteLine("Engine startup exception: " + ex.ToString());
+        //        }
+        //        var logger = _applicationServices.GetRequiredService<ILogger<NodeHost>>();
+        //        _logger.EngineError(ex);
+
+        //        if (!_options.CaptureStartupErrors)
+        //        {
+        //            throw;
+        //        }
+
+        //        EnsureEngine();
+
+        //        // Generate an HTML error page.
+        //        var hostingEnv = _applicationServices.GetRequiredService<IHostEnvironment>();
+        //        var showDetailedErrors = hostingEnv.IsDevelopment() || _options.DetailedErrors;
+
+        //        //return ErrorPageBuilder.BuildErrorPageEngine(hostingEnv.ContentRootFileProvider, logger, showDetailedErrors, ex);
+        //        return null;
+        //    }
+        //}
+
+        [MemberNotNull(nameof(Engine))]
+        private void EnsureEngine()
         {
-            Debug.Assert(_applicationServices != null, "Initialize must be called first.");
+            //Debug.Assert(_applicationServices != null, "Initialize must be called first.");
 
-            try
-            {
-                _applicationServicesException?.Throw();
-                EnsureServer();
+            //if (Engine == null)
+            //{
+            //    Engine = _applicationServices.GetRequiredService<IEngine>();
 
-                var builderFactory = _applicationServices.GetRequiredService<IEngineBuilderFactory>();
-                var builder = builderFactory.CreateBuilder(Server.Features);
-                builder.EngineServices = _applicationServices;
+            //    var serverAddressesFeature = Engine.Features?.Get<IEngineAddressesFeature>();
+            //    var addresses = serverAddressesFeature?.Addresses;
+            //    if (addresses != null && !addresses.IsReadOnly && addresses.Count == 0)
+            //    {
+            //        var urls = _config[NodeHostDefaults.EngineUrlsKey] ?? _config[DeprecatedEngineUrlsKey];
+            //        if (!string.IsNullOrEmpty(urls))
+            //        {
+            //            serverAddressesFeature!.PreferHostingUrls = NodeHostUtilities.ParseBool(_config[NodeHostDefaults.PreferHostingUrlsKey]);
 
-                var startupFilters = _applicationServices.GetService<IEnumerable<IStartupFilter>>();
-                Action<IEngineBuilder> configure = _startup!.Configure;
-                if (startupFilters != null)
-                {
-                    foreach (var filter in startupFilters.Reverse())
-                    {
-                        configure = filter.Configure(configure);
-                    }
-                }
-
-                configure(builder);
-
-                return builder.Build();
-            }
-            catch (Exception ex)
-            {
-                if (!_options.SuppressStatusMessages)
-                {
-                    // Write errors to standard out so they can be retrieved when not in development mode.
-                    Console.WriteLine("Engine startup exception: " + ex.ToString());
-                }
-                var logger = _applicationServices.GetRequiredService<ILogger<NodeHost>>();
-                _logger.EngineError(ex);
-
-                if (!_options.CaptureStartupErrors)
-                {
-                    throw;
-                }
-
-                EnsureServer();
-
-                // Generate an HTML error page.
-                var hostingEnv = _applicationServices.GetRequiredService<IHostEnvironment>();
-                var showDetailedErrors = hostingEnv.IsDevelopment() || _options.DetailedErrors;
-
-                //return ErrorPageBuilder.BuildErrorPageEngine(hostingEnv.ContentRootFileProvider, logger, showDetailedErrors, ex);
-                return null;
-            }
-        }
-
-        [MemberNotNull(nameof(Server))]
-        private void EnsureServer()
-        {
-            Debug.Assert(_applicationServices != null, "Initialize must be called first.");
-
-            if (Server == null)
-            {
-                Server = _applicationServices.GetRequiredService<IServer>();
-
-                var serverAddressesFeature = Server.Features?.Get<IServerAddressesFeature>();
-                var addresses = serverAddressesFeature?.Addresses;
-                if (addresses != null && !addresses.IsReadOnly && addresses.Count == 0)
-                {
-                    var urls = _config[NodeHostDefaults.ServerUrlsKey] ?? _config[DeprecatedServerUrlsKey];
-                    if (!string.IsNullOrEmpty(urls))
-                    {
-                        serverAddressesFeature!.PreferHostingUrls = NodeHostUtilities.ParseBool(_config[NodeHostDefaults.PreferHostingUrlsKey]);
-
-                        foreach (var value in urls.Split(';', StringSplitOptions.RemoveEmptyEntries))
-                        {
-                            addresses.Add(value);
-                        }
-                    }
-                }
-            }
+            //            foreach (var value in urls.Split(';', StringSplitOptions.RemoveEmptyEntries))
+            //            {
+            //                addresses.Add(value);
+            //            }
+            //        }
+            //    }
+            //}
         }
 
         public async Task StopAsync(CancellationToken cancellationToken = default)
@@ -287,35 +282,35 @@ namespace NI2S.Node.Hosting.Internal
 
             Log.Shutdown(_logger);
 
-            using var timeoutCTS = new CancellationTokenSource(Options.ShutdownTimeout);
-            var timeoutToken = timeoutCTS.Token;
-            if (!cancellationToken.CanBeCanceled)
-            {
-                cancellationToken = timeoutToken;
-            }
-            else
-            {
-                cancellationToken = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, timeoutToken).Token;
-            }
+            //using var timeoutCTS = new CancellationTokenSource(Options.ShutdownTimeout);
+            //var timeoutToken = timeoutCTS.Token;
+            //if (!cancellationToken.CanBeCanceled)
+            //{
+            //    cancellationToken = timeoutToken;
+            //}
+            //else
+            //{
+            //    cancellationToken = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, timeoutToken).Token;
+            //}
 
-            // Fire IApplicationLifetime.Stopping
-            _applicationLifetime?.StopApplication();
+            //// Fire IApplicationLifetime.Stopping
+            //_applicationLifetime?.StopApplication();
 
-            if (Server != null && _startedServer)
-            {
-                await Server.StopAsync(cancellationToken).ConfigureAwait(false);
-            }
+            //if (Engine != null && _startedEngine)
+            //{
+            //    await Engine.StopAsync(cancellationToken).ConfigureAwait(false);
+            //}
 
-            // Fire the IHostedService.Stop
-            if (_hostedServiceExecutor != null)
-            {
-                await _hostedServiceExecutor.StopAsync(cancellationToken).ConfigureAwait(false);
-            }
+            //// Fire the IHostedService.Stop
+            //if (_hostedServiceExecutor != null)
+            //{
+            //    await _hostedServiceExecutor.StopAsync(cancellationToken).ConfigureAwait(false);
+            //}
 
-            // Fire IApplicationLifetime.Stopped
-            _applicationLifetime?.NotifyStopped();
+            //// Fire IApplicationLifetime.Stopped
+            //_applicationLifetime?.NotifyStopped();
 
-            HostingEventSource.Log.HostStop();
+            //HostingEventSource.Log.HostStop();
         }
 
         public void Dispose()
@@ -333,7 +328,7 @@ namespace NI2S.Node.Hosting.Internal
                 }
                 catch (Exception ex)
                 {
-                    Log.ServerShutdownException(_logger, ex);
+                    Log.EngineShutdownException(_logger, ex);
                 }
             }
 
@@ -365,8 +360,8 @@ namespace NI2S.Node.Hosting.Internal
             [LoggerMessage(5, LogLevel.Debug, "Hosting shutdown", EventName = "Shutdown")]
             public static partial void Shutdown(ILogger logger);
 
-            [LoggerMessage(12, LogLevel.Debug, "Server shutdown exception", EventName = "ServerShutdownException")]
-            public static partial void ServerShutdownException(ILogger logger, Exception ex);
+            [LoggerMessage(12, LogLevel.Debug, "Engine shutdown exception", EventName = "EngineShutdownException")]
+            public static partial void EngineShutdownException(ILogger logger, Exception ex);
 
             [LoggerMessage(13, LogLevel.Debug,
                 "Loaded hosting startup assembly {assemblyName}",

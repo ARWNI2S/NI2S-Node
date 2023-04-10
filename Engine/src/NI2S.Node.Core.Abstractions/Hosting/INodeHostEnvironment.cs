@@ -2,7 +2,6 @@
 
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
-using NI2S.Node.Core.Infrastructure;
 
 namespace NI2S.Node.Hosting
 {
@@ -16,11 +15,11 @@ namespace NI2S.Node.Hosting
         /// <summary>
         /// Gets or sets the absolute path to the directory that contains the node content files.
         /// </summary>
-        string NodeRootPath { get; }
+        string NodeRootPath { get; set; }
 
         /// <summary>
         /// Gets or sets an <see cref="IFileProvider"/> pointing at <see cref="NodeRootPath"/>.
         /// </summary>
-        INodeFileProvider NodeRootFileProvider { get; set; }
+        IFileProvider NodeRootFileProvider { get; set; }
     }
 }

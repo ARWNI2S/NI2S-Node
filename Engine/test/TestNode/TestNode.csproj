@@ -13,12 +13,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include=".node\nodesettings.json">
+    <Content Include="niisroot\.node\nodesettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Include=".node\nodesettings.Development.json">
+    <Content Include="niisroot\.node\nodesettings.Development.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
@@ -36,7 +36,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include=".assets\" />
+    <Folder Include="niisroot\.assets\" />
   </ItemGroup>
   
 

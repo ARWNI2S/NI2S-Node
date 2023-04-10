@@ -1,4 +1,4 @@
-﻿using NI2S.Node.Builder;
+﻿using NI2S.Node.Hosting.Builder;
 using System;
 using System.Diagnostics.CodeAnalysis;
 

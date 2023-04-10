@@ -3,6 +3,7 @@
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using NI2S.Engine;
 using NI2S.Node.Hosting.Builder;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,8 @@ namespace NI2S.Node.Core.Infrastructure
     /// </summary>
     public interface IEngine
     {
+        IModuleCollection Modules { get; }
+
         /// <summary>
         /// Add and configure services.
         /// </summary>

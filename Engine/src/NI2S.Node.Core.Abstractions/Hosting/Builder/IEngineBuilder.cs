@@ -26,7 +26,7 @@ namespace NI2S.Node.Hosting.Builder
         /// <summary>
         /// Gets a key/value collection that can be used to share data between middleware.
         /// </summary>
-        IDictionary<object, object> Properties { get; }
+        IDictionary<string, object> Properties { get; }
 
         /// <summary>
         /// Creates a new <see cref="IEngineBuilder"/> that shares the <see cref="Properties"/> of this

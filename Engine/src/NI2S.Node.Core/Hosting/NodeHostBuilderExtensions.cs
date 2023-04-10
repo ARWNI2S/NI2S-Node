@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using NI2S.Node.Builder;
+using NI2S.Node.Hosting.Builder;
 using NI2S.Node.Hosting.Infrastructure;
 using NI2S.Node.Hosting.Internal;
 using System;
@@ -54,6 +54,7 @@ namespace NI2S.Node.Hosting
         /// <param name="hostBuilder">The <see cref="INodeHostBuilder"/> to configure.</param>
         /// <param name="configureApp">The delegate that configures the <see cref="IEngineBuilder"/>.</param>
         /// <returns>The <see cref="INodeHostBuilder"/>.</returns>
+        /* 015 */
         public static INodeHostBuilder Configure(this INodeHostBuilder hostBuilder, Action<NodeHostBuilderContext, IEngineBuilder> configureApp)
         {
             if (configureApp == null)

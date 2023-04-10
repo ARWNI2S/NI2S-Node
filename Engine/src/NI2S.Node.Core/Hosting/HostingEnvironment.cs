@@ -1,7 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.FileProviders;
+﻿using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
-using NI2S.Node.Core.Infrastructure;
 
 namespace NI2S.Node.Hosting
 {
@@ -9,26 +7,16 @@ namespace NI2S.Node.Hosting
     internal sealed class HostingEnvironment : IHostingEnvironment, INodeHostEnvironment
 #pragma warning restore CS0618 // Type or member is obsolete
     {
-        private IHostEnvironment _hostEnvironment;
+        public string EnvironmentName { get; set; } = Environments.Production;
 
-        public HostingEnvironment(IHostEnvironment environment, ConfigurationManager configuration)
-        {
-            _hostEnvironment = environment;
+        public string ApplicationName { get; set; }
 
-            NodeRootPath = configuration.GetValue<string>(NodeHostDefaults.NodeRootKey);
-            NodeRootFileProvider = new NodeFileProvider(this);
-        }
+        public string NodeRootPath { get; set; } = default!;
 
-        public string NodeRootPath { get; set; }
+        public IFileProvider NodeRootFileProvider { get; set; } = default!;
 
-        public INodeFileProvider NodeRootFileProvider { get; set; }
+        public string ContentRootPath { get; set; } = default!;
 
-        public string EnvironmentName { get => _hostEnvironment.EnvironmentName; set => _hostEnvironment.EnvironmentName = value; }
-
-        public string ApplicationName { get => _hostEnvironment.ApplicationName; set => _hostEnvironment.ApplicationName = value; }
-
-        public string ContentRootPath { get => _hostEnvironment.ContentRootPath; set => _hostEnvironment.ContentRootPath = value; }
-
-        public IFileProvider ContentRootFileProvider { get => _hostEnvironment.ContentRootFileProvider; set => _hostEnvironment.ContentRootFileProvider = value; }
+        public IFileProvider ContentRootFileProvider { get; set; } = default!;
     }
 }
