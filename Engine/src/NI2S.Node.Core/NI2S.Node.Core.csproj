@@ -11,16 +11,19 @@
   <ItemGroup>
     <Compile Remove="Core\**" />
     <Compile Remove="Dummy\**" />
+    <Compile Remove="Engine\**" />
     <Compile Remove="Helpers\**" />
     <Compile Remove="Hosting\**" />
     <Compile Remove="Routing\**" />
     <EmbeddedResource Remove="Core\**" />
     <EmbeddedResource Remove="Dummy\**" />
+    <EmbeddedResource Remove="Engine\**" />
     <EmbeddedResource Remove="Helpers\**" />
     <EmbeddedResource Remove="Hosting\**" />
     <EmbeddedResource Remove="Routing\**" />
     <None Remove="Core\**" />
     <None Remove="Dummy\**" />
+    <None Remove="Engine\**" />
     <None Remove="Helpers\**" />
     <None Remove="Hosting\**" />
     <None Remove="Routing\**" />
@@ -38,56 +41,67 @@
     <Compile Include="Core\CommonHelper.cs" />
     <Compile Include="Core\Configuration\CommonConfig.cs" />
     <Compile Include="Core\Configuration\ConfigurationDefaults.cs" />
-    <Compile Include="Core\Configuration\ISettings.cs" />
     <Compile Include="Core\Configuration\NodeSettings.cs" />
     <Compile Include="Core\Configuration\NodeSettingsHelper.cs" />
-    <Compile Include="Core\Configuration\PluginConfig.cs" />
     <Compile Include="Core\Constants.cs" />
     <Compile Include="Core\Infrastructure\AppDomainTypeFinder.cs" />
     <Compile Include="Core\Infrastructure\EngineContext.cs" />
-    <Compile Include="Core\Infrastructure\NodeFileProvider.cs" />
     <Compile Include="Core\Infrastructure\NI2SEngine.cs" />
-    <Compile Include="Core\Infrastructure\Singleton.cs" />
     <Compile Include="Core\Infrastructure\NodeEngineTypeFinder.cs" />
-    <Compile Include="Core\NodeHost.cs" />
+    <Compile Include="Core\Infrastructure\NodeFileProvider.cs" />
+    <Compile Include="Core\Infrastructure\Singleton.cs" />
+    <Compile Include="Core\NodeContextAccessor.cs" />
+    <Compile Include="Core\NodeEngine.cs" />
+    <Compile Include="Engine\DefaultEventHandlerAccessor.cs" />
+    <Compile Include="Engine\IEventHandlerAccessor.cs" />
+    <Compile Include="Engine\Modules\ModuleCollection.cs" />
+    <Compile Include="Engine\Modules\ModuleLoader.cs" />
+    <Compile Include="Engine\NodeEngineBase.cs" />
+    <Compile Include="Engine\NodeEngineImpl.cs" />
+    <Compile Include="Core\NodeEngineOptions.cs" />
+    <Compile Include="Engine\NodeEngineOptionsSetup.cs" />
+    <Compile Include="Helpers\MethodInfoExtensions.cs" />
+    <Compile Include="Helpers\PathResolver.cs" />
+    <Compile Include="Helpers\SecureRandomNumberGenerator.cs" />
     <Compile Include="Hosting\Assets\ManifestStaticAssetFileProvider.cs" />
     <Compile Include="Hosting\Assets\StaticAssetsLoader.cs" />
-    <Compile Include="Hosting\BootstrapHostBuilder.cs" />
+    <Compile Include="Hosting\Builder\BootstrapHostBuilder.cs" />
     <Compile Include="Hosting\Builder\ConfigureHostBuilder.cs" />
     <Compile Include="Hosting\Builder\ConfigureNodeHostBuilder.cs" />
-    <Compile Include="Hosting\Builder\EngineBuilder.cs" />
     <Compile Include="Hosting\Builder\NodeEngineBuilder.cs" />
-    <Compile Include="Hosting\Builder\NodeEngineOptions.cs" />
+    <Compile Include="Hosting\Builder\NodeEngineHostBuilder.cs" />
+    <Compile Include="Hosting\NodeEngineHostOptions.cs" />
     <Compile Include="Hosting\Builder\ConfigureBuilder.cs" />
     <Compile Include="Hosting\Builder\ConfigureContainerBuilder.cs" />
     <Compile Include="Hosting\Builder\ConfigureServicesBuilder.cs" />
-    <Compile Include="Hosting\ConventionBasedStartup.cs" />
+    <Compile Include="Hosting\Extensions\NodeHostBuilderNI2SExtensions.cs" />
+    <Compile Include="Engine\DefaultEngineContext.cs" />
+    <Compile Include="Engine\DefaultWorkContext.cs" />
+    <Compile Include="Engine\DefaultWorkContextFactory.cs" />
+    <Compile Include="Hosting\Builder\NodeEngineBuilderFactory.cs" />
+    <Compile Include="Hosting\Extensions\HostingEnvironmentExtensions.cs" />
+    <Compile Include="Hosting\Generic\GenericNodeHostApplicationLifetime.cs" />
     <Compile Include="Hosting\Generic\GenericNodeHostServiceOptions.cs" />
-    <Compile Include="Hosting\Service\GenericNodeHostService.cs" />
+    <Compile Include="Hosting\Internal\HostedServiceExecutor.cs" />
+    <Compile Include="Hosting\NodeHostService.cs" />
     <Compile Include="Hosting\Generic\GenericNodeHostBuilder.cs" />
-    <Compile Include="Hosting\Startup\HostingStartupNodeHostBuilder.cs" />
+    <Compile Include="Hosting\Builder\StartupNodeHostBuilder.cs" />
     <Compile Include="Hosting\Internal\NodeHost.cs" />
     <Compile Include="Hosting\Internal\UseStartupState.cs" />
-    <Compile Include="Hosting\ISupportsUseDefaultServiceProvider.cs" />
-    <Compile Include="Hosting\NodeHostBuilder.cs" />
-    <Compile Include="Hosting\NodeHostOptions.cs" />
-    <Compile Include="Hosting\NodeHostUtilities.cs" />
-    <Compile Include="Hosting\ServiceCollectionExtensions.cs" />
-    <Compile Include="Hosting\Startup\DelegateStartup.cs" />
-    <Compile Include="Hosting\Generic\GenericHostBuilderExtensions.cs" />
-    <Compile Include="Hosting\Generic\GenericHostNodeHostBuilderExtensions.cs" />
-    <Compile Include="Hosting\HostingEnvironment.cs" />
+    <Compile Include="Hosting\Internal\ISupportsUseDefaultServiceProvider.cs" />
+    <Compile Include="Hosting\Builder\NodeHostBuilder.cs" />
+    <Compile Include="Hosting\Internal\NodeHostOptions.cs" />
+    <Compile Include="Helpers\StringUtilities.cs" />
+    <Compile Include="Hosting\Extensions\ServiceCollectionExtensions.cs" />
+    <Compile Include="Engine\NodeEngineStartup.cs" />
+    <Compile Include="Hosting\Extensions\GenericHostBuilderExtensions.cs" />
+    <Compile Include="Hosting\Extensions\GenericHostNodeHostBuilderExtensions.cs" />
+    <Compile Include="Hosting\Internal\HostingEnvironment.cs" />
     <Compile Include="Hosting\Infrastructure\ISupportsConfigureNodeHost.cs" />
     <Compile Include="Hosting\Infrastructure\ISupportsStartup.cs" />
-    <Compile Include="Hosting\NodeEngine.cs" />
-    <Compile Include="Hosting\NodeHostBuilderExtensions.cs" />
-    <Compile Include="Hosting\NodeHostBuilderOptions.cs" />
-    <Compile Include="Hosting\Startup\IStartupConfigureContainerFilter.cs" />
-    <Compile Include="Hosting\Startup\IStartupConfigureServicesFilter.cs" />
-    <Compile Include="Hosting\Startup\IStartupFilter.cs" />
-    <Compile Include="Hosting\Startup\StartupBase.cs" />
-    <Compile Include="Hosting\Startup\StartupLoader.cs" />
-    <Compile Include="Hosting\Startup\StartupMethods.cs" />
+    <Compile Include="Hosting\NodeEngineHost.cs" />
+    <Compile Include="Hosting\Extensions\NodeHostBuilderExtensions.cs" />
+    <Compile Include="Hosting\Builder\NodeHostBuilderOptions.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -98,12 +112,6 @@
 
   <ItemGroup>
     <ProjectReference Include="$(SourceProjectsPath)\NI2S.Node.Core.Abstractions\NI2S.Node.Core.Abstractions.csproj" />
-    <ProjectReference Include="..\NI2S.Node.Math\NI2S.Node.Math.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Helpers\" />
-    <Folder Include="Hosting\Extensions\" />
   </ItemGroup>
 
 </Project>

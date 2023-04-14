@@ -1,4 +1,6 @@
-﻿#nullable enable
+﻿// Copyrigth (c) 2023 Alternate Reality Worlds. Narrative Interactive Intelligent Simulator.
+
+#nullable enable
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.FileProviders;
 using System;

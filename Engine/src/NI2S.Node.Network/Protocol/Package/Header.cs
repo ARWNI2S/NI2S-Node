@@ -1,5 +1,6 @@
-﻿using System;
-using System.Runtime.Serialization;
+﻿// Copyrigth (c) 2023 Alternate Reality Worlds. Narrative Interactive Intelligent Simulator.
+
+using System;
 
 namespace NI2S.Node.Network.Protocol.Package
 {

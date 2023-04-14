@@ -1,14 +1,16 @@
-﻿using System;
+﻿// Copyrigth (c) 2023 Alternate Reality Worlds. Narrative Interactive Intelligent Simulator.
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace NI2S.Engine
+namespace NI2S.Node.Engine
 {
     /// <summary>
     /// Default implementation for <see cref="IModuleCollection"/>.
     /// </summary>
-    public class ModuleCollection : IModuleCollection
+    internal class ModuleCollection : IModuleCollection
     {
         private static readonly KeyComparer FeatureKeyComparer = new();
         private readonly IModuleCollection _defaults;

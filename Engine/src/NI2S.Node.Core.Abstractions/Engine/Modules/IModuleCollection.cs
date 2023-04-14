@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace NI2S.Engine
+namespace NI2S.Node.Engine
 {
     /// <summary>
     /// Represents a collection of NI2S engine modules.
@@ -30,15 +30,15 @@ namespace NI2S.Engine
         /// <summary>
         /// Retrieves the requested module from the collection.
         /// </summary>
-        /// <typeparam name="TFeature">The feature key.</typeparam>
+        /// <typeparam name="TModule">The feature key.</typeparam>
         /// <returns>The requested feature, or null if it is not present.</returns>
-        TFeature Get<TFeature>();
+        TModule Get<TModule>();
 
         /// <summary>
         /// Sets the given feature in the collection.
         /// </summary>
-        /// <typeparam name="TFeature">The feature key.</typeparam>
+        /// <typeparam name="TModule">The feature key.</typeparam>
         /// <param name="instance">The feature value.</param>
-        void Set<TFeature>(TFeature instance);
+        void Set<TModule>(TModule instance);
     }
 }

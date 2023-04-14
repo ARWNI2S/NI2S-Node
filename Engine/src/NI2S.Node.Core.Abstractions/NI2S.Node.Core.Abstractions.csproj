@@ -12,49 +12,44 @@
 
   <ItemGroup>
     <Compile Remove="Clustering\**" />
-    <Compile Remove="Core\Configuration\**" />
     <Compile Remove="Core\**" />
     <Compile Remove="Engine\Messaging\**" />
     <Compile Remove="Hosting\**" />
     <EmbeddedResource Remove="Clustering\**" />
-    <EmbeddedResource Remove="Core\Configuration\**" />
     <EmbeddedResource Remove="Core\**" />
     <EmbeddedResource Remove="Engine\Messaging\**" />
     <EmbeddedResource Remove="Hosting\**" />
     <None Remove="Clustering\**" />
-    <None Remove="Core\Configuration\**" />
     <None Remove="Core\**" />
     <None Remove="Engine\Messaging\**" />
     <None Remove="Hosting\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="Engine\EngineContext.cs" />
+    <Compile Remove="Engine\CacheKey.cs" />
+    <Compile Remove="Engine\Modules\LoadModulesMode.cs" />
+    <Compile Remove="Engine\NodeMessage.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Include="Core\Configuration\IConfig.cs" />
-    <Compile Include="Core\Configuration\ISettings.cs" />
     <Compile Include="Core\IDescriptor.cs" />
     <Compile Include="Core\Infrastructure\IEngine.cs" />
     <Compile Include="Core\Infrastructure\INodeFileProvider.cs" />
     <Compile Include="Core\Infrastructure\INodeStartup.cs" />
     <Compile Include="Core\Infrastructure\IStartupTask.cs" />
+    <Compile Include="Core\Infrastructure\ITaskScheduler.cs" />
     <Compile Include="Core\Infrastructure\ITypeFinder.cs" />
     <Compile Include="Core\NI2SException.cs" />
     <Compile Include="Hosting\Builder\IClusterNodeBuilder.cs" />
-    <Compile Include="Hosting\Builder\IEngineBuilder.cs" />
-    <Compile Include="Core\INodeContextAccessor.cs" />
-    <Compile Include="Hosting\HostingAbstractionsNodeHostBuilderExtensions.cs" />
-    <Compile Include="Hosting\HostingStartupAttribute.cs" />
-    <Compile Include="Hosting\IHostingStartup.cs" />
-    <Compile Include="Hosting\INodeEngine.cs" />
+    <Compile Include="Hosting\Builder\INodeEngineBuilder.cs" />
+    <Compile Include="Hosting\Builder\IEngineBuilderFactory.cs" />
+    <Compile Include="Hosting\Extensions\AbstractionsNodeHostBuilderExtensions.cs" />
+    <Compile Include="Hosting\IHostContextContainer.cs" />
     <Compile Include="Hosting\INodeHost.cs" />
-    <Compile Include="Hosting\INodeHostBuilder.cs" />
+    <Compile Include="Hosting\Builder\INodeHostBuilder.cs" />
     <Compile Include="Hosting\INodeHostEnvironment.cs" />
-    <Compile Include="Core\NodeContext.cs" />
-    <Compile Include="Hosting\IStartup.cs" />
-    <Compile Include="Hosting\NodeHostBuilderContext.cs" />
+    <Compile Include="Hosting\Builder\NodeHostBuilderContext.cs" />
     <Compile Include="Hosting\NodeHostDefaults.cs" />
   </ItemGroup>
 
@@ -62,11 +57,6 @@
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
     <PackageReference Include="Newtonsoft.Json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Engine\Cache\" />
-    <Folder Include="Plugins\" />
   </ItemGroup>
 
 </Project>

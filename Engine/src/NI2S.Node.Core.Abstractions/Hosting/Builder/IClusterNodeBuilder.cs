@@ -1,14 +1,17 @@
-﻿using System;
+﻿// Copyrigth (c) 2023 Alternate Reality Worlds. Narrative Interactive Intelligent Simulator.
+
+using System;
 
 namespace NI2S.Node.Hosting.Builder
 {
+    //TODO: BUILD CLUSTERING AROUND THAT
     public interface IClusterNodeBuilder
     {
         /// <summary>
-        /// Creates a new <see cref="IEngineBuilder"/>.
+        /// Creates a new <see cref="INodeEngineBuilder"/>.
         /// </summary>
-        /// <returns>The new <see cref="IEngineBuilder"/>.</returns>
-        IEngineBuilder CreateEngineBuilder();
+        /// <returns>The new <see cref="INodeEngineBuilder"/>.</returns>
+        INodeEngineBuilder CreateEngineBuilder();
 
         /// <summary>
         /// Gets the <see cref="IServiceProvider"/> used to resolve services for routes.

@@ -1,4 +1,6 @@
-﻿using System;
+﻿// Copyrigth (c) 2023 Alternate Reality Worlds. Narrative Interactive Intelligent Simulator.
+
+using System;
 using System.Diagnostics;
 using System.Reflection;
 

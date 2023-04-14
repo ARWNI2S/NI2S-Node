@@ -1,11 +1,13 @@
-﻿using System;
+﻿// Copyrigth (c) 2023 Alternate Reality Worlds. Narrative Interactive Intelligent Simulator.
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace NI2S.Engine
+namespace NI2S.Node.Engine
 {
     /// <summary>
-    /// Represents an information about assembly which loaded by plugins
+    /// Represents an information about assembly which loaded by modules
     /// </summary>
     public partial class ModuleLoadedAssemblyInfo
     {
@@ -36,7 +38,7 @@ namespace NI2S.Engine
         /// Gets the short assembly name
         /// </summary>
         public string ShortName { get; }
-        
+
         /// <summary>
         /// Gets a list of all mentioned plugin-assembly pairs
         /// </summary>

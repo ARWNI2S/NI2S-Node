@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NI2S.Node.Hosting.Builder;
 
-namespace NI2S.Engine
+namespace NI2S.Node.Engine
 {
     public interface IEngineModule
     {
@@ -21,7 +21,7 @@ namespace NI2S.Engine
         /// Configure the using of added middleware
         /// </summary>
         /// <param name="engine">Builder for configuring a NI2S node engine.</param>
-        void Configure(IEngineBuilder engine);
+        void Configure(INodeEngineBuilder engine);
 
     }
 }

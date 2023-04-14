@@ -1,4 +1,6 @@
-﻿using System;
+﻿// Copyrigth (c) 2023 Alternate Reality Worlds. Narrative Interactive Intelligent Simulator.
+
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 
@@ -18,7 +20,6 @@ namespace NI2S.Node.Core.Infrastructure
 
         #region Ctor
 
-        /* 043 */
         public NodeEngineTypeFinder(INodeFileProvider fileProvider = null) : base(fileProvider)
         {
         }

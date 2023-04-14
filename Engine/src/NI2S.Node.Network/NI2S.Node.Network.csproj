@@ -37,7 +37,6 @@
 
   <ItemGroup>
     <ProjectReference Include="$(SourceProjectsPath)\NI2S.Node.Core.Abstractions\NI2S.Node.Core.Abstractions.csproj" />
-    <ProjectReference Include="..\NI2S.Node.Math\NI2S.Node.Math.csproj" />
   </ItemGroup>
 
   <ItemGroup>

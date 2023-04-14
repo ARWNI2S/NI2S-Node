@@ -1,4 +1,6 @@
-﻿using NI2S.Engine;
+﻿// Copyrigth (c) 2023 Alternate Reality Worlds. Narrative Interactive Intelligent Simulator.
+
+using NI2S.Node.Engine;
 using System;
 using System.Threading;
 using System.Threading.Tasks;

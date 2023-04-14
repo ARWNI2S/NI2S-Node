@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿// Copyrigth (c) 2023 Alternate Reality Worlds. Narrative Interactive Intelligent Simulator.
+
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NI2S.Node.Hosting.Infrastructure;
 using System;
@@ -7,8 +9,8 @@ using System.Diagnostics.CodeAnalysis;
 namespace NI2S.Node.Hosting.Builder
 {
     /// <summary>
-    /// A non-buildable <see cref="INodeHostBuilder"/> for <see cref="NodeEngineBuilder"/>.
-    /// Use <see cref="NodeEngineBuilder.Build"/> to build the <see cref="NodeEngineBuilder"/>.
+    /// A non-buildable <see cref="INodeHostBuilder"/> for <see cref="NodeEngineHostBuilder"/>.
+    /// Use <see cref="NodeEngineHostBuilder.Build"/> to build the <see cref="NodeEngineHostBuilder"/>.
     /// </summary>
     public sealed class ConfigureNodeHostBuilder : INodeHostBuilder, ISupportsStartup
     {
@@ -17,7 +19,6 @@ namespace NI2S.Node.Hosting.Builder
         private readonly IServiceCollection _services;
         private readonly NodeHostBuilderContext _context;
 
-        /* 039 */
         internal ConfigureNodeHostBuilder(NodeHostBuilderContext nodeHostBuilderContext, ConfigurationManager configuration, IServiceCollection services)
         {
             _configuration = configuration;
@@ -28,11 +29,11 @@ namespace NI2S.Node.Hosting.Builder
 
         INodeHost INodeHostBuilder.Build()
         {
-            throw new NotSupportedException($"Call {nameof(NodeEngineBuilder)}.{nameof(NodeEngineBuilder.Build)}() instead.");
+            throw new NotSupportedException($"Call {nameof(NodeEngineHostBuilder)}.{nameof(NodeEngineHostBuilder.Build)}() instead.");
         }
 
         /// <inheritdoc />
-        public INodeHostBuilder ConfigureAppConfiguration(Action<NodeHostBuilderContext, IConfigurationBuilder> configureDelegate)
+        public INodeHostBuilder ConfigureNodeConfiguration(Action<NodeHostBuilderContext, IConfigurationBuilder> configureDelegate)
         {
             var previousContentRoot = PathResolver.ResolvePath(_context.HostingEnvironment.ContentRootPath);
             var previousContentRootConfig = _configuration[NodeHostDefaults.ContentRootKey];
@@ -161,12 +162,12 @@ namespace NI2S.Node.Hosting.Builder
             return this;
         }
 
-        INodeHostBuilder ISupportsStartup.Configure(Action<IEngineBuilder> configure)
+        INodeHostBuilder ISupportsStartup.Configure(Action<INodeEngineBuilder> configure)
         {
             throw new NotSupportedException("Configure() is not supported by NodeEngineBuilder.NodeHost. Use the NodeEngine returned by NodeEngineBuilder.Build() instead.");
         }
 
-        INodeHostBuilder ISupportsStartup.Configure(Action<NodeHostBuilderContext, IEngineBuilder> configure)
+        INodeHostBuilder ISupportsStartup.Configure(Action<NodeHostBuilderContext, INodeEngineBuilder> configure)
         {
             throw new NotSupportedException("Configure() is not supported by NodeEngineBuilder.NodeHost. Use the NodeEngine returned by NodeEngineBuilder.Build() instead.");
         }

@@ -11,7 +11,7 @@
   <PropertyGroup>
     <WarningLevel>3</WarningLevel>
     <AnalysisLevel>preview</AnalysisLevel>
-    <Features>strict</Features>
+    <Modules>strict</Modules>
     <Nullable>disable</Nullable>
   </PropertyGroup>
 

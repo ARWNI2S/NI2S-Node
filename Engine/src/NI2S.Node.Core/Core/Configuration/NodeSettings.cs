@@ -25,7 +25,6 @@ namespace NI2S.Node.Core.Configuration
         /// Initializes a instance of <see cref="NodeSettings"/>.
         /// </summary>
         /// <param name="configurations">A <see cref="IList{IConfig}"/> containing <see cref="IConfig"/> configurations.</param>
-        /* 046 */
         public NodeSettings(IList<IConfig> configurations = null)
         {
             _configurations = configurations
@@ -65,7 +64,6 @@ namespace NI2S.Node.Core.Configuration
         /// Update app settings
         /// </summary>
         /// <param name="configurations">Configurations to update</param>
-        /* 047 */
         public void Update(IList<IConfig> configurations)
         {
             foreach (var config in configurations)

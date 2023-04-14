@@ -1,4 +1,6 @@
-﻿namespace NI2S.Node
+﻿// Copyrigth (c) 2023 Alternate Reality Worlds. Narrative Interactive Intelligent Simulator.
+
+namespace NI2S.Node
 {
     /// <summary>
     /// Represents nopCommerce version

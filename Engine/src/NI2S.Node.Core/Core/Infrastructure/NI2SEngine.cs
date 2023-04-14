@@ -2,8 +2,8 @@
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using NI2S.Engine;
 using NI2S.Node.Core.Configuration;
+using NI2S.Node.Engine;
 using NI2S.Node.Hosting.Builder;
 using System;
 using System.Collections.Generic;
@@ -27,8 +27,8 @@ namespace NI2S.Node.Core.Infrastructure
         {
             if (scope == null)
             {
-                var accessor = ServiceProvider.GetService<INodeContextAccessor>();
-                var context = accessor?.NodeContext;
+                var accessor = ServiceProvider.GetService<IEngineContextAccessor>();
+                var context = accessor?.EngineContext;
                 return context?.NodeServices ?? ServiceProvider;
             }
             return scope.ServiceProvider;
@@ -138,7 +138,7 @@ namespace NI2S.Node.Core.Infrastructure
         /// Configure HTTP request pipeline
         /// </summary>
         /// <param name="application">Builder for configuring an application's request pipeline</param>
-        public virtual void ConfigureMessageHandlerPipeline(IEngineBuilder application)
+        public virtual void ConfigureMessageHandlerPipeline(INodeEngineBuilder application)
         {
             ServiceProvider = application.EngineServices;
 
@@ -228,8 +228,6 @@ namespace NI2S.Node.Core.Infrastructure
         /// </summary>
         public virtual IServiceProvider ServiceProvider { get; protected set; }
 
-        public IModuleCollection Modules { get; protected set; }
-
-    #endregion
-}
+        #endregion
+    }
 }

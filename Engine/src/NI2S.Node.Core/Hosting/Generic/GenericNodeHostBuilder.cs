@@ -1,7 +1,10 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿// Copyrigth (c) 2023 Alternate Reality Worlds. Narrative Interactive Intelligent Simulator.
+
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
+using NI2S.Node.Engine;
 using NI2S.Node.Hosting.Builder;
 using NI2S.Node.Hosting.Infrastructure;
 using NI2S.Node.Hosting.Internal;
@@ -22,9 +25,9 @@ namespace NI2S.Node.Hosting
         private readonly object _startupKey = new();
 
         private AggregateException _hostingStartupErrors;
-        private HostingStartupNodeHostBuilder _hostingStartupNodeHostBuilder;
+        private StartupNodeHostBuilder _hostingStartupNodeHostBuilder;
 
-        /* 006 */
+        /* 005 */
         public GenericNodeHostBuilder(IHostBuilder builder, NodeHostBuilderOptions options)
         {
             _builder = builder;
@@ -33,14 +36,13 @@ namespace NI2S.Node.Hosting
 
             if (!options.SuppressEnvironmentConfiguration)
             {
-                configBuilder.AddEnvironmentVariables(prefix: "DOTNET_");
+                configBuilder.AddEnvironmentVariables(prefix: "NI2S_");
             }
 
             _config = configBuilder.Build();
 
             _builder.ConfigureHostConfiguration(config =>
             {
-                /* 020 */
                 config.AddConfiguration(_config);
 
                 // We do this super early but still late enough that we can process the configuration
@@ -48,11 +50,10 @@ namespace NI2S.Node.Hosting
                 ExecuteHostingStartups();
             });
 
-            // IHostingStartup needs to be executed before any direct methods on the builder
+            // INodeStartup needs to be executed before any direct methods on the builder
             // so register these callbacks first
             _builder.ConfigureAppConfiguration((context, configurationBuilder) =>
             {
-                /* 025 */
                 if (_hostingStartupNodeHostBuilder != null)
                 {
                     var nodehostContext = GetNodeHostBuilderContext(context);
@@ -62,15 +63,14 @@ namespace NI2S.Node.Hosting
 
             _builder.ConfigureServices((context, services) =>
             {
-                /* 033 */
                 var nodehostContext = GetNodeHostBuilderContext(context);
                 var nodeHostOptions = (NodeHostOptions)context.Properties[typeof(NodeHostOptions)];
 
-                // Add the IHostingEnvironment and IApplicationLifetime from Microsoft.AspNetCore.Hosting
+                // Add the IHostingEnvironment and IApplicationLifetime from NI2S.Node.Hosting
                 services.AddSingleton(nodehostContext.HostingEnvironment);
 #pragma warning disable CS0618 // Type or member is obsolete
                 services.AddSingleton((IHostingEnvironment)nodehostContext.HostingEnvironment);
-                //services.AddSingleton<Microsoft.Extensions.Hosting.IApplicationLifetime, GenericNodeHostApplicationLifetime>();
+                services.AddSingleton<Microsoft.Extensions.Hosting.IApplicationLifetime, GenericNodeHostApplicationLifetime>();
 #pragma warning restore CS0618 // Type or member is obsolete
 
                 services.Configure<GenericNodeHostServiceOptions>(options =>
@@ -83,14 +83,14 @@ namespace NI2S.Node.Hosting
 
                 // REVIEW: This is bad since we don't own this type. Anybody could add one of these and it would mess things up
                 // We need to flow this differently
-                services.TryAddSingleton(sp => new DiagnosticListener("Microsoft.AspNetCore"));
+                services.TryAddSingleton(sp => new DiagnosticListener("NI2S.Node.Core"));
                 services.TryAddSingleton<DiagnosticSource>(sp => sp.GetRequiredService<DiagnosticListener>());
-                services.TryAddSingleton(sp => new ActivitySource("Microsoft.AspNetCore"));
+                services.TryAddSingleton(sp => new ActivitySource("NI2S.Node.Core"));
                 services.TryAddSingleton(DistributedContextPropagator.Current);
 
-                //services.TryAddSingleton<IDummyContextFactory, DefaultDummyContextFactory>();
+                services.TryAddSingleton<IWorkContextFactory, DefaultWorkContextFactory>();
                 //services.TryAddScoped<IMiddlewareFactory, MiddlewareFactory>();
-                //services.TryAddSingleton<IEngineBuilderFactory, EngineBuilderFactory>();
+                services.TryAddSingleton<IEngineBuilderFactory, NodeEngineBuilderFactory>();
 
                 // IMPORTANT: This needs to run *before* direct calls on the builder (like UseStartup)
                 _hostingStartupNodeHostBuilder?.ConfigureServices(nodehostContext, services);
@@ -126,7 +126,6 @@ namespace NI2S.Node.Hosting
             }
         }
 
-        /* 021 */
         private void ExecuteHostingStartups()
         {
             var nodeHostOptions = new NodeHostOptions(_config);
@@ -139,7 +138,7 @@ namespace NI2S.Node.Hosting
             var exceptions = new List<Exception>();
             var processed = new HashSet<Assembly>();
 
-            _hostingStartupNodeHostBuilder = new HostingStartupNodeHostBuilder(this);
+            _hostingStartupNodeHostBuilder = new StartupNodeHostBuilder(this);
 
             // Execute the hosting startup assemblies
             foreach (var assemblyName in nodeHostOptions.GetFinalHostingStartupAssemblies())
@@ -154,9 +153,9 @@ namespace NI2S.Node.Hosting
                         continue;
                     }
 
-                    foreach (var attribute in assembly.GetCustomAttributes<HostingStartupAttribute>())
+                    foreach (var attribute in assembly.GetCustomAttributes<NodeStartupAttribute>())
                     {
-                        var hostingStartup = (IHostingStartup)Activator.CreateInstance(attribute.HostingStartupType)!;
+                        var hostingStartup = (INodeStartup)Activator.CreateInstance(attribute.HostingStartupType)!;
                         hostingStartup.Configure(_hostingStartupNodeHostBuilder);
                     }
                 }
@@ -178,12 +177,11 @@ namespace NI2S.Node.Hosting
             throw new NotSupportedException($"Building this implementation of {nameof(INodeHostBuilder)} is not supported.");
         }
 
-        /* 012 */
-        public INodeHostBuilder ConfigureAppConfiguration(Action<NodeHostBuilderContext, IConfigurationBuilder> configureDelegate)
+        /* 007 */
+        public INodeHostBuilder ConfigureNodeConfiguration(Action<NodeHostBuilderContext, IConfigurationBuilder> configureDelegate)
         {
             _builder.ConfigureAppConfiguration((context, builder) =>
             {
-                /* 030 */
                 var nodehostBuilderContext = GetNodeHostBuilderContext(context);
                 configureDelegate(nodehostBuilderContext, builder);
             });
@@ -355,7 +353,7 @@ namespace NI2S.Node.Hosting
             builder.Build(instance)(container);
         }
 
-        public INodeHostBuilder Configure(Action<IEngineBuilder> configure)
+        public INodeHostBuilder Configure(Action<INodeEngineBuilder> configure)
         {
             var startupAssemblyName = configure.GetMethodInfo().DeclaringType!.Assembly.GetName().Name!;
 
@@ -378,8 +376,7 @@ namespace NI2S.Node.Hosting
             return this;
         }
 
-        /* 016 */
-        public INodeHostBuilder Configure(Action<NodeHostBuilderContext, IEngineBuilder> configure)
+        public INodeHostBuilder Configure(Action<NodeHostBuilderContext, INodeEngineBuilder> configure)
         {
             var startupAssemblyName = configure.GetMethodInfo().DeclaringType!.Assembly.GetName().Name!;
 
@@ -390,7 +387,6 @@ namespace NI2S.Node.Hosting
 
             _builder.ConfigureServices((context, services) =>
             {
-                /* 036 */
                 if (ReferenceEquals(_startupObject, configure))
                 {
                     services.Configure<GenericNodeHostServiceOptions>(options =>
@@ -404,7 +400,6 @@ namespace NI2S.Node.Hosting
             return this;
         }
 
-        /* 026 */ /* 031 */ /* 034 */
         private NodeHostBuilderContext GetNodeHostBuilderContext(HostBuilderContext context)
         {
             if (!context.Properties.TryGetValue(typeof(NodeHostBuilderContext), out var contextVal))

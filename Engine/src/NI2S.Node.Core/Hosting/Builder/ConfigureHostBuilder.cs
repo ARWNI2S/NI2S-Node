@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿// Copyrigth (c) 2023 Alternate Reality Worlds. Narrative Interactive Intelligent Simulator.
+
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NI2S.Node.Hosting.Infrastructure;
@@ -9,8 +11,8 @@ using System.Linq;
 namespace NI2S.Node.Hosting.Builder
 {
     /// <summary>
-    /// A non-buildable <see cref="IHostBuilder"/> for <see cref="NodeEngineBuilder"/>.
-    /// Use <see cref="NodeEngineBuilder.Build"/> to build the <see cref="NodeEngineBuilder"/>.
+    /// A non-buildable <see cref="IHostBuilder"/> for <see cref="NodeEngineHostBuilder"/>.
+    /// Use <see cref="NodeEngineHostBuilder.Build"/> to build the <see cref="NodeEngineHostBuilder"/>.
     /// </summary>
     public sealed class ConfigureHostBuilder : IHostBuilder, ISupportsConfigureNodeHost
     {
@@ -21,7 +23,6 @@ namespace NI2S.Node.Hosting.Builder
         private readonly List<Action<HostBuilderContext, object>> _configureContainerActions = new();
         private IServiceProviderFactory<object> _serviceProviderFactory;
 
-        /* 038 */
         internal ConfigureHostBuilder(
             HostBuilderContext context,
             ConfigurationManager configuration,
@@ -39,7 +40,7 @@ namespace NI2S.Node.Hosting.Builder
 
         IHost IHostBuilder.Build()
         {
-            throw new NotSupportedException($"Call {nameof(NodeEngineBuilder)}.{nameof(NodeEngineBuilder.Build)}() instead.");
+            throw new NotSupportedException($"Call {nameof(NodeEngineHostBuilder)}.{nameof(NodeEngineHostBuilder.Build)}() instead.");
         }
 
         /// <inheritdoc />

@@ -1,13 +1,16 @@
-﻿using Microsoft.Extensions.Hosting;
+﻿// Copyrigth (c) 2023 Alternate Reality Worlds. Narrative Interactive Intelligent Simulator.
+
+using Microsoft.Extensions.Hosting;
+using NI2S.Node.Hosting.Builder;
 using System;
 
 namespace NI2S.Node.Hosting.Infrastructure
 {
     /// <summary>
-    /// An interface implemented by INodeHostBuilders that handle <see cref="GenericHostNodeHostBuilderExtensions.ConfigureNodeHost(IHostBuilder, Action{INodeHostBuilder})"/>
+    /// An interface implemented by INodeHostBuilders that handle <see cref="NodeHostBuilderExtensions.ConfigureNodeHost(IHostBuilder, Action{INodeHostBuilder})"/>
     /// directly.
     /// </summary>
-    public interface ISupportsConfigureNodeHost
+    internal interface ISupportsConfigureNodeHost
     {
         /// <summary>
         /// Adds and configures an ASP.NET Core web application.

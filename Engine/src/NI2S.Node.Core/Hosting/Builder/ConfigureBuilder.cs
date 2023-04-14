@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿// Copyrigth (c) 2023 Alternate Reality Worlds. Narrative Interactive Intelligent Simulator.
+
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Globalization;
 using System.Reflection;
@@ -14,9 +16,9 @@ namespace NI2S.Node.Hosting.Builder
 
         public MethodInfo MethodInfo { get; }
 
-        public Action<IEngineBuilder> Build(object instance) => builder => Invoke(instance, builder);
+        public Action<INodeEngineBuilder> Build(object instance) => builder => Invoke(instance, builder);
 
-        private void Invoke(object instance, IEngineBuilder builder)
+        private void Invoke(object instance, INodeEngineBuilder builder)
         {
             // Create a scope for Configure, this allows creating scoped dependencies
             // without the hassle of manually creating a scope.
@@ -27,7 +29,7 @@ namespace NI2S.Node.Hosting.Builder
             for (var index = 0; index < parameterInfos.Length; index++)
             {
                 var parameterInfo = parameterInfos[index];
-                if (parameterInfo.ParameterType == typeof(IEngineBuilder))
+                if (parameterInfo.ParameterType == typeof(INodeEngineBuilder))
                 {
                     parameters[index] = builder;
                 }

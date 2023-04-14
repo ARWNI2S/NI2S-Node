@@ -1,29 +1,31 @@
-﻿using NI2S.Node.Hosting.Builder;
+﻿// Copyrigth (c) 2023 Alternate Reality Worlds. Narrative Interactive Intelligent Simulator.
+
+using NI2S.Node.Hosting.Builder;
 using System;
 using System.Diagnostics.CodeAnalysis;
 
 namespace NI2S.Node.Hosting.Infrastructure
 {
     /// <summary>
-    /// An interface implemented by INodeHostBuilders that handle <see cref="NodeHostBuilderExtensions.Configure(INodeHostBuilder, Action{IEngineBuilder})"/>,
+    /// An interface implemented by INodeHostBuilders that handle <see cref="NodeHostBuilderExtensions.Configure(INodeHostBuilder, Action{INodeEngineBuilder})"/>,
     /// <see cref="NodeHostBuilderExtensions.UseStartup(INodeHostBuilder, Type)"/> and <see cref="NodeHostBuilderExtensions.UseStartup{TStartup}(INodeHostBuilder, Func{NodeHostBuilderContext, TStartup})"/>
     /// directly.
     /// </summary>
-    public interface ISupportsStartup
+    internal interface ISupportsStartup
     {
         /// <summary>
         /// Specify the startup method to be used to configure the web application.
         /// </summary>
-        /// <param name="configure">The delegate that configures the <see cref="IEngineBuilder"/>.</param>
+        /// <param name="configure">The delegate that configures the <see cref="INodeEngineBuilder"/>.</param>
         /// <returns>The <see cref="INodeHostBuilder"/>.</returns>
-        INodeHostBuilder Configure(Action<IEngineBuilder> configure);
+        INodeHostBuilder Configure(Action<INodeEngineBuilder> configure);
 
         /// <summary>
         /// Specify the startup method to be used to configure the web application.
         /// </summary>
-        /// <param name="configure">The delegate that configures the <see cref="IEngineBuilder"/>.</param>
+        /// <param name="configure">The delegate that configures the <see cref="INodeEngineBuilder"/>.</param>
         /// <returns>The <see cref="INodeHostBuilder"/>.</returns>
-        INodeHostBuilder Configure(Action<NodeHostBuilderContext, IEngineBuilder> configure);
+        INodeHostBuilder Configure(Action<NodeHostBuilderContext, INodeEngineBuilder> configure);
 
         /// <summary>
         /// Specify the startup type to be used by the web host.

@@ -3,7 +3,6 @@
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using NI2S.Engine;
 using NI2S.Node.Hosting.Builder;
 using System;
 using System.Collections.Generic;
@@ -16,8 +15,6 @@ namespace NI2S.Node.Core.Infrastructure
     /// </summary>
     public interface IEngine
     {
-        IModuleCollection Modules { get; }
-
         /// <summary>
         /// Add and configure services.
         /// </summary>
@@ -29,7 +26,7 @@ namespace NI2S.Node.Core.Infrastructure
         /// Configure message handler pipeline.
         /// </summary>
         /// <param name="engine">Builder for configuring a engine's message handler pipeline.</param>
-        void ConfigureMessageHandlerPipeline(IEngineBuilder engine);
+        void ConfigureMessageHandlerPipeline(INodeEngineBuilder engine);
 
         /// <summary>
         /// Resolve dependency.

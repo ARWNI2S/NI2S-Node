@@ -15,16 +15,16 @@ namespace NI2S.Node.Infrastructure.Extensions
         /// Configure the application HTTP request pipeline
         /// </summary>
         /// <param name="application">Builder for configuring an application's request pipeline</param>
-        public static void ConfigureRequestPipeline(this IEngineBuilder application)
+        public static void ConfigureMessagePipeline(this INodeEngineBuilder application)
         {
-            //EngineContext.Current.ConfigureRequestPipeline(application);
+            //EngineContext.Current.ConfigureMessagePipeline(application);
         }
 
-        public static void StartEngine(this IEngineBuilder _)
+        public static void StartEngine(this INodeEngineBuilder _)
         {
         }
 
-        public static async Task StartEngineAsync(this IEngineBuilder _)
+        public static async Task StartEngineAsync(this INodeEngineBuilder _)
         {
             var engine = EngineContext.Current;
 
@@ -56,7 +56,7 @@ namespace NI2S.Node.Infrastructure.Extensions
         /// Add exception handling
         /// </summary>
         /// <param name="application">Builder for configuring an application's request pipeline</param>
-        public static void UseNI2SExceptionHandler(this IEngineBuilder application)
+        public static void UseNI2SExceptionHandler(this INodeEngineBuilder application)
         {
             //var appSettings = EngineContext.Current.Resolve<AppSettings>();
             //var nodeHostEnvironment = EngineContext.Current.Resolve<INodeHostEnvironment>();
@@ -77,7 +77,7 @@ namespace NI2S.Node.Infrastructure.Extensions
             //{
             //    handler.Run(async context =>
             //    {
-            //        var exception = context.Features.Get<IExceptionHandlerFeature>()?.Error;
+            //        var exception = context.Modules.Get<IExceptionHandlerModule>()?.Error;
             //        if (exception == null)
             //            return;
 
@@ -106,7 +106,7 @@ namespace NI2S.Node.Infrastructure.Extensions
         /// Adds a special handler that checks for responses with the 404 status code that do not have a body
         /// </summary>
         /// <param name="application">Builder for configuring an application's request pipeline</param>
-        public static void UsePageNotFound(this IEngineBuilder application)
+        public static void UsePageNotFound(this INodeEngineBuilder application)
         {
             //application.UseStatusCodePages(async context =>
             //{
@@ -117,8 +117,8 @@ namespace NI2S.Node.Infrastructure.Extensions
             //        if (!webHelper.IsStaticResource())
             //        {
             //            //get original path and query
-            //            var originalPath = context.DummyContext.Request.Path;
-            //            var originalQueryString = context.DummyContext.Request.QueryString;
+            //            var originalPath = context.DummyContext.Message.Path;
+            //            var originalQueryString = context.DummyContext.Message.QueryString;
 
             //            if (DataSettingsManager.IsDatabaseInstalled())
             //            {
@@ -139,13 +139,13 @@ namespace NI2S.Node.Infrastructure.Extensions
             //                //get new path
             //                var pageNotFoundPath = "/page-not-found";
             //                //re-execute request with new path
-            //                context.DummyContext.Response.Redirect(context.DummyContext.Request.PathBase + pageNotFoundPath);
+            //                context.DummyContext.Response.Redirect(context.DummyContext.Message.PathBase + pageNotFoundPath);
             //            }
             //            finally
             //            {
             //                //return original path to request
-            //                context.DummyContext.Request.QueryString = originalQueryString;
-            //                context.DummyContext.Request.Path = originalPath;
+            //                context.DummyContext.Message.QueryString = originalQueryString;
+            //                context.DummyContext.Message.Path = originalPath;
             //            }
             //        }
             //    }
@@ -156,12 +156,12 @@ namespace NI2S.Node.Infrastructure.Extensions
         /// Adds a special handler that checks for responses with the 400 status code (bad request)
         /// </summary>
         /// <param name="application">Builder for configuring an application's request pipeline</param>
-        public static void UseBadRequestResult(this IEngineBuilder application)
+        public static void UseBadMessageResult(this INodeEngineBuilder application)
         {
             //application.UseStatusCodePages(async context =>
             //{
             //    //handle 404 (Bad request)
-            //    if (context.DummyContext.Response.StatusCode == StatusCodes.Status400BadRequest)
+            //    if (context.DummyContext.Response.StatusCode == StatusCodes.Status400BadMessage)
             //    {
             //        var logger = EngineContext.Current.Resolve<ILogger>();
             //        var workContext = EngineContext.Current.Resolve<IWorkContext>();
@@ -174,7 +174,7 @@ namespace NI2S.Node.Infrastructure.Extensions
         /// Configure middleware for dynamically compressing HTTP responses
         /// </summary>
         /// <param name="application">Builder for configuring an application's request pipeline</param>
-        public static void UseNI2SResponseCompression(this IEngineBuilder application)
+        public static void UseNI2SResponseCompression(this INodeEngineBuilder application)
         {
             //if (!DataSettingsManager.IsDatabaseInstalled())
             //    return;
@@ -185,10 +185,10 @@ namespace NI2S.Node.Infrastructure.Extensions
         }
 
         /// <summary>
-        /// Adds NodeOptimizer to the <see cref="IEngineBuilder"/> request execution pipeline
+        /// Adds NodeOptimizer to the <see cref="INodeEngineBuilder"/> request execution pipeline
         /// </summary>
         /// <param name="application">Builder for configuring an application's request pipeline</param>
-        public static void UseNI2SNodeOptimizer(this IEngineBuilder application)
+        public static void UseNI2SNodeOptimizer(this INodeEngineBuilder application)
         {
             //var fileProvider = EngineContext.Current.Resolve<INI2SFileProvider>();
             //var nodeHostEnvironment = EngineContext.Current.Resolve<INodeHostEnvironment>();
@@ -197,12 +197,12 @@ namespace NI2S.Node.Infrastructure.Extensions
             //{
             //    new FileProviderOptions
             //    {
-            //        RequestPath =  new PathString("/Plugins"),
+            //        MessagePath =  new PathString("/Plugins"),
             //        FileProvider = new PhysicalFileProvider(fileProvider.MapPath(@"Plugins"))
             //    },
             //    new FileProviderOptions
             //    {
-            //        RequestPath =  new PathString("/Themes"),
+            //        MessagePath =  new PathString("/Themes"),
             //        FileProvider = new PhysicalFileProvider(fileProvider.MapPath(@"Themes"))
             //    }
             //});
@@ -212,7 +212,7 @@ namespace NI2S.Node.Infrastructure.Extensions
         /// Configure static file serving
         /// </summary>
         /// <param name="application">Builder for configuring an application's request pipeline</param>
-        public static void UseNI2SStaticFiles(this IEngineBuilder application)
+        public static void UseNI2SStaticFiles(this INodeEngineBuilder application)
         {
             //var fileProvider = EngineContext.Current.Resolve<INI2SFileProvider>();
             //var appSettings = EngineContext.Current.Resolve<AppSettings>();
@@ -227,7 +227,7 @@ namespace NI2S.Node.Infrastructure.Extensions
             //application.UseStaticFiles(new StaticFileOptions
             //{
             //    FileProvider = new PhysicalFileProvider(fileProvider.GetAbsolutePath(NI2SSeoDefaults.SitemapXmlDirectory)),
-            //    RequestPath = new PathString($"/{NI2SSeoDefaults.SitemapXmlDirectory}"),
+            //    MessagePath = new PathString($"/{NI2SSeoDefaults.SitemapXmlDirectory}"),
             //    OnPrepareResponse = context =>
             //    {
             //        if (!DataSettingsManager.IsDatabaseInstalled() ||
@@ -247,7 +247,7 @@ namespace NI2S.Node.Infrastructure.Extensions
             //application.UseStaticFiles(new StaticFileOptions
             //{
             //    FileProvider = new PhysicalFileProvider(fileProvider.MapPath(@"Themes")),
-            //    RequestPath = new PathString("/Themes"),
+            //    MessagePath = new PathString("/Themes"),
             //    OnPrepareResponse = staticFileResponse
             //});
 
@@ -255,7 +255,7 @@ namespace NI2S.Node.Infrastructure.Extensions
             //var staticFileOptions = new StaticFileOptions
             //{
             //    FileProvider = new PhysicalFileProvider(fileProvider.MapPath(@"Plugins")),
-            //    RequestPath = new PathString("/Plugins"),
+            //    MessagePath = new PathString("/Plugins"),
             //    OnPrepareResponse = staticFileResponse
             //};
 
@@ -287,7 +287,7 @@ namespace NI2S.Node.Infrastructure.Extensions
             //application.UseStaticFiles(new StaticFileOptions
             //{
             //    FileProvider = new PhysicalFileProvider(fileProvider.GetAbsolutePath(NI2SCommonDefaults.DbBackupsPath)),
-            //    RequestPath = new PathString("/db_backups"),
+            //    MessagePath = new PathString("/db_backups"),
             //    ContentTypeProvider = provider,
             //    OnPrepareResponse = context =>
             //    {
@@ -307,7 +307,7 @@ namespace NI2S.Node.Infrastructure.Extensions
             //application.UseStaticFiles(new StaticFileOptions
             //{
             //    FileProvider = new PhysicalFileProvider(fileProvider.GetAbsolutePath("icons")),
-            //    RequestPath = "/icons",
+            //    MessagePath = "/icons",
             //    ContentTypeProvider = provider
             //});
 
@@ -316,7 +316,7 @@ namespace NI2S.Node.Infrastructure.Extensions
             //    application.UseStaticFiles(new StaticFileOptions
             //    {
             //        FileProvider = EngineContext.Current.Resolve<IRoxyFilemanFileProvider>(),
-            //        RequestPath = new PathString(NI2SRoxyFilemanDefaults.DefaultRootDirectory),
+            //        MessagePath = new PathString(NI2SRoxyFilemanDefaults.DefaultRootDirectory),
             //        OnPrepareResponse = staticFileResponse
             //    });
             //}
@@ -326,7 +326,7 @@ namespace NI2S.Node.Infrastructure.Extensions
             //    application.UseStaticFiles(new StaticFileOptions
             //    {
             //        FileProvider = new PhysicalFileProvider(fileProvider.GetAbsolutePath(".well-known")),
-            //        RequestPath = new PathString("/.well-known"),
+            //        MessagePath = new PathString("/.well-known"),
             //        ServeUnknownFileTypes = true,
             //    });
             //}
@@ -336,7 +336,7 @@ namespace NI2S.Node.Infrastructure.Extensions
         /// Configure middleware checking whether requested page is keep alive page
         /// </summary>
         /// <param name="application">Builder for configuring an application's request pipeline</param>
-        public static void UseKeepAlive(this IEngineBuilder application)
+        public static void UseKeepAlive(this INodeEngineBuilder application)
         {
             //application.UseMiddleware<KeepAliveMiddleware>();
         }
@@ -345,7 +345,7 @@ namespace NI2S.Node.Infrastructure.Extensions
         /// Configure middleware checking whether database is installed
         /// </summary>
         /// <param name="application">Builder for configuring an application's request pipeline</param>
-        public static void UseInstallUrl(this IEngineBuilder application)
+        public static void UseInstallUrl(this INodeEngineBuilder application)
         {
             //application.UseMiddleware<InstallUrlMiddleware>();
         }
@@ -354,7 +354,7 @@ namespace NI2S.Node.Infrastructure.Extensions
         /// Adds the authentication middleware, which enables authentication capabilities.
         /// </summary>
         /// <param name="application">Builder for configuring an application's request pipeline</param>
-        public static void UseNI2SAuthentication(this IEngineBuilder application)
+        public static void UseNI2SAuthentication(this INodeEngineBuilder application)
         {
             //check whether database is installed
             //if (!DataSettingsManager.IsDatabaseInstalled())
@@ -366,7 +366,7 @@ namespace NI2S.Node.Infrastructure.Extensions
         /// <summary>
         /// Configure PDF
         /// </summary>
-        public static void UseNI2SPdf(this IEngineBuilder _)
+        public static void UseNI2SPdf(this INodeEngineBuilder _)
         {
             //if (!DataSettingsManager.IsDatabaseInstalled())
             //    return;
@@ -387,9 +387,9 @@ namespace NI2S.Node.Infrastructure.Extensions
         /// Configure the request localization feature
         /// </summary>
         /// <param name="application">Builder for configuring an application's request pipeline</param>
-        public static void UseNI2SRequestLocalization(this IEngineBuilder application)
+        public static void UseNI2SMessageLocalization(this INodeEngineBuilder application)
         {
-            //application.UseRequestLocalization(options =>
+            //application.UseMessageLocalization(options =>
             //{
             //    if (!DataSettingsManager.IsDatabaseInstalled())
             //        return;
@@ -400,14 +400,14 @@ namespace NI2S.Node.Infrastructure.Extensions
             //        .Select(language => new CultureInfo(language.LanguageCulture)).ToList();
             //    options.SupportedCultures = cultures;
             //    options.SupportedUICultures = cultures;
-            //    options.DefaultRequestCulture = new RequestCulture(cultures.FirstOrDefault() ?? new CultureInfo(NI2SCommonDefaults.DefaultLanguageCulture));
+            //    options.DefaultMessageCulture = new MessageCulture(cultures.FirstOrDefault() ?? new CultureInfo(NI2SCommonDefaults.DefaultLanguageCulture));
             //    options.ApplyCurrentCultureToResponseHeaders = true;
 
             //    //configure culture providers
-            //    options.AddInitialRequestCultureProvider(new NI2SSeoUrlCultureProvider());
-            //    var cookieRequestCultureProvider = options.RequestCultureProviders.OfType<CookieRequestCultureProvider>().FirstOrDefault();
-            //    if (cookieRequestCultureProvider is not null)
-            //        cookieRequestCultureProvider.CookieName = $"{NI2SCookieDefaults.Prefix}{NI2SCookieDefaults.CultureCookie}";
+            //    options.AddInitialMessageCultureProvider(new NI2SSeoUrlCultureProvider());
+            //    var cookieMessageCultureProvider = options.MessageCultureProviders.OfType<CookieMessageCultureProvider>().FirstOrDefault();
+            //    if (cookieMessageCultureProvider is not null)
+            //        cookieMessageCultureProvider.CookieName = $"{NI2SCookieDefaults.Prefix}{NI2SCookieDefaults.CultureCookie}";
             //});
         }
 
@@ -415,7 +415,7 @@ namespace NI2S.Node.Infrastructure.Extensions
         /// Configure Endpoints routing
         /// </summary>
         /// <param name="application">Builder for configuring an application's request pipeline</param>
-        public static void UseNI2SEndpoints(this IEngineBuilder application)
+        public static void UseNI2SEndpoints(this INodeEngineBuilder application)
         {
             //Execute the endpoint selected by the routing middleware
             //application.UseEndpoints(endpoints =>
@@ -429,7 +429,7 @@ namespace NI2S.Node.Infrastructure.Extensions
         /// Configure applying forwarded headers to their matching fields on the current request.
         /// </summary>
         /// <param name="application">Builder for configuring an application's request pipeline</param>
-        public static void UseNI2SProxy(this IEngineBuilder application)
+        public static void UseNI2SProxy(this INodeEngineBuilder application)
         {
             //var appSettings = EngineContext.Current.Resolve<AppSettings>();
 
@@ -470,7 +470,7 @@ namespace NI2S.Node.Infrastructure.Extensions
         /// Configure NodeMarkupMin
         /// </summary>
         /// <param name="application">Builder for configuring an application's request pipeline</param>
-        public static void UseNI2SNodeMarkupMin(this IEngineBuilder application)
+        public static void UseNI2SNodeMarkupMin(this INodeEngineBuilder application)
         {
             //check whether database is installed
             //if (!DataSettingsManager.IsDatabaseInstalled())

@@ -1,16 +1,17 @@
-﻿using System;
+﻿// Copyrigth (c) 2023 Alternate Reality Worlds. Narrative Interactive Intelligent Simulator.
+
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace NI2S.Engine
+namespace NI2S.Node.Engine
 {
-    public class ModuleLoader
+    internal class ModuleLoader
     {
         /// <summary>
         /// Get plugin descriptors
         /// </summary>
         /// <typeparam name="TModule">The type of plugins to get</typeparam>
-        /// <param name="loadMode">Filter by load plugins mode</param>
         /// <param name="customer">Filter by  customer; pass null to load all records</param>
         /// <param name="storeId">Filter by store; pass 0 to load all records</param>
         /// <param name="group">Filter by plugin group; pass null to load all records</param>
@@ -21,7 +22,7 @@ namespace NI2S.Engine
         /// A task that represents the asynchronous operation
         /// The task result contains the plugin descriptors
         /// </returns>
-        public Task<IList<ModuleInfo>> GetModuleDescriptorsAsync<TModule>(LoadModulesMode loadMode = LoadModulesMode.InstalledOnly,
+        public Task<IList<ModuleInfo>> GetModuleDescriptorsAsync<TModule>(/*LoadModulesMode loadMode = LoadModulesMode.InstalledOnly,*/
             string group = null, string dependsOnSystemName = "", string friendlyName = null, string author = null) where TModule : class, IEngineModule
         {
             throw new NotImplementedException();
@@ -32,7 +33,6 @@ namespace NI2S.Engine
         /// </summary>
         /// <typeparam name="TModule">The type of plugin to get</typeparam>
         /// <param name="systemName">Module system name</param>
-        /// <param name="loadMode">Load plugins mode</param>
         /// <param name="customer">Filter by  customer; pass null to load all records</param>
         /// <param name="storeId">Filter by store; pass 0 to load all records</param>
         /// <param name="group">Filter by plugin group; pass null to load all records</param>
@@ -41,7 +41,7 @@ namespace NI2S.Engine
         /// The task result contains the >Module descriptor
         /// </returns>
         public Task<ModuleInfo> GetModuleDescriptorBySystemNameAsync<TModule>(string systemName,
-            LoadModulesMode loadMode = LoadModulesMode.InstalledOnly,
+            /*LoadModulesMode loadMode = LoadModulesMode.InstalledOnly,*/
             string group = null) where TModule : class, IEngineModule
         {
             throw new NotImplementedException();
@@ -51,7 +51,6 @@ namespace NI2S.Engine
         /// Get plugins
         /// </summary>
         /// <typeparam name="TModule">The type of plugins to get</typeparam>
-        /// <param name="loadMode">Filter by load plugins mode</param>
         /// <param name="customer">Filter by  customer; pass null to load all records</param>
         /// <param name="storeId">Filter by store; pass 0 to load all records</param>
         /// <param name="group">Filter by plugin group; pass null to load all records</param>
@@ -59,7 +58,7 @@ namespace NI2S.Engine
         /// A task that represents the asynchronous operation
         /// The task result contains the plugins
         /// </returns>
-        public Task<IList<TModule>> GetModulesAsync<TModule>(LoadModulesMode loadMode = LoadModulesMode.InstalledOnly,
+        public Task<IList<TModule>> GetModulesAsync<TModule>(/*LoadModulesMode loadMode = LoadModulesMode.InstalledOnly,*/
             string group = null) where TModule : class, IEngineModule
         {
             throw new NotImplementedException();
@@ -185,7 +184,7 @@ namespace NI2S.Engine
         /// Get names of incompatible plugins
         /// </summary>
         /// <returns>List of plugin names</returns>
-        public IDictionary<string, ModuleIncompatibleType> GetIncompatibleModules()
+        public IDictionary<string, IncompatibilityType> GetIncompatibleModules()
         {
             throw new NotImplementedException();
         }

@@ -22,7 +22,7 @@ namespace NI2S.Node.Core.Infrastructure
         /// Configure the using of added middleware
         /// </summary>
         /// <param name="engine">Builder for configuring a NI2S node engine.</param>
-        void Configure(IEngineBuilder engine);
+        void Configure(INodeEngineBuilder engine);
 
         /// <summary>
         /// Gets order of this startup configuration implementation

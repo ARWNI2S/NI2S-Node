@@ -1,6 +1,8 @@
 ﻿// Copyrigth (c) 2023 Alternate Reality Worlds. Narrative Interactive Intelligent Simulator.
 
+using Autofac.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 using NI2S.Node.Core.Configuration;
 using NI2S.Node.Core.Infrastructure;
 using NI2S.Node.Hosting;
@@ -17,10 +19,10 @@ namespace NI2S.Node
     {
         public static void Run(string[] args)
         {
-            NodeEngine nodeEngine = CreateDefaultNodeEngineBuilder(args).Build();
+            NodeEngineHost nodeEngine = CreateDefaultNodeEngineBuilder(args).Build();
 
             //configure the application HTTP request pipeline
-            nodeEngine.ConfigureRequestPipeline();
+            nodeEngine.ConfigureMessagePipeline();
             nodeEngine.StartEngine();
 
             nodeEngine.Run();
@@ -30,24 +32,23 @@ namespace NI2S.Node
 
         public static async Task RunAsync(string[] args)
         {
-            NodeEngine nodeEngine = CreateDefaultNodeEngineBuilder(args).Build();
+            NodeEngineHost nodeEngine = CreateDefaultNodeEngineBuilder(args).Build();
 
             //configure the application HTTP request pipeline
-            nodeEngine.ConfigureRequestPipeline();
+            nodeEngine.ConfigureMessagePipeline();
             await nodeEngine.StartEngineAsync();
 
             await nodeEngine.RunAsync();
         }
 
-        private static NodeEngineBuilder CreateNodeEngineBuilder(string[] args)
+        private static NodeEngineHostBuilder CreateNodeEngineBuilder(string[] args)
         {
-            return NodeEngine.CreateBuilder(args);
+            return NodeEngineHost.CreateBuilder(args);
         }
 
-        private static NodeEngineBuilder CreateDefaultNodeEngineBuilder(string[] args) => ConfigureNodeEngineBuilder(CreateNodeEngineBuilder(args));
+        private static NodeEngineHostBuilder CreateDefaultNodeEngineBuilder(string[] args) => ConfigureNodeEngineBuilder(CreateNodeEngineBuilder(args));
 
-        /* 040 */
-        private static NodeEngineBuilder ConfigureNodeEngineBuilder(NodeEngineBuilder builder)
+        private static NodeEngineHostBuilder ConfigureNodeEngineBuilder(NodeEngineHostBuilder builder)
         {
             builder.Configuration.AddJsonFile(ConfigurationDefaults.NodeSettingsFilePath, true, true);
             if (!string.IsNullOrEmpty(builder.Environment?.EnvironmentName))
@@ -63,16 +64,16 @@ namespace NI2S.Node
             var appSettings = Singleton<NodeSettings>.Instance;
             var useAutofac = appSettings.Get<CommonConfig>().UseAutofac;
 
-            //if (useAutofac)
-            //    builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
-            //else
-            //    builder.Host.UseDefaultServiceProvider(options =>
-            //    {
-            //        //we don't validate the scopes, since at the app start and the initial configuration we need 
-            //        //to resolve some services (registered as "scoped") through the root container
-            //        options.ValidateScopes = false;
-            //        options.ValidateOnBuild = true;
-            //    });
+            if (useAutofac)
+                builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
+            else
+                builder.Host.UseDefaultServiceProvider(options =>
+                {
+                    //we don't validate the scopes, since at the app start and the initial configuration we need 
+                    //to resolve some services (registered as "scoped") through the root container
+                    options.ValidateScopes = false;
+                    options.ValidateOnBuild = true;
+                });
 
             //add services to the application and configure service provider
             builder.Services.ConfigureEngineServices(builder);

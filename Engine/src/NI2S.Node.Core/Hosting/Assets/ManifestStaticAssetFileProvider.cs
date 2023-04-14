@@ -1,4 +1,6 @@
-﻿#nullable enable
+﻿// Copyrigth (c) 2023 Alternate Reality Worlds. Narrative Interactive Intelligent Simulator.
+
+#nullable enable
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.FileSystemGlobbing;
 using Microsoft.Extensions.Primitives;
@@ -7,15 +9,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace NI2S.Node.Hosting
 {
-internal sealed partial class ManifestStaticAssetFileProvider : IFileProvider
+    internal sealed partial class ManifestStaticAssetFileProvider : IFileProvider
     {
         private static readonly StringComparison _fsComparison = OperatingSystem.IsWindows() ?
             StringComparison.OrdinalIgnoreCase :

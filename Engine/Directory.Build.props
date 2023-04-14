@@ -30,7 +30,7 @@
   <!-- Set common properties regarding assembly information -->
   <PropertyGroup>
     <LangVersion>11</LangVersion>
-    <Features>strict</Features>
+    <Modules>strict</Modules>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <!-- Authoring and Copyright -->
     <Authors>ManOguaR and contributors</Authors>

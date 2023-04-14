@@ -1,6 +1,5 @@
 ﻿// Copyrigth (c) 2023 Alternate Reality Worlds. Narrative Interactive Intelligent Simulator.
 
-using NI2S.Node.Core.Infrastructure;
 using NI2S.Node.Hosting;
 using System.Threading.Tasks;
 
@@ -11,9 +10,9 @@ namespace NI2S.Node.Infrastructure.Extensions
     /// </summary>
     public static class NodeEngineExtensions
     {
-        public static async Task StartEngineAsync(this NodeEngine _)
+        public static async Task StartEngineAsync(this NodeEngineHost _)
         {
-            var engine = EngineContext.Current;
+            //var engine = EngineContext.Current;
 
             ////further actions are performed only when the database is installed
             //if (DataSettingsManager.IsDatabaseInstalled())

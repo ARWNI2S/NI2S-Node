@@ -2,7 +2,7 @@
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using NI2S.Engine;
+using NI2S.Node.Engine;
 using NI2S.Node.Hosting.Builder;
 
 namespace NI2S.Node.Core
@@ -13,7 +13,7 @@ namespace NI2S.Node.Core
         {
         }
 
-        public void Configure(IEngineBuilder engine)
+        public void Configure(INodeEngineBuilder engine)
         {
 
         }

@@ -3,7 +3,7 @@
 using NI2S.Node.Core;
 using System;
 
-namespace NI2S.Engine
+namespace NI2S.Node.Engine
 {
     public abstract class ModuleInfo : IDescriptor
     {

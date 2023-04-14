@@ -3,7 +3,7 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace NI2S.Node.Core.Configuration
+namespace NI2S.Node.Core
 {
     /// <summary>
     /// Represents errors that occur during application execution

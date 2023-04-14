@@ -1,215 +1,149 @@
 ﻿// Copyrigth (c) 2023 Alternate Reality Worlds. Narrative Interactive Intelligent Simulator.
 
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Internal;
+using NI2S.Node.Engine;
 using System;
 using System.Collections.Generic;
 
 namespace NI2S.Node.Hosting.Builder
 {
     /// <summary>
-    /// A builder for NI2S node engine hosting and services.
+    /// Default implementation for <see cref="INodeEngineBuilder"/>.
     /// </summary>
-    public sealed class NodeEngineBuilder
+    internal class NodeEngineBuilder : INodeEngineBuilder
     {
-        private readonly HostApplicationBuilder _hostApplicationBuilder;
-        private readonly ServiceDescriptor _genericNodeHostServiceDescriptor;
+        private const string EngineModulesKey = "engine.Modules";
+        private const string EngineServicesKey = "engine.Services";
 
-        private NodeEngine _builtNodeEngine;
+        //private readonly List<Func<INodeEngine, INodeEngine>> _components = new();
 
-        /* 001 */
-        internal NodeEngineBuilder(NodeEngineOptions options, Action<IHostBuilder> configureDefaults = null)
+        /// <summary>
+        /// Initializes a new instance of <see cref="NodeEngineBuilder"/>.
+        /// </summary>
+        /// <param name="serviceProvider">The <see cref="IServiceProvider"/> for application services.</param>
+        public NodeEngineBuilder(IServiceProvider serviceProvider) : this(serviceProvider, new ModuleCollection())
         {
-            var configuration = new ConfigurationManager();
+        }
 
-            configuration.AddEnvironmentVariables(prefix: "NI2S_");
+        /// <summary>
+        /// Initializes a new instance of <see cref="NodeEngineBuilder"/>.
+        /// </summary>
+        /// <param name="serviceProvider">The <see cref="IServiceProvider"/> for application services.</param>
+        /// <param name="server">The server instance that hosts the application.</param>
+        public NodeEngineBuilder(IServiceProvider serviceProvider, object server)
+        {
+            Properties = new Dictionary<string, object>(StringComparer.Ordinal);
+            EngineServices = serviceProvider;
 
-            _hostApplicationBuilder = new HostApplicationBuilder(new HostApplicationBuilderSettings
+            SetProperty(EngineModulesKey, server);
+        }
+
+        private NodeEngineBuilder(NodeEngineBuilder builder)
+        {
+            Properties = new CopyOnWriteDictionary<string, object>(builder.Properties, StringComparer.Ordinal);
+        }
+
+        /// <summary>
+        /// Gets the <see cref="IServiceProvider"/> for application services.
+        /// </summary>
+        public IServiceProvider EngineServices
+        {
+            get
             {
-                Args = options.Args,
-                ApplicationName = options.ApplicationName,
-                EnvironmentName = options.EnvironmentName,
-                ContentRootPath = options.ContentRootPath,
-                Configuration = configuration,
-            });
-
-            // Set NodeRootPath if necessary
-            if (options.NodeRootPath is not null)
-            {
-                Configuration.AddInMemoryCollection(new[]
-                {
-                    new KeyValuePair<string, string>(NodeHostDefaults.NodeRootKey, options.NodeRootPath),
-                });
+                return GetProperty<IServiceProvider>(EngineServicesKey)!;
             }
-
-            // Run methods to configure web host defaults early to populate services
-            var bootstrapHostBuilder = new BootstrapHostBuilder(_hostApplicationBuilder);
-
-            // This is for testing purposes
-            configureDefaults?.Invoke(bootstrapHostBuilder);
-
-            bootstrapHostBuilder.ConfigureNodeHostDefaults(nodeHostBuilder =>
+            set
             {
-                // Runs inline./* 014 */
-                nodeHostBuilder.Configure(ConfigureApplication);
+                SetProperty(EngineServicesKey, value);
+            }
+        }
 
-                nodeHostBuilder.UseSetting(NodeHostDefaults.ApplicationKey, _hostApplicationBuilder.Environment.ApplicationName ?? "");
-                nodeHostBuilder.UseSetting(NodeHostDefaults.PreventHostingStartupKey, Configuration[NodeHostDefaults.PreventHostingStartupKey]);
-                nodeHostBuilder.UseSetting(NodeHostDefaults.HostingStartupAssembliesKey, Configuration[NodeHostDefaults.HostingStartupAssembliesKey]);
-                nodeHostBuilder.UseSetting(NodeHostDefaults.HostingStartupExcludeAssembliesKey, Configuration[NodeHostDefaults.HostingStartupExcludeAssembliesKey]);
-            },
-            options =>
+        /// <summary>
+        /// Gets the <see cref="IModuleCollection"/> for server modules.
+        /// </summary>
+        /// <remarks>
+        /// An empty collection is returned if a server wasn't specified for the application builder.
+        /// </remarks>
+        public IModuleCollection EngineModules
+        {
+            get
             {
-                /* 005 */
-                // We've already applied "NI2S_" environment variables to hosting config
-                options.SuppressEnvironmentConfiguration = true;
-            });
-
-            // This applies the config from ConfigureNodeHostDefaults
-            // Grab the GenericNodeHostService ServiceDescriptor so we can append it after any user-added IHostedServices during Build();
-            _genericNodeHostServiceDescriptor = bootstrapHostBuilder.RunDefaultCallbacks();
-
-            // Grab the NodeHostBuilderContext from the property bag to use in the ConfigureNodeHostBuilder. Then
-            // grab the INodeHostEnvironment from the nodeHostContext. This also matches the instance in the IServiceCollection.
-            var nodeHostContext = (NodeHostBuilderContext)bootstrapHostBuilder.Properties[typeof(NodeHostBuilderContext)];
-            Environment = nodeHostContext.HostingEnvironment;
-
-            Host = new ConfigureHostBuilder(bootstrapHostBuilder.Context, Configuration, Services);
-            NodeHost = new ConfigureNodeHostBuilder(nodeHostContext, Configuration, Services);
+                return GetProperty<IModuleCollection>(EngineModulesKey)!;
+            }
         }
 
         /// <summary>
-        /// A collection of services for the application to compose. This is useful for adding user provided or framework provided services.
+        /// Gets a set of properties for <see cref="NodeEngineBuilder"/>.
         /// </summary>
-        public ConfigurationManager Configuration => _hostApplicationBuilder.Configuration;
+        public IDictionary<string, object> Properties { get; }
 
-        /// <summary>
-        /// A collection of services for the application to compose. This is useful for adding user provided or framework provided services.
-        /// </summary>
-        public IServiceCollection Services => _hostApplicationBuilder.Services;
-
-        /// <summary>
-        /// Provides information about the hosting environment an application is running in.
-        /// </summary>
-        public INodeHostEnvironment Environment { get; }
-
-        /// <summary>
-        /// A collection of logging providers for the application to compose. This is useful for adding new logging providers.
-        /// </summary>
-        public ILoggingBuilder Logging => _hostApplicationBuilder.Logging;
-
-        /// <summary>
-        /// Builds the <see cref="NodeEngine"/>.
-        /// </summary>
-        /// <returns>A configured <see cref="NodeEngine"/>.</returns>
-        public NodeEngine Build()
+        private T GetProperty<T>(string key)
         {
-            // ConfigureContainer callbacks run after ConfigureServices callbacks including the one that adds GenericNodeHostService by default.
-            // One nice side effect is this gives a way to configure an IHostedService that starts after the server and stops beforehand.
-            _hostApplicationBuilder.Services.Add(_genericNodeHostServiceDescriptor);
-            Host.ApplyServiceProviderFactory(_hostApplicationBuilder);
-            _builtNodeEngine = new NodeEngine(_hostApplicationBuilder.Build());
-            return _builtNodeEngine;
+            return Properties.TryGetValue(key, out var value) ? (T)value : default;
         }
 
-        public ConfigureHostBuilder Host { get; }
-        public ConfigureNodeHostBuilder NodeHost { get; }
-
-        private void ConfigureApplication(NodeHostBuilderContext context, IEngineBuilder engine)
+        private void SetProperty<T>(string key, T value)
         {
-            //Debug.Assert(_builtNodeEngineHost is not null);
-
-            //// UseRouting called before WebApplication such as in a StartupFilter
-            //// lets remove the property and reset it at the end so we don't mess with the routes in the filter
-            //if (engine.Properties.TryGetValue(EndpointRouteBuilderKey, out var priorRouteBuilder))
-            //{
-            //    engine.Properties.Remove(EndpointRouteBuilderKey);
-            //}
-
-            //if (context.HostingEnvironment.IsDevelopment())
-            //{
-            //    engine.UseDeveloperExceptionPage();
-            //}
-
-            //// Wrap the entire destination pipeline in UseRouting() and UseEndpoints(), essentially:
-            //// destination.UseRouting()
-            //// destination.Run(source)
-            //// destination.UseEndpoints()
-
-            //// Set the route builder so that UseRouting will use the WebApplication as the IEndpointRouteBuilder for route matching
-            //engine.Properties.Add(WebApplication.GlobalEndpointRouteBuilderKey, _builtNodeEngineHost);
-
-            //// Only call UseRouting() if there are endpoints configured and UseRouting() wasn't called on the global route builder already
-            //if (_builtNodeEngineHost.DataSources.Count > 0)
-            //{
-            //    // If this is set, someone called UseRouting() when a global route builder was already set
-            //    if (!_builtNodeEngineHost.Properties.TryGetValue(EndpointRouteBuilderKey, out var localRouteBuilder))
-            //    {
-            //        engine.UseRouting();
-            //        // Middleware the needs to re-route will use this property to call UseRouting()
-            //        _builtNodeEngineHost.Properties[UseRoutingKey] = engine.Properties[UseRoutingKey];
-            //    }
-            //    else
-            //    {
-            //        // UseEndpoints will be looking for the RouteBuilder so make sure it's set
-            //        engine.Properties[EndpointRouteBuilderKey] = localRouteBuilder;
-            //    }
-            //}
-
-            //// Process authorization and authentication middlewares independently to avoid
-            //// registering middlewares for services that do not exist
-            //var serviceProviderIsService = _builtNodeEngineHost.Services.GetService<IServiceProviderIsService>();
-            //if (serviceProviderIsService?.IsService(typeof(IAuthenticationSchemeProvider)) is true)
-            //{
-            //    // Don't add more than one instance of the middleware
-            //    if (!_builtNodeEngineHost.Properties.ContainsKey(AuthenticationMiddlewareSetKey))
-            //    {
-            //        // The Use invocations will set the property on the outer pipeline,
-            //        // but we want to set it on the inner pipeline as well.
-            //        _builtNodeEngineHost.Properties[AuthenticationMiddlewareSetKey] = true;
-            //        engine.UseAuthentication();
-            //    }
-            //}
-
-            //if (serviceProviderIsService?.IsService(typeof(IAuthorizationHandlerProvider)) is true)
-            //{
-            //    if (!_builtNodeEngineHost.Properties.ContainsKey(AuthorizationMiddlewareSetKey))
-            //    {
-            //        _builtNodeEngineHost.Properties[AuthorizationMiddlewareSetKey] = true;
-            //        engine.UseAuthorization();
-            //    }
-            //}
-
-            //// Wire the source pipeline to run in the destination pipeline
-            //engine.Use(next =>
-            //{
-            //    _builtNodeEngineHost.Run(next);
-            //    return _builtNodeEngineHost.BuildRequestDelegate();
-            //});
-
-            //if (_builtNodeEngineHost.DataSources.Count > 0)
-            //{
-            //    // We don't know if user code called UseEndpoints(), so we will call it just in case, UseEndpoints() will ignore duplicate DataSources
-            //    engine.UseEndpoints(_ => { });
-            //}
-
-            //// Copy the properties to the destination app builder
-            //foreach (var item in _builtNodeEngineHost.Properties)
-            //{
-            //    engine.Properties[item.Key] = item.Value;
-            //}
-
-            //// Remove the route builder to clean up the properties, we're done adding routes to the pipeline
-            //engine.Properties.Remove(WebApplication.GlobalEndpointRouteBuilderKey);
-
-            //// reset route builder if it existed, this is needed for StartupFilters
-            //if (priorRouteBuilder is not null)
-            //{
-            //    engine.Properties[EndpointRouteBuilderKey] = priorRouteBuilder;
-            //}
+            Properties[key] = value;
         }
 
+        /// <summary>
+        /// Adds the middleware to the application request pipeline.
+        /// </summary>
+        /// <param name="middleware">The middleware.</param>
+        /// <returns>An instance of <see cref="INodeEngineBuilder"/> after the operation has completed.</returns>
+        //public IEngineBuilder Use(Func<INodeEngine, INodeEngine> middleware)
+        //{
+        //    _components.Add(middleware);
+        //    return this;
+        //}
+
+        /// <summary>
+        /// Creates a copy of this application builder.
+        /// <para>
+        /// The created clone has the same properties as the current instance, but does not copy
+        /// the request pipeline.
+        /// </para>
+        /// </summary>
+        /// <returns>The cloned instance.</returns>
+        public INodeEngineBuilder New()
+        {
+            return new NodeEngineBuilder(this);
+        }
+
+        /// <summary>
+        /// Produces a <see cref="INodeEngine"/> that executes added middlewares.
+        /// </summary>
+        /// <returns>The <see cref="INodeEngine"/>.</returns>
+        public INodeEngine Build()
+        {
+            //TODO: BUILD NODE ENGINE
+            //INodeEngine app = context =>
+            //{
+            //    // If we reach the end of the pipeline, but we have an endpoint, then something unexpected has happened.
+            //    // This could happen if user code sets an endpoint, but they forgot to add the UseEndpoint middleware.
+            //    var endpoint = context.GetEndpoint();
+            //    var endpointMessageDelegate = endpoint?.INodeEngine;
+            //    if (endpointMessageDelegate != null)
+            //    {
+            //        var message =
+            //            $"The request reached the end of the pipeline without executing the endpoint: '{endpoint!.DisplayName}'. " +
+            //            $"Please register the EndpointMiddleware using '{nameof(IEngineBuilder)}.UseEndpoints(...)' if using " +
+            //            $"routing.";
+            //        throw new InvalidOperationException(message);
+            //    }
+
+            //    context.Response.StatusCode = StatusCodes.Status404NotFound;
+            //    return Task.CompletedTask;
+            //};
+
+            //for (var c = _components.Count - 1; c >= 0; c--)
+            //{
+            //    app = _components[c](app);
+            //}
+
+            //return app;
+            return null;
+        }
     }
 }

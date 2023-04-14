@@ -1,8 +1,11 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿// Copyrigth (c) 2023 Alternate Reality Worlds. Narrative Interactive Intelligent Simulator.
+
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NI2S.Node.Core;
 using NI2S.Node.Core.Configuration;
 using NI2S.Node.Core.Infrastructure;
+using NI2S.Node.Engine;
 using NI2S.Node.Hosting.Builder;
 using System;
 using System.Linq;
@@ -20,9 +23,8 @@ namespace NI2S.Node.Infrastructure.Extensions
         /// </summary>
         /// <param name="services">Collection of service descriptors</param>
         /// <param name="builder">A builder for node engine and services</param>
-        /* 041 */
         public static void ConfigureEngineSettings(this IServiceCollection services,
-            NodeEngineBuilder builder)
+            NodeEngineHostBuilder builder)
         {
             //let the operating system decide what TLS protocol version to use
             //see dummys://docs.microsoft.com/dotnet/framework/network-programming/tls
@@ -54,21 +56,20 @@ namespace NI2S.Node.Infrastructure.Extensions
         /// </summary>
         /// <param name="services">Collection of service descriptors</param>
         /// <param name="builder">A builder for node engine and services</param>
-        /* 050 */
         public static void ConfigureEngineServices(this IServiceCollection services,
-            NodeEngineBuilder builder)
+            NodeEngineHostBuilder builder)
         {
             //add accessor to DummyContext
-            services.AddDummyContextAccessor();
+            services.AddNodeContextAccessor();
 
             //initialize plugins
             //var mvcCoreBuilder = services.AddMvcCore();
-            var pluginConfig = new PluginConfig();
-            builder.Configuration.GetSection(nameof(PluginConfig)).Bind(pluginConfig, options => options.BindNonPublicProperties = true);
+            //var pluginConfig = new PluginConfig();
+            //builder.Configuration.GetSection(nameof(PluginConfig)).Bind(pluginConfig, options => options.BindNonPublicProperties = true);
             //mvcCoreBuilder.PartManager.InitializePlugins(pluginConfig);
 
             //create engine and configure service provider
-            var engine = EngineContext.Create();
+            var engine = Core.Infrastructure.EngineContext.Create();
 
             engine.ConfigureServices(services, builder.Configuration);
         }
@@ -77,9 +78,9 @@ namespace NI2S.Node.Infrastructure.Extensions
         /// Register DummyContextAccessor
         /// </summary>
         /// <param name="services">Collection of service descriptors</param>
-        public static void AddDummyContextAccessor(this IServiceCollection services)
+        public static void AddNodeContextAccessor(this IServiceCollection services)
         {
-            //services.AddSingleton<IDummyContextAccessor, DummyContextAccessor>();
+            services.AddSingleton<IEngineContextAccessor, NodeContextAccessor>();
         }
 
         /// <summary>
@@ -92,7 +93,7 @@ namespace NI2S.Node.Infrastructure.Extensions
         //    services.AddAntiforgery(options =>
         //    {
         //        options.Cookie.Name = $"{NI2SCookieDefaults.Prefix}{NI2SCookieDefaults.AntiforgeryCookie}";
-        //        options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
+        //        options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsMessage;
         //    });
         //}
 
@@ -106,7 +107,7 @@ namespace NI2S.Node.Infrastructure.Extensions
         //    {
         //        options.Cookie.Name = $"{NI2SCookieDefaults.Prefix}{NI2SCookieDefaults.SessionCookie}";
         //        options.Cookie.DummyOnly = true;
-        //        options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
+        //        options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsMessage;
         //    });
         //}
 
@@ -224,7 +225,7 @@ namespace NI2S.Node.Infrastructure.Extensions
         //    {
         //        options.Cookie.Name = $"{NI2SCookieDefaults.Prefix}{NI2SCookieDefaults.AuthenticationCookie}";
         //        options.Cookie.DummyOnly = true;
-        //        options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
+        //        options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsMessage;
         //        options.LoginPath = NI2SAuthenticationDefaults.LoginPath;
         //        options.AccessDeniedPath = NI2SAuthenticationDefaults.AccessDeniedPath;
         //    });
@@ -234,7 +235,7 @@ namespace NI2S.Node.Infrastructure.Extensions
         //    {
         //        options.Cookie.Name = $"{NI2SCookieDefaults.Prefix}{NI2SCookieDefaults.ExternalAuthenticationCookie}";
         //        options.Cookie.DummyOnly = true;
-        //        options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
+        //        options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsMessage;
         //        options.LoginPath = NI2SAuthenticationDefaults.LoginPath;
         //        options.AccessDeniedPath = NI2SAuthenticationDefaults.AccessDeniedPath;
         //    });
@@ -273,7 +274,7 @@ namespace NI2S.Node.Infrastructure.Extensions
         //        mvcBuilder.AddCookieTempDataProvider(options =>
         //        {
         //            options.Cookie.Name = $"{NI2SCookieDefaults.Prefix}{NI2SCookieDefaults.TempDataCookie}";
-        //            options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
+        //            options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsMessage;
         //        });
         //    }
 
