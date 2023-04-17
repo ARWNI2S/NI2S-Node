@@ -1,5 +1,11 @@
 ﻿// Copyrigth (c) 2023 Alternate Reality Worlds. Narrative Interactive Intelligent Simulator.
 
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using NI2S.Node.Engine;
 using System;
 
 namespace NI2S.Node.Core
@@ -121,7 +127,7 @@ namespace NI2S.Node.Core
         /// Provides a configuration source where endpoints will be loaded from on server start.
         /// The default is <see langword="null"/>.
         /// </summary>
-        //public NodeEngineConfigurationLoader ConfigurationLoader { get; set; }
+        public NodeEngineConfigurationLoader ConfigurationLoader { get; set; }
 
         //    /// <summary>
         //    /// A default configuration action for all endpoints. Use for Listen, configuration, the default url, and URLs.
@@ -313,7 +319,7 @@ namespace NI2S.Node.Core
         /// Creates a configuration loader for setting up Kestrel.
         /// </summary>
         /// <returns>A <see cref="NodeEngineConfigurationLoader"/> for configuring endpoints.</returns>
-        //public NodeEngineConfigurationLoader Configure() => Configure(new ConfigurationBuilder().Build());
+        public NodeEngineConfigurationLoader Configure() => Configure(new ConfigurationBuilder().Build());
 
         /// <summary>
         /// Creates a configuration loader for setting up Kestrel that takes an <see cref="IConfiguration"/> as input.
@@ -322,7 +328,7 @@ namespace NI2S.Node.Core
         /// </summary>
         /// <param name="config">The configuration section for Kestrel.</param>
         /// <returns>A <see cref="NodeEngineConfigurationLoader"/> for further endpoint configuration.</returns>
-        //public NodeEngineConfigurationLoader Configure(IConfiguration config) => Configure(config, reloadOnChange: false);
+        public NodeEngineConfigurationLoader Configure(IConfiguration config) => Configure(config, reloadOnChange: false);
 
         /// <summary>
         /// Creates a configuration loader for setting up Kestrel that takes an <see cref="IConfiguration"/> as input.
@@ -334,193 +340,192 @@ namespace NI2S.Node.Core
         /// This will only reload endpoints defined in the "Endpoints" section of your <paramref name="config"/>. Endpoints defined in code will not be reloaded.
         /// </param>
         /// <returns>A <see cref="NodeEngineConfigurationLoader"/> for further endpoint configuration.</returns>
-        //public NodeEngineConfigurationLoader Configure(IConfiguration config, bool reloadOnChange)
+        public NodeEngineConfigurationLoader Configure(IConfiguration config, bool reloadOnChange)
+        {
+            if (EngineServices is null)
+            {
+                throw new InvalidOperationException($"{nameof(EngineServices)} must not be null. This is normally set automatically via {nameof(IConfigureOptions<NodeEngineOptions>)}.");
+            }
+
+            var hostEnvironment = EngineServices.GetRequiredService<IHostEnvironment>();
+            var logger = EngineServices.GetRequiredService<ILogger<INodeEngine>>();
+            var moduleLogger = EngineServices.GetRequiredService<ILogger<IEngineModuleManager>>();
+
+            var loader = new NodeEngineConfigurationLoader(this, config, hostEnvironment, reloadOnChange, logger, moduleLogger);
+            ConfigurationLoader = loader;
+            return loader;
+        }
+
+        /// <summary>
+        /// Bind to given IP address and port.
+        /// </summary>
+        //public void Listen(IPAddress address, int port)
         //{
-        //    if (EngineServices is null)
-        //    {
-        //        throw new InvalidOperationException($"{nameof(EngineServices)} must not be null. This is normally set automatically via {nameof(IConfigureOptions<NodeEngineOptions>)}.");
-        //    }
-
-        //    var hostEnvironment = EngineServices.GetRequiredService<IHostEnvironment>();
-        //    var logger = EngineServices.GetRequiredService<ILogger<KestrelServer>>();
-        //    var httpsLogger = EngineServices.GetRequiredService<ILogger<HttpsConnectionMiddleware>>();
-
-        //    var loader = new NodeEngineConfigurationLoader(this, config, hostEnvironment, reloadOnChange, logger, httpsLogger);
-        //    ConfigurationLoader = loader;
-        //    return loader;
+        //    Listen(address, port, _ => { });
         //}
 
-        //    /// <summary>
-        //    /// Bind to given IP address and port.
-        //    /// </summary>
-        //    public void Listen(IPAddress address, int port)
+        /// <summary>
+        /// Bind to given IP address and port.
+        /// The callback configures endpoint-specific settings.
+        /// </summary>
+        //public void Listen(IPAddress address, int port, Action<ListenOptions> configure)
+        //{
+        //    if (address == null)
         //    {
-        //        Listen(address, port, _ => { });
+        //        throw new ArgumentNullException(nameof(address));
         //    }
 
-        //    /// <summary>
-        //    /// Bind to given IP address and port.
-        //    /// The callback configures endpoint-specific settings.
-        //    /// </summary>
-        //    public void Listen(IPAddress address, int port, Action<ListenOptions> configure)
-        //    {
-        //        if (address == null)
-        //        {
-        //            throw new ArgumentNullException(nameof(address));
-        //        }
+        //    Listen(new IPEndPoint(address, port), configure);
+        //}
 
-        //        Listen(new IPEndPoint(address, port), configure);
+        /// <summary>
+        /// Bind to the given IP endpoint.
+        /// </summary>
+        //public void Listen(IPEndPoint endPoint)
+        //{
+        //    Listen((EndPoint)endPoint);
+        //}
+
+        /// <summary>
+        /// Bind to the given endpoint.
+        /// </summary>
+        /// <param name="endPoint"></param>
+        //public void Listen(EndPoint endPoint)
+        //{
+        //    Listen(endPoint, _ => { });
+        //}
+
+        /// <summary>
+        /// Bind to given IP address and port.
+        /// The callback configures endpoint-specific settings.
+        /// </summary>
+        //public void Listen(IPEndPoint endPoint, Action<ListenOptions> configure)
+        //{
+        //    Listen((EndPoint)endPoint, configure);
+        //}
+
+        /// <summary>
+        /// Bind to the given endpoint.
+        /// The callback configures endpoint-specific settings.
+        /// </summary>
+        //public void Listen(EndPoint endPoint, Action<ListenOptions> configure)
+        //{
+        //    if (endPoint == null)
+        //    {
+        //        throw new ArgumentNullException(nameof(endPoint));
+        //    }
+        //    if (configure == null)
+        //    {
+        //        throw new ArgumentNullException(nameof(configure));
         //    }
 
-        //    /// <summary>
-        //    /// Bind to the given IP endpoint.
-        //    /// </summary>
-        //    public void Listen(IPEndPoint endPoint)
+        //    var listenOptions = new ListenOptions(endPoint);
+        //    ApplyEndpointDefaults(listenOptions);
+        //    configure(listenOptions);
+        //    CodeBackedListenOptions.Add(listenOptions);
+        //}
+
+        /// <summary>
+        /// Listens on ::1 and 127.0.0.1 with the given port. Requesting a dynamic port by specifying 0 is not supported
+        /// for this type of endpoint.
+        /// </summary>
+        //public void ListenLocalhost(int port) => ListenLocalhost(port, options => { });
+
+        /// <summary>
+        /// Listens on ::1 and 127.0.0.1 with the given port. Requesting a dynamic port by specifying 0 is not supported
+        /// for this type of endpoint.
+        /// </summary>
+        //public void ListenLocalhost(int port, Action<ListenOptions> configure)
+        //{
+        //    if (configure == null)
         //    {
-        //        Listen((EndPoint)endPoint);
+        //        throw new ArgumentNullException(nameof(configure));
         //    }
 
-        //    /// <summary>
-        //    /// Bind to the given endpoint.
-        //    /// </summary>
-        //    /// <param name="endPoint"></param>
-        //    public void Listen(EndPoint endPoint)
+        //    var listenOptions = new LocalhostListenOptions(port);
+        //    ApplyEndpointDefaults(listenOptions);
+        //    configure(listenOptions);
+        //    CodeBackedListenOptions.Add(listenOptions);
+        //}
+
+        /// <summary>
+        /// Listens on all IPs using IPv6 [::], or IPv4 0.0.0.0 if IPv6 is not supported.
+        /// </summary>
+        //public void ListenAnyIP(int port) => ListenAnyIP(port, options => { });
+
+        /// <summary>
+        /// Listens on all IPs using IPv6 [::], or IPv4 0.0.0.0 if IPv6 is not supported.
+        /// </summary>
+        //public void ListenAnyIP(int port, Action<ListenOptions> configure)
+        //{
+        //    if (configure == null)
         //    {
-        //        Listen(endPoint, _ => { });
+        //        throw new ArgumentNullException(nameof(configure));
         //    }
 
-        //    /// <summary>
-        //    /// Bind to given IP address and port.
-        //    /// The callback configures endpoint-specific settings.
-        //    /// </summary>
-        //    public void Listen(IPEndPoint endPoint, Action<ListenOptions> configure)
+        //    var listenOptions = new AnyIPListenOptions(port);
+        //    ApplyEndpointDefaults(listenOptions);
+        //    configure(listenOptions);
+        //    CodeBackedListenOptions.Add(listenOptions);
+        //}
+
+        /// <summary>
+        /// Bind to given Unix domain socket path.
+        /// </summary>
+        //public void ListenUnixSocket(string socketPath)
+        //{
+        //    ListenUnixSocket(socketPath, _ => { });
+        //}
+
+        /// <summary>
+        /// Bind to given Unix domain socket path.
+        /// Specify callback to configure endpoint-specific settings.
+        /// </summary>
+        //public void ListenUnixSocket(string socketPath, Action<ListenOptions> configure)
+        //{
+        //    if (socketPath == null)
         //    {
-        //        Listen((EndPoint)endPoint, configure);
+        //        throw new ArgumentNullException(nameof(socketPath));
         //    }
 
-        //    /// <summary>
-        //    /// Bind to the given endpoint.
-        //    /// The callback configures endpoint-specific settings.
-        //    /// </summary>
-        //    public void Listen(EndPoint endPoint, Action<ListenOptions> configure)
+        //    if (!Path.IsPathRooted(socketPath))
         //    {
-        //        if (endPoint == null)
-        //        {
-        //            throw new ArgumentNullException(nameof(endPoint));
-        //        }
-        //        if (configure == null)
-        //        {
-        //            throw new ArgumentNullException(nameof(configure));
-        //        }
-
-        //        var listenOptions = new ListenOptions(endPoint);
-        //        ApplyEndpointDefaults(listenOptions);
-        //        configure(listenOptions);
-        //        CodeBackedListenOptions.Add(listenOptions);
+        //        throw new ArgumentException(CoreStrings.UnixSocketPathMustBeAbsolute, nameof(socketPath));
+        //    }
+        //    if (configure == null)
+        //    {
+        //        throw new ArgumentNullException(nameof(configure));
         //    }
 
-        //    /// <summary>
-        //    /// Listens on ::1 and 127.0.0.1 with the given port. Requesting a dynamic port by specifying 0 is not supported
-        //    /// for this type of endpoint.
-        //    /// </summary>
-        //    public void ListenLocalhost(int port) => ListenLocalhost(port, options => { });
+        //    var listenOptions = new ListenOptions(socketPath);
+        //    ApplyEndpointDefaults(listenOptions);
+        //    configure(listenOptions);
+        //    CodeBackedListenOptions.Add(listenOptions);
+        //}
 
-        //    /// <summary>
-        //    /// Listens on ::1 and 127.0.0.1 with the given port. Requesting a dynamic port by specifying 0 is not supported
-        //    /// for this type of endpoint.
-        //    /// </summary>
-        //    public void ListenLocalhost(int port, Action<ListenOptions> configure)
+        /// <summary>
+        /// Open a socket file descriptor.
+        /// </summary>
+        //public void ListenHandle(ulong handle)
+        //{
+        //    ListenHandle(handle, _ => { });
+        //}
+
+        /// <summary>
+        /// Open a socket file descriptor.
+        /// The callback configures endpoint-specific settings.
+        /// </summary>
+        //public void ListenHandle(ulong handle, Action<ListenOptions> configure)
+        //{
+        //    if (configure == null)
         //    {
-        //        if (configure == null)
-        //        {
-        //            throw new ArgumentNullException(nameof(configure));
-        //        }
-
-        //        var listenOptions = new LocalhostListenOptions(port);
-        //        ApplyEndpointDefaults(listenOptions);
-        //        configure(listenOptions);
-        //        CodeBackedListenOptions.Add(listenOptions);
+        //        throw new ArgumentNullException(nameof(configure));
         //    }
 
-        //    /// <summary>
-        //    /// Listens on all IPs using IPv6 [::], or IPv4 0.0.0.0 if IPv6 is not supported.
-        //    /// </summary>
-        //    public void ListenAnyIP(int port) => ListenAnyIP(port, options => { });
-
-        //    /// <summary>
-        //    /// Listens on all IPs using IPv6 [::], or IPv4 0.0.0.0 if IPv6 is not supported.
-        //    /// </summary>
-        //    public void ListenAnyIP(int port, Action<ListenOptions> configure)
-        //    {
-        //        if (configure == null)
-        //        {
-        //            throw new ArgumentNullException(nameof(configure));
-        //        }
-
-        //        var listenOptions = new AnyIPListenOptions(port);
-        //        ApplyEndpointDefaults(listenOptions);
-        //        configure(listenOptions);
-        //        CodeBackedListenOptions.Add(listenOptions);
-        //    }
-
-        //    /// <summary>
-        //    /// Bind to given Unix domain socket path.
-        //    /// </summary>
-        //    public void ListenUnixSocket(string socketPath)
-        //    {
-        //        ListenUnixSocket(socketPath, _ => { });
-        //    }
-
-        //    /// <summary>
-        //    /// Bind to given Unix domain socket path.
-        //    /// Specify callback to configure endpoint-specific settings.
-        //    /// </summary>
-        //    public void ListenUnixSocket(string socketPath, Action<ListenOptions> configure)
-        //    {
-        //        if (socketPath == null)
-        //        {
-        //            throw new ArgumentNullException(nameof(socketPath));
-        //        }
-
-        //        if (!Path.IsPathRooted(socketPath))
-        //        {
-        //            throw new ArgumentException(CoreStrings.UnixSocketPathMustBeAbsolute, nameof(socketPath));
-        //        }
-        //        if (configure == null)
-        //        {
-        //            throw new ArgumentNullException(nameof(configure));
-        //        }
-
-        //        var listenOptions = new ListenOptions(socketPath);
-        //        ApplyEndpointDefaults(listenOptions);
-        //        configure(listenOptions);
-        //        CodeBackedListenOptions.Add(listenOptions);
-        //    }
-
-        //    /// <summary>
-        //    /// Open a socket file descriptor.
-        //    /// </summary>
-        //    public void ListenHandle(ulong handle)
-        //    {
-        //        ListenHandle(handle, _ => { });
-        //    }
-
-        //    /// <summary>
-        //    /// Open a socket file descriptor.
-        //    /// The callback configures endpoint-specific settings.
-        //    /// </summary>
-        //    public void ListenHandle(ulong handle, Action<ListenOptions> configure)
-        //    {
-        //        if (configure == null)
-        //        {
-        //            throw new ArgumentNullException(nameof(configure));
-        //        }
-
-        //        var listenOptions = new ListenOptions(handle);
-        //        ApplyEndpointDefaults(listenOptions);
-        //        configure(listenOptions);
-        //        CodeBackedListenOptions.Add(listenOptions);
-        //    }
+        //    var listenOptions = new ListenOptions(handle);
+        //    ApplyEndpointDefaults(listenOptions);
+        //    configure(listenOptions);
+        //    CodeBackedListenOptions.Add(listenOptions);
         //}
     }
 }

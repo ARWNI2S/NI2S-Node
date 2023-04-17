@@ -59,7 +59,7 @@ namespace NI2S.Node.Hosting
         /// <param name="configure">The configure callback</param>
         /// <param name="configureOptions">The delegate that configures the <see cref="NodeHostBuilderOptions"/>.</param>
         /// <returns>A reference to the <paramref name="builder"/> after the operation has completed.</returns>
-        /* 003 */
+        /* 001.2 - new NodeEngineHostBuilder(...) -> bootstrapHostBuilder.ConfigureNodeHostDefaults(...) */
         public static IHostBuilder ConfigureNodeHostDefaults(this IHostBuilder builder, Action<INodeHostBuilder> configure, Action<NodeHostBuilderOptions> configureOptions)
         {
             if (configure is null)
@@ -69,7 +69,8 @@ namespace NI2S.Node.Hosting
 
             return builder.ConfigureNodeHost(nodeHostBuilder =>
             {
-                /* 004-2 */
+                /* 001.2.1.3 - new NodeEngineHostBuilder(...) -> bootstrapHostBuilder.ConfigureNodeHostDefaults(...)
+                               -> builder.ConfigureNodeHost(...) -> configure(nodehostBuilder) */
                 NodeEngine.ConfigureNodeDefaults(nodeHostBuilder);
 
                 configure(nodeHostBuilder);

@@ -5,8 +5,8 @@ using NI2S.Node.Engine;
 
 namespace NI2S.Node.Core
 {
-    public sealed class NodeContextAccessor : IEngineContextAccessor
+    public sealed class NodeContextAccessor : INodeEngineContextAccessor
     {
-        public EngineContext EngineContext => throw new NotImplementedException();
+        public NodeEngineContext EngineContext => throw new NotImplementedException();
     }
 }

@@ -23,6 +23,7 @@ namespace NI2S.Node.Hosting.Builder
         private readonly List<Action<HostBuilderContext, object>> _configureContainerActions = new();
         private IServiceProviderFactory<object> _serviceProviderFactory;
 
+        /* 001.4 - new NodeEngineHostBuilder(...) -> new ConfigureHostBuilder(...) */
         internal ConfigureHostBuilder(
             HostBuilderContext context,
             ConfigurationManager configuration,
@@ -106,6 +107,7 @@ namespace NI2S.Node.Hosting.Builder
         }
 
         /// <inheritdoc />
+        /* 002.2 - ConfigureNodeEngineBuilder(...) -> builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory()) */
         public IHostBuilder UseServiceProviderFactory<TContainerBuilder>(IServiceProviderFactory<TContainerBuilder> factory) where TContainerBuilder : notnull
         {
             if (factory is null)
@@ -128,6 +130,7 @@ namespace NI2S.Node.Hosting.Builder
             throw new NotSupportedException("ConfigureNodeHost() is not supported by NodeEngineBuilder.Host. Use the NodeEngine returned by NodeEngineBuilder.Build() instead.");
         }
 
+        /* 003.1 - ... -> .Build() -> Host.ApplyServiceProviderFactory(...) */
         internal void ApplyServiceProviderFactory(HostApplicationBuilder hostEngineBuilder)
         {
             if (_serviceProviderFactory is null)
@@ -144,6 +147,8 @@ namespace NI2S.Node.Hosting.Builder
 
             void ConfigureContainerBuilderAdapter(object containerBuilder)
             {
+                /* 003.2.1 - ... -> .Build() -> Host.ApplyServiceProviderFactory(...) -> new NodeEngineHost(_hostApplicationBuilder.Build()) 
+                             -> _serviceProviderFactory.CreateBuilder(services) */
                 foreach (var action in _configureContainerActions)
                 {
                     action(_context, containerBuilder);
@@ -162,7 +167,9 @@ namespace NI2S.Node.Hosting.Builder
                 _serviceProviderFactory = serviceProviderFactory;
             }
 
+            /* 003.2 - ... -> .Build() -> Host.ApplyServiceProviderFactory(...) -> new NodeEngineHost(_hostApplicationBuilder.Build()) */
             public object CreateBuilder(IServiceCollection services) => _serviceProviderFactory.CreateBuilder(services);
+            /* 003.3 - ... -> .Build() -> Host.ApplyServiceProviderFactory(...) -> new NodeEngineHost(_hostApplicationBuilder.Build()) */
             public IServiceProvider CreateServiceProvider(object containerBuilder) => _serviceProviderFactory.CreateServiceProvider((TContainerBuilder)containerBuilder);
         }
     }

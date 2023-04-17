@@ -30,6 +30,7 @@ namespace NI2S.Node.Hosting.Builder
         /// </summary>
         /// <param name="serviceProvider">The <see cref="IServiceProvider"/> for application services.</param>
         /// <param name="server">The server instance that hosts the application.</param>
+        /* 003.4.1 - ... -> .Build() -> Host.ApplyServiceProviderFactory(...) -> new NodeEngineHost(...) -> new NodeEngineBuilder(...) */
         public NodeEngineBuilder(IServiceProvider serviceProvider, object server)
         {
             Properties = new Dictionary<string, object>(StringComparer.Ordinal);

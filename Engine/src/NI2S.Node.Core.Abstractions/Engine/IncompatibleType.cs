@@ -2,7 +2,7 @@
 
 namespace NI2S.Node.Engine
 {
-    public enum IncompatibilityType
+    public enum IncompatibleType
     {
         /// <summary>
         /// The plugin isn't compatible with the current version

@@ -8,7 +8,7 @@ namespace NI2S.Node.Engine
 {
     public interface IEngineModule
     {
-        ModuleInfo ModuleInfo { get; }
+        ModuleDescriptorBase ModuleDescriptor { get; set; }
 
         /// <summary>
         /// Add and configure any of the middleware

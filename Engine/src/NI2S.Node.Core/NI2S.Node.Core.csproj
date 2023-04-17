@@ -54,9 +54,15 @@
     <Compile Include="Core\NodeEngine.cs" />
     <Compile Include="Engine\DefaultEventHandlerAccessor.cs" />
     <Compile Include="Engine\IEventHandlerAccessor.cs" />
+    <Compile Include="Engine\Internal\ConfigurationReader.cs" />
+    <Compile Include="Engine\Modules\EngineModule.cs" />
+    <Compile Include="Engine\Modules\EngineModuleDefaults.cs" />
+    <Compile Include="Engine\Modules\EngineModulesOptions.cs" />
+    <Compile Include="Engine\Modules\EngineModulesOptionsSetup.cs" />
     <Compile Include="Engine\Modules\ModuleCollection.cs" />
-    <Compile Include="Engine\Modules\ModuleLoader.cs" />
+    <Compile Include="Engine\Modules\ModuleDescriptor.cs" />
     <Compile Include="Engine\NodeEngineBase.cs" />
+    <Compile Include="Engine\NodeEngineConfigurationLoader.cs" />
     <Compile Include="Engine\NodeEngineImpl.cs" />
     <Compile Include="Core\NodeEngineOptions.cs" />
     <Compile Include="Engine\NodeEngineOptionsSetup.cs" />
@@ -74,8 +80,7 @@
     <Compile Include="Hosting\Builder\ConfigureBuilder.cs" />
     <Compile Include="Hosting\Builder\ConfigureContainerBuilder.cs" />
     <Compile Include="Hosting\Builder\ConfigureServicesBuilder.cs" />
-    <Compile Include="Hosting\Extensions\NodeHostBuilderNI2SExtensions.cs" />
-    <Compile Include="Engine\DefaultEngineContext.cs" />
+    <Compile Include="Hosting\Extensions\NodeHostBuilderNodeEngineExtensions.cs" />
     <Compile Include="Engine\DefaultWorkContext.cs" />
     <Compile Include="Engine\DefaultWorkContextFactory.cs" />
     <Compile Include="Hosting\Builder\NodeEngineBuilderFactory.cs" />

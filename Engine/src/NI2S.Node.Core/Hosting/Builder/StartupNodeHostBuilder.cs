@@ -17,6 +17,7 @@ namespace NI2S.Node.Hosting.Builder
         private Action<NodeHostBuilderContext, IConfigurationBuilder> _configureConfiguration;
         private Action<NodeHostBuilderContext, IServiceCollection> _configureServices;
 
+        /* 001.3.1.1.2 */
         public StartupNodeHostBuilder(GenericNodeHostBuilder builder)
         {
             _builder = builder;
@@ -52,11 +53,15 @@ namespace NI2S.Node.Hosting.Builder
             return this;
         }
 
+        /* 001.3.4.2 - new NodeEngineHostBuilder(...) -> bootstrapHostBuilder.RunDefaultCallbacks() -> configureServicesAction(...)
+                       -> _hostingStartupNodeHostBuilder?.ConfigureServices(nodehostContext, services) */
         public void ConfigureServices(NodeHostBuilderContext context, IServiceCollection services)
         {
             _configureServices?.Invoke(context, services);
         }
 
+        /* 001.3.2.2 - new NodeEngineHostBuilder(...) -> bootstrapHostBuilder.RunDefaultCallbacks() -> configureAppAction(Context, _builder.Configuration) 
+                      -> GetNodeHostBuilderContext(context) -> _hostingStartupNodeHostBuilder.ConfigureAppConfiguration(...) */
         public void ConfigureAppConfiguration(NodeHostBuilderContext context, IConfigurationBuilder builder)
         {
             _configureConfiguration?.Invoke(context, builder);

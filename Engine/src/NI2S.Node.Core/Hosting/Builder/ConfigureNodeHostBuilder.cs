@@ -19,6 +19,7 @@ namespace NI2S.Node.Hosting.Builder
         private readonly IServiceCollection _services;
         private readonly NodeHostBuilderContext _context;
 
+        /* 001.5 - new NodeEngineHostBuilder(...) -> new ConfigureNodeHostBuilder(...) */
         internal ConfigureNodeHostBuilder(NodeHostBuilderContext nodeHostBuilderContext, ConfigurationManager configuration, IServiceCollection services)
         {
             _configuration = configuration;

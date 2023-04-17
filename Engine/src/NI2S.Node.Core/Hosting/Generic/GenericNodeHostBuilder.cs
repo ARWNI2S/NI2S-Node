@@ -27,7 +27,8 @@ namespace NI2S.Node.Hosting
         private AggregateException _hostingStartupErrors;
         private StartupNodeHostBuilder _hostingStartupNodeHostBuilder;
 
-        /* 005 */
+        /* 001.2.1.2 - new NodeEngineHostBuilder(...) -> bootstrapHostBuilder.ConfigureNodeHostDefaults(...)
+                       -> builder.ConfigureNodeHost(...) -> new GenericNodeHostBuilder(...) */
         public GenericNodeHostBuilder(IHostBuilder builder, NodeHostBuilderOptions options)
         {
             _builder = builder;
@@ -43,6 +44,7 @@ namespace NI2S.Node.Hosting
 
             _builder.ConfigureHostConfiguration(config =>
             {
+                /* 001.3.1 - new NodeEngineHostBuilder(...) -> bootstrapHostBuilder.RunDefaultCallbacks() -> configureHostAction(_builder.Configuration) */
                 config.AddConfiguration(_config);
 
                 // We do this super early but still late enough that we can process the configuration
@@ -54,6 +56,7 @@ namespace NI2S.Node.Hosting
             // so register these callbacks first
             _builder.ConfigureAppConfiguration((context, configurationBuilder) =>
             {
+                /* 001.3.2 - new NodeEngineHostBuilder(...) -> bootstrapHostBuilder.RunDefaultCallbacks() -> configureAppAction(Context, _builder.Configuration) */
                 if (_hostingStartupNodeHostBuilder != null)
                 {
                     var nodehostContext = GetNodeHostBuilderContext(context);
@@ -63,6 +66,7 @@ namespace NI2S.Node.Hosting
 
             _builder.ConfigureServices((context, services) =>
             {
+                /* 001.3.4 - new NodeEngineHostBuilder(...) -> bootstrapHostBuilder.RunDefaultCallbacks() -> configureServicesAction(Context, _builder.Configuration) */
                 var nodehostContext = GetNodeHostBuilderContext(context);
                 var nodeHostOptions = (NodeHostOptions)context.Properties[typeof(NodeHostOptions)];
 
@@ -126,6 +130,8 @@ namespace NI2S.Node.Hosting
             }
         }
 
+        /* 001.3.1.1 - new NodeEngineHostBuilder(...) -> bootstrapHostBuilder.RunDefaultCallbacks() -> configureHostAction(_builder.Configuration)
+                       -> ExecuteHostingStartups() */
         private void ExecuteHostingStartups()
         {
             var nodeHostOptions = new NodeHostOptions(_config);
@@ -177,11 +183,13 @@ namespace NI2S.Node.Hosting
             throw new NotSupportedException($"Building this implementation of {nameof(INodeHostBuilder)} is not supported.");
         }
 
-        /* 007 */
+        /* 001.2.1.3.1.1 - new NodeEngineHostBuilder(...) -> bootstrapHostBuilder.ConfigureNodeHostDefaults(...) -> builder.ConfigureNodeHost(...)
+                           -> configure(nodehostBuilder) -> NodeEngine.ConfigureNodeDefaults(nodehostBuilder) -> builder.ConfigureNodeConfiguration(...) */
         public INodeHostBuilder ConfigureNodeConfiguration(Action<NodeHostBuilderContext, IConfigurationBuilder> configureDelegate)
         {
             _builder.ConfigureAppConfiguration((context, builder) =>
             {
+                /* 001.3.3 - new NodeEngineHostBuilder(...) -> bootstrapHostBuilder.RunDefaultCallbacks() -> configureAppAction(Context, _builder.Configuration) */
                 var nodehostBuilderContext = GetNodeHostBuilderContext(context);
                 configureDelegate(nodehostBuilderContext, builder);
             });
@@ -189,15 +197,26 @@ namespace NI2S.Node.Hosting
             return this;
         }
 
+        /* 001.2.1.3.1.2.1.1.2.1 */
+        /* 001.2.1.3.1.2.1.2 */
+        /* 001.3.5.2 */
+        /* 001.3.6.2 */
+        /* 001.3.7.2 */
         public INodeHostBuilder ConfigureServices(Action<IServiceCollection> configureServices)
         {
             return ConfigureServices((context, services) => configureServices(services));
         }
 
+        /* 001.2.1.3.1.2.1.1.2.1.1 */
+        /* 001.2.1.3.1.2.1.2.1 */
+        /* 001.2.1.3.1.2.2.1 */
         public INodeHostBuilder ConfigureServices(Action<NodeHostBuilderContext, IServiceCollection> configureServices)
         {
             _builder.ConfigureServices((context, builder) =>
             {
+                /* 001.3.5 - new NodeEngineHostBuilder(...) -> bootstrapHostBuilder.RunDefaultCallbacks() -> configureServicesAction(Context, _builder.Configuration) */
+                /* 001.3.6 - new NodeEngineHostBuilder(...) -> bootstrapHostBuilder.RunDefaultCallbacks() -> configureServicesAction(Context, _builder.Configuration) */
+                /* 001.3.7 - new NodeEngineHostBuilder(...) -> bootstrapHostBuilder.RunDefaultCallbacks() -> configureServicesAction(Context, _builder.Configuration) */
                 var nodehostBuilderContext = GetNodeHostBuilderContext(context);
                 configureServices(nodehostBuilderContext, builder);
             });
@@ -376,6 +395,8 @@ namespace NI2S.Node.Hosting
             return this;
         }
 
+        /* 001.2.1.3.2.1.1 - new NodeEngineHostBuilder(...) -> bootstrapHostBuilder.ConfigureNodeHostDefaults(...) -> builder.ConfigureNodeHost(...)
+                             -> configure(nodehostBuilder) -> configure(nodeHostBuilder) -> nodeHostBuilder.Configure(...) -> supportsStartup.Configure(configureApp) */
         public INodeHostBuilder Configure(Action<NodeHostBuilderContext, INodeEngineBuilder> configure)
         {
             var startupAssemblyName = configure.GetMethodInfo().DeclaringType!.Assembly.GetName().Name!;
@@ -387,6 +408,7 @@ namespace NI2S.Node.Hosting
 
             _builder.ConfigureServices((context, services) =>
             {
+                /* 001.3.8 - new NodeEngineHostBuilder(...) -> bootstrapHostBuilder.RunDefaultCallbacks() -> configureServicesAction(Context, _builder.Configuration) */
                 if (ReferenceEquals(_startupObject, configure))
                 {
                     services.Configure<GenericNodeHostServiceOptions>(options =>
@@ -400,6 +422,13 @@ namespace NI2S.Node.Hosting
             return this;
         }
 
+        /* 001.3.2.1 - new NodeEngineHostBuilder(...) -> bootstrapHostBuilder.RunDefaultCallbacks() -> configureAppAction(Context, _builder.Configuration) 
+                       -> GetNodeHostBuilderContext(context) */
+        /* 001.3.3.1 */
+        /* 001.3.4.1 */
+        /* 001.3.5.1 */
+        /* 001.3.6.1 */
+        /* 001.3.7.1 */
         private NodeHostBuilderContext GetNodeHostBuilderContext(HostBuilderContext context)
         {
             if (!context.Properties.TryGetValue(typeof(NodeHostBuilderContext), out var contextVal))
@@ -428,6 +457,11 @@ namespace NI2S.Node.Hosting
             return _config[key];
         }
 
+        /* 001.2.1.3.2.1.1.1 */
+        /* 001.2.1.3.2.2 */
+        /* 001.2.1.3.2.3 */
+        /* 001.2.1.3.2.4 */
+        /* 001.2.1.3.2.5 */
         public INodeHostBuilder UseSetting(string key, string value)
         {
             _config[key] = value;

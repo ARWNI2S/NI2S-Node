@@ -27,7 +27,7 @@ namespace NI2S.Node.Core.Infrastructure
         {
             if (scope == null)
             {
-                var accessor = ServiceProvider.GetService<IEngineContextAccessor>();
+                var accessor = ServiceProvider.GetService<INodeEngineContextAccessor>();
                 var context = accessor?.EngineContext;
                 return context?.NodeServices ?? ServiceProvider;
             }

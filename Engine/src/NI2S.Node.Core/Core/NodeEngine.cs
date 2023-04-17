@@ -117,20 +117,23 @@ namespace NI2S.Node.Core
             return builder;
         }
 
-        /* 006 */
+        /* 001.2.1.3.1 - new NodeEngineHostBuilder(...) -> bootstrapHostBuilder.ConfigureNodeHostDefaults(...) -> builder.ConfigureNodeHost(...)
+                         -> configure(nodehostBuilder) -> NodeEngine.ConfigureNodeDefaults(nodehostBuilder) */
         internal static void ConfigureNodeDefaults(INodeHostBuilder builder)
         {
             builder.ConfigureNodeConfiguration((ctx, cb) =>
             {
+                /* 001.3.3.2 - new NodeEngineHostBuilder(...) -> bootstrapHostBuilder.RunDefaultCallbacks() -> configureAppAction(...)
+                               -> configureDelegate(nodehostBuilderContext, builder)*/
                 if (ctx.HostingEnvironment.IsDevelopment())
                 {
                     StaticAssetsLoader.UseStaticAssets(ctx.HostingEnvironment, ctx.Configuration);
                 }
             });
 
-            builder.UseNI2S((builderContext, options) =>
+            builder.UseNodeEngine((builderContext, options) =>
             {
-                //options.Configure(builderContext.Configuration.GetSection("nodeengine"), reloadOnChange: true);
+                options.Configure(builderContext.Configuration.GetSection("nodeengine"), reloadOnChange: true);
             });
 
 

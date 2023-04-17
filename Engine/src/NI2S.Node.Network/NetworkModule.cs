@@ -7,21 +7,16 @@ using NI2S.Node.Hosting.Builder;
 
 namespace NI2S.Node.Core
 {
-    public sealed class NetworkModule : ModuleInfo, IEngineModule
+    public sealed class NetworkModule : EngineModule
     {
-        public NetworkModule() : base(name: "Network", systemName: "CORE_NETWORK") { }
-
-        public void Configure(INodeEngineBuilder engine)
+        public override void Configure(INodeEngineBuilder engine)
         {
 
         }
 
-        public void ConfigureServices(IServiceCollection services, IConfiguration configuration)
+        public override void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
 
         }
-
-        ModuleInfo IEngineModule.ModuleInfo => this;
-
     }
 }

@@ -18,7 +18,7 @@ namespace NI2S.Node.Hosting
         private readonly List<Action<HostBuilderContext, IConfigurationBuilder>> _configureNodeActions = new();
         private readonly List<Action<HostBuilderContext, IServiceCollection>> _configureServicesActions = new();
 
-        /* 002 */
+        /* 001.1 - new NodeEngineHostBuilder(...) -> new BootstrapHostBuilder(...) */
         public BootstrapHostBuilder(HostApplicationBuilder builder)
         {
             _builder = builder;
@@ -42,18 +42,27 @@ namespace NI2S.Node.Hosting
 
         public HostBuilderContext Context { get; }
 
+        /* 001.2.1.2.1 */
         public IHostBuilder ConfigureHostConfiguration(Action<IConfigurationBuilder> configureDelegate)
         {
             _configureHostActions.Add(configureDelegate ?? throw new ArgumentNullException(nameof(configureDelegate)));
             return this;
         }
 
+        /* 001.2.1.2.2 */
+        /* 001.2.1.3.1.1.1 */
         public IHostBuilder ConfigureAppConfiguration(Action<HostBuilderContext, IConfigurationBuilder> configureDelegate)
         {
             _configureNodeActions.Add(configureDelegate ?? throw new ArgumentNullException(nameof(configureDelegate)));
             return this;
         }
 
+        /* 001.2.1.2.3 */
+        /* 001.2.1.3.1.2.1.1.2.1.1.1 */
+        /* 001.2.1.3.1.2.1.2.1.1 */
+        /* 001.2.1.3.1.2.2.1.1 */
+        /* 001.2.1.3.2.1.1.2 */
+        /* 001.2.1.4 */
         public IHostBuilder ConfigureServices(Action<HostBuilderContext, IServiceCollection> configureDelegate)
         {
             _configureServicesActions.Add(configureDelegate ?? throw new ArgumentNullException(nameof(configureDelegate)));
@@ -84,6 +93,7 @@ namespace NI2S.Node.Hosting
             throw new InvalidOperationException();
         }
 
+        /* 001.3 - new NodeEngineHostBuilder(...) -> bootstrapHostBuilder.RunDefaultCallbacks() */
         public ServiceDescriptor RunDefaultCallbacks()
         {
             foreach (var configureHostAction in _configureHostActions)
@@ -110,7 +120,7 @@ namespace NI2S.Node.Hosting
                 var descriptor = _builder.Services[i];
                 if (descriptor.ServiceType == typeof(IHostedService))
                 {
-                    Debug.Assert(descriptor.ImplementationType?.Name == "GenericNodeHostService");
+                    Debug.Assert(descriptor.ImplementationType?.Name == "NodeHostService");
 
                     genericNodeHostServiceDescriptor = descriptor;
                     _builder.Services.RemoveAt(i);

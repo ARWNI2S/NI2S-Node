@@ -20,7 +20,7 @@ namespace NI2S.Node.Hosting.Builder
 
         private NodeEngineHost _builtNodeEngineHost;
 
-        /* 001 */
+        /* 001 - new NodeEngineHostBuilder(...) */
         internal NodeEngineHostBuilder(NodeEngineHostOptions options, Action<IHostBuilder> configureDefaults = null)
         {
             var configuration = new ConfigurationManager();
@@ -53,6 +53,8 @@ namespace NI2S.Node.Hosting.Builder
 
             bootstrapHostBuilder.ConfigureNodeHostDefaults(nodeHostBuilder =>
             {
+                /* 001.2.1.3.2 - new NodeEngineHostBuilder(...) -> bootstrapHostBuilder.ConfigureNodeHostDefaults(...) -> builder.ConfigureNodeHost(...)
+                                 -> configure(nodehostBuilder) -> configure(nodeHostBuilder) */
                 // Runs inline.
                 nodeHostBuilder.Configure(ConfigureApplication);
 
@@ -63,7 +65,8 @@ namespace NI2S.Node.Hosting.Builder
             },
             options =>
             {
-                /* 004-1 */
+                /* 001.2.1.1 - new NodeEngineHostBuilder(...) -> bootstrapHostBuilder.ConfigureNodeHostDefaults(...)
+                               -> builder.ConfigureNodeHost(...) -> configureNodeHostBuilder(nodeHostBuilderOptions) */
                 // We've already applied "NI2S_" environment variables to hosting config
                 options.SuppressEnvironmentConfiguration = true;
             });
@@ -105,6 +108,7 @@ namespace NI2S.Node.Hosting.Builder
         /// Builds the <see cref="NodeEngineHost"/>.
         /// </summary>
         /// <returns>A configured <see cref="NodeEngineHost"/>.</returns>
+        /* 003 - ... -> .Build() */
         public NodeEngineHost Build()
         {
             // ConfigureContainer callbacks run after ConfigureServices callbacks including the one that adds GenericNodeHostService by default.
@@ -211,6 +215,5 @@ namespace NI2S.Node.Hosting.Builder
             //    engine.Properties[EndpointRouteBuilderKey] = priorRouteBuilder;
             //}
         }
-
     }
 }

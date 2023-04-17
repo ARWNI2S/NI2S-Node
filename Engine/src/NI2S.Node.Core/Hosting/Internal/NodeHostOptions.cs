@@ -12,6 +12,8 @@ namespace NI2S.Node.Hosting.Internal
 {
     internal sealed class NodeHostOptions
     {
+        /* 001.3.1.1.1 */
+        /* 001.3.2.1.1 */
         public NodeHostOptions(IConfiguration primaryConfiguration, IConfiguration fallbackConfiguration = null, IHostEnvironment environment = null)
         {
             if (primaryConfiguration is null)
@@ -73,6 +75,7 @@ namespace NI2S.Node.Hosting.Internal
 
         public bool PreferHostingUrls { get; }
 
+        /* 001.3.1.1.3 */
         public IEnumerable<string> GetFinalHostingStartupAssemblies()
         {
             return HostingStartupAssemblies.Except(HostingStartupExcludeAssemblies, StringComparer.OrdinalIgnoreCase);

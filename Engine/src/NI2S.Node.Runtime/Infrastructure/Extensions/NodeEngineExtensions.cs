@@ -10,6 +10,7 @@ namespace NI2S.Node.Infrastructure.Extensions
     /// </summary>
     public static class NodeEngineExtensions
     {
+        /* 005 - ... -> nodeEngine.StartEngineAsync() */
         public static async Task StartEngineAsync(this NodeEngineHost _)
         {
             //var engine = EngineContext.Current;

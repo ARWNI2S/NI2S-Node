@@ -22,6 +22,7 @@ namespace NI2S.Node.Hosting
 
         private readonly IHost _host;
 
+        /* 003.4 - ... -> .Build() -> Host.ApplyServiceProviderFactory(...) -> new NodeEngineHost(...) */
         internal NodeEngineHost(IHost host)
         {
             _host = host;
@@ -133,6 +134,7 @@ namespace NI2S.Node.Hosting
         /// <returns>
         /// A <see cref="Task"/> that represents the entire runtime of the <see cref="NodeEngineHost"/> from startup to shutdown.
         /// </returns>
+        /* 006 - ... -> nodeEngine.RunAsync() */
         public Task RunAsync(string url = null)
         {
             Listen(url);
@@ -184,6 +186,7 @@ namespace NI2S.Node.Hosting
 
         INodeEngineBuilder IClusterNodeBuilder.CreateEngineBuilder() => ((INodeEngineBuilder)this).New();
 
+        /* 006.1 - ... -> nodeEngine.RunAsync() -> Listen(...) */
         private void Listen(string url)
         {
             //if (url is null)

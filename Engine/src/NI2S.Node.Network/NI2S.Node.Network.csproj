@@ -36,7 +36,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="$(SourceProjectsPath)\NI2S.Node.Core.Abstractions\NI2S.Node.Core.Abstractions.csproj" />
+    <ProjectReference Include="$(SourceProjectsPath)\NI2S.Node.Core\NI2S.Node.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>

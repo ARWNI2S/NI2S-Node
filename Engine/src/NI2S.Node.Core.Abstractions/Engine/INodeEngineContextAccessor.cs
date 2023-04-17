@@ -2,8 +2,8 @@
 
 namespace NI2S.Node.Engine
 {
-    public interface IEngineContextAccessor
+    public interface INodeEngineContextAccessor
     {
-        EngineContext EngineContext { get; }
+        NodeEngineContext EngineContext { get; }
     }
 }

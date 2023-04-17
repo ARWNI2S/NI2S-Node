@@ -7,22 +7,16 @@ using NI2S.Node.Hosting.Builder;
 
 namespace NI2S.Node.Core
 {
-    public sealed class DataModule : ModuleInfo, IEngineModule
+    public sealed class DataModule : EngineModule
     {
-        public DataModule() : base(name: "Data", systemName: "CORE_DATA")
-        {
-        }
-
-        public void Configure(INodeEngineBuilder engine)
+        public override void Configure(INodeEngineBuilder engine)
         {
 
         }
 
-        public void ConfigureServices(IServiceCollection services, IConfiguration configuration)
+        public override void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
 
         }
-
-        ModuleInfo IEngineModule.ModuleInfo => this;
     }
 }

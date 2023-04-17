@@ -57,6 +57,8 @@ namespace NI2S.Node.Hosting
         /// <param name="hostBuilder">The <see cref="INodeHostBuilder"/> to configure.</param>
         /// <param name="configureApp">The delegate that configures the <see cref="INodeEngineBuilder"/>.</param>
         /// <returns>The <see cref="INodeHostBuilder"/>.</returns>
+        /* 001.2.1.3.2.1 - new NodeEngineHostBuilder(...) -> bootstrapHostBuilder.ConfigureNodeHostDefaults(...) -> builder.ConfigureNodeHost(...)
+                        -> configure(nodehostBuilder) -> configure(nodeHostBuilder) -> nodeHostBuilder.Configure(...) */
         public static INodeHostBuilder Configure(this INodeHostBuilder hostBuilder, Action<NodeHostBuilderContext, INodeEngineBuilder> configureApp)
         {
             if (configureApp == null)

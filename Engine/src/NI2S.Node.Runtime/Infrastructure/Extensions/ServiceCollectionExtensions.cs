@@ -23,6 +23,7 @@ namespace NI2S.Node.Infrastructure.Extensions
         /// </summary>
         /// <param name="services">Collection of service descriptors</param>
         /// <param name="builder">A builder for node engine and services</param>
+        /* 002.1 - ConfigureNodeEngineBuilder(...) -> builder.Services.ConfigureEngineSettings(...) */
         public static void ConfigureEngineSettings(this IServiceCollection services,
             NodeEngineHostBuilder builder)
         {
@@ -56,6 +57,7 @@ namespace NI2S.Node.Infrastructure.Extensions
         /// </summary>
         /// <param name="services">Collection of service descriptors</param>
         /// <param name="builder">A builder for node engine and services</param>
+        /* 002.3 - ConfigureNodeEngineBuilder(...) -> builder.Services.ConfigureEngineServices(...) */
         public static void ConfigureEngineServices(this IServiceCollection services,
             NodeEngineHostBuilder builder)
         {
@@ -63,13 +65,14 @@ namespace NI2S.Node.Infrastructure.Extensions
             services.AddNodeContextAccessor();
 
             //initialize plugins
-            //var mvcCoreBuilder = services.AddMvcCore();
+            //TODO:
+            //var niisCoreBuilder = services.AddNI2SCore();
             //var pluginConfig = new PluginConfig();
             //builder.Configuration.GetSection(nameof(PluginConfig)).Bind(pluginConfig, options => options.BindNonPublicProperties = true);
-            //mvcCoreBuilder.PartManager.InitializePlugins(pluginConfig);
+            //niisCoreBuilder.ModuleManager.InitializePlugins(pluginConfig);
 
             //create engine and configure service provider
-            var engine = Core.Infrastructure.EngineContext.Create();
+            var engine = EngineContext.Create();
 
             engine.ConfigureServices(services, builder.Configuration);
         }
@@ -78,9 +81,10 @@ namespace NI2S.Node.Infrastructure.Extensions
         /// Register DummyContextAccessor
         /// </summary>
         /// <param name="services">Collection of service descriptors</param>
+        /* 002.3.1 - ConfigureNodeEngineBuilder(...) -> builder.Services.ConfigureEngineServices(...) -> services.AddNodeContextAccessor() */
         public static void AddNodeContextAccessor(this IServiceCollection services)
         {
-            services.AddSingleton<IEngineContextAccessor, NodeContextAccessor>();
+            services.AddSingleton<INodeEngineContextAccessor, NodeContextAccessor>();
         }
 
         /// <summary>
