@@ -12,11 +12,11 @@ namespace NI2S.Node.Hosting.Builder
         /// <summary>
         /// The <see cref="INodeHostEnvironment" /> initialized by the <see cref="INodeHost" />.
         /// </summary>
-        public INodeHostEnvironment HostingEnvironment { get; set; } = default!;
+        public INodeHostEnvironment HostingEnvironment { get; set; }
 
         /// <summary>
-        /// The <see cref="IConfiguration" /> containing the merged configuration of the application and the <see cref="INodeHost" />.
+        /// The <see cref="IConfiguration" /> containing the merged configuration of the engine and the <see cref="INodeHost" />.
         /// </summary>
-        public IConfiguration Configuration { get; set; } = default!;
+        public IConfiguration Configuration { get; set; }
     }
 }

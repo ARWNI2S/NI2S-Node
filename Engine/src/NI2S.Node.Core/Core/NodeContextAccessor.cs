@@ -1,12 +1,12 @@
 ﻿// Copyrigth (c) 2023 Alternate Reality Worlds. Narrative Interactive Intelligent Simulator.
 
-using System;
 using NI2S.Node.Engine;
+using System;
 
 namespace NI2S.Node.Core
 {
-    public sealed class NodeContextAccessor : INodeEngineContextAccessor
+    public sealed class NodeContextAccessor : IEngineContextAccessor
     {
-        public NodeEngineContext EngineContext => throw new NotImplementedException();
+        public EngineContext EngineContext => throw new NotImplementedException();
     }
 }

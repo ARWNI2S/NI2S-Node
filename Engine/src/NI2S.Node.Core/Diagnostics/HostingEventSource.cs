@@ -74,7 +74,7 @@ namespace NI2S.Node.Diagnostics
         }
 
         [Event(6, Level = EventLevel.Informational)]
-        public void ServerReady()
+        public void EngineReady()
         {
             WriteEvent(6);
         }

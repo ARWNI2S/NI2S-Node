@@ -17,36 +17,18 @@ namespace NI2S.Node
     /// </summary>
     public static class NI2SNode
     {
-        public static void Run(string[] args)
-        {
-            NodeEngineHost nodeEngine = CreateDefaultNodeEngineBuilder(args).Build();
-
-            //configure the application HTTP request pipeline
-            nodeEngine.ConfigureMessagePipeline();
-            nodeEngine.StartEngine();
-
-            nodeEngine.Run();
-        }
-
-
-
         public static async Task RunAsync(string[] args)
         {
-            NodeEngineHost nodeEngine = CreateDefaultNodeEngineBuilder(args).Build();
+            NodeEngineHost engineHost = CreateDefaultNodeEngineBuilder(args).Build();
 
-            //configure the application HTTP request pipeline
-            nodeEngine.ConfigureMessagePipeline();
-            await nodeEngine.StartEngineAsync();
+            //configure the engine HTTP request pipeline
+            engineHost.ConfigureEventHandler();
+            await engineHost.StartEngineAsync();
 
-            await nodeEngine.RunAsync();
+            await engineHost.RunAsync();
         }
 
-        private static NodeEngineHostBuilder CreateNodeEngineBuilder(string[] args)
-        {
-            return NodeEngineHost.CreateBuilder(args);
-        }
-
-        private static NodeEngineHostBuilder CreateDefaultNodeEngineBuilder(string[] args) => ConfigureNodeEngineBuilder(CreateNodeEngineBuilder(args));
+        private static NodeEngineHostBuilder CreateDefaultNodeEngineBuilder(string[] args) => ConfigureNodeEngineBuilder(NodeEngineHost.CreateBuilder(args));
 
         /* 002 - ConfigureNodeEngineBuilder(...) */
         private static NodeEngineHostBuilder ConfigureNodeEngineBuilder(NodeEngineHostBuilder builder)
@@ -59,7 +41,7 @@ namespace NI2S.Node
             }
             builder.Configuration.AddEnvironmentVariables();
 
-            //load application settings
+            //load engine settings
             builder.Services.ConfigureEngineSettings(builder);
 
             var appSettings = Singleton<NodeSettings>.Instance;
@@ -76,7 +58,7 @@ namespace NI2S.Node
                     options.ValidateOnBuild = true;
                 });
 
-            //add services to the application and configure service provider
+            //add services to the engine and configure service provider
             builder.Services.ConfigureEngineServices(builder);
 
             return builder;

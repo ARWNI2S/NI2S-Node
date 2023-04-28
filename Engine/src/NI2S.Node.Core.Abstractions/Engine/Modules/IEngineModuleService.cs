@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyrigth (c) 2023 Alternate Reality Worlds. Narrative Interactive Intelligent Simulator.
+
+
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -131,7 +134,7 @@ namespace NI2S.Node.Engine.Modules
         Task UpdateModulesAsync();
 
         /// <summary>
-        /// Check whether application restart is required to apply changes to modules
+        /// Check whether engine restart is required to apply changes to modules
         /// </summary>
         /// <returns>Result of check</returns>
         bool IsRestartRequired();

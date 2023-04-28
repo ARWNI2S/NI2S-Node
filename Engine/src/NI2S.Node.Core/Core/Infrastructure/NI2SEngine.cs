@@ -2,7 +2,6 @@
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using NI2S.Node.Core.Configuration;
 using NI2S.Node.Engine;
 using NI2S.Node.Hosting.Builder;
 using System;
@@ -27,7 +26,7 @@ namespace NI2S.Node.Core.Infrastructure
         {
             if (scope == null)
             {
-                var accessor = ServiceProvider.GetService<INodeEngineContextAccessor>();
+                var accessor = ServiceProvider.GetService<IEngineContextAccessor>();
                 var context = accessor?.EngineContext;
                 return context?.NodeServices ?? ServiceProvider;
             }
@@ -37,6 +36,7 @@ namespace NI2S.Node.Core.Infrastructure
         /// <summary>
         /// Run startup tasks
         /// </summary>
+        /* 002.3.5.2 - ConfigureNodeEngineBuilder(...) -> builder.Services.ConfigureEngineServices(...) -> engine.ConfigureServices(...) -> AddAutoMapper() */
         protected virtual void RunStartupTasks()
         {
             //find startup tasks provided by other assemblies
@@ -58,6 +58,7 @@ namespace NI2S.Node.Core.Infrastructure
         /// <summary>
         /// Register and configure AutoMapper
         /// </summary>
+        /* 002.3.5.1 - ConfigureNodeEngineBuilder(...) -> builder.Services.ConfigureEngineServices(...) -> engine.ConfigureServices(...) -> AddAutoMapper() */
         protected virtual void AddAutoMapper()
         {
             ////find mapper configurations provided by other assemblies
@@ -99,11 +100,8 @@ namespace NI2S.Node.Core.Infrastructure
 
         #region Methods
 
-        /// <summary>
-        /// Add and configure services
-        /// </summary>
-        /// <param name="services">Collection of service descriptors</param>
-        /// <param name="configuration">Configuration of the application</param>
+        /// <inheritdoc/>
+        /* 002.3.5 - ConfigureNodeEngineBuilder(...) -> builder.Services.ConfigureEngineServices(...) -> engine.ConfigureServices(...) */
         public virtual void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
             //register engine
@@ -134,13 +132,10 @@ namespace NI2S.Node.Core.Infrastructure
             AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
         }
 
-        /// <summary>
-        /// Configure HTTP request pipeline
-        /// </summary>
-        /// <param name="application">Builder for configuring an application's request pipeline</param>
-        public virtual void ConfigureMessageHandlerPipeline(INodeEngineBuilder application)
+        /// <inheritdoc/>
+        public virtual void ConfigureEventHandler(IEngineBuilder engine)
         {
-            ServiceProvider = application.EngineServices;
+            ServiceProvider = engine.EngineServices;
 
             //find startup configurations provided by other assemblies
             var typeFinder = Singleton<ITypeFinder>.Instance;
@@ -153,46 +148,28 @@ namespace NI2S.Node.Core.Infrastructure
 
             //configure request pipeline
             foreach (var instance in instances)
-                instance.Configure(application);
+                instance.Configure(engine);
         }
 
-        /// <summary>
-        /// Resolve dependency
-        /// </summary>
-        /// <param name="scope">Scope</param>
-        /// <typeparam name="T">Type of resolved service</typeparam>
-        /// <returns>Resolved service</returns>
+        /// <inheritdoc/>
         public virtual T Resolve<T>(IServiceScope scope = null) where T : class
         {
             return (T)Resolve(typeof(T), scope);
         }
 
-        /// <summary>
-        /// Resolve dependency
-        /// </summary>
-        /// <param name="type">Type of resolved service</param>
-        /// <param name="scope">Scope</param>
-        /// <returns>Resolved service</returns>
+        /// <inheritdoc/>
         public virtual object Resolve(Type type, IServiceScope scope = null)
         {
             return GetServiceProvider(scope)?.GetService(type);
         }
 
-        /// <summary>
-        /// Resolve dependencies
-        /// </summary>
-        /// <typeparam name="T">Type of resolved services</typeparam>
-        /// <returns>Collection of resolved services</returns>
+        /// <inheritdoc/>
         public virtual IEnumerable<T> ResolveAll<T>()
         {
             return (IEnumerable<T>)GetServiceProvider().GetServices(typeof(T));
         }
 
-        /// <summary>
-        /// Resolve unregistered service
-        /// </summary>
-        /// <param name="type">Type of service</param>
-        /// <returns>Resolved service</returns>
+        /// <inheritdoc/>
         public virtual object ResolveUnregistered(Type type)
         {
             Exception innerException = null;
@@ -223,10 +200,11 @@ namespace NI2S.Node.Core.Infrastructure
 
         #region Properties
 
-        /// <summary>
-        /// Service provider
-        /// </summary>
+        /// <inheritdoc/>
         public virtual IServiceProvider ServiceProvider { get; protected set; }
+
+        /// <inheritdoc/>
+        public virtual IModuleCollection Modules { get; protected set; }
 
         #endregion
     }

@@ -13,7 +13,7 @@ namespace NI2S.Node.Hosting.Infrastructure
     internal interface ISupportsConfigureNodeHost
     {
         /// <summary>
-        /// Adds and configures an ASP.NET Core web application.
+        /// Adds and configures an ASP.NET Core web engine.
         /// </summary>
         /// <param name="configure">The delegate that configures the <see cref="INodeHostBuilder"/>.</param>
         /// <param name="configureOptions">The delegate that configures the <see cref="NodeHostBuilderOptions"/>.</param>

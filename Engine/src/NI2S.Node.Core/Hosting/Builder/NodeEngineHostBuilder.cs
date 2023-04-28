@@ -20,7 +20,6 @@ namespace NI2S.Node.Hosting.Builder
 
         private NodeEngineHost _builtNodeEngineHost;
 
-        /* 001 - new NodeEngineHostBuilder(...) */
         internal NodeEngineHostBuilder(NodeEngineHostOptions options, Action<IHostBuilder> configureDefaults = null)
         {
             var configuration = new ConfigurationManager();
@@ -53,10 +52,8 @@ namespace NI2S.Node.Hosting.Builder
 
             bootstrapHostBuilder.ConfigureNodeHostDefaults(nodeHostBuilder =>
             {
-                /* 001.2.1.3.2 - new NodeEngineHostBuilder(...) -> bootstrapHostBuilder.ConfigureNodeHostDefaults(...) -> builder.ConfigureNodeHost(...)
-                                 -> configure(nodehostBuilder) -> configure(nodeHostBuilder) */
                 // Runs inline.
-                nodeHostBuilder.Configure(ConfigureApplication);
+                nodeHostBuilder.Configure(ConfigureEngine);
 
                 nodeHostBuilder.UseSetting(NodeHostDefaults.ApplicationKey, _hostApplicationBuilder.Environment.ApplicationName ?? "");
                 nodeHostBuilder.UseSetting(NodeHostDefaults.PreventHostingStartupKey, Configuration[NodeHostDefaults.PreventHostingStartupKey]);
@@ -65,8 +62,6 @@ namespace NI2S.Node.Hosting.Builder
             },
             options =>
             {
-                /* 001.2.1.1 - new NodeEngineHostBuilder(...) -> bootstrapHostBuilder.ConfigureNodeHostDefaults(...)
-                               -> builder.ConfigureNodeHost(...) -> configureNodeHostBuilder(nodeHostBuilderOptions) */
                 // We've already applied "NI2S_" environment variables to hosting config
                 options.SuppressEnvironmentConfiguration = true;
             });
@@ -122,7 +117,47 @@ namespace NI2S.Node.Hosting.Builder
         public ConfigureHostBuilder Host { get; }
         public ConfigureNodeHostBuilder NodeHost { get; }
 
-        private void ConfigureApplication(NodeHostBuilderContext context, INodeEngineBuilder engine)
+        private void ConfigureEngine(NodeHostBuilderContext context, IEngineBuilder engine)
+        {
+            ConfigureEngineCore(
+                context,
+                engine,
+                processAuthMiddlewares: () =>
+                {
+                    Debug.Assert(_builtNodeEngineHost is not null);
+
+                    // Process authorization and authentication middlewares independently to avoid
+                    // registering middlewares for services that do not exist
+                    var serviceProviderIsService = _builtNodeEngineHost.Services.GetService<IServiceProviderIsService>();
+                    //if (serviceProviderIsService?.IsService(typeof(IAuthenticationSchemeProvider)) is true)
+                    //{
+                    //    // Don't add more than one instance of the middleware
+                    //    if (!_builtNodeEngineHost.Properties.ContainsKey(AuthenticationMiddlewareSetKey))
+                    //    {
+                    //        // The Use invocations will set the property on the outer pipeline,
+                    //        // but we want to set it on the inner pipeline as well.
+                    //        _builtNodeEngineHost.Properties[AuthenticationMiddlewareSetKey] = true;
+                    //        engine.UseAuthentication();
+                    //    }
+                    //}
+
+                    //if (serviceProviderIsService?.IsService(typeof(IAuthorizationHandlerProvider)) is true)
+                    //{
+                    //    if (!_builtNodeEngineHost.Properties.ContainsKey(AuthorizationMiddlewareSetKey))
+                    //    {
+                    //        _builtNodeEngineHost.Properties[AuthorizationMiddlewareSetKey] = true;
+                    //        engine.UseAuthorization();
+                    //    }
+                    //}
+                });
+        }
+
+        private void ConfigureEmptyApplication(NodeHostBuilderContext context, IEngineBuilder engine)
+        {
+            ConfigureEngineCore(context, engine, processAuthMiddlewares: null);
+        }
+
+        private void ConfigureEngineCore(NodeHostBuilderContext context, IEngineBuilder engine, Action processAuthMiddlewares)
         {
             Debug.Assert(_builtNodeEngineHost is not null);
 
@@ -163,29 +198,7 @@ namespace NI2S.Node.Hosting.Builder
             //    }
             //}
 
-            // Process authorization and authentication middlewares independently to avoid
-            // registering middlewares for services that do not exist
-            var serviceProviderIsService = _builtNodeEngineHost.Services.GetService<IServiceProviderIsService>();
-            //if (serviceProviderIsService?.IsService(typeof(IAuthenticationSchemeProvider)) is true)
-            //{
-            //    // Don't add more than one instance of the middleware
-            //    if (!_builtNodeEngineHost.Properties.ContainsKey(AuthenticationMiddlewareSetKey))
-            //    {
-            //        // The Use invocations will set the property on the outer pipeline,
-            //        // but we want to set it on the inner pipeline as well.
-            //        _builtNodeEngineHost.Properties[AuthenticationMiddlewareSetKey] = true;
-            //        engine.UseAuthentication();
-            //    }
-            //}
-
-            //if (serviceProviderIsService?.IsService(typeof(IAuthorizationHandlerProvider)) is true)
-            //{
-            //    if (!_builtNodeEngineHost.Properties.ContainsKey(AuthorizationMiddlewareSetKey))
-            //    {
-            //        _builtNodeEngineHost.Properties[AuthorizationMiddlewareSetKey] = true;
-            //        engine.UseAuthorization();
-            //    }
-            //}
+            processAuthMiddlewares?.Invoke();
 
             // Wire the source pipeline to run in the destination pipeline
             //engine.Use(next =>

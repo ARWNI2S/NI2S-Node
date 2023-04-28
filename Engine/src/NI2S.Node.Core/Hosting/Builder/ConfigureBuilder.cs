@@ -16,9 +16,9 @@ namespace NI2S.Node.Hosting.Builder
 
         public MethodInfo MethodInfo { get; }
 
-        public Action<INodeEngineBuilder> Build(object instance) => builder => Invoke(instance, builder);
+        public Action<IEngineBuilder> Build(object instance) => builder => Invoke(instance, builder);
 
-        private void Invoke(object instance, INodeEngineBuilder builder)
+        private void Invoke(object instance, IEngineBuilder builder)
         {
             // Create a scope for Configure, this allows creating scoped dependencies
             // without the hassle of manually creating a scope.
@@ -29,7 +29,7 @@ namespace NI2S.Node.Hosting.Builder
             for (var index = 0; index < parameterInfos.Length; index++)
             {
                 var parameterInfo = parameterInfos[index];
-                if (parameterInfo.ParameterType == typeof(INodeEngineBuilder))
+                if (parameterInfo.ParameterType == typeof(IEngineBuilder))
                 {
                     parameters[index] = builder;
                 }

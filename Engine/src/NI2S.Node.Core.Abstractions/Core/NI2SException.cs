@@ -6,7 +6,7 @@ using System.Runtime.Serialization;
 namespace NI2S.Node.Core
 {
     /// <summary>
-    /// Represents errors that occur during application execution
+    /// Represents errors that occur during engine execution
     /// </summary>
     [Serializable]
     public partial class NI2SException : Exception

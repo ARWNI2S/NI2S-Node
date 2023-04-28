@@ -9,8 +9,12 @@ namespace NI2S.Node.Hosting.Internal
     internal sealed class HostingEnvironment : IHostingEnvironment, INodeHostEnvironment
 #pragma warning restore CS0618 // Type or member is obsolete
     {
-        public string EnvironmentName { get; set; } = Environments.Production;
-
+        public string EnvironmentName { get; set; } =
+#if !DEBUG
+            Environments.Production;
+#else
+            Environments.Development;
+#endif
         public string ApplicationName { get; set; }
 
         public string NodeRootPath { get; set; } = default!;

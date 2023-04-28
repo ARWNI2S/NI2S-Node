@@ -8,7 +8,7 @@ namespace NI2S.Node.Hosting
     public static class NodeHostDefaults
     {
         /// <summary>
-        /// The configuration key associated with an application name.
+        /// The configuration key associated with an engine name.
         /// </summary>
         public static readonly string ApplicationKey = "applicationName";
 
@@ -33,7 +33,7 @@ namespace NI2S.Node.Hosting
         public static readonly string DetailedErrorsKey = "detailedErrors";
 
         /// <summary>
-        /// The configuration key associated with the application's environment setting.
+        /// The configuration key associated with the engine's environment setting.
         /// </summary>
         public static readonly string EnvironmentKey = "environment";
 

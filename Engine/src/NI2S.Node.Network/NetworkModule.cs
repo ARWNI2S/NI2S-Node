@@ -9,12 +9,14 @@ namespace NI2S.Node.Core
 {
     public sealed class NetworkModule : EngineModule
     {
-        public override void Configure(INodeEngineBuilder engine)
+        public NetworkModule() : base(new ModuleDescriptor() { Author = "", }) { }
+
+        public override void ConfigureModule(IEngineBuilder engine)
         {
 
         }
 
-        public override void ConfigureServices(IServiceCollection services, IConfiguration configuration)
+        public override void ConfigureModuleServices(IServiceCollection services, IConfiguration configuration)
         {
 
         }

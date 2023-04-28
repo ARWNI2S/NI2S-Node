@@ -14,7 +14,7 @@ namespace NI2S.Node.Hosting
     public static class GenericHostNodeHostBuilderExtensions
     {
         /// <summary>
-        /// Adds and configures an ASP.NET Core web application.
+        /// Adds and configures an ASP.NET Core web engine.
         /// </summary>
         /// <param name="builder">The <see cref="IHostBuilder"/> to add the <see cref="INodeHostBuilder"/> to.</param>
         /// <param name="configure">The delegate that configures the <see cref="INodeHostBuilder"/>.</param>
@@ -30,13 +30,12 @@ namespace NI2S.Node.Hosting
         }
 
         /// <summary>
-        /// Adds and configures an ASP.NET Core web application.
+        /// Adds and configures an ASP.NET Core web engine.
         /// </summary>
         /// <param name="builder">The <see cref="IHostBuilder"/> to add the <see cref="INodeHostBuilder"/> to.</param>
         /// <param name="configure">The delegate that configures the <see cref="INodeHostBuilder"/>.</param>
         /// <param name="configureNodeHostBuilder">The delegate that configures the <see cref="NodeHostBuilderOptions"/>.</param>
         /// <returns>The <see cref="IHostBuilder"/>.</returns>
-        /* 001.2.1 - new NodeEngineHostBuilder(...) -> bootstrapHostBuilder.ConfigureNodeHostDefaults(...) -> builder.ConfigureNodeHost(...) */
         public static IHostBuilder ConfigureNodeHost(this IHostBuilder builder, Action<INodeHostBuilder> configure, Action<NodeHostBuilderOptions> configureNodeHostBuilder)
         {
             if (configure is null)
@@ -59,8 +58,8 @@ namespace NI2S.Node.Hosting
             configureNodeHostBuilder(nodeHostBuilderOptions);
             var nodehostBuilder = new GenericNodeHostBuilder(builder, nodeHostBuilderOptions);
             configure(nodehostBuilder);
-            builder.ConfigureServices((context, services) => 
-            /* 001.3.9 - new NodeEngineHostBuilder(...) -> bootstrapHostBuilder.RunDefaultCallbacks() -> configureServicesAction(Context, _builder.Configuration) */
+            builder.ConfigureServices((context, services) =>
+                                                              /* 001.3.9 - new NodeEngineHostBuilder(...) -> bootstrapHostBuilder.RunDefaultCallbacks() -> configureServicesAction(Context, _builder.Configuration) */
                                                               services.AddHostedService<NodeHostService>());
             return builder;
         }

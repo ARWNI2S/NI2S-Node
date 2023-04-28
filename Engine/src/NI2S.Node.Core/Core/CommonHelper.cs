@@ -1,6 +1,5 @@
 ﻿// Copyrigth (c) 2023 Alternate Reality Worlds. Narrative Interactive Intelligent Simulator.
 
-using NI2S.Node.Core.Configuration;
 using NI2S.Node.Core.Infrastructure;
 using System;
 using System.Collections.Generic;

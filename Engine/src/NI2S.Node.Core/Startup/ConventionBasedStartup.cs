@@ -17,7 +17,7 @@ namespace NI2S.Node
             _methods = methods;
         }
 
-        public void Configure(INodeEngineBuilder app)
+        public void Configure(IEngineBuilder app)
         {
             try
             {

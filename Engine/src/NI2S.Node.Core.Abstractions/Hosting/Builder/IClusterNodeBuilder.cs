@@ -1,6 +1,8 @@
 ﻿// Copyrigth (c) 2023 Alternate Reality Worlds. Narrative Interactive Intelligent Simulator.
 
+using NI2S.Node.Data;
 using System;
+using System.Collections.Generic;
 
 namespace NI2S.Node.Hosting.Builder
 {
@@ -8,10 +10,10 @@ namespace NI2S.Node.Hosting.Builder
     public interface IClusterNodeBuilder
     {
         /// <summary>
-        /// Creates a new <see cref="INodeEngineBuilder"/>.
+        /// Creates a new <see cref="IEngineBuilder"/>.
         /// </summary>
-        /// <returns>The new <see cref="INodeEngineBuilder"/>.</returns>
-        INodeEngineBuilder CreateEngineBuilder();
+        /// <returns>The new <see cref="IEngineBuilder"/>.</returns>
+        IEngineBuilder CreateEngineBuilder();
 
         /// <summary>
         /// Gets the <see cref="IServiceProvider"/> used to resolve services for routes.
@@ -19,9 +21,8 @@ namespace NI2S.Node.Hosting.Builder
         IServiceProvider ServiceProvider { get; }
 
         /// <summary>
-        /// Gets the endpoint data sources configured in the builder.
+        /// Gets the external data sources configured in the builder.
         /// </summary>
-        //ICollection<EndpointDataSource> DataSources { get; }
+        ICollection<IDataSource> DataSources { get; }
     }
-
 }

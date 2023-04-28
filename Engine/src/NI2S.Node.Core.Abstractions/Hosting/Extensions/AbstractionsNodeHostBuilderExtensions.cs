@@ -2,7 +2,7 @@
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using NI2S.Node.Engine;
+using NI2S.Node.Core.Infrastructure;
 using NI2S.Node.Hosting.Builder;
 using System;
 using System.Diagnostics.CodeAnalysis;
@@ -68,9 +68,9 @@ namespace NI2S.Node.Hosting
         /// Specify the server to be used by the web host.
         /// </summary>
         /// <param name="hostBuilder">The <see cref="INodeHostBuilder"/> to configure.</param>
-        /// <param name="engine">The <see cref="INodeEngine"/> to be used.</param>
+        /// <param name="engine">The <see cref="IEngine"/> to be used.</param>
         /// <returns>The <see cref="INodeHostBuilder"/>.</returns>
-        public static INodeHostBuilder UseEngine(this INodeHostBuilder hostBuilder, INodeEngine engine)
+        public static INodeHostBuilder UseEngine(this INodeHostBuilder hostBuilder, IEngine engine)
         {
             if (engine == null)
             {
@@ -89,7 +89,7 @@ namespace NI2S.Node.Hosting
         /// Specify the environment to be used by the web host.
         /// </summary>
         /// <param name="hostBuilder">The <see cref="INodeHostBuilder"/> to configure.</param>
-        /// <param name="environment">The environment to host the application in.</param>
+        /// <param name="environment">The environment to host the engine in.</param>
         /// <returns>The <see cref="INodeHostBuilder"/>.</returns>
         public static INodeHostBuilder UseEnvironment(this INodeHostBuilder hostBuilder, string environment)
         {
@@ -105,7 +105,7 @@ namespace NI2S.Node.Hosting
         /// Specify the content root directory to be used by the web host.
         /// </summary>
         /// <param name="hostBuilder">The <see cref="INodeHostBuilder"/> to configure.</param>
-        /// <param name="contentRoot">Path to root directory of the application.</param>
+        /// <param name="contentRoot">Path to root directory of the engine.</param>
         /// <returns>The <see cref="INodeHostBuilder"/>.</returns>
         public static INodeHostBuilder UseContentRoot(this INodeHostBuilder hostBuilder, string contentRoot)
         {
@@ -137,7 +137,7 @@ namespace NI2S.Node.Hosting
         /// Specify the urls the web host will listen on.
         /// </summary>
         /// <param name="hostBuilder">The <see cref="INodeHostBuilder"/> to configure.</param>
-        /// <param name="urls">The urls the hosted application will listen on.</param>
+        /// <param name="urls">The urls the hosted engine will listen on.</param>
         /// <returns>The <see cref="INodeHostBuilder"/>.</returns>
         public static INodeHostBuilder UseUrls(this INodeHostBuilder hostBuilder, params string[] urls)
         {
@@ -187,7 +187,7 @@ namespace NI2S.Node.Hosting
         /// Start the web host and listen on the specified urls.
         /// </summary>
         /// <param name="hostBuilder">The <see cref="INodeHostBuilder"/> to start.</param>
-        /// <param name="urls">The urls the hosted application will listen on.</param>
+        /// <param name="urls">The urls the hosted engine will listen on.</param>
         /// <returns>The <see cref="INodeHostBuilder"/>.</returns>
         public static INodeHost Start(this INodeHostBuilder hostBuilder, params string[] urls)
         {

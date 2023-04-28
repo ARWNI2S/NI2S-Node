@@ -10,8 +10,6 @@ namespace NI2S.Node.Hosting
 {
     internal static class HostingEnvironmentExtensions
     {
-        /* 001.3.2.1.2 - new NodeEngineHostBuilder(...) -> bootstrapHostBuilder.RunDefaultCallbacks() -> configureAppAction(Context, _builder.Configuration) 
-                         -> GetNodeHostBuilderContext(context) -> nodeHostBuilderContext.HostingEnvironment.Initialize(...) */
         internal static void Initialize(
             this INodeHostEnvironment hostingEnvironment,
             string contentRootPath,

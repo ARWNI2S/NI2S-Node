@@ -1,4 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿// Copyrigth (c) 2023 Alternate Reality Worlds. Narrative Interactive Intelligent Simulator.
+
+
+using Newtonsoft.Json;
 using System;
 
 namespace NI2S.Node.Engine

@@ -85,7 +85,7 @@ namespace NI2S.Node.Hosting
         }
 
         /// <summary>
-        /// Adds a delegate for configuring additional services for the host or web application. This may be called
+        /// Adds a delegate for configuring additional services for the host or web engine. This may be called
         /// multiple times.
         /// </summary>
         /// <param name="configureServices">A delegate for configuring the <see cref="IServiceCollection"/>.</param>
@@ -98,7 +98,7 @@ namespace NI2S.Node.Hosting
         }
 
         /// <summary>
-        /// Adds a delegate for configuring additional services for the host or web application. This may be called
+        /// Adds a delegate for configuring additional services for the host or web engine. This may be called
         /// multiple times.
         /// </summary>
         /// <param name="configureServices">A delegate for configuring the <see cref="IServiceCollection"/>.</param>
@@ -125,7 +125,7 @@ namespace NI2S.Node.Hosting
         }
 
         /// <summary>
-        /// Builds the required services and an <see cref="INodeHost"/> which hosts a web application.
+        /// Builds the required services and an <see cref="INodeHost"/> which hosts a web engine.
         /// </summary>
         public INodeHost Build()
         {
@@ -259,7 +259,7 @@ namespace NI2S.Node.Hosting
             var contentRootPath = ResolveContentRootPath(_options.ContentRootPath, AppContext.BaseDirectory);
 
             // Initialize the hosting environment
-            ((INodeHostEnvironment)_hostingEnvironment).Initialize(contentRootPath, _options);
+            _hostingEnvironment.Initialize(contentRootPath, _options);
             _context.HostingEnvironment = _hostingEnvironment;
 
             var services = new ServiceCollection();
@@ -267,7 +267,6 @@ namespace NI2S.Node.Hosting
             services.AddSingleton<INodeHostEnvironment>(_hostingEnvironment);
             services.AddSingleton<IHostEnvironment>(_hostingEnvironment);
 #pragma warning disable CS0618 // Type or member is obsolete
-            //services.AddSingleton<AspNetCore.Hosting.IHostingEnvironment>(_hostingEnvironment);
             services.AddSingleton<IHostingEnvironment>(_hostingEnvironment);
 #pragma warning restore CS0618 // Type or member is obsolete
             services.AddSingleton(_context);
@@ -288,8 +287,8 @@ namespace NI2S.Node.Hosting
             services.TryAddSingleton(sp => new ActivitySource("Microsoft.AspNetCore"));
             services.TryAddSingleton(DistributedContextPropagator.Current);
 
-            services.AddTransient<IEngineBuilderFactory, NodeEngineBuilderFactory>();
-            services.AddTransient<IWorkContextFactory, DefaultWorkContextFactory>();
+            services.AddTransient<IEngineBuilderFactory, EngineBuilderFactory>();
+            //services.AddTransient<IWorkContextFactory, DefaultWorkContextFactory>();
             //services.AddScoped<IMiddlewareFactory, MiddlewareFactory>();
             services.AddOptions();
             services.AddLogging();
@@ -345,9 +344,9 @@ namespace NI2S.Node.Hosting
         private static void AddEngineServices(IServiceCollection services, IServiceProvider hostingServiceProvider)
         {
             // We are forwarding services from hosting container so hosting container
-            // can still manage their lifetime (disposal) shared instances with application services.
+            // can still manage their lifetime (disposal) shared instances with engine services.
             // NOTE: This code overrides original services lifetime. Instances would always be singleton in
-            // application container.
+            // engine container.
             var listener = hostingServiceProvider.GetService<DiagnosticListener>();
             services.Replace(ServiceDescriptor.Singleton(typeof(DiagnosticListener), listener!));
             services.Replace(ServiceDescriptor.Singleton(typeof(DiagnosticSource), listener!));

@@ -13,8 +13,8 @@ namespace NI2S.Node
 {
     internal sealed class StartupLoader
     {
-        // Creates an <see cref="StartupMethods"/> instance with the actions to run for configuring the application services and the
-        // request pipeline of the application.
+        // Creates an <see cref="StartupMethods"/> instance with the actions to run for configuring the engine services and the
+        // request pipeline of the engine.
         // When using convention based startup, the process for initializing the services is as follows:
         // The host looks for a method with the signature <see cref="IServiceProvider"/> ConfigureServices(<see cref="IServiceCollection"/> services).
         // If it can't find one, it looks for a method with the signature <see cref="void"/> ConfigureServices(<see cref="IServiceCollection"/> services).

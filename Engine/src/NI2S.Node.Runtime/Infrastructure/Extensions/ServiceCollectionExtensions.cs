@@ -6,6 +6,7 @@ using NI2S.Node.Core;
 using NI2S.Node.Core.Configuration;
 using NI2S.Node.Core.Infrastructure;
 using NI2S.Node.Engine;
+using NI2S.Node.Hosting;
 using NI2S.Node.Hosting.Builder;
 using System;
 using System.Linq;
@@ -19,7 +20,7 @@ namespace NI2S.Node.Infrastructure.Extensions
     public static class ServiceCollectionExtensions
     {
         /// <summary>
-        /// Configure base application settings
+        /// Configure base engine settings
         /// </summary>
         /// <param name="services">Collection of service descriptors</param>
         /// <param name="builder">A builder for node engine and services</param>
@@ -35,7 +36,7 @@ namespace NI2S.Node.Infrastructure.Extensions
             CommonHelper.DefaultFileProvider = new NodeFileProvider(builder.Environment);
 
             //register type finder
-            var typeFinder = new NodeEngineTypeFinder();
+            var typeFinder = new EngineTypeFinder();
             Singleton<ITypeFinder>.Instance = typeFinder;
             services.AddSingleton<ITypeFinder>(typeFinder);
 
@@ -53,7 +54,7 @@ namespace NI2S.Node.Infrastructure.Extensions
         }
 
         /// <summary>
-        /// Add services to the application and configure service provider
+        /// Add services to the engine and configure service provider
         /// </summary>
         /// <param name="services">Collection of service descriptors</param>
         /// <param name="builder">A builder for node engine and services</param>
@@ -65,14 +66,14 @@ namespace NI2S.Node.Infrastructure.Extensions
             services.AddNodeContextAccessor();
 
             //initialize plugins
-            //TODO:
-            //var niisCoreBuilder = services.AddNI2SCore();
+            var niisCoreBuilder = services.AddNI2SCore();
+            // TODO: apply required PluginConfig.
             //var pluginConfig = new PluginConfig();
             //builder.Configuration.GetSection(nameof(PluginConfig)).Bind(pluginConfig, options => options.BindNonPublicProperties = true);
             //niisCoreBuilder.ModuleManager.InitializePlugins(pluginConfig);
 
             //create engine and configure service provider
-            var engine = EngineContext.Create();
+            var engine = Core.Infrastructure.EngineContext.Create();
 
             engine.ConfigureServices(services, builder.Configuration);
         }
@@ -81,10 +82,9 @@ namespace NI2S.Node.Infrastructure.Extensions
         /// Register DummyContextAccessor
         /// </summary>
         /// <param name="services">Collection of service descriptors</param>
-        /* 002.3.1 - ConfigureNodeEngineBuilder(...) -> builder.Services.ConfigureEngineServices(...) -> services.AddNodeContextAccessor() */
         public static void AddNodeContextAccessor(this IServiceCollection services)
         {
-            services.AddSingleton<INodeEngineContextAccessor, NodeContextAccessor>();
+            services.AddSingleton<IEngineContextAccessor, NodeContextAccessor>();
         }
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace NI2S.Node.Infrastructure.Extensions
         //}
 
         /// <summary>
-        /// Adds services required for application session state
+        /// Adds services required for engine session state
         /// </summary>
         /// <param name="services">Collection of service descriptors</param>
         //public static void AddDummySession(this IServiceCollection services)
@@ -137,43 +137,44 @@ namespace NI2S.Node.Infrastructure.Extensions
         /// <param name="services">Collection of service descriptors</param>
         public static void AddDistributedCache(this IServiceCollection services)
         {
-            //    var appSettings = Singleton<AppSettings>.Instance;
-            //    var distributedCacheConfig = appSettings.Get<DistributedCacheConfig>();
+            // TODO: apply required AddDistributedCache.
+            //var appSettings = Singleton<AppSettings>.Instance;
+            //var distributedCacheConfig = appSettings.Get<DistributedCacheConfig>();
 
-            //    if (!distributedCacheConfig.Enabled)
-            //        return;
+            //if (!distributedCacheConfig.Enabled)
+            //    return;
 
-            //    switch (distributedCacheConfig.DistributedCacheType)
-            //    {
-            //        case DistributedCacheType.Memory:
-            //            services.AddDistributedMemoryCache();
-            //            break;
+            //switch (distributedCacheConfig.DistributedCacheType)
+            //{
+            //    case DistributedCacheType.Memory:
+            //        services.AddDistributedMemoryCache();
+            //        break;
 
-            //        case DistributedCacheType.SqlServer:
-            //            services.AddDistributedSqlServerCache(options =>
-            //            {
-            //                options.ConnectionString = distributedCacheConfig.ConnectionString;
-            //                options.SchemaName = distributedCacheConfig.SchemaName;
-            //                options.TableName = distributedCacheConfig.TableName;
-            //            });
-            //            break;
+            //    case DistributedCacheType.SqlServer:
+            //        services.AddDistributedSqlServerCache(options =>
+            //        {
+            //            options.ConnectionString = distributedCacheConfig.ConnectionString;
+            //            options.SchemaName = distributedCacheConfig.SchemaName;
+            //            options.TableName = distributedCacheConfig.TableName;
+            //        });
+            //        break;
 
-            //        case DistributedCacheType.Redis:
-            //            services.AddStackExchangeRedisCache(options =>
-            //            {
-            //                options.Configuration = distributedCacheConfig.ConnectionString;
-            //                options.InstanceName = distributedCacheConfig.InstanceName ?? string.Empty;
-            //            });
-            //            break;
+            //    case DistributedCacheType.Redis:
+            //        services.AddStackExchangeRedisCache(options =>
+            //        {
+            //            options.Configuration = distributedCacheConfig.ConnectionString;
+            //            options.InstanceName = distributedCacheConfig.InstanceName ?? string.Empty;
+            //        });
+            //        break;
 
-            //        case DistributedCacheType.RedisSynchronizedMemory:
-            //            services.AddStackExchangeRedisCache(options =>
-            //            {
-            //                options.Configuration = distributedCacheConfig.ConnectionString;
-            //                options.InstanceName = distributedCacheConfig.InstanceName ?? string.Empty;
-            //            });
-            //            break;
-            //    }
+            //    case DistributedCacheType.RedisSynchronizedMemory:
+            //        services.AddStackExchangeRedisCache(options =>
+            //        {
+            //            options.Configuration = distributedCacheConfig.ConnectionString;
+            //            options.InstanceName = distributedCacheConfig.InstanceName ?? string.Empty;
+            //        });
+            //        break;
+            //}
         }
 
         /// <summary>
@@ -255,7 +256,7 @@ namespace NI2S.Node.Infrastructure.Extensions
         //}
 
         /// <summary>
-        /// Add and configure MVC for the application
+        /// Add and configure MVC for the engine
         /// </summary>
         /// <param name="services">Collection of service descriptors</param>
         /// <returns>A builder for configuring MVC services</returns>
@@ -305,8 +306,8 @@ namespace NI2S.Node.Infrastructure.Extensions
         //    services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
 
         //    //register all available validators from NI2S assemblies
-        //    var assemblies = mvcBuilder.PartManager.ApplicationParts
-        //        .OfType<AssemblyPart>()
+        //    var assemblies = mvcBuilder.PartManager.NI2SPlugins
+        //        .OfType<NI2SPlugin>()
         //        .Where(part => part.Name.StartsWith("NI2S", StringComparison.InvariantCultureIgnoreCase))
         //        .Select(part => part.Assembly);
         //    services.AddValidatorsFromAssemblies(assemblies);

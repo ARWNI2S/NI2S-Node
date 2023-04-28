@@ -8,17 +8,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Infrastructure\**" />
-    <Compile Remove="Plugins\**" />
     <EmbeddedResource Remove="Infrastructure\**" />
-    <EmbeddedResource Remove="Plugins\**" />
     <None Remove="Infrastructure\**" />
-    <None Remove="Plugins\**" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="CacheKey.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Infrastructure\Extensions\NodeEngineExtensions.cs" />
     <Compile Include="Infrastructure\Extensions\EngineBuilderExtensions.cs" />
     <Compile Include="Infrastructure\Extensions\ServiceCollectionExtensions.cs" />
   </ItemGroup>
@@ -35,10 +31,6 @@
     <ProjectReference Include="$(SourceProjectsPath)\NI2S.Node.Core\NI2S.Node.Core.csproj" />
     <ProjectReference Include="$(SourceProjectsPath)\NI2S.Node.Network\NI2S.Node.Network.csproj" />
     <ProjectReference Include="..\NI2S.Node.Data\NI2S.Node.Data.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Plugins\" />
   </ItemGroup>
 
 </Project>

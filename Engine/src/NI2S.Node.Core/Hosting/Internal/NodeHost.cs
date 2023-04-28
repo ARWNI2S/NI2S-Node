@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Hosting.Internal;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
+using NI2S.Node.Core.Infrastructure;
 using NI2S.Node.Diagnostics;
 using NI2S.Node.Engine;
 using NI2S.Node.Hosting.Builder;
@@ -44,7 +45,7 @@ namespace NI2S.Node.Hosting.Internal
         // Used for testing only
         internal NodeHostOptions Options => _options;
 
-        private INodeEngine Engine { get; set; }
+        private IEngine Engine { get; set; }
 
         public NodeHost(
             IServiceCollection appServices,
@@ -125,7 +126,7 @@ namespace NI2S.Node.Hosting.Internal
             _logger = _applicationServices.GetRequiredService<ILoggerFactory>().CreateLogger("NI2S.Node.Hosting.Diagnostics");
             Log.Starting(_logger);
 
-            var application = BuildEngine();
+            var engine = BuildEngine();
 
             _applicationLifetime = _applicationServices.GetRequiredService<ApplicationLifetime>();
             _hostedServiceExecutor = _applicationServices.GetRequiredService<HostedServiceExecutor>();
@@ -137,8 +138,10 @@ namespace NI2S.Node.Hosting.Internal
             var activitySource = _applicationServices.GetRequiredService<ActivitySource>();
             var propagator = _applicationServices.GetRequiredService<DistributedContextPropagator>();
             var engineContextFactory = _applicationServices.GetRequiredService<IWorkContextFactory>();
-            //var hostingApp = new HostingApplication(application, _logger, diagnosticSource, activitySource, propagator, engineContextFactory);
-            //await Server.StartAsync(hostingApp, cancellationToken).ConfigureAwait(false);
+            // TODO: Do engine runtime.
+            //var runtime = new HostingApplication(engine, _logger, diagnosticSource, activitySource, propagator, engineContextFactory);
+            // TODO: Do engine runtime start.
+            //await Engine.StartAsync(runtime, cancellationToken).ConfigureAwait(false);
             _startedEngine = true;
 
             // Fire IApplicationLifetime.Started
@@ -159,7 +162,7 @@ namespace NI2S.Node.Hosting.Internal
             {
                 foreach (var exception in _hostingStartupErrors.InnerExceptions)
                 {
-                    //_logger.HostingStartupAssemblyError(exception);
+                    _logger.HostingStartupAssemblyError(exception);
                 }
             }
         }
@@ -181,18 +184,11 @@ namespace NI2S.Node.Hosting.Internal
                 return;
             }
 
-            var startup = _hostingServiceProvider.GetService<IStartup>();
-
-            if (startup == null)
-            {
-                throw new InvalidOperationException($"No application configured. Please specify startup via INodeHostBuilder.UseStartup, INodeHostBuilder.Configure, injecting {nameof(IStartup)} or specifying the startup assembly via {nameof(NodeHostDefaults.StartupAssemblyKey)} in the web host configuration.");
-            }
-
-            _startup = startup;
+            _startup = _hostingServiceProvider.GetService<IStartup>() ?? throw new InvalidOperationException($"No engine configured. Please specify startup via INodeHostBuilder.UseStartup, INodeHostBuilder.Configure, injecting {nameof(IStartup)} or specifying the startup assembly via {nameof(NodeHostDefaults.StartupAssemblyKey)} in the web host configuration.");
         }
 
         [MemberNotNull(nameof(Engine))]
-        private INodeEngine BuildEngine()
+        private IEngine BuildEngine()
         {
             Debug.Assert(_applicationServices != null, "Initialize must be called first.");
 
@@ -206,7 +202,7 @@ namespace NI2S.Node.Hosting.Internal
                 builder.EngineServices = _applicationServices;
 
                 var startupFilters = _applicationServices.GetService<IEnumerable<IStartupFilter>>();
-                Action<INodeEngineBuilder> configure = _startup!.Configure;
+                Action<IEngineBuilder> configure = _startup!.Configure;
                 if (startupFilters != null)
                 {
                     foreach (var filter in startupFilters.Reverse())
@@ -250,26 +246,7 @@ namespace NI2S.Node.Hosting.Internal
         {
             Debug.Assert(_applicationServices != null, "Initialize must be called first.");
 
-            if (Engine == null)
-            {
-                Engine = _applicationServices.GetRequiredService<INodeEngine>();
-
-                //var serverAddressesModule = Engine.Modules?.Get<IEngineAddressesModule>();
-                //var addresses = serverAddressesModule?.Addresses;
-                //if (addresses != null && !addresses.IsReadOnly && addresses.Count == 0)
-                //{
-                //    var urls = _config[NodeHostDefaults.EngineUrlsKey] ?? _config[DeprecatedEngineUrlsKey];
-                //    if (!string.IsNullOrEmpty(urls))
-                //    {
-                //        serverAddressesModule!.PreferHostingUrls = NodeHostUtilities.ParseBool(_config[NodeHostDefaults.PreferHostingUrlsKey]);
-
-                //        foreach (var value in urls.Split(';', StringSplitOptions.RemoveEmptyEntries))
-                //        {
-                //            addresses.Add(value);
-                //        }
-                //    }
-                //}
-            }
+            Engine ??= _applicationServices.GetRequiredService<IEngine>();
         }
 
         public async Task StopAsync(CancellationToken cancellationToken = default)

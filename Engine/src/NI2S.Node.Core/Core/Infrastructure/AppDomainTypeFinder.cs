@@ -131,7 +131,7 @@ namespace NI2S.Node.Core.Infrastructure
                     var an = AssemblyName.GetAssemblyName(dllPath);
                     if (Matches(an.FullName) && !loadedAssemblyNames.Contains(an.FullName))
                     {
-                        App.Load(an);
+                        Domain.Load(an);
                     }
 
                     //old loading stuff
@@ -292,7 +292,7 @@ namespace NI2S.Node.Core.Infrastructure
         #region Properties
 
         /// <summary>The app domain to look for types in.</summary>
-        public virtual AppDomain App => AppDomain.CurrentDomain;
+        public virtual AppDomain Domain => AppDomain.CurrentDomain;
 
         /// <summary>Gets or sets whether NI2S should iterate assemblies in the app domain when loading NI2S types. Loading patterns are applied when loading these assemblies.</summary>
         public bool LoadAppDomainAssemblies { get; set; } = true;

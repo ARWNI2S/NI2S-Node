@@ -5,15 +5,15 @@ using NI2S.Node.Engine;
 namespace NI2S.Node.Hosting.Builder
 {
     /// <summary>
-    /// Provides an interface for implementing a factory that produces <see cref="INodeEngineBuilder"/> instances.
+    /// Provides an interface for implementing a factory that produces <see cref="IEngineBuilder"/> instances.
     /// </summary>
     public interface IEngineBuilderFactory
     {
         /// <summary>
-        /// Create an <see cref="INodeEngineBuilder" /> builder given a <paramref name="engineModules" />
+        /// Create an <see cref="IEngineBuilder" /> builder given a <paramref name="engineModules" />
         /// </summary>
         /// <param name="engineModules">An <see cref="IModuleCollection"/> of HTTP features.</param>
-        /// <returns>An <see cref="INodeEngineBuilder"/> configured with <paramref name="engineModules"/>.</returns>
-        INodeEngineBuilder CreateBuilder(IModuleCollection engineModules);
+        /// <returns>An <see cref="IEngineBuilder"/> configured with <paramref name="engineModules"/>.</returns>
+        IEngineBuilder CreateBuilder(IModuleCollection engineModules);
     }
 }

@@ -7,15 +7,15 @@ using System;
 namespace NI2S.Node
 {
     /// <summary>
-    /// Base class for initializing services and middlewares used by an application.
+    /// Base class for initializing services and middlewares used by an engine.
     /// </summary>
     public abstract class StartupBase : IStartup
     {
         /// <summary>
-        /// Configures the application.
+        /// Configures the engine.
         /// </summary>
-        /// <param name="app">An <see cref="INodeEngineBuilder"/> for the app to configure.</param>
-        public abstract void Configure(INodeEngineBuilder app);
+        /// <param name="app">An <see cref="IEngineBuilder"/> for the app to configure.</param>
+        public abstract void Configure(IEngineBuilder app);
 
         IServiceProvider IStartup.ConfigureServices(IServiceCollection services)
         {

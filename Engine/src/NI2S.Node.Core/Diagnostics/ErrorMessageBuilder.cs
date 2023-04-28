@@ -4,7 +4,7 @@ namespace NI2S.Node.Diagnostics
 {
     internal class ErrorMessageBuilder
     {
-        //internal static INodeEngine BuildErrorMessage(IFileProvider rootFileProvider, ILogger logger, bool showDetailedErrors, Exception ex)
+        //internal static IEngine BuildErrorMessage(IFileProvider rootFileProvider, ILogger logger, bool showDetailedErrors, Exception ex)
         //{
         //    throw new NotImplementedException();
         //}

@@ -1,4 +1,7 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿// Copyrigth (c) 2023 Alternate Reality Worlds. Narrative Interactive Intelligent Simulator.
+
+
+using Microsoft.Extensions.Configuration;
 using System;
 
 namespace NI2S.Node.Engine.Internal

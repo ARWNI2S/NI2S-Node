@@ -9,12 +9,16 @@ namespace NI2S.Node.Core
 {
     public sealed class DataModule : EngineModule
     {
-        public override void Configure(INodeEngineBuilder engine)
+        public DataModule() : base(new ModuleDescriptor() { })
+        {
+        }
+
+        public override void ConfigureModule(IEngineBuilder engine)
         {
 
         }
 
-        public override void ConfigureServices(IServiceCollection services, IConfiguration configuration)
+        public override void ConfigureModuleServices(IServiceCollection services, IConfiguration configuration)
         {
 
         }

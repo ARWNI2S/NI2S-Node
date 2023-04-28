@@ -4,8 +4,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using NI2S.Node.Hosting;
 using NI2S.Node.Hosting.Builder;
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Reflection;
@@ -125,6 +127,7 @@ namespace NI2S.Node.Core
             {
                 /* 001.3.3.2 - new NodeEngineHostBuilder(...) -> bootstrapHostBuilder.RunDefaultCallbacks() -> configureAppAction(...)
                                -> configureDelegate(nodehostBuilderContext, builder)*/
+                //TODO STATIC ASSETS
                 if (ctx.HostingEnvironment.IsDevelopment())
                 {
                     StaticAssetsLoader.UseStaticAssets(ctx.HostingEnvironment, ctx.Configuration);
@@ -134,18 +137,11 @@ namespace NI2S.Node.Core
             builder.UseNodeEngine((builderContext, options) =>
             {
                 options.Configure(builderContext.Configuration.GetSection("nodeengine"), reloadOnChange: true);
-            });
-
-
-
-
-            //builder.UseSocketServer((builderContext, options) =>
-            //{
-            //    options.Configure(builderContext.Configuration.GetSection("SocketServer"), reloadOnChange: true);
-            //})
-            //.ConfigureServices((hostingContext, services) =>
-            //{
-                // Fallback
+            }).ConfigureServices((hostingContext, services) =>
+            {
+                /* 001.3.8.1 - new NodeEngineHostBuilder(...) -> bootstrapHostBuilder.RunDefaultCallbacks() -> configureServicesAction(Context, _builder.Configuration)
+                               -> configureServices(...) */
+                //// Fallback
                 //services.PostConfigure<HostFilteringOptions>(options =>
                 //{
                 //    if (options.AllowedHosts == null || options.AllowedHosts.Count == 0)
@@ -165,10 +161,7 @@ namespace NI2S.Node.Core
                 //services.AddTransient<IConfigureOptions<ForwardedHeadersOptions>, ForwardedHeadersOptionsSetup>();
 
                 //services.AddRouting();
-            //})
-            //.UseIIS()
-            //.UseIISIntegration()
-            //;
+            });
         }
 
         /// <summary>

@@ -23,7 +23,6 @@ namespace NI2S.Node.Hosting.Builder
         private readonly List<Action<HostBuilderContext, object>> _configureContainerActions = new();
         private IServiceProviderFactory<object> _serviceProviderFactory;
 
-        /* 001.4 - new NodeEngineHostBuilder(...) -> new ConfigureHostBuilder(...) */
         internal ConfigureHostBuilder(
             HostBuilderContext context,
             ConfigurationManager configuration,
@@ -78,21 +77,21 @@ namespace NI2S.Node.Hosting.Builder
             configureDelegate(_configuration);
 
             // Disallow changing any host settings this late in the cycle, the reasoning is that we've already loaded the default configuration
-            // and done other things based on environment name, application name or content root.
+            // and done other things based on environment name, engine name or content root.
             if (!string.Equals(previousApplicationName, _configuration[HostDefaults.ApplicationKey], StringComparison.OrdinalIgnoreCase))
             {
-                throw new NotSupportedException($"The application name changed from \"{previousApplicationName}\" to \"{_configuration[HostDefaults.ApplicationKey]}\". Changing the host configuration using NodeEngineBuilder.Host is not supported. Use NodeEngine.CreateBuilder(NodeEngineOptions) instead.");
+                throw new NotSupportedException($"The engine name changed from \"{previousApplicationName}\" to \"{_configuration[HostDefaults.ApplicationKey]}\". Changing the host configuration using EngineBuilder.Host is not supported. Use NodeEngine.CreateBuilder(NodeEngineOptions) instead.");
             }
 
             if (!string.Equals(previousContentRootConfig, _configuration[HostDefaults.ContentRootKey], StringComparison.OrdinalIgnoreCase)
                 && !string.Equals(previousContentRoot, PathResolver.ResolvePath(_configuration[HostDefaults.ContentRootKey]), StringComparison.OrdinalIgnoreCase))
             {
-                throw new NotSupportedException($"The content root changed from \"{previousContentRoot}\" to \"{PathResolver.ResolvePath(_configuration[HostDefaults.ContentRootKey])}\". Changing the host configuration using NodeEngineBuilder.Host is not supported. Use NodeEngine.CreateBuilder(NodeEngineOptions) instead.");
+                throw new NotSupportedException($"The content root changed from \"{previousContentRoot}\" to \"{PathResolver.ResolvePath(_configuration[HostDefaults.ContentRootKey])}\". Changing the host configuration using EngineBuilder.Host is not supported. Use NodeEngine.CreateBuilder(NodeEngineOptions) instead.");
             }
 
             if (!string.Equals(previousEnvironment, _configuration[HostDefaults.EnvironmentKey], StringComparison.OrdinalIgnoreCase))
             {
-                throw new NotSupportedException($"The environment changed from \"{previousEnvironment}\" to \"{_configuration[HostDefaults.EnvironmentKey]}\". Changing the host configuration using NodeEngineBuilder.Host is not supported. Use NodeEngine.CreateBuilder(NodeEngineOptions) instead.");
+                throw new NotSupportedException($"The environment changed from \"{previousEnvironment}\" to \"{_configuration[HostDefaults.EnvironmentKey]}\". Changing the host configuration using EngineBuilder.Host is not supported. Use NodeEngine.CreateBuilder(NodeEngineOptions) instead.");
             }
 
             return this;
@@ -127,7 +126,7 @@ namespace NI2S.Node.Hosting.Builder
 
         IHostBuilder ISupportsConfigureNodeHost.ConfigureNodeHost(Action<INodeHostBuilder> configure, Action<NodeHostBuilderOptions> configureOptions)
         {
-            throw new NotSupportedException("ConfigureNodeHost() is not supported by NodeEngineBuilder.Host. Use the NodeEngine returned by NodeEngineBuilder.Build() instead.");
+            throw new NotSupportedException("ConfigureNodeHost() is not supported by EngineBuilder.Host. Use the NodeEngine returned by EngineBuilder.Build() instead.");
         }
 
         /* 003.1 - ... -> .Build() -> Host.ApplyServiceProviderFactory(...) */

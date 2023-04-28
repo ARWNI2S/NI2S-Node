@@ -7,7 +7,7 @@ using System;
 namespace NI2S.Node
 {
     /// <summary>
-    /// Provides an interface for initializing services and middleware used by an application.
+    /// Provides an interface for initializing services and middleware used by an engine.
     /// </summary>
     public interface IStartup
     {
@@ -20,7 +20,7 @@ namespace NI2S.Node
         /// <summary>
         /// Configures the engine.
         /// </summary>
-        /// <param name="engine">An <see cref="INodeEngineBuilder"/> for the engine to configure.</param>
-        void Configure(INodeEngineBuilder engine);
+        /// <param name="engine">An <see cref="IEngineBuilder"/> for the engine to configure.</param>
+        void Configure(IEngineBuilder engine);
     }
 }

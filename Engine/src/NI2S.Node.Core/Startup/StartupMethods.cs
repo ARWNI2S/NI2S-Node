@@ -9,7 +9,7 @@ namespace NI2S.Node
 {
     internal sealed class StartupMethods
     {
-        public StartupMethods(object instance, Action<INodeEngineBuilder> configure, Func<IServiceCollection, IServiceProvider> configureServices)
+        public StartupMethods(object instance, Action<IEngineBuilder> configure, Func<IServiceCollection, IServiceProvider> configureServices)
         {
             Debug.Assert(configure != null);
             Debug.Assert(configureServices != null);
@@ -21,6 +21,6 @@ namespace NI2S.Node
 
         public object StartupInstance { get; }
         public Func<IServiceCollection, IServiceProvider> ConfigureServicesDelegate { get; }
-        public Action<INodeEngineBuilder> ConfigureDelegate { get; }
+        public Action<IEngineBuilder> ConfigureDelegate { get; }
     }
 }

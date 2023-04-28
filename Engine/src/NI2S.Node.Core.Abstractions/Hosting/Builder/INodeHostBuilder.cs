@@ -12,7 +12,7 @@ namespace NI2S.Node.Hosting.Builder
     public interface INodeHostBuilder
     {
         /// <summary>
-        /// Builds an <see cref="INodeHost"/> which hosts a web application.
+        /// Builds an <see cref="INodeHost"/> which hosts a web engine.
         /// </summary>
         INodeHost Build();
 
@@ -28,7 +28,7 @@ namespace NI2S.Node.Hosting.Builder
         INodeHostBuilder ConfigureNodeConfiguration(Action<NodeHostBuilderContext, IConfigurationBuilder> configureDelegate);
 
         /// <summary>
-        /// Adds a delegate for configuring additional services for the host or web application. This may be called
+        /// Adds a delegate for configuring additional services for the host or web engine. This may be called
         /// multiple times.
         /// </summary>
         /// <param name="configureServices">A delegate for configuring the <see cref="IServiceCollection"/>.</param>
@@ -36,7 +36,7 @@ namespace NI2S.Node.Hosting.Builder
         INodeHostBuilder ConfigureServices(Action<IServiceCollection> configureServices);
 
         /// <summary>
-        /// Adds a delegate for configuring additional services for the host or web application. This may be called
+        /// Adds a delegate for configuring additional services for the host or web engine. This may be called
         /// multiple times.
         /// </summary>
         /// <param name="configureServices">A delegate for configuring the <see cref="IServiceCollection"/>.</param>

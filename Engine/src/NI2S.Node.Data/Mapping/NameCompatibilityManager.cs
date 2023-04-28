@@ -1,4 +1,4 @@
-﻿using NI2S.Node.Core.ComponentModel;
+﻿using NI2S.Node.ComponentModel;
 using NI2S.Node.Core.Infrastructure;
 using System;
 using System.Collections.Generic;

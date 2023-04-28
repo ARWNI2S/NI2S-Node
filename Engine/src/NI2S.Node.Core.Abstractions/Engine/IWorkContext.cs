@@ -5,7 +5,7 @@ namespace NI2S.Node.Engine
     public interface IWorkContext
     {
         IModuleCollection Modules { get; }
-        //NodeMessage Message { get; }
+
         string TraceIdentifier { get; }
     }
 }

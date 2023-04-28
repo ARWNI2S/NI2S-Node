@@ -18,7 +18,7 @@ namespace NI2S.Node.Hosting
         /// <summary>
         /// Configure the <see cref="INodeHostEnvironment"/> to use static web assets.
         /// </summary>
-        /// <param name="environment">The application <see cref="INodeHostEnvironment"/>.</param>
+        /// <param name="environment">The engine <see cref="INodeHostEnvironment"/>.</param>
         /// <param name="configuration">The host <see cref="IConfiguration"/>.</param>
         public static void UseStaticAssets(INodeHostEnvironment environment, IConfiguration configuration)
         {

@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using NI2S.Node.Core.Infrastructure;
 using NI2S.Node.Diagnostics;
 using NI2S.Node.Engine;
 using NI2S.Node.Hosting.Builder;
@@ -19,7 +20,7 @@ namespace NI2S.Node.Hosting
     internal sealed partial class NodeHostService : IHostedService
     {
         public NodeHostService(IOptions<GenericNodeHostServiceOptions> options,
-                                     INodeEngine engine,
+                                     IEngine engine,
                                      ILoggerFactory loggerFactory,
                                      DiagnosticListener diagnosticListener,
                                      ActivitySource activitySource,
@@ -45,7 +46,7 @@ namespace NI2S.Node.Hosting
         }
 
         public GenericNodeHostServiceOptions Options { get; }
-        public INodeEngine Engine { get; }
+        public IEngine Engine { get; }
         public ILogger Logger { get; }
         // Only for high level lifetime events
         public ILogger LifetimeLogger { get; }
@@ -62,46 +63,13 @@ namespace NI2S.Node.Hosting
         {
             HostingEventSource.Log.HostStart();
 
-            //var engineAddressesModule = Engine.Modules.Get<IEngineAddressesModule>();
-            //var addresses = engineAddressesModule?.Addresses;
-            //if (addresses != null && !addresses.IsReadOnly && addresses.Count == 0) 
-            //{
-            //    // We support reading "urls" from app configuration
-            //    var urls = Configuration[NodeHostDefaults.ServerUrlsKey];
+            // TODO: Get Clustering module an get cluster data.
 
-            //    // But fall back to host settings
-            //    if (string.IsNullOrEmpty(urls))
-            //    {
-            //        urls = Options.NodeHostOptions.ServerUrls;
-            //    }
-
-            //    if (!string.IsNullOrEmpty(urls))
-            //    {
-            //        // We support reading "preferHostingUrls" from app configuration
-            //        var preferHostingUrlsConfig = Configuration[NodeHostDefaults.PreferHostingUrlsKey];
-
-            //        // But fall back to host settings
-            //        if (!string.IsNullOrEmpty(preferHostingUrlsConfig))
-            //        {
-            //            engineAddressesModule.PreferHostingUrls = NodeHostUtilities.ParseBool(preferHostingUrlsConfig);
-            //        }
-            //        else
-            //        {
-            //            engineAddressesModule.PreferHostingUrls = Options.NodeHostOptions.PreferHostingUrls;
-            //        }
-
-            //        foreach (var value in urls.Split(';', StringSplitOptions.RemoveEmptyEntries))
-            //        {
-            //            addresses.Add(value);
-            //        }
-            //    }
-            //}
-
-            INodeEngine application = null;
+            IEngine engine = null;
 
             try
             {
-                var configure = Options.ConfigureEngine ?? throw new InvalidOperationException($"No application configured. Please specify an application via INodeHostBuilder.UseStartup, INodeHostBuilder.Configure, or specifying the startup assembly via {nameof(NodeHostDefaults.StartupAssemblyKey)} in the web host configuration.");
+                var configure = Options.ConfigureEngine ?? throw new InvalidOperationException($"No engine configured. Please specify an engine via INodeHostBuilder.UseStartup, INodeHostBuilder.Configure, or specifying the startup assembly via {nameof(NodeHostDefaults.StartupAssemblyKey)} in the web host configuration.");
                 var builder = EngineBuilderFactory.CreateBuilder(Engine.Modules);
 
                 foreach (var filter in StartupFilters.Reverse())
@@ -112,11 +80,11 @@ namespace NI2S.Node.Hosting
                 configure(builder);
 
                 // Build the request pipeline
-                application = builder.Build();
+                engine = builder.Build();
             }
             catch (Exception ex)
             {
-                //Logger.EngineError(ex);
+                Logger.EngineError(ex);
 
                 if (!Options.NodeHostOptions.CaptureStartupErrors)
                 {
@@ -125,14 +93,18 @@ namespace NI2S.Node.Hosting
 
                 var showDetailedErrors = HostingEnvironment.IsDevelopment() || Options.NodeHostOptions.DetailedErrors;
 
-                //application = ErrorPageBuilder.BuildErrorPageEngine(HostingEnvironment.ContentRootFileProvider, Logger, showDetailedErrors, ex);
+                // TODO: Do errors.
+                //engine = ErrorPageBuilder.BuildErrorPageEngine(HostingEnvironment.ContentRootFileProvider, Logger, showDetailedErrors, ex);
             }
 
-            //var dummyEngine = new HostingApplication(application, Logger, DiagnosticListener, ActivitySource, Propagator, EngineContextFactory);
+            // TODO: Do engine runtime.
+            //var runtime = new HostingApplication(engine, Logger, DiagnosticListener, ActivitySource, Propagator, EngineContextFactory);
 
-            //await Engine.StartAsync(dummyEngine, cancellationToken);
-            //HostingEventSource.Log.EngineReady();
+            // TODO: Do engine runtime start.
+            //await Engine.StartAsync(runtime, cancellationToken);
+            HostingEventSource.Log.EngineReady();
 
+            // TODO: Do cluster listening.
             //if (addresses != null)
             //{
             //    foreach (var address in addresses)
@@ -153,7 +125,7 @@ namespace NI2S.Node.Hosting
             {
                 foreach (var exception in Options.HostingStartupExceptions.InnerExceptions)
                 {
-                    //Logger.HostingStartupAssemblyError(exception);
+                    Logger.HostingStartupAssemblyError(exception);
                 }
             }
         }
@@ -162,7 +134,8 @@ namespace NI2S.Node.Hosting
         {
             try
             {
-                //await Server.StopAsync(cancellationToken);
+                // TODO: Do engine runtime stop.
+                //await Engine.StopAsync(cancellationToken);
             }
             finally
             {

@@ -1,6 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿// Copyrigth (c) 2023 Alternate Reality Worlds. Narrative Interactive Intelligent Simulator.
+
+using Newtonsoft.Json;
 using NI2S.Node.Core;
-using NI2S.Node.Core.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,8 +20,6 @@ namespace NI2S.Node.Engine
         public ModuleDescriptor()
         {
             SupportedVersions = new List<string>();
-            LimitedToStores = new List<int>();
-            LimitedToCustomerRoles = new List<int>();
             DependsOn = new List<string>();
         }
 
@@ -41,9 +40,8 @@ namespace NI2S.Node.Engine
             //get module descriptor from the JSON file
             var descriptor = JsonConvert.DeserializeObject<ModuleDescriptor>(text);
 
-            //nopCommerce 2.00 didn't have 'SupportedVersions' parameter, so let's set it to "2.00"
             if (!descriptor.SupportedVersions.Any())
-                descriptor.SupportedVersions.Add("2.00");
+                descriptor.SupportedVersions.Add("0.10");
 
             return descriptor;
         }
@@ -56,7 +54,7 @@ namespace NI2S.Node.Engine
         public virtual TModule Instance<TModule>() where TModule : class, IEngineModule
         {
             //try to resolve module as unregistered service
-            var instance = EngineContext.Current.ResolveUnregistered(ModuleType);
+            var instance = Core.Infrastructure.EngineContext.Current.ResolveUnregistered(ModuleType);
 
             //try to get typed instance
             var typedInstance = instance as TModule;
@@ -158,18 +156,6 @@ namespace NI2S.Node.Engine
         public virtual string Description { get; set; }
 
         /// <summary>
-        /// Gets or sets the list of store identifiers in which this module is available. If empty, then this module is available in all stores
-        /// </summary>
-        [JsonProperty(PropertyName = "LimitedToStores")]
-        public virtual IList<int> LimitedToStores { get; set; }
-
-        /// <summary>
-        /// Gets or sets the list of customer role identifiers for which this module is available. If empty, then this module is available for all ones.
-        /// </summary>
-        [JsonProperty(PropertyName = "LimitedToCustomerRoles")]
-        public virtual IList<int> LimitedToCustomerRoles { get; set; }
-
-        /// <summary>
         /// Gets or sets the list of modules' system name that this module depends on
         /// </summary>
         [JsonProperty(PropertyName = "DependsOnSystemNames")]
@@ -200,7 +186,7 @@ namespace NI2S.Node.Engine
         public virtual IList<string> ModuleFiles { get; set; }
 
         /// <summary>
-        /// Gets or sets the assembly that is active in the application
+        /// Gets or sets the assembly that is active in the engine
         /// </summary>
         [JsonIgnore]
         public virtual Assembly ReferencedAssembly { get; set; }

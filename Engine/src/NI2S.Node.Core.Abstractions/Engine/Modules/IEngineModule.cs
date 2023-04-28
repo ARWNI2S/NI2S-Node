@@ -11,17 +11,17 @@ namespace NI2S.Node.Engine
         ModuleDescriptorBase ModuleDescriptor { get; set; }
 
         /// <summary>
-        /// Add and configure any of the middleware
+        /// Add and configure any of the module services.
         /// </summary>
-        /// <param name="services">Collection of service descriptors</param>
-        /// <param name="configuration">Configuration of the node engine</param>
-        void ConfigureServices(IServiceCollection services, IConfiguration configuration);
+        /// <param name="services">Collection of service descriptors.</param>
+        /// <param name="configuration">Configuration of the node engine.</param>
+        void ConfigureModuleServices(IServiceCollection services, IConfiguration configuration);
 
         /// <summary>
-        /// Configure the using of added middleware
+        /// Configure the using of added module.
         /// </summary>
         /// <param name="engine">Builder for configuring a NI2S node engine.</param>
-        void Configure(INodeEngineBuilder engine);
+        void ConfigureModule(IEngineBuilder engine);
 
     }
 }

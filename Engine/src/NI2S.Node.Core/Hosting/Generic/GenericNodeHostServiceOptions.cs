@@ -8,7 +8,7 @@ namespace NI2S.Node.Hosting
 {
     internal sealed class GenericNodeHostServiceOptions
     {
-        public Action<INodeEngineBuilder> ConfigureEngine { get; set; }
+        public Action<IEngineBuilder> ConfigureEngine { get; set; }
 
         public NodeHostOptions NodeHostOptions { get; set; } = default!; // Always set when options resolved by DI
 

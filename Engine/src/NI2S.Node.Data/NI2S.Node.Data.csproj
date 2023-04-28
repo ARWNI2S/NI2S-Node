@@ -23,6 +23,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="Mapping\INameCompatibility.cs" />
+    <Compile Include="Mapping\NameCompatibilityManager.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="$(SourceProjectsPath)\NI2S.Node.Core\NI2S.Node.Core.csproj" />
   </ItemGroup>
 

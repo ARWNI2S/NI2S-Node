@@ -1,8 +1,8 @@
 ﻿// Copyrigth (c) 2023 Alternate Reality Worlds. Narrative Interactive Intelligent Simulator.
 
+using NI2S.Node.Hosting;
 using System;
 using System.Diagnostics.CodeAnalysis;
-using NI2S.Node.Hosting;
 
 namespace NI2S.Node
 {
@@ -33,7 +33,7 @@ namespace NI2S.Node
 
         /// <summary>
         /// The implementation of <see cref="INodeStartup"/> that should be loaded when
-        /// starting an application.
+        /// starting an engine.
         /// </summary>
         [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)]
         public Type HostingStartupType { get; }

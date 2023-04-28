@@ -7,25 +7,25 @@ using System.Diagnostics.CodeAnalysis;
 namespace NI2S.Node.Hosting.Infrastructure
 {
     /// <summary>
-    /// An interface implemented by INodeHostBuilders that handle <see cref="NodeHostBuilderExtensions.Configure(INodeHostBuilder, Action{INodeEngineBuilder})"/>,
+    /// An interface implemented by INodeHostBuilders that handle <see cref="NodeHostBuilderExtensions.Configure(INodeHostBuilder, Action{IEngineBuilder})"/>,
     /// <see cref="NodeHostBuilderExtensions.UseStartup(INodeHostBuilder, Type)"/> and <see cref="NodeHostBuilderExtensions.UseStartup{TStartup}(INodeHostBuilder, Func{NodeHostBuilderContext, TStartup})"/>
     /// directly.
     /// </summary>
     internal interface ISupportsStartup
     {
         /// <summary>
-        /// Specify the startup method to be used to configure the web application.
+        /// Specify the startup method to be used to configure the web engine.
         /// </summary>
-        /// <param name="configure">The delegate that configures the <see cref="INodeEngineBuilder"/>.</param>
+        /// <param name="configure">The delegate that configures the <see cref="IEngineBuilder"/>.</param>
         /// <returns>The <see cref="INodeHostBuilder"/>.</returns>
-        INodeHostBuilder Configure(Action<INodeEngineBuilder> configure);
+        INodeHostBuilder Configure(Action<IEngineBuilder> configure);
 
         /// <summary>
-        /// Specify the startup method to be used to configure the web application.
+        /// Specify the startup method to be used to configure the web engine.
         /// </summary>
-        /// <param name="configure">The delegate that configures the <see cref="INodeEngineBuilder"/>.</param>
+        /// <param name="configure">The delegate that configures the <see cref="IEngineBuilder"/>.</param>
         /// <returns>The <see cref="INodeHostBuilder"/>.</returns>
-        INodeHostBuilder Configure(Action<NodeHostBuilderContext, INodeEngineBuilder> configure);
+        INodeHostBuilder Configure(Action<NodeHostBuilderContext, IEngineBuilder> configure);
 
         /// <summary>
         /// Specify the startup type to be used by the web host.

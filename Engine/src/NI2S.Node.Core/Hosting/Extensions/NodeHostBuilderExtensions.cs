@@ -20,12 +20,12 @@ namespace NI2S.Node.Hosting
     public static class NodeHostBuilderExtensions
     {
         /// <summary>
-        /// Specify the startup method to be used to configure the web application.
+        /// Specify the startup method to be used to configure the web engine.
         /// </summary>
         /// <param name="hostBuilder">The <see cref="INodeHostBuilder"/> to configure.</param>
-        /// <param name="configureApp">The delegate that configures the <see cref="INodeEngineBuilder"/>.</param>
+        /// <param name="configureApp">The delegate that configures the <see cref="IEngineBuilder"/>.</param>
         /// <returns>The <see cref="INodeHostBuilder"/>.</returns>
-        public static INodeHostBuilder Configure(this INodeHostBuilder hostBuilder, Action<INodeEngineBuilder> configureApp)
+        public static INodeHostBuilder Configure(this INodeHostBuilder hostBuilder, Action<IEngineBuilder> configureApp)
         {
             if (configureApp == null)
             {
@@ -46,20 +46,18 @@ namespace NI2S.Node.Hosting
             {
                 services.AddSingleton<IStartup>(sp =>
                 {
-                    return new NodeEngineStartup(sp.GetRequiredService<IServiceProviderFactory<IServiceCollection>>(), (app => configureApp(app)));
+                    return new EngineStartup(sp.GetRequiredService<IServiceProviderFactory<IServiceCollection>>(), (app => configureApp(app)));
                 });
             });
         }
 
         /// <summary>
-        /// Specify the startup method to be used to configure the web application.
+        /// Specify the startup method to be used to configure the web engine.
         /// </summary>
         /// <param name="hostBuilder">The <see cref="INodeHostBuilder"/> to configure.</param>
-        /// <param name="configureApp">The delegate that configures the <see cref="INodeEngineBuilder"/>.</param>
+        /// <param name="configureApp">The delegate that configures the <see cref="IEngineBuilder"/>.</param>
         /// <returns>The <see cref="INodeHostBuilder"/>.</returns>
-        /* 001.2.1.3.2.1 - new NodeEngineHostBuilder(...) -> bootstrapHostBuilder.ConfigureNodeHostDefaults(...) -> builder.ConfigureNodeHost(...)
-                        -> configure(nodehostBuilder) -> configure(nodeHostBuilder) -> nodeHostBuilder.Configure(...) */
-        public static INodeHostBuilder Configure(this INodeHostBuilder hostBuilder, Action<NodeHostBuilderContext, INodeEngineBuilder> configureApp)
+        public static INodeHostBuilder Configure(this INodeHostBuilder hostBuilder, Action<NodeHostBuilderContext, IEngineBuilder> configureApp)
         {
             if (configureApp == null)
             {
@@ -80,7 +78,7 @@ namespace NI2S.Node.Hosting
             {
                 services.AddSingleton<IStartup>(sp =>
                 {
-                    return new NodeEngineStartup(sp.GetRequiredService<IServiceProviderFactory<IServiceCollection>>(), (app => configureApp(context, app)));
+                    return new EngineStartup(sp.GetRequiredService<IServiceProviderFactory<IServiceCollection>>(), (app => configureApp(context, app)));
                 });
             });
         }
@@ -179,7 +177,7 @@ namespace NI2S.Node.Hosting
         /// Specify the startup type to be used by the web host.
         /// </summary>
         /// <param name="hostBuilder">The <see cref="INodeHostBuilder"/> to configure.</param>
-        /// <typeparam name ="TStartup">The type containing the startup methods for the application.</typeparam>
+        /// <typeparam name ="TStartup">The type containing the startup methods for the engine.</typeparam>
         /// <returns>The <see cref="INodeHostBuilder"/>.</returns>
         public static INodeHostBuilder UseStartup<[DynamicallyAccessedMembers(StartupLinkerOptions.Accessibility)] TStartup>(this INodeHostBuilder hostBuilder) where TStartup : class
         {

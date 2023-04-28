@@ -15,6 +15,7 @@ namespace NI2S.Node.Core.Infrastructure
         /// Create a static instance of the NI2S engine.
         /// </summary>
         [MethodImpl(MethodImplOptions.Synchronized)]
+        /* 002.3.4 - ConfigureNodeEngineBuilder(...) -> builder.Services.ConfigureEngineServices(...) -> EngineContext.Create(() */
         public static IEngine Create()
         {
             //create NI2SEngine as engine

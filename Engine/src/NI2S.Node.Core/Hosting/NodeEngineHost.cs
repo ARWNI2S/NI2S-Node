@@ -4,6 +4,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using NI2S.Node.Core.Infrastructure;
+using NI2S.Node.Data;
 using NI2S.Node.Engine;
 using NI2S.Node.Hosting.Builder;
 using System;
@@ -16,7 +18,7 @@ namespace NI2S.Node.Hosting
     /// <summary>
     /// Used to configure the NI2S node engine host.
     /// </summary>
-    public sealed class NodeEngineHost : IHost, INodeEngineBuilder, IClusterNodeBuilder, IAsyncDisposable
+    public sealed class NodeEngineHost : IHost, IEngineBuilder, IClusterNodeBuilder, IAsyncDisposable
     {
         internal const string GlobalClusterNodeBuilderKey = "__GlobalClusterNodeBuilder";
 
@@ -26,7 +28,7 @@ namespace NI2S.Node.Hosting
         internal NodeEngineHost(IHost host)
         {
             _host = host;
-            EngineBuilder = new NodeEngineBuilder(host.Services, EngineModules);
+            EngineBuilder = new EngineBuilder(host.Services, EngineModules);
             Logger = host.Services.GetRequiredService<ILoggerFactory>().CreateLogger(Environment.ApplicationName ?? nameof(NodeEngineHost));
 
             Properties[GlobalClusterNodeBuilderKey] = this;
@@ -42,6 +44,8 @@ namespace NI2S.Node.Hosting
         /// </summary>
         public IConfiguration Configuration => _host.Services.GetRequiredService<IConfiguration>();
 
+        public List<IDataSource> DataSources => _host.Services.GetRequiredService<IClusterManager>().GetDataSources();
+     
         /// <summary>
         /// The node engine's configured <see cref="INodeHostEnvironment"/>.
         /// </summary>
@@ -57,37 +61,24 @@ namespace NI2S.Node.Hosting
         /// </summary>
         public ILogger Logger { get; }
 
-        IServiceProvider INodeEngineBuilder.EngineServices
+        IServiceProvider IEngineBuilder.EngineServices
         {
             get => EngineBuilder.EngineServices;
             set => EngineBuilder.EngineServices = value;
         }
 
-        internal IModuleCollection EngineModules => _host.Services.GetRequiredService<INodeEngine>().Modules;
+        internal IModuleCollection EngineModules => _host.Services.GetRequiredService<IEngine>().Modules;
 
-        IModuleCollection INodeEngineBuilder.EngineModules => EngineModules;
+        IModuleCollection IEngineBuilder.EngineModules => EngineModules;
 
         internal IDictionary<string, object> Properties => EngineBuilder.Properties;
-        IDictionary<string, object> INodeEngineBuilder.Properties => Properties;
+        IDictionary<string, object> IEngineBuilder.Properties => Properties;
 
-        internal NodeEngineBuilder EngineBuilder { get; }
+        internal EngineBuilder EngineBuilder { get; }
 
         IServiceProvider IClusterNodeBuilder.ServiceProvider => Services;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="NodeEngineHost"/> class with preconfigured defaults.
-        /// </summary>
-        /// <param name="args">Command line arguments</param>
-        /// <returns>The <see cref="NodeEngineHost"/>.</returns>
-        public static NodeEngineHost Create(string[] args = null) =>
-            new NodeEngineHostBuilder(new() { Args = args }).Build();
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="NodeEngineHostBuilder"/> class with preconfigured defaults.
-        /// </summary>
-        /// <returns>The <see cref="NodeEngineHostBuilder"/>.</returns>
-        public static NodeEngineHostBuilder CreateBuilder() =>
-            new(new());
+        ICollection<IDataSource> IClusterNodeBuilder.DataSources => DataSources;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NodeEngineHostBuilder"/> class with preconfigured defaults.
@@ -161,11 +152,11 @@ namespace NI2S.Node.Hosting
         /// </summary>
         public ValueTask DisposeAsync() => ((IAsyncDisposable)_host).DisposeAsync();
 
-        internal INodeEngine BuildNodeEngine() => EngineBuilder.Build();
-        INodeEngine INodeEngineBuilder.Build() => BuildNodeEngine();
+        internal IEngine BuildNodeEngine() => EngineBuilder.Build();
+        IEngine IEngineBuilder.Build() => BuildNodeEngine();
 
         // REVIEW: Should this be wrapping another type?
-        INodeEngineBuilder INodeEngineBuilder.New()
+        IEngineBuilder IEngineBuilder.New()
         {
             var newBuilder = EngineBuilder.New();
             // Remove the route builder so branched pipelines have their own routing world
@@ -173,32 +164,18 @@ namespace NI2S.Node.Hosting
             return newBuilder;
         }
 
-        /// <summary>
-        /// Adds the middleware to the application request pipeline.
-        /// </summary>
-        /// <param name="middleware">The middleware.</param>
-        /// <returns>An instance of <see cref="INodeEngineBuilder"/> after the operation has completed.</returns>
-        //public IEngineBuilder Use(Func<INodeEngine, INodeEngine> middleware)
-        //{
-        //    EngineBuilder.Use(middleware);
-        //    return this;
-        //}
-
-        INodeEngineBuilder IClusterNodeBuilder.CreateEngineBuilder() => ((INodeEngineBuilder)this).New();
+        IEngineBuilder IClusterNodeBuilder.CreateEngineBuilder() => ((IEngineBuilder)this).New();
 
         /* 006.1 - ... -> nodeEngine.RunAsync() -> Listen(...) */
         private void Listen(string url)
         {
-            //if (url is null)
-            //{
-            //    return;
-            //}
+            if (url is null)
+            {
+                return;
+            }
 
-            //var addresses = ServerModules.Get<IServerAddressesModule>()?.Addresses;
-            //if (addresses is null)
-            //{
-            //    throw new InvalidOperationException($"Changing the URL is not supported because no valid {nameof(IServerAddressesModule)} was found.");
-            //}
+            // TODO: Do cluster listen update.
+            //var addresses = (EngineModules.Get<IServerAddressesModule>()?.Addresses) ?? throw new InvalidOperationException($"Changing the URL is not supported because no valid {nameof(IServerAddressesModule)} was found.");
             //if (addresses.IsReadOnly)
             //{
             //    throw new InvalidOperationException($"Changing the URL is not supported because {nameof(IServerAddressesModule.Addresses)} {nameof(ICollection<string>.IsReadOnly)}.");

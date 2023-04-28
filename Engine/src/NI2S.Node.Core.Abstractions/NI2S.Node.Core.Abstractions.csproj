@@ -11,46 +11,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Clustering\**" />
-    <Compile Remove="Core\**" />
-    <Compile Remove="Engine\Messaging\**" />
-    <Compile Remove="Hosting\**" />
-    <EmbeddedResource Remove="Clustering\**" />
-    <EmbeddedResource Remove="Core\**" />
-    <EmbeddedResource Remove="Engine\Messaging\**" />
-    <EmbeddedResource Remove="Hosting\**" />
-    <None Remove="Clustering\**" />
-    <None Remove="Core\**" />
-    <None Remove="Engine\Messaging\**" />
-    <None Remove="Hosting\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Remove="Engine\CacheKey.cs" />
-    <Compile Remove="Engine\Modules\LoadModulesMode.cs" />
-    <Compile Remove="Engine\NodeMessage.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Include="Core\Configuration\IConfig.cs" />
-    <Compile Include="Core\IDescriptor.cs" />
-    <Compile Include="Core\Infrastructure\IEngine.cs" />
-    <Compile Include="Core\Infrastructure\INodeFileProvider.cs" />
-    <Compile Include="Core\Infrastructure\INodeStartup.cs" />
-    <Compile Include="Core\Infrastructure\IStartupTask.cs" />
-    <Compile Include="Core\Infrastructure\ITaskScheduler.cs" />
-    <Compile Include="Core\Infrastructure\ITypeFinder.cs" />
-    <Compile Include="Core\NI2SException.cs" />
-    <Compile Include="Hosting\Builder\IClusterNodeBuilder.cs" />
-    <Compile Include="Hosting\Builder\INodeEngineBuilder.cs" />
-    <Compile Include="Hosting\Builder\IEngineBuilderFactory.cs" />
-    <Compile Include="Hosting\Extensions\AbstractionsNodeHostBuilderExtensions.cs" />
-    <Compile Include="Hosting\IHostContextContainer.cs" />
-    <Compile Include="Hosting\INodeHost.cs" />
-    <Compile Include="Hosting\Builder\INodeHostBuilder.cs" />
-    <Compile Include="Hosting\INodeHostEnvironment.cs" />
-    <Compile Include="Hosting\Builder\NodeHostBuilderContext.cs" />
-    <Compile Include="Hosting\NodeHostDefaults.cs" />
+    <Compile Remove="Core\Plugins\**" />
+    <EmbeddedResource Remove="Core\Plugins\**" />
+    <None Remove="Core\Plugins\**" />
   </ItemGroup>
 
   <ItemGroup>

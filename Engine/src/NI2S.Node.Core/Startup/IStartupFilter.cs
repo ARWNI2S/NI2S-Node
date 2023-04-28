@@ -18,6 +18,6 @@ namespace NI2S.Node
         /// </summary>
         /// <param name="next">The Configure method to extend.</param>
         /// <returns>A modified <see cref="Action"/>.</returns>
-        Action<INodeEngineBuilder> Configure(Action<INodeEngineBuilder> next);
+        Action<IEngineBuilder> Configure(Action<IEngineBuilder> next);
     }
 }

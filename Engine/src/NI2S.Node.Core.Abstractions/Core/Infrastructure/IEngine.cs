@@ -1,8 +1,8 @@
 ﻿// Copyrigth (c) 2023 Alternate Reality Worlds. Narrative Interactive Intelligent Simulator.
-// TODO: find and replace this line with COPYRIGTH NOTICE entire solution
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using NI2S.Node.Engine;
 using NI2S.Node.Hosting.Builder;
 using System;
 using System.Collections.Generic;
@@ -15,18 +15,29 @@ namespace NI2S.Node.Core.Infrastructure
     /// </summary>
     public interface IEngine
     {
+
+        /// <summary>
+        /// Service provider
+        /// </summary>
+        IServiceProvider ServiceProvider { get; }
+
+        /// <summary>
+        /// Engine modules
+        /// </summary>
+        IModuleCollection Modules { get; }
+
         /// <summary>
         /// Add and configure services.
         /// </summary>
         /// <param name="services">Collection of service descriptors.</param>
-        /// <param name="configuration">Configuration of the application.</param>
+        /// <param name="configuration">Configuration of the engine.</param>
         void ConfigureServices(IServiceCollection services, IConfiguration configuration);
 
         /// <summary>
-        /// Configure message handler pipeline.
+        /// Configure event handler pipeline.
         /// </summary>
-        /// <param name="engine">Builder for configuring a engine's message handler pipeline.</param>
-        void ConfigureMessageHandlerPipeline(INodeEngineBuilder engine);
+        /// <param name="engine">Builder for configuring a engine's event handler for specific simulation.</param>
+        void ConfigureEventHandler(IEngineBuilder engine);
 
         /// <summary>
         /// Resolve dependency.
@@ -57,6 +68,5 @@ namespace NI2S.Node.Core.Infrastructure
         /// <param name="type">Type of service.</param>
         /// <returns>Resolved service.</returns>
         object ResolveUnregistered(Type type);
-
     }
 }
