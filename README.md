@@ -22,3 +22,6 @@ This repository contains the source code for build the cluster node host for the
 [![GitHub Sponsors](https://img.shields.io/github/sponsors/arwni2s?logo=github&style=social)](https://github.com/arwni2s/ni2s-node)
 [![Liberpay Donate](https://img.shields.io/liberapay/goal/ARWNI2S?label=Donate&logo=liberapay&style=flat)](https://liberapay.com/ARWNI2S/donate)
 [![Liberapay patrons](https://img.shields.io/liberapay/patrons/arwni2s?logo=liberapay)](https://liberapay.com/ARWNI2S/donate)
+
+![Static Badge](https://img.shields.io/badge/BTC-DONATE-ff8000?style=plastic&logo=bitcoin)**bc1qrv2h2kjzp7ycjwrpmlsgnve4xlujw6rc5v96f9** 
+![Static Badge](https://img.shields.io/badge/SOL-DONATE-blue?style=plastic&logo=solana)**2gbQraAm9ka96CnXpJATF44FHevnWtpWaWyAXQwTzjNU** 
