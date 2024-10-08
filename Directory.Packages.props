@@ -50,6 +50,10 @@
     <PackageVersion Include="Azure.Messaging.EventHubs" Version="5.9.3" />
     <PackageVersion Include="Azure.Storage.Blobs" Version="12.22.1" />
     <PackageVersion Include="Azure.Storage.Queues" Version="12.20.0" />-->
+    <!-- Hosting -->
+    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
+    <!-- Microsoft.Orleans -->
+    <PackageVersion Include="Microsoft.Orleans.Core.Abstractions" Version="8.0.0" />
     <!-- Aspire -->
     <!--<PackageVersion Include="Aspire.Hosting.AppHost" Version="$(AspireVersion)" />
     <PackageVersion Include="Aspire.Hosting.Orleans" Version="$(AspireVersion)" />
@@ -106,5 +110,6 @@
     <!-- Source repo related packages -->
     <PackageVersion Include="Microsoft.SourceLink.AzureRepos.Git" Version="8.0.0" />
     <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="8.0.0" />
+    <PackageVersion Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
   </ItemGroup>
 </Project>

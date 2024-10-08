@@ -16,7 +16,8 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <IsPackable>false</IsPackable>
+    <IsPackable Condition=" '$(IsPackable)'=='' ">false</IsPackable>
+    <IsFrameworkPart Condition=" '$(IsFrameworkPart)'=='' ">true</IsFrameworkPart>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -28,8 +29,8 @@
     <SourceLinkOriginUrl>https://github.com/ARWNI2S/NI2S-Node</SourceLinkOriginUrl>
   </PropertyGroup>
 
-  <ItemGroup>
-    <AssemblyAttribute Include="ARWNI2S.Node.Metadata.FrameworkPartAttribute" />
+  <ItemGroup Condition=" '$(IsFrameworkPart)'=='true' ">
+    <AssemblyAttribute Include="ARWNI2S.Infrastructure.Metadata.FrameworkPartAttribute" />
   </ItemGroup>
 
 </Project>

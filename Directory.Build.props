@@ -17,6 +17,8 @@
     <Features>strict</Features>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <DebugType>embedded</DebugType>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TF_BUILD)' == 'true' or '$(GITHUB_ACTIONS)' == 'true'">
@@ -47,12 +49,12 @@
     <VersionSuffix Condition=" '$(VersionDateSuffix)'!='' ">$(VersionSuffix)-$(VersionDateSuffix)</VersionSuffix>
   </PropertyGroup>
 
-  <Import Condition=" '$(NI2SNodeBuildTimeCodeGen)' == 'true' " Project="$(MSBuildThisFileDirectory)src/ARWNI2S.Node.CodeGenerator/build/ARWNI2S.Node.CodeGenerator.props" />
+  <!-- <Import Condition=" '$(NI2SNodeBuildTimeCodeGen)' == 'true' " Project="$(MSBuildThisFileDirectory)src/ARWNI2S.Node.CodeGenerator/build/ARWNI2S.Node.CodeGenerator.props" /> -->
 
   <!-- Set output folder for distributed test apps -->
-  <PropertyGroup>
+  <!-- <PropertyGroup>
     <DistributedTestsOutputPath Condition=" '$(DistributedODistributedTestsOutputPathutputPath)'=='' ">$(SourceRoot)/Artifacts/DistributedTests</DistributedTestsOutputPath>
-  </PropertyGroup>
+  </PropertyGroup> -->
 
   <Choose>
     <When Condition="'$(OfficialBuild)' != 'true'">
