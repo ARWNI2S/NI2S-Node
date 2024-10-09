@@ -648,7 +648,7 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
         public BigList<T> Clone()
         {
             if (root == null)
-                return new BigList<T>();
+                return [];
             else
             {
                 root.MarkShared();
@@ -681,7 +681,7 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
         public BigList<T> CloneContents()
         {
             if (root == null)
-                return new BigList<T>();
+                return [];
             else
             {
                 bool itemIsValueType;
@@ -829,7 +829,7 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
         public BigList<T> GetRange(int index, int count)
         {
             if (count == 0)
-                return new BigList<T>();
+                return [];
 
             if (index < 0 || index >= Count)
                 throw new ArgumentOutOfRangeException("index");

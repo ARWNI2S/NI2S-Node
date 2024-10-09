@@ -892,7 +892,7 @@ namespace ARWNI2S.Infrastructure.Collections
                 // Start at the beginning of the skip list.
                 Node curr = header.forward[0];
                 // Create a collection to hold the keys.
-                ArrayList collection = new ArrayList();
+                ArrayList collection = [];
 
                 // While we haven't reached the end of the skip list.
                 while (curr != header)
@@ -917,7 +917,7 @@ namespace ARWNI2S.Infrastructure.Collections
                 // Start at the beginning of the skip list.
                 Node curr = header.forward[0];
                 // Create a collection to hold the values.
-                ArrayList collection = new ArrayList();
+                ArrayList collection = [];
 
                 // While we haven't reached the end of the skip list.
                 while (curr != header)

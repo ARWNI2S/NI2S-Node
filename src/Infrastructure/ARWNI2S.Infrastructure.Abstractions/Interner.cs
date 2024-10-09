@@ -180,7 +180,7 @@ namespace ARWNI2S.Infrastructure
 
         public List<T> AllValues()
         {
-            List<T> values = new List<T>();
+            List<T> values = [];
             foreach (var e in internCache)
             {
                 if (e.Value != null && e.Value.IsAlive && e.Value.Target != null)

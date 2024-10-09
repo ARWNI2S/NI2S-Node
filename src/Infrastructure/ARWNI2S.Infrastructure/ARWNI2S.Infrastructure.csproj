@@ -5,13 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ARWNI2S.Infrastructure.Abstractions\ARWNI2S.Infrastructure.Abstractions.csproj" />
     <ProjectReference Include="..\ARWNI2S.Infrastructure.Collections\ARWNI2S.Infrastructure.Collections.csproj" />
     <ProjectReference Include="..\ARWNI2S.Infrastructure.Extensions\ARWNI2S.Infrastructure.Extensions.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Collections\" />
   </ItemGroup>
 
 </Project>

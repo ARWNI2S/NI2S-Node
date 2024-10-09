@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Common\AddressAttributeFormatter.cs" />
+    <Compile Remove="Common\IAddressAttributeFormatter.cs" />
+    <Compile Remove="Common\ISearchTermService.cs" />
+    <Compile Remove="Common\KeepAliveMiddleware.cs" />
+    <Compile Remove="Common\KeepAliveTask.cs" />
+    <Compile Remove="Common\SearchTermService.cs" />
+    <Compile Remove="Common\ServerHttpClient.cs" />
+    <Compile Remove="Directory\GeoLookupService.cs" />
+    <Compile Remove="Directory\IGeoLookupService.cs" />
+    <Compile Remove="Localization\LocalizedUrlExtensions.cs" />
+    <Compile Remove="Plugins\IUploadService.cs" />
+    <Compile Remove="Plugins\UploadService.cs" />
+    <Compile Remove="Users\IUserAttributeFormatter.cs" />
+    <Compile Remove="Users\IUserRegistrationService.cs" />
+    <Compile Remove="Users\UserAttributeFormatter.cs" />
+    <Compile Remove="Users\UserRegistrationRequest.cs" />
+    <Compile Remove="Users\UserRegistrationService.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Http" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ARWNI2S.Node.Core\ARWNI2S.Node.Core.csproj" />
+    <ProjectReference Include="..\ARWNI2S.Node.Data\ARWNI2S.Node.Data.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -198,7 +198,7 @@ namespace ARWNI2S.Infrastructure.Collections.Tree
         {
             if (Root != node.Root)
                 throw new ArgumentException("parameter node must belong to the same tree");
-            List<int> index = new List<int>();
+            List<int> index = [];
 
             while (node != this && node._parent != null)
             {
@@ -220,7 +220,7 @@ namespace ARWNI2S.Infrastructure.Collections.Tree
 
         public System.Collections.IList GetNodePath()
         {
-            List<TreeNode<T>> list = new List<TreeNode<T>>();
+            List<TreeNode<T>> list = [];
             TreeNode<T> node = _parent;
 
             while (node != null)
@@ -236,7 +236,7 @@ namespace ARWNI2S.Infrastructure.Collections.Tree
 
         public IList<T> GetElementPath()
         {
-            List<T> list = new List<T>();
+            List<T> list = [];
             TreeNode<T> node = _parent;
 
             while (node != null)

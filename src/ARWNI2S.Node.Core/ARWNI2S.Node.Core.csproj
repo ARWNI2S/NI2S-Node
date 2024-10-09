@@ -5,6 +5,73 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Entities\Clustering\**" />
+    <Compile Remove="Entities\Common\**" />
+    <Compile Remove="Entities\Configuration\**" />
+    <Compile Remove="Entities\Localization\**" />
+    <Compile Remove="Entities\Logging\**" />
+    <Compile Remove="Entities\Media\**" />
+    <Compile Remove="Entities\ScheduleTasks\**" />
+    <Compile Remove="Entities\Security\**" />
+    <Compile Remove="Entities\Users\**" />
+    <Compile Remove="Http\Extensions\**" />
+    <Compile Remove="Plugins\**" />
+    <EmbeddedResource Remove="Entities\Clustering\**" />
+    <EmbeddedResource Remove="Entities\Common\**" />
+    <EmbeddedResource Remove="Entities\Configuration\**" />
+    <EmbeddedResource Remove="Entities\Localization\**" />
+    <EmbeddedResource Remove="Entities\Logging\**" />
+    <EmbeddedResource Remove="Entities\Media\**" />
+    <EmbeddedResource Remove="Entities\ScheduleTasks\**" />
+    <EmbeddedResource Remove="Entities\Security\**" />
+    <EmbeddedResource Remove="Entities\Users\**" />
+    <EmbeddedResource Remove="Http\Extensions\**" />
+    <EmbeddedResource Remove="Plugins\**" />
+    <None Remove="Entities\Clustering\**" />
+    <None Remove="Entities\Common\**" />
+    <None Remove="Entities\Configuration\**" />
+    <None Remove="Entities\Localization\**" />
+    <None Remove="Entities\Logging\**" />
+    <None Remove="Entities\Media\**" />
+    <None Remove="Entities\ScheduleTasks\**" />
+    <None Remove="Entities\Security\**" />
+    <None Remove="Entities\Users\**" />
+    <None Remove="Http\Extensions\**" />
+    <None Remove="Plugins\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Configuration\ISettings.cs" />
+    <Compile Remove="Entities\BaseDataEntity.cs" />
+    <Compile Remove="Services\Helpers\BrowscapXmlParser.cs" />
+    <Compile Remove="Services\Helpers\IUserAgentHelper.cs" />
+    <Compile Remove="Services\Helpers\UserAgentHelper.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Entities\Clustering\IBladeServer.cs" />
+    <Compile Include="Entities\Localization\ILocalizedEntity.cs" />
+    <Compile Include="Entities\Localization\ILocalizedEnum.cs" />
+    <Compile Include="Entities\Users\INodeUser.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" />
+    <PackageReference Include="AutoMapper" />
+    <PackageReference Include="Azure.Security.KeyVault.Secrets" />
+    <PackageReference Include="Microsoft.Extensions.Caching.SqlServer" />
+    <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" />
+    <PackageReference Include="Newtonsoft.Json" />
+  </ItemGroup>
+
+
+
+
+
+
+  <ItemGroup>
     <ProjectReference Include="..\Infrastructure\ARWNI2S.Infrastructure\ARWNI2S.Infrastructure.csproj" />
   </ItemGroup>
 

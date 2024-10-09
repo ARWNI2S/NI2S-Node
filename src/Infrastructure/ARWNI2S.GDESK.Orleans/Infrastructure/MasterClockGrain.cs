@@ -1,18 +1,24 @@
-﻿using Orleans;
+﻿using ARWNI2S.Infrastructure.Timing;
+using Orleans;
+using Orleans.Placement;
 
 namespace ARWNI2S.GDESK.Orleans.Infrastructure
 {
-    internal class MasterClockGrain : Grain, IMasterClockGrain
+    [SiloRoleBasedPlacement]
+    internal class MasterClockGrain : Grain, IMasterClockGrain, IDisposable
     {
-        private const int _electionTimeout = 5000; // 5 segundos para timeout
+        private static readonly TimeSpan electionTimeout = TimeSpan.FromMilliseconds(5000); // 5 segundos para cada ciclo de elecciones
+
+        private SafeTimer _electionTimer;
+        private SafeTimer _heartbeatTimer;
 
         private enum Role { Follower, Candidate, Leader }
 
         private Role _currentRole = Role.Follower;
         private long _currentTime = 0;
         private long _lastHeartbeat = 0;
-        private Timer _electionTimer;
-        private Timer _heartbeatTimer;
+        private bool disposedValue;
+
         //private CancellationTokenSource cancellationTokenSource;
 
         public override Task OnActivateAsync(CancellationToken cancellationToken)
@@ -20,7 +26,7 @@ namespace ARWNI2S.GDESK.Orleans.Infrastructure
             // Inicializamos el Grain como seguidor y empezamos a escuchar por latidos
             _currentRole = Role.Follower;
             _lastHeartbeat = DateTime.UtcNow.Ticks;
-            _electionTimer = new Timer(CheckForElection, null, _electionTimeout, _electionTimeout);
+            _electionTimer = new SafeTimer(CheckForElection, null, electionTimeout, electionTimeout);
             return Task.CompletedTask;
         }
 
@@ -59,7 +65,7 @@ namespace ARWNI2S.GDESK.Orleans.Infrastructure
             Console.WriteLine($"Grain {this.GetPrimaryKeyLong()} ha sido elegido líder");
             _currentRole = Role.Leader;
             // Inicia un timer para avanzar el tiempo
-            _heartbeatTimer = new Timer(LeaderTick, null, 0, 1000); // Avanzamos cada 1 segundo
+            _heartbeatTimer = new SafeTimer(LeaderTick, null, TimeSpan.Zero, TimeSpan.FromMilliseconds(1000)); // Avanzamos cada 1 segundo
         }
 
         private void LeaderTick(object state)
@@ -90,7 +96,7 @@ namespace ARWNI2S.GDESK.Orleans.Infrastructure
         private void CheckForElection(object state)
         {
             var now = DateTime.UtcNow.Ticks;
-            if (now - _lastHeartbeat > TimeSpan.FromMilliseconds(_electionTimeout).Ticks && _currentRole != Role.Leader)
+            if (now - _lastHeartbeat > electionTimeout.Ticks && _currentRole != Role.Leader)
             {
                 Console.WriteLine($"Grain {this.GetPrimaryKeyLong()} no ha recibido latidos. Iniciando elección...");
                 StartElectionAsync().Ignore();
@@ -110,6 +116,39 @@ namespace ARWNI2S.GDESK.Orleans.Infrastructure
             }
             return Task.CompletedTask;
         }
+
+        #region Dispose Model
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    // TODO: eliminar el estado administrado (objetos administrados)
+                }
+
+                // TODO: liberar los recursos no administrados (objetos no administrados) y reemplazar el finalizador
+                // TODO: establecer los campos grandes como NULL
+                disposedValue = true;
+            }
+        }
+
+        // // TODO: reemplazar el finalizador solo si "Dispose(bool disposing)" tiene código para liberar los recursos no administrados
+        // ~MasterClockGrain()
+        // {
+        //     // No cambie este código. Coloque el código de limpieza en el método "Dispose(bool disposing)".
+        //     Dispose(disposing: false);
+        // }
+
+        public void Dispose()
+        {
+            // No cambie este código. Coloque el código de limpieza en el método "Dispose(bool disposing)".
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
+        }
+        
+        #endregion
     }
 
 }

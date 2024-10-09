@@ -4973,7 +4973,7 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
                 T item;
                 int i = -1, j = 0;
                 int listCount = list.Count;
-                List<T> removed = new List<T>();
+                List<T> removed = [];
 
                 // Remove item where predicate is true, compressing items to lower in the list. This is much more
                 // efficient than the naive algorithm that uses IList<T>.Remove().
@@ -5020,7 +5020,7 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
             {
                 // We have to copy all the items to remove to a List, because collections can't be modifed 
                 // during an enumeration.
-                List<T> removed = new List<T>();
+                List<T> removed = [];
 
                 foreach (T item in collection)
                     if (predicate(item))

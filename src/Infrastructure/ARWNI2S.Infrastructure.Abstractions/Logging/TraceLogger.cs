@@ -70,7 +70,7 @@ namespace ARWNI2S.Infrastructure.Logging
 
         private static readonly ConcurrentDictionary<Type, Func<Exception, string>> exceptionDecoders = new ConcurrentDictionary<Type, Func<Exception, string>>();
         private static readonly object lockable;
-        private static readonly List<Tuple<string, LogLevel>> traceLevelOverrides = new List<Tuple<string, LogLevel>>();
+        private static readonly List<Tuple<string, LogLevel>> traceLevelOverrides = [];
         private static readonly TimeSpan loggerInternCacheCleanupInterval = InternerConstants.DefaultCacheCleanupFreq;
         private static readonly TimeSpan defaultBulkMessageInterval = TimeSpan.FromMinutes(1);
         /// <summary>
@@ -149,7 +149,7 @@ namespace ARWNI2S.Infrastructure.Logging
         private LogLevel _severity;
         private bool _useCustomTraceLevel = false;
 
-        private Dictionary<int, int> recentLogMessageCounts = new Dictionary<int, int>();
+        private Dictionary<int, int> recentLogMessageCounts = [];
         private DateTime lastBulkLogMessageFlush = DateTime.MinValue;
 
         private TimeSpan flushInterval = Debugger.IsAttached ? TimeSpan.FromMilliseconds(10) : TimeSpan.FromSeconds(1);
@@ -185,8 +185,8 @@ namespace ARWNI2S.Infrastructure.Logging
         {
             defaultModificationCounter = 0;
             lockable = new object();
-            LogConsumers = new ConcurrentBag<ILogConsumer>();
-            TelemetryConsumers = new ConcurrentBag<ITelemetryConsumer>();
+            LogConsumers = [];
+            TelemetryConsumers = [];
             BulkMessageInterval = defaultBulkMessageInterval;
             BulkMessageLimit = Constants.DEFAULT_LOGGER_BULK_MESSAGE_LIMIT;
         }
@@ -267,8 +267,8 @@ namespace ARWNI2S.Infrastructure.Logging
             lock (lockable)
             {
                 Close();
-                LogConsumers = new ConcurrentBag<ILogConsumer>();
-                TelemetryConsumers = new ConcurrentBag<ITelemetryConsumer>();
+                LogConsumers = [];
+                TelemetryConsumers = [];
 
                 if (loggerStoreInternCache != null)
                     loggerStoreInternCache.StopAndClear();
@@ -446,7 +446,7 @@ namespace ARWNI2S.Infrastructure.Logging
                     traceLevelOverrides.Sort(new TraceOverrideComparer());
                 }
                 defaultModificationCounter++;
-                loggers = loggerStoreInternCache != null ? loggerStoreInternCache.AllValues() : new List<TraceLogger>();
+                loggers = loggerStoreInternCache != null ? loggerStoreInternCache.AllValues() : [];
             }
             foreach (var logger in loggers)
             {
@@ -470,7 +470,7 @@ namespace ARWNI2S.Infrastructure.Logging
                 {
                     traceLevelOverrides.Sort(new TraceOverrideComparer());
                 }
-                loggers = loggerStoreInternCache != null ? loggerStoreInternCache.AllValues() : new List<TraceLogger>();
+                loggers = loggerStoreInternCache != null ? loggerStoreInternCache.AllValues() : [];
             }
             foreach (var logger in loggers)
             {
@@ -496,7 +496,7 @@ namespace ARWNI2S.Infrastructure.Logging
                 {
                     traceLevelOverrides.Sort(new TraceOverrideComparer());
                 }
-                loggers = loggerStoreInternCache != null ? loggerStoreInternCache.AllValues() : new List<TraceLogger>();
+                loggers = loggerStoreInternCache != null ? loggerStoreInternCache.AllValues() : [];
             }
             foreach (var logger in loggers)
             {
@@ -1026,7 +1026,7 @@ namespace ARWNI2S.Infrastructure.Logging
                 {
                     // Take local copy of buffered log message counts, now that this bulk message compaction period has finished
                     copyMessageCounts = recentLogMessageCounts;
-                    recentLogMessageCounts = new Dictionary<int, int>();
+                    recentLogMessageCounts = [];
                     lastBulkLogMessageFlush = now;
                 }
 

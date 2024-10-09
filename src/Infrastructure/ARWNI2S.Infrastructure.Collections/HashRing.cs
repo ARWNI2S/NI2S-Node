@@ -14,7 +14,7 @@ namespace ARWNI2S.Infrastructure.Collections
 
         public HashRing()
         {
-            sortedRingList = new List<IRingIdentifier<T>>();
+            sortedRingList = [];
         }
 
         public HashRing(IEnumerable<IRingIdentifier<T>> ring)

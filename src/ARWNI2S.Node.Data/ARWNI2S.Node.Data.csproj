@@ -2,9 +2,78 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Mapping\Builders\Common\**" />
+    <Compile Remove="Mapping\Builders\Configuration\**" />
+    <Compile Remove="Mapping\Builders\Directory\**" />
+    <Compile Remove="Mapping\Builders\Gameplay\**" />
+    <Compile Remove="Mapping\Builders\Gdpr\**" />
+    <Compile Remove="Mapping\Builders\Localization\**" />
+    <Compile Remove="Mapping\Builders\Logging\**" />
+    <Compile Remove="Mapping\Builders\Media\**" />
+    <Compile Remove="Mapping\Builders\Messages\**" />
+    <Compile Remove="Mapping\Builders\News\**" />
+    <Compile Remove="Mapping\Builders\ScheduleTasks\**" />
+    <Compile Remove="Mapping\Builders\Security\**" />
+    <Compile Remove="Mapping\Builders\Servers\**" />
+    <Compile Remove="Mapping\Builders\Users\**" />
+    <Compile Remove="Migrations\Installation\**" />
+    <EmbeddedResource Remove="Mapping\Builders\Common\**" />
+    <EmbeddedResource Remove="Mapping\Builders\Configuration\**" />
+    <EmbeddedResource Remove="Mapping\Builders\Directory\**" />
+    <EmbeddedResource Remove="Mapping\Builders\Gameplay\**" />
+    <EmbeddedResource Remove="Mapping\Builders\Gdpr\**" />
+    <EmbeddedResource Remove="Mapping\Builders\Localization\**" />
+    <EmbeddedResource Remove="Mapping\Builders\Logging\**" />
+    <EmbeddedResource Remove="Mapping\Builders\Media\**" />
+    <EmbeddedResource Remove="Mapping\Builders\Messages\**" />
+    <EmbeddedResource Remove="Mapping\Builders\News\**" />
+    <EmbeddedResource Remove="Mapping\Builders\ScheduleTasks\**" />
+    <EmbeddedResource Remove="Mapping\Builders\Security\**" />
+    <EmbeddedResource Remove="Mapping\Builders\Servers\**" />
+    <EmbeddedResource Remove="Mapping\Builders\Users\**" />
+    <EmbeddedResource Remove="Migrations\Installation\**" />
+    <None Remove="Mapping\Builders\Common\**" />
+    <None Remove="Mapping\Builders\Configuration\**" />
+    <None Remove="Mapping\Builders\Directory\**" />
+    <None Remove="Mapping\Builders\Gameplay\**" />
+    <None Remove="Mapping\Builders\Gdpr\**" />
+    <None Remove="Mapping\Builders\Localization\**" />
+    <None Remove="Mapping\Builders\Logging\**" />
+    <None Remove="Mapping\Builders\Media\**" />
+    <None Remove="Mapping\Builders\Messages\**" />
+    <None Remove="Mapping\Builders\News\**" />
+    <None Remove="Mapping\Builders\ScheduleTasks\**" />
+    <None Remove="Mapping\Builders\Security\**" />
+    <None Remove="Mapping\Builders\Servers\**" />
+    <None Remove="Mapping\Builders\Users\**" />
+    <None Remove="Migrations\Installation\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Entities\BaseEntity.cs" />
+    <Compile Remove="Entities\Common\ISoftDeletedEntity.cs" />
+    <Compile Remove="Entities\INodeEntity.cs" />
+    <Compile Remove="Entities\ISoftDeletedEntity.cs" />
+    <Compile Remove="Entities\Localization\ILocalizedEntity.cs" />
+    <Compile Remove="Entities\Localization\ILocalizedEnum.cs" />
+    <Compile Remove="Entities\Media\Download.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentMigrator" />
+    <PackageReference Include="FluentMigrator.Runner" />
+    <PackageReference Include="linq2db" />
+    <PackageReference Include="Microsoft.Data.SqlClient" />
+    <PackageReference Include="MiniProfiler.Shared" />
+    <PackageReference Include="MySqlConnector" />
+    <PackageReference Include="Npgsql" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" />
+    <PackageReference Include="System.Linq.Async" />
+    <PackageReference Include="System.Net.NameResolution" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ARWNI2S.Node.Core\ARWNI2S.Node.Core.csproj" />

@@ -937,7 +937,7 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
             if (!CollectionUtils.IsCloneableType(typeof(T), out itemIsValueType))
                 throw new InvalidOperationException(string.Format(LocalizedStrings.Collections_TypeNotCloneable, typeof(T).FullName));
 
-            Deque<T> clone = new Deque<T>();
+            Deque<T> clone = [];
 
             // Clone each item, and add it to the new ordered set.
             foreach (T item in this)
