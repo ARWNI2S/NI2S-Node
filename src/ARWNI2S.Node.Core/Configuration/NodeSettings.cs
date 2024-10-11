@@ -5,7 +5,7 @@ using Newtonsoft.Json.Linq;
 namespace ARWNI2S.Node.Core.Configuration
 {
     /// <summary>
-    /// Represents the app settings
+    /// Represents the node settings
     /// </summary>
     public partial class NodeSettings
     {
@@ -53,7 +53,7 @@ namespace ARWNI2S.Node.Core.Configuration
         }
 
         /// <summary>
-        /// Update app settings
+        /// Update node settings
         /// </summary>
         /// <param name="configurations">Configurations to update</param>
         public void Update(IList<IConfig> configurations)

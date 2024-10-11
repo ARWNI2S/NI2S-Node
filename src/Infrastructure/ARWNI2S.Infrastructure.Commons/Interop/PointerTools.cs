@@ -1,6 +1,6 @@
 using System.Runtime.InteropServices;
 
-namespace ARWNI2S.Node.Core.Infrastructure.Interop
+namespace ARWNI2S.Infrastructure.Interop
 {
 
     internal class PointerTools

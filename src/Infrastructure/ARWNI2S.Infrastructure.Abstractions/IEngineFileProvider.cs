@@ -2,7 +2,7 @@
 using System.Security.AccessControl;
 using System.Text;
 
-namespace ARWNI2S.Node.Core.Infrastructure
+namespace ARWNI2S.Infrastructure
 {
     /// <summary>
     /// A file provider abstraction

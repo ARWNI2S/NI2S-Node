@@ -1,11 +1,11 @@
-﻿using ARWNI2S.Node.Core.Entities;
+﻿using ARWNI2S.Infrastructure.Entities;
 
 namespace ARWNI2S.Node.Core.Caching
 {
     /// <summary>
     /// Represents default values related to caching entities
     /// </summary>
-    public static partial class EntityCacheDefaults<TEntity> where TEntity : INodeEntity
+    public static partial class EntityCacheDefaults<TEntity> where TEntity : INI2SEntity
     {
         /// <summary>
         /// Gets an entity type name used in cache keys

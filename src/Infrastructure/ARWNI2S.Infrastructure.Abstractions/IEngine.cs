@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace ARWNI2S.Node.Core.Infrastructure
+namespace ARWNI2S.Infrastructure
 {
     public interface IEngine
     {

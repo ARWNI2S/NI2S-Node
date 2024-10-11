@@ -10,7 +10,7 @@
 
 using System.Collections;
 
-namespace ARWNI2S.Infrastructure.Abstractions.Collections.Sorting
+namespace ARWNI2S.Infrastructure.Collections.Sorting
 {
     /// <summary>
     /// Represents a List Sorter

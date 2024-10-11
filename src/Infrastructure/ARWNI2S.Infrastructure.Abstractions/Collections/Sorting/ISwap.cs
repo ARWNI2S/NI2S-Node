@@ -10,7 +10,7 @@
 
 using System.Collections;
 
-namespace ARWNI2S.Infrastructure.Abstractions.Collections.Sorting
+namespace ARWNI2S.Infrastructure.Collections.Sorting
 {
     /// <summary>
     /// Interface que define metodos para la representacion de un intercambiador.

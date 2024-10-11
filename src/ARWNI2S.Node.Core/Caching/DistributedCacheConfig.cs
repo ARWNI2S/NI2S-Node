@@ -1,4 +1,4 @@
-﻿using ARWNI2S.Node.Core.Configuration;
+﻿using ARWNI2S.Infrastructure.Configuration;
 using ARWNI2S.Node.Core.Security.Secrets;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -55,7 +55,7 @@ namespace ARWNI2S.Node.Core.Caching
 
         /// <summary>
         /// Gets or sets instance name. Used when distributed cache is enabled and DistributedCacheType property is set as Redis or RedisSynchronizedMemory.
-        /// Useful when one wants to partition a single Redis store for use with multiple apps, e.g. by setting InstanceName to "development" and "production".
+        /// Useful when one wants to partition a single Redis store for use with multiple nodes, e.g. by setting InstanceName to "development" and "production".
         /// </summary>
         public string InstanceName { get; private set; } = "metalink";
     }

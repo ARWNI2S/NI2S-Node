@@ -68,13 +68,13 @@ namespace ARWNI2S.Node.Data.DataProviders
             ArgumentNullException.ThrowIfNull(dataConnection);
 
             var descriptor = NodeMappingSchema.GetEntityDescriptor(typeof(TEntity))
-                             ?? throw new ServerException($"Mapped entity descriptor is not found: {typeof(TEntity).Name}");
+                             ?? throw new NodeException($"Mapped entity descriptor is not found: {typeof(TEntity).Name}");
 
             var tableName = descriptor.EntityName;
             var columnName = descriptor.Fields.FirstOrDefault(x => x.IsIdentity && x.IsPrimaryKey)?.Name;
 
             if (string.IsNullOrEmpty(columnName))
-                throw new ServerException("A table's primary key does not have an identity constraint");
+                throw new NodeException("A table's primary key does not have an identity constraint");
 
             return dataConnection.Query<string>($"SELECT pg_get_serial_sequence('\"{tableName}\"', '{columnName}');")
                 .FirstOrDefault();
@@ -317,7 +317,7 @@ namespace ARWNI2S.Node.Data.DataProviders
             ArgumentNullException.ThrowIfNull(nopConnectionString);
 
             if (nopConnectionString.IntegratedSecurity)
-                throw new ServerException("Data provider supports connection only with login and password");
+                throw new NodeException("Data provider supports connection only with login and password");
 
             var builder = new NpgsqlConnectionStringBuilder
             {

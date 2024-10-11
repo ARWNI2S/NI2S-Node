@@ -1,5 +1,4 @@
-﻿using ARWNI2S.Infrastructure.Abstractions.Collections.Generic;
-using ARWNI2S.Infrastructure.Collections.Generic;
+﻿using ARWNI2S.Infrastructure.Collections.Generic;
 using LinqToDB;
 using System.Linq.Expressions;
 

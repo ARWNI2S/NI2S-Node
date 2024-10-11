@@ -1,4 +1,4 @@
-﻿using ARWNI2S.Node.Core.Infrastructure;
+﻿using ARWNI2S.Infrastructure;
 
 namespace ARWNI2S.Node.Core.Caching
 {

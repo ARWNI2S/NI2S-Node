@@ -1,4 +1,5 @@
-﻿using ARWNI2S.Node.Core.ComponentModel;
+﻿using ARWNI2S.Infrastructure;
+using ARWNI2S.Node.Core.ComponentModel;
 using ARWNI2S.Node.Core.Infrastructure;
 
 namespace ARWNI2S.Node.Data.Mapping

@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace ARWNI2S.Node.Core.Infrastructure
+namespace ARWNI2S.Infrastructure
 {
     /// <summary>
     /// Classes implementing this interface provide information about types 

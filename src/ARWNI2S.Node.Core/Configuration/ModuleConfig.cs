@@ -1,4 +1,6 @@
-﻿namespace ARWNI2S.Node.Core.Configuration
+﻿using ARWNI2S.Infrastructure.Configuration;
+
+namespace ARWNI2S.Node.Core.Configuration
 {
     /// <summary>
     /// Represents module configuration parameters

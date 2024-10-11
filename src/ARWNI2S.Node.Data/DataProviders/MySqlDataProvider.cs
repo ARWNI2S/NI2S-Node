@@ -264,7 +264,7 @@ namespace ARWNI2S.Node.Data.DataProviders
             ArgumentNullException.ThrowIfNull(nopConnectionString);
 
             if (nopConnectionString.IntegratedSecurity)
-                throw new ServerException("Data provider supports connection only with login and password");
+                throw new NodeException("Data provider supports connection only with login and password");
 
             var builder = new MySqlConnectionStringBuilder
             {

@@ -5,39 +5,45 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Configuration\**" />
-    <Compile Remove="DataProviders\**" />
     <Compile Remove="Entities\**" />
-    <Compile Remove="Extensions\**" />
     <Compile Remove="Mapping\**" />
     <Compile Remove="Migrations\**" />
-    <EmbeddedResource Remove="Configuration\**" />
-    <EmbeddedResource Remove="DataProviders\**" />
     <EmbeddedResource Remove="Entities\**" />
-    <EmbeddedResource Remove="Extensions\**" />
     <EmbeddedResource Remove="Mapping\**" />
     <EmbeddedResource Remove="Migrations\**" />
-    <None Remove="Configuration\**" />
-    <None Remove="DataProviders\**" />
     <None Remove="Entities\**" />
-    <None Remove="Extensions\**" />
     <None Remove="Mapping\**" />
     <None Remove="Migrations\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="DataProviderManager.cs" />
-    <Compile Remove="DataProviderType.cs" />
-    <Compile Remove="DataSettingsManager.cs" />
-    <Compile Remove="EntityRepository.cs" />
-    <Compile Remove="IDataProviderManager.cs" />
-    <Compile Remove="IRepository.cs" />
-    <Compile Remove="IServerConnectionStringInfo.cs" />
-    <Compile Remove="IServerDataProvider.cs" />
-    <Compile Remove="ITempDataStorage.cs" />
-    <Compile Remove="ServerDataSettingsDefaults.cs" />
-    <Compile Remove="ServerDbStartup.cs" />
-    <Compile Remove="TempSqlDataStorage.cs" />
+    <Compile Include="Entities\BaseDataEntity.cs" />
+    <Compile Include="Entities\ISoftDeletedEntity.cs" />
+    <Compile Include="Mapping\BaseNameCompatibility.cs" />
+    <Compile Include="Mapping\Builders\IEntityBuilder.cs" />
+    <Compile Include="Mapping\Builders\ServerEntityBuilder.cs" />
+    <Compile Include="Mapping\FluentMigratorMetadataReader.cs" />
+    <Compile Include="Mapping\IMappingEntityAccessor.cs" />
+    <Compile Include="Mapping\INameCompatibility.cs" />
+    <Compile Include="Mapping\NameCompatibilityManager.cs" />
+    <Compile Include="Mapping\ServerEntityDescriptor.cs" />
+    <Compile Include="Mapping\ServerEntityFieldDescriptor.cs" />
+    <Compile Include="Mapping\ServerMappingSchema.cs" />
+    <Compile Include="Migrations\IMigrationManager.cs" />
+    <Compile Include="Migrations\Installation\Indexes.cs" />
+    <Compile Include="Migrations\Installation\InstallationSchemaMigration.cs" />
+    <Compile Include="Migrations\MigrationManager.cs" />
+    <Compile Include="Migrations\MigrationProcessType.cs" />
+    <Compile Include="Migrations\MigrationVersionInfo.cs" />
+    <Compile Include="Migrations\NullMigrationContext.cs" />
+    <Compile Include="Migrations\ServerColumnsConvention.cs" />
+    <Compile Include="Migrations\ServerConventionSet.cs" />
+    <Compile Include="Migrations\ServerForeignKeyConvention.cs" />
+    <Compile Include="Migrations\ServerIndexConvention.cs" />
+    <Compile Include="Migrations\ServerMigrationAttribute.cs" />
+    <Compile Include="Migrations\ServerMigrationDefaults.cs" />
+    <Compile Include="Migrations\ServerProcessorAccessor.cs" />
+    <Compile Include="Migrations\UpdateMigrationType.cs" />
   </ItemGroup>
 
   <ItemGroup>

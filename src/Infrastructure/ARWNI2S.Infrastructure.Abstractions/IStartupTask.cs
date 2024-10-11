@@ -1,4 +1,4 @@
-﻿namespace ARWNI2S.Node.Core.Infrastructure
+﻿namespace ARWNI2S.Infrastructure
 {
     /// <summary>
     /// Interface which should be implemented by tasks run on startup

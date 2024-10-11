@@ -10,7 +10,6 @@
 //*************************************************************************************
 
 using ARWNI2S.Infrastructure.Collections.Comparers;
-using ARWNI2S.Infrastructure.Abstractions.Collections.Sorting;
 using System.Collections;
 
 namespace ARWNI2S.Infrastructure.Collections.Sorting

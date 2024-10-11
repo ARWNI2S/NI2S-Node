@@ -1,4 +1,4 @@
-﻿namespace ARWNI2S.Node.Core
+﻿namespace ARWNI2S.Infrastructure
 {
     /// <summary>
     /// Represents Metalink version

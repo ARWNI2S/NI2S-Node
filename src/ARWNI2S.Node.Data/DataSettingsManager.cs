@@ -1,4 +1,5 @@
-﻿using ARWNI2S.Node.Core;
+﻿using ARWNI2S.Infrastructure;
+using ARWNI2S.Node.Core;
 using ARWNI2S.Node.Core.Configuration;
 using ARWNI2S.Node.Core.Infrastructure;
 using ARWNI2S.Node.Data.Configuration;
@@ -116,12 +117,12 @@ namespace ARWNI2S.Node.Data
                 fileProvider.DeleteFile(filePath_json);
                 fileProvider.DeleteFile(filePath_txt);
 
-                AppSettingsHelper.SaveAppSettings([dataSettings], fileProvider);
+                NodeSettingsHelper.SaveNodeSettings([dataSettings], fileProvider);
                 Singleton<DataConfig>.Instance = dataSettings;
             }
             else
             {
-                Singleton<DataConfig>.Instance = Singleton<AppSettings>.Instance.Get<DataConfig>();
+                Singleton<DataConfig>.Instance = Singleton<NodeSettings>.Instance.Get<DataConfig>();
             }
 
             return Singleton<DataConfig>.Instance;
@@ -134,7 +135,7 @@ namespace ARWNI2S.Node.Data
         /// <param name="fileProvider">File provider</param>
         public static void SaveSettings(DataConfig dataSettings, IEngineFileProvider fileProvider)
         {
-            AppSettingsHelper.SaveAppSettings([dataSettings], fileProvider);
+            NodeSettingsHelper.SaveNodeSettings([dataSettings], fileProvider);
             LoadSettings(fileProvider, reload: true);
         }
 

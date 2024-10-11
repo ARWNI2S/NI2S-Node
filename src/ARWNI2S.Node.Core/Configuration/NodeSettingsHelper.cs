@@ -1,4 +1,5 @@
-﻿using ARWNI2S.Infrastructure.Configuration;
+﻿using ARWNI2S.Infrastructure;
+using ARWNI2S.Infrastructure.Configuration;
 using ARWNI2S.Node.Core.Infrastructure;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -7,7 +8,7 @@ using System.Text;
 namespace ARWNI2S.Node.Core.Configuration
 {
     /// <summary>
-    /// Represents the app settings helper
+    /// Represents the node settings helper
     /// </summary>
     public partial class NodeSettingsHelper
     {
@@ -20,25 +21,25 @@ namespace ARWNI2S.Node.Core.Configuration
         #region Methods
 
         /// <summary>
-        /// Create app settings with the passed configurations and save it to the file
+        /// Create node settings with the passed configurations and save it to the file
         /// </summary>
         /// <param name="configurations">Configurations to save</param>
         /// <param name="fileProvider">File provider</param>
-        /// <param name="overwrite">Whether to overwrite appsettings file</param>
-        /// <returns>App settings</returns>
-        public static NodeSettings SaveAppSettings(IList<IConfig> configurations, IEngineFileProvider fileProvider, bool overwrite = true)
+        /// <param name="overwrite">Whether to overwrite nodesettings file</param>
+        /// <returns>Node settings</returns>
+        public static NodeSettings SaveNodeSettings(IList<IConfig> configurations, IEngineFileProvider fileProvider, bool overwrite = true)
         {
             ArgumentNullException.ThrowIfNull(configurations);
 
             _configurationOrder ??= configurations.ToDictionary(config => config.Name, config => config.GetOrder());
 
-            //create app settings
-            var appSettings = Singleton<NodeSettings>.Instance ?? new NodeSettings();
-            appSettings.Update(configurations);
-            Singleton<NodeSettings>.Instance = appSettings;
+            //create node settings
+            var nodeSettings = Singleton<NodeSettings>.Instance ?? new NodeSettings();
+            nodeSettings.Update(configurations);
+            Singleton<NodeSettings>.Instance = nodeSettings;
 
             //create file if not exists
-            var filePath = fileProvider.MapPath(ConfigurationDefaults.AppSettingsFilePath);
+            var filePath = fileProvider.MapPath(ConfigurationDefaults.NodeSettingsFilePath);
             var fileExists = fileProvider.FileExists(filePath);
             fileProvider.CreateFile(filePath);
 
@@ -52,21 +53,21 @@ namespace ARWNI2S.Node.Core.Configuration
             }
 
             //sort configurations for display by order (e.g. data configuration with 0 will be the first)
-            appSettings.Configuration = configuration
+            nodeSettings.Configuration = configuration
                 .SelectMany(outConfig => _configurationOrder.Where(inConfig => inConfig.Key == outConfig.Key).DefaultIfEmpty(),
                     (outConfig, inConfig) => new { OutConfig = outConfig, InConfig = inConfig })
                 .OrderBy(config => config.InConfig.Value)
                 .Select(config => config.OutConfig)
                 .ToDictionary(config => config.Key, config => config.Value);
 
-            //save app settings to the file
+            //save node settings to the file
             if (!fileExists || overwrite)
             {
-                var text = JsonConvert.SerializeObject(appSettings, Formatting.Indented);//, new JsonSerializerSettings { ContractResolver = new SecretContractResolver() });
+                var text = JsonConvert.SerializeObject(nodeSettings, Formatting.Indented);//, new JsonSerializerSettings { ContractResolver = new SecretContractResolver() });
                 fileProvider.WriteAllText(filePath, text, Encoding.UTF8);
             }
 
-            return appSettings;
+            return nodeSettings;
         }
 
         #endregion

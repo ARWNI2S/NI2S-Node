@@ -1,8 +1,8 @@
-﻿using System.Globalization;
-using System.Text;
-using ARWNI2S.Infrastructure;
+﻿using ARWNI2S.Infrastructure;
+using ARWNI2S.Infrastructure.Entities;
 using ARWNI2S.Node.Core.Configuration;
-using ARWNI2S.Node.Core.Entities;
+using System.Globalization;
+using System.Text;
 
 namespace ARWNI2S.Node.Core.Caching
 {
@@ -22,15 +22,15 @@ namespace ARWNI2S.Node.Core.Caching
 
         #region Fields
 
-        protected readonly AppSettings _appSettings;
+        protected readonly NodeSettings _nodeSettings;
 
         #endregion
 
         #region Ctor
 
-        protected CacheKeyService(AppSettings appSettings)
+        protected CacheKeyService(NodeSettings nodeSettings)
         {
-            _appSettings = appSettings;
+            _nodeSettings = nodeSettings;
         }
 
         #endregion
@@ -78,8 +78,8 @@ namespace ARWNI2S.Node.Core.Caching
             return parameter switch
             {
                 null => "null",
-                IEnumerable<INodeEntity> entities => CreateIdsHash(entities.Select(entity => entity.Id)),
-                INodeEntity entity => entity.Id,
+                IEnumerable<INI2SEntity> entities => CreateIdsHash(entities.Select(entity => entity.Id)),
+                INI2SEntity entity => entity.Id,
                 //IEnumerable<BaseEntity> entities => CreateIdsHash(entities.Select(entity => entity.Id)),
                 //BaseEntity entity => entity.Id,
                 decimal param => param.ToString(CultureInfo.InvariantCulture),
@@ -112,7 +112,7 @@ namespace ARWNI2S.Node.Core.Caching
         {
             var key = cacheKey.Create(CreateCacheKeyParameters, cacheKeyParameters);
 
-            key.CacheTime = _appSettings.Get<CacheConfig>().DefaultCacheTime;
+            key.CacheTime = _nodeSettings.Get<CacheConfig>().DefaultCacheTime;
 
             return key;
         }
@@ -127,7 +127,7 @@ namespace ARWNI2S.Node.Core.Caching
         {
             var key = cacheKey.Create(CreateCacheKeyParameters, cacheKeyParameters);
 
-            key.CacheTime = _appSettings.Get<CacheConfig>().ShortTermCacheTime;
+            key.CacheTime = _nodeSettings.Get<CacheConfig>().ShortTermCacheTime;
 
             return key;
         }

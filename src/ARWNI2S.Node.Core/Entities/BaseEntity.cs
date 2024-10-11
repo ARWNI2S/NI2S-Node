@@ -1,9 +1,11 @@
-﻿namespace ARWNI2S.Node.Core.Entities
+﻿using ARWNI2S.Infrastructure.Entities;
+
+namespace ARWNI2S.Node.Core.Entities
 {
     /// <summary>
     /// Represents the base class for entities
     /// </summary>
-    public abstract partial class BaseEntity : INodeEntity
+    public abstract partial class BaseEntity : INI2SEntity
     {
         /// <summary>
         /// Gets or sets the entity identifier

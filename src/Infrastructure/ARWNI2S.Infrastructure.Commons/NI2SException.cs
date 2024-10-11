@@ -4,7 +4,7 @@
     /// Represents all ni2s errors
     /// </summary>
     [Serializable]
-    public abstract class NI2SException : Exception
+    public class NI2SException : Exception
     {
         /// <summary>
         /// Initializes a new instance of the Exception class.

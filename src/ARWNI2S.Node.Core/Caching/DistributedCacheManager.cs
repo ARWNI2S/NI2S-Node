@@ -1,5 +1,5 @@
-﻿using ARWNI2S.Node.Core.Configuration;
-using ARWNI2S.Node.Core.Infrastructure;
+﻿using ARWNI2S.Infrastructure;
+using ARWNI2S.Node.Core.Configuration;
 using Microsoft.Extensions.Caching.Distributed;
 using Newtonsoft.Json;
 using System.Collections.Concurrent;
@@ -29,10 +29,10 @@ namespace ARWNI2S.Node.Core.Caching
 
         #region Ctor
 
-        protected DistributedCacheManager(AppSettings appSettings,
+        protected DistributedCacheManager(NodeSettings nodeSettings,
             IDistributedCache distributedCache,
             ICacheKeyManager cacheKeyManager)
-            : base(appSettings)
+            : base(nodeSettings)
         {
             _distributedCache = distributedCache;
             _localKeyManager = cacheKeyManager;

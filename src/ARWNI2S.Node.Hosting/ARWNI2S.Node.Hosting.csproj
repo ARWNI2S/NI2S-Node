@@ -6,12 +6,23 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Builder\**" />
+    <Compile Remove="Features\**" />
     <Compile Remove="Hosting\**" />
     <Compile Remove="Plugins\**" />
+    <EmbeddedResource Remove="Builder\**" />
+    <EmbeddedResource Remove="Features\**" />
     <EmbeddedResource Remove="Hosting\**" />
     <EmbeddedResource Remove="Plugins\**" />
+    <None Remove="Builder\**" />
+    <None Remove="Features\**" />
     <None Remove="Hosting\**" />
     <None Remove="Plugins\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="NI2SNode.cs" />
+    <Compile Remove="NI2SNodeOptions.cs" />
   </ItemGroup>
   
   <ItemGroup>
@@ -21,6 +32,5 @@
   <ItemGroup>
     <ProjectReference Include="..\ARWNI2S.Node.Core\ARWNI2S.Node.Core.csproj" />
     <ProjectReference Include="..\ARWNI2S.Node.Data\ARWNI2S.Node.Data.csproj" />
-    <ProjectReference Include="..\ARWNI2S.Node.Data.Services\ARWNI2S.Node.Data.Services.csproj" />
   </ItemGroup>
 </Project>

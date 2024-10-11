@@ -1,4 +1,4 @@
-﻿namespace ARWNI2S.Node.Core.Infrastructure.Interop
+﻿namespace ARWNI2S.Infrastructure.Interop
 {
     public enum MiniDumpType
     {

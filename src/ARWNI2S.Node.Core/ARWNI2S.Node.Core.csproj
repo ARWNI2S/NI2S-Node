@@ -5,58 +5,53 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Caching\**" />
     <Compile Remove="ComponentModel\**" />
     <Compile Remove="Configuration\**" />
     <Compile Remove="Entities\**" />
-    <Compile Remove="Events\**" />
     <Compile Remove="Hosting\**" />
     <Compile Remove="Http\**" />
     <Compile Remove="Infrastructure\**" />
-    <Compile Remove="Plugins\**" />
-    <Compile Remove="Security\**" />
     <Compile Remove="Services\**" />
-    <EmbeddedResource Remove="Caching\**" />
     <EmbeddedResource Remove="ComponentModel\**" />
     <EmbeddedResource Remove="Configuration\**" />
     <EmbeddedResource Remove="Entities\**" />
-    <EmbeddedResource Remove="Events\**" />
     <EmbeddedResource Remove="Hosting\**" />
     <EmbeddedResource Remove="Http\**" />
     <EmbeddedResource Remove="Infrastructure\**" />
-    <EmbeddedResource Remove="Plugins\**" />
-    <EmbeddedResource Remove="Security\**" />
     <EmbeddedResource Remove="Services\**" />
-    <None Remove="Caching\**" />
     <None Remove="ComponentModel\**" />
     <None Remove="Configuration\**" />
     <None Remove="Entities\**" />
-    <None Remove="Events\**" />
     <None Remove="Hosting\**" />
     <None Remove="Http\**" />
     <None Remove="Infrastructure\**" />
-    <None Remove="Plugins\**" />
-    <None Remove="Security\**" />
     <None Remove="Services\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="CommonHelper.cs" />
     <Compile Remove="INodeHelper.cs" />
     <Compile Remove="IServerContext.cs" />
     <Compile Remove="IWorkContext.cs" />
     <Compile Remove="NI2SVersion.cs" />
-    <Compile Remove="SecureRandomNumberGenerator.cs" />
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="ComponentModel\ReaderWriteLockDisposable.cs" />
     <Compile Include="Configuration\ClusterConfig.cs" />
     <Compile Include="Configuration\CommonConfig.cs" />
     <Compile Include="Configuration\HostingConfig.cs" />
+    <Compile Include="Configuration\ModuleConfig.cs" />
     <Compile Include="Configuration\NodeSettings.cs" />
     <Compile Include="Configuration\NodeSettingsHelper.cs" />
     <Compile Include="Configuration\ConfigurationDefaults.cs" />
+    <Compile Include="Entities\BaseEntity.cs" />
+    <Compile Include="Infrastructure\EngineContext.cs" />
+    <Compile Include="Infrastructure\EngineFileProvider.cs" />
+    <Compile Include="Infrastructure\Mapper\AutoMapperConfiguration.cs" />
+    <Compile Include="Infrastructure\Mapper\IOrderedMapperProfile.cs" />
+    <Compile Include="Infrastructure\NodeEngine.cs" />
     <Compile Include="Infrastructure\Singleton.cs" />
+    <Compile Include="Infrastructure\NI2SNodeTypeFinder.cs" />
   </ItemGroup>
 
   <ItemGroup>

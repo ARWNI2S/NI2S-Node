@@ -1,4 +1,4 @@
-﻿using ARWNI2S.Node.Core;
+﻿using ARWNI2S.Infrastructure;
 using FluentMigrator;
 using FluentMigrator.Infrastructure;
 using FluentMigrator.Runner;

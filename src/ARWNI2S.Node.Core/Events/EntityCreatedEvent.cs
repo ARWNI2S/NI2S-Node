@@ -1,4 +1,4 @@
-﻿using ARWNI2S.Node.Core.Entities;
+﻿using ARWNI2S.Infrastructure.Entities;
 
 namespace ARWNI2S.Node.Core.Events
 {
@@ -6,7 +6,7 @@ namespace ARWNI2S.Node.Core.Events
     /// A container for entities that have been inserted.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public partial class EntityCreatedEvent<T> where T : INodeEntity
+    public partial class EntityCreatedEvent<T> where T : INI2SEntity
     {
         /// <summary>
         /// Ctor

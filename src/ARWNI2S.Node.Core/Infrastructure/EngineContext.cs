@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using ARWNI2S.Infrastructure;
+using System.Runtime.CompilerServices;
 
 namespace ARWNI2S.Node.Core.Infrastructure
 {

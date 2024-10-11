@@ -1,4 +1,5 @@
-﻿using ARWNI2S.Node.Core.Infrastructure.Mapper;
+﻿using ARWNI2S.Infrastructure;
+using ARWNI2S.Node.Core.Infrastructure.Mapper;
 using AutoMapper;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -106,11 +107,11 @@ namespace ARWNI2S.Node.Core.Infrastructure
 
             //find startup configurations provided by other assemblies
             var typeFinder = Singleton<ITypeFinder>.Instance;
-            var startupConfigurations = typeFinder.FindClassesOfType<IServerStartup>();
+            var startupConfigurations = typeFinder.FindClassesOfType<INI2SStartup>();
 
             //create and sort instances of startup configurations
             var instances = startupConfigurations
-                .Select(startup => (IServerStartup)Activator.CreateInstance(startup))
+                .Select(startup => (INI2SStartup)Activator.CreateInstance(startup))
                 .OrderBy(startup => startup.Order);
 
             //configure services
@@ -139,11 +140,11 @@ namespace ARWNI2S.Node.Core.Infrastructure
 
         //    //find startup configurations provided by other assemblies
         //    var typeFinder = Singleton<ITypeFinder>.Instance;
-        //    var startupConfigurations = typeFinder.FindClassesOfType<IServerStartup>();
+        //    var startupConfigurations = typeFinder.FindClassesOfType<INI2SStartup>();
 
         //    //create and sort instances of startup configurations
         //    var instances = startupConfigurations
-        //        .Select(startup => (IServerStartup)Activator.CreateInstance(startup))
+        //        .Select(startup => (INI2SStartup)Activator.CreateInstance(startup))
         //        .OrderBy(startup => startup.Order);
 
         //    //configure request pipeline
@@ -198,7 +199,7 @@ namespace ARWNI2S.Node.Core.Infrastructure
                     //try to resolve constructor parameters
                     var parameters = constructor.GetParameters().Select(parameter =>
                     {
-                        var service = Resolve(parameter.ParameterType) ?? throw new ServerException("Unknown dependency");
+                        var service = Resolve(parameter.ParameterType) ?? throw new NodeException("Unknown dependency");
                         return service;
                     });
 
@@ -211,7 +212,7 @@ namespace ARWNI2S.Node.Core.Infrastructure
                 }
             }
 
-            throw new ServerException("No constructor was found that had all the dependencies satisfied.", innerException);
+            throw new NodeException("No constructor was found that had all the dependencies satisfied.", innerException);
         }
 
         #endregion

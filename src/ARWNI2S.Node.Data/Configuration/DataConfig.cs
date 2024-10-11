@@ -1,4 +1,4 @@
-﻿using ARWNI2S.Node.Core.Configuration;
+﻿using ARWNI2S.Infrastructure.Configuration;
 using ARWNI2S.Node.Core.Security.Secrets;
 using FluentMigrator.Runner.Initialization;
 using Newtonsoft.Json;

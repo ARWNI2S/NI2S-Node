@@ -1,4 +1,5 @@
-﻿using ARWNI2S.Node.Core.Infrastructure;
+﻿using ARWNI2S.Infrastructure;
+using ARWNI2S.Node.Core.Infrastructure;
 using ARWNI2S.Node.Data.Migrations;
 using FluentMigrator;
 using FluentMigrator.Runner;
@@ -13,7 +14,7 @@ namespace ARWNI2S.Node.Data
     /// <summary>
     /// Represents object for the configuring DB context on application startup
     /// </summary>
-    public partial class ServerDbStartup : IServerStartup
+    public partial class ServerDbStartup : INI2SStartup
     {
         /// <summary>
         /// Add and configure any of the middleware
@@ -62,13 +63,13 @@ namespace ARWNI2S.Node.Data
                 runner.ApplyUpMigrations(assembly, MigrationProcessType.NoDependencies);
         }
 
-        /// <summary>
-        /// Configure the using of added middleware
-        /// </summary>
-        /// <param name="application">Builder for configuring an application's request pipeline</param>
-        public void Configure(INodeHostBuilder application)
-        {
-        }
+        ///// <summary>
+        ///// Configure the using of added middleware
+        ///// </summary>
+        ///// <param name="application">Builder for configuring an application's request pipeline</param>
+        //public void Configure(INodeHostBuilder application)
+        //{
+        //}
 
         /// <summary>
         /// Gets order of this startup configuration implementation

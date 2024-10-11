@@ -24,7 +24,7 @@ namespace ARWNI2S.Node.Data
                 DataProviderType.SqlServer => new MsSqlServerDataProvider(),
                 DataProviderType.MySql => new MySqlServerDataProvider(),
                 DataProviderType.PostgreSQL => new PostgreSqlServerDataProvider(),
-                _ => throw new ServerException($"Not supported data provider name: '{dataProviderType}'"),
+                _ => throw new NodeException($"Not supported data provider name: '{dataProviderType}'"),
             };
         }
 
