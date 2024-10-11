@@ -4,7 +4,6 @@ namespace ARWNI2S.Infrastructure.Logging
 {
     /// <summary>
     /// An interface used to consume log entries. 
-    /// Instaces of a class implementing this should be added to <see cref="TraceLogger.LogConsumers"/> collection in order to retrieve events.
     /// </summary>
     public interface ILogConsumer
     {
@@ -22,7 +21,7 @@ namespace ARWNI2S.Infrastructure.Logging
         /// In general, all log entries at severity=Error or greater should specify an explicit error code value.</param>
         void Log(
             LogLevel level,
-            TraceLogger.LoggerType loggerType,
+            LoggerType loggerType,
             string caller,
             string message,
             IPEndPoint myIPEndPoint,
@@ -33,7 +32,6 @@ namespace ARWNI2S.Infrastructure.Logging
 
     /// <summary>
     /// An interface used to consume log entries, when a Flush function is also supported. 
-    /// Instances of a class implementing this should be added to <see cref="TraceLogger.LogConsumers"/> collection in order to retrieve events.
     /// </summary>
     public interface IFlushableLogConsumer : ILogConsumer
     {
@@ -45,7 +43,6 @@ namespace ARWNI2S.Infrastructure.Logging
 
     /// <summary>
     /// An interface used to consume log entries, when a Close function is also supported. 
-    /// Instances of a class implementing this should be added to <see cref="TraceLogger.LogConsumers"/> collection in order to retrieve events.
     /// </summary>
     public interface ICloseableLogConsumer : ILogConsumer
     {

@@ -81,10 +81,7 @@ namespace ARWNI2S.Infrastructure.Collections
         {
             #region Require
 
-            if (col == null)
-            {
-                throw new ArgumentNullException("col");
-            }
+            ArgumentNullException.ThrowIfNull(col);
 
             #endregion
 
@@ -417,10 +414,7 @@ namespace ARWNI2S.Infrastructure.Collections
         {
             #region Require
 
-            if (deque == null)
-            {
-                throw new ArgumentNullException("deque");
-            }
+            ArgumentNullException.ThrowIfNull(deque);
 
             #endregion
 
@@ -632,10 +626,7 @@ namespace ARWNI2S.Infrastructure.Collections
             {
                 #region Require
 
-                if (deque == null)
-                {
-                    throw new ArgumentNullException("deque");
-                }
+                ArgumentNullException.ThrowIfNull(deque);
 
                 #endregion
 

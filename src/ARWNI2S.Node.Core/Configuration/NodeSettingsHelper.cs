@@ -1,4 +1,5 @@
-﻿using ARWNI2S.Node.Core.Infrastructure;
+﻿using ARWNI2S.Infrastructure.Configuration;
+using ARWNI2S.Node.Core.Infrastructure;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ namespace ARWNI2S.Node.Core.Configuration
     /// <summary>
     /// Represents the app settings helper
     /// </summary>
-    public partial class AppSettingsHelper
+    public partial class NodeSettingsHelper
     {
         #region Fields
 
@@ -25,16 +26,16 @@ namespace ARWNI2S.Node.Core.Configuration
         /// <param name="fileProvider">File provider</param>
         /// <param name="overwrite">Whether to overwrite appsettings file</param>
         /// <returns>App settings</returns>
-        public static AppSettings SaveAppSettings(IList<IConfig> configurations, IEngineFileProvider fileProvider, bool overwrite = true)
+        public static NodeSettings SaveAppSettings(IList<IConfig> configurations, IEngineFileProvider fileProvider, bool overwrite = true)
         {
             ArgumentNullException.ThrowIfNull(configurations);
 
             _configurationOrder ??= configurations.ToDictionary(config => config.Name, config => config.GetOrder());
 
             //create app settings
-            var appSettings = Singleton<AppSettings>.Instance ?? new AppSettings();
+            var appSettings = Singleton<NodeSettings>.Instance ?? new NodeSettings();
             appSettings.Update(configurations);
-            Singleton<AppSettings>.Instance = appSettings;
+            Singleton<NodeSettings>.Instance = appSettings;
 
             //create file if not exists
             var filePath = fileProvider.MapPath(ConfigurationDefaults.AppSettingsFilePath);
@@ -42,7 +43,7 @@ namespace ARWNI2S.Node.Core.Configuration
             fileProvider.CreateFile(filePath);
 
             //get raw configuration parameters
-            var configuration = JsonConvert.DeserializeObject<AppSettings>(fileProvider.ReadAllText(filePath, Encoding.UTF8))
+            var configuration = JsonConvert.DeserializeObject<NodeSettings>(fileProvider.ReadAllText(filePath, Encoding.UTF8))
                 ?.Configuration
                 ?? [];
             foreach (var config in configurations)

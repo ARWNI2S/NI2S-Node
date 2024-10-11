@@ -5,6 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Infrastructure\**" />
+    <EmbeddedResource Remove="Infrastructure\**" />
+    <None Remove="Infrastructure\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.Orleans.Core.Abstractions" />
     <ProjectReference Include="..\ARWNI2S.Infrastructure.Abstractions\ARWNI2S.Infrastructure.Abstractions.csproj" />
   </ItemGroup>

@@ -105,8 +105,7 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
         /// <exception cref="ArgumentNullException"><paramref name="collection"/> is null.</exception>
         public BigList(IEnumerable<T> collection)
         {
-            if (collection == null)
-                throw new ArgumentNullException("collection");
+            ArgumentNullException.ThrowIfNull(collection);
             root = NodeFromEnumerable(collection);
             CheckBalance();
         }
@@ -122,8 +121,7 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
         /// <exception cref="ArgumentNullException"><paramref name="collection"/> is null.</exception>
         public BigList(IEnumerable<T> collection, int copies)
         {
-            if (collection == null)
-                throw new ArgumentNullException("collection");
+            ArgumentNullException.ThrowIfNull(collection);
             root = NCopiesOfNode(copies, NodeFromEnumerable(collection));
             CheckBalance();
         }
@@ -138,8 +136,7 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
         /// <exception cref="ArgumentNullException"><paramref name="list"/> is null.</exception>
         public BigList(BigList<T> list)
         {
-            if (list == null)
-                throw new ArgumentNullException("list");
+            ArgumentNullException.ThrowIfNull(list);
             if (list.root == null)
                 root = null;
             else
@@ -161,8 +158,7 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
         /// <exception cref="ArgumentNullException"><paramref name="list"/> is null.</exception>
         public BigList(BigList<T> list, int copies)
         {
-            if (list == null)
-                throw new ArgumentNullException("list");
+            ArgumentNullException.ThrowIfNull(list);
             if (list.root == null)
                 root = null;
             else
@@ -367,8 +363,7 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
         {
             StopEnumerations();
 
-            if (collection == null)
-                throw new ArgumentNullException("collection");
+            ArgumentNullException.ThrowIfNull(collection);
 
             if (index <= 0 || index >= Count)
             {
@@ -421,8 +416,7 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
         {
             StopEnumerations();
 
-            if (list == null)
-                throw new ArgumentNullException("list");
+            ArgumentNullException.ThrowIfNull(list);
             if ((uint)Count + (uint)list.Count > MAXITEMS)
                 throw new InvalidOperationException(LocalizedStrings.Collections_CollectionTooLarge);
 
@@ -573,8 +567,7 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
         /// <exception cref="ArgumentNullException"><paramref name="collection"/> is null.</exception>
         public void AddRange(IEnumerable<T> collection)
         {
-            if (collection == null)
-                throw new ArgumentNullException("collection");
+            ArgumentNullException.ThrowIfNull(collection);
 
             StopEnumerations();
 
@@ -611,8 +604,7 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
         /// <exception cref="ArgumentNullException"><paramref name="collection"/> is null.</exception>
         public void AddRangeToFront(IEnumerable<T> collection)
         {
-            if (collection == null)
-                throw new ArgumentNullException("collection");
+            ArgumentNullException.ThrowIfNull(collection);
 
             StopEnumerations();
 
@@ -684,8 +676,7 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
                 return [];
             else
             {
-                bool itemIsValueType;
-                if (!CollectionUtils.IsCloneableType(typeof(T), out itemIsValueType))
+                if (!CollectionUtils.IsCloneableType(typeof(T), out bool itemIsValueType))
                     throw new InvalidOperationException(string.Format(LocalizedStrings.Collections_TypeNotCloneable, typeof(T).FullName));
 
                 if (itemIsValueType)
@@ -715,8 +706,7 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
         /// <exception cref="ArgumentNullException"><paramref name="list"/> is null.</exception>
         public void AddRange(BigList<T> list)
         {
-            if (list == null)
-                throw new ArgumentNullException("list");
+            ArgumentNullException.ThrowIfNull(list);
             if ((uint)Count + (uint)list.Count > MAXITEMS)
                 throw new InvalidOperationException(LocalizedStrings.Collections_CollectionTooLarge);
 
@@ -754,8 +744,7 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
         /// <exception cref="ArgumentNullException"><paramref name="list"/> is null.</exception>
         public void AddRangeToFront(BigList<T> list)
         {
-            if (list == null)
-                throw new ArgumentNullException("list");
+            ArgumentNullException.ThrowIfNull(list);
             if ((uint)Count + (uint)list.Count > MAXITEMS)
                 throw new InvalidOperationException(LocalizedStrings.Collections_CollectionTooLarge);
 
@@ -794,10 +783,8 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
         /// <exception cref="ArgumentNullException"><paramref name="first"/> or <paramref name="second"/> is null.</exception>
         public static BigList<T> operator +(BigList<T> first, BigList<T> second)
         {
-            if (first == null)
-                throw new ArgumentNullException("first");
-            if (second == null)
-                throw new ArgumentNullException("second");
+            ArgumentNullException.ThrowIfNull(first);
+            ArgumentNullException.ThrowIfNull(second);
             if ((uint)first.Count + (uint)second.Count > MAXITEMS)
                 throw new InvalidOperationException(LocalizedStrings.Collections_CollectionTooLarge);
 
@@ -1351,9 +1338,9 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
         /// larger than <paramref name="item"/>, the bitwise complement of Count is returned.</returns>
         public int BinarySearch(T item, IComparer<T> comparer)
         {
-            int count, index;
+            int count;
 
-            count = CollectionAlgorithms.BinarySearch(this, item, comparer, out index);
+            count = CollectionAlgorithms.BinarySearch(this, item, comparer, out int index);
             if (count == 0)
                 return ~index;
             else
@@ -1802,9 +1789,8 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
             private bool MergeLeafInPlace(Node other)
             {
                 Debug.Assert(!shared);
-                LeafNode otherLeaf = other as LeafNode;
                 int newCount;
-                if (otherLeaf != null && (newCount = otherLeaf.Count + _count) <= MAXLEAF)
+                if (other is LeafNode otherLeaf && (newCount = otherLeaf.Count + _count) <= MAXLEAF)
                 {
                     // Combine the two leaf nodes into one.
                     if (newCount > _items.Length)
@@ -1831,9 +1817,8 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
             /// returns null.</returns>
             private Node MergeLeaf(Node other)
             {
-                LeafNode otherLeaf = other as LeafNode;
                 int newCount;
-                if (otherLeaf != null && (newCount = otherLeaf.Count + _count) <= MAXLEAF)
+                if (other is LeafNode otherLeaf && (newCount = otherLeaf.Count + _count) <= MAXLEAF)
                 {
                     // Combine the two leaf nodes into one.
                     T[] newItems = new T[MAXLEAF];
@@ -1938,8 +1923,7 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
                 }
 
                 // If we're appending a tree with a left leaf node, try to merge them if possible.
-                ConcatNode otherConcat = node as ConcatNode;
-                if (otherConcat != null && MergeLeafInPlace(otherConcat._left))
+                if (node is ConcatNode otherConcat && MergeLeafInPlace(otherConcat._left))
                 {
                     if (!nodeIsUnused)
                         otherConcat._right.MarkShared();
@@ -1961,8 +1945,7 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
                     return result;
 
                 // If we're appending a concat with a left leaf, try to merge them if possible.
-                ConcatNode otherConcat = node as ConcatNode;
-                if (otherConcat != null && (result = MergeLeaf(otherConcat._left)) != null)
+                if (node is ConcatNode otherConcat && (result = MergeLeaf(otherConcat._left)) != null)
                 {
                     if (!nodeIsUnused)
                         otherConcat._right.MarkShared();
@@ -2060,10 +2043,9 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
                 if (shared)
                     return Insert(index, node, nodeIsUnused);       // Can't update a shared node in place.
 
-                LeafNode otherLeaf = node as LeafNode;
                 int newCount;
 
-                if (otherLeaf != null && (newCount = otherLeaf.Count + _count) <= MAXLEAF)
+                if (node is LeafNode otherLeaf && (newCount = otherLeaf.Count + _count) <= MAXLEAF)
                 {
                     // Combine the two leaf nodes into one.
                     if (newCount > _items.Length)
@@ -2124,10 +2106,9 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
             /// <returns>A new node with the give node inserted.</returns>
             public override Node Insert(int index, Node node, bool nodeIsUnused)
             {
-                LeafNode otherLeaf = node as LeafNode;
                 int newCount;
 
-                if (otherLeaf != null && (newCount = otherLeaf.Count + _count) <= MAXLEAF)
+                if (node is LeafNode otherLeaf && (newCount = otherLeaf.Count + _count) <= MAXLEAF)
                 {
                     // Combine the two leaf nodes into one.
                     T[] newItems = new T[MAXLEAF];
@@ -2498,8 +2479,7 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
                 if (shared)
                     return Prepend(new LeafNode(item), true);  // Can't update a shared node in place.
 
-                LeafNode leftLeaf;
-                if (_left.Count < MAXLEAF && !_left.Shared && (leftLeaf = _left as LeafNode) != null)
+                if (_left.Count < MAXLEAF && !_left.Shared && _left is LeafNode leftLeaf)
                 {
                     // Prepend the item to the left leaf. This keeps repeated prepends from creating
                     // single item nodes.
@@ -2537,8 +2517,7 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
                 if (shared)
                     return Append(new LeafNode(item), true);  // Can't update a shared node in place.
 
-                LeafNode rightLeaf;
-                if (_right.Count < MAXLEAF && !_right.Shared && (rightLeaf = _right as LeafNode) != null)
+                if (_right.Count < MAXLEAF && !_right.Shared && _right is LeafNode rightLeaf)
                 {
                     int c = rightLeaf.Count;
                     if (c == rightLeaf._items.Length)

@@ -81,8 +81,7 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
         /// <param name="equalityComparer">An instance of IEqualityComparer&lt;T&gt; that will be used to compare items.</param>
         public Bag(IEqualityComparer<T> equalityComparer)
         {
-            if (equalityComparer == null)
-                throw new ArgumentNullException("equalityComparer");
+            ArgumentNullException.ThrowIfNull(equalityComparer);
 
             _keyEqualityComparer = equalityComparer;
             _equalityComparer = Compare.EqualityComparerKeyValueFromComparerKey<T, int>(equalityComparer);
@@ -172,8 +171,7 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
         /// <exception cref="InvalidOperationException">T is a reference type that does not implement ICloneable.</exception>
         public Bag<T> CloneContents()
         {
-            bool itemIsValueType;
-            if (!CollectionUtils.IsCloneableType(typeof(T), out itemIsValueType))
+            if (!CollectionUtils.IsCloneableType(typeof(T), out bool itemIsValueType))
                 throw new InvalidOperationException(string.Format(LocalizedStrings.Collections_TypeNotCloneable, typeof(T).FullName));
 
             Hash<KeyValuePair<T, int>> newHash = new Hash<KeyValuePair<T, int>>(_equalityComparer);
@@ -181,7 +179,7 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
             // Clone each item, and add it to the new ordered bag.
             foreach (KeyValuePair<T, int> pair in _hash)
             {
-                KeyValuePair<T, int> newPair, dummy;
+                KeyValuePair<T, int> newPair;
                 T newKey;
 
                 if (!itemIsValueType && pair.Key != null)
@@ -191,7 +189,7 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
 
                 newPair = NewPair(newKey, pair.Value);
 
-                newHash.Insert(newPair, true, out dummy);
+                newHash.Insert(newPair, true, out KeyValuePair<T, int> dummy);
             }
 
             return new Bag<T>(_equalityComparer, _keyEqualityComparer, newHash, _count);
@@ -236,8 +234,7 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
         /// <returns>The number of items in the bag that compare equal to <paramref name="item"/>.</returns>
         public int NumberOfCopies(T item)
         {
-            KeyValuePair<T, int> foundPair;
-            if (_hash.Find(NewPair(item), false, out foundPair))
+            if (_hash.Find(NewPair(item), false, out KeyValuePair<T, int> foundPair))
                 return foundPair.Value;
             else
                 return 0;
@@ -254,8 +251,7 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
         /// <returns>The number of items equal to <paramref name="item"/> stored in the bag.</returns>
         public int GetRepresentativeItem(T item, out T representative)
         {
-            KeyValuePair<T, int> foundPair;
-            if (_hash.Find(NewPair(item), false, out foundPair))
+            if (_hash.Find(NewPair(item), false, out KeyValuePair<T, int> foundPair))
             {
                 representative = foundPair.Key;
                 return foundPair.Value;
@@ -299,8 +295,7 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
         /// <returns>True if the bag contains <paramref name="item"/>. False if the bag does not contain <paramref name="item"/>.</returns>
         public sealed override bool Contains(T item)
         {
-            KeyValuePair<T, int> dummy;
-            return _hash.Find(NewPair(item), false, out dummy);
+            return _hash.Find(NewPair(item), false, out KeyValuePair<T, int> dummy);
         }
 
         /// <summary>
@@ -340,8 +335,8 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
         private void AddSecure(T item)
         {
             KeyValuePair<T, int> pair = NewPair(item, 1);
-            KeyValuePair<T, int> existing, newPair;
-            if (!_hash.Insert(pair, false, out existing))
+            KeyValuePair<T, int> newPair;
+            if (!_hash.Insert(pair, false, out KeyValuePair<T, int> existing))
             {
                 // The item already existed, so update the count instead.
                 newPair = NewPair(existing.Key, existing.Value + 1);
@@ -361,8 +356,8 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
         public void AddRepresentative(T item)
         {
             KeyValuePair<T, int> pair = NewPair(item, 1);
-            KeyValuePair<T, int> existing, newPair;
-            if (!_hash.Insert(pair, false, out existing))
+            KeyValuePair<T, int> newPair;
+            if (!_hash.Insert(pair, false, out KeyValuePair<T, int> existing))
             {
                 // The item already existed, so update the count instead.
                 newPair = NewPair(pair.Key, existing.Value + 1);
@@ -385,8 +380,8 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
                 RemoveAllCopies(item);
             else
             {
-                KeyValuePair<T, int> dummy, existing, newPair;
-                if (_hash.Find(NewPair(item), false, out existing))
+                KeyValuePair<T, int> newPair;
+                if (_hash.Find(NewPair(item), false, out KeyValuePair<T, int> existing))
                 {
                     _count += numCopies - existing.Value;
                     newPair = NewPair(existing.Key, numCopies);
@@ -396,7 +391,7 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
                     _count += numCopies;
                     newPair = NewPair(item, numCopies);
                 }
-                _hash.Insert(newPair, true, out dummy);
+                _hash.Insert(newPair, true, out KeyValuePair<T, int> dummy);
             }
         }
 
@@ -409,8 +404,7 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
         /// <param name="collection">A collection of items to add to the bag.</param>
         public void AddMany(IEnumerable<T> collection)
         {
-            if (collection == null)
-                throw new ArgumentNullException("collection");
+            ArgumentNullException.ThrowIfNull(collection);
 
             // If we're adding ourselves, we need to copy to a separate array to avoid modification
             // during enumeration.
@@ -441,15 +435,14 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
         /// <returns>True if <paramref name="item"/> was found and removed. False if <paramref name="item"/> was not in the bag.</returns>
         public sealed override bool Remove(T item)
         {
-            KeyValuePair<T, int> removed, newPair;
-            if (_hash.Delete(NewPair(item), out removed))
+            KeyValuePair<T, int> newPair;
+            if (_hash.Delete(NewPair(item), out KeyValuePair<T, int> removed))
             {
                 if (removed.Value > 1)
                 {
                     // Only want to remove one copied, so add back in with a reduced count.
-                    KeyValuePair<T, int> dummy;
                     newPair = NewPair(removed.Key, removed.Value - 1);
-                    _hash.Insert(newPair, true, out dummy);
+                    _hash.Insert(newPair, true, out KeyValuePair<T, int> dummy);
                 }
                 --_count;
                 return true;
@@ -471,8 +464,7 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
         /// <returns>The number of copies of <paramref name="item"/> that were found and removed. </returns>
         public int RemoveAllCopies(T item)
         {
-            KeyValuePair<T, int> removed;
-            if (_hash.Delete(NewPair(item), out removed))
+            if (_hash.Delete(NewPair(item), out KeyValuePair<T, int> removed))
             {
                 _count -= removed.Value;
                 return removed.Value;
@@ -495,8 +487,7 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
         /// <exception cref="ArgumentNullException"><paramref name="collection"/> is null.</exception>
         public int RemoveMany(IEnumerable<T> collection)
         {
-            if (collection == null)
-                throw new ArgumentNullException("collection");
+            ArgumentNullException.ThrowIfNull(collection);
 
             int removeCount = 0;
 
@@ -542,8 +533,7 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
         /// <exception cref="InvalidOperationException">If otherBag and this bag don't use the same method for comparing items.</exception>
         private void CheckConsistentComparison(Bag<T> otherBag)
         {
-            if (otherBag == null)
-                throw new ArgumentNullException("otherBag");
+            ArgumentNullException.ThrowIfNull(otherBag);
 
             if (!Equals(_equalityComparer, otherBag._equalityComparer))
                 throw new InvalidOperationException(LocalizedStrings.Collections_InconsistentComparisons);
@@ -847,7 +837,6 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
                 smaller = otherBag; larger = this;
             }
 
-            KeyValuePair<T, int> dummy;
             Hash<KeyValuePair<T, int>> newHash = new Hash<KeyValuePair<T, int>>(_equalityComparer);
             int newCount = 0;
             int copiesInSmaller, copiesInLarger, copies;
@@ -861,7 +850,7 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
                 copies = Math.Min(copiesInLarger, copiesInSmaller);
                 if (copies > 0)
                 {
-                    newHash.Insert(NewPair(item, copies), true, out dummy);
+                    newHash.Insert(NewPair(item, copies), true, out KeyValuePair<T, int> dummy);
                     newCount += copies;
                 }
             }

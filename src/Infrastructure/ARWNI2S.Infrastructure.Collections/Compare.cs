@@ -16,8 +16,7 @@ namespace ARWNI2S.Infrastructure.Collections
         /// <returns>IComparer that uses the comparison.</returns>
         public static IComparer<T> ComparerFromComparison<T>(Comparison<T> comparison)
         {
-            if (comparison == null)
-                throw new ArgumentNullException("comparison");
+            ArgumentNullException.ThrowIfNull(comparison);
 
             return new ComparisonComparer<T>(comparison);
         }
@@ -32,8 +31,7 @@ namespace ARWNI2S.Infrastructure.Collections
         /// <returns>IComparer for comparing key-value pairs.</returns>
         public static IComparer<KeyValuePair<TKey, TValue>> ComparerKeyValueFromComparerKey<TKey, TValue>(IComparer<TKey> keyComparer)
         {
-            if (keyComparer == null)
-                throw new ArgumentNullException("keyComparer");
+            ArgumentNullException.ThrowIfNull(keyComparer);
 
             return new KeyValueComparer<TKey, TValue>(keyComparer);
         }
@@ -48,8 +46,7 @@ namespace ARWNI2S.Infrastructure.Collections
         /// <returns>IEqualityComparer for comparing key-value pairs.</returns>
         public static IEqualityComparer<KeyValuePair<TKey, TValue>> EqualityComparerKeyValueFromComparerKey<TKey, TValue>(IEqualityComparer<TKey> keyEqualityComparer)
         {
-            if (keyEqualityComparer == null)
-                throw new ArgumentNullException("keyEqualityComparer");
+            ArgumentNullException.ThrowIfNull(keyEqualityComparer);
 
             return new KeyValueEqualityComparer<TKey, TValue>(keyEqualityComparer);
         }
@@ -65,10 +62,8 @@ namespace ARWNI2S.Infrastructure.Collections
         /// <returns>IComparer for comparing key-value pairs.</returns>
         public static IComparer<KeyValuePair<TKey, TValue>> ComparerPairFromKeyValueComparers<TKey, TValue>(IComparer<TKey> keyComparer, IComparer<TValue> valueComparer)
         {
-            if (keyComparer == null)
-                throw new ArgumentNullException("keyComparer");
-            if (valueComparer == null)
-                throw new ArgumentNullException("valueComparer");
+            ArgumentNullException.ThrowIfNull(keyComparer);
+            ArgumentNullException.ThrowIfNull(valueComparer);
 
             return new PairComparer<TKey, TValue>(keyComparer, valueComparer);
         }
@@ -83,8 +78,7 @@ namespace ARWNI2S.Infrastructure.Collections
         /// <returns>IComparer for comparing key-value pairs.</returns>
         public static IComparer<KeyValuePair<TKey, TValue>> ComparerKeyValueFromComparisonKey<TKey, TValue>(Comparison<TKey> keyComparison)
         {
-            if (keyComparison == null)
-                throw new ArgumentNullException("keyComparison");
+            ArgumentNullException.ThrowIfNull(keyComparison);
 
             return new ComparisonKeyValueComparer<TKey, TValue>(keyComparison);
         }

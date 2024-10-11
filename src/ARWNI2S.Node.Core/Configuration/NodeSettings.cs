@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using ARWNI2S.Infrastructure.Configuration;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace ARWNI2S.Node.Core.Configuration
@@ -6,7 +7,7 @@ namespace ARWNI2S.Node.Core.Configuration
     /// <summary>
     /// Represents the app settings
     /// </summary>
-    public partial class AppSettings
+    public partial class NodeSettings
     {
         #region Fields
 
@@ -16,7 +17,7 @@ namespace ARWNI2S.Node.Core.Configuration
 
         #region Ctor
 
-        public AppSettings(IList<IConfig> configurations = null)
+        public NodeSettings(IList<IConfig> configurations = null)
         {
             _configurations = configurations
                 ?.OrderBy(config => config.GetOrder())
@@ -46,7 +47,7 @@ namespace ARWNI2S.Node.Core.Configuration
         public TConfig Get<TConfig>() where TConfig : class, IConfig
         {
             if (_configurations[typeof(TConfig)] is not TConfig config)
-                throw new ServerException($"No configuration with type '{typeof(TConfig)}' found");
+                throw new NI2SException($"No configuration with type '{typeof(TConfig)}' found");
 
             return config;
         }

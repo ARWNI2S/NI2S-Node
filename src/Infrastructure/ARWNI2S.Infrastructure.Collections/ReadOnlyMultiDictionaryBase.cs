@@ -118,8 +118,7 @@ namespace ARWNI2S.Infrastructure.Collections
         /// <returns>True if the key is present in the dictionary.</returns>
         public virtual bool ContainsKey(TKey key)
         {
-            IEnumerator<TValue> values;
-            return TryEnumerateValuesForKey(key, out values);
+            return TryEnumerateValuesForKey(key, out IEnumerator<TValue> values);
         }
 
         /// <summary>
@@ -177,9 +176,8 @@ namespace ARWNI2S.Infrastructure.Collections
         protected virtual int CountValues(TKey key)
         {
             int count = 0;
-            IEnumerator<TValue> enumValues;
 
-            if (TryEnumerateValuesForKey(key, out enumValues))
+            if (TryEnumerateValuesForKey(key, out IEnumerator<TValue> enumValues))
             {
                 using (enumValues)
                 {
@@ -470,8 +468,7 @@ namespace ARWNI2S.Infrastructure.Collections
             /// <returns>An IEnumerator&lt;TValue&gt; that enumerates all the values associated with key.</returns>
             public override IEnumerator<TValue> GetEnumerator()
             {
-                IEnumerator<TValue> values;
-                if (_myDictionary.TryEnumerateValuesForKey(_key, out values))
+                if (_myDictionary.TryEnumerateValuesForKey(_key, out IEnumerator<TValue> values))
                     return values;
                 else
                     return NoValues();
@@ -549,8 +546,7 @@ namespace ARWNI2S.Infrastructure.Collections
                     while (enumKeys.MoveNext())
                     {
                         TKey key = enumKeys.Current;
-                        IEnumerator<TValue> enumValues;
-                        if (_myDictionary.TryEnumerateValuesForKey(key, out enumValues))
+                        if (_myDictionary.TryEnumerateValuesForKey(key, out IEnumerator<TValue> enumValues))
                         {
                             using (enumValues)
                             {
@@ -665,8 +661,7 @@ namespace ARWNI2S.Infrastructure.Collections
                     while (enumKeys.MoveNext())
                     {
                         TKey key = enumKeys.Current;
-                        IEnumerator<TValue> enumValues;
-                        if (_myDictionary.TryEnumerateValuesForKey(key, out enumValues))
+                        if (_myDictionary.TryEnumerateValuesForKey(key, out IEnumerator<TValue> enumValues))
                         {
                             using (enumValues)
                             {

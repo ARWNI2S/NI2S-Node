@@ -1,5 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 using System.Security;
+using ARWNI2S.Node.Core.Infrastructure.Interop;
 
 namespace ARWNI2S.Infrastructure.Interop
 {

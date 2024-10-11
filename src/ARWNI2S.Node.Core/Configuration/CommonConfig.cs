@@ -1,4 +1,6 @@
-﻿namespace ARWNI2S.Node.Core.Configuration
+﻿using ARWNI2S.Infrastructure.Configuration;
+
+namespace ARWNI2S.Node.Core.Configuration
 {
     /// <summary>
     /// Represents common configuration parameters
@@ -9,16 +11,6 @@
         /// Gets or sets a value indicating whether to display the full error in production environment. It's ignored (always enabled) in development environment
         /// </summary>
         public bool DisplayFullErrorStack { get; private set; } = false;
-
-        /// <summary>
-        /// Gets or sets path to database with user agent strings
-        /// </summary>
-        public string UserAgentStringsPath { get; private set; } = "~/App_Data/browscap.xml";
-
-        /// <summary>
-        /// Gets or sets path to database with crawler only user agent strings
-        /// </summary>
-        public string CrawlerOnlyUserAgentStringsPath { get; private set; } = "~/App_Data/browscap.crawlersonly.xml";
 
         /// <summary>
         /// Gets or sets path to additional database with crawler only user agent strings
@@ -49,11 +41,6 @@
         /// Get or set the blacklist of static file extension for module directories
         /// </summary>
         public string ModuleStaticFileExtensionsBlacklist { get; private set; } = "";
-
-        /// <summary>
-        /// Get or set a value indicating whether to serve files that don't have a recognized content-type
-        /// </summary>
-        public bool ServeUnknownFileTypes { get; private set; } = false;
 
         /// <summary>
         /// Get or set a value indicating whether to use Autofac IoC container

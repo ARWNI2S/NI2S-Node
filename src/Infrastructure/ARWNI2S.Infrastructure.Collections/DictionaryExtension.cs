@@ -29,9 +29,8 @@
         /// <returns></returns>
         public static T GetValue<T>(this IDictionary<object, object> dictionary, object key, T defaultValue)
         {
-            object valueObj;
 
-            if (!dictionary.TryGetValue(key, out valueObj))
+            if (!dictionary.TryGetValue(key, out object valueObj))
             {
                 return defaultValue;
             }

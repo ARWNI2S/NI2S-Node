@@ -76,8 +76,7 @@ namespace ARWNI2S.Infrastructure.Collections
         /// <returns>True if the key is present in the dictionary.</returns>
         public virtual bool ContainsKey(TKey key)
         {
-            TValue dummy;
-            return TryGetValue(key, out dummy);
+            return TryGetValue(key, out TValue dummy);
         }
 
         /// <summary>
@@ -93,8 +92,7 @@ namespace ARWNI2S.Infrastructure.Collections
         {
             get
             {
-                TValue value;
-                if (TryGetValue(key, out value))
+                if (TryGetValue(key, out TValue value))
                     return value;
                 else
                     throw new KeyNotFoundException(LocalizedStrings.Collections_KeyNotFound);
@@ -377,11 +375,10 @@ namespace ARWNI2S.Infrastructure.Collections
                 if (key is TKey || key == null)
                 {
                     TKey theKey = (TKey)key;
-                    TValue theValue;
 
                     // The IDictionary (non-generic) indexer returns null for not found, instead of
                     // throwing an exception like the generic IDictionary indexer.
-                    if (TryGetValue(theKey, out theValue))
+                    if (TryGetValue(theKey, out TValue theValue))
                         return theValue;
                     else
                         return null;

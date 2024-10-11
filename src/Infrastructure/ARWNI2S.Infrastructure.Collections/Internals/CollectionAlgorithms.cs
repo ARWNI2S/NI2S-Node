@@ -1,6 +1,5 @@
 ﻿using ARWNI2S.Infrastructure.Collections.Generic;
 using ARWNI2S.Infrastructure.Collections.Resources;
-using ARWNI2S.Infrastructure.Extensions;
 using System.Collections;
 
 namespace ARWNI2S.Infrastructure.Collections.Internals
@@ -884,8 +883,7 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
 
             public void CopyTo(Array array, int index)
             {
-                if (array == null)
-                    throw new ArgumentNullException("array");
+                ArgumentNullException.ThrowIfNull(array);
 
                 int i = 0;
                 int count = _wrappedCollection.Count;
@@ -1044,8 +1042,7 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
 
             public void CopyTo(Array array, int index)
             {
-                if (array == null)
-                    throw new ArgumentNullException("array");
+                ArgumentNullException.ThrowIfNull(array);
 
                 int i = 0;
                 int count = _wrappedList.Count;
@@ -1183,8 +1180,7 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
 
             public override void CopyTo(T[] array, int arrayIndex)
             {
-                if (array == null)
-                    throw new ArgumentNullException("array");
+                ArgumentNullException.ThrowIfNull(array);
                 if (array.Length < _wrappedArray.Length)
                     throw new ArgumentException("array is too short", "array");
                 if (arrayIndex < 0 || arrayIndex >= array.Length)
@@ -1234,8 +1230,7 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// <returns>An IList&lt;T&gt; wrapper onto <paramref name="array"/>.</returns>
         public static IList<T> ReadWriteList<T>(T[] array)
         {
-            if (array == null)
-                throw new ArgumentNullException("array");
+            ArgumentNullException.ThrowIfNull(array);
 
             return new ArrayWrapper<T>(array);
         }
@@ -1271,10 +1266,8 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// with the appropriate replacements made.</returns>
         public static IEnumerable<T> Replace<T>(IEnumerable<T> collection, T itemFind, T replaceWith, IEqualityComparer<T> equalityComparer)
         {
-            if (collection == null)
-                throw new ArgumentNullException("collection");
-            if (equalityComparer == null)
-                throw new ArgumentNullException("equalityComparer");
+            ArgumentNullException.ThrowIfNull(collection);
+            ArgumentNullException.ThrowIfNull(equalityComparer);
 
             foreach (T item in collection)
             {
@@ -1296,10 +1289,8 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// with the appropriate replacements made.</returns>
         public static IEnumerable<T> Replace<T>(IEnumerable<T> collection, Predicate<T> predicate, T replaceWith)
         {
-            if (collection == null)
-                throw new ArgumentNullException("collection");
-            if (predicate == null)
-                throw new ArgumentNullException("predicate");
+            ArgumentNullException.ThrowIfNull(collection);
+            ArgumentNullException.ThrowIfNull(predicate);
 
             foreach (T item in collection)
             {
@@ -1339,10 +1330,8 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// <param name="equalityComparer">The IEqualityComparer&lt;T&gt; used to compare items for equality. Only the Equals method will be called.</param>
         public static void ReplaceInPlace<T>(IList<T> list, T itemFind, T replaceWith, IEqualityComparer<T> equalityComparer)
         {
-            if (list == null)
-                throw new ArgumentNullException("list");
-            if (equalityComparer == null)
-                throw new ArgumentNullException("equalityComparer");
+            ArgumentNullException.ThrowIfNull(list);
+            ArgumentNullException.ThrowIfNull(equalityComparer);
             if (list is T[])
                 list = new ArrayWrapper<T>((T[])list);
             if (list.IsReadOnly)
@@ -1368,10 +1357,8 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// <param name="replaceWith">The new value to replace with.</param>
         public static void ReplaceInPlace<T>(IList<T> list, Predicate<T> predicate, T replaceWith)
         {
-            if (list == null)
-                throw new ArgumentNullException("list");
-            if (predicate == null)
-                throw new ArgumentNullException("predicate");
+            ArgumentNullException.ThrowIfNull(list);
+            ArgumentNullException.ThrowIfNull(predicate);
             if (list is T[])
                 list = new ArrayWrapper<T>((T[])list);
             if (list.IsReadOnly)
@@ -1416,8 +1403,7 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// <exception cref="ArgumentNullException"><paramref name="collection"/> or <paramref name="equalityComparer"/> is null.</exception>
         public static IEnumerable<T> RemoveDuplicates<T>(IEnumerable<T> collection, IEqualityComparer<T> equalityComparer)
         {
-            if (equalityComparer == null)
-                throw new ArgumentNullException("equalityComparer");
+            ArgumentNullException.ThrowIfNull(equalityComparer);
 
             return RemoveDuplicates(collection, equalityComparer.Equals);
 
@@ -1436,10 +1422,8 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// with consecutive "duplicates" removed.</returns>
         public static IEnumerable<T> RemoveDuplicates<T>(IEnumerable<T> collection, BinaryPredicate<T> predicate)
         {
-            if (collection == null)
-                throw new ArgumentNullException("collection");
-            if (predicate == null)
-                throw new ArgumentNullException("predicate");
+            ArgumentNullException.ThrowIfNull(collection);
+            ArgumentNullException.ThrowIfNull(predicate);
 
             T current = default;
             bool atBeginning = true;
@@ -1484,8 +1468,7 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// <param name="equalityComparer">The IEqualityComparer&lt;T&gt; used to compare items for equality. Only the Equals method will be called.</param>
         public static void RemoveDuplicatesInPlace<T>(IList<T> list, IEqualityComparer<T> equalityComparer)
         {
-            if (equalityComparer == null)
-                throw new ArgumentNullException("equalityComparer");
+            ArgumentNullException.ThrowIfNull(equalityComparer);
 
             RemoveDuplicatesInPlace(list, equalityComparer.Equals);
 
@@ -1503,10 +1486,8 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// <param name="predicate">The BinaryPredicate used to compare items for "equality". </param>
         public static void RemoveDuplicatesInPlace<T>(IList<T> list, BinaryPredicate<T> predicate)
         {
-            if (list == null)
-                throw new ArgumentNullException("list");
-            if (predicate == null)
-                throw new ArgumentNullException("predicate");
+            ArgumentNullException.ThrowIfNull(list);
+            ArgumentNullException.ThrowIfNull(predicate);
 
             if (list is T[])
                 list = new ArrayWrapper<T>((T[])list);
@@ -1578,8 +1559,7 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// <returns>The index of the first item in the first run of <paramref name="count"/> consecutive equal items, or -1 if no such run exists.</returns>
         public static int FirstConsecutiveEqual<T>(IList<T> list, int count, IEqualityComparer<T> equalityComparer)
         {
-            if (equalityComparer == null)
-                throw new ArgumentNullException("equalityComparer");
+            ArgumentNullException.ThrowIfNull(equalityComparer);
 
             return FirstConsecutiveEqual(list, count, equalityComparer.Equals);
         }
@@ -1595,10 +1575,8 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// <returns>The index of the first item in the first run of <paramref name="count"/> consecutive equal items, or -1 if no such run exists.</returns>
         public static int FirstConsecutiveEqual<T>(IList<T> list, int count, BinaryPredicate<T> predicate)
         {
-            if (list == null)
-                throw new ArgumentNullException("list");
-            if (predicate == null)
-                throw new ArgumentNullException("predicate");
+            ArgumentNullException.ThrowIfNull(list);
+            ArgumentNullException.ThrowIfNull(predicate);
             if (count < 1)
                 throw new ArgumentOutOfRangeException("count");
 
@@ -1645,10 +1623,8 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// returns true for all items in the run, or -1 if no such run exists.</returns>
         public static int FirstConsecutiveWhere<T>(IList<T> list, int count, Predicate<T> predicate)
         {
-            if (list == null)
-                throw new ArgumentNullException("list");
-            if (predicate == null)
-                throw new ArgumentNullException("predicate");
+            ArgumentNullException.ThrowIfNull(list);
+            ArgumentNullException.ThrowIfNull(predicate);
             if (count < 1)
                 throw new ArgumentOutOfRangeException("count");
 
@@ -1702,8 +1678,7 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// <seealso cref="TryFindFirstWhere{T}"/>
         public static T FindFirstWhere<T>(IEnumerable<T> collection, Predicate<T> predicate)
         {
-            T retval;
-            if (TryFindFirstWhere(collection, predicate, out retval))
+            if (TryFindFirstWhere(collection, predicate, out T retval))
                 return retval;
             else
                 return default;
@@ -1720,10 +1695,8 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// <seealso cref="FindFirstWhere{T}"/>
         public static bool TryFindFirstWhere<T>(IEnumerable<T> collection, Predicate<T> predicate, out T foundItem)
         {
-            if (collection == null)
-                throw new ArgumentNullException("collection");
-            if (predicate == null)
-                throw new ArgumentNullException("predicate");
+            ArgumentNullException.ThrowIfNull(collection);
+            ArgumentNullException.ThrowIfNull(predicate);
 
             foreach (T item in collection)
             {
@@ -1756,8 +1729,7 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// <seealso cref="TryFindLastWhere{T}"/>
         public static T FindLastWhere<T>(IEnumerable<T> collection, Predicate<T> predicate)
         {
-            T retval;
-            if (TryFindLastWhere(collection, predicate, out retval))
+            if (TryFindLastWhere(collection, predicate, out T retval))
                 return retval;
             else
                 return default;
@@ -1776,13 +1748,10 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// <seealso cref="FindLastWhere{T}"/>
         public static bool TryFindLastWhere<T>(IEnumerable<T> collection, Predicate<T> predicate, out T foundItem)
         {
-            if (collection == null)
-                throw new ArgumentNullException("collection");
-            if (predicate == null)
-                throw new ArgumentNullException("predicate");
+            ArgumentNullException.ThrowIfNull(collection);
+            ArgumentNullException.ThrowIfNull(predicate);
 
-            IList<T> list = collection as IList<T>;
-            if (list != null)
+            if (collection is IList<T> list)
             {
                 // If it's a list, we can iterate in reverse.
                 for (int index = list.Count - 1; index >= 0; --index)
@@ -1827,10 +1796,8 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// <returns>An IEnumerable&lt;T&gt; that enumerates the items that satisfy the condition.</returns>
         public static IEnumerable<T> FindWhere<T>(IEnumerable<T> collection, Predicate<T> predicate)
         {
-            if (collection == null)
-                throw new ArgumentNullException("collection");
-            if (predicate == null)
-                throw new ArgumentNullException("predicate");
+            ArgumentNullException.ThrowIfNull(collection);
+            ArgumentNullException.ThrowIfNull(predicate);
 
             foreach (T item in collection)
             {
@@ -1850,10 +1817,8 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// <returns>The index of the first item satisfying the condition. -1 if no such item exists in the list.</returns>
         public static int FindFirstIndexWhere<T>(IList<T> list, Predicate<T> predicate)
         {
-            if (list == null)
-                throw new ArgumentNullException("list");
-            if (predicate == null)
-                throw new ArgumentNullException("predicate");
+            ArgumentNullException.ThrowIfNull(list);
+            ArgumentNullException.ThrowIfNull(predicate);
 
             int index = 0;
             foreach (T item in list)
@@ -1878,10 +1843,8 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// <returns>The index of the last item satisfying the condition. -1 if no such item exists in the list.</returns>
         public static int FindLastIndexWhere<T>(IList<T> list, Predicate<T> predicate)
         {
-            if (list == null)
-                throw new ArgumentNullException("list");
-            if (predicate == null)
-                throw new ArgumentNullException("predicate");
+            ArgumentNullException.ThrowIfNull(list);
+            ArgumentNullException.ThrowIfNull(predicate);
 
             for (int index = list.Count - 1; index >= 0; --index)
             {
@@ -1904,10 +1867,8 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// <returns>An IEnumerable&lt;T&gt; that enumerates the indices of items that satisfy the condition.</returns>
         public static IEnumerable<int> FindIndicesWhere<T>(IList<T> list, Predicate<T> predicate)
         {
-            if (list == null)
-                throw new ArgumentNullException("list");
-            if (predicate == null)
-                throw new ArgumentNullException("predicate");
+            ArgumentNullException.ThrowIfNull(list);
+            ArgumentNullException.ThrowIfNull(predicate);
 
             int index = 0;
             foreach (T item in list)
@@ -1943,10 +1904,8 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// <returns>The index of the first item equal to <paramref name="item"/>. -1 if no such item exists in the list.</returns>
         public static int FirstIndexOf<T>(IList<T> list, T item, IEqualityComparer<T> equalityComparer)
         {
-            if (list == null)
-                throw new ArgumentNullException("list");
-            if (equalityComparer == null)
-                throw new ArgumentNullException("equalityComparer");
+            ArgumentNullException.ThrowIfNull(list);
+            ArgumentNullException.ThrowIfNull(equalityComparer);
 
             int index = 0;
             foreach (T x in list)
@@ -1985,10 +1944,8 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// <returns>The index of the last item equal to <paramref name="item"/>. -1 if no such item exists in the list.</returns>
         public static int LastIndexOf<T>(IList<T> list, T item, IEqualityComparer<T> equalityComparer)
         {
-            if (list == null)
-                throw new ArgumentNullException("list");
-            if (equalityComparer == null)
-                throw new ArgumentNullException("equalityComparer");
+            ArgumentNullException.ThrowIfNull(list);
+            ArgumentNullException.ThrowIfNull(equalityComparer);
 
             for (int index = list.Count - 1; index >= 0; --index)
             {
@@ -2025,10 +1982,8 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// <returns>An IEnumerable&lt;T&gt; that enumerates the indices of items equal to <paramref name="item"/>. </returns>
         public static IEnumerable<int> IndicesOf<T>(IList<T> list, T item, IEqualityComparer<T> equalityComparer)
         {
-            if (list == null)
-                throw new ArgumentNullException("list");
-            if (equalityComparer == null)
-                throw new ArgumentNullException("equalityComparer");
+            ArgumentNullException.ThrowIfNull(list);
+            ArgumentNullException.ThrowIfNull(equalityComparer);
 
             int index = 0;
             foreach (T x in list)
@@ -2067,12 +2022,9 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// -1 if no such item exists in the list.</returns>
         public static int FirstIndexOfMany<T>(IList<T> list, IEnumerable<T> itemsToLookFor, IEqualityComparer<T> equalityComparer)
         {
-            if (list == null)
-                throw new ArgumentNullException("list");
-            if (itemsToLookFor == null)
-                throw new ArgumentNullException("itemsToLookFor");
-            if (equalityComparer == null)
-                throw new ArgumentNullException("equalityComparer");
+            ArgumentNullException.ThrowIfNull(list);
+            ArgumentNullException.ThrowIfNull(itemsToLookFor);
+            ArgumentNullException.ThrowIfNull(equalityComparer);
 
             // Create a set of the items we are looking for, for efficient lookup.
             Set<T> setToLookFor = new Set<T>(itemsToLookFor, equalityComparer);
@@ -2106,12 +2058,9 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// -1 if no such item exists in the list.</returns>
         public static int FirstIndexOfMany<T>(IList<T> list, IEnumerable<T> itemsToLookFor, BinaryPredicate<T> predicate)
         {
-            if (list == null)
-                throw new ArgumentNullException("list");
-            if (itemsToLookFor == null)
-                throw new ArgumentNullException("itemsToLookFor");
-            if (predicate == null)
-                throw new ArgumentNullException("predicate");
+            ArgumentNullException.ThrowIfNull(list);
+            ArgumentNullException.ThrowIfNull(itemsToLookFor);
+            ArgumentNullException.ThrowIfNull(predicate);
 
             // Scan the list for the items.
             int index = 0;
@@ -2157,12 +2106,9 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// -1 if no such item exists in the list.</returns>
         public static int LastIndexOfMany<T>(IList<T> list, IEnumerable<T> itemsToLookFor, IEqualityComparer<T> equalityComparer)
         {
-            if (list == null)
-                throw new ArgumentNullException("list");
-            if (itemsToLookFor == null)
-                throw new ArgumentNullException("itemsToLookFor");
-            if (equalityComparer == null)
-                throw new ArgumentNullException("equalityComparer");
+            ArgumentNullException.ThrowIfNull(list);
+            ArgumentNullException.ThrowIfNull(itemsToLookFor);
+            ArgumentNullException.ThrowIfNull(equalityComparer);
 
             // Create a set of the items we are looking for, for efficient lookup.
             Set<T> setToLookFor = new Set<T>(itemsToLookFor, equalityComparer);
@@ -2194,12 +2140,9 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// -1 if no such item exists in the list.</returns>
         public static int LastIndexOfMany<T>(IList<T> list, IEnumerable<T> itemsToLookFor, BinaryPredicate<T> predicate)
         {
-            if (list == null)
-                throw new ArgumentNullException("list");
-            if (itemsToLookFor == null)
-                throw new ArgumentNullException("itemsToLookFor");
-            if (predicate == null)
-                throw new ArgumentNullException("predicate");
+            ArgumentNullException.ThrowIfNull(list);
+            ArgumentNullException.ThrowIfNull(itemsToLookFor);
+            ArgumentNullException.ThrowIfNull(predicate);
 
             // Scan the list
             for (int index = list.Count - 1; index >= 0; --index)
@@ -2242,12 +2185,9 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// any of the items in the collection <paramref name="itemsToLookFor"/>. </returns>
         public static IEnumerable<int> IndicesOfMany<T>(IList<T> list, IEnumerable<T> itemsToLookFor, IEqualityComparer<T> equalityComparer)
         {
-            if (list == null)
-                throw new ArgumentNullException("list");
-            if (itemsToLookFor == null)
-                throw new ArgumentNullException("itemsToLookFor");
-            if (equalityComparer == null)
-                throw new ArgumentNullException("equalityComparer");
+            ArgumentNullException.ThrowIfNull(list);
+            ArgumentNullException.ThrowIfNull(itemsToLookFor);
+            ArgumentNullException.ThrowIfNull(equalityComparer);
 
             // Create a set of the items we are looking for, for efficient lookup.
             Set<T> setToLookFor = new Set<T>(itemsToLookFor, equalityComparer);
@@ -2278,12 +2218,9 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// <paramtest name="BinaryPredicate"/> as the test for equality. </returns>
         public static IEnumerable<int> IndicesOfMany<T>(IList<T> list, IEnumerable<T> itemsToLookFor, BinaryPredicate<T> predicate)
         {
-            if (list == null)
-                throw new ArgumentNullException("list");
-            if (itemsToLookFor == null)
-                throw new ArgumentNullException("itemsToLookFor");
-            if (predicate == null)
-                throw new ArgumentNullException("predicate");
+            ArgumentNullException.ThrowIfNull(list);
+            ArgumentNullException.ThrowIfNull(itemsToLookFor);
+            ArgumentNullException.ThrowIfNull(predicate);
 
             // Scan the list for the items.
             int index = 0;
@@ -2334,12 +2271,9 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// <returns>The first index with <paramref name="list"/> that matches the items in <paramref name="pattern"/>.</returns>
         public static int SearchForSubsequence<T>(IList<T> list, IEnumerable<T> pattern, BinaryPredicate<T> predicate)
         {
-            if (list == null)
-                throw new ArgumentNullException("list");
-            if (pattern == null)
-                throw new ArgumentNullException("pattern");
-            if (predicate == null)
-                throw new ArgumentNullException("predicate");
+            ArgumentNullException.ThrowIfNull(list);
+            ArgumentNullException.ThrowIfNull(pattern);
+            ArgumentNullException.ThrowIfNull(predicate);
 
             // Put the pattern into an array for performance (don't keep allocating enumerators).
             T[] patternArray = ToArray(pattern);
@@ -2383,8 +2317,7 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// <returns>The first index with <paramref name="list"/> that matches the items in <paramref name="pattern"/>.</returns>
         public static int SearchForSubsequence<T>(IList<T> list, IEnumerable<T> pattern, IEqualityComparer<T> equalityComparer)
         {
-            if (equalityComparer == null)
-                throw new ArgumentNullException("equalityComparer");
+            ArgumentNullException.ThrowIfNull(equalityComparer);
 
             return SearchForSubsequence(list, pattern, equalityComparer.Equals);
         }
@@ -2429,10 +2362,8 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// <exception cref="ArgumentNullException"><paramref name="collection1"/> or <paramref name="collection2"/> is null.</exception>
         public static bool IsSubsetOf<T>(IEnumerable<T> collection1, IEnumerable<T> collection2, IEqualityComparer<T> equalityComparer)
         {
-            if (collection1 == null)
-                throw new ArgumentNullException("collection1");
-            if (collection2 == null)
-                throw new ArgumentNullException("collection2");
+            ArgumentNullException.ThrowIfNull(collection1);
+            ArgumentNullException.ThrowIfNull(collection2);
             if (equalityComparer == null)
                 throw new ArgumentException("equalityComparer");
 
@@ -2480,10 +2411,8 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// <exception cref="ArgumentNullException"><paramref name="collection1"/> or <paramref name="collection2"/> is null.</exception>
         public static bool IsProperSubsetOf<T>(IEnumerable<T> collection1, IEnumerable<T> collection2, IEqualityComparer<T> equalityComparer)
         {
-            if (collection1 == null)
-                throw new ArgumentNullException("collection1");
-            if (collection2 == null)
-                throw new ArgumentNullException("collection2");
+            ArgumentNullException.ThrowIfNull(collection1);
+            ArgumentNullException.ThrowIfNull(collection2);
             if (equalityComparer == null)
                 throw new ArgumentException("equalityComparer");
 
@@ -2529,10 +2458,8 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// <exception cref="ArgumentNullException"><paramref name="collection1"/> or <paramref name="collection2"/> is null.</exception>
         public static bool DisjointSets<T>(IEnumerable<T> collection1, IEnumerable<T> collection2, IEqualityComparer<T> equalityComparer)
         {
-            if (collection1 == null)
-                throw new ArgumentNullException("collection1");
-            if (collection2 == null)
-                throw new ArgumentNullException("collection2");
+            ArgumentNullException.ThrowIfNull(collection1);
+            ArgumentNullException.ThrowIfNull(collection2);
             if (equalityComparer == null)
                 throw new ArgumentException("equalityComparer");
 
@@ -2582,10 +2509,8 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// <exception cref="ArgumentNullException"><paramref name="collection1"/> or <paramref name="collection2"/> is null.</exception>
         public static bool EqualSets<T>(IEnumerable<T> collection1, IEnumerable<T> collection2, IEqualityComparer<T> equalityComparer)
         {
-            if (collection1 == null)
-                throw new ArgumentNullException("collection1");
-            if (collection2 == null)
-                throw new ArgumentNullException("collection2");
+            ArgumentNullException.ThrowIfNull(collection1);
+            ArgumentNullException.ThrowIfNull(collection2);
             if (equalityComparer == null)
                 throw new ArgumentException("equalityComparer");
 
@@ -2641,10 +2566,8 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// <exception cref="ArgumentNullException"><paramref name="collection1"/> or <paramref name="collection2"/> is null.</exception>
         public static IEnumerable<T> SetIntersection<T>(IEnumerable<T> collection1, IEnumerable<T> collection2, IEqualityComparer<T> equalityComparer)
         {
-            if (collection1 == null)
-                throw new ArgumentNullException("collection1");
-            if (collection2 == null)
-                throw new ArgumentNullException("collection2");
+            ArgumentNullException.ThrowIfNull(collection1);
+            ArgumentNullException.ThrowIfNull(collection2);
             if (equalityComparer == null)
                 throw new ArgumentException("equalityComparer");
 
@@ -2700,10 +2623,8 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// <exception cref="ArgumentNullException"><paramref name="collection1"/> or <paramref name="collection2"/> is null.</exception>
         public static IEnumerable<T> SetUnion<T>(IEnumerable<T> collection1, IEnumerable<T> collection2, IEqualityComparer<T> equalityComparer)
         {
-            if (collection1 == null)
-                throw new ArgumentNullException("collection1");
-            if (collection2 == null)
-                throw new ArgumentNullException("collection2");
+            ArgumentNullException.ThrowIfNull(collection1);
+            ArgumentNullException.ThrowIfNull(collection2);
             if (equalityComparer == null)
                 throw new ArgumentException("equalityComparer");
 
@@ -2768,10 +2689,8 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// <exception cref="ArgumentNullException"><paramref name="collection1"/> or <paramref name="collection2"/> is null.</exception>
         public static IEnumerable<T> SetDifference<T>(IEnumerable<T> collection1, IEnumerable<T> collection2, IEqualityComparer<T> equalityComparer)
         {
-            if (collection1 == null)
-                throw new ArgumentNullException("collection1");
-            if (collection2 == null)
-                throw new ArgumentNullException("collection2");
+            ArgumentNullException.ThrowIfNull(collection1);
+            ArgumentNullException.ThrowIfNull(collection2);
             if (equalityComparer == null)
                 throw new ArgumentException("equalityComparer");
 
@@ -2828,10 +2747,8 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// <exception cref="ArgumentNullException"><paramref name="collection1"/> or <paramref name="collection2"/> is null.</exception>
         public static IEnumerable<T> SetSymmetricDifference<T>(IEnumerable<T> collection1, IEnumerable<T> collection2, IEqualityComparer<T> equalityComparer)
         {
-            if (collection1 == null)
-                throw new ArgumentNullException("collection1");
-            if (collection2 == null)
-                throw new ArgumentNullException("collection2");
+            ArgumentNullException.ThrowIfNull(collection1);
+            ArgumentNullException.ThrowIfNull(collection2);
             if (equalityComparer == null)
                 throw new ArgumentException("equalityComparer");
 
@@ -2861,10 +2778,8 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// <returns>An IEnumerable&lt;Pair&lt;TFirst, TSecond&gt;&gt; that enumerates the cartesian product of the two collections.</returns>
         public static IEnumerable<Pair<TFirst, TSecond>> CartesianProduct<TFirst, TSecond>(IEnumerable<TFirst> first, IEnumerable<TSecond> second)
         {
-            if (first == null)
-                throw new ArgumentNullException("first");
-            if (second == null)
-                throw new ArgumentNullException("second");
+            ArgumentNullException.ThrowIfNull(first);
+            ArgumentNullException.ThrowIfNull(second);
 
             foreach (TFirst itemFirst in first)
                 foreach (TSecond itemSecond in second)
@@ -2906,12 +2821,9 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         ///  is null.</exception>
         public static string ToString<T>(IEnumerable<T> collection, bool recursive, string start, string separator, string end)
         {
-            if (start == null)
-                throw new ArgumentNullException("start");
-            if (separator == null)
-                throw new ArgumentNullException("separator");
-            if (end == null)
-                throw new ArgumentNullException("end");
+            ArgumentNullException.ThrowIfNull(start);
+            ArgumentNullException.ThrowIfNull(separator);
+            ArgumentNullException.ThrowIfNull(end);
 
             if (collection == null)
                 return "null";
@@ -3038,10 +2950,8 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         {
             // We have to copy all items anyway, and there isn't a way to produce the items
             // on the fly that is linear. So copying to an array and shuffling it is an efficient as we can get.
-            if (collection == null)
-                throw new ArgumentNullException("collection");
-            if (randomGenerator == null)
-                throw new ArgumentNullException("randomGenerator");
+            ArgumentNullException.ThrowIfNull(collection);
+            ArgumentNullException.ThrowIfNull(randomGenerator);
 
             T[] array = ToArray(collection);
 
@@ -3080,10 +2990,8 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// <param name="randomGenerator">The random number generator to use to select the random order.</param>
         public static void RandomShuffleInPlace<T>(IList<T> list, Randomizer randomGenerator)
         {
-            if (list == null)
-                throw new ArgumentNullException("list");
-            if (randomGenerator == null)
-                throw new ArgumentNullException("randomGenerator");
+            ArgumentNullException.ThrowIfNull(list);
+            ArgumentNullException.ThrowIfNull(randomGenerator);
             if (list is T[])
                 list = new ArrayWrapper<T>((T[])list);
             if (list.IsReadOnly)
@@ -3133,15 +3041,12 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// <exception cref="ArgumentNullException"><paramref name="randomGenerator"/> is null.</exception>
         public static T[] RandomSubset<T>(IEnumerable<T> collection, int count, Randomizer randomGenerator)
         {
-            if (collection == null)
-                throw new ArgumentNullException("collection");
-            if (randomGenerator == null)
-                throw new ArgumentNullException("randomGenerator");
+            ArgumentNullException.ThrowIfNull(collection);
+            ArgumentNullException.ThrowIfNull(randomGenerator);
 
             // We need random access to the items in the collection. If it's not already an 
             // IList<T>, copy to a temporary list.
-            IList<T> list = collection as IList<T>;
-            if (list == null)
+            if (collection is not IList<T> list)
             {
                 list = new List<T>(collection);
             }
@@ -3156,12 +3061,11 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
             for (int i = 0; i < count; ++i)
             {
                 // Set j to the index of the item to swap with, and value to the value to swap with.
-                T value;
                 int j = randomGenerator.GetInt(listCount - i) + i;
 
                 // Swap values of i and j in the list. The list isn't actually changed; instead,
                 // swapped values are stored in the dictionary swappedValues.
-                if (!swappedValues.TryGetValue(j, out value))
+                if (!swappedValues.TryGetValue(j, out T value))
                     value = list[j];
 
                 result[i] = value;
@@ -3193,8 +3097,7 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// reuse the same array instance.</returns>
         public static IEnumerable<T[]> GeneratePermutations<T>(IEnumerable<T> collection)
         {
-            if (collection == null)
-                throw new ArgumentNullException("collection");
+            ArgumentNullException.ThrowIfNull(collection);
 
             T[] array = ToArray(collection);
 
@@ -3283,10 +3186,8 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// reuse the same array instance.</returns>
         public static IEnumerable<T[]> GenerateSortedPermutations<T>(IEnumerable<T> collection, IComparer<T> comparer)
         {
-            if (collection == null)
-                throw new ArgumentNullException("collection");
-            if (comparer == null)
-                throw new ArgumentNullException("comparer");
+            ArgumentNullException.ThrowIfNull(collection);
+            ArgumentNullException.ThrowIfNull(comparer);
 
             T[] array = ToArray(collection);
             int length = array.Length;
@@ -3391,10 +3292,8 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// <exception cref="ArgumentNullException"><paramref name="collection"/> or <paramref name="comparer"/> is null.</exception>
         public static T Maximum<T>(IEnumerable<T> collection, IComparer<T> comparer)
         {
-            if (collection == null)
-                throw new ArgumentNullException("collection");
-            if (comparer == null)
-                throw new ArgumentNullException("comparer");
+            ArgumentNullException.ThrowIfNull(collection);
+            ArgumentNullException.ThrowIfNull(comparer);
 
             T maxSoFar = default;
             bool foundOne = false;
@@ -3460,10 +3359,8 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// <exception cref="ArgumentNullException"><paramref name="collection"/> or <paramref name="comparer"/> is null.</exception>
         public static T Minimum<T>(IEnumerable<T> collection, IComparer<T> comparer)
         {
-            if (collection == null)
-                throw new ArgumentNullException("collection");
-            if (comparer == null)
-                throw new ArgumentNullException("comparer");
+            ArgumentNullException.ThrowIfNull(collection);
+            ArgumentNullException.ThrowIfNull(comparer);
 
             T minSoFar = default;
             bool foundOne = false;
@@ -3529,10 +3426,8 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// <exception cref="ArgumentNullException"><paramref name="list"/> or <paramref name="comparer"/> is null.</exception>
         public static int IndexOfMaximum<T>(IList<T> list, IComparer<T> comparer)
         {
-            if (list == null)
-                throw new ArgumentNullException("list");
-            if (comparer == null)
-                throw new ArgumentNullException("comparer");
+            ArgumentNullException.ThrowIfNull(list);
+            ArgumentNullException.ThrowIfNull(comparer);
 
             T maxSoFar = default;
             int indexSoFar = -1;
@@ -3598,10 +3493,8 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// <exception cref="ArgumentNullException"><paramref name="list"/> or <paramref name="comparer"/> is null.</exception>
         public static int IndexOfMinimum<T>(IList<T> list, IComparer<T> comparer)
         {
-            if (list == null)
-                throw new ArgumentNullException("list");
-            if (comparer == null)
-                throw new ArgumentNullException("comparer");
+            ArgumentNullException.ThrowIfNull(list);
+            ArgumentNullException.ThrowIfNull(comparer);
 
             T minSoFar = default;
             int indexSoFar = -1;
@@ -3667,10 +3560,8 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         {
             T[] array;
 
-            if (collection == null)
-                throw new ArgumentNullException("collection");
-            if (comparer == null)
-                throw new ArgumentNullException("comparer");
+            ArgumentNullException.ThrowIfNull(collection);
+            ArgumentNullException.ThrowIfNull(comparer);
 
             array = ToArray(collection);
 
@@ -3719,10 +3610,8 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// the Compare method is used.</param>
         public static void SortInPlace<T>(IList<T> list, IComparer<T> comparer)
         {
-            if (list == null)
-                throw new ArgumentNullException("list");
-            if (comparer == null)
-                throw new ArgumentNullException("comparer");
+            ArgumentNullException.ThrowIfNull(list);
+            ArgumentNullException.ThrowIfNull(comparer);
 
             // If we have an array, use the built-in array sort (faster than going through IList accessors
             // with virtual calls).
@@ -3905,10 +3794,8 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         {
             T[] array;
 
-            if (collection == null)
-                throw new ArgumentNullException("collection");
-            if (comparer == null)
-                throw new ArgumentNullException("comparer");
+            ArgumentNullException.ThrowIfNull(collection);
+            ArgumentNullException.ThrowIfNull(comparer);
 
             array = ToArray(collection);
 
@@ -3960,10 +3847,8 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// the Compare method is used.</param>
         public static void StableSortInPlace<T>(IList<T> list, IComparer<T> comparer)
         {
-            if (list == null)
-                throw new ArgumentNullException("list");
-            if (comparer == null)
-                throw new ArgumentNullException("comparer");
+            ArgumentNullException.ThrowIfNull(list);
+            ArgumentNullException.ThrowIfNull(comparer);
             if (list is T[])
                 list = new ArrayWrapper<T>((T[])list);
             if (list.IsReadOnly)
@@ -4163,10 +4048,8 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// </returns>
         public static int BinarySearch<T>(IList<T> list, T item, IComparer<T> comparer, out int index)
         {
-            if (list == null)
-                throw new ArgumentNullException("list");
-            if (comparer == null)
-                throw new ArgumentNullException("comparer");
+            ArgumentNullException.ThrowIfNull(list);
+            ArgumentNullException.ThrowIfNull(comparer);
 
             int l = 0;
             int r = list.Count;
@@ -4287,10 +4170,8 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// in sorted order. </returns>
         public static IEnumerable<T> MergeSorted<T>(IComparer<T> comparer, params IEnumerable<T>[] collections)
         {
-            if (collections == null)
-                throw new ArgumentNullException("collections");
-            if (comparer == null)
-                throw new ArgumentNullException("comparer");
+            ArgumentNullException.ThrowIfNull(collections);
+            ArgumentNullException.ThrowIfNull(comparer);
 
             IEnumerator<T>[] enumerators = new IEnumerator<T>[collections.Length];
             bool[] more = new bool[collections.Length];
@@ -4427,12 +4308,9 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// <paramref name="comparer"/> is null.</exception>
         public static int LexicographicalCompare<T>(IEnumerable<T> sequence1, IEnumerable<T> sequence2, IComparer<T> comparer)
         {
-            if (sequence1 == null)
-                throw new ArgumentNullException("sequence1");
-            if (sequence2 == null)
-                throw new ArgumentNullException("sequence2");
-            if (comparer == null)
-                throw new ArgumentNullException("comparer");
+            ArgumentNullException.ThrowIfNull(sequence1);
+            ArgumentNullException.ThrowIfNull(sequence2);
+            ArgumentNullException.ThrowIfNull(comparer);
 
             using (IEnumerator<T> enum1 = sequence1.GetEnumerator(), enum2 = sequence2.GetEnumerator())
             {
@@ -4530,8 +4408,7 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// <returns>At IComparer&lt;IEnumerable&lt;T&gt;&gt; that compares sequences of T.</returns>
         public static IComparer<IEnumerable<T>> GetLexicographicalComparer<T>(IComparer<T> comparer)
         {
-            if (comparer == null)
-                throw new ArgumentNullException("comparer");
+            ArgumentNullException.ThrowIfNull(comparer);
 
             return new LexicographicalComparerClass<T>(comparer);
         }
@@ -4546,8 +4423,7 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// <returns>At IComparer&lt;IEnumerable&lt;T&gt;&gt; that compares sequences of T.</returns>
         public static IComparer<IEnumerable<T>> GetLexicographicalComparer<T>(Comparison<T> comparison)
         {
-            if (comparison == null)
-                throw new ArgumentNullException("comparison");
+            ArgumentNullException.ThrowIfNull(comparison);
 
             return new LexicographicalComparerClass<T>(Compare.ComparerFromComparison(comparison));
         }
@@ -4600,8 +4476,7 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// <exception cref="ArgumentNullException"><paramref name="comparer"/> is null.</exception>
         public static IComparer<T> GetReverseComparer<T>(IComparer<T> comparer)
         {
-            if (comparer == null)
-                throw new ArgumentNullException("comparer");
+            ArgumentNullException.ThrowIfNull(comparer);
 
             return new ReverseComparerClass<T>(comparer);
         }
@@ -4660,8 +4535,7 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// <exception cref="ArgumentNullException"><paramref name="comparison"/> is null.</exception>
         public static Comparison<T> GetReverseComparison<T>(Comparison<T> comparison)
         {
-            if (comparison == null)
-                throw new ArgumentNullException("comparison");
+            ArgumentNullException.ThrowIfNull(comparison);
 
             return delegate (T x, T y) { return -comparison(x, y); };
         }
@@ -4675,8 +4549,7 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// as <paramref name="comparison"/>.</returns>
         public static IComparer<T> GetComparerFromComparison<T>(Comparison<T> comparison)
         {
-            if (comparison == null)
-                throw new ArgumentNullException("comparison");
+            ArgumentNullException.ThrowIfNull(comparison);
 
             return Compare.ComparerFromComparison(comparison);
         }
@@ -4690,8 +4563,7 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// operation as <paramref name="comparer"/>.</returns>
         public static Comparison<T> GetComparisonFromComparer<T>(IComparer<T> comparer)
         {
-            if (comparer == null)
-                throw new ArgumentNullException("comparer");
+            ArgumentNullException.ThrowIfNull(comparer);
 
             return comparer.Compare;
         }
@@ -4775,8 +4647,7 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// <seealso cref="EqualCollections{T}(IEnumerable{T}, IEnumerable{T}, IEqualityComparer{T})"/>
         public static IEqualityComparer<IEnumerable<T>> GetCollectionEqualityComparer<T>(IEqualityComparer<T> equalityComparer)
         {
-            if (equalityComparer == null)
-                throw new ArgumentNullException("equalityComparer");
+            ArgumentNullException.ThrowIfNull(equalityComparer);
 
             return new CollectionEqualityComparer<T>(equalityComparer);
         }
@@ -4859,8 +4730,7 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// <seealso cref="EqualSets{T}(IEnumerable{T}, IEnumerable{T}, IEqualityComparer{T})"/>
         public static IEqualityComparer<IEnumerable<T>> GetSetEqualityComparer<T>(IEqualityComparer<T> equalityComparer)
         {
-            if (equalityComparer == null)
-                throw new ArgumentNullException("equalityComparer");
+            ArgumentNullException.ThrowIfNull(equalityComparer);
 
             return new SetEqualityComparer<T>(equalityComparer);
         }
@@ -4880,10 +4750,8 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// an item that satisfies <paramref name="predicate"/>.</returns>
         public static bool Exists<T>(IEnumerable<T> collection, Predicate<T> predicate)
         {
-            if (collection == null)
-                throw new ArgumentNullException("collection");
-            if (predicate == null)
-                throw new ArgumentNullException("predicate");
+            ArgumentNullException.ThrowIfNull(collection);
+            ArgumentNullException.ThrowIfNull(predicate);
 
             foreach (T item in collection)
             {
@@ -4905,10 +4773,8 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// in the collection do not satisfy <paramref name="predicate"/>.</returns>
         public static bool TrueForAll<T>(IEnumerable<T> collection, Predicate<T> predicate)
         {
-            if (collection == null)
-                throw new ArgumentNullException("collection");
-            if (predicate == null)
-                throw new ArgumentNullException("predicate");
+            ArgumentNullException.ThrowIfNull(collection);
+            ArgumentNullException.ThrowIfNull(predicate);
 
             foreach (T item in collection)
             {
@@ -4928,10 +4794,8 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// <returns>The number of items in the collection that satisfy <paramref name="predicate"/>.</returns>
         public static int CountWhere<T>(IEnumerable<T> collection, Predicate<T> predicate)
         {
-            if (collection == null)
-                throw new ArgumentNullException("collection");
-            if (predicate == null)
-                throw new ArgumentNullException("predicate");
+            ArgumentNullException.ThrowIfNull(collection);
+            ArgumentNullException.ThrowIfNull(predicate);
 
             int count = 0;
             foreach (T item in collection)
@@ -4958,17 +4822,14 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// items in the same order that they orginally appeared in <paramref name="collection"/>.</returns>
         public static ICollection<T> RemoveWhere<T>(ICollection<T> collection, Predicate<T> predicate)
         {
-            if (collection == null)
-                throw new ArgumentNullException("collection");
-            if (predicate == null)
-                throw new ArgumentNullException("predicate");
+            ArgumentNullException.ThrowIfNull(collection);
+            ArgumentNullException.ThrowIfNull(predicate);
             if (collection is T[])
                 collection = new ArrayWrapper<T>((T[])collection);
             if (collection.IsReadOnly)
                 throw new ArgumentException(LocalizedStrings.Collections_ListIsReadOnly, "collection");
 
-            IList<T> list = collection as IList<T>;
-            if (list != null)
+            if (collection is IList<T> list)
             {
                 T item;
                 int i = -1, j = 0;
@@ -5047,10 +4908,8 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// <exception cref="ArgumentNullException"><paramref name="sourceCollection"/> or <paramref name="converter"/> is null.</exception>
         public static IEnumerable<TDest> Convert<TSource, TDest>(IEnumerable<TSource> sourceCollection, Converter<TSource, TDest> converter)
         {
-            if (sourceCollection == null)
-                throw new ArgumentNullException("sourceCollection");
-            if (converter == null)
-                throw new ArgumentNullException("converter");
+            ArgumentNullException.ThrowIfNull(sourceCollection);
+            ArgumentNullException.ThrowIfNull(converter);
 
             foreach (TSource sourceItem in sourceCollection)
                 yield return converter(sourceItem);
@@ -5081,13 +4940,11 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// <exception cref="ArgumentNullException"><paramref name="dictionary"/> is null.</exception>
         public static Converter<TKey, TValue> GetDictionaryConverter<TKey, TValue>(IDictionary<TKey, TValue> dictionary, TValue defaultValue)
         {
-            if (dictionary == null)
-                throw new ArgumentNullException("dictionary");
+            ArgumentNullException.ThrowIfNull(dictionary);
 
             return delegate (TKey key)
             {
-                TValue value;
-                if (dictionary.TryGetValue(key, out value))
+                if (dictionary.TryGetValue(key, out TValue value))
                     return value;
                 else
                     return defaultValue;
@@ -5101,10 +4958,8 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// <param name="action">An Action delegate which is invoked for each item in <paramref name="collection"/>.</param>
         public static void ForEach<T>(IEnumerable<T> collection, Action<T> action)
         {
-            if (collection == null)
-                throw new ArgumentNullException("collection");
-            if (action == null)
-                throw new ArgumentNullException("action");
+            ArgumentNullException.ThrowIfNull(collection);
+            ArgumentNullException.ThrowIfNull(action);
 
             foreach (T item in collection)
                 action(item);
@@ -5123,10 +4978,8 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// in the list, list.Count is returned.</returns>
         public static int Partition<T>(IList<T> list, Predicate<T> predicate)
         {
-            if (list == null)
-                throw new ArgumentNullException("list");
-            if (predicate == null)
-                throw new ArgumentNullException("predicate");
+            ArgumentNullException.ThrowIfNull(list);
+            ArgumentNullException.ThrowIfNull(predicate);
             if (list is T[])
                 list = new ArrayWrapper<T>((T[])list);
             if (list.IsReadOnly)
@@ -5172,10 +5025,8 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// in the list, list.Count is returned.</returns>
         public static int StablePartition<T>(IList<T> list, Predicate<T> predicate)
         {
-            if (list == null)
-                throw new ArgumentNullException("list");
-            if (predicate == null)
-                throw new ArgumentNullException("predicate");
+            ArgumentNullException.ThrowIfNull(list);
+            ArgumentNullException.ThrowIfNull(predicate);
             if (list is T[])
                 list = new ArrayWrapper<T>((T[])list);
             if (list.IsReadOnly)
@@ -5223,8 +5074,7 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// <returns>An IEnumerable that enumerates all the items in each of the collections, in order.</returns>
         public static IEnumerable<T> Concatenate<T>(params IEnumerable<T>[] collections)
         {
-            if (collections == null)
-                throw new ArgumentNullException("collections");
+            ArgumentNullException.ThrowIfNull(collections);
 
             foreach (IEnumerable<T> coll in collections)
             {
@@ -5262,12 +5112,9 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// <paramref name="equalityComparer"/> is null.</exception>
         public static bool EqualCollections<T>(IEnumerable<T> collection1, IEnumerable<T> collection2, IEqualityComparer<T> equalityComparer)
         {
-            if (collection1 == null)
-                throw new ArgumentNullException("collection1");
-            if (collection2 == null)
-                throw new ArgumentNullException("collection2");
-            if (equalityComparer == null)
-                throw new ArgumentNullException("equalityComparer");
+            ArgumentNullException.ThrowIfNull(collection1);
+            ArgumentNullException.ThrowIfNull(collection2);
+            ArgumentNullException.ThrowIfNull(equalityComparer);
 
             using (IEnumerator<T> enum1 = collection1.GetEnumerator(), enum2 = collection2.GetEnumerator())
             {
@@ -5314,12 +5161,9 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// <paramref name="predicate"/> is null.</exception>
         public static bool EqualCollections<T>(IEnumerable<T> collection1, IEnumerable<T> collection2, BinaryPredicate<T> predicate)
         {
-            if (collection1 == null)
-                throw new ArgumentNullException("collection1");
-            if (collection2 == null)
-                throw new ArgumentNullException("collection2");
-            if (predicate == null)
-                throw new ArgumentNullException("predicate");
+            ArgumentNullException.ThrowIfNull(collection1);
+            ArgumentNullException.ThrowIfNull(collection2);
+            ArgumentNullException.ThrowIfNull(predicate);
 
             using (IEnumerator<T> enum1 = collection1.GetEnumerator(), enum2 = collection2.GetEnumerator())
             {
@@ -5353,11 +5197,9 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// <exception cref="ArgumentNullException"><paramref name="collection"/> is null.</exception>
         public static T[] ToArray<T>(IEnumerable<T> collection)
         {
-            if (collection == null)
-                throw new ArgumentNullException("collection");
+            ArgumentNullException.ThrowIfNull(collection);
 
-            ICollection<T> coll = collection as ICollection<T>;
-            if (coll != null)
+            if (collection is ICollection<T> coll)
             {
                 // Use ICollection methods to do it more efficiently.
                 T[] array = new T[coll.Count];
@@ -5389,8 +5231,7 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// <exception cref="ArgumentNullException"><paramref name="collection"/> is null.</exception>
         public static int Count<T>(IEnumerable<T> collection)
         {
-            if (collection == null)
-                throw new ArgumentNullException("collection");
+            ArgumentNullException.ThrowIfNull(collection);
 
             // If it's really an ICollection, use that Count property as it is much faster.
             if (collection is ICollection<T>)
@@ -5432,8 +5273,7 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         {
             if (collection == null)
                 throw new ArgumentException("collection");
-            if (equalityComparer == null)
-                throw new ArgumentNullException("equalityComparer");
+            ArgumentNullException.ThrowIfNull(equalityComparer);
 
             int count = 0;
             foreach (T item in collection)
@@ -5483,8 +5323,7 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// <exception cref="ArgumentNullException"><paramref name="list"/> is null.</exception>
         public static void Fill<T>(IList<T> list, T value)
         {
-            if (list == null)
-                throw new ArgumentNullException("list");
+            ArgumentNullException.ThrowIfNull(list);
             if (list.IsReadOnly)
                 throw new ArgumentException(LocalizedStrings.Collections_ListIsReadOnly, "list");
 
@@ -5503,8 +5342,7 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// <exception cref="ArgumentNullException"><paramref name="array"/> is null.</exception>
         public static void Fill<T>(T[] array, T value)
         {
-            if (array == null)
-                throw new ArgumentNullException("array");
+            ArgumentNullException.ThrowIfNull(array);
 
             for (int i = 0; i < array.Length; ++i)
             {
@@ -5526,8 +5364,7 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// <exception cref="ArgumentNullException"><paramref name="list"/> is null.</exception>
         public static void FillRange<T>(IList<T> list, int start, int count, T value)
         {
-            if (list == null)
-                throw new ArgumentNullException("list");
+            ArgumentNullException.ThrowIfNull(list);
             if (list.IsReadOnly)
                 throw new ArgumentException(LocalizedStrings.Collections_ListIsReadOnly, "list");
 
@@ -5556,8 +5393,7 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// <exception cref="ArgumentNullException"><paramref name="array"/> is null.</exception>
         public static void FillRange<T>(T[] array, int start, int count, T value)
         {
-            if (array == null)
-                throw new ArgumentNullException("array");
+            ArgumentNullException.ThrowIfNull(array);
 
             if (count == 0)
                 return;
@@ -5601,10 +5437,8 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// has been filled with as many items as fit before the exception is thrown.</exception>
         public static void Copy<T>(IEnumerable<T> source, T[] dest, int destIndex)
         {
-            if (source == null)
-                throw new ArgumentNullException("source");
-            if (dest == null)
-                throw new ArgumentNullException("dest");
+            ArgumentNullException.ThrowIfNull(source);
+            ArgumentNullException.ThrowIfNull(dest);
 
             if (destIndex < 0 || destIndex > dest.Length)
                 throw new ArgumentOutOfRangeException("destIndex");
@@ -5636,10 +5470,8 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// <exception cref="ArgumentNullException"><paramref name="source"/> or <paramref name="dest"/> is null.</exception>
         public static void Copy<T>(IEnumerable<T> source, IList<T> dest, int destIndex, int count)
         {
-            if (source == null)
-                throw new ArgumentNullException("source");
-            if (dest == null)
-                throw new ArgumentNullException("dest");
+            ArgumentNullException.ThrowIfNull(source);
+            ArgumentNullException.ThrowIfNull(dest);
             if (dest.IsReadOnly)
                 throw new ArgumentException(LocalizedStrings.Collections_ListIsReadOnly, "dest");
 
@@ -5684,10 +5516,8 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// <exception cref="ArgumentNullException"><paramref name="source"/> or <paramref name="dest"/> is null.</exception>
         public static void Copy<T>(IEnumerable<T> source, T[] dest, int destIndex, int count)
         {
-            if (source == null)
-                throw new ArgumentNullException("source");
-            if (dest == null)
-                throw new ArgumentNullException("dest");
+            ArgumentNullException.ThrowIfNull(source);
+            ArgumentNullException.ThrowIfNull(dest);
 
             int destCount = dest.Length;
 
@@ -5725,10 +5555,8 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// <exception cref="ArgumentNullException"><paramref name="source"/> or <paramref name="dest"/> is null.</exception>
         public static void Copy<T>(IList<T> source, int sourceIndex, IList<T> dest, int destIndex, int count)
         {
-            if (source == null)
-                throw new ArgumentNullException("source");
-            if (dest == null)
-                throw new ArgumentNullException("dest");
+            ArgumentNullException.ThrowIfNull(source);
+            ArgumentNullException.ThrowIfNull(dest);
             if (dest.IsReadOnly)
                 throw new ArgumentException(LocalizedStrings.Collections_ListIsReadOnly, "dest");
 
@@ -5799,10 +5627,8 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// <exception cref="ArgumentNullException"><paramref name="source"/> or <paramref name="dest"/> is null.</exception>
         public static void Copy<T>(IList<T> source, int sourceIndex, T[] dest, int destIndex, int count)
         {
-            if (source == null)
-                throw new ArgumentNullException("source");
-            if (dest == null)
-                throw new ArgumentNullException("dest");
+            ArgumentNullException.ThrowIfNull(source);
+            ArgumentNullException.ThrowIfNull(dest);
 
             int sourceCount = source.Count;
             int destCount = dest.Length;
@@ -5842,8 +5668,7 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// <exception cref="ArgumentNullException"><paramref name="source"/> is null.</exception>
         public static IEnumerable<T> Reverse<T>(IList<T> source)
         {
-            if (source == null)
-                throw new ArgumentNullException("source");
+            ArgumentNullException.ThrowIfNull(source);
 
             for (int i = source.Count - 1; i >= 0; --i)
                 yield return source[i];
@@ -5859,8 +5684,7 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// <exception cref="ArgumentException"><paramref name="list"/> is read only.</exception>
         public static void ReverseInPlace<T>(IList<T> list)
         {
-            if (list == null)
-                throw new ArgumentNullException("list");
+            ArgumentNullException.ThrowIfNull(list);
             if (list is T[])
                 list = new ArrayWrapper<T>((T[])list);
             if (list.IsReadOnly)
@@ -5890,8 +5714,7 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// <exception cref="ArgumentNullException"><paramref name="source"/> is null.</exception>
         public static IEnumerable<T> Rotate<T>(IList<T> source, int amountToRotate)
         {
-            if (source == null)
-                throw new ArgumentNullException("source");
+            ArgumentNullException.ThrowIfNull(source);
 
             int count = source.Count;
             if (count != 0)
@@ -5920,8 +5743,7 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         /// <exception cref="ArgumentNullException"><paramref name="list"/> is null.</exception>
         public static void RotateInPlace<T>(IList<T> list, int amountToRotate)
         {
-            if (list == null)
-                throw new ArgumentNullException("list");
+            ArgumentNullException.ThrowIfNull(list);
             if (list is T[])
                 list = new ArrayWrapper<T>((T[])list);
             if (list.IsReadOnly)

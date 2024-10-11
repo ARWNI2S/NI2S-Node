@@ -53,8 +53,7 @@ namespace ARWNI2S.Infrastructure.Collections
         /// an item that satisfies <paramref name="predicate"/>.</returns>
         public virtual bool Exists(Predicate<T> predicate)
         {
-            if (predicate == null)
-                throw new ArgumentNullException("predicate");
+            ArgumentNullException.ThrowIfNull(predicate);
 
             return CollectionAlgorithms.Exists(this, predicate);
         }
@@ -69,8 +68,7 @@ namespace ARWNI2S.Infrastructure.Collections
         /// in the collection do not satisfy <paramref name="predicate"/>.</returns>
         public virtual bool TrueForAll(Predicate<T> predicate)
         {
-            if (predicate == null)
-                throw new ArgumentNullException("predicate");
+            ArgumentNullException.ThrowIfNull(predicate);
 
             return CollectionAlgorithms.TrueForAll(this, predicate);
         }
@@ -83,8 +81,7 @@ namespace ARWNI2S.Infrastructure.Collections
         /// <returns>The number of items in the collection that satisfy <paramref name="predicate"/>.</returns>
         public virtual int CountWhere(Predicate<T> predicate)
         {
-            if (predicate == null)
-                throw new ArgumentNullException("predicate");
+            ArgumentNullException.ThrowIfNull(predicate);
 
             return CollectionAlgorithms.CountWhere(this, predicate);
         }
@@ -97,8 +94,7 @@ namespace ARWNI2S.Infrastructure.Collections
         /// <returns>An IEnumerable&lt;T&gt; that enumerates the items that satisfy the condition.</returns>
         public IEnumerable<T> FindAll(Predicate<T> predicate)
         {
-            if (predicate == null)
-                throw new ArgumentNullException("predicate");
+            ArgumentNullException.ThrowIfNull(predicate);
 
             return CollectionAlgorithms.FindWhere(this, predicate);
         }
@@ -109,8 +105,7 @@ namespace ARWNI2S.Infrastructure.Collections
         /// <param name="action">An Action delegate which is invoked for each item in this collection.</param>
         public virtual void ForEach(Action<T> action)
         {
-            if (action == null)
-                throw new ArgumentNullException("action");
+            ArgumentNullException.ThrowIfNull(action);
 
             CollectionAlgorithms.ForEach(this, action);
         }
@@ -127,8 +122,7 @@ namespace ARWNI2S.Infrastructure.Collections
         /// <exception cref="ArgumentNullException"><paramref name="converter"/> is null.</exception>
         public virtual IEnumerable<TOutput> ConvertAll<TOutput>(Converter<T, TOutput> converter)
         {
-            if (converter == null)
-                throw new ArgumentNullException("converter");
+            ArgumentNullException.ThrowIfNull(converter);
 
             return CollectionAlgorithms.Convert(this, converter);
         }
@@ -208,8 +202,7 @@ namespace ARWNI2S.Infrastructure.Collections
             if (count == 0)
                 return;
 
-            if (array == null)
-                throw new ArgumentNullException("array");
+            ArgumentNullException.ThrowIfNull(array);
             if (count < 0)
                 throw new IndexOutOfRangeException(LocalizedStrings.Collections_ArgMustNotBeNegative);
             if (arrayIndex < 0)
@@ -291,8 +284,7 @@ namespace ARWNI2S.Infrastructure.Collections
             if (count == 0)
                 return;
 
-            if (array == null)
-                throw new ArgumentNullException("array");
+            ArgumentNullException.ThrowIfNull(array);
             if (count < 0)
                 throw new IndexOutOfRangeException(LocalizedStrings.Collections_ArgMustNotBeNegative);
             if (index < 0)

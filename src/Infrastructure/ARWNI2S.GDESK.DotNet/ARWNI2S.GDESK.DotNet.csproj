@@ -7,4 +7,11 @@
     <RootNamespace>ARWNI2S.GDESK</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Event.cs" />
+    <Compile Remove="EventDispatcher.cs" />
+    <Compile Remove="EventPool.cs" />
+    <Compile Remove="GameObject.cs" />
+  </ItemGroup>
+
 </Project>

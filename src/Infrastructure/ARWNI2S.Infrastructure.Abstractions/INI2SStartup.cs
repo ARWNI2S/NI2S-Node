@@ -1,4 +1,4 @@
-﻿using ARWNI2S.Node.Hosting;
+﻿using ARWNI2S.Infrastructure.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -7,7 +7,7 @@ namespace ARWNI2S.Node.Core.Infrastructure
     /// <summary>
     /// Represents object for the configuring services and middleware on application startup
     /// </summary>
-    public partial interface IServerStartup
+    public partial interface INI2SStartup
     {
         /// <summary>
         /// Add and configure any of the middleware
@@ -20,7 +20,7 @@ namespace ARWNI2S.Node.Core.Infrastructure
         /// Configure the using of added middleware
         /// </summary>
         /// <param name="application">Builder for configuring an application's request pipeline</param>
-        void Configure(INodeHostBuilder application);
+        void Configure(INI2SHostBuilder application);
 
         /// <summary>
         /// Gets order of this startup configuration implementation

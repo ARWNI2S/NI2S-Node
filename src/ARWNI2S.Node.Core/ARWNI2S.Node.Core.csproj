@@ -5,54 +5,58 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Entities\Clustering\**" />
-    <Compile Remove="Entities\Common\**" />
-    <Compile Remove="Entities\Configuration\**" />
-    <Compile Remove="Entities\Localization\**" />
-    <Compile Remove="Entities\Logging\**" />
-    <Compile Remove="Entities\Media\**" />
-    <Compile Remove="Entities\ScheduleTasks\**" />
-    <Compile Remove="Entities\Security\**" />
-    <Compile Remove="Entities\Users\**" />
-    <Compile Remove="Http\Extensions\**" />
+    <Compile Remove="Caching\**" />
+    <Compile Remove="ComponentModel\**" />
+    <Compile Remove="Configuration\**" />
+    <Compile Remove="Entities\**" />
+    <Compile Remove="Events\**" />
+    <Compile Remove="Hosting\**" />
+    <Compile Remove="Http\**" />
+    <Compile Remove="Infrastructure\**" />
     <Compile Remove="Plugins\**" />
-    <EmbeddedResource Remove="Entities\Clustering\**" />
-    <EmbeddedResource Remove="Entities\Common\**" />
-    <EmbeddedResource Remove="Entities\Configuration\**" />
-    <EmbeddedResource Remove="Entities\Localization\**" />
-    <EmbeddedResource Remove="Entities\Logging\**" />
-    <EmbeddedResource Remove="Entities\Media\**" />
-    <EmbeddedResource Remove="Entities\ScheduleTasks\**" />
-    <EmbeddedResource Remove="Entities\Security\**" />
-    <EmbeddedResource Remove="Entities\Users\**" />
-    <EmbeddedResource Remove="Http\Extensions\**" />
+    <Compile Remove="Security\**" />
+    <Compile Remove="Services\**" />
+    <EmbeddedResource Remove="Caching\**" />
+    <EmbeddedResource Remove="ComponentModel\**" />
+    <EmbeddedResource Remove="Configuration\**" />
+    <EmbeddedResource Remove="Entities\**" />
+    <EmbeddedResource Remove="Events\**" />
+    <EmbeddedResource Remove="Hosting\**" />
+    <EmbeddedResource Remove="Http\**" />
+    <EmbeddedResource Remove="Infrastructure\**" />
     <EmbeddedResource Remove="Plugins\**" />
-    <None Remove="Entities\Clustering\**" />
-    <None Remove="Entities\Common\**" />
-    <None Remove="Entities\Configuration\**" />
-    <None Remove="Entities\Localization\**" />
-    <None Remove="Entities\Logging\**" />
-    <None Remove="Entities\Media\**" />
-    <None Remove="Entities\ScheduleTasks\**" />
-    <None Remove="Entities\Security\**" />
-    <None Remove="Entities\Users\**" />
-    <None Remove="Http\Extensions\**" />
+    <EmbeddedResource Remove="Security\**" />
+    <EmbeddedResource Remove="Services\**" />
+    <None Remove="Caching\**" />
+    <None Remove="ComponentModel\**" />
+    <None Remove="Configuration\**" />
+    <None Remove="Entities\**" />
+    <None Remove="Events\**" />
+    <None Remove="Hosting\**" />
+    <None Remove="Http\**" />
+    <None Remove="Infrastructure\**" />
     <None Remove="Plugins\**" />
+    <None Remove="Security\**" />
+    <None Remove="Services\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="Configuration\ISettings.cs" />
-    <Compile Remove="Entities\BaseDataEntity.cs" />
-    <Compile Remove="Services\Helpers\BrowscapXmlParser.cs" />
-    <Compile Remove="Services\Helpers\IUserAgentHelper.cs" />
-    <Compile Remove="Services\Helpers\UserAgentHelper.cs" />
+    <Compile Remove="CommonHelper.cs" />
+    <Compile Remove="INodeHelper.cs" />
+    <Compile Remove="IServerContext.cs" />
+    <Compile Remove="IWorkContext.cs" />
+    <Compile Remove="NI2SVersion.cs" />
+    <Compile Remove="SecureRandomNumberGenerator.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="Entities\Clustering\IBladeServer.cs" />
-    <Compile Include="Entities\Localization\ILocalizedEntity.cs" />
-    <Compile Include="Entities\Localization\ILocalizedEnum.cs" />
-    <Compile Include="Entities\Users\INodeUser.cs" />
+    <Compile Include="Configuration\ClusterConfig.cs" />
+    <Compile Include="Configuration\CommonConfig.cs" />
+    <Compile Include="Configuration\HostingConfig.cs" />
+    <Compile Include="Configuration\NodeSettings.cs" />
+    <Compile Include="Configuration\NodeSettingsHelper.cs" />
+    <Compile Include="Configuration\ConfigurationDefaults.cs" />
+    <Compile Include="Infrastructure\Singleton.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -62,7 +66,6 @@
     <PackageReference Include="Microsoft.Extensions.Caching.SqlServer" />
     <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" />
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" />
-    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" />
     <PackageReference Include="Newtonsoft.Json" />
   </ItemGroup>
 

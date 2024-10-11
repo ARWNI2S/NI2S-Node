@@ -22,8 +22,7 @@ namespace ARWNI2S.Infrastructure.Collections.Tree
 
         internal TreeNodeCollection(TreeNode<T> owner)
         {
-            if (owner == null)
-                throw new ArgumentNullException("owner");
+            ArgumentNullException.ThrowIfNull(owner);
             _owner = owner;
         }
 

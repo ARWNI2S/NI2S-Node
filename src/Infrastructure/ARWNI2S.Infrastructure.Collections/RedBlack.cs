@@ -1078,11 +1078,10 @@ namespace ARWNI2S.Infrastructure.Collections
         {
             bool deleted;
             int counter = 0;
-            T dummy;
 
             do
             {
-                deleted = DeleteItemFromRange(rangeTester, true, out dummy);
+                deleted = DeleteItemFromRange(rangeTester, true, out T dummy);
                 if (deleted)
                     ++counter;
             } while (deleted);
@@ -1289,8 +1288,7 @@ namespace ARWNI2S.Infrastructure.Collections
             else
             {
                 Debug.Assert(!_root.IsRed, "Root is not black");
-                int blackHeight;
-                int nodeCount = ValidateSubTree(_root, out blackHeight);
+                int nodeCount = ValidateSubTree(_root, out int blackHeight);
                 Debug.Assert(nodeCount == _count, "Node count of tree is not correct.");
             }
         }
@@ -1325,12 +1323,12 @@ namespace ARWNI2S.Infrastructure.Collections
             }
 
             // Validate sub-trees and get their size and heights.
-            int leftCount, leftBlackHeight;
-            int rightCount, rightBlackHeight;
+            int leftCount;
+            int rightCount;
             int ourCount;
 
-            leftCount = ValidateSubTree(node.left, out leftBlackHeight);
-            rightCount = ValidateSubTree(node.right, out rightBlackHeight);
+            leftCount = ValidateSubTree(node.left, out int leftBlackHeight);
+            rightCount = ValidateSubTree(node.right, out int rightBlackHeight);
             ourCount = leftCount + rightCount + 1;
 
             Debug.Assert(ourCount == node.Count);

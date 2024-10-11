@@ -1,7 +1,7 @@
 ﻿using ARWNI2S.Node.Core;
 using ARWNI2S.Node.Core.Configuration;
 using ARWNI2S.Node.Core.Infrastructure;
-using ARWNI2S.Node.Data.Entities.Configuration;
+using ARWNI2S.Node.Data.Configuration;
 using Newtonsoft.Json;
 using System.Text;
 

@@ -115,8 +115,7 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
         /// <param name="arrayIndex">Starting index in <paramref name="array"/> to copy to.</param>
         public sealed override void CopyTo(T[] array, int arrayIndex)
         {
-            if (array == null)
-                throw new ArgumentNullException("array");
+            ArgumentNullException.ThrowIfNull(array);
 
             // This override is provided to give a more efficient implementation to CopyTo than
             // the default one provided by CollectionBase.
@@ -407,8 +406,7 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
         /// less than zero or greater than Count.</exception>
         public void InsertRange(int index, IEnumerable<T> collection)
         {
-            if (collection == null)
-                throw new ArgumentNullException("collection");
+            ArgumentNullException.ThrowIfNull(collection);
 
             StopEnumerations();
 
@@ -753,8 +751,7 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
         /// <param name="collection">The collection of items to add.</param>
         public void AddManyToFront(IEnumerable<T> collection)
         {
-            if (collection == null)
-                throw new ArgumentNullException("collection");
+            ArgumentNullException.ThrowIfNull(collection);
 
             InsertRange(0, collection);
         }
@@ -810,8 +807,7 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
         /// <param name="collection">The collection of item to add.</param>
         public void AddManyToBack(IEnumerable<T> collection)
         {
-            if (collection == null)
-                throw new ArgumentNullException("collection");
+            ArgumentNullException.ThrowIfNull(collection);
 
             foreach (T item in collection)
                 AddToBack(item);
@@ -933,8 +929,7 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
         /// <exception cref="InvalidOperationException">T is a reference type that does not implement ICloneable.</exception>
         public Deque<T> CloneContents()
         {
-            bool itemIsValueType;
-            if (!CollectionUtils.IsCloneableType(typeof(T), out itemIsValueType))
+            if (!CollectionUtils.IsCloneableType(typeof(T), out bool itemIsValueType))
                 throw new InvalidOperationException(string.Format(LocalizedStrings.Collections_TypeNotCloneable, typeof(T).FullName));
 
             Deque<T> clone = [];

@@ -1,4 +1,4 @@
-﻿using ARWNI2S.Infrastructure.Utilities;
+﻿using ARWNI2S.Infrastructure.Extensions;
 
 namespace ARWNI2S.Infrastructure.Collections
 {
@@ -105,8 +105,7 @@ namespace ARWNI2S.Infrastructure.Collections
             {
                 return string.Format("All {0}:" + Environment.NewLine + "{1}",
                     typeof(T).Name,
-                    Utils.EnumerableToString(
-                        sortedRingList,
+                    sortedRingList.EnumerableToString(
                         elem => string.Format("{0}/x{1,8:X8}", elem, elem.GetUniformHashCode()),
                         Environment.NewLine,
                         false));

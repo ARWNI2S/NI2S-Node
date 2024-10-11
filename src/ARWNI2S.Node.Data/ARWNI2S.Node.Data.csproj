@@ -5,61 +5,39 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Mapping\Builders\Common\**" />
-    <Compile Remove="Mapping\Builders\Configuration\**" />
-    <Compile Remove="Mapping\Builders\Directory\**" />
-    <Compile Remove="Mapping\Builders\Gameplay\**" />
-    <Compile Remove="Mapping\Builders\Gdpr\**" />
-    <Compile Remove="Mapping\Builders\Localization\**" />
-    <Compile Remove="Mapping\Builders\Logging\**" />
-    <Compile Remove="Mapping\Builders\Media\**" />
-    <Compile Remove="Mapping\Builders\Messages\**" />
-    <Compile Remove="Mapping\Builders\News\**" />
-    <Compile Remove="Mapping\Builders\ScheduleTasks\**" />
-    <Compile Remove="Mapping\Builders\Security\**" />
-    <Compile Remove="Mapping\Builders\Servers\**" />
-    <Compile Remove="Mapping\Builders\Users\**" />
-    <Compile Remove="Migrations\Installation\**" />
-    <EmbeddedResource Remove="Mapping\Builders\Common\**" />
-    <EmbeddedResource Remove="Mapping\Builders\Configuration\**" />
-    <EmbeddedResource Remove="Mapping\Builders\Directory\**" />
-    <EmbeddedResource Remove="Mapping\Builders\Gameplay\**" />
-    <EmbeddedResource Remove="Mapping\Builders\Gdpr\**" />
-    <EmbeddedResource Remove="Mapping\Builders\Localization\**" />
-    <EmbeddedResource Remove="Mapping\Builders\Logging\**" />
-    <EmbeddedResource Remove="Mapping\Builders\Media\**" />
-    <EmbeddedResource Remove="Mapping\Builders\Messages\**" />
-    <EmbeddedResource Remove="Mapping\Builders\News\**" />
-    <EmbeddedResource Remove="Mapping\Builders\ScheduleTasks\**" />
-    <EmbeddedResource Remove="Mapping\Builders\Security\**" />
-    <EmbeddedResource Remove="Mapping\Builders\Servers\**" />
-    <EmbeddedResource Remove="Mapping\Builders\Users\**" />
-    <EmbeddedResource Remove="Migrations\Installation\**" />
-    <None Remove="Mapping\Builders\Common\**" />
-    <None Remove="Mapping\Builders\Configuration\**" />
-    <None Remove="Mapping\Builders\Directory\**" />
-    <None Remove="Mapping\Builders\Gameplay\**" />
-    <None Remove="Mapping\Builders\Gdpr\**" />
-    <None Remove="Mapping\Builders\Localization\**" />
-    <None Remove="Mapping\Builders\Logging\**" />
-    <None Remove="Mapping\Builders\Media\**" />
-    <None Remove="Mapping\Builders\Messages\**" />
-    <None Remove="Mapping\Builders\News\**" />
-    <None Remove="Mapping\Builders\ScheduleTasks\**" />
-    <None Remove="Mapping\Builders\Security\**" />
-    <None Remove="Mapping\Builders\Servers\**" />
-    <None Remove="Mapping\Builders\Users\**" />
-    <None Remove="Migrations\Installation\**" />
+    <Compile Remove="Configuration\**" />
+    <Compile Remove="DataProviders\**" />
+    <Compile Remove="Entities\**" />
+    <Compile Remove="Extensions\**" />
+    <Compile Remove="Mapping\**" />
+    <Compile Remove="Migrations\**" />
+    <EmbeddedResource Remove="Configuration\**" />
+    <EmbeddedResource Remove="DataProviders\**" />
+    <EmbeddedResource Remove="Entities\**" />
+    <EmbeddedResource Remove="Extensions\**" />
+    <EmbeddedResource Remove="Mapping\**" />
+    <EmbeddedResource Remove="Migrations\**" />
+    <None Remove="Configuration\**" />
+    <None Remove="DataProviders\**" />
+    <None Remove="Entities\**" />
+    <None Remove="Extensions\**" />
+    <None Remove="Mapping\**" />
+    <None Remove="Migrations\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="Entities\BaseEntity.cs" />
-    <Compile Remove="Entities\Common\ISoftDeletedEntity.cs" />
-    <Compile Remove="Entities\INodeEntity.cs" />
-    <Compile Remove="Entities\ISoftDeletedEntity.cs" />
-    <Compile Remove="Entities\Localization\ILocalizedEntity.cs" />
-    <Compile Remove="Entities\Localization\ILocalizedEnum.cs" />
-    <Compile Remove="Entities\Media\Download.cs" />
+    <Compile Remove="DataProviderManager.cs" />
+    <Compile Remove="DataProviderType.cs" />
+    <Compile Remove="DataSettingsManager.cs" />
+    <Compile Remove="EntityRepository.cs" />
+    <Compile Remove="IDataProviderManager.cs" />
+    <Compile Remove="IRepository.cs" />
+    <Compile Remove="IServerConnectionStringInfo.cs" />
+    <Compile Remove="IServerDataProvider.cs" />
+    <Compile Remove="ITempDataStorage.cs" />
+    <Compile Remove="ServerDataSettingsDefaults.cs" />
+    <Compile Remove="ServerDbStartup.cs" />
+    <Compile Remove="TempSqlDataStorage.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,7 +1,7 @@
 ﻿using ARWNI2S.Node.Core;
 using ARWNI2S.Node.Core.Infrastructure;
+using ARWNI2S.Node.Data.Configuration;
 using ARWNI2S.Node.Data.DataProviders;
-using ARWNI2S.Node.Data.Entities.Configuration;
 
 namespace ARWNI2S.Node.Data
 {

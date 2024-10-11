@@ -64,8 +64,7 @@ namespace ARWNI2S.Infrastructure.Collections.Sorted
         /// <param name="comparer">An instance of IComparer&lt;T&gt; that will be used to compare items.</param>
         public OrderedSet(IComparer<T> comparer)
         {
-            if (comparer == null)
-                throw new ArgumentNullException("comparer");
+            ArgumentNullException.ThrowIfNull(comparer);
 
             _comparer = comparer;
             _tree = new RedBlackTree<T>(comparer);
@@ -168,8 +167,7 @@ namespace ARWNI2S.Infrastructure.Collections.Sorted
         /// <exception cref="InvalidOperationException">T is a reference type that does not implement ICloneable.</exception>
         public OrderedSet<T> CloneContents()
         {
-            bool itemIsValueType;
-            if (!CollectionUtils.IsCloneableType(typeof(T), out itemIsValueType))
+            if (!CollectionUtils.IsCloneableType(typeof(T), out bool itemIsValueType))
                 throw new InvalidOperationException(string.Format(LocalizedStrings.Collections_TypeNotCloneable, typeof(T).FullName));
 
             OrderedSet<T> clone = new OrderedSet<T>(_comparer);
@@ -254,8 +252,7 @@ namespace ARWNI2S.Infrastructure.Collections.Sorted
         /// <returns>True if the set contains <paramref name="item"/>. False if the set does not contain <paramref name="item"/>.</returns>
         public sealed override bool Contains(T item)
         {
-            T dummy;
-            return _tree.Find(item, false, false, out dummy);
+            return _tree.Find(item, false, false, out T dummy);
         }
 
         /// <summary>
@@ -338,8 +335,7 @@ namespace ARWNI2S.Infrastructure.Collections.Sorted
         /// otherwise.</returns>
         public new bool Add(T item)
         {
-            T dummy;
-            return _tree.Insert(item, DuplicatePolicy.ReplaceFirst, out dummy);
+            return _tree.Insert(item, DuplicatePolicy.ReplaceFirst, out T dummy);
         }
 
         /// <summary>
@@ -368,8 +364,7 @@ namespace ARWNI2S.Infrastructure.Collections.Sorted
         /// <param name="collection">A collection of items to add to the set.</param>
         public void AddMany(IEnumerable<T> collection)
         {
-            if (collection == null)
-                throw new ArgumentNullException("collection");
+            ArgumentNullException.ThrowIfNull(collection);
 
             // If we're adding ourselves, then there is nothing to do.
             if (ReferenceEquals(collection, this))
@@ -395,8 +390,7 @@ namespace ARWNI2S.Infrastructure.Collections.Sorted
         /// <returns>True if <paramref name="item"/> was found and removed. False if <paramref name="item"/> was not in the set.</returns>
         public sealed override bool Remove(T item)
         {
-            T dummy;
-            return _tree.Delete(item, true, out dummy);
+            return _tree.Delete(item, true, out T dummy);
         }
 
         /// <summary>
@@ -413,8 +407,7 @@ namespace ARWNI2S.Infrastructure.Collections.Sorted
         /// <exception cref="ArgumentNullException"><paramref name="collection"/> is null.</exception>
         public int RemoveMany(IEnumerable<T> collection)
         {
-            if (collection == null)
-                throw new ArgumentNullException("collection");
+            ArgumentNullException.ThrowIfNull(collection);
 
             int count = 0;
 
@@ -471,9 +464,8 @@ namespace ARWNI2S.Infrastructure.Collections.Sorted
         /// <exception cref="InvalidOperationException">The set is empty.</exception>
         public T GetFirst()
         {
-            T item;
             CheckEmpty();
-            _tree.FirstItemInRange(_tree.EntireRangeTester, out item);
+            _tree.FirstItemInRange(_tree.EntireRangeTester, out T item);
             return item;
         }
 
@@ -487,9 +479,8 @@ namespace ARWNI2S.Infrastructure.Collections.Sorted
         /// <exception cref="InvalidOperationException">The set is empty.</exception>
         public T GetLast()
         {
-            T item;
             CheckEmpty();
-            _tree.LastItemInRange(_tree.EntireRangeTester, out item);
+            _tree.LastItemInRange(_tree.EntireRangeTester, out T item);
             return item;
         }
 
@@ -502,8 +493,7 @@ namespace ARWNI2S.Infrastructure.Collections.Sorted
         public T RemoveFirst()
         {
             CheckEmpty();
-            T item;
-            _tree.DeleteItemFromRange(_tree.EntireRangeTester, true, out item);
+            _tree.DeleteItemFromRange(_tree.EntireRangeTester, true, out T item);
             return item;
         }
 
@@ -516,8 +506,7 @@ namespace ARWNI2S.Infrastructure.Collections.Sorted
         public T RemoveLast()
         {
             CheckEmpty();
-            T item;
-            _tree.DeleteItemFromRange(_tree.EntireRangeTester, false, out item);
+            _tree.DeleteItemFromRange(_tree.EntireRangeTester, false, out T item);
             return item;
         }
 
@@ -533,8 +522,7 @@ namespace ARWNI2S.Infrastructure.Collections.Sorted
         /// <exception cref="InvalidOperationException">If otherSet and this set don't use the same method for comparing items.</exception>
         private void CheckConsistentComparison(OrderedSet<T> otherSet)
         {
-            if (otherSet == null)
-                throw new ArgumentNullException("otherSet");
+            ArgumentNullException.ThrowIfNull(otherSet);
 
             if (!Equals(_comparer, otherSet._comparer))
                 throw new InvalidOperationException(LocalizedStrings.Collections_InconsistentComparisons);
@@ -775,13 +763,12 @@ namespace ARWNI2S.Infrastructure.Collections.Sorted
                 smaller = otherSet; larger = this;
             }
 
-            T dummy;
             RedBlackTree<T> newTree = new RedBlackTree<T>(_comparer);
 
             foreach (T item in smaller)
             {
                 if (larger.Contains(item))
-                    newTree.Insert(item, DuplicatePolicy.ReplaceFirst, out dummy);
+                    newTree.Insert(item, DuplicatePolicy.ReplaceFirst, out T dummy);
             }
 
             _tree = newTree;
@@ -1018,8 +1005,7 @@ namespace ARWNI2S.Infrastructure.Collections.Sorted
                     }
                     else
                     {
-                        T dummy;
-                        int firstIndex = _mySet._tree.FirstItemInRange(_rangeTester, out dummy);
+                        int firstIndex = _mySet._tree.FirstItemInRange(_rangeTester, out T dummy);
                         int lastIndex = _mySet._tree.LastItemInRange(_rangeTester, out dummy);
                         if (firstIndex < 0 || lastIndex < 0 || index < 0 || index >= lastIndex - firstIndex + 1)
                             throw new ArgumentOutOfRangeException("index");
@@ -1437,8 +1423,7 @@ namespace ARWNI2S.Infrastructure.Collections.Sorted
                     }
                     else
                     {
-                        T dummy;
-                        int firstIndex = _mySet._tree.FirstItemInRange(_rangeTester, out dummy);
+                        int firstIndex = _mySet._tree.FirstItemInRange(_rangeTester, out T dummy);
                         int lastIndex = _mySet._tree.LastItemInRange(_rangeTester, out dummy);
                         if (firstIndex < 0 || lastIndex < 0 || index < 0 || index >= lastIndex - firstIndex + 1)
                             throw new ArgumentOutOfRangeException("index");

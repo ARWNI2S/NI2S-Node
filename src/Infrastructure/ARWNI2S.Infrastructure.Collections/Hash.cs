@@ -316,10 +316,10 @@ namespace ARWNI2S.Infrastructure.Collections
             {
                 foreach (Slot oldSlot in oldTable)
                 {
-                    int hash, bucket, skip;
+                    int hash;
 
                     hash = oldSlot.HashValue;
-                    GetHashValuesFromFullHash(hash, out bucket, out skip);
+                    GetHashValuesFromFullHash(hash, out int bucket, out int skip);
 
                     // Find an empty bucket.
                     while (!_table[bucket].Empty)
@@ -410,13 +410,13 @@ namespace ARWNI2S.Infrastructure.Collections
         /// <returns>True if no duplicate existed, false if a duplicate was found.</returns>
         public bool Insert(T item, bool replaceOnDuplicate, out T previous)
         {
-            int hash, bucket, skip;
+            int hash;
             int emptyBucket = -1;                      // If >= 0, an empty bucket we can use for a true insert
             bool duplicateMightExist = true;      // If true, still the possibility that a duplicate exists.
 
             EnsureEnoughSlots(1);            // Ensure enough room to insert. Also stops enumerations.
 
-            hash = GetHashValues(item, out bucket, out skip);
+            hash = GetHashValues(item, out int bucket, out int skip);
 
             for (; ; )
             {
@@ -485,7 +485,7 @@ namespace ARWNI2S.Infrastructure.Collections
         /// <returns>True if item was found and deleted, false if item wasn't found.</returns>
         public bool Delete(T item, out T itemDeleted)
         {
-            int hash, bucket, skip;
+            int hash;
 
             StopEnumerations();
 
@@ -495,7 +495,7 @@ namespace ARWNI2S.Infrastructure.Collections
                 return false;
             }
 
-            hash = GetHashValues(item, out bucket, out skip);
+            hash = GetHashValues(item, out int bucket, out int skip);
 
             for (; ; )
             {
@@ -532,7 +532,7 @@ namespace ARWNI2S.Infrastructure.Collections
         /// <returns>True if the item was found, false otherwise.</returns>
         public bool Find(T find, bool replace, out T item)
         {
-            int hash, bucket, skip;
+            int hash;
 
             if (_count == 0)
             {
@@ -540,7 +540,7 @@ namespace ARWNI2S.Infrastructure.Collections
                 return false;
             }
 
-            hash = GetHashValues(find, out bucket, out skip);
+            hash = GetHashValues(find, out int bucket, out int skip);
 
             for (; ; )
             {
@@ -638,8 +638,7 @@ namespace ARWNI2S.Infrastructure.Collections
         /// </summary>
         void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context)
         {
-            if (info == null)
-                throw new ArgumentNullException("info");
+            ArgumentNullException.ThrowIfNull(info);
 
             info.AddValue("equalityComparer", _equalityComparer, typeof(IEqualityComparer<T>));
             info.AddValue("loadFactor", _loadFactor, typeof(float));
@@ -676,11 +675,10 @@ namespace ARWNI2S.Infrastructure.Collections
             _equalityComparer = (IEqualityComparer<T>)_serializationInfo.GetValue("equalityComparer", typeof(IEqualityComparer<T>));
 
             T[] items = (T[])_serializationInfo.GetValue("items", typeof(T[]));
-            T dummy;
 
             EnsureEnoughSlots(items.Length);
             foreach (T item in items)
-                Insert(item, true, out dummy);
+                Insert(item, true, out T dummy);
 
             _serializationInfo = null;
         }
@@ -739,7 +737,7 @@ namespace ARWNI2S.Infrastructure.Collections
 
             // Traverse the table. Make sure that count and usedSlots are right, and that
             // each slot looks reasonable.
-            int expectedCount = 0, expectedUsed = 0, initialBucket, skip;
+            int expectedCount = 0, expectedUsed = 0;
             if (_table != null)
             {
                 for (int i = 0; i < _totalSlots; ++i)
@@ -758,7 +756,7 @@ namespace ARWNI2S.Infrastructure.Collections
                         ++expectedCount;
                         ++expectedUsed;
                         Debug.Assert(slot.HashValue != 0);
-                        Debug.Assert(GetHashValues(slot.item, out initialBucket, out skip) == slot.HashValue);
+                        Debug.Assert(GetHashValues(slot.item, out int initialBucket, out int skip) == slot.HashValue);
                         if (initialBucket != i)
                             Debug.Assert(_table[initialBucket].Collision);
                     }

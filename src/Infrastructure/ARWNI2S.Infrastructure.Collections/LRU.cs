@@ -90,15 +90,13 @@ namespace ARWNI2S.Infrastructure.Collections
 
         public bool ContainsKey(TKey key)
         {
-            TimestampedValue ignore;
-            return cache.TryGetValue(key, out ignore);
+            return cache.TryGetValue(key, out TimestampedValue ignore);
         }
 
         public bool RemoveKey(TKey key, out TValue value)
         {
             value = default;
-            TimestampedValue tv;
-            if (!cache.TryRemove(key, out tv)) return false;
+            if (!cache.TryRemove(key, out TimestampedValue tv)) return false;
 
             value = tv.Value;
             return true;
@@ -119,11 +117,10 @@ namespace ARWNI2S.Infrastructure.Collections
 
         public bool TryGetValue(TKey key, out TValue value)
         {
-            TimestampedValue result;
 
             value = default;
 
-            if (cache.TryGetValue(key, out result))
+            if (cache.TryGetValue(key, out TimestampedValue result))
             {
                 result.Generation = Interlocked.Increment(ref nextGeneration);
                 var age = DateTime.UtcNow.Subtract(result.WhenLoaded);
@@ -148,9 +145,8 @@ namespace ARWNI2S.Infrastructure.Collections
 
         public TValue Get(TKey key)
         {
-            TValue value;
 
-            if (TryGetValue(key, out value)) return value;
+            if (TryGetValue(key, out TValue value)) return value;
             if (fetcher == null) return value;
 
             value = fetcher(key);
@@ -168,8 +164,7 @@ namespace ARWNI2S.Infrastructure.Collections
 
                 if (entryToFree.Key == null) continue;
                 TKey keyToFree = entryToFree.Key;
-                TimestampedValue old;
-                if (!cache.TryRemove(keyToFree, out old)) continue;
+                if (!cache.TryRemove(keyToFree, out TimestampedValue old)) continue;
                 if (RaiseFlushEvent == null) continue;
 
                 var args = new FlushEventArgs(keyToFree, old.Value);

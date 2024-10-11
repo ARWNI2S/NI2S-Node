@@ -48,8 +48,7 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
         /// <param name="equalityComparer">An instance of IEqualityComparer&lt;T&gt; that will be used to compare items.</param>
         public Set(IEqualityComparer<T> equalityComparer)
         {
-            if (equalityComparer == null)
-                throw new ArgumentNullException("equalityComparer");
+            ArgumentNullException.ThrowIfNull(equalityComparer);
 
             _equalityComparer = equalityComparer;
             _hash = new Hash<T>(_equalityComparer);
@@ -134,8 +133,7 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
         /// <exception cref="InvalidOperationException">T is a reference type that does not implement ICloneable.</exception>
         public Set<T> CloneContents()
         {
-            bool itemIsValueType;
-            if (!CollectionUtils.IsCloneableType(typeof(T), out itemIsValueType))
+            if (!CollectionUtils.IsCloneableType(typeof(T), out bool itemIsValueType))
                 throw new InvalidOperationException(string.Format(LocalizedStrings.Collections_TypeNotCloneable, typeof(T).FullName));
 
             Set<T> clone = new Set<T>(_equalityComparer);
@@ -218,8 +216,7 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
         /// <returns>True if the set contains <paramref name="item"/>. False if the set does not contain <paramref name="item"/>.</returns>
         public sealed override bool Contains(T item)
         {
-            T dummy;
-            return _hash.Find(item, false, out dummy);
+            return _hash.Find(item, false, out T dummy);
         }
 
         /// <summary>
@@ -263,8 +260,7 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
         /// otherwise.</returns>
         public new bool Add(T item)
         {
-            T dummy;
-            return !_hash.Insert(item, true, out dummy);
+            return !_hash.Insert(item, true, out T dummy);
         }
 
         /// <summary>
@@ -295,8 +291,7 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
         /// <param name="collection">A collection of items to add to the set.</param>
         public void AddMany(IEnumerable<T> collection)
         {
-            if (collection == null)
-                throw new ArgumentNullException("collection");
+            ArgumentNullException.ThrowIfNull(collection);
 
             // If we're adding ourselves, then there is nothing to do.
             if (ReferenceEquals(collection, this))
@@ -322,8 +317,7 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
         /// <returns>True if <paramref name="item"/> was found and removed. False if <paramref name="item"/> was not in the set.</returns>
         public sealed override bool Remove(T item)
         {
-            T dummy;
-            return _hash.Delete(item, out dummy);
+            return _hash.Delete(item, out T dummy);
         }
 
         /// <summary>
@@ -339,8 +333,7 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
         /// <exception cref="ArgumentNullException"><paramref name="collection"/> is null.</exception>
         public int RemoveMany(IEnumerable<T> collection)
         {
-            if (collection == null)
-                throw new ArgumentNullException("collection");
+            ArgumentNullException.ThrowIfNull(collection);
 
             int count = 0;
 
@@ -385,8 +378,7 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
         /// <exception cref="InvalidOperationException">If otherSet and this set don't use the same method for comparing items.</exception>
         private void CheckConsistentComparison(Set<T> otherSet)
         {
-            if (otherSet == null)
-                throw new ArgumentNullException("otherSet");
+            ArgumentNullException.ThrowIfNull(otherSet);
 
             if (!Equals(_equalityComparer, otherSet._equalityComparer))
                 throw new InvalidOperationException(LocalizedStrings.Collections_InconsistentComparisons);
@@ -608,13 +600,12 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
                 smaller = otherSet; larger = this;
             }
 
-            T dummy;
             Hash<T> newHash = new Hash<T>(_equalityComparer);
 
             foreach (T item in smaller)
             {
                 if (larger.Contains(item))
-                    newHash.Insert(item, true, out dummy);
+                    newHash.Insert(item, true, out T dummy);
             }
 
             _hash = newHash;
@@ -731,11 +722,10 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
             {
                 _hash.StopEnumerations();
                 Hash<T> newHash = otherSet._hash.Clone(null);
-                T dummy;
 
                 foreach (T item in this)
                 {
-                    if (newHash.Find(item, false, out dummy))
+                    if (newHash.Find(item, false, out T dummy))
                         newHash.Delete(item, out dummy);
                     else
                         newHash.Insert(item, true, out dummy);

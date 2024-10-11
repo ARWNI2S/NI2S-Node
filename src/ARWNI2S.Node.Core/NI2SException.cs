@@ -4,12 +4,12 @@
     /// Represents errors that occur during application execution
     /// </summary>
     [Serializable]
-    public partial class ServerException : Exception
+    public partial class NI2SException : Exception
     {
         /// <summary>
         /// Initializes a new instance of the Exception class.
         /// </summary>
-        public ServerException()
+        public NI2SException()
         {
         }
 
@@ -17,7 +17,7 @@
         /// Initializes a new instance of the Exception class with a specified error message.
         /// </summary>
         /// <param name="message">The message that describes the error.</param>
-        public ServerException(string message)
+        public NI2SException(string message)
             : base(message)
         {
         }
@@ -27,7 +27,7 @@
         /// </summary>
         /// <param name="messageFormat">The exception message format.</param>
         /// <param name="args">The exception message arguments.</param>
-        public ServerException(string messageFormat, params object[] args)
+        public NI2SException(string messageFormat, params object[] args)
             : base(string.Format(messageFormat, args))
         {
         }
@@ -37,7 +37,7 @@
         /// </summary>
         /// <param name="message">The error message that explains the reason for the exception.</param>
         /// <param name="innerException">The exception that is the cause of the current exception, or a null reference if no inner exception is specified.</param>
-        public ServerException(string message, Exception innerException)
+        public NI2SException(string message, Exception innerException)
             : base(message, innerException)
         {
         }

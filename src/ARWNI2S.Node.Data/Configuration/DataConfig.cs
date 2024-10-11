@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System.Configuration;
 
-namespace ARWNI2S.Node.Data.Entities.Configuration
+namespace ARWNI2S.Node.Data.Configuration
 {
     public partial class DataConfig : IConfig, IConnectionStringAccessor
     {

@@ -38,10 +38,8 @@ namespace ARWNI2S.Infrastructure.Collections.Sorting
         /// <param name="swapper">El intercambiador a emplear.</param>
         public SwapSorter(IComparer comparer, ISwap swapper)
         {
-            if (comparer == null)
-                throw new ArgumentNullException("comparer");
-            if (swapper == null)
-                throw new ArgumentNullException("swapper");
+            ArgumentNullException.ThrowIfNull(comparer);
+            ArgumentNullException.ThrowIfNull(swapper);
 
             _comparer = comparer;
             _swapper = swapper;
@@ -57,8 +55,7 @@ namespace ARWNI2S.Infrastructure.Collections.Sorting
             }
             set
             {
-                if (value == null)
-                    throw new ArgumentNullException("comparer");
+                ArgumentNullException.ThrowIfNull(value);
                 _comparer = value;
             }
         }
@@ -73,8 +70,7 @@ namespace ARWNI2S.Infrastructure.Collections.Sorting
             }
             set
             {
-                if (value == null)
-                    throw new ArgumentNullException("swapper");
+                ArgumentNullException.ThrowIfNull(value);
                 _swapper = value;
             }
         }

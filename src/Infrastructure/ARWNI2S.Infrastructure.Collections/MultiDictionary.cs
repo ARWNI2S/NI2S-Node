@@ -159,10 +159,8 @@ namespace ARWNI2S.Infrastructure.Collections
         /// <param name="valueEqualityComparer">An IEqualityComparer&lt;TValue&gt; instance that will be used to compare values.</param>
         public MultiDictionary(bool allowDuplicateValues, IEqualityComparer<TKey> keyEqualityComparer, IEqualityComparer<TValue> valueEqualityComparer)
         {
-            if (keyEqualityComparer == null)
-                throw new ArgumentNullException("keyEqualityComparer");
-            if (valueEqualityComparer == null)
-                throw new ArgumentNullException("valueEqualityComparer");
+            ArgumentNullException.ThrowIfNull(keyEqualityComparer);
+            ArgumentNullException.ThrowIfNull(valueEqualityComparer);
 
             _allowDuplicateValues = allowDuplicateValues;
             _keyEqualityComparer = keyEqualityComparer;
@@ -176,10 +174,8 @@ namespace ARWNI2S.Infrastructure.Collections
         /// </summary>
         private MultiDictionary(bool allowDuplicateValues, IEqualityComparer<TKey> keyEqualityComparer, IEqualityComparer<TValue> valueEqualityComparer, IEqualityComparer<KeyAndValues> equalityComparer, Hash<KeyAndValues> hash)
         {
-            if (keyEqualityComparer == null)
-                throw new ArgumentNullException("keyEqualityComparer");
-            if (valueEqualityComparer == null)
-                throw new ArgumentNullException("valueEqualityComparer");
+            ArgumentNullException.ThrowIfNull(keyEqualityComparer);
+            ArgumentNullException.ThrowIfNull(valueEqualityComparer);
 
             _allowDuplicateValues = allowDuplicateValues;
             _keyEqualityComparer = keyEqualityComparer;
@@ -205,9 +201,8 @@ namespace ARWNI2S.Infrastructure.Collections
         public sealed override void Add(TKey key, TValue value)
         {
             KeyAndValues keyValues = new KeyAndValues(key);
-            KeyAndValues existing;
 
-            if (_hash.Find(keyValues, false, out existing))
+            if (_hash.Find(keyValues, false, out KeyAndValues existing))
             {
                 // There already is an item in the hash table equal to this key. Add the new value,
                 // taking into account duplicates if needed.
@@ -263,9 +258,8 @@ namespace ARWNI2S.Infrastructure.Collections
         public sealed override bool Remove(TKey key, TValue value)
         {
             KeyAndValues keyValues = new KeyAndValues(key);
-            KeyAndValues existing;
 
-            if (_hash.Find(keyValues, false, out existing))
+            if (_hash.Find(keyValues, false, out KeyAndValues existing))
             {
                 // There is an item in the hash table equal to this key. Find the value.
                 int existingCount = existing.Count;
@@ -320,8 +314,7 @@ namespace ARWNI2S.Infrastructure.Collections
         /// false if the key was not present.</returns>
         public sealed override bool Remove(TKey key)
         {
-            KeyAndValues dummy;
-            return _hash.Delete(new KeyAndValues(key), out dummy);
+            return _hash.Delete(new KeyAndValues(key), out KeyAndValues dummy);
         }
 
         /// <summary>
@@ -400,8 +393,7 @@ namespace ARWNI2S.Infrastructure.Collections
         public sealed override bool Contains(TKey key, TValue value)
         {
             KeyAndValues find = new KeyAndValues(key);
-            KeyAndValues item;
-            if (_hash.Find(find, false, out item))
+            if (_hash.Find(find, false, out KeyAndValues item))
             {
                 int existingCount = item.Count;
                 int valueHash = CollectionUtils.GetHashCode(value, _valueEqualityComparer);
@@ -429,8 +421,7 @@ namespace ARWNI2S.Infrastructure.Collections
         public sealed override bool ContainsKey(TKey key)
         {
             KeyAndValues find = new KeyAndValues(key);
-            KeyAndValues temp;
-            return _hash.Find(find, false, out temp);
+            return _hash.Find(find, false, out KeyAndValues temp);
         }
 
         /// <summary>
@@ -477,8 +468,7 @@ namespace ARWNI2S.Infrastructure.Collections
         protected sealed override bool TryEnumerateValuesForKey(TKey key, out IEnumerator<TValue> values)
         {
             KeyAndValues find = new KeyAndValues(key);
-            KeyAndValues item;
-            if (_hash.Find(find, false, out item))
+            if (_hash.Find(find, false, out KeyAndValues item))
             {
                 values = EnumerateValues(item);
                 return true;
@@ -499,8 +489,7 @@ namespace ARWNI2S.Infrastructure.Collections
         protected sealed override int CountValues(TKey key)
         {
             KeyAndValues find = new KeyAndValues(key);
-            KeyAndValues item;
-            if (_hash.Find(find, false, out item))
+            if (_hash.Find(find, false, out KeyAndValues item))
             {
                 return item.Count;
             }
@@ -557,13 +546,12 @@ namespace ARWNI2S.Infrastructure.Collections
         /// <exception cref="InvalidOperationException">TKey or TValue is a reference type that does not implement ICloneable.</exception>
         public MultiDictionary<TKey, TValue> CloneContents()
         {
-            bool keyIsValueType, valueIsValueType;
 
             // Make sure that TKey and TValue can be cloned.
-            if (!CollectionUtils.IsCloneableType(typeof(TKey), out keyIsValueType))
+            if (!CollectionUtils.IsCloneableType(typeof(TKey), out bool keyIsValueType))
                 NonCloneableType(typeof(TKey));
 
-            if (!CollectionUtils.IsCloneableType(typeof(TValue), out valueIsValueType))
+            if (!CollectionUtils.IsCloneableType(typeof(TValue), out bool valueIsValueType))
                 NonCloneableType(typeof(TValue));
 
             // It's tempting to do a more efficient cloning, utilizing the hash.Clone() method. However, we can't know that

@@ -78,9 +78,8 @@
         /// <returns></returns>
         public static T GetValue<T>(this IDictionary<object, object> dictionary, object key, T defaultValue)
         {
-            object valueObj;
 
-            if (!dictionary.TryGetValue(key, out valueObj))
+            if (!dictionary.TryGetValue(key, out object valueObj))
             {
                 return defaultValue;
             }
@@ -269,9 +268,8 @@
         {
             T[] target;
 
-            var array = source as T[];
 
-            if (array != null)
+            if (source is T[] array)
             {
                 target = new T[length];
                 Array.Copy(array, offset, target, 0, length);

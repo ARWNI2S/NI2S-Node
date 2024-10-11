@@ -13,7 +13,7 @@
 
 using ARWNI2S.Infrastructure.Interop;
 
-namespace ARWNI2S.Infrastructure.Extensions
+namespace ARWNI2S.Infrastructure
 {
     /// <summary>
     /// Encapsulates a static access to genuine random number generators.
@@ -36,10 +36,9 @@ namespace ARWNI2S.Infrastructure.Extensions
         }
         static Randomizer()
         {
-            long qpf;
             int seed = 1234567890;
 
-            if (NativeMethods.QueryPerformanceCounter(out qpf))
+            if (NativeMethods.QueryPerformanceCounter(out long qpf))
             {
                 seed = (int)(qpf - (qpf >> 32 << 32));
             }

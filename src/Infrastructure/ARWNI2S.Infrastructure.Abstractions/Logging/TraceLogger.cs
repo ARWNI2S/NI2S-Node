@@ -19,36 +19,6 @@ namespace ARWNI2S.Infrastructure.Logging
     /// </summary>
     public class TraceLogger : Logger
     {
-        /// <summary>
-        /// The TraceLogger class distinguishes between five categories of loggers:
-        /// </summary>
-        public enum LoggerType
-        {
-            /// <summary>
-            /// Logs that are written by the NI2S Host. 
-            /// </summary>
-            Host,
-            /// <summary>
-            /// Logs that are written by the NI2S run-time itself.
-            /// This category should not be used by application code. 
-            /// </summary>
-            Runtime,
-            /// <summary>
-            /// Logs that are written by node entities.
-            /// This category should be used by code that runs as NI2S entities in a node. 
-            /// </summary>
-            NodeEntity,
-            /// <summary>
-            /// Logs that are written by the scene application.
-            /// This category should be used by node client-side application code. 
-            /// </summary>
-            Application,
-            /// <summary>
-            /// Logs that are written by the node providers.
-            /// This category should be used by node providers. 
-            /// </summary>
-            Provider
-        }
 
         #region Constants
 

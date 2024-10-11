@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace ARWNI2S.Node.Core.Configuration
+namespace ARWNI2S.Infrastructure.Configuration
 {
     /// <summary>
     /// Represents a configuration from app settings

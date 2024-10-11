@@ -6,27 +6,63 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Update="Resources\ErrorStrings.Designer.cs">
-      <DependentUpon>ErrorStrings.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="Resources\LocalizedStrings.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>LocalizedStrings.resx</DependentUpon>
-    </Compile>
+    <Compile Remove="Collections\**" />
+    <Compile Remove="Configuration\**" />
+    <Compile Remove="Logging\**" />
+    <Compile Remove="Telemetry\**" />
+    <Compile Remove="Timing\**" />
+    <Compile Remove="Utilities\**" />
+    <EmbeddedResource Remove="Collections\**" />
+    <EmbeddedResource Remove="Configuration\**" />
+    <EmbeddedResource Remove="Logging\**" />
+    <EmbeddedResource Remove="Telemetry\**" />
+    <EmbeddedResource Remove="Timing\**" />
+    <EmbeddedResource Remove="Utilities\**" />
+    <None Remove="Collections\**" />
+    <None Remove="Configuration\**" />
+    <None Remove="Logging\**" />
+    <None Remove="Telemetry\**" />
+    <None Remove="Timing\**" />
+    <None Remove="Utilities\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Resources\ErrorStrings.resx">
-      <LastGenOutput>ErrorStrings.Designer.cs</LastGenOutput>
-      <Generator>ResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Resources\LocalizedStrings.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>LocalizedStrings.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
+    <Compile Remove="Constants.cs" />
+    <Compile Remove="ExceptionExtensions.cs" />
+    <Compile Remove="HashHelper.cs" />
+    <Compile Remove="Interner.cs" />
+    <Compile Remove="InternerConstants.cs" />
+    <Compile Remove="Randomizer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="Resources\ErrorStrings.resx" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Collections\Generic\IPagedList.cs" />
+    <Compile Include="Collections\Sorting\ISorter.cs" />
+    <Compile Include="Collections\Sorting\ISwap.cs" />
+    <Compile Include="Configuration\IConfig.cs" />
+    <Compile Include="Configuration\ISettings.cs" />
+    <Compile Include="Configuration\ITraceConfiguration.cs" />
+    <Compile Include="Logging\ILogConsumer.cs" />
+    <Compile Include="Logging\LoggingEnums.cs" />
+    <Compile Include="Telemetry\IDependencyTelemetryConsumer.cs" />
+    <Compile Include="Telemetry\IEventTelemetryConsumer.cs" />
+    <Compile Include="Telemetry\IExceptionTelemetryConsumer.cs" />
+    <Compile Include="Telemetry\IMetricTelemetryConsumer.cs" />
+    <Compile Include="Telemetry\IRequestTelemetryConsumer.cs" />
+    <Compile Include="Telemetry\ITelemetryConsumer.cs" />
+    <Compile Include="Telemetry\ITraceTelemetryConsumer.cs" />
+    <Compile Include="Timing\ITimeInterval.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
+    <PackageReference Include="Microsoft.Extensions.FileProviders.Abstractions" />
+    <PackageReference Include="Newtonsoft.Json" />
   </ItemGroup>
 
 </Project>

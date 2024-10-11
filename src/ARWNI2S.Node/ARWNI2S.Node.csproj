@@ -10,9 +10,14 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" />
+    <PackageReference Include="Mono.Options" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ARWNI2S.Node.Hosting\ARWNI2S.Node.Hosting.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="App_Data\" />
   </ItemGroup>
 </Project>

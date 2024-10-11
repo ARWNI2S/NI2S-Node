@@ -245,10 +245,8 @@ namespace ARWNI2S.Infrastructure.Collections.Sorted
         /// <param name="valueComparer">An IComparer&lt;TValue&gt; instance that will be used to compare values.</param>
         public OrderedMultiDictionary(bool allowDuplicateValues, IComparer<TKey> keyComparer, IComparer<TValue> valueComparer)
         {
-            if (keyComparer == null)
-                throw new ArgumentNullException("keyComparer");
-            if (valueComparer == null)
-                throw new ArgumentNullException("valueComparer");
+            ArgumentNullException.ThrowIfNull(keyComparer);
+            ArgumentNullException.ThrowIfNull(valueComparer);
 
             _allowDuplicateValues = allowDuplicateValues;
             _keyComparer = keyComparer;
@@ -292,12 +290,11 @@ namespace ARWNI2S.Infrastructure.Collections.Sorted
         public sealed override void Add(TKey key, TValue value)
         {
             KeyValuePair<TKey, TValue> pair = NewPair(key, value);
-            KeyValuePair<TKey, TValue> dummy;
 
             if (!ContainsKey(key))
                 ++_keyCount;
 
-            _tree.Insert(pair, _allowDuplicateValues ? DuplicatePolicy.InsertLast : DuplicatePolicy.ReplaceLast, out dummy);
+            _tree.Insert(pair, _allowDuplicateValues ? DuplicatePolicy.InsertLast : DuplicatePolicy.ReplaceLast, out KeyValuePair<TKey, TValue> dummy);
         }
 
         /// <summary>
@@ -310,8 +307,7 @@ namespace ARWNI2S.Infrastructure.Collections.Sorted
         /// therefore removed). False if <paramref name="value"/> was not associated with <paramref name="key"/>.</returns>
         public sealed override bool Remove(TKey key, TValue value)
         {
-            KeyValuePair<TKey, TValue> dummy;
-            bool found = _tree.Delete(NewPair(key, value), false, out dummy);
+            bool found = _tree.Delete(NewPair(key, value), false, out KeyValuePair<TKey, TValue> dummy);
             if (found && !ContainsKey(key))
                 --_keyCount;  // Removed the last value associated with the key.
             return found;
@@ -417,8 +413,7 @@ namespace ARWNI2S.Infrastructure.Collections.Sorted
         /// <returns>True if <paramref name="value"/> is associated with <paramref name="key"/>.</returns>
         public sealed override bool Contains(TKey key, TValue value)
         {
-            KeyValuePair<TKey, TValue> dummy;
-            return _tree.Find(NewPair(key, value), true, false, out dummy);
+            return _tree.Find(NewPair(key, value), true, false, out KeyValuePair<TKey, TValue> dummy);
         }
 
         /// <summary>
@@ -430,8 +425,7 @@ namespace ARWNI2S.Infrastructure.Collections.Sorted
         /// one value associated with it. Returns false otherwise.</returns>
         public sealed override bool ContainsKey(TKey key)
         {
-            KeyValuePair<TKey, TValue> dummy;
-            return _tree.FirstItemInRange(KeyRange(key), out dummy) >= 0;
+            return _tree.FirstItemInRange(KeyRange(key), out KeyValuePair<TKey, TValue> dummy) >= 0;
         }
 
         /// <summary>
@@ -580,13 +574,12 @@ namespace ARWNI2S.Infrastructure.Collections.Sorted
         /// <exception cref="InvalidOperationException">TKey or TValue is a reference type that does not implement ICloneable.</exception>
         public OrderedMultiDictionary<TKey, TValue> CloneContents()
         {
-            bool keyIsValueType, valueIsValueType;
 
             // Make sure that TKey and TValue can be cloned.
-            if (!CollectionUtils.IsCloneableType(typeof(TKey), out keyIsValueType))
+            if (!CollectionUtils.IsCloneableType(typeof(TKey), out bool keyIsValueType))
                 NonCloneableType(typeof(TKey));
 
-            if (!CollectionUtils.IsCloneableType(typeof(TValue), out valueIsValueType))
+            if (!CollectionUtils.IsCloneableType(typeof(TValue), out bool valueIsValueType))
                 NonCloneableType(typeof(TValue));
 
             OrderedMultiDictionary<TKey, TValue> newDict = new OrderedMultiDictionary<TKey, TValue>(_allowDuplicateValues, _keyComparer, _valueComparer);
@@ -664,8 +657,7 @@ namespace ARWNI2S.Infrastructure.Collections.Sorted
 
             public override bool Contains(KeyValuePair<TKey, TValue> pair)
             {
-                KeyValuePair<TKey, TValue> dummy;
-                return _myDictionary._tree.Find(pair, true, false, out dummy);
+                return _myDictionary._tree.Find(pair, true, false, out KeyValuePair<TKey, TValue> dummy);
             }
         }
 

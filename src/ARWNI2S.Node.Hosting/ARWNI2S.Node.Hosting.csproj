@@ -6,7 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Hosting\Extensions\NodeHostBuilderExtensions.cs" />
+    <Compile Remove="Hosting\**" />
+    <Compile Remove="Plugins\**" />
+    <EmbeddedResource Remove="Hosting\**" />
+    <EmbeddedResource Remove="Plugins\**" />
+    <None Remove="Hosting\**" />
+    <None Remove="Plugins\**" />
   </ItemGroup>
   
   <ItemGroup>
