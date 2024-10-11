@@ -1,10 +1,10 @@
-﻿namespace ARWNI2S.Node.Core
+﻿namespace ARWNI2S.Infrastructure
 {
     /// <summary>
-    /// Represents errors that occur during application execution
+    /// Represents all ni2s errors
     /// </summary>
     [Serializable]
-    public partial class NI2SException : Exception
+    public abstract class NI2SException : Exception
     {
         /// <summary>
         /// Initializes a new instance of the Exception class.

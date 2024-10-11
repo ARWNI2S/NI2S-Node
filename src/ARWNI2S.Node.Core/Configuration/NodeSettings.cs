@@ -47,7 +47,7 @@ namespace ARWNI2S.Node.Core.Configuration
         public TConfig Get<TConfig>() where TConfig : class, IConfig
         {
             if (_configurations[typeof(TConfig)] is not TConfig config)
-                throw new NI2SException($"No configuration with type '{typeof(TConfig)}' found");
+                throw new NodeException($"No configuration with type '{typeof(TConfig)}' found");
 
             return config;
         }
