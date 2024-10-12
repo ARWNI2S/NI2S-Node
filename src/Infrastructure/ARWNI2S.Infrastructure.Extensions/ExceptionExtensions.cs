@@ -1,6 +1,6 @@
 ﻿namespace ARWNI2S.Infrastructure
 {
-    internal static class ExceptionExtensions
+    public static class ExceptionExtensions
     {
         /// <summary>
         /// 

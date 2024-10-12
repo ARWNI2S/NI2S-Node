@@ -15,9 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ARWNI2S.Node.Core\ARWNI2S.Node.Core.csproj" />
-    <ProjectReference Include="..\ARWNI2S.Node.Data\ARWNI2S.Node.Data.csproj" />
-    <ProjectReference Include="..\ARWNI2S.Node.Services\ARWNI2S.Node.Services.csproj" />
+    <ProjectReference Include="..\ARWNI2S.Node.Runtime\ARWNI2S.Node.Runtime.csproj" />
   </ItemGroup>
 
 
@@ -27,11 +25,15 @@
   <ItemGroup>
     <!-- We copy the entire \Node_Data directory. But we ignore JSON files and data protection keys  -->
     <Content Include="Node_Data\**" CopyToPublishDirectory="PreserveNewest" Exclude="Node_Data\*.json" />
+    <Content Remove="Framework\**" />
     <Content Remove="Node_Data\*.json" />
     <Content Update="Node_Data\DataProtectionKeys\*.xml" CopyToPublishDirectory="Never" />
+    <Compile Remove="Framework\**" />
     <Compile Remove="Modules\**" />
     <Content Remove="Modules\**" />
+    <EmbeddedResource Remove="Framework\**" />
     <EmbeddedResource Remove="Modules\**" />
+    <None Remove="Framework\**" />
     <None Remove="Modules\**" />
     <None Include="Modules\**" CopyToPublishDirectory="PreserveNewest" Exclude="Modules\**\runtimes\**;Modules\**\ref\**;Modules\**\*.pdb" />
     <!-- We copy the \Logs directory -->

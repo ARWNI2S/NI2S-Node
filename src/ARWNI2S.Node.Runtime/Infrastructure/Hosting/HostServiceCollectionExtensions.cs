@@ -1,12 +1,14 @@
 ﻿using ARWNI2S.Infrastructure;
 using ARWNI2S.Infrastructure.Configuration;
-using ARWNI2S.Node.Core;
 using ARWNI2S.Node.Core.Configuration;
 using ARWNI2S.Node.Core.Infrastructure;
 using ARWNI2S.Node.Services.Plugins;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using System.Net;
 
-namespace ARWNI2S.Node.Framework.Infrastructure.Hosting
+namespace ARWNI2S.Node.Runtime.Infrastructure.Hosting
 {
     /// <summary>
     /// Represents extensions of IServiceCollection

@@ -8,22 +8,21 @@
   <ItemGroup>
     <Compile Remove="Interop\IAppDomainManager.cs" />
     <Compile Remove="Logging\ILogConsumer.cs" />
-    <Compile Remove="Logging\Logger.cs" />
     <Compile Remove="Logging\LoggingEnums.cs" />
-    <Compile Remove="Logging\TraceCode.cs" />
-    <Compile Remove="Logging\TraceLogger.cs" />
-    <Compile Remove="Logging\TraceParserUtils.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Remove="Resources\ErrorStrings.resx" />
+    <Compile Remove="Timing\TimeSpanExtension.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ARWNI2S.Infrastructure.Abstractions\ARWNI2S.Infrastructure.Abstractions.csproj" />
+    <ProjectReference Include="..\ARWNI2S.Infrastructure.Extensions\ARWNI2S.Infrastructure.Extensions.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Resources\ErrorStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ErrorStrings.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\LocalizedStrings.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -32,6 +31,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="Resources\ErrorStrings.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ErrorStrings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Resources\LocalizedStrings.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>LocalizedStrings.Designer.cs</LastGenOutput>

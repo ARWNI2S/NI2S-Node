@@ -35,9 +35,9 @@
     <PackageVersion Include="Azure.Security.KeyVault.Secrets" Version="4.6.0" />
     <!-- Microsoft.Orleans packages -->
     <PackageVersion Include="Microsoft.Orleans.Core" Version="$(MicrosoftOrleansVersion)" />
-    <PackageVersion Include="Microsoft.Orleans.Core.Abstractions" Version="$(MicrosoftOrleansVersion)" />
+    <PackageVersion Include="Microsoft.Orleans.Core.Abstractions" Version="8.2.0" />
     <PackageVersion Include="Microsoft.Orleans.Sdk" Version="$(MicrosoftOrleansVersion)" />
-    <PackageVersion Include="Microsoft.Orleans.Server" Version="$(MicrosoftOrleansVersion)" />
+    <PackageVersion Include="Microsoft.Orleans.Server" Version="8.2.0" />
     <!-- Aspire -->
     <!--<PackageVersion Include="Aspire.Hosting.AppHost" Version="$(AspireVersion)" />
     <PackageVersion Include="Aspire.Hosting.Orleans" Version="$(AspireVersion)" />

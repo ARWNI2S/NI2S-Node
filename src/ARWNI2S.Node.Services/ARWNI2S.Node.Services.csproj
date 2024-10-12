@@ -49,9 +49,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="Logging\DefaultLogger.cs" />
+    <Compile Include="Logging\ILogService.cs" />
     <Compile Include="Plugins\IDescriptor.cs" />
     <Compile Include="Plugins\IModule.cs" />
+    <Compile Include="Plugins\IModuleService.cs" />
     <Compile Include="Plugins\IModulesInfo.cs" />
+    <Compile Include="Plugins\LoadModulesMode.cs" />
     <Compile Include="Plugins\ModuleDescriptor.cs" />
     <Compile Include="Plugins\ModuleDescriptorBaseInfo.cs" />
     <Compile Include="Plugins\ModuleIncompatibleType.cs" />
@@ -59,6 +63,7 @@
     <Compile Include="Plugins\ModuleServicesDefaults.cs" />
     <Compile Include="Plugins\ModulesInfo.cs" />
     <Compile Include="Plugins\NodeModuleManager.cs" />
+    <Compile Include="ScheduleTasks\ITaskScheduler.cs" />
   </ItemGroup>
 
   <ItemGroup>

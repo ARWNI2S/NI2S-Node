@@ -12,21 +12,18 @@
     <Compile Remove="Logging\**" />
     <Compile Remove="Telemetry\**" />
     <Compile Remove="Timing\**" />
-    <Compile Remove="Utilities\**" />
     <EmbeddedResource Remove="Collections\**" />
     <EmbeddedResource Remove="Configuration\**" />
     <EmbeddedResource Remove="Hosting\**" />
     <EmbeddedResource Remove="Logging\**" />
     <EmbeddedResource Remove="Telemetry\**" />
     <EmbeddedResource Remove="Timing\**" />
-    <EmbeddedResource Remove="Utilities\**" />
     <None Remove="Collections\**" />
     <None Remove="Configuration\**" />
     <None Remove="Hosting\**" />
     <None Remove="Logging\**" />
     <None Remove="Telemetry\**" />
     <None Remove="Timing\**" />
-    <None Remove="Utilities\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -36,10 +33,6 @@
     <Compile Remove="Interner.cs" />
     <Compile Remove="InternerConstants.cs" />
     <Compile Remove="Randomizer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Remove="Resources\ErrorStrings.resx" />
   </ItemGroup>
 
   <ItemGroup>

@@ -121,4 +121,79 @@
     <value>Exception = </value>
     <comment>Exception'space'='space'</comment>
   </data>
+  <data name="TraceLogger_Assert_FailMessage" xml:space="preserve">
+    <value>Assert failed with message = </value>
+  </data>
+  <data name="TraceLogger_Assert_Message" xml:space="preserve">
+    <value>Internal contract assertion has failed!</value>
+  </data>
+  <data name="TraceLogger_CheckBulkMessageLimits_Format" xml:space="preserve">
+    <value>Log code {0} occurred {1} additional time{2} in the previous {3}</value>
+  </data>
+  <data name="TraceLogger_ConfigDataMissing" xml:space="preserve">
+    <value>No logger config data provided.</value>
+  </data>
+  <data name="TraceLogger_Fail_ErrorMessage" xml:space="preserve">
+    <value>INTERNAL FAILURE! About to crash! Fail message is: </value>
+  </data>
+  <data name="TraceLogger_Fail_Message" xml:space="preserve">
+    <value>Internal Fail!</value>
+  </data>
+  <data name="TraceLogger_Fail_UnrecoverableMessage" xml:space="preserve">
+    <value>Unrecoverable failure: </value>
+  </data>
+  <data name="TraceLogger_Initialize_ArgumentNullException" xml:space="preserve">
+    <value>No logger config data provided.</value>
+  </data>
+  <data name="TraceLogger_LogWithoutBulkingAndTruncating_Format" xml:space="preserve">
+    <value>CHUNKED MESSAGE Part {0}: {1}</value>
+    <comment>{0} - partNum, {1} - message.Substring(startIndex, chunkSize)</comment>
+  </data>
+  <data name="TraceLogger_PrintException_Helper_NoExceptionsMesage" xml:space="preserve">
+    <value>No LoaderExceptions found</value>
+  </data>
+  <data name="TraceLogger_PrintOneException_Format" xml:space="preserve">
+    <value>Exc level {0}: {1}: {2}{3}</value>
+  </data>
+  <data name="TraceLogger_WriteLogMessage_ExceptionFormat" xml:space="preserve">
+    <value>"Exception while passing a log message to log consumer. TraceLogger type:{0}, name:{1}, severity:{2}, message:{3}, error code:{4}, message exception:{5}, log consumer exception:{6}"</value>
+    <comment>{0} - consumer.GetType().FullName, {1} - logName, {2} - sev, {3} - message, {4} - errorCode, {5} - exception, {6} - exc</comment>
+  </data>
+  <data name="TraceLogger_WriteLogMessage_MessageTruncatedText" xml:space="preserve">
+    <value>Previous log message was truncated - Max size = </value>
+    <comment>Max size'space'='space'</comment>
+  </data>
+  <data name="TimerAfterCallbackAsync" xml:space="preserve">
+    <value>Completed async task timer callback for timer {0}</value>
+  </data>
+  <data name="TimerAfterCallbackSync" xml:space="preserve">
+    <value>Completed sync timer callback for timer {0}</value>
+  </data>
+  <data name="TimerBeforeCallback" xml:space="preserve">
+    <value>About to make task timer callback for timer {0}</value>
+  </data>
+  <data name="TimerBeforeCallbackAsync" xml:space="preserve">
+    <value>About to make async task timer callback for timer {0}</value>
+  </data>
+  <data name="TimerBeforeCallbackSync" xml:space="preserve">
+    <value>About to make sync timer callback for timer {0}</value>
+  </data>
+  <data name="TimerChanging" xml:space="preserve">
+    <value>Changing timer {0} to dueTime={1} period={2}</value>
+  </data>
+  <data name="TimerChanging_Creating" xml:space="preserve">
+    <value>Creating timer {0} with dueTime={1} period={2}</value>
+  </data>
+  <data name="TimerChanging_Queue" xml:space="preserve">
+    <value>About to QueueNextTimerTick for timer {0}</value>
+  </data>
+  <data name="TimerNextTick" xml:space="preserve">
+    <value>Queued next tick for timer {0} in {1}</value>
+  </data>
+  <data name="TimerStopped" xml:space="preserve">
+    <value>Timer {0} is now stopped and disposed</value>
+  </data>
+  <data name="Logger_LogMessageTruncated_Format" xml:space="preserve">
+    <value>"{0}. MESSAGE TRUNCATED AT THIS POINT!! Max message size = {1}"</value>
+  </data>
 </root>

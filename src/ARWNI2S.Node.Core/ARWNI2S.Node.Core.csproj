@@ -29,8 +29,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="INodeHelper.cs" />
     <Compile Remove="IServerContext.cs" />
+    <Compile Remove="IWebHelper.cs" />
     <Compile Remove="IWorkContext.cs" />
     <Compile Remove="NI2SVersion.cs" />
   </ItemGroup>
@@ -71,6 +71,15 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Infrastructure\ARWNI2S.Infrastructure\ARWNI2S.Infrastructure.csproj" />
+  </ItemGroup>
+
+
+
+
+
+
+  <ItemGroup>
+    <Folder Include="Common\" />
   </ItemGroup>
 
 </Project>

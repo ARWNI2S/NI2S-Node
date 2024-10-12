@@ -1,4 +1,6 @@
-﻿namespace ARWNI2S.Node.Data.Entities.Logging
+﻿using ARWNI2S.Infrastructure.Logging;
+
+namespace ARWNI2S.Node.Data.Entities.Logging
 {
     /// <summary>
     /// Represents a log record

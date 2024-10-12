@@ -11,51 +11,51 @@ namespace ARWNI2S.Infrastructure.Utilities
     /// </summary>
     public static class Utils
     {
-        /// <summary>
-        /// Returns a human-readable text string that describes an IEnumerable collection of objects.
-        /// </summary>
-        /// <typeparam name="T">The type of the list elements.</typeparam>
-        /// <param name="collection">The IEnumerable to describe.</param>
-        /// <param name="toString"></param>
-        /// <param name="separator"></param>
-        /// <param name="putInBrackets"></param>
-        /// <returns>A string assembled by wrapping the string descriptions of the individual
-        /// elements with square brackets and separating them with commas.</returns>
-        public static string EnumerableToString<T>(IEnumerable<T> collection, Func<T, string> toString = null,
-                                                        string separator = ", ", bool putInBrackets = true)
-        {
-            if (collection == null)
-            {
-                if (putInBrackets) return "[]";
-                else return "null";
-            }
-            var sb = new StringBuilder();
-            if (putInBrackets) sb.Append("[");
-            var enumerator = collection.GetEnumerator();
-            bool firstDone = false;
-            while (enumerator.MoveNext())
-            {
-                T value = enumerator.Current;
-                string val;
-                if (toString != null)
-                    val = toString(value);
-                else
-                    val = value == null ? "null" : value.ToString();
+        ///// <summary>
+        ///// Returns a human-readable text string that describes an IEnumerable collection of objects.
+        ///// </summary>
+        ///// <typeparam name="T">The type of the list elements.</typeparam>
+        ///// <param name="collection">The IEnumerable to describe.</param>
+        ///// <param name="toString"></param>
+        ///// <param name="separator"></param>
+        ///// <param name="putInBrackets"></param>
+        ///// <returns>A string assembled by wrapping the string descriptions of the individual
+        ///// elements with square brackets and separating them with commas.</returns>
+        //public static string EnumerableToString<T>(IEnumerable<T> collection, Func<T, string> toString = null,
+        //                                                string separator = ", ", bool putInBrackets = true)
+        //{
+        //    if (collection == null)
+        //    {
+        //        if (putInBrackets) return "[]";
+        //        else return "null";
+        //    }
+        //    var sb = new StringBuilder();
+        //    if (putInBrackets) sb.Append("[");
+        //    var enumerator = collection.GetEnumerator();
+        //    bool firstDone = false;
+        //    while (enumerator.MoveNext())
+        //    {
+        //        T value = enumerator.Current;
+        //        string val;
+        //        if (toString != null)
+        //            val = toString(value);
+        //        else
+        //            val = value == null ? "null" : value.ToString();
 
-                if (firstDone)
-                {
-                    sb.Append(separator);
-                    sb.Append(val);
-                }
-                else
-                {
-                    sb.Append(val);
-                    firstDone = true;
-                }
-            }
-            if (putInBrackets) sb.Append("]");
-            return sb.ToString();
-        }
+        //        if (firstDone)
+        //        {
+        //            sb.Append(separator);
+        //            sb.Append(val);
+        //        }
+        //        else
+        //        {
+        //            sb.Append(val);
+        //            firstDone = true;
+        //        }
+        //    }
+        //    if (putInBrackets) sb.Append("]");
+        //    return sb.ToString();
+        //}
 
         /// <summary>
         /// Returns a human-readable text string that describes a dictionary that maps objects to objects.
@@ -227,7 +227,7 @@ namespace ARWNI2S.Infrastructure.Utilities
         /// <summary>
         /// 
         /// </summary>
-        public static void SafeExecute(Action action, Logger logger = null, string caller = null)
+        public static void SafeExecute(Action action, NI2SLogger logger = null, string caller = null)
         {
             SafeExecute(action, logger, caller == null ? (Func<string>)null : () => caller);
         }
@@ -237,7 +237,7 @@ namespace ARWNI2S.Infrastructure.Utilities
         /// callerGetter function is called only in faulty case (now string is generated in the success case).
         /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
-        public static void SafeExecute(Action action, Logger logger, Func<string> callerGetter)
+        public static void SafeExecute(Action action, NI2SLogger logger, Func<string> callerGetter)
         {
             try
             {

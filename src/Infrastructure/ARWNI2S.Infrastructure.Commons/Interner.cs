@@ -41,7 +41,7 @@ namespace ARWNI2S.Infrastructure
 
             int concurrencyLevel = Environment.ProcessorCount * 4; // Default from ConcurrentDictionary class in .NET 4.0
 
-            _logger = TraceLogger.GetLogger(_internCacheName, TraceLogger.LoggerType.Runtime);
+            _logger = TraceLogger.GetLogger(_internCacheName, LoggerType.Runtime);
 
             internCache = new ConcurrentDictionary<K, WeakReference>(concurrencyLevel, initialSize);
 

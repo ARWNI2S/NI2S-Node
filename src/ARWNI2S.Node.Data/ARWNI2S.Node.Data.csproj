@@ -19,6 +19,9 @@
   <ItemGroup>
     <Compile Include="Entities\BaseDataEntity.cs" />
     <Compile Include="Entities\ISoftDeletedEntity.cs" />
+    <Compile Include="Entities\Logging\ActivityLog.cs" />
+    <Compile Include="Entities\Logging\ActivityLogType.cs" />
+    <Compile Include="Entities\Logging\Log.cs" />
     <Compile Include="Mapping\BaseNameCompatibility.cs" />
     <Compile Include="Mapping\Builders\IEntityBuilder.cs" />
     <Compile Include="Mapping\Builders\ServerEntityBuilder.cs" />

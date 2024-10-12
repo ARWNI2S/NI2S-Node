@@ -1,6 +1,6 @@
 ﻿using ARWNI2S.Infrastructure.Configuration;
 
-namespace ARWNI2S.Node.Data.Entities.Common
+namespace ARWNI2S.Node.Core.Common
 {
     /// <summary>
     /// Common settings

@@ -1,6 +1,6 @@
-﻿using ARWNI2S.Node.Data.Entities.Users;
+﻿using ARWNI2S.Infrastructure.Entities;
 
-namespace ARWNI2S.Node.Data.Services.Plugins
+namespace ARWNI2S.Node.Services.Plugins
 {
     /// <summary>
     /// Represents a module service
@@ -23,7 +23,7 @@ namespace ARWNI2S.Node.Data.Services.Plugins
         /// The task result contains the module descriptors
         /// </returns>
         Task<IList<ModuleDescriptor>> GetModuleDescriptorsAsync<TModule>(LoadModulesMode loadMode = LoadModulesMode.InstalledOnly,
-            User user = null, int serverId = 0, string group = null, string dependsOnSystemName = "", string friendlyName = null, string author = null) where TModule : class, IModule;
+            INI2SUser user = null, int serverId = 0, string group = null, string dependsOnSystemName = "", string friendlyName = null, string author = null) where TModule : class, IModule;
 
         /// <summary>
         /// Get a module descriptor by the system name
@@ -40,7 +40,7 @@ namespace ARWNI2S.Node.Data.Services.Plugins
         /// </returns>
         Task<ModuleDescriptor> GetModuleDescriptorBySystemNameAsync<TModule>(string systemName,
             LoadModulesMode loadMode = LoadModulesMode.InstalledOnly,
-            User user = null, int serverId = 0, string group = null) where TModule : class, IModule;
+            INI2SUser user = null, int serverId = 0, string group = null) where TModule : class, IModule;
 
         /// <summary>
         /// Get modules
@@ -55,7 +55,7 @@ namespace ARWNI2S.Node.Data.Services.Plugins
         /// The task result contains the modules
         /// </returns>
         Task<IList<TModule>> GetModulesAsync<TModule>(LoadModulesMode loadMode = LoadModulesMode.InstalledOnly,
-            User user = null, int serverId = 0, string group = null) where TModule : class, IModule;
+            INI2SUser user = null, int serverId = 0, string group = null) where TModule : class, IModule;
 
         /// <summary>
         /// Find a module by the type which is located into the same assembly as a module
@@ -81,7 +81,7 @@ namespace ARWNI2S.Node.Data.Services.Plugins
         /// <param name="user">User</param>
         /// <param name="checkDependencies">Specifies whether to check module dependencies</param>
         /// <returns>A task that represents the asynchronous operation</returns>
-        Task PrepareModuleToInstallAsync(string systemName, User user = null, bool checkDependencies = true);
+        Task PrepareModuleToInstallAsync(string systemName, INI2SUser user = null, bool checkDependencies = true);
 
         /// <summary>
         /// Prepare module to the uninstallation

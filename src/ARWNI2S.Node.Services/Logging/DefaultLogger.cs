@@ -1,38 +1,20 @@
-﻿
-using ARWNI2S.Infrastructure.Abstractions.Collections.Generic;
+﻿using ARWNI2S.Infrastructure.Collections.Generic;
+using ARWNI2S.Infrastructure.Entities;
+using ARWNI2S.Infrastructure.Logging;
 using ARWNI2S.Node.Core;
-using ARWNI2S.Node.Data.Entities.Common;
+using ARWNI2S.Node.Core.Common;
+using ARWNI2S.Node.Data;
 using ARWNI2S.Node.Data.Entities.Logging;
-using ARWNI2S.Node.Data.Entities.Users;
 
-namespace ARWNI2S.Node.Data.Services.Logging
+namespace ARWNI2S.Node.Services.Logging
 {
     /// <summary>
     /// Default logger
     /// </summary>
-    public partial class DefaultLogger : ILogger
+    public partial class DefaultLogger(CommonSettings commonSettings,
+        IRepository<Log> logRepository,
+        INodeHelper nodeHelper) : ILogService
     {
-        #region Fields
-
-        private readonly CommonSettings _commonSettings;
-
-        private readonly IRepository<Log> _logRepository;
-        private readonly IWebHelper _webHelper;
-
-        #endregion
-
-        #region Ctor
-
-        public DefaultLogger(CommonSettings commonSettings,
-            IRepository<Log> logRepository,
-            IWebHelper webHelper)
-        {
-            _commonSettings = commonSettings;
-            _logRepository = logRepository;
-            _webHelper = webHelper;
-        }
-
-        #endregion
 
         #region Utilities
 
@@ -43,13 +25,13 @@ namespace ARWNI2S.Node.Data.Services.Logging
         /// <returns>Result</returns>
         protected virtual bool IgnoreLog(string message)
         {
-            if (_commonSettings.IgnoreLogWordlist.Count == 0)
+            if (commonSettings.IgnoreLogWordlist.Count == 0)
                 return false;
 
             if (string.IsNullOrWhiteSpace(message))
                 return false;
 
-            return _commonSettings
+            return commonSettings
                 .IgnoreLogWordlist
                 .Any(x => message.Contains(x, StringComparison.InvariantCultureIgnoreCase));
         }
@@ -67,7 +49,7 @@ namespace ARWNI2S.Node.Data.Services.Logging
         {
             return level switch
             {
-                LogLevel.Debug => false,
+                LogLevel.Verbose or LogLevel.Verbose2 or LogLevel.Verbose3 => false,
                 _ => true,
             };
         }
@@ -81,7 +63,7 @@ namespace ARWNI2S.Node.Data.Services.Logging
         {
             ArgumentNullException.ThrowIfNull(log);
 
-            await _logRepository.DeleteAsync(log, false);
+            await logRepository.DeleteAsync(log, false);
         }
 
         /// <summary>
@@ -91,7 +73,7 @@ namespace ARWNI2S.Node.Data.Services.Logging
         /// <returns>A task that represents the asynchronous operation</returns>
         public virtual async Task DeleteLogsAsync(IList<Log> logs)
         {
-            await _logRepository.DeleteAsync(logs, false);
+            await logRepository.DeleteAsync(logs, false);
         }
 
         /// <summary>
@@ -102,9 +84,9 @@ namespace ARWNI2S.Node.Data.Services.Logging
         public virtual async Task ClearLogAsync(DateTime? olderThan = null)
         {
             if (olderThan == null)
-                await _logRepository.TruncateAsync();
+                await logRepository.TruncateAsync();
             else
-                await _logRepository.DeleteAsync(p => p.CreatedOnUtc < olderThan.Value);
+                await logRepository.DeleteAsync(p => p.CreatedOnUtc < olderThan.Value);
         }
 
         /// <summary>
@@ -124,7 +106,7 @@ namespace ARWNI2S.Node.Data.Services.Logging
             string message = "", LogLevel? logLevel = null,
             int pageIndex = 0, int pageSize = int.MaxValue)
         {
-            var logs = await _logRepository.GetAllPagedAsync(query =>
+            var logs = await logRepository.GetAllPagedAsync(query =>
             {
                 if (fromUtc.HasValue)
                     query = query.Where(l => fromUtc.Value <= l.CreatedOnUtc);
@@ -156,7 +138,7 @@ namespace ARWNI2S.Node.Data.Services.Logging
         /// </returns>
         public virtual async Task<Log> GetLogByIdAsync(int logId)
         {
-            return await _logRepository.GetByIdAsync(logId);
+            return await logRepository.GetByIdAsync(logId);
         }
 
         /// <summary>
@@ -169,7 +151,7 @@ namespace ARWNI2S.Node.Data.Services.Logging
         /// </returns>
         public virtual async Task<IList<Log>> GetLogByIdsAsync(int[] logIds)
         {
-            return await _logRepository.GetByIdsAsync(logIds);
+            return await logRepository.GetByIdsAsync(logIds);
         }
 
         /// <summary>
@@ -183,7 +165,7 @@ namespace ARWNI2S.Node.Data.Services.Logging
         /// A task that represents the asynchronous operation
         /// The task result contains a log item
         /// </returns>
-        public virtual async Task<Log> InsertLogAsync(LogLevel logLevel, string shortMessage, string fullMessage = "", User user = null)
+        public virtual async Task<Log> InsertLogAsync(LogLevel logLevel, string shortMessage, string fullMessage = "", INI2SUser user = null)
         {
             //check ignore word/phrase list?
             if (IgnoreLog(shortMessage) || IgnoreLog(fullMessage))
@@ -194,12 +176,12 @@ namespace ARWNI2S.Node.Data.Services.Logging
                 LogLevel = logLevel,
                 ShortMessage = shortMessage,
                 FullMessage = fullMessage,
-                IpAddress = _webHelper.GetCurrentIpAddress(),
+                IpAddress = nodeHelper.GetCurrentIpAddress(),
                 UserId = user?.Id,
                 CreatedOnUtc = DateTime.UtcNow
             };
 
-            await _logRepository.InsertAsync(log, false);
+            await logRepository.InsertAsync(log, false);
 
             return log;
         }
@@ -214,7 +196,7 @@ namespace ARWNI2S.Node.Data.Services.Logging
         /// <returns>
         /// Log item
         /// </returns>
-        public virtual Log InsertLog(LogLevel logLevel, string shortMessage, string fullMessage = "", User user = null)
+        public virtual Log InsertLog(LogLevel logLevel, string shortMessage, string fullMessage = "", INI2SUser user = null)
         {
             //check ignore word/phrase list?
             if (IgnoreLog(shortMessage) || IgnoreLog(fullMessage))
@@ -225,12 +207,12 @@ namespace ARWNI2S.Node.Data.Services.Logging
                 LogLevel = logLevel,
                 ShortMessage = shortMessage,
                 FullMessage = fullMessage,
-                IpAddress = _webHelper.GetCurrentIpAddress(),
+                IpAddress = nodeHelper.GetCurrentIpAddress(),
                 UserId = user?.Id,
                 CreatedOnUtc = DateTime.UtcNow
             };
 
-            _logRepository.Insert(log, false);
+            logRepository.Insert(log, false);
 
             return log;
         }
@@ -242,14 +224,14 @@ namespace ARWNI2S.Node.Data.Services.Logging
         /// <param name="exception">Exception</param>
         /// <param name="user">User</param>
         /// <returns>A task that represents the asynchronous operation</returns>
-        public virtual async Task InformationAsync(string message, Exception exception = null, User user = null)
+        public virtual async Task InformationAsync(string message, Exception exception = null, INI2SUser user = null)
         {
             //don't log thread abort exception
             if (exception is ThreadAbortException)
                 return;
 
-            if (IsEnabled(LogLevel.Information))
-                await InsertLogAsync(LogLevel.Information, message, exception?.ToString() ?? string.Empty, user);
+            if (IsEnabled(LogLevel.Info))
+                await InsertLogAsync(LogLevel.Info, message, exception?.ToString() ?? string.Empty, user);
         }
 
         /// <summary>
@@ -258,14 +240,14 @@ namespace ARWNI2S.Node.Data.Services.Logging
         /// <param name="message">Message</param>
         /// <param name="exception">Exception</param>
         /// <param name="user">User</param>
-        public virtual void Information(string message, Exception exception = null, User user = null)
+        public virtual void Information(string message, Exception exception = null, INI2SUser user = null)
         {
             //don't log thread abort exception
             if (exception is ThreadAbortException)
                 return;
 
-            if (IsEnabled(LogLevel.Information))
-                InsertLog(LogLevel.Information, message, exception?.ToString() ?? string.Empty, user);
+            if (IsEnabled(LogLevel.Info))
+                InsertLog(LogLevel.Info, message, exception?.ToString() ?? string.Empty, user);
         }
 
         /// <summary>
@@ -275,7 +257,7 @@ namespace ARWNI2S.Node.Data.Services.Logging
         /// <param name="exception">Exception</param>
         /// <param name="user">User</param>
         /// <returns>A task that represents the asynchronous operation</returns>
-        public virtual async Task WarningAsync(string message, Exception exception = null, User user = null)
+        public virtual async Task WarningAsync(string message, Exception exception = null, INI2SUser user = null)
         {
             //don't log thread abort exception
             if (exception is ThreadAbortException)
@@ -291,7 +273,7 @@ namespace ARWNI2S.Node.Data.Services.Logging
         /// <param name="message">Message</param>
         /// <param name="exception">Exception</param>
         /// <param name="user">User</param>
-        public virtual void Warning(string message, Exception exception = null, User user = null)
+        public virtual void Warning(string message, Exception exception = null, INI2SUser user = null)
         {
             //don't log thread abort exception
             if (exception is ThreadAbortException)
@@ -308,7 +290,7 @@ namespace ARWNI2S.Node.Data.Services.Logging
         /// <param name="exception">Exception</param>
         /// <param name="user">User</param>
         /// <returns>A task that represents the asynchronous operation</returns>
-        public virtual async Task ErrorAsync(string message, Exception exception = null, User user = null)
+        public virtual async Task ErrorAsync(string message, Exception exception = null, INI2SUser user = null)
         {
             //don't log thread abort exception
             if (exception is ThreadAbortException)
@@ -324,7 +306,7 @@ namespace ARWNI2S.Node.Data.Services.Logging
         /// <param name="message">Message</param>
         /// <param name="exception">Exception</param>
         /// <param name="user">User</param>
-        public virtual void Error(string message, Exception exception = null, User user = null)
+        public virtual void Error(string message, Exception exception = null, INI2SUser user = null)
         {
             //don't log thread abort exception
             if (exception is ThreadAbortException)

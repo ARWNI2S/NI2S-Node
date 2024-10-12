@@ -1,6 +1,6 @@
 using ARWNI2S.Node.Core.Configuration;
 using ARWNI2S.Node.Core.Infrastructure;
-using ARWNI2S.Node.Framework.Infrastructure.Hosting;
+using ARWNI2S.Node.Runtime.Infrastructure.Hosting;
 using Autofac.Extensions.DependencyInjection;
 //using ARWNI2S.Node.Hosting.Extensions;
 
@@ -62,6 +62,9 @@ namespace ARWNI2S.Node
 
             // Construir y ejecutar el host
             var host = builder.Build();
+
+            //await host.StartEngineAsync();
+
             await host.RunAsync();
         }
             //static void Main(string[] args)

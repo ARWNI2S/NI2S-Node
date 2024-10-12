@@ -17,7 +17,7 @@ namespace ARWNI2S.Infrastructure.Logging
     /// The TraceLogger class is a convenient wrapper around the .Net Trace class.
     /// It provides more flexible configuration than the Trace class.
     /// </summary>
-    public class TraceLogger : Logger
+    public class TraceLogger : NI2SLogger
     {
 
         #region Constants

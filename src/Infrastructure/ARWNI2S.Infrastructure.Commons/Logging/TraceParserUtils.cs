@@ -47,7 +47,7 @@ namespace ARWNI2S.Infrastructure.Logging
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         public static string FormatLogMessage(
             LogLevel severity,
-            TraceLogger.LoggerType loggerType,
+            LoggerType loggerType,
             string caller,
             string message,
             IPEndPoint myIPEndPoint,
@@ -81,7 +81,7 @@ namespace ARWNI2S.Infrastructure.Logging
         public static string FormatLogMessage(
             DateTime timestamp,
             LogLevel severity,
-            TraceLogger.LoggerType loggerType,
+            LoggerType loggerType,
             string caller,
             string message,
             IPEndPoint myIPEndPoint,
@@ -94,7 +94,7 @@ namespace ARWNI2S.Infrastructure.Logging
         private static string FormatLogMessage_Impl(
             DateTime timestamp,
             LogLevel severity,
-            TraceLogger.LoggerType loggerType,
+            LoggerType loggerType,
             string caller,
             string message,
             IPEndPoint myIPEndPoint,
@@ -106,7 +106,7 @@ namespace ARWNI2S.Infrastructure.Logging
                 message = "!!!!!!!!!! " + message;
 
             string ip = myIPEndPoint == null ? string.Empty : myIPEndPoint.ToString();
-            if (loggerType.Equals(TraceLogger.LoggerType.NodeEntity))
+            if (loggerType.Equals(LoggerType.NodeEntity))
             {
                 // Entity identifies itself, so I don't want an additional long string in the prefix.
                 // This is just a temporal solution to ease the dev. process, can remove later.

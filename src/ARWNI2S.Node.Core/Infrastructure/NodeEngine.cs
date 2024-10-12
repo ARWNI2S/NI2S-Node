@@ -22,10 +22,10 @@ namespace ARWNI2S.Node.Core.Infrastructure
         {
             if (scope == null)
             {
-                // TODO CHECK THAT
-                //var accessor = ServiceProvider?.GetService<IHttpContextAccessor>();
-                //var context = accessor?.HttpContext;
-                //return context?.RequestServices ?? ServiceProvider;
+                //var accessor = ServiceProvider?.GetService<IContextAccessor>();
+                //var context = accessor?.CurrentContext;
+                //return context?.ContextServices ?? ServiceProvider;
+                return ServiceProvider;
             }
             return scope.ServiceProvider;
         }

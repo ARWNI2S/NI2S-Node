@@ -1,13 +1,14 @@
-﻿using ARWNI2S.Infrastructure.Abstractions.Collections.Generic;
+﻿using ARWNI2S.Infrastructure.Collections.Generic;
+using ARWNI2S.Infrastructure.Entities;
+using ARWNI2S.Infrastructure.Logging;
 using ARWNI2S.Node.Data.Entities.Logging;
-using ARWNI2S.Node.Data.Entities.Users;
 
-namespace ARWNI2S.Node.Data.Services.Logging
+namespace ARWNI2S.Node.Services.Logging
 {
     /// <summary>
     /// Logger interface
     /// </summary>
-    public partial interface ILogger
+    public partial interface ILogService
     {
         /// <summary>
         /// Determines whether a log level is enabled
@@ -85,7 +86,7 @@ namespace ARWNI2S.Node.Data.Services.Logging
         /// A task that represents the asynchronous operation
         /// The task result contains a log item
         /// </returns>
-        Task<Log> InsertLogAsync(LogLevel logLevel, string shortMessage, string fullMessage = "", User user = null);
+        Task<Log> InsertLogAsync(LogLevel logLevel, string shortMessage, string fullMessage = "", INI2SUser user = null);
 
         /// <summary>
         /// Inserts a log item
@@ -97,7 +98,7 @@ namespace ARWNI2S.Node.Data.Services.Logging
         /// <returns>
         /// Log item
         /// </returns>
-        Log InsertLog(LogLevel logLevel, string shortMessage, string fullMessage = "", User user = null);
+        Log InsertLog(LogLevel logLevel, string shortMessage, string fullMessage = "", INI2SUser user = null);
 
         /// <summary>
         /// Information
@@ -106,7 +107,7 @@ namespace ARWNI2S.Node.Data.Services.Logging
         /// <param name="exception">Exception</param>
         /// <param name="user">User</param>
         /// <returns>A task that represents the asynchronous operation</returns>
-        Task InformationAsync(string message, Exception exception = null, User user = null);
+        Task InformationAsync(string message, Exception exception = null, INI2SUser user = null);
 
         /// <summary>
         /// Information
@@ -114,7 +115,7 @@ namespace ARWNI2S.Node.Data.Services.Logging
         /// <param name="message">Message</param>
         /// <param name="exception">Exception</param>
         /// <param name="user">User</param>
-        void Information(string message, Exception exception = null, User user = null);
+        void Information(string message, Exception exception = null, INI2SUser user = null);
 
         /// <summary>
         /// Warning
@@ -123,7 +124,7 @@ namespace ARWNI2S.Node.Data.Services.Logging
         /// <param name="exception">Exception</param>
         /// <param name="user">User</param>
         /// <returns>A task that represents the asynchronous operation</returns>
-        Task WarningAsync(string message, Exception exception = null, User user = null);
+        Task WarningAsync(string message, Exception exception = null, INI2SUser user = null);
 
         /// <summary>
         /// Warning
@@ -131,7 +132,7 @@ namespace ARWNI2S.Node.Data.Services.Logging
         /// <param name="message">Message</param>
         /// <param name="exception">Exception</param>
         /// <param name="user">User</param>
-        void Warning(string message, Exception exception = null, User user = null);
+        void Warning(string message, Exception exception = null, INI2SUser user = null);
 
         /// <summary>
         /// Error
@@ -140,7 +141,7 @@ namespace ARWNI2S.Node.Data.Services.Logging
         /// <param name="exception">Exception</param>
         /// <param name="user">User</param>
         /// <returns>A task that represents the asynchronous operation</returns>
-        Task ErrorAsync(string message, Exception exception = null, User user = null);
+        Task ErrorAsync(string message, Exception exception = null, INI2SUser user = null);
 
         /// <summary>
         /// Error
@@ -148,6 +149,6 @@ namespace ARWNI2S.Node.Data.Services.Logging
         /// <param name="message">Message</param>
         /// <param name="exception">Exception</param>
         /// <param name="user">User</param>
-        void Error(string message, Exception exception = null, User user = null);
+        void Error(string message, Exception exception = null, INI2SUser user = null);
     }
 }
