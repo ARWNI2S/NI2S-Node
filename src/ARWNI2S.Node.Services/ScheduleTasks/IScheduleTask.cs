@@ -1,4 +1,4 @@
-﻿namespace ARWNI2S.Node.Data.Services.ScheduleTasks
+﻿namespace ARWNI2S.Node.Services.ScheduleTasks
 {
     /// <summary>
     /// Interface that should be implemented by each task

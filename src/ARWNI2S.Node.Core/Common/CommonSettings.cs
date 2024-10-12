@@ -66,7 +66,7 @@ namespace ARWNI2S.Node.Core.Common
 
         /// <summary>
         /// Gets or sets a value indicating whether to compress response (gzip by default). 
-        /// You may want to disable it, for example, If you have an active IIS Dynamic Compression Module configured at the server level
+        /// You may want to disable it, for example, If you have an active IIS Dynamic Compression Module configured at the node level
         /// </summary>
         public bool UseResponseCompression { get; set; }
 

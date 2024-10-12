@@ -1,6 +1,6 @@
 ﻿using System.Xml;
 
-namespace ARWNI2S.Node.Data.Services.ExportImport
+namespace ARWNI2S.Node.Services.ExportImport
 {
     /// <summary>
     /// Extensions

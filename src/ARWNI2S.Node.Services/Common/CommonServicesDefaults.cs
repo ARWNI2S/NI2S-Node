@@ -1,6 +1,6 @@
 ﻿using ARWNI2S.Node.Core.Caching;
 
-namespace ARWNI2S.Node.Data.Services.Common
+namespace ARWNI2S.Node.Services.Common
 {
     /// <summary>
     /// Represents default values related to common services

@@ -57,7 +57,7 @@ namespace ARWNI2S.Node.Data.DataProviders
         {
             ArgumentNullException.ThrowIfNull(dataProvider);
 
-            var dataConnection = new DataConnection(dataProvider, CreateDbConnection(), NodeMappingSchema.GetMappingSchema(ConfigurationName))
+            var dataConnection = new DataConnection(dataProvider, CreateDbConnection(), NI2SDataMappingSchema.GetMappingSchema(ConfigurationName))
             {
                 CommandTimeout = DataSettingsManager.GetSqlCommandTimeout()
             };
@@ -103,7 +103,7 @@ namespace ARWNI2S.Node.Data.DataProviders
         {
             var migrationManager = EngineContext.Current.Resolve<IMigrationManager>();
 
-            var targetAssembly = typeof(ServerDbStartup).Assembly;
+            var targetAssembly = typeof(NI2SNodeDbStartup).Assembly;
             migrationManager.ApplyUpMigrations(targetAssembly);
 
             var typeFinder = Singleton<ITypeFinder>.Instance;
@@ -181,7 +181,7 @@ namespace ARWNI2S.Node.Data.DataProviders
         {
             var options = new DataOptions()
                 .UseConnectionString(LinqToDbDataProvider, GetCurrentConnectionString())
-                .UseMappingSchema(NodeMappingSchema.GetMappingSchema(ConfigurationName));
+                .UseMappingSchema(NI2SDataMappingSchema.GetMappingSchema(ConfigurationName));
 
             return new DataContext(options)
             {

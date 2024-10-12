@@ -10,7 +10,7 @@
         /// <summary>
         /// Gets data provider
         /// </summary>
-        IServerDataProvider DataProvider { get; }
+        INI2SDataProvider DataProvider { get; }
 
         #endregion
     }

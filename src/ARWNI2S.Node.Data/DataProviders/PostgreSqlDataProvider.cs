@@ -13,7 +13,7 @@ using System.Data.Common;
 
 namespace ARWNI2S.Node.Data.DataProviders
 {
-    public partial class PostgreSqlServerDataProvider : BaseDataProvider, IServerDataProvider
+    public partial class PostgreSqlServerDataProvider : BaseDataProvider, INI2SDataProvider
     {
         #region Fields
 
@@ -67,7 +67,7 @@ namespace ARWNI2S.Node.Data.DataProviders
         {
             ArgumentNullException.ThrowIfNull(dataConnection);
 
-            var descriptor = NodeMappingSchema.GetEntityDescriptor(typeof(TEntity))
+            var descriptor = NI2SDataMappingSchema.GetEntityDescriptor(typeof(TEntity))
                              ?? throw new NodeException($"Mapped entity descriptor is not found: {typeof(TEntity).Name}");
 
             var tableName = descriptor.EntityName;
@@ -312,7 +312,7 @@ namespace ARWNI2S.Node.Data.DataProviders
         /// </summary>
         /// <param name="nopConnectionString">Connection string info</param>
         /// <returns>Connection string</returns>
-        public virtual string BuildConnectionString(IServerConnectionStringInfo nopConnectionString)
+        public virtual string BuildConnectionString(INodeConnectionStringInfo nopConnectionString)
         {
             ArgumentNullException.ThrowIfNull(nopConnectionString);
 

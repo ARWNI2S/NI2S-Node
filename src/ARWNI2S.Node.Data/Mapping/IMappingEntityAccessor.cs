@@ -12,7 +12,7 @@ namespace ARWNI2S.Node.Data.Mapping
         /// </summary>
         /// <param name="entityType">Type of entity</param>
         /// <returns>Mapped entity descriptor</returns>
-        ServerEntityDescriptor GetEntityDescriptor(Type entityType);
+        NI2SDataEntityDescriptor GetEntityDescriptor(Type entityType);
 
         /// <summary>
         /// Get entity accessor mapping schema

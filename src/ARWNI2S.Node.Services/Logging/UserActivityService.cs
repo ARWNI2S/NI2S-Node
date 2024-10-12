@@ -1,10 +1,12 @@
-﻿using ARWNI2S.Infrastructure.Abstractions.Collections.Generic;
+﻿using ARWNI2S.Infrastructure;
+using ARWNI2S.Infrastructure.Collections.Generic;
 using ARWNI2S.Node.Core;
+using ARWNI2S.Node.Data;
 using ARWNI2S.Node.Data.Entities;
 using ARWNI2S.Node.Data.Entities.Logging;
 using ARWNI2S.Node.Data.Entities.Users;
 
-namespace ARWNI2S.Node.Data.Services.Logging
+namespace ARWNI2S.Node.Services.Logging
 {
     /// <summary>
     /// User activity service
@@ -15,7 +17,7 @@ namespace ARWNI2S.Node.Data.Services.Logging
 
         private readonly IRepository<ActivityLog> _activityLogRepository;
         private readonly IRepository<ActivityLogType> _activityLogTypeRepository;
-        private readonly IWebHelper _webHelper;
+        private readonly INodeHelper _nodeHelper;
         private readonly IWorkContext _workContext;
 
         #endregion
@@ -24,12 +26,12 @@ namespace ARWNI2S.Node.Data.Services.Logging
 
         public UserActivityService(IRepository<ActivityLog> activityLogRepository,
             IRepository<ActivityLogType> activityLogTypeRepository,
-            IWebHelper webHelper,
+            INodeHelper nodeHelper,
             IWorkContext workContext)
         {
             _activityLogRepository = activityLogRepository;
             _activityLogTypeRepository = activityLogTypeRepository;
-            _webHelper = webHelper;
+            _nodeHelper = nodeHelper;
             _workContext = workContext;
         }
 
@@ -124,7 +126,7 @@ namespace ARWNI2S.Node.Data.Services.Logging
                 UserId = user.Id,
                 Comment = CommonHelper.EnsureMaximumLength(comment ?? string.Empty, 4000),
                 CreatedOnUtc = DateTime.UtcNow,
-                IpAddress = _webHelper.GetCurrentIpAddress()
+                IpAddress = _nodeHelper.GetCurrentIpAddress()
             };
             await _activityLogRepository.InsertAsync(logItem);
 

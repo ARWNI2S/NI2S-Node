@@ -51,7 +51,7 @@ namespace ARWNI2S.Node.Data.Migrations
             var migrations = _filteringMigrationSource
                 .GetMigrations(t =>
                 {
-                    var migrationAttribute = t.GetCustomAttribute<ServerMigrationAttribute>();
+                    var migrationAttribute = t.GetCustomAttribute<NI2SMigrationAttribute>();
 
                     if (migrationAttribute is null || _versionLoader.Value.VersionInfo.HasAppliedMigration(migrationAttribute.Version))
                         return false;
@@ -85,7 +85,7 @@ namespace ARWNI2S.Node.Data.Migrations
             var migrations = _filteringMigrationSource
                 .GetMigrations(t =>
                 {
-                    var migrationAttribute = t.GetCustomAttribute<ServerMigrationAttribute>();
+                    var migrationAttribute = t.GetCustomAttribute<NI2SMigrationAttribute>();
 
                     if (migrationAttribute is null || !_versionLoader.Value.VersionInfo.HasAppliedMigration(migrationAttribute.Version))
                         return false;
@@ -124,7 +124,7 @@ namespace ARWNI2S.Node.Data.Migrations
 
 #if DEBUG
                 if (!string.IsNullOrEmpty(migrationInfo.Description) &&
-                    migrationInfo.Description.StartsWith(string.Format(ServerMigrationDefaults.UpdateMigrationDescriptionPrefix, NI2SVersion.FULL_VERSION)))
+                    migrationInfo.Description.StartsWith(string.Format(NI2SMigrationDefaults.UpdateMigrationDescriptionPrefix, NI2SVersion.FULL_VERSION)))
                     continue;
 #endif
                 try

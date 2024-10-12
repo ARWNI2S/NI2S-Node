@@ -52,10 +52,10 @@ namespace ARWNI2S.Node.Core.Entities.Users
         /// </summary>
         public string PhoneNumberValidationRule { get; set; }
 
-        /// <summary>
-        /// Default password format for users
-        /// </summary>
-        public PasswordFormat DefaultPasswordFormat { get; set; }
+        ///// <summary>
+        ///// Default password format for users
+        ///// </summary>
+        //public PasswordFormat DefaultPasswordFormat { get; set; }
 
         /// <summary>
         /// Gets or sets a user password format (SHA1, MD5) when passwords are hashed (DO NOT edit in production environment)
@@ -117,10 +117,10 @@ namespace ARWNI2S.Node.Core.Entities.Users
         /// </summary>
         public int FailedPasswordLockoutMinutes { get; set; }
 
-        /// <summary>
-        /// User registration type
-        /// </summary>
-        public UserRegistrationType UserRegistrationType { get; set; }
+        ///// <summary>
+        ///// User registration type
+        ///// </summary>
+        //public UserRegistrationType UserRegistrationType { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether users are allowed to upload avatars.
@@ -172,10 +172,10 @@ namespace ARWNI2S.Node.Core.Entities.Users
         /// </summary>
         public bool DownloadableProductsValidateUser { get; set; }
 
-        /// <summary>
-        /// User name formatting
-        /// </summary>
-        public UserNameFormat UserNameFormat { get; set; }
+        ///// <summary>
+        ///// User name formatting
+        ///// </summary>
+        //public UserNameFormat UserNameFormat { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether 'Newsletter' form field is enabled

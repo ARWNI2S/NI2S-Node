@@ -1,16 +1,17 @@
-﻿using ARWNI2S.Node.Core;
+﻿using ARWNI2S.Infrastructure;
+using ARWNI2S.Infrastructure.Entities;
+using ARWNI2S.Node.Core;
+using ARWNI2S.Node.Core.Entities.Clustering;
 using ARWNI2S.Node.Core.Infrastructure;
-using ARWNI2S.Node.Data.Entities.Clustering;
-using ARWNI2S.Node.Data.Entities.Media;
 using ARWNI2S.Node.Data.Entities.Users;
 using ARWNI2S.Node.Data.Extensions;
 using ARWNI2S.Node.Data.Migrations;
-using ARWNI2S.Node.Data.Services.Localization;
-using ARWNI2S.Node.Data.Services.Logging;
-using ARWNI2S.Node.Data.Services.Users;
+using ARWNI2S.Node.Services.Localization;
+using ARWNI2S.Node.Services.Logging;
+using ARWNI2S.Node.Services.Users;
 using System.Reflection;
 
-namespace ARWNI2S.Node.Data.Services.Plugins
+namespace ARWNI2S.Node.Services.Plugins
 {
     /// <summary>
     /// Represents the module service implementation
@@ -23,11 +24,11 @@ namespace ARWNI2S.Node.Data.Services.Plugins
         private readonly IUserService _userService;
         //private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IMigrationManager _migrationManager;
-        private readonly ILogger _logger;
+        private readonly ILogService _logger;
         private readonly IEngineFileProvider _fileProvider;
         private readonly IModulesInfo _modulesInfo;
-        private readonly IWebHelper _webHelper;
-        private readonly MediaSettings _mediaSettings;
+        private readonly INodeHelper _webHelper;
+        //private readonly MediaSettings _mediaSettings;
 
         #endregion
 
@@ -37,10 +38,11 @@ namespace ARWNI2S.Node.Data.Services.Plugins
             IUserService userService,
             //IHttpContextAccessor httpContextAccessor,
             IMigrationManager migrationManager,
-            ILogger logger,
+            ILogService logger,
             IEngineFileProvider fileProvider,
-            IWebHelper webHelper,
-            MediaSettings mediaSettings)
+            INodeHelper nodeHelper//,
+            //MediaSettings mediaSettings
+            )
         {
             _nodeSettings = nodeSettings;
             _userService = userService;
@@ -49,8 +51,8 @@ namespace ARWNI2S.Node.Data.Services.Plugins
             _logger = logger;
             _fileProvider = fileProvider;
             _modulesInfo = Singleton<IModulesInfo>.Instance;
-            _webHelper = webHelper;
-            _mediaSettings = mediaSettings;
+            _webHelper = nodeHelper;
+            //_mediaSettings = mediaSettings;
         }
 
         #endregion
@@ -101,7 +103,7 @@ namespace ARWNI2S.Node.Data.Services.Plugins
         /// A task that represents the asynchronous operation
         /// The task result contains the result of check
         /// </returns>
-        protected virtual async Task<bool> FilterByUserAsync(ModuleDescriptor moduleDescriptor, User user)
+        protected virtual async Task<bool> FilterByUserAsync(ModuleDescriptor moduleDescriptor, INI2SUser user)
         {
             ArgumentNullException.ThrowIfNull(moduleDescriptor);
 
@@ -111,27 +113,27 @@ namespace ARWNI2S.Node.Data.Services.Plugins
             if (_nodeSettings.IgnoreAcl)
                 return true;
 
-            return moduleDescriptor.LimitedToUserRoles.Intersect(await _userService.GetUserRoleIdsAsync(user)).Any();
+            return moduleDescriptor.LimitedToUserRoles.Intersect(await _userService.GetUserRoleIdsAsync((User)user)).Any();
         }
 
         /// <summary>
         /// Check whether to load the module based on the node identifier passed
         /// </summary>
         /// <param name="moduleDescriptor">Module descriptor to check</param>
-        /// <param name="serverId">Server identifier</param>
+        /// <param name="nodeId">Node identifier</param>
         /// <returns>Result of check</returns>
-        protected virtual bool FilterByServer(ModuleDescriptor moduleDescriptor, int serverId)
+        protected virtual bool FilterByNode(ModuleDescriptor moduleDescriptor, int nodeId)
         {
             ArgumentNullException.ThrowIfNull(moduleDescriptor);
 
             //no validation required
-            if (serverId == 0)
+            if (nodeId == 0)
                 return true;
 
-            if (!moduleDescriptor.LimitedToServers.Any())
+            if (!moduleDescriptor.LimitedToNodes.Any())
                 return true;
 
-            return moduleDescriptor.LimitedToServers.Contains(serverId);
+            return moduleDescriptor.LimitedToNodes.Contains(nodeId);
         }
 
         /// <summary>
@@ -222,7 +224,7 @@ namespace ARWNI2S.Node.Data.Services.Plugins
         /// <typeparam name="TModule">The type of modules to get</typeparam>
         /// <param name="loadMode">Filter by load modules mode</param>
         /// <param name="user">Filter by  user; pass null to load all records</param>
-        /// <param name="serverId">Filter by node; pass 0 to load all records</param>
+        /// <param name="nodeId">Filter by node; pass 0 to load all records</param>
         /// <param name="group">Filter by module group; pass null to load all records</param>
         /// <param name="friendlyName">Filter by module friendly name; pass null to load all records</param>
         /// <param name="author">Filter by module author; pass null to load all records</param>
@@ -232,7 +234,7 @@ namespace ARWNI2S.Node.Data.Services.Plugins
         /// The task result contains the module descriptors
         /// </returns>
         public virtual async Task<IList<ModuleDescriptor>> GetModuleDescriptorsAsync<TModule>(LoadModulesMode loadMode = LoadModulesMode.InstalledOnly,
-            User user = null, int serverId = 0, string group = null, string dependsOnSystemName = "", string friendlyName = null, string author = null) where TModule : class, IModule
+            INI2SUser user = null, int nodeId = 0, string group = null, string dependsOnSystemName = "", string friendlyName = null, string author = null) where TModule : class, IModule
         {
             var moduleDescriptors = _modulesInfo.ModuleDescriptors.Select(p => p.moduleDescriptor).ToList();
 
@@ -240,7 +242,7 @@ namespace ARWNI2S.Node.Data.Services.Plugins
             moduleDescriptors = await moduleDescriptors.WhereAwait(async descriptor =>
                 FilterByLoadMode(descriptor, loadMode) &&
                 await FilterByUserAsync(descriptor, user) &&
-                FilterByServer(descriptor, serverId) &&
+                FilterByNode(descriptor, nodeId) &&
                 FilterByModuleGroup(descriptor, group) &&
                 FilterByDependsOn(descriptor, dependsOnSystemName) &&
                 FilterByModuleFriendlyName(descriptor, friendlyName) &&
@@ -264,7 +266,7 @@ namespace ARWNI2S.Node.Data.Services.Plugins
         /// <param name="systemName">Module system name</param>
         /// <param name="loadMode">Load modules mode</param>
         /// <param name="user">Filter by  user; pass null to load all records</param>
-        /// <param name="serverId">Filter by node; pass 0 to load all records</param>
+        /// <param name="nodeId">Filter by node; pass 0 to load all records</param>
         /// <param name="group">Filter by module group; pass null to load all records</param>
         /// <returns>
         /// A task that represents the asynchronous operation
@@ -272,9 +274,9 @@ namespace ARWNI2S.Node.Data.Services.Plugins
         /// </returns>
         public virtual async Task<ModuleDescriptor> GetModuleDescriptorBySystemNameAsync<TModule>(string systemName,
             LoadModulesMode loadMode = LoadModulesMode.InstalledOnly,
-            User user = null, int serverId = 0, string @group = null) where TModule : class, IModule
+            INI2SUser user = null, int nodeId = 0, string @group = null) where TModule : class, IModule
         {
-            return (await GetModuleDescriptorsAsync<TModule>(loadMode, user, serverId, group))
+            return (await GetModuleDescriptorsAsync<TModule>(loadMode, user, nodeId, group))
                 .FirstOrDefault(descriptor => descriptor.SystemName.Equals(systemName));
         }
 
@@ -284,7 +286,7 @@ namespace ARWNI2S.Node.Data.Services.Plugins
         /// <typeparam name="TModule">The type of modules to get</typeparam>
         /// <param name="loadMode">Filter by load modules mode</param>
         /// <param name="user">Filter by user; pass null to load all records</param>
-        /// <param name="serverId">Filter by node; pass 0 to load all records</param>
+        /// <param name="nodeId">Filter by node; pass 0 to load all records</param>
         /// <param name="group">Filter by module group; pass null to load all records</param>
         /// <returns>
         /// A task that represents the asynchronous operation
@@ -292,9 +294,9 @@ namespace ARWNI2S.Node.Data.Services.Plugins
         /// </returns>
         public virtual async Task<IList<TModule>> GetModulesAsync<TModule>(
             LoadModulesMode loadMode = LoadModulesMode.InstalledOnly,
-            User user = null, int serverId = 0, string @group = null) where TModule : class, IModule
+            INI2SUser user = null, int nodeId = 0, string @group = null) where TModule : class, IModule
         {
-            return (await GetModuleDescriptorsAsync<TModule>(loadMode, user, serverId, group))
+            return (await GetModuleDescriptorsAsync<TModule>(loadMode, user, nodeId, group))
                 .Select(descriptor => descriptor.Instance<TModule>()).ToList();
         }
 
@@ -336,7 +338,7 @@ namespace ARWNI2S.Node.Data.Services.Plugins
         //        return Task.FromResult<string>(null);
 
         //    var pathBase = _httpContextAccessor.HttpContext.Request.PathBase.Value ?? string.Empty;
-        //    var logoPathUrl = _mediaSettings.UseAbsoluteImagePath ? _webHelper.GetServerLocation() : $"{pathBase}/";
+        //    var logoPathUrl = _mediaSettings.UseAbsoluteImagePath ? _webHelper.GetNodeLocation() : $"{pathBase}/";
 
         //    var logoUrl = $"{logoPathUrl}{ModuleServicesDefaults.PathName}/" +
         //        $"{_fileProvider.GetDirectoryNameOnly(moduleDirectory)}/{ModuleServicesDefaults.LogoFileName}.{logoExtension}";
@@ -351,7 +353,7 @@ namespace ARWNI2S.Node.Data.Services.Plugins
         /// <param name="user">User</param>
         /// <param name="checkDependencies">Specifies whether to check module dependencies</param>
         /// <returns>A task that represents the asynchronous operation</returns>
-        public virtual async Task PrepareModuleToInstallAsync(string systemName, User user = null, bool checkDependencies = true)
+        public virtual async Task PrepareModuleToInstallAsync(string systemName, INI2SUser user = null, bool checkDependencies = true)
         {
             //add module name to the appropriate list (if not yet contained) and save changes
             if (_modulesInfo.ModuleNamesToInstall.Any(item => item.SystemName == systemName))
@@ -378,12 +380,12 @@ namespace ARWNI2S.Node.Data.Services.Plugins
 
                         var errorMessage = string.Format(await localizationService.GetResourceAsync("Admin.Modules.Errors.InstallDependsOn"), string.IsNullOrEmpty(descriptor.FriendlyName) ? descriptor.SystemName : descriptor.FriendlyName, dependsOnSystemNames);
 
-                        throw new ServerException(errorMessage);
+                        throw new NodeException(errorMessage);
                     }
                 }
             }
 
-            _modulesInfo.ModuleNamesToInstall.Add((systemName, user?.UserGuid));
+            _modulesInfo.ModuleNamesToInstall.Add((systemName, ((User)user)?.UserGuid));
             await _modulesInfo.SaveAsync();
         }
 
@@ -428,7 +430,7 @@ namespace ARWNI2S.Node.Data.Services.Plugins
                         string.IsNullOrEmpty(descriptor.FriendlyName) ? descriptor.SystemName : descriptor.FriendlyName,
                         dependsOnSystemNames);
 
-                    throw new ServerException(errorMessage);
+                    throw new NodeException(errorMessage);
                 }
             }
 

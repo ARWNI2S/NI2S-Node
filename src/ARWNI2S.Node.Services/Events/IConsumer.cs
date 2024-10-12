@@ -1,4 +1,4 @@
-﻿namespace ARWNI2S.Node.Data.Services.Events
+﻿namespace ARWNI2S.Node.Services.Events
 {
     /// <summary>
     /// Consumer interface

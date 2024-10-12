@@ -43,7 +43,7 @@ namespace ARWNI2S.Node
                 // Load application settings
                 services.ConfigureApplicationSettings(context);
 
-                var nodeSettings = Singleton<NodeSettings>.Instance;
+                var nodeSettings = Singleton<NI2SSettings>.Instance;
                 var useAutofac = nodeSettings.Get<CommonConfig>().UseAutofac;
 
                 if (useAutofac)
@@ -63,7 +63,8 @@ namespace ARWNI2S.Node
             // Construir y ejecutar el host
             var host = builder.Build();
 
-            //await host.StartEngineAsync();
+            host.ConfigureEngine();
+            await host.StartEngineAsync();
 
             await host.RunAsync();
         }

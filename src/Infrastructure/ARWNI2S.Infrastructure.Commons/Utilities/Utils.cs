@@ -1,4 +1,5 @@
-﻿using ARWNI2S.Infrastructure.Logging;
+﻿using ARWNI2S.Infrastructure.Extensions;
+using ARWNI2S.Infrastructure.Logging;
 using ARWNI2S.Infrastructure.Resources;
 using System.Reflection;
 using System.Security.Cryptography;

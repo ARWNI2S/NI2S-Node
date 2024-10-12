@@ -63,7 +63,7 @@ namespace ARWNI2S.Node.Core.Caching
         /// <summary>
         /// Gets or sets a cache time in minutes
         /// </summary>
-        public int CacheTime { get; set; } = Singleton<NodeSettings>.Instance.Get<CacheConfig>().DefaultCacheTime;
+        public int CacheTime { get; set; } = Singleton<NI2SSettings>.Instance.Get<CacheConfig>().DefaultCacheTime;
 
         #endregion
     }

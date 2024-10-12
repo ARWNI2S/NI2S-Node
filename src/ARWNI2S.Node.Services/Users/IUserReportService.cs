@@ -1,4 +1,4 @@
-﻿namespace ARWNI2S.Node.Data.Services.Users
+﻿namespace ARWNI2S.Node.Services.Users
 {
     /// <summary>
     /// User report service interface

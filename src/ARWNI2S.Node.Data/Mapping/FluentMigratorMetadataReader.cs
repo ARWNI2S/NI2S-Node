@@ -189,7 +189,7 @@ namespace ARWNI2S.Node.Data.Mapping
 
             var attribute = Types.GetOrAdd((type, null), _ =>
             {
-                var entityDescriptor = NodeMappingSchema.GetEntityDescriptor(type);
+                var entityDescriptor = NI2SDataMappingSchema.GetEntityDescriptor(type);
 
                 if (entityDescriptor is null)
                     return null;
@@ -211,7 +211,7 @@ namespace ARWNI2S.Node.Data.Mapping
             if (!type.IsSubclassOf(typeof(BaseDataEntity)))
                 return [];
 
-            var entityDescriptor = NodeMappingSchema.GetEntityDescriptor(type);
+            var entityDescriptor = NI2SDataMappingSchema.GetEntityDescriptor(type);
 
             if (entityDescriptor is null)
                 return [];

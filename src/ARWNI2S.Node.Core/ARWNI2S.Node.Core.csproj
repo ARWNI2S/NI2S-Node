@@ -5,53 +5,35 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="ComponentModel\**" />
-    <Compile Remove="Configuration\**" />
     <Compile Remove="Entities\**" />
-    <Compile Remove="Hosting\**" />
-    <Compile Remove="Http\**" />
-    <Compile Remove="Infrastructure\**" />
-    <Compile Remove="Services\**" />
-    <EmbeddedResource Remove="ComponentModel\**" />
-    <EmbeddedResource Remove="Configuration\**" />
+    <Compile Remove="Network\Extensions\**" />
     <EmbeddedResource Remove="Entities\**" />
-    <EmbeddedResource Remove="Hosting\**" />
-    <EmbeddedResource Remove="Http\**" />
-    <EmbeddedResource Remove="Infrastructure\**" />
-    <EmbeddedResource Remove="Services\**" />
-    <None Remove="ComponentModel\**" />
-    <None Remove="Configuration\**" />
+    <EmbeddedResource Remove="Network\Extensions\**" />
     <None Remove="Entities\**" />
-    <None Remove="Hosting\**" />
-    <None Remove="Http\**" />
-    <None Remove="Infrastructure\**" />
-    <None Remove="Services\**" />
+    <None Remove="Network\Extensions\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="IServerContext.cs" />
+    <Compile Remove="Configuration\AzureBlobConfig.cs" />
+    <Compile Remove="Infrastructure\NI2SEnvironment.cs" />
     <Compile Remove="IWebHelper.cs" />
-    <Compile Remove="IWorkContext.cs" />
     <Compile Remove="NI2SVersion.cs" />
+    <Compile Remove="Services\Helpers\BrowscapXmlParser.cs" />
+    <Compile Remove="Services\Helpers\IUserAgentHelper.cs" />
+    <Compile Remove="Services\Helpers\UserAgentHelper.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="ComponentModel\ReaderWriteLockDisposable.cs" />
-    <Compile Include="Configuration\ClusterConfig.cs" />
-    <Compile Include="Configuration\CommonConfig.cs" />
-    <Compile Include="Configuration\HostingConfig.cs" />
-    <Compile Include="Configuration\ModuleConfig.cs" />
-    <Compile Include="Configuration\NodeSettings.cs" />
-    <Compile Include="Configuration\NodeSettingsHelper.cs" />
-    <Compile Include="Configuration\ConfigurationDefaults.cs" />
     <Compile Include="Entities\BaseEntity.cs" />
-    <Compile Include="Infrastructure\EngineContext.cs" />
-    <Compile Include="Infrastructure\EngineFileProvider.cs" />
-    <Compile Include="Infrastructure\Mapper\AutoMapperConfiguration.cs" />
-    <Compile Include="Infrastructure\Mapper\IOrderedMapperProfile.cs" />
-    <Compile Include="Infrastructure\NodeEngine.cs" />
-    <Compile Include="Infrastructure\Singleton.cs" />
-    <Compile Include="Infrastructure\NI2SNodeTypeFinder.cs" />
+    <Compile Include="Entities\Clustering\INI2SNode.cs" />
+    <Compile Include="Entities\Clustering\INodeMappingSupported.cs" />
+    <Compile Include="Entities\Clustering\NodeSettings.cs" />
+    <Compile Include="Entities\ISoftDeletedEntity.cs" />
+    <Compile Include="Entities\Localization\ILocalizedEntity.cs" />
+    <Compile Include="Entities\Localization\ILocalizedEnum.cs" />
+    <Compile Include="Entities\Localization\LocalizationSettings.cs" />
+    <Compile Include="Entities\Users\UserDefaults.cs" />
+    <Compile Include="Entities\Users\UserSettings.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -64,22 +46,8 @@
     <PackageReference Include="Newtonsoft.Json" />
   </ItemGroup>
 
-
-
-
-
-
   <ItemGroup>
     <ProjectReference Include="..\Infrastructure\ARWNI2S.Infrastructure\ARWNI2S.Infrastructure.csproj" />
-  </ItemGroup>
-
-
-
-
-
-
-  <ItemGroup>
-    <Folder Include="Common\" />
   </ItemGroup>
 
 </Project>

@@ -2,10 +2,10 @@
 using ARWNI2S.Node.Core.Caching;
 using ARWNI2S.Node.Core.Infrastructure;
 using ARWNI2S.Node.Data.Entities.ScheduleTasks;
-using ARWNI2S.Node.Data.Services.Localization;
-using ARWNI2S.Node.Data.Services.Logging;
+using ARWNI2S.Node.Services.Localization;
+using ARWNI2S.Node.Services.Logging;
 
-namespace ARWNI2S.Node.Data.Services.ScheduleTasks
+namespace ARWNI2S.Node.Services.ScheduleTasks
 {
     /// <summary>
     /// Schedule task runner
@@ -16,9 +16,9 @@ namespace ARWNI2S.Node.Data.Services.ScheduleTasks
 
         protected readonly ILocalizationService _localizationService;
         protected readonly ILocker _locker;
-        protected readonly ILogger _logger;
+        protected readonly ILogService _logger;
         protected readonly IScheduleTaskService _scheduleTaskService;
-        protected readonly IServerContext _serverContext;
+        protected readonly INodeContext _nodeContext;
 
         #endregion
 
@@ -26,15 +26,15 @@ namespace ARWNI2S.Node.Data.Services.ScheduleTasks
 
         public ScheduleTaskRunner(ILocalizationService localizationService,
             ILocker locker,
-            ILogger logger,
+            ILogService logger,
             IScheduleTaskService scheduleTaskService,
-            IServerContext serverContext)
+            INodeContext nodeContext)
         {
             _localizationService = localizationService;
             _locker = locker;
             _logger = logger;
             _scheduleTaskService = scheduleTaskService;
-            _serverContext = serverContext;
+            _nodeContext = nodeContext;
         }
 
         #endregion
@@ -50,7 +50,7 @@ namespace ARWNI2S.Node.Data.Services.ScheduleTasks
                        //ensure that it works fine when only the type name is specified (do not require fully qualified names)
                        AppDomain.CurrentDomain.GetAssemblies()
                            .Select(a => a.GetType(scheduleTask.Type))
-                           .FirstOrDefault(t => t != null)) ?? throw new ServerException($"Schedule task ({scheduleTask.Type}) cannot by instantiated");
+                           .FirstOrDefault(t => t != null)) ?? throw new NodeException($"Schedule task ({scheduleTask.Type}) cannot by instantiated");
             object instance = null;
 
             try
@@ -141,16 +141,16 @@ namespace ARWNI2S.Node.Data.Services.ScheduleTasks
             }
             catch (Exception exc)
             {
-                var server = await _serverContext.GetCurrentServerAsync();
+                var node = await _nodeContext.GetCurrentNodeAsync();
 
-                var scheduleTaskUrl = $"{server.Url}{TaskServicesDefaults.ScheduleTaskPath}";
+                var scheduleTaskUrl = $"{node.IpAddress}{TaskServicesDefaults.ScheduleTaskPath}";
 
                 scheduleTask.Enabled = !scheduleTask.StopOnError;
                 scheduleTask.LastEndUtc = DateTime.UtcNow;
                 await _scheduleTaskService.UpdateTaskAsync(scheduleTask);
 
                 var message = string.Format(await _localizationService.GetResourceAsync("ScheduleTasks.Error"), scheduleTask.Name,
-                    exc.Message, scheduleTask.Type, server.Name, scheduleTaskUrl);
+                    exc.Message, scheduleTask.Type, node.Name, scheduleTaskUrl);
 
                 //log error
                 await _logger.ErrorAsync(message, exc);

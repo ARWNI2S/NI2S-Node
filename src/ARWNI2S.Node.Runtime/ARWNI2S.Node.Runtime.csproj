@@ -5,6 +5,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Infrastructure\AuthenticationStartup.cs" />
+    <Compile Remove="Infrastructure\AuthorizationStartup.cs" />
+    <Compile Remove="Infrastructure\Hosting\HostApplicationBuilderExtensions.cs" />
+    <Compile Remove="Infrastructure\MetalinkEndpoints.cs" />
+    <Compile Remove="Infrastructure\MvcStartup.cs" />
+    <Compile Remove="Infrastructure\RoutingStartup.cs" />
+    <Compile Remove="Infrastructure\StaticFilesStartup.cs" />
+    <Compile Remove="Infrastructure\WebMarkupMinStartup.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Caching.Memory" />
     <PackageReference Include="Microsoft.Orleans.Server" />
   </ItemGroup>
 

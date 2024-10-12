@@ -12,7 +12,7 @@ namespace ARWNI2S.Node.Data.DataProviders
     /// <summary>
     /// Represents the MS SQL Server data provider
     /// </summary>
-    public partial class MsSqlServerDataProvider : BaseDataProvider, IServerDataProvider
+    public partial class MsSqlServerDataProvider : BaseDataProvider, INI2SDataProvider
     {
         #region Utilities
 
@@ -162,7 +162,7 @@ namespace ARWNI2S.Node.Data.DataProviders
         public virtual Task<int?> GetTableIdentAsync<TEntity>() where TEntity : BaseDataEntity
         {
             using var currentConnection = CreateDataConnection();
-            var tableName = NodeMappingSchema.GetEntityDescriptor(typeof(TEntity)).EntityName;
+            var tableName = NI2SDataMappingSchema.GetEntityDescriptor(typeof(TEntity)).EntityName;
 
             var result = currentConnection.Query<decimal?>($"SELECT IDENT_CURRENT('[{tableName}]') as Value")
                 .FirstOrDefault();
@@ -183,7 +183,7 @@ namespace ARWNI2S.Node.Data.DataProviders
             if (!currentIdent.HasValue || ident <= currentIdent.Value)
                 return;
 
-            var tableName = NodeMappingSchema.GetEntityDescriptor(typeof(TEntity)).EntityName;
+            var tableName = NI2SDataMappingSchema.GetEntityDescriptor(typeof(TEntity)).EntityName;
 
             await currentConnection.ExecuteAsync($"DBCC CHECKIDENT([{tableName}], RESEED, {ident})");
         }
@@ -258,7 +258,7 @@ namespace ARWNI2S.Node.Data.DataProviders
         /// </summary>
         /// <param name="nopConnectionString">Connection string info</param>
         /// <returns>Connection string</returns>
-        public virtual string BuildConnectionString(IServerConnectionStringInfo nopConnectionString)
+        public virtual string BuildConnectionString(INodeConnectionStringInfo nopConnectionString)
         {
             ArgumentNullException.ThrowIfNull(nopConnectionString);
 

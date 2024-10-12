@@ -1,7 +1,7 @@
 ﻿using ARWNI2S.Node.Data.Entities.ScheduleTasks;
-using ARWNI2S.Node.Data.Services.Caching;
+using ARWNI2S.Node.Services.Caching;
 
-namespace ARWNI2S.Node.Data.Services.ScheduleTasks.Caching
+namespace ARWNI2S.Node.Services.ScheduleTasks.Caching
 {
     /// <summary>
     /// Represents a schedule task cache event consumer

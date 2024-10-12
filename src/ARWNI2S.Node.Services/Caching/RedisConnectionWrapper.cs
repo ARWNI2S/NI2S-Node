@@ -3,7 +3,7 @@ using Microsoft.Extensions.Options;
 using StackExchange.Redis;
 using System.Net;
 
-namespace ARWNI2S.Node.Data.Services.Caching
+namespace ARWNI2S.Node.Services.Caching
 {
     /// <summary>
     /// Redis connection wrapper

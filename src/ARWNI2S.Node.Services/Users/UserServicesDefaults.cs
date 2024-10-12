@@ -1,7 +1,7 @@
 ﻿using ARWNI2S.Node.Core.Caching;
 using ARWNI2S.Node.Data.Entities.Users;
 
-namespace ARWNI2S.Node.Data.Services.Users
+namespace ARWNI2S.Node.Services.Users
 {
     /// <summary>
     /// Represents default values related to user services

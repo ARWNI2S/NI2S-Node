@@ -2,7 +2,7 @@
 
 namespace ARWNI2S.Node.Data.Migrations.Installation
 {
-    [ServerMigration("2024/10/11 12:12:12:1212121", "ARWNI2S.Node.Data base schema", MigrationProcessType.Installation)]
+    [NI2SMigration("2024/10/11 12:12:12:1212121", "ARWNI2S.Node.Data base schema", MigrationProcessType.Installation)]
     public class InstallationSchemaMigration : AutoReversingMigration
     {
         /// <summary>
@@ -15,7 +15,7 @@ namespace ARWNI2S.Node.Data.Migrations.Installation
         public override void Up()
         {
             ////Servers
-            //Create.TableFor<BladeServer>();
+            //Create.TableFor<NI2SNode>();
             //Create.TableFor<ServerMapping>();
 
             ////Directory

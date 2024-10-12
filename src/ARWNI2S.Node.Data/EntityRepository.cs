@@ -1,5 +1,6 @@
 ﻿using ARWNI2S.Infrastructure.Collections.Generic;
 using ARWNI2S.Node.Core.Caching;
+using ARWNI2S.Node.Core.Entities;
 using ARWNI2S.Node.Core.Events;
 using ARWNI2S.Node.Data.Entities;
 using ARWNI2S.Node.Data.Extensions;
@@ -17,7 +18,7 @@ namespace ARWNI2S.Node.Data
         #region Fields
 
         private readonly INodeEventPublisher _eventPublisher;
-        private readonly IServerDataProvider _dataProvider;
+        private readonly INI2SDataProvider _dataProvider;
         private readonly IStaticCacheManager _staticCacheManager;
 
         #endregion
@@ -25,7 +26,7 @@ namespace ARWNI2S.Node.Data
         #region Ctor
 
         public EntityRepository(INodeEventPublisher eventPublisher,
-            IServerDataProvider dataProvider,
+            INI2SDataProvider dataProvider,
             IStaticCacheManager staticCacheManager)
         {
             _eventPublisher = eventPublisher;

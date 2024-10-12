@@ -1,7 +1,7 @@
 ﻿using StackExchange.Redis;
 using System.Net;
 
-namespace ARWNI2S.Node.Data.Services.Caching
+namespace ARWNI2S.Node.Services.Caching
 {
     /// <summary>
     /// Represents Redis connection wrapper
@@ -21,26 +21,26 @@ namespace ARWNI2S.Node.Data.Services.Caching
         IDatabase GetDatabase();
 
         /// <summary>
-        /// Obtain a configuration API for an individual server
+        /// Obtain a configuration API for an individual node
         /// </summary>
         /// <param name="endPoint">The network endpoint</param>
         /// <returns>Redis server</returns>
         Task<IServer> GetServerAsync(EndPoint endPoint);
 
         /// <summary>
-        /// Gets all endpoints defined on the server
+        /// Gets all endpoints defined on the node
         /// </summary>
         /// <returns>Array of endpoints</returns>
         Task<EndPoint[]> GetEndPointsAsync();
 
         /// <summary>
-        /// Gets a subscriber for the server
+        /// Gets a subscriber for the node
         /// </summary>
         /// <returns>Array of endpoints</returns>
         Task<ISubscriber> GetSubscriberAsync();
 
         /// <summary>
-        /// Gets a subscriber for the server
+        /// Gets a subscriber for the node
         /// </summary>
         /// <returns>Array of endpoints</returns>
         ISubscriber GetSubscriber();

@@ -1,4 +1,7 @@
-﻿namespace ARWNI2S.Node.Data.Mapping.Builders.Configuration
+﻿using ARWNI2S.Node.Data.Entities.Configuration;
+using FluentMigrator.Builders.Create.Table;
+
+namespace ARWNI2S.Node.Data.Mapping.Builders.Configuration
 {
     /// <summary>
     /// Represents a setting entity builder

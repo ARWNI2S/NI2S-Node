@@ -17,7 +17,7 @@ namespace ARWNI2S.Node.Services.Plugins
         public ModuleDescriptor()
         {
             SupportedVersions = [];
-            LimitedToServers = [];
+            LimitedToNodes = [];
             LimitedToUserRoles = [];
             DependsOn = [];
         }
@@ -156,10 +156,10 @@ namespace ARWNI2S.Node.Services.Plugins
         public virtual string Description { get; set; }
 
         /// <summary>
-        /// Gets or sets the list of server identifiers in which this module is available. If empty, then this module is available in all servers
+        /// Gets or sets the list of node identifiers in which this module is available. If empty, then this module is available in all nodes
         /// </summary>
-        [JsonProperty(PropertyName = "LimitedToServers")]
-        public virtual IList<int> LimitedToServers { get; set; }
+        [JsonProperty(PropertyName = "LimitedToNodes")]
+        public virtual IList<int> LimitedToNodes { get; set; }
 
         /// <summary>
         /// Gets or sets the list of user role identifiers for which this module is available. If empty, then this module is available for all ones.

@@ -12,6 +12,15 @@ namespace ARWNI2S.Node.Runtime.Infrastructure.Hosting
     internal static class HostApplicationBuilderExtensions
     {
         /// <summary>
+        /// Configure the application HTTP request pipeline
+        /// </summary>
+        /// <param name="application">Builder for configuring an application's request pipeline</param>
+        public static void ConfigureRequestPipeline(this IHostApplicationBuilder application)
+        {
+            EngineContext.Current.ConfigureRequestPipeline(application);
+        }
+
+        /// <summary>
         /// Starts the engine
         /// </summary>
         /// <param name="_">unused</param>

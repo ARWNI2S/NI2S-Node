@@ -1,4 +1,4 @@
-﻿namespace ARWNI2S.Node.Data.Services
+﻿namespace ARWNI2S.Node.Services
 {
     public sealed class SystemKeywords
     {

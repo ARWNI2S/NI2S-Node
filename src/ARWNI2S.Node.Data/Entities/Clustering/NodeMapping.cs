@@ -1,7 +1,7 @@
 ﻿namespace ARWNI2S.Node.Data.Entities.Clustering
 {
     /// <summary>
-    /// Represents a server mapping record
+    /// Represents a node mapping record
     /// </summary>
     public partial class NodeMapping : BaseDataEntity
     {
@@ -16,8 +16,8 @@
         public string EntityName { get; set; }
 
         /// <summary>
-        /// Gets or sets the server identifier
+        /// Gets or sets the node identifier
         /// </summary>
-        public int ServerId { get; set; }
+        public int NodeId { get; set; }
     }
 }

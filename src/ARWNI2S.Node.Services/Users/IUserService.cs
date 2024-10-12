@@ -1,9 +1,8 @@
-﻿using ARWNI2S.Infrastructure.Abstractions.Collections.Generic;
-using ARWNI2S.Node.Data.Entities.Common;
+﻿using ARWNI2S.Infrastructure.Collections.Generic;
 using ARWNI2S.Node.Data.Entities.Users;
 
-//using TheCorporateWars.Server.Domain.Orders;
-namespace ARWNI2S.Node.Data.Services.Users
+//using TheCorporateWars.Node.Domain.Orders;
+namespace ARWNI2S.Node.Services.Users
 {
     /// <summary>
     /// User service interface
@@ -65,7 +64,7 @@ namespace ARWNI2S.Node.Data.Services.Users
         ///// Gets users with shopping carts
         ///// </summary>
         ///// <param name="shoppingCartType">Shopping cart type; pass null to load all records</param>
-        ///// <param name="serverId">Server identifier; pass 0 to load all records</param>
+        ///// <param name="nodeId">Node identifier; pass 0 to load all records</param>
         ///// <param name="productId">Product identifier; pass null to load all records</param>
         ///// <param name="createdFromUtc">Created date from (UTC); pass null to load all records</param>
         ///// <param name="createdToUtc">Created date to (UTC); pass null to load all records</param>
@@ -77,7 +76,7 @@ namespace ARWNI2S.Node.Data.Services.Users
         ///// The task result contains the users
         ///// </returns>
         //Task<IPagedList<User>> GetUsersWithShoppingCartsAsync(ShoppingCartType? shoppingCartType = null,
-        //    int serverId = 0, int? productId = null,
+        //    int nodeId = 0, int? productId = null,
         //    DateTime? createdFromUtc = null, DateTime? createdToUtc = null, int? countryId = null,
         //    int pageIndex = 0, int pageSize = int.MaxValue);
 
@@ -223,14 +222,14 @@ namespace ARWNI2S.Node.Data.Services.Users
         ///// Reset data required for checkout
         ///// </summary>
         ///// <param name="user">User</param>
-        ///// <param name="serverId">Server identifier</param>
+        ///// <param name="nodeId">Node identifier</param>
         ///// <param name="clearCouponCodes">A value indicating whether to clear coupon code</param>
         ///// <param name="clearCheckoutAttributes">A value indicating whether to clear selected checkout attributes</param>
         ///// <param name="clearRewardPoints">A value indicating whether to clear "Use reward points" flag</param>
         ///// <param name="clearShippingMethod">A value indicating whether to clear selected shipping method</param>
         ///// <param name="clearPaymentMethod">A value indicating whether to clear selected payment method</param>
         ///// <returns>A task that represents the asynchronous operation</returns>
-        //Task ResetCheckoutDataAsync(User user, int serverId,
+        //Task ResetCheckoutDataAsync(User user, int nodeId,
         //    bool clearCouponCodes = false, bool clearCheckoutAttributes = false,
         //    bool clearRewardPoints = true, bool clearShippingMethod = true,
         //    bool clearPaymentMethod = true);
@@ -277,70 +276,6 @@ namespace ARWNI2S.Node.Data.Services.Users
         /// The task result contains the formatted text
         /// </returns>
         Task<string> FormatUsernameAsync(User user, bool stripTooLong = false, int maxLength = 0);
-
-        /// <summary>
-        /// Gets coupon codes
-        /// </summary>
-        /// <param name="user">User</param>
-        /// <returns>
-        /// A task that represents the asynchronous operation
-        /// The task result contains the coupon codes
-        /// </returns>
-        Task<string[]> ParseAppliedDiscountCouponCodesAsync(User user);
-
-        /// <summary>
-        /// Adds a coupon code
-        /// </summary>
-        /// <param name="user">User</param>
-        /// <param name="couponCode">Coupon code</param>
-        /// <returns>
-        /// A task that represents the asynchronous operation
-        /// The task result contains the new coupon codes document
-        /// </returns>
-        Task ApplyDiscountCouponCodeAsync(User user, string couponCode);
-
-        /// <summary>
-        /// Removes a coupon code
-        /// </summary>
-        /// <param name="user">User</param>
-        /// <param name="couponCode">Coupon code to remove</param>
-        /// <returns>
-        /// A task that represents the asynchronous operation
-        /// The task result contains the new coupon codes document
-        /// </returns>
-        Task RemoveDiscountCouponCodeAsync(User user, string couponCode);
-
-        /// <summary>
-        /// Gets coupon codes
-        /// </summary>
-        /// <param name="user">User</param>
-        /// <returns>
-        /// A task that represents the asynchronous operation
-        /// The task result contains the coupon codes
-        /// </returns>
-        Task<string[]> ParseAppliedGiftCardCouponCodesAsync(User user);
-
-        /// <summary>
-        /// Adds a coupon code
-        /// </summary>
-        /// <param name="user">User</param>
-        /// <param name="couponCode">Coupon code</param>
-        /// <returns>
-        /// A task that represents the asynchronous operation
-        /// The task result contains the new coupon codes document
-        /// </returns>
-        Task ApplyGiftCardCouponCodeAsync(User user, string couponCode);
-
-        /// <summary>
-        /// Removes a coupon code
-        /// </summary>
-        /// <param name="user">User</param>
-        /// <param name="couponCode">Coupon code to remove</param>
-        /// <returns>
-        /// A task that represents the asynchronous operation
-        /// The task result contains the new coupon codes document
-        /// </returns>
-        Task RemoveGiftCardCouponCodeAsync(User user, string couponCode);
 
         /// <summary>
         /// Returns a list of guids of not existing users
@@ -524,137 +459,137 @@ namespace ARWNI2S.Node.Data.Services.Users
 
         #endregion
 
-        #region User passwords
+        //#region User passwords
 
-        /// <summary>
-        /// Gets user passwords
-        /// </summary>
-        /// <param name="userId">User identifier; pass null to load all records</param>
-        /// <param name="passwordFormat">Password format; pass null to load all records</param>
-        /// <param name="passwordsToReturn">Number of returning passwords; pass null to load all records</param>
-        /// <returns>
-        /// A task that represents the asynchronous operation
-        /// The task result contains the list of user passwords
-        /// </returns>
-        Task<IList<UserPassword>> GetUserPasswordsAsync(int? userId = null,
-            PasswordFormat? passwordFormat = null, int? passwordsToReturn = null);
+        ///// <summary>
+        ///// Gets user passwords
+        ///// </summary>
+        ///// <param name="userId">User identifier; pass null to load all records</param>
+        ///// <param name="passwordFormat">Password format; pass null to load all records</param>
+        ///// <param name="passwordsToReturn">Number of returning passwords; pass null to load all records</param>
+        ///// <returns>
+        ///// A task that represents the asynchronous operation
+        ///// The task result contains the list of user passwords
+        ///// </returns>
+        //Task<IList<UserPassword>> GetUserPasswordsAsync(int? userId = null,
+        //    PasswordFormat? passwordFormat = null, int? passwordsToReturn = null);
 
-        /// <summary>
-        /// Get current user password
-        /// </summary>
-        /// <param name="userId">User identifier</param>
-        /// <returns>
-        /// A task that represents the asynchronous operation
-        /// The task result contains the user password
-        /// </returns>
-        Task<UserPassword> GetCurrentPasswordAsync(int userId);
+        ///// <summary>
+        ///// Get current user password
+        ///// </summary>
+        ///// <param name="userId">User identifier</param>
+        ///// <returns>
+        ///// A task that represents the asynchronous operation
+        ///// The task result contains the user password
+        ///// </returns>
+        //Task<UserPassword> GetCurrentPasswordAsync(int userId);
 
-        /// <summary>
-        /// Insert a user password
-        /// </summary>
-        /// <param name="userPassword">User password</param>
-        /// <returns>A task that represents the asynchronous operation</returns>
-        Task InsertUserPasswordAsync(UserPassword userPassword);
+        ///// <summary>
+        ///// Insert a user password
+        ///// </summary>
+        ///// <param name="userPassword">User password</param>
+        ///// <returns>A task that represents the asynchronous operation</returns>
+        //Task InsertUserPasswordAsync(UserPassword userPassword);
 
-        /// <summary>
-        /// Update a user password
-        /// </summary>
-        /// <param name="userPassword">User password</param>
-        /// <returns>A task that represents the asynchronous operation</returns>
-        Task UpdateUserPasswordAsync(UserPassword userPassword);
+        ///// <summary>
+        ///// Update a user password
+        ///// </summary>
+        ///// <param name="userPassword">User password</param>
+        ///// <returns>A task that represents the asynchronous operation</returns>
+        //Task UpdateUserPasswordAsync(UserPassword userPassword);
 
-        /// <summary>
-        /// Check whether password recovery token is valid
-        /// </summary>
-        /// <param name="user">User</param>
-        /// <param name="token">Token to validate</param>
-        /// <returns>
-        /// A task that represents the asynchronous operation
-        /// The task result contains the result
-        /// </returns>
-        Task<bool> IsPasswordRecoveryTokenValidAsync(User user, string token);
+        ///// <summary>
+        ///// Check whether password recovery token is valid
+        ///// </summary>
+        ///// <param name="user">User</param>
+        ///// <param name="token">Token to validate</param>
+        ///// <returns>
+        ///// A task that represents the asynchronous operation
+        ///// The task result contains the result
+        ///// </returns>
+        //Task<bool> IsPasswordRecoveryTokenValidAsync(User user, string token);
 
-        /// <summary>
-        /// Check whether password recovery link is expired
-        /// </summary>
-        /// <param name="user">User</param>
-        /// <returns>
-        /// A task that represents the asynchronous operation
-        /// The task result contains the result
-        /// </returns>
-        Task<bool> IsPasswordRecoveryLinkExpiredAsync(User user);
+        ///// <summary>
+        ///// Check whether password recovery link is expired
+        ///// </summary>
+        ///// <param name="user">User</param>
+        ///// <returns>
+        ///// A task that represents the asynchronous operation
+        ///// The task result contains the result
+        ///// </returns>
+        //Task<bool> IsPasswordRecoveryLinkExpiredAsync(User user);
 
-        /// <summary>
-        /// Check whether user password is expired 
-        /// </summary>
-        /// <param name="user">User</param>
-        /// <returns>
-        /// A task that represents the asynchronous operation
-        /// The task result contains the rue if password is expired; otherwise false
-        /// </returns>
-        Task<bool> IsPasswordExpiredAsync(User user);
+        ///// <summary>
+        ///// Check whether user password is expired 
+        ///// </summary>
+        ///// <param name="user">User</param>
+        ///// <returns>
+        ///// A task that represents the asynchronous operation
+        ///// The task result contains the rue if password is expired; otherwise false
+        ///// </returns>
+        //Task<bool> IsPasswordExpiredAsync(User user);
 
-        #endregion
+        //#endregion
 
-        #region User address mapping
+        //#region User address mapping
 
-        /// <summary>
-        /// Gets a list of addresses mapped to user
-        /// </summary>
-        /// <param name="userId">User identifier</param>
-        /// <returns>
-        /// A task that represents the asynchronous operation
-        /// The task result contains the 
-        /// </returns>
-        Task<IList<Address>> GetAddressesByUserIdAsync(int userId);
+        ///// <summary>
+        ///// Gets a list of addresses mapped to user
+        ///// </summary>
+        ///// <param name="userId">User identifier</param>
+        ///// <returns>
+        ///// A task that represents the asynchronous operation
+        ///// The task result contains the 
+        ///// </returns>
+        //Task<IList<Address>> GetAddressesByUserIdAsync(int userId);
 
-        /// <summary>
-        /// Gets a address mapped to user
-        /// </summary>
-        /// <param name="userId">User identifier</param>
-        /// <param name="addressId">Address identifier</param>
-        /// <returns>
-        /// A task that represents the asynchronous operation
-        /// The task result contains the result
-        /// </returns>
-        Task<Address> GetUserAddressAsync(int userId, int addressId);
+        ///// <summary>
+        ///// Gets a address mapped to user
+        ///// </summary>
+        ///// <param name="userId">User identifier</param>
+        ///// <param name="addressId">Address identifier</param>
+        ///// <returns>
+        ///// A task that represents the asynchronous operation
+        ///// The task result contains the result
+        ///// </returns>
+        //Task<Address> GetUserAddressAsync(int userId, int addressId);
 
-        /// <summary>
-        /// Gets a user billing address
-        /// </summary>
-        /// <param name="user">User identifier</param>
-        /// <returns>
-        /// A task that represents the asynchronous operation
-        /// The task result contains the result
-        /// </returns>
-        Task<Address> GetUserBillingAddressAsync(User user);
+        ///// <summary>
+        ///// Gets a user billing address
+        ///// </summary>
+        ///// <param name="user">User identifier</param>
+        ///// <returns>
+        ///// A task that represents the asynchronous operation
+        ///// The task result contains the result
+        ///// </returns>
+        //Task<Address> GetUserBillingAddressAsync(User user);
 
-        /// <summary>
-        /// Gets a user shipping address
-        /// </summary>
-        /// <param name="user">User</param>
-        /// <returns>
-        /// A task that represents the asynchronous operation
-        /// The task result contains the result
-        /// </returns>
-        Task<Address> GetUserShippingAddressAsync(User user);
+        ///// <summary>
+        ///// Gets a user shipping address
+        ///// </summary>
+        ///// <param name="user">User</param>
+        ///// <returns>
+        ///// A task that represents the asynchronous operation
+        ///// The task result contains the result
+        ///// </returns>
+        //Task<Address> GetUserShippingAddressAsync(User user);
 
-        /// <summary>
-        /// Remove a user-address mapping record
-        /// </summary>
-        /// <param name="user">User</param>
-        /// <param name="address">Address</param>
-        /// <returns>A task that represents the asynchronous operation</returns>
-        Task RemoveUserAddressAsync(User user, Address address);
+        ///// <summary>
+        ///// Remove a user-address mapping record
+        ///// </summary>
+        ///// <param name="user">User</param>
+        ///// <param name="address">Address</param>
+        ///// <returns>A task that represents the asynchronous operation</returns>
+        //Task RemoveUserAddressAsync(User user, Address address);
 
-        /// <summary>
-        /// Inserts a user-address mapping record
-        /// </summary>
-        /// <param name="user">User</param>
-        /// <param name="address">Address</param>
-        /// <returns>A task that represents the asynchronous operation</returns>
-        Task InsertUserAddressAsync(User user, Address address);
+        ///// <summary>
+        ///// Inserts a user-address mapping record
+        ///// </summary>
+        ///// <param name="user">User</param>
+        ///// <param name="address">Address</param>
+        ///// <returns>A task that represents the asynchronous operation</returns>
+        //Task InsertUserAddressAsync(User user, Address address);
 
-        #endregion
+        //#endregion
     }
 }

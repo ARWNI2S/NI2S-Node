@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace ARWNI2S.Infrastructure
 {
@@ -15,11 +16,11 @@ namespace ARWNI2S.Infrastructure
         /// <param name="configuration">Configuration of the application</param>
         void ConfigureServices(IServiceCollection services, IConfiguration configuration);
 
-        ///// <summary>
-        ///// Configure the using of added middleware
-        ///// </summary>
-        ///// <param name="application">Builder for configuring an application's request pipeline</param>
-        //void Configure(INI2SHostBuilder application);
+        /// <summary>
+        /// Configure the using of added middleware
+        /// </summary>
+        /// <param name="application">Builder for configuring an application's request pipeline</param>
+        void Configure(IHost application); //INI2SHostBuilder application);
 
         /// <summary>
         /// Gets order of this startup configuration implementation

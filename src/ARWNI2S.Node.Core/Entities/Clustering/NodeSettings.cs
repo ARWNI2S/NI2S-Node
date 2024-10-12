@@ -16,7 +16,7 @@ namespace ARWNI2S.Node.Core.Entities.Clustering
         public string DefaultViewMode { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the images can be downloaded from remote server
+        /// Gets or sets a value indicating whether the images can be downloaded from remote node
         /// </summary>
         public bool ExportImportAllowDownloadImages { get; set; }
 
@@ -36,9 +36,9 @@ namespace ARWNI2S.Node.Core.Entities.Clustering
         public bool IgnoreAcl { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether to ignore "limit per server" rules (side-wide). It can significantly improve performance when enabled.
+        /// Gets or sets a value indicating whether to ignore "limit per node" rules (side-wide). It can significantly improve performance when enabled.
         /// </summary>
-        public bool IgnoreServerLimitations { get; set; }
+        public bool IgnoreNodeLimitations { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the new content feature is enabled
@@ -51,7 +51,7 @@ namespace ARWNI2S.Node.Core.Entities.Clustering
         public bool SearchAutoCompleteEnabled { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the server search system is enabled
+        /// Gets or sets a value indicating whether the node search system is enabled
         /// </summary>
         public bool SearchEnabled { get; set; }
 

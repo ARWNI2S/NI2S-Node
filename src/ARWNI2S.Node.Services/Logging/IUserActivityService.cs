@@ -1,9 +1,9 @@
-﻿using ARWNI2S.Infrastructure.Abstractions.Collections.Generic;
+﻿using ARWNI2S.Infrastructure.Collections.Generic;
 using ARWNI2S.Node.Data.Entities;
 using ARWNI2S.Node.Data.Entities.Logging;
 using ARWNI2S.Node.Data.Entities.Users;
 
-namespace ARWNI2S.Node.Data.Services.Logging
+namespace ARWNI2S.Node.Services.Logging
 {
     /// <summary>
     /// User activity service interface

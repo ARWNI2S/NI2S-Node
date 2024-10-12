@@ -2,7 +2,7 @@
 
 namespace ARWNI2S.Node.Data.Migrations.Installation
 {
-    [ServerMigration("2023/07/28 13:13:13:1313131", "ARWNI2S.Node.Data base indexes", MigrationProcessType.Installation)]
+    [NI2SMigration("2023/07/28 13:13:13:1313131", "ARWNI2S.Node.Data base indexes", MigrationProcessType.Installation)]
     public class Indexes : AutoReversingMigration
     {
         #region Methods

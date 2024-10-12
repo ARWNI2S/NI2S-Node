@@ -8,9 +8,9 @@ namespace ARWNI2S.Node.Core.Services.Helpers
     public partial class DateTimeSettings : ISettings
     {
         /// <summary>
-        /// Gets or sets a default server time zone identifier
+        /// Gets or sets a default node time zone identifier
         /// </summary>
-        public string DefaultServerTimeZoneId { get; set; }
+        public string DefaultNodeTimeZoneId { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether users are allowed to select theirs time zone

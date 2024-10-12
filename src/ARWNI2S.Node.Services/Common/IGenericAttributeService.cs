@@ -1,7 +1,7 @@
 ﻿using ARWNI2S.Node.Data.Entities;
 using ARWNI2S.Node.Data.Entities.Common;
 
-namespace ARWNI2S.Node.Data.Services.Common
+namespace ARWNI2S.Node.Services.Common
 {
     /// <summary>
     /// Generic attribute service interface

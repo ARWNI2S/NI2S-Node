@@ -1,6 +1,6 @@
-﻿using ARWNI2S.Node.Data.Entities.Users;
+﻿using ARWNI2S.Infrastructure.Entities;
 
-namespace ARWNI2S.Node.Data.Services.Plugins
+namespace ARWNI2S.Node.Services.Plugins
 {
     /// <summary>
     /// Represents a module manager
@@ -12,36 +12,36 @@ namespace ARWNI2S.Node.Data.Services.Plugins
         /// Load all modules
         /// </summary>
         /// <param name="user">Filter by user; pass null to load all modules</param>
-        /// <param name="serverId">Filter by server; pass 0 to load all modules</param>
+        /// <param name="nodeId">Filter by node; pass 0 to load all modules</param>
         /// <returns>
         /// A task that represents the asynchronous operation
         /// The task result contains the list of modules
         /// </returns>
-        Task<IList<TModule>> LoadAllModulesAsync(User user = null, int serverId = 0);
+        Task<IList<TModule>> LoadAllModulesAsync(INI2SUser user = null, int nodeId = 0);
 
         /// <summary>
         /// Load module by system name
         /// </summary>
         /// <param name="systemName">System name</param>
         /// <param name="user">Filter by user; pass null to load all modules</param>
-        /// <param name="serverId">Filter by server; pass 0 to load all modules</param>
+        /// <param name="nodeId">Filter by node; pass 0 to load all modules</param>
         /// <returns>
         /// A task that represents the asynchronous operation
         /// The task result contains the module
         /// </returns>
-        Task<TModule> LoadModuleBySystemNameAsync(string systemName, User user = null, int serverId = 0);
+        Task<TModule> LoadModuleBySystemNameAsync(string systemName, INI2SUser user = null, int nodeId = 0);
 
         /// <summary>
         /// Load active modules
         /// </summary>
         /// <param name="systemNames">System names of active modules</param>
         /// <param name="user">Filter by user; pass null to load all modules</param>
-        /// <param name="serverId">Filter by server; pass 0 to load all modules</param>
+        /// <param name="nodeId">Filter by node; pass 0 to load all modules</param>
         /// <returns>
         /// A task that represents the asynchronous operation
         /// The task result contains the list of active modules
         /// </returns>
-        Task<IList<TModule>> LoadActiveModulesAsync(List<string> systemNames, User user = null, int serverId = 0);
+        Task<IList<TModule>> LoadActiveModulesAsync(List<string> systemNames, INI2SUser user = null, int nodeId = 0);
 
         /// <summary>
         /// Check whether the passed module is active

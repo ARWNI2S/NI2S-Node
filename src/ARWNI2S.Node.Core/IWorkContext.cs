@@ -1,4 +1,4 @@
-﻿using ARWNI2S.Node.Core.Entities.Users;
+﻿using ARWNI2S.Infrastructure.Entities;
 using System.Globalization;
 
 namespace ARWNI2S.Node.Core
@@ -12,14 +12,14 @@ namespace ARWNI2S.Node.Core
         /// Gets the current user
         /// </summary>
         /// <returns>A task that represents the asynchronous operation</returns>
-        Task<INodeUser> GetCurrentUserAsync();
+        Task<INI2SUser> GetCurrentUserAsync();
 
         /// <summary>
         /// Sets the current user
         /// </summary>
         /// <param name="user">Current user</param>
         /// <returns>A task that represents the asynchronous operation</returns>
-        Task SetCurrentUserAsync(INodeUser user = null);
+        Task SetCurrentUserAsync(INI2SUser user = null);
 
         /// <summary>
         /// Gets current user working cultureInfo

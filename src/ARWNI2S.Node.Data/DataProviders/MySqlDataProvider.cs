@@ -14,7 +14,7 @@ using System.Text;
 
 namespace ARWNI2S.Node.Data.DataProviders
 {
-    public partial class MySqlServerDataProvider : BaseDataProvider, IServerDataProvider
+    public partial class MySqlServerDataProvider : BaseDataProvider, INI2SDataProvider
     {
         #region Fields
 
@@ -169,7 +169,7 @@ namespace ARWNI2S.Node.Data.DataProviders
         public virtual async Task<int?> GetTableIdentAsync<TEntity>() where TEntity : BaseDataEntity
         {
             using var currentConnection = CreateDataConnection();
-            var tableName = NodeMappingSchema.GetEntityDescriptor(typeof(TEntity)).EntityName;
+            var tableName = NI2SDataMappingSchema.GetEntityDescriptor(typeof(TEntity)).EntityName;
             var databaseName = currentConnection.Connection.Database;
 
             //we're using the DbConnection object until linq2db solve this issue https://github.com/linq2db/linq2db/issues/1987
@@ -217,7 +217,7 @@ namespace ARWNI2S.Node.Data.DataProviders
                 return;
 
             using var currentConnection = CreateDataConnection();
-            var tableName = NodeMappingSchema.GetEntityDescriptor(typeof(TEntity)).EntityName;
+            var tableName = NI2SDataMappingSchema.GetEntityDescriptor(typeof(TEntity)).EntityName;
 
             await currentConnection.ExecuteAsync($"ALTER TABLE `{tableName}` AUTO_INCREMENT = {ident};");
         }
@@ -259,7 +259,7 @@ namespace ARWNI2S.Node.Data.DataProviders
         /// </summary>
         /// <param name="nopConnectionString">Connection string info</param>
         /// <returns>Connection string</returns>
-        public virtual string BuildConnectionString(IServerConnectionStringInfo nopConnectionString)
+        public virtual string BuildConnectionString(INodeConnectionStringInfo nopConnectionString)
         {
             ArgumentNullException.ThrowIfNull(nopConnectionString);
 

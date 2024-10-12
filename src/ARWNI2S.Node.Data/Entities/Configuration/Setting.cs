@@ -16,12 +16,12 @@ namespace ARWNI2S.Node.Data.Entities.Configuration
         /// </summary>
         /// <param name="name">Name</param>
         /// <param name="value">Value</param>
-        /// <param name="serverId">Server identifier</param>
-        public Setting(string name, string value, int serverId = 0)
+        /// <param name="nodeId">Node identifier</param>
+        public Setting(string name, string value, int nodeId = 0)
         {
             Name = name;
             Value = value;
-            ServerId = serverId;
+            NodeId = nodeId;
         }
 
         /// <summary>
@@ -35,9 +35,9 @@ namespace ARWNI2S.Node.Data.Entities.Configuration
         public string Value { get; set; }
 
         /// <summary>
-        /// Gets or sets the server for which this setting is valid. 0 is set when the setting is for all servers
+        /// Gets or sets the node for which this setting is valid. 0 is set when the setting is for all nodes
         /// </summary>
-        public int ServerId { get; set; }
+        public int NodeId { get; set; }
 
         /// <summary>
         /// To string

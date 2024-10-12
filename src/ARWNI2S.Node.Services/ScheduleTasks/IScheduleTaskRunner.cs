@@ -1,6 +1,6 @@
 ﻿using ARWNI2S.Node.Data.Entities.ScheduleTasks;
 
-namespace ARWNI2S.Node.Data.Services.ScheduleTasks
+namespace ARWNI2S.Node.Services.ScheduleTasks
 {
     /// <summary>
     /// Schedule task runner interface

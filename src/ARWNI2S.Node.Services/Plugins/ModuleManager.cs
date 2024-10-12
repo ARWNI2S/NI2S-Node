@@ -1,7 +1,8 @@
-﻿using ARWNI2S.Node.Data.Entities.Users;
-using ARWNI2S.Node.Data.Services.Users;
+﻿using ARWNI2S.Infrastructure.Entities;
+using ARWNI2S.Node.Data.Entities.Users;
+using ARWNI2S.Node.Services.Users;
 
-namespace ARWNI2S.Node.Data.Services.Plugins
+namespace ARWNI2S.Node.Services.Plugins
 {
     /// <summary>
     /// Represents a module manager implementation
@@ -32,18 +33,18 @@ namespace ARWNI2S.Node.Data.Services.Plugins
         #region Utilities
 
         /// <summary>
-        /// Prepare the dictionary key to server loaded modules
+        /// Prepare the dictionary key to node loaded modules
         /// </summary>
-        /// <param name="user">User</param>
-        /// <param name="serverId">Server identifier</param>
+        /// <param name="user">INI2SUser</param>
+        /// <param name="nodeId">Node identifier</param>
         /// <param name="systemName">Module system name</param>
         /// <returns>
         /// A task that represents the asynchronous operation
         /// The task result contains the key
         /// </returns>
-        protected virtual async Task<string> GetKeyAsync(User user, int serverId, string systemName = null)
+        protected virtual async Task<string> GetKeyAsync(INI2SUser user, int nodeId, string systemName = null)
         {
-            return $"{serverId}-{(user != null ? string.Join(',', await _userService.GetUserRoleIdsAsync(user)) : null)}-{systemName}";
+            return $"{nodeId}-{(user != null ? string.Join(',', await _userService.GetUserRoleIdsAsync((User)user)) : null)}-{systemName}";
         }
 
         /// <summary>
@@ -51,16 +52,16 @@ namespace ARWNI2S.Node.Data.Services.Plugins
         /// </summary>
         /// <param name="systemName">System name of primary active module</param>
         /// <param name="user">Filter by user; pass null to load all modules</param>
-        /// <param name="serverId">Filter by server; pass 0 to load all modules</param>
+        /// <param name="nodeId">Filter by node; pass 0 to load all modules</param>
         /// <returns>
         /// A task that represents the asynchronous operation
         /// The task result contains the module
         /// </returns>
-        protected virtual async Task<TModule> LoadPrimaryModuleAsync(string systemName, User user = null, int serverId = 0)
+        protected virtual async Task<TModule> LoadPrimaryModuleAsync(string systemName, INI2SUser user = null, int nodeId = 0)
         {
             //try to get a module by system name or return the first loaded one (it's necessary to have a primary active module)
-            var module = await LoadModuleBySystemNameAsync(systemName, user, serverId)
-                         ?? (await LoadAllModulesAsync(user, serverId)).FirstOrDefault();
+            var module = await LoadModuleBySystemNameAsync(systemName, user, nodeId)
+                         ?? (await LoadAllModulesAsync(user, nodeId)).FirstOrDefault();
 
             return module;
         }
@@ -73,18 +74,18 @@ namespace ARWNI2S.Node.Data.Services.Plugins
         /// Load all modules
         /// </summary>
         /// <param name="user">Filter by user; pass null to load all modules</param>
-        /// <param name="serverId">Filter by server; pass 0 to load all modules</param>
+        /// <param name="nodeId">Filter by node; pass 0 to load all modules</param>
         /// <returns>
         /// A task that represents the asynchronous operation
         /// The task result contains the list of modules
         /// </returns>
-        public virtual async Task<IList<TModule>> LoadAllModulesAsync(User user = null, int serverId = 0)
+        public virtual async Task<IList<TModule>> LoadAllModulesAsync(INI2SUser user = null, int nodeId = 0)
         {
             //get modules and put them into the dictionary to avoid further loading
-            var key = await GetKeyAsync(user, serverId);
+            var key = await GetKeyAsync(user, nodeId);
 
             if (!_modules.TryGetValue(key, out var _))
-                _modules.Add(key, await _moduleService.GetModulesAsync<TModule>(user: user, serverId: serverId));
+                _modules.Add(key, await _moduleService.GetModulesAsync<TModule>(user: user, nodeId: nodeId));
 
             return _modules[key];
         }
@@ -94,27 +95,27 @@ namespace ARWNI2S.Node.Data.Services.Plugins
         /// </summary>
         /// <param name="systemName">System name</param>
         /// <param name="user">Filter by user; pass null to load all modules</param>
-        /// <param name="serverId">Filter by server; pass 0 to load all modules</param>
+        /// <param name="nodeId">Filter by node; pass 0 to load all modules</param>
         /// <returns>
         /// A task that represents the asynchronous operation
         /// The task result contains the module
         /// </returns>
-        public virtual async Task<TModule> LoadModuleBySystemNameAsync(string systemName, User user = null, int serverId = 0)
+        public virtual async Task<TModule> LoadModuleBySystemNameAsync(string systemName, INI2SUser user = null, int nodeId = 0)
         {
             if (string.IsNullOrEmpty(systemName))
                 return null;
 
             //try to get already loaded module
-            var key = await GetKeyAsync(user, serverId, systemName);
+            var key = await GetKeyAsync(user, nodeId, systemName);
             if (_modules.TryGetValue(key, out var modules1))
                 return modules1.FirstOrDefault();
 
             //or get it from list of all loaded modules or load it for the first time
-            var moduleBySystemName = _modules.TryGetValue(await GetKeyAsync(user, serverId), out var modules2)
+            var moduleBySystemName = _modules.TryGetValue(await GetKeyAsync(user, nodeId), out var modules2)
                 && modules2.FirstOrDefault(module =>
                     module.ModuleDescriptor.SystemName.Equals(systemName, StringComparison.InvariantCultureIgnoreCase)) is TModule loadedModule
                 ? loadedModule
-                : (await _moduleService.GetModuleDescriptorBySystemNameAsync<TModule>(systemName, user: user, serverId: serverId))?.Instance<TModule>();
+                : (await _moduleService.GetModuleDescriptorBySystemNameAsync<TModule>(systemName, user: user, nodeId: nodeId))?.Instance<TModule>();
 
             _modules.Add(key, [moduleBySystemName]);
 
@@ -126,18 +127,18 @@ namespace ARWNI2S.Node.Data.Services.Plugins
         /// </summary>
         /// <param name="systemNames">System names of active modules</param>
         /// <param name="user">Filter by user; pass null to load all modules</param>
-        /// <param name="serverId">Filter by server; pass 0 to load all modules</param>
+        /// <param name="nodeId">Filter by node; pass 0 to load all modules</param>
         /// <returns>
         /// A task that represents the asynchronous operation
         /// The task result contains the list of active modules
         /// </returns>
-        public virtual async Task<IList<TModule>> LoadActiveModulesAsync(List<string> systemNames, User user = null, int serverId = 0)
+        public virtual async Task<IList<TModule>> LoadActiveModulesAsync(List<string> systemNames, INI2SUser user = null, int nodeId = 0)
         {
             if (systemNames == null)
                 return [];
 
             //get loaded modules according to passed system names
-            return (await LoadAllModulesAsync(user, serverId))
+            return (await LoadAllModulesAsync(user, nodeId))
                 .Where(module => systemNames.Contains(module.ModuleDescriptor.SystemName, StringComparer.InvariantCultureIgnoreCase))
                 .ToList();
         }

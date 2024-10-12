@@ -1,13 +1,14 @@
 ﻿using ARWNI2S.Node.Core;
 using ARWNI2S.Node.Core.Configuration;
-using ARWNI2S.Node.Core.Http;
 using ARWNI2S.Node.Core.Infrastructure;
+using ARWNI2S.Node.Core.Network;
+using ARWNI2S.Node.Data;
 using ARWNI2S.Node.Data.Entities.ScheduleTasks;
-using ARWNI2S.Node.Data.Services.Localization;
-using ARWNI2S.Node.Data.Services.Logging;
+using ARWNI2S.Node.Services.Localization;
+using ARWNI2S.Node.Services.Logging;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace ARWNI2S.Node.Data.Services.ScheduleTasks
+namespace ARWNI2S.Node.Services.ScheduleTasks
 {
     /// <summary>
     /// Represents task manager
@@ -17,25 +18,25 @@ namespace ARWNI2S.Node.Data.Services.ScheduleTasks
         #region Fields
 
         protected static readonly List<TaskThread> _taskThreads = [];
-        protected readonly AppSettings _appSettings;
+        protected readonly NI2SSettings _ni2sSettings;
         protected readonly IScheduleTaskService _scheduleTaskService;
-        protected readonly IServerContext _serverContext;
+        protected readonly INodeContext _nodeContext;
 
         #endregion
 
         #region Ctor
 
-        public TaskScheduler(AppSettings appSettings,
+        public TaskScheduler(NI2SSettings ni2sSettings,
             IHttpClientFactory httpClientFactory,
             IScheduleTaskService scheduleTaskService,
             IServiceScopeFactory serviceScopeFactory,
-            IServerContext serverContext)
+            INodeContext nodeContext)
         {
-            _appSettings = appSettings;
+            _ni2sSettings = ni2sSettings;
             TaskThread.HttpClientFactory = httpClientFactory;
             _scheduleTaskService = scheduleTaskService;
             TaskThread.ServiceScopeFactory = serviceScopeFactory;
-            _serverContext = serverContext;
+            _nodeContext = nodeContext;
         }
 
         #endregion
@@ -58,10 +59,10 @@ namespace ARWNI2S.Node.Data.Services.ScheduleTasks
                 .OrderBy(x => x.Seconds)
                 .ToList();
 
-            var node = await _serverContext.GetCurrentServerAsync();
+            var node = await _nodeContext.GetCurrentNodeAsync();
 
-            var scheduleTaskUrl = $"{node.Url.TrimEnd('/')}/{TaskServicesDefaults.ScheduleTaskPath}";
-            var timeout = _appSettings.Get<CommonConfig>().ScheduleTaskRunTimeout;
+            var scheduleTaskUrl = $"{node.IpAddress.TrimEnd('/')}/{TaskServicesDefaults.ScheduleTaskPath}";
+            var timeout = _ni2sSettings.Get<CommonConfig>().ScheduleTaskRunTimeout;
 
             foreach (var scheduleTask in scheduleTasks)
             {
@@ -175,7 +176,7 @@ namespace ARWNI2S.Node.Data.Services.ScheduleTasks
                 try
                 {
                     //create and configure client
-                    client = HttpClientFactory.CreateClient(HttpDefaults.DefaultHttpClient);
+                    client = HttpClientFactory.CreateClient(NetworkDefaults.DefaultHttpClient);
                     if (_timeout.HasValue)
                         client.Timeout = TimeSpan.FromMilliseconds(_timeout.Value);
 
@@ -188,15 +189,15 @@ namespace ARWNI2S.Node.Data.Services.ScheduleTasks
                     using var scope = ServiceScopeFactory.CreateScope();
 
                     // Resolve
-                    var logger = EngineContext.Current.Resolve<ILogger>(scope);
+                    var logger = EngineContext.Current.Resolve<ILogService>(scope);
                     var localizationService = EngineContext.Current.Resolve<ILocalizationService>(scope);
-                    var serverContext = EngineContext.Current.Resolve<IServerContext>(scope);
+                    var nodeContext = EngineContext.Current.Resolve<INodeContext>(scope);
 
                     var message = ex.InnerException?.GetType() == typeof(TaskCanceledException) ? await localizationService.GetResourceAsync("ScheduleTasks.TimeoutError") : ex.Message;
-                    var server = await serverContext.GetCurrentServerAsync();
+                    var node = await nodeContext.GetCurrentNodeAsync();
 
                     message = string.Format(await localizationService.GetResourceAsync("ScheduleTasks.Error"), _scheduleTask.Name,
-                        message, _scheduleTask.Type, server.Name, _scheduleTaskUrl);
+                        message, _scheduleTask.Type, node.Name, _scheduleTaskUrl);
 
                     await logger.ErrorAsync(message, ex);
                 }

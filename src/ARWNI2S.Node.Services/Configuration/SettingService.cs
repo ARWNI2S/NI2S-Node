@@ -1,12 +1,13 @@
-﻿using ARWNI2S.Infrastructure.Configuration;
-using ARWNI2S.Node.Core;
+﻿using ARWNI2S.Infrastructure;
+using ARWNI2S.Infrastructure.Configuration;
 using ARWNI2S.Node.Core.Caching;
+using ARWNI2S.Node.Data;
 using ARWNI2S.Node.Data.Entities.Configuration;
 using System.ComponentModel;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace ARWNI2S.Node.Data.Services.Configuration
+namespace ARWNI2S.Node.Services.Configuration
 {
     /// <summary>
     /// Setting manager
@@ -55,7 +56,7 @@ namespace ARWNI2S.Node.Data.Services.Configuration
                         Id = s.Id,
                         Name = s.Name,
                         Value = s.Value,
-                        ServerId = s.ServerId
+                        NodeId = s.NodeId
                     };
                     if (!dictionary.TryGetValue(resourceName, out IList<Setting> value))
                         //first setting
@@ -92,7 +93,7 @@ namespace ARWNI2S.Node.Data.Services.Configuration
                         Id = s.Id,
                         Name = s.Name,
                         Value = s.Value,
-                        ServerId = s.ServerId
+                        NodeId = s.NodeId
                     };
                     if (!dictionary.TryGetValue(resourceName, out IList<Setting> value))
                         //first setting
@@ -114,10 +115,10 @@ namespace ARWNI2S.Node.Data.Services.Configuration
         /// <param name="type">Type</param>
         /// <param name="key">Key</param>
         /// <param name="value">Value</param>
-        /// <param name="serverId">Server identifier</param>
+        /// <param name="nodeId">Node identifier</param>
         /// <param name="clearCache">A value indicating whether to clear cache after setting update</param>
         /// <returns>A task that represents the asynchronous operation</returns>
-        protected virtual async Task SetSettingAsync(Type type, string key, object value, int serverId = 0, bool clearCache = true)
+        protected virtual async Task SetSettingAsync(Type type, string key, object value, int nodeId = 0, bool clearCache = true)
         {
             ArgumentNullException.ThrowIfNull(key);
             key = key.Trim().ToLowerInvariant();
@@ -125,7 +126,7 @@ namespace ARWNI2S.Node.Data.Services.Configuration
 
             var allSettings = await GetAllSettingsDictionaryAsync();
             var settingForCaching = allSettings.TryGetValue(key, out var settings) ?
-                settings.FirstOrDefault(x => x.ServerId == serverId) : null;
+                settings.FirstOrDefault(x => x.NodeId == nodeId) : null;
             if (settingForCaching != null)
             {
                 //update
@@ -140,7 +141,7 @@ namespace ARWNI2S.Node.Data.Services.Configuration
                 {
                     Name = key,
                     Value = valueStr,
-                    ServerId = serverId
+                    NodeId = nodeId
                 };
                 await InsertSettingAsync(setting, clearCache);
             }
@@ -152,9 +153,9 @@ namespace ARWNI2S.Node.Data.Services.Configuration
         /// <param name="type">Type</param>
         /// <param name="key">Key</param>
         /// <param name="value">Value</param>
-        /// <param name="serverId">Server identifier</param>
+        /// <param name="nodeId">Node identifier</param>
         /// <param name="clearCache">A value indicating whether to clear cache after setting update</param>
-        protected virtual void SetSetting(Type type, string key, object value, int serverId = 0, bool clearCache = true)
+        protected virtual void SetSetting(Type type, string key, object value, int nodeId = 0, bool clearCache = true)
         {
             ArgumentNullException.ThrowIfNull(key);
             key = key.Trim().ToLowerInvariant();
@@ -162,7 +163,7 @@ namespace ARWNI2S.Node.Data.Services.Configuration
 
             var allSettings = GetAllSettingsDictionary();
             var settingForCaching = allSettings.TryGetValue(key, out var settings) ?
-                settings.FirstOrDefault(x => x.ServerId == serverId) : null;
+                settings.FirstOrDefault(x => x.NodeId == nodeId) : null;
             if (settingForCaching != null)
             {
                 //update
@@ -177,7 +178,7 @@ namespace ARWNI2S.Node.Data.Services.Configuration
                 {
                     Name = key,
                     Value = valueStr,
-                    ServerId = serverId
+                    NodeId = nodeId
                 };
                 InsertSetting(setting, clearCache);
             }
@@ -316,13 +317,13 @@ namespace ARWNI2S.Node.Data.Services.Configuration
         /// Get setting by key
         /// </summary>
         /// <param name="key">Key</param>
-        /// <param name="serverId">Server identifier</param>
-        /// <param name="loadSharedValueIfNotFound">A value indicating whether a shared (for all servers) value should be loaded if a value specific for a certain is not found</param>
+        /// <param name="nodeId">Node identifier</param>
+        /// <param name="loadSharedValueIfNotFound">A value indicating whether a shared (for all nodes) value should be loaded if a value specific for a certain is not found</param>
         /// <returns>
         /// A task that represents the asynchronous operation
         /// The task result contains the setting
         /// </returns>
-        public virtual async Task<Setting> GetSettingAsync(string key, int serverId = 0, bool loadSharedValueIfNotFound = false)
+        public virtual async Task<Setting> GetSettingAsync(string key, int nodeId = 0, bool loadSharedValueIfNotFound = false)
         {
             if (string.IsNullOrEmpty(key))
                 return null;
@@ -333,11 +334,11 @@ namespace ARWNI2S.Node.Data.Services.Configuration
                 return null;
 
             var settingsByKey = value;
-            var setting = settingsByKey.FirstOrDefault(x => x.ServerId == serverId);
+            var setting = settingsByKey.FirstOrDefault(x => x.NodeId == nodeId);
 
             //load shared value?
-            if (setting == null && serverId > 0 && loadSharedValueIfNotFound)
-                setting = settingsByKey.FirstOrDefault(x => x.ServerId == 0);
+            if (setting == null && nodeId > 0 && loadSharedValueIfNotFound)
+                setting = settingsByKey.FirstOrDefault(x => x.NodeId == 0);
 
             return setting != null ? await GetSettingByIdAsync(setting.Id) : null;
         }
@@ -346,12 +347,12 @@ namespace ARWNI2S.Node.Data.Services.Configuration
         /// Get setting by key
         /// </summary>
         /// <param name="key">Key</param>
-        /// <param name="serverId">Server identifier</param>
-        /// <param name="loadSharedValueIfNotFound">A value indicating whether a shared (for all servers) value should be loaded if a value specific for a certain is not found</param>
+        /// <param name="nodeId">Node identifier</param>
+        /// <param name="loadSharedValueIfNotFound">A value indicating whether a shared (for all nodes) value should be loaded if a value specific for a certain is not found</param>
         /// <returns>
         /// The setting
         /// </returns>
-        public virtual Setting GetSetting(string key, int serverId = 0, bool loadSharedValueIfNotFound = false)
+        public virtual Setting GetSetting(string key, int nodeId = 0, bool loadSharedValueIfNotFound = false)
         {
             if (string.IsNullOrEmpty(key))
                 return null;
@@ -362,11 +363,11 @@ namespace ARWNI2S.Node.Data.Services.Configuration
                 return null;
 
             var settingsByKey = value;
-            var setting = settingsByKey.FirstOrDefault(x => x.ServerId == serverId);
+            var setting = settingsByKey.FirstOrDefault(x => x.NodeId == nodeId);
 
             //load shared value?
-            if (setting == null && serverId > 0 && loadSharedValueIfNotFound)
-                setting = settingsByKey.FirstOrDefault(x => x.ServerId == 0);
+            if (setting == null && nodeId > 0 && loadSharedValueIfNotFound)
+                setting = settingsByKey.FirstOrDefault(x => x.NodeId == 0);
 
             return setting != null ? GetSettingById(setting.Id) : null;
         }
@@ -377,14 +378,14 @@ namespace ARWNI2S.Node.Data.Services.Configuration
         /// <typeparam name="T">Type</typeparam>
         /// <param name="key">Key</param>
         /// <param name="defaultValue">Default value</param>
-        /// <param name="serverId">Server identifier</param>
-        /// <param name="loadSharedValueIfNotFound">A value indicating whether a shared (for all servers) value should be loaded if a value specific for a certain is not found</param>
+        /// <param name="nodeId">Node identifier</param>
+        /// <param name="loadSharedValueIfNotFound">A value indicating whether a shared (for all nodes) value should be loaded if a value specific for a certain is not found</param>
         /// <returns>
         /// A task that represents the asynchronous operation
         /// The task result contains the setting value
         /// </returns>
         public virtual async Task<T> GetSettingByKeyAsync<T>(string key, T defaultValue = default,
-            int serverId = 0, bool loadSharedValueIfNotFound = false)
+            int nodeId = 0, bool loadSharedValueIfNotFound = false)
         {
             if (string.IsNullOrEmpty(key))
                 return defaultValue;
@@ -395,11 +396,11 @@ namespace ARWNI2S.Node.Data.Services.Configuration
                 return defaultValue;
 
             var settingsByKey = value;
-            var setting = settingsByKey.FirstOrDefault(x => x.ServerId == serverId);
+            var setting = settingsByKey.FirstOrDefault(x => x.NodeId == nodeId);
 
             //load shared value?
-            if (setting == null && serverId > 0 && loadSharedValueIfNotFound)
-                setting = settingsByKey.FirstOrDefault(x => x.ServerId == 0);
+            if (setting == null && nodeId > 0 && loadSharedValueIfNotFound)
+                setting = settingsByKey.FirstOrDefault(x => x.NodeId == 0);
 
             return setting != null ? CommonHelper.To<T>(setting.Value) : defaultValue;
         }
@@ -410,13 +411,13 @@ namespace ARWNI2S.Node.Data.Services.Configuration
         /// <typeparam name="T">Type</typeparam>
         /// <param name="key">Key</param>
         /// <param name="defaultValue">Default value</param>
-        /// <param name="serverId">Server identifier</param>
-        /// <param name="loadSharedValueIfNotFound">A value indicating whether a shared (for all servers) value should be loaded if a value specific for a certain is not found</param>
+        /// <param name="nodeId">Node identifier</param>
+        /// <param name="loadSharedValueIfNotFound">A value indicating whether a shared (for all nodes) value should be loaded if a value specific for a certain is not found</param>
         /// <returns>
         /// Setting value
         /// </returns>
         public virtual T GetSettingByKey<T>(string key, T defaultValue = default,
-            int serverId = 0, bool loadSharedValueIfNotFound = false)
+            int nodeId = 0, bool loadSharedValueIfNotFound = false)
         {
             if (string.IsNullOrEmpty(key))
                 return defaultValue;
@@ -427,11 +428,11 @@ namespace ARWNI2S.Node.Data.Services.Configuration
                 return defaultValue;
 
             var settingsByKey = value;
-            var setting = settingsByKey.FirstOrDefault(x => x.ServerId == serverId);
+            var setting = settingsByKey.FirstOrDefault(x => x.NodeId == nodeId);
 
             //load shared value?
-            if (setting == null && serverId > 0 && loadSharedValueIfNotFound)
-                setting = settingsByKey.FirstOrDefault(x => x.ServerId == 0);
+            if (setting == null && nodeId > 0 && loadSharedValueIfNotFound)
+                setting = settingsByKey.FirstOrDefault(x => x.NodeId == 0);
 
             return setting != null ? CommonHelper.To<T>(setting.Value) : defaultValue;
         }
@@ -442,12 +443,12 @@ namespace ARWNI2S.Node.Data.Services.Configuration
         /// <typeparam name="T">Type</typeparam>
         /// <param name="key">Key</param>
         /// <param name="value">Value</param>
-        /// <param name="serverId">Server identifier</param>
+        /// <param name="nodeId">Node identifier</param>
         /// <param name="clearCache">A value indicating whether to clear cache after setting update</param>
         /// <returns>A task that represents the asynchronous operation</returns>
-        public virtual async Task SetSettingAsync<T>(string key, T value, int serverId = 0, bool clearCache = true)
+        public virtual async Task SetSettingAsync<T>(string key, T value, int nodeId = 0, bool clearCache = true)
         {
-            await SetSettingAsync(typeof(T), key, value, serverId, clearCache);
+            await SetSettingAsync(typeof(T), key, value, nodeId, clearCache);
         }
 
         /// <summary>
@@ -456,11 +457,11 @@ namespace ARWNI2S.Node.Data.Services.Configuration
         /// <typeparam name="T">Type</typeparam>
         /// <param name="key">Key</param>
         /// <param name="value">Value</param>
-        /// <param name="serverId">Server identifier</param>
+        /// <param name="nodeId">Node identifier</param>
         /// <param name="clearCache">A value indicating whether to clear cache after setting update</param>
-        public virtual void SetSetting<T>(string key, T value, int serverId = 0, bool clearCache = true)
+        public virtual void SetSetting<T>(string key, T value, int nodeId = 0, bool clearCache = true)
         {
-            SetSetting(typeof(T), key, value, serverId, clearCache);
+            SetSetting(typeof(T), key, value, nodeId, clearCache);
         }
 
         /// <summary>
@@ -475,7 +476,7 @@ namespace ARWNI2S.Node.Data.Services.Configuration
             var settings = await _settingRepository.GetAllAsync(query =>
             {
                 return from s in query
-                       orderby s.Name, s.ServerId
+                       orderby s.Name, s.NodeId
                        select s;
             }, cache => default);
 
@@ -491,7 +492,7 @@ namespace ARWNI2S.Node.Data.Services.Configuration
         public virtual IList<Setting> GetAllSettings()
         {
             var settings = _settingRepository.GetAll(query => from s in query
-                                                              orderby s.Name, s.ServerId
+                                                              orderby s.Name, s.NodeId
                                                               select s, cache => default);
 
             return settings;
@@ -504,18 +505,18 @@ namespace ARWNI2S.Node.Data.Services.Configuration
         /// <typeparam name="TPropType">Property type</typeparam>
         /// <param name="settings">Entity</param>
         /// <param name="keySelector">Key selector</param>
-        /// <param name="serverId">Server identifier</param>
+        /// <param name="nodeId">Node identifier</param>
         /// <returns>
         /// A task that represents the asynchronous operation
         /// The task result contains the true -setting exists; false - does not exist
         /// </returns>
         public virtual async Task<bool> SettingExistsAsync<T, TPropType>(T settings,
-            Expression<Func<T, TPropType>> keySelector, int serverId = 0)
+            Expression<Func<T, TPropType>> keySelector, int nodeId = 0)
             where T : ISettings, new()
         {
             var key = GetSettingKey(settings, keySelector);
 
-            var setting = await GetSettingByKeyAsync<string>(key, serverId: serverId);
+            var setting = await GetSettingByKeyAsync<string>(key, nodeId: nodeId);
             return setting != null;
         }
 
@@ -526,17 +527,17 @@ namespace ARWNI2S.Node.Data.Services.Configuration
         /// <typeparam name="TPropType">Property type</typeparam>
         /// <param name="settings">Entity</param>
         /// <param name="keySelector">Key selector</param>
-        /// <param name="serverId">Server identifier</param>
+        /// <param name="nodeId">Node identifier</param>
         /// <returns>
         /// The true -setting exists; false - does not exist
         /// </returns>
         public virtual bool SettingExists<T, TPropType>(T settings,
-            Expression<Func<T, TPropType>> keySelector, int serverId = 0)
+            Expression<Func<T, TPropType>> keySelector, int nodeId = 0)
             where T : ISettings, new()
         {
             var key = GetSettingKey(settings, keySelector);
 
-            var setting = GetSettingByKey<string>(key, serverId: serverId);
+            var setting = GetSettingByKey<string>(key, nodeId: nodeId);
             return setting != null;
         }
 
@@ -544,30 +545,30 @@ namespace ARWNI2S.Node.Data.Services.Configuration
         /// Load settings
         /// </summary>
         /// <typeparam name="T">Type</typeparam>
-        /// <param name="serverId">Server identifier for which settings should be loaded</param>
+        /// <param name="nodeId">Node identifier for which settings should be loaded</param>
         /// <returns>A task that represents the asynchronous operation</returns>
-        public virtual async Task<T> LoadSettingAsync<T>(int serverId = 0) where T : ISettings, new()
+        public virtual async Task<T> LoadSettingAsync<T>(int nodeId = 0) where T : ISettings, new()
         {
-            return (T)await LoadSettingAsync(typeof(T), serverId);
+            return (T)await LoadSettingAsync(typeof(T), nodeId);
         }
 
         /// <summary>
         /// Load settings
         /// </summary>
         /// <typeparam name="T">Type</typeparam>
-        /// <param name="serverId">Server identifier for which settings should be loaded</param>
-        public virtual T LoadSetting<T>(int serverId = 0) where T : ISettings, new()
+        /// <param name="nodeId">Node identifier for which settings should be loaded</param>
+        public virtual T LoadSetting<T>(int nodeId = 0) where T : ISettings, new()
         {
-            return (T)LoadSetting(typeof(T), serverId);
+            return (T)LoadSetting(typeof(T), nodeId);
         }
 
         /// <summary>
         /// Load settings
         /// </summary>
         /// <param name="type">Type</param>
-        /// <param name="serverId">Server identifier for which settings should be loaded</param>
+        /// <param name="nodeId">Node identifier for which settings should be loaded</param>
         /// <returns>A task that represents the asynchronous operation</returns>
-        public virtual async Task<ISettings> LoadSettingAsync(Type type, int serverId = 0)
+        public virtual async Task<ISettings> LoadSettingAsync(Type type, int nodeId = 0)
         {
             var settings = Activator.CreateInstance(type);
 
@@ -581,8 +582,8 @@ namespace ARWNI2S.Node.Data.Services.Configuration
                     continue;
 
                 var key = type.Name + "." + prop.Name;
-                //load by server
-                var setting = await GetSettingByKeyAsync<string>(key, serverId: serverId, loadSharedValueIfNotFound: true);
+                //load by node
+                var setting = await GetSettingByKeyAsync<string>(key, nodeId: nodeId, loadSharedValueIfNotFound: true);
                 if (setting == null)
                     continue;
 
@@ -605,9 +606,9 @@ namespace ARWNI2S.Node.Data.Services.Configuration
         /// Load settings
         /// </summary>
         /// <param name="type">Type</param>
-        /// <param name="serverId">Server identifier for which settings should be loaded</param>
+        /// <param name="nodeId">Node identifier for which settings should be loaded</param>
         /// <returns>Settings</returns>
-        public virtual ISettings LoadSetting(Type type, int serverId = 0)
+        public virtual ISettings LoadSetting(Type type, int nodeId = 0)
         {
             var settings = Activator.CreateInstance(type);
 
@@ -621,8 +622,8 @@ namespace ARWNI2S.Node.Data.Services.Configuration
                     continue;
 
                 var key = type.Name + "." + prop.Name;
-                //load by server
-                var setting = GetSettingByKey<string>(key, serverId: serverId, loadSharedValueIfNotFound: true);
+                //load by node
+                var setting = GetSettingByKey<string>(key, nodeId: nodeId, loadSharedValueIfNotFound: true);
                 if (setting == null)
                     continue;
 
@@ -645,10 +646,10 @@ namespace ARWNI2S.Node.Data.Services.Configuration
         /// Save settings object
         /// </summary>
         /// <typeparam name="T">Type</typeparam>
-        /// <param name="serverId">Server identifier</param>
+        /// <param name="nodeId">Node identifier</param>
         /// <param name="settings">Setting instance</param>
         /// <returns>A task that represents the asynchronous operation</returns>
-        public virtual async Task SaveSettingAsync<T>(T settings, int serverId = 0) where T : ISettings, new()
+        public virtual async Task SaveSettingAsync<T>(T settings, int nodeId = 0) where T : ISettings, new()
         {
             /* We do not clear cache after each setting update.
              * This behavior can increase performance because cached settings will not be cleared 
@@ -665,9 +666,9 @@ namespace ARWNI2S.Node.Data.Services.Configuration
                 var key = typeof(T).Name + "." + prop.Name;
                 var value = prop.GetValue(settings, null);
                 if (value != null)
-                    await SetSettingAsync(prop.PropertyType, key, value, serverId, false);
+                    await SetSettingAsync(prop.PropertyType, key, value, nodeId, false);
                 else
-                    await SetSettingAsync(key, string.Empty, serverId, false);
+                    await SetSettingAsync(key, string.Empty, nodeId, false);
             }
 
             //and now clear cache
@@ -678,9 +679,9 @@ namespace ARWNI2S.Node.Data.Services.Configuration
         /// Save settings object
         /// </summary>
         /// <typeparam name="T">Type</typeparam>
-        /// <param name="serverId">Server identifier</param>
+        /// <param name="nodeId">Node identifier</param>
         /// <param name="settings">Setting instance</param>
-        public virtual void SaveSetting<T>(T settings, int serverId = 0) where T : ISettings, new()
+        public virtual void SaveSetting<T>(T settings, int nodeId = 0) where T : ISettings, new()
         {
             /* We do not clear cache after each setting update.
              * This behavior can increase performance because cached settings will not be cleared 
@@ -697,9 +698,9 @@ namespace ARWNI2S.Node.Data.Services.Configuration
                 var key = typeof(T).Name + "." + prop.Name;
                 var value = prop.GetValue(settings, null);
                 if (value != null)
-                    SetSetting(prop.PropertyType, key, value, serverId, false);
+                    SetSetting(prop.PropertyType, key, value, nodeId, false);
                 else
-                    SetSetting(key, string.Empty, serverId, false);
+                    SetSetting(key, string.Empty, nodeId, false);
             }
 
             //and now clear cache
@@ -713,12 +714,12 @@ namespace ARWNI2S.Node.Data.Services.Configuration
         /// <typeparam name="TPropType">Property type</typeparam>
         /// <param name="settings">Settings</param>
         /// <param name="keySelector">Key selector</param>
-        /// <param name="serverId">Server ID</param>
+        /// <param name="nodeId">Node ID</param>
         /// <param name="clearCache">A value indicating whether to clear cache after setting update</param>
         /// <returns>A task that represents the asynchronous operation</returns>
         public virtual async Task SaveSettingAsync<T, TPropType>(T settings,
             Expression<Func<T, TPropType>> keySelector,
-            int serverId = 0, bool clearCache = true) where T : ISettings, new()
+            int nodeId = 0, bool clearCache = true) where T : ISettings, new()
         {
             if (keySelector.Body is not MemberExpression member)
                 throw new ArgumentException($"Expression '{keySelector}' refers to a method, not a property.");
@@ -727,9 +728,9 @@ namespace ARWNI2S.Node.Data.Services.Configuration
             var key = GetSettingKey(settings, keySelector);
             var value = (TPropType)propInfo.GetValue(settings, null);
             if (value != null)
-                await SetSettingAsync(key, value, serverId, clearCache);
+                await SetSettingAsync(key, value, nodeId, clearCache);
             else
-                await SetSettingAsync(key, string.Empty, serverId, clearCache);
+                await SetSettingAsync(key, string.Empty, nodeId, clearCache);
         }
 
         /// <summary>
@@ -739,11 +740,11 @@ namespace ARWNI2S.Node.Data.Services.Configuration
         /// <typeparam name="TPropType">Property type</typeparam>
         /// <param name="settings">Settings</param>
         /// <param name="keySelector">Key selector</param>
-        /// <param name="serverId">Server ID</param>
+        /// <param name="nodeId">Node ID</param>
         /// <param name="clearCache">A value indicating whether to clear cache after setting update</param>
         public virtual void SaveSetting<T, TPropType>(T settings,
             Expression<Func<T, TPropType>> keySelector,
-            int serverId = 0, bool clearCache = true) where T : ISettings, new()
+            int nodeId = 0, bool clearCache = true) where T : ISettings, new()
         {
             if (keySelector.Body is not MemberExpression member)
                 throw new ArgumentException($"Expression '{keySelector}' refers to a method, not a property.");
@@ -752,30 +753,30 @@ namespace ARWNI2S.Node.Data.Services.Configuration
             var key = GetSettingKey(settings, keySelector);
             var value = (TPropType)propInfo.GetValue(settings, null);
             if (value != null)
-                SetSetting(key, value, serverId, clearCache);
+                SetSetting(key, value, nodeId, clearCache);
             else
-                SetSetting(key, string.Empty, serverId, clearCache);
+                SetSetting(key, string.Empty, nodeId, clearCache);
         }
 
         /// <summary>
-        /// Save settings object (per server). If the setting is not overridden per server then it'll be delete
+        /// Save settings object (per node). If the setting is not overridden per node then it'll be delete
         /// </summary>
         /// <typeparam name="T">Entity type</typeparam>
         /// <typeparam name="TPropType">Property type</typeparam>
         /// <param name="settings">Settings</param>
         /// <param name="keySelector">Key selector</param>
-        /// <param name="overrideForNode">A value indicating whether to setting is overridden in some server</param>
-        /// <param name="serverId">Server ID</param>
+        /// <param name="overrideForNode">A value indicating whether to setting is overridden in some node</param>
+        /// <param name="nodeId">Node ID</param>
         /// <param name="clearCache">A value indicating whether to clear cache after setting update</param>
         /// <returns>A task that represents the asynchronous operation</returns>
         public virtual async Task SaveSettingOverridablePerNodeAsync<T, TPropType>(T settings,
             Expression<Func<T, TPropType>> keySelector,
-            bool overrideForNode, int serverId = 0, bool clearCache = true) where T : ISettings, new()
+            bool overrideForNode, int nodeId = 0, bool clearCache = true) where T : ISettings, new()
         {
-            if (overrideForNode || serverId == 0)
-                await SaveSettingAsync(settings, keySelector, serverId, clearCache);
-            else if (serverId > 0)
-                await DeleteSettingAsync(settings, keySelector, serverId);
+            if (overrideForNode || nodeId == 0)
+                await SaveSettingAsync(settings, keySelector, nodeId, clearCache);
+            else if (nodeId > 0)
+                await DeleteSettingAsync(settings, keySelector, nodeId);
         }
 
         /// <summary>
@@ -803,17 +804,17 @@ namespace ARWNI2S.Node.Data.Services.Configuration
         /// <typeparam name="TPropType">Property type</typeparam>
         /// <param name="settings">Settings</param>
         /// <param name="keySelector">Key selector</param>
-        /// <param name="serverId">Server ID</param>
+        /// <param name="nodeId">Node ID</param>
         /// <returns>A task that represents the asynchronous operation</returns>
         public virtual async Task DeleteSettingAsync<T, TPropType>(T settings,
-            Expression<Func<T, TPropType>> keySelector, int serverId = 0) where T : ISettings, new()
+            Expression<Func<T, TPropType>> keySelector, int nodeId = 0) where T : ISettings, new()
         {
             var key = GetSettingKey(settings, keySelector);
             key = key.Trim().ToLowerInvariant();
 
             var allSettings = await GetAllSettingsDictionaryAsync();
             var settingForCaching = allSettings.TryGetValue(key, out var settings_) ?
-                settings_.FirstOrDefault(x => x.ServerId == serverId) : null;
+                settings_.FirstOrDefault(x => x.NodeId == nodeId) : null;
             if (settingForCaching == null)
                 return;
 

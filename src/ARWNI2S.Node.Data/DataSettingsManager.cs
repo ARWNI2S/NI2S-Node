@@ -1,5 +1,4 @@
 ﻿using ARWNI2S.Infrastructure;
-using ARWNI2S.Node.Core;
 using ARWNI2S.Node.Core.Configuration;
 using ARWNI2S.Node.Core.Infrastructure;
 using ARWNI2S.Node.Data.Configuration;
@@ -105,8 +104,8 @@ namespace ARWNI2S.Node.Data
 
             //backward compatibility
             fileProvider ??= CommonHelper.DefaultFileProvider;
-            var filePath_json = fileProvider.MapPath(ServerDataSettingsDefaults.FilePath);
-            var filePath_txt = fileProvider.MapPath(ServerDataSettingsDefaults.ObsoleteFilePath);
+            var filePath_json = fileProvider.MapPath(NodeDataSettingsDefaults.FilePath);
+            var filePath_txt = fileProvider.MapPath(NodeDataSettingsDefaults.ObsoleteFilePath);
             if (fileProvider.FileExists(filePath_json) || fileProvider.FileExists(filePath_txt))
             {
                 var dataSettings = fileProvider.FileExists(filePath_json)
@@ -117,12 +116,12 @@ namespace ARWNI2S.Node.Data
                 fileProvider.DeleteFile(filePath_json);
                 fileProvider.DeleteFile(filePath_txt);
 
-                NodeSettingsHelper.SaveNodeSettings([dataSettings], fileProvider);
+                NI2SSettingsHelper.SaveNodeSettings([dataSettings], fileProvider);
                 Singleton<DataConfig>.Instance = dataSettings;
             }
             else
             {
-                Singleton<DataConfig>.Instance = Singleton<NodeSettings>.Instance.Get<DataConfig>();
+                Singleton<DataConfig>.Instance = Singleton<NI2SSettings>.Instance.Get<DataConfig>();
             }
 
             return Singleton<DataConfig>.Instance;
@@ -135,7 +134,7 @@ namespace ARWNI2S.Node.Data
         /// <param name="fileProvider">File provider</param>
         public static void SaveSettings(DataConfig dataSettings, IEngineFileProvider fileProvider)
         {
-            NodeSettingsHelper.SaveNodeSettings([dataSettings], fileProvider);
+            NI2SSettingsHelper.SaveNodeSettings([dataSettings], fileProvider);
             LoadSettings(fileProvider, reload: true);
         }
 

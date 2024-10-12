@@ -3,7 +3,7 @@ using ARWNI2S.Node.Data.Entities;
 using ARWNI2S.Node.Data.Entities.Localization;
 using System.Linq.Expressions;
 
-namespace ARWNI2S.Node.Data.Services.Localization
+namespace ARWNI2S.Node.Services.Localization
 {
     /// <summary>
     /// Localized entity service interface

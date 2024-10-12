@@ -29,7 +29,7 @@ namespace ARWNI2S.Node.Core.Caching
 
         #region Ctor
 
-        protected DistributedCacheManager(NodeSettings nodeSettings,
+        protected DistributedCacheManager(NI2SSettings nodeSettings,
             IDistributedCache distributedCache,
             ICacheKeyManager cacheKeyManager)
             : base(nodeSettings)

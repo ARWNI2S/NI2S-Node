@@ -1,4 +1,4 @@
-using ARWNI2S.Node.Data.Entities.Clustering;
+using ARWNI2S.Node.Core.Entities.Clustering;
 
 namespace ARWNI2S.Node.Data.Entities.Localization
 {
@@ -33,9 +33,9 @@ namespace ARWNI2S.Node.Data.Entities.Localization
         public bool Rtl { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the entity is limited/restricted to certain servers
+        /// Gets or sets a value indicating whether the entity is limited/restricted to certain nodes
         /// </summary>
-        public bool LimitedToServers { get; set; }
+        public bool LimitedToNodes { get; set; }
 
         /// <summary>
         /// Gets or sets the identifier of the default currency for this language; 0 is set when we use the default currency display order

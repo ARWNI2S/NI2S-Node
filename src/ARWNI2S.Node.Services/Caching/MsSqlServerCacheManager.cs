@@ -4,7 +4,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Caching.Distributed;
 using System.Data;
 
-namespace ARWNI2S.Node.Data.Services.Caching
+namespace ARWNI2S.Node.Services.Caching
 {
     /// <summary>
     /// Represents a MsSql server distributed cache 
@@ -19,12 +19,12 @@ namespace ARWNI2S.Node.Data.Services.Caching
 
         #region Ctor
 
-        public MsSqlServerCacheManager(AppSettings appSettings,
+        public MsSqlServerCacheManager(NI2SSettings ni2sSettings,
             IDistributedCache distributedCache,
             ICacheKeyManager cacheKeyManager)
-            : base(appSettings, distributedCache, cacheKeyManager)
+            : base(ni2sSettings, distributedCache, cacheKeyManager)
         {
-            _distributedCacheConfig = appSettings.Get<DistributedCacheConfig>();
+            _distributedCacheConfig = ni2sSettings.Get<DistributedCacheConfig>();
         }
 
         #endregion

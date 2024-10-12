@@ -1,25 +1,24 @@
 ﻿using ARWNI2S.Node.Data.Entities.Users;
-using ARWNI2S.Node.Data.Services.Caching;
-using ARWNI2S.Node.Data.Services.Events;
+using ARWNI2S.Node.Services.Caching;
 
-namespace ARWNI2S.Node.Data.Services.Users.Caching
+namespace ARWNI2S.Node.Services.Users.Caching
 {
     /// <summary>
     /// Represents a user cache event consumer
     /// </summary>
-    public partial class UserCacheEventConsumer : CacheEventConsumer<User>, IConsumer<UserPasswordChangedEvent>
+    public partial class UserCacheEventConsumer : CacheEventConsumer<User>//, IConsumer<UserPasswordChangedEvent>
     {
         #region Methods
 
-        /// <summary>
-        /// Handle password changed event
-        /// </summary>
-        /// <param name="eventMessage">Event message</param>
-        /// <returns>A task that represents the asynchronous operation</returns>
-        public async Task HandleEventAsync(UserPasswordChangedEvent eventMessage)
-        {
-            await RemoveAsync(UserServicesDefaults.UserPasswordLifetimeCacheKey, eventMessage.Password.UserId);
-        }
+        ///// <summary>
+        ///// Handle password changed event
+        ///// </summary>
+        ///// <param name="eventMessage">Event message</param>
+        ///// <returns>A task that represents the asynchronous operation</returns>
+        //public async Task HandleEventAsync(UserPasswordChangedEvent eventMessage)
+        //{
+        //    await RemoveAsync(UserServicesDefaults.UserPasswordLifetimeCacheKey, eventMessage.Password.UserId);
+        //}
 
         /// <summary>
         /// Clear cache by entity event type

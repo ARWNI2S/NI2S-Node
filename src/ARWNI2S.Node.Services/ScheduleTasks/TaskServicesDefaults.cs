@@ -1,4 +1,4 @@
-﻿namespace ARWNI2S.Node.Data.Services.ScheduleTasks
+﻿namespace ARWNI2S.Node.Services.ScheduleTasks
 {
     /// <summary>
     /// Represents default values related to task services

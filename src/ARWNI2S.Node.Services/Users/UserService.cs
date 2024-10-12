@@ -1,16 +1,16 @@
-﻿using ARWNI2S.Infrastructure.Abstractions.Collections.Generic;
+﻿using ARWNI2S.Infrastructure;
+using ARWNI2S.Infrastructure.Collections.Generic;
 using ARWNI2S.Node.Core;
 using ARWNI2S.Node.Core.Caching;
+using ARWNI2S.Node.Core.Entities.Users;
 using ARWNI2S.Node.Core.Infrastructure;
+using ARWNI2S.Node.Data;
 using ARWNI2S.Node.Data.Entities.Clustering;
-using ARWNI2S.Node.Data.Entities.Common;
 using ARWNI2S.Node.Data.Entities.Users;
 using ARWNI2S.Node.Data.Extensions;
-using ARWNI2S.Node.Data.Services.Common;
-using ARWNI2S.Node.Data.Services.Localization;
-using System.Xml;
+using ARWNI2S.Node.Services.Localization;
 
-namespace ARWNI2S.Node.Data.Services.Users
+namespace ARWNI2S.Node.Services.Users
 {
     /// <summary>
     /// User service
@@ -20,21 +20,21 @@ namespace ARWNI2S.Node.Data.Services.Users
         #region Fields
 
         private readonly UserSettings _userSettings;
-        private readonly IGenericAttributeService _genericAttributeService;
-        private readonly IServerDataProvider _dataProvider;
-        private readonly IRepository<Address> _userAddressRepository;
+        //private readonly IGenericAttributeService _genericAttributeService;
+        private readonly INI2SDataProvider _dataProvider;
+        //private readonly IRepository<Address> _userAddressRepository;
         //private readonly IRepository<BlogComment> _blogCommentRepository;
         private readonly IRepository<User> _userRepository;
-        private readonly IRepository<UserAddressMapping> _userAddressMappingRepository;
+        //private readonly IRepository<UserAddressMapping> _userAddressMappingRepository;
         private readonly IRepository<UserUserRoleMapping> _userUserRoleMappingRepository;
-        private readonly IRepository<UserPassword> _userPasswordRepository;
+        //private readonly IRepository<UserPassword> _userPasswordRepository;
         private readonly IRepository<UserRole> _userRoleRepository;
-        private readonly IRepository<GenericAttribute> _gaRepository;
+        //private readonly IRepository<GenericAttribute> _gaRepository;
         //private readonly IRepository<CryptoAddress> _cryptoAddressRepository;
         //private readonly IRepository<NewsComment> _newsCommentRepository;
         //private readonly IRepository<PollVotingRecord> _pollVotingRecordRepository;
         private readonly IStaticCacheManager _staticCacheManager;
-        private readonly IServerContext _serverContext;
+        private readonly INodeContext _nodeContext;
 
         #endregion
 
@@ -42,39 +42,39 @@ namespace ARWNI2S.Node.Data.Services.Users
 
         public UserService(
             UserSettings userSettings,
-            IGenericAttributeService genericAttributeService,
-            IServerDataProvider dataProvider,
-            IRepository<Address> userAddressRepository,
+            //IGenericAttributeService genericAttributeService,
+            INI2SDataProvider dataProvider,
+            //IRepository<Address> userAddressRepository,
             //IRepository<BlogComment> blogCommentRepository,
             IRepository<User> userRepository,
-            IRepository<UserAddressMapping> userAddressMappingRepository,
+            //IRepository<UserAddressMapping> userAddressMappingRepository,
             IRepository<UserUserRoleMapping> userUserRoleMappingRepository,
-            IRepository<UserPassword> userPasswordRepository,
+            //IRepository<UserPassword> userPasswordRepository,
             IRepository<UserRole> userRoleRepository,
-            IRepository<GenericAttribute> gaRepository,
+            //IRepository<GenericAttribute> gaRepository,
             //IRepository<CryptoAddress> cryptoAddressRepository,
             //IRepository<NewsComment> newsCommentRepository,
             //IRepository<PollVotingRecord> pollVotingRecordRepository,
             IStaticCacheManager staticCacheManager,
-            IServerContext serverContext
+            INodeContext nodeContext
             )
         {
             _userSettings = userSettings;
-            _genericAttributeService = genericAttributeService;
+            //_genericAttributeService = genericAttributeService;
             _dataProvider = dataProvider;
-            _userAddressRepository = userAddressRepository;
+            //_userAddressRepository = userAddressRepository;
             //_blogCommentRepository = blogCommentRepository;
             _userRepository = userRepository;
-            _userAddressMappingRepository = userAddressMappingRepository;
+            //_userAddressMappingRepository = userAddressMappingRepository;
             _userUserRoleMappingRepository = userUserRoleMappingRepository;
-            _userPasswordRepository = userPasswordRepository;
+            //_userPasswordRepository = userPasswordRepository;
             _userRoleRepository = userRoleRepository;
-            _gaRepository = gaRepository;
+            //_gaRepository = gaRepository;
             //_cryptoAddressRepository = cryptoAddressRepository;
             //_newsCommentRepository = newsCommentRepository;
             //_pollVotingRecordRepository = pollVotingRecordRepository;
             _staticCacheManager = staticCacheManager;
-            _serverContext = serverContext;
+            _nodeContext = nodeContext;
         }
 
         #endregion
@@ -135,14 +135,14 @@ namespace ARWNI2S.Node.Data.Services.Users
 
                 query = query.Where(u => !u.Deleted);
 
-                if (userRoleIds != null && userRoleIds.Length > 0)
-                {
-                    query = query.Join(_userUserRoleMappingRepository.Table, x => x.Id, y => y.UserId,
-                            (x, y) => new { User = x, Mapping = y })
-                        .Where(z => userRoleIds.Contains(z.Mapping.UserRoleId))
-                        .Select(z => z.User)
-                        .Distinct();
-                }
+                //if (userRoleIds != null && userRoleIds.Length > 0)
+                //{
+                //    query = query.Join(_userUserRoleMappingRepository.Table, x => x.Id, y => y.UserId,
+                //            (x, y) => new { User = x, Mapping = y })
+                //        .Where(z => userRoleIds.Contains(z.Mapping.UserRoleId))
+                //        .Select(z => z.User)
+                //        .Distinct();
+                //}
 
                 if (!string.IsNullOrWhiteSpace(email))
                     query = query.Where(u => u.Email.Contains(email));
@@ -199,8 +199,8 @@ namespace ARWNI2S.Node.Data.Services.Users
             query = query.Where(u => lastActivityFromUtc <= u.LastActivityDateUtc);
             query = query.Where(u => !u.Deleted);
 
-            if (userRoleIds != null && userRoleIds.Length > 0)
-                query = query.Where(u => _userUserRoleMappingRepository.Table.Any(ccrm => ccrm.UserId == u.Id && userRoleIds.Contains(ccrm.UserRoleId)));
+            //if (userRoleIds != null && userRoleIds.Length > 0)
+            //    query = query.Where(u => _userUserRoleMappingRepository.Table.Any(ccrm => ccrm.UserId == u.Id && userRoleIds.Contains(ccrm.UserRoleId)));
 
             query = query.OrderByDescending(u => u.LastActivityDateUtc);
             var users = await query.ToPagedListAsync(pageIndex, pageSize);
@@ -212,7 +212,7 @@ namespace ARWNI2S.Node.Data.Services.Users
         ///// Gets users with shopping carts
         ///// </summary>
         ///// <param name="shoppingCartType">Shopping cart type; pass null to load all records</param>
-        ///// <param name="serverId">Server identifier; pass 0 to load all records</param>
+        ///// <param name="nodeId">Node identifier; pass 0 to load all records</param>
         ///// <param name="productId">Product identifier; pass null to load all records</param>
         ///// <param name="createdFromUtc">Created date from (UTC); pass null to load all records</param>
         ///// <param name="createdToUtc">Created date to (UTC); pass null to load all records</param>
@@ -224,7 +224,7 @@ namespace ARWNI2S.Node.Data.Services.Users
         ///// The task result contains the users
         ///// </returns>
         //public virtual async Task<IPagedList<User>> GetUsersWithShoppingCartsAsync(ShoppingCartType? shoppingCartType = null,
-        //    int serverId = 0, int? productId = null,
+        //    int nodeId = 0, int? productId = null,
         //    DateTime? createdFromUtc = null, DateTime? createdToUtc = null, int? countryId = null,
         //    int pageIndex = 0, int pageSize = int.MaxValue)
         //{
@@ -236,8 +236,8 @@ namespace ARWNI2S.Node.Data.Services.Users
         //        items = items.Where(item => item.ShoppingCartTypeId == (int)shoppingCartType.Value);
 
         //    //filter shopping cart items by node
-        //    if (serverId > 0 && !_shoppingCartSettings.CartsSharedBetweenNodes)
-        //        items = items.Where(item => item.ServerId == serverId);
+        //    if (nodeId > 0 && !_shoppingCartSettings.CartsSharedBetweenNodes)
+        //        items = items.Where(item => item.NodeId == nodeId);
 
         //    //filter shopping cart items by product
         //    if (productId > 0)
@@ -293,7 +293,7 @@ namespace ARWNI2S.Node.Data.Services.Users
             ArgumentNullException.ThrowIfNull(user);
 
             if (user.IsSystemAccount)
-                throw new ServerException($"System user account ({user.SystemName}) could not be deleted");
+                throw new NodeException($"System user account ({user.SystemName}) could not be deleted");
 
             user.Deleted = true;
 
@@ -465,7 +465,7 @@ namespace ARWNI2S.Node.Data.Services.Users
 
             if (backgroundTaskUser is null)
             {
-                var node = (BladeServer)await _serverContext.GetCurrentServerAsync();
+                var node = (NI2SNode)await _nodeContext.GetCurrentNodeAsync();
                 //If for any reason the system user isn't in the database, then we add it
                 backgroundTaskUser = new User
                 {
@@ -477,13 +477,13 @@ namespace ARWNI2S.Node.Data.Services.Users
                     SystemName = UserDefaults.BackgroundTaskUserName,
                     CreatedOnUtc = DateTime.UtcNow,
                     LastActivityDateUtc = DateTime.UtcNow,
-                    RegisteredInServerId = node.Id
+                    RegisteredInNodeId = node.Id
                 };
 
                 await InsertUserAsync(backgroundTaskUser);
 
-                var guestRole = await GetUserRoleBySystemNameAsync(UserDefaults.GuestsRoleName) ?? throw new ServerException("'Guests' role could not be loaded");
-                await AddUserRoleMappingAsync(new UserUserRoleMapping { UserRoleId = guestRole.Id, UserId = backgroundTaskUser.Id });
+                //var guestRole = await GetUserRoleBySystemNameAsync(UserDefaults.GuestsRoleName) ?? throw new NodeException("'Guests' role could not be loaded");
+                //await AddUserRoleMappingAsync(new UserUserRoleMapping { UserRoleId = guestRole.Id, UserId = backgroundTaskUser.Id });
             }
 
             return backgroundTaskUser;
@@ -502,7 +502,7 @@ namespace ARWNI2S.Node.Data.Services.Users
 
             if (searchEngineUser is null)
             {
-                var node = (BladeServer)await _serverContext.GetCurrentServerAsync();
+                var node = (NI2SNode)await _nodeContext.GetCurrentNodeAsync();
                 //If for any reason the system user isn't in the database, then we add it
                 searchEngineUser = new User
                 {
@@ -514,13 +514,13 @@ namespace ARWNI2S.Node.Data.Services.Users
                     SystemName = UserDefaults.SearchEngineUserName,
                     CreatedOnUtc = DateTime.UtcNow,
                     LastActivityDateUtc = DateTime.UtcNow,
-                    RegisteredInServerId = node.Id
+                    RegisteredInNodeId = node.Id
                 };
 
                 await InsertUserAsync(searchEngineUser);
 
-                var guestRole = await GetUserRoleBySystemNameAsync(UserDefaults.GuestsRoleName) ?? throw new ServerException("'Guests' role could not be loaded");
-                await AddUserRoleMappingAsync(new UserUserRoleMapping { UserRoleId = guestRole.Id, UserId = searchEngineUser.Id });
+                //var guestRole = await GetUserRoleBySystemNameAsync(UserDefaults.GuestsRoleName) ?? throw new NodeException("'Guests' role could not be loaded");
+                //await AddUserRoleMappingAsync(new UserUserRoleMapping { UserRoleId = guestRole.Id, UserId = searchEngineUser.Id });
             }
 
             return searchEngineUser;
@@ -565,11 +565,11 @@ namespace ARWNI2S.Node.Data.Services.Users
                 LastActivityDateUtc = DateTime.UtcNow
             };
 
-            //add to 'Guests' role
-            var guestRole = await GetUserRoleBySystemNameAsync(UserDefaults.GuestsRoleName) ?? throw new ServerException("'Guests' role could not be loaded");
+            ////add to 'Guests' role
+            //var guestRole = await GetUserRoleBySystemNameAsync(UserDefaults.GuestsRoleName) ?? throw new NodeException("'Guests' role could not be loaded");
             await _userRepository.InsertAsync(user);
 
-            await AddUserRoleMappingAsync(new UserUserRoleMapping { UserId = user.Id, UserRoleId = guestRole.Id });
+            //await AddUserRoleMappingAsync(new UserUserRoleMapping { UserId = user.Id, UserRoleId = guestRole.Id });
 
             return user;
         }
@@ -598,14 +598,14 @@ namespace ARWNI2S.Node.Data.Services.Users
         ///// Reset data required for checkout
         ///// </summary>
         ///// <param name="user">User</param>
-        ///// <param name="serverId">Server identifier</param>
+        ///// <param name="nodeId">Node identifier</param>
         ///// <param name="clearCouponCodes">A value indicating whether to clear coupon code</param>
         ///// <param name="clearCheckoutAttributes">A value indicating whether to clear selected checkout attributes</param>
         ///// <param name="clearRewardPoints">A value indicating whether to clear "Use reward points" flag</param>
         ///// <param name="clearShippingMethod">A value indicating whether to clear selected shipping method</param>
         ///// <param name="clearPaymentMethod">A value indicating whether to clear selected payment method</param>
         ///// <returns>A task that represents the asynchronous operation</returns>
-        //public virtual async Task ResetCheckoutDataAsync(User user, int serverId,
+        //public virtual async Task ResetCheckoutDataAsync(User user, int nodeId,
         //    bool clearCouponCodes = false, bool clearCheckoutAttributes = false,
         //    bool clearRewardPoints = true, bool clearShippingMethod = true,
         //    bool clearPaymentMethod = true)
@@ -622,23 +622,23 @@ namespace ARWNI2S.Node.Data.Services.Users
 
         //    //clear checkout attributes
         //    if (clearCheckoutAttributes)
-        //        await _genericAttributeService.SaveAttributeAsync<string>(user, UserDefaults.CheckoutAttributes, null, serverId);
+        //        await _genericAttributeService.SaveAttributeAsync<string>(user, UserDefaults.CheckoutAttributes, null, nodeId);
 
         //    //clear reward points flag
         //    if (clearRewardPoints)
-        //        await _genericAttributeService.SaveAttributeAsync(user, UserDefaults.UseRewardPointsDuringCheckoutAttribute, false, serverId);
+        //        await _genericAttributeService.SaveAttributeAsync(user, UserDefaults.UseRewardPointsDuringCheckoutAttribute, false, nodeId);
 
         //    //clear selected shipping method
         //    if (clearShippingMethod)
         //    {
-        //        await _genericAttributeService.SaveAttributeAsync<ShippingOption>(user, UserDefaults.SelectedShippingOptionAttribute, null, serverId);
-        //        await _genericAttributeService.SaveAttributeAsync<ShippingOption>(user, UserDefaults.OfferedShippingOptionsAttribute, null, serverId);
-        //        await _genericAttributeService.SaveAttributeAsync<PickupPoint>(user, UserDefaults.SelectedPickupPointAttribute, null, serverId);
+        //        await _genericAttributeService.SaveAttributeAsync<ShippingOption>(user, UserDefaults.SelectedShippingOptionAttribute, null, nodeId);
+        //        await _genericAttributeService.SaveAttributeAsync<ShippingOption>(user, UserDefaults.OfferedShippingOptionsAttribute, null, nodeId);
+        //        await _genericAttributeService.SaveAttributeAsync<PickupPoint>(user, UserDefaults.SelectedPickupPointAttribute, null, nodeId);
         //    }
 
         //    //clear selected payment method
         //    if (clearPaymentMethod)
-        //        await _genericAttributeService.SaveAttributeAsync<string>(user, UserDefaults.SelectedPaymentMethodAttribute, null, serverId);
+        //        await _genericAttributeService.SaveAttributeAsync<string>(user, UserDefaults.SelectedPaymentMethodAttribute, null, nodeId);
 
         //    await UpdateUserAsync(user);
         //}
@@ -654,11 +654,11 @@ namespace ARWNI2S.Node.Data.Services.Users
         /// </returns>
         public virtual async Task<int> DeleteGuestUsersAsync(DateTime? createdFromUtc, DateTime? createdToUtc)
         {
-            var guestRole = await GetUserRoleBySystemNameAsync(UserDefaults.GuestsRoleName);
+            //var guestRole = await GetUserRoleBySystemNameAsync(UserDefaults.GuestsRoleName);
 
             var allGuestUsers = from guest in _userRepository.Table
-                                join ccm in _userUserRoleMappingRepository.Table on guest.Id equals ccm.UserId
-                                where ccm.UserRoleId == guestRole.Id
+                                //join ccm in _userUserRoleMappingRepository.Table on guest.Id equals ccm.UserId
+                                //where ccm.UserRoleId == guestRole.Id
                                 select guest;
 
             var guestsToDelete = from guest in _userRepository.Table
@@ -677,19 +677,19 @@ namespace ARWNI2S.Node.Data.Services.Users
 
 
             await using var tmpGuests = await _dataProvider.CreateTempDataStorageAsync("tmp_guestsToDelete", guestsToDelete);
-            await using var tmpAddresses = await _dataProvider.CreateTempDataStorageAsync("tmp_guestsAddressesToDelete",
-                _userAddressMappingRepository.Table
-                    .Where(ca => tmpGuests.Any(u => u.UserId == ca.UserId))
-                    .Select(ca => new { ca.AddressId }));
+            //await using var tmpAddresses = await _dataProvider.CreateTempDataStorageAsync("tmp_guestsAddressesToDelete",
+            //    _userAddressMappingRepository.Table
+            //        .Where(ca => tmpGuests.Any(u => u.UserId == ca.UserId))
+            //        .Select(ca => new { ca.AddressId }));
 
             //delete guests
             var totalRecordsDeleted = await _userRepository.DeleteAsync(u => tmpGuests.Any(tmp => tmp.UserId == u.Id));
 
             //delete attributes
-            await _gaRepository.DeleteAsync(ga => tmpGuests.Any(u => u.UserId == ga.EntityId) && ga.KeyGroup == nameof(User));
+            //await _gaRepository.DeleteAsync(ga => tmpGuests.Any(u => u.UserId == ga.EntityId) && ga.KeyGroup == nameof(User));
 
             //delete m -> m addresses
-            await _userAddressRepository.DeleteAsync(a => tmpAddresses.Any(tmp => tmp.AddressId == a.Id));
+            //await _userAddressRepository.DeleteAsync(a => tmpAddresses.Any(tmp => tmp.AddressId == a.Id));
 
             return totalRecordsDeleted;
         }
@@ -763,297 +763,33 @@ namespace ARWNI2S.Node.Data.Services.Users
             if (user == null)
                 return string.Empty;
 
-            if (await IsGuestAsync(user))
-                //do not inject ILocalizationService via constructor because it'll cause circular references
-                return await EngineContext.Current.Resolve<ILocalizationService>().GetResourceAsync("User.Guest");
+            //if (await IsGuestAsync(user))
+            //    //do not inject ILocalizationService via constructor because it'll cause circular references
+            //    return await EngineContext.Current.Resolve<ILocalizationService>().GetResourceAsync("User.Guest");
 
             var result = string.Empty;
-            switch (_userSettings.UserNameFormat)
-            {
-                case UserNameFormat.ShowEmails:
-                    result = user.Email;
-                    break;
-                case UserNameFormat.ShowUsernames:
-                    result = user.Username;
-                    break;
-                case UserNameFormat.ShowFullNames:
-                    result = await GetUserFullNameAsync(user);
-                    break;
-                case UserNameFormat.ShowFirstName:
-                    result = user.FirstName;
-                    break;
-                default:
-                    break;
-            }
+            //switch (_userSettings.UserNameFormat)
+            //{
+            //    case UserNameFormat.ShowEmails:
+            //        result = user.Email;
+            //        break;
+            //    case UserNameFormat.ShowUsernames:
+            //        result = user.Username;
+            //        break;
+            //    case UserNameFormat.ShowFullNames:
+            result = await GetUserFullNameAsync(user);
+            //        break;
+            //    case UserNameFormat.ShowFirstName:
+            //        result = user.FirstName;
+            //        break;
+            //    default:
+            //        break;
+            //}
 
             if (stripTooLong && maxLength > 0)
                 result = CommonHelper.EnsureMaximumLength(result, maxLength);
 
             return result;
-        }
-
-        /// <summary>
-        /// Gets coupon codes
-        /// </summary>
-        /// <param name="user">User</param>
-        /// <returns>
-        /// A task that represents the asynchronous operation
-        /// The task result contains the coupon codes
-        /// </returns>
-        public virtual async Task<string[]> ParseAppliedDiscountCouponCodesAsync(User user)
-        {
-            ArgumentNullException.ThrowIfNull(user);
-
-            var existingCouponCodes = await _genericAttributeService.GetAttributeAsync<string>(user, UserDefaults.DiscountCouponCodeAttribute);
-
-            var couponCodes = new List<string>();
-            if (string.IsNullOrEmpty(existingCouponCodes))
-                return couponCodes.ToArray();
-
-            try
-            {
-                var xmlDoc = new XmlDocument();
-                xmlDoc.LoadXml(existingCouponCodes);
-
-                var nodeList1 = xmlDoc.SelectNodes(@"//DiscountCouponCodes/CouponCode");
-                foreach (XmlNode node1 in nodeList1)
-                {
-                    if (node1.Attributes?["Code"] == null)
-                        continue;
-                    var code = node1.Attributes["Code"].InnerText.Trim();
-                    couponCodes.Add(code);
-                }
-            }
-            catch
-            {
-                // ignored
-            }
-
-            return couponCodes.ToArray();
-        }
-
-        /// <summary>
-        /// Adds a coupon code
-        /// </summary>
-        /// <param name="user">User</param>
-        /// <param name="couponCode">Coupon code</param>
-        /// <returns>
-        /// A task that represents the asynchronous operation
-        /// The task result contains the new coupon codes document
-        /// </returns>
-        public virtual async Task ApplyDiscountCouponCodeAsync(User user, string couponCode)
-        {
-            ArgumentNullException.ThrowIfNull(user);
-
-            var result = string.Empty;
-            try
-            {
-                var existingCouponCodes = await _genericAttributeService.GetAttributeAsync<string>(user, UserDefaults.DiscountCouponCodeAttribute);
-
-                couponCode = couponCode.Trim().ToLowerInvariant();
-
-                var xmlDoc = new XmlDocument();
-                if (string.IsNullOrEmpty(existingCouponCodes))
-                {
-                    var element1 = xmlDoc.CreateElement("DiscountCouponCodes");
-                    xmlDoc.AppendChild(element1);
-                }
-                else
-                    xmlDoc.LoadXml(existingCouponCodes);
-
-                var rootElement = (XmlElement)xmlDoc.SelectSingleNode(@"//DiscountCouponCodes");
-
-                XmlElement gcElement = null;
-                //find existing
-                var nodeList1 = xmlDoc.SelectNodes(@"//DiscountCouponCodes/CouponCode");
-                foreach (XmlNode node1 in nodeList1)
-                {
-                    if (node1.Attributes?["Code"] == null)
-                        continue;
-
-                    var couponCodeAttribute = node1.Attributes["Code"].InnerText.Trim();
-
-                    if (!couponCodeAttribute.Equals(couponCode, StringComparison.InvariantCultureIgnoreCase))
-                        continue;
-
-                    gcElement = (XmlElement)node1;
-                    break;
-                }
-
-                //create new one if not found
-                if (gcElement == null)
-                {
-                    gcElement = xmlDoc.CreateElement("CouponCode");
-                    gcElement.SetAttribute("Code", couponCode);
-                    rootElement.AppendChild(gcElement);
-                }
-
-                result = xmlDoc.OuterXml;
-            }
-            catch
-            {
-                // ignored
-            }
-
-            //apply new value
-            await _genericAttributeService.SaveAttributeAsync(user, UserDefaults.DiscountCouponCodeAttribute, result);
-        }
-
-        /// <summary>
-        /// Removes a coupon code
-        /// </summary>
-        /// <param name="user">User</param>
-        /// <param name="couponCode">Coupon code to remove</param>
-        /// <returns>
-        /// A task that represents the asynchronous operation
-        /// The task result contains the new coupon codes document
-        /// </returns>
-        public virtual async Task RemoveDiscountCouponCodeAsync(User user, string couponCode)
-        {
-            ArgumentNullException.ThrowIfNull(user);
-
-            //get applied coupon codes
-            var existingCouponCodes = await ParseAppliedDiscountCouponCodesAsync(user);
-
-            //clear them
-            await _genericAttributeService.SaveAttributeAsync<string>(user, UserDefaults.DiscountCouponCodeAttribute, null);
-
-            //save again except removed one
-            foreach (var existingCouponCode in existingCouponCodes)
-                if (!existingCouponCode.Equals(couponCode, StringComparison.InvariantCultureIgnoreCase))
-                    await ApplyDiscountCouponCodeAsync(user, existingCouponCode);
-        }
-
-        /// <summary>
-        /// Gets coupon codes
-        /// </summary>
-        /// <param name="user">User</param>
-        /// <returns>
-        /// A task that represents the asynchronous operation
-        /// The task result contains the coupon codes
-        /// </returns>
-        public virtual async Task<string[]> ParseAppliedGiftCardCouponCodesAsync(User user)
-        {
-            ArgumentNullException.ThrowIfNull(user);
-
-            var existingCouponCodes = await _genericAttributeService.GetAttributeAsync<string>(user, UserDefaults.GiftCardCouponCodesAttribute);
-
-            var couponCodes = new List<string>();
-            if (string.IsNullOrEmpty(existingCouponCodes))
-                return couponCodes.ToArray();
-
-            try
-            {
-                var xmlDoc = new XmlDocument();
-                xmlDoc.LoadXml(existingCouponCodes);
-
-                var nodeList1 = xmlDoc.SelectNodes(@"//GiftCardCouponCodes/CouponCode");
-                foreach (XmlNode node1 in nodeList1)
-                {
-                    if (node1.Attributes?["Code"] == null)
-                        continue;
-
-                    var code = node1.Attributes["Code"].InnerText.Trim();
-                    couponCodes.Add(code);
-                }
-            }
-            catch
-            {
-                // ignored
-            }
-
-            return couponCodes.ToArray();
-        }
-
-        /// <summary>
-        /// Adds a coupon code
-        /// </summary>
-        /// <param name="user">User</param>
-        /// <param name="couponCode">Coupon code</param>
-        /// <returns>
-        /// A task that represents the asynchronous operation
-        /// The task result contains the new coupon codes document
-        /// </returns>
-        public virtual async Task ApplyGiftCardCouponCodeAsync(User user, string couponCode)
-        {
-            ArgumentNullException.ThrowIfNull(user);
-
-            var result = string.Empty;
-            try
-            {
-                var existingCouponCodes = await _genericAttributeService.GetAttributeAsync<string>(user, UserDefaults.GiftCardCouponCodesAttribute);
-
-                couponCode = couponCode.Trim().ToLowerInvariant();
-
-                var xmlDoc = new XmlDocument();
-                if (string.IsNullOrEmpty(existingCouponCodes))
-                {
-                    var element1 = xmlDoc.CreateElement("GiftCardCouponCodes");
-                    xmlDoc.AppendChild(element1);
-                }
-                else
-                    xmlDoc.LoadXml(existingCouponCodes);
-
-                var rootElement = (XmlElement)xmlDoc.SelectSingleNode(@"//GiftCardCouponCodes");
-
-                XmlElement gcElement = null;
-                //find existing
-                var nodeList1 = xmlDoc.SelectNodes(@"//GiftCardCouponCodes/CouponCode");
-                foreach (XmlNode node1 in nodeList1)
-                {
-                    if (node1.Attributes?["Code"] == null)
-                        continue;
-
-                    var couponCodeAttribute = node1.Attributes["Code"].InnerText.Trim();
-                    if (!couponCodeAttribute.Equals(couponCode, StringComparison.InvariantCultureIgnoreCase))
-                        continue;
-
-                    gcElement = (XmlElement)node1;
-                    break;
-                }
-
-                //create new one if not found
-                if (gcElement == null)
-                {
-                    gcElement = xmlDoc.CreateElement("CouponCode");
-                    gcElement.SetAttribute("Code", couponCode);
-                    rootElement.AppendChild(gcElement);
-                }
-
-                result = xmlDoc.OuterXml;
-            }
-            catch
-            {
-                // ignored
-            }
-
-            //apply new value
-            await _genericAttributeService.SaveAttributeAsync(user, UserDefaults.GiftCardCouponCodesAttribute, result);
-        }
-
-        /// <summary>
-        /// Removes a coupon code
-        /// </summary>
-        /// <param name="user">User</param>
-        /// <param name="couponCode">Coupon code to remove</param>
-        /// <returns>
-        /// A task that represents the asynchronous operation
-        /// The task result contains the new coupon codes document
-        /// </returns>
-        public virtual async Task RemoveGiftCardCouponCodeAsync(User user, string couponCode)
-        {
-            ArgumentNullException.ThrowIfNull(user);
-
-            //get applied coupon codes
-            var existingCouponCodes = await ParseAppliedGiftCardCouponCodesAsync(user);
-
-            //clear them
-            await _genericAttributeService.SaveAttributeAsync<string>(user, UserDefaults.GiftCardCouponCodesAttribute, null);
-
-            //save again except removed one
-            foreach (var existingCouponCode in existingCouponCodes)
-                if (!existingCouponCode.Equals(couponCode, StringComparison.InvariantCultureIgnoreCase))
-                    await ApplyGiftCardCouponCodeAsync(user, existingCouponCode);
         }
 
         /// <summary>
@@ -1121,7 +857,7 @@ namespace ARWNI2S.Node.Data.Services.Users
             ArgumentNullException.ThrowIfNull(userRole);
 
             if (userRole.IsSystemRole)
-                throw new ServerException("System role could not be deleted");
+                throw new NodeException("System role could not be deleted");
 
             await _userRoleRepository.DeleteAsync(userRole);
         }
@@ -1363,292 +1099,292 @@ namespace ARWNI2S.Node.Data.Services.Users
 
         #endregion
 
-        #region User passwords
+        //#region User passwords
 
-        /// <summary>
-        /// Gets user passwords
-        /// </summary>
-        /// <param name="userId">User identifier; pass null to load all records</param>
-        /// <param name="passwordFormat">Password format; pass null to load all records</param>
-        /// <param name="passwordsToReturn">Number of returning passwords; pass null to load all records</param>
-        /// <returns>
-        /// A task that represents the asynchronous operation
-        /// The task result contains the list of user passwords
-        /// </returns>
-        public virtual async Task<IList<UserPassword>> GetUserPasswordsAsync(int? userId = null,
-            PasswordFormat? passwordFormat = null, int? passwordsToReturn = null)
-        {
-            var query = _userPasswordRepository.Table;
+        ///// <summary>
+        ///// Gets user passwords
+        ///// </summary>
+        ///// <param name="userId">User identifier; pass null to load all records</param>
+        ///// <param name="passwordFormat">Password format; pass null to load all records</param>
+        ///// <param name="passwordsToReturn">Number of returning passwords; pass null to load all records</param>
+        ///// <returns>
+        ///// A task that represents the asynchronous operation
+        ///// The task result contains the list of user passwords
+        ///// </returns>
+        //public virtual async Task<IList<UserPassword>> GetUserPasswordsAsync(int? userId = null,
+        //    PasswordFormat? passwordFormat = null, int? passwordsToReturn = null)
+        //{
+        //    var query = _userPasswordRepository.Table;
 
-            //filter by user
-            if (userId.HasValue)
-                query = query.Where(password => password.UserId == userId.Value);
+        //    //filter by user
+        //    if (userId.HasValue)
+        //        query = query.Where(password => password.UserId == userId.Value);
 
-            //filter by password format
-            if (passwordFormat.HasValue)
-                query = query.Where(password => password.PasswordFormatId == (int)passwordFormat.Value);
+        //    //filter by password format
+        //    if (passwordFormat.HasValue)
+        //        query = query.Where(password => password.PasswordFormatId == (int)passwordFormat.Value);
 
-            //get the latest passwords
-            if (passwordsToReturn.HasValue)
-                query = query.OrderByDescending(password => password.CreatedOnUtc).Take(passwordsToReturn.Value);
+        //    //get the latest passwords
+        //    if (passwordsToReturn.HasValue)
+        //        query = query.OrderByDescending(password => password.CreatedOnUtc).Take(passwordsToReturn.Value);
 
-            return await query.ToListAsync();
-        }
+        //    return await query.ToListAsync();
+        //}
 
-        /// <summary>
-        /// Get current user password
-        /// </summary>
-        /// <param name="userId">User identifier</param>
-        /// <returns>
-        /// A task that represents the asynchronous operation
-        /// The task result contains the user password
-        /// </returns>
-        public virtual async Task<UserPassword> GetCurrentPasswordAsync(int userId)
-        {
-            if (userId == 0)
-                return null;
+        ///// <summary>
+        ///// Get current user password
+        ///// </summary>
+        ///// <param name="userId">User identifier</param>
+        ///// <returns>
+        ///// A task that represents the asynchronous operation
+        ///// The task result contains the user password
+        ///// </returns>
+        //public virtual async Task<UserPassword> GetCurrentPasswordAsync(int userId)
+        //{
+        //    if (userId == 0)
+        //        return null;
 
-            //return the latest password
-            return (await GetUserPasswordsAsync(userId, passwordsToReturn: 1)).FirstOrDefault();
-        }
+        //    //return the latest password
+        //    return (await GetUserPasswordsAsync(userId, passwordsToReturn: 1)).FirstOrDefault();
+        //}
 
-        /// <summary>
-        /// Insert a user password
-        /// </summary>
-        /// <param name="userPassword">User password</param>
-        /// <returns>A task that represents the asynchronous operation</returns>
-        public virtual async Task InsertUserPasswordAsync(UserPassword userPassword)
-        {
-            await _userPasswordRepository.InsertAsync(userPassword);
-        }
+        ///// <summary>
+        ///// Insert a user password
+        ///// </summary>
+        ///// <param name="userPassword">User password</param>
+        ///// <returns>A task that represents the asynchronous operation</returns>
+        //public virtual async Task InsertUserPasswordAsync(UserPassword userPassword)
+        //{
+        //    await _userPasswordRepository.InsertAsync(userPassword);
+        //}
 
-        /// <summary>
-        /// Update a user password
-        /// </summary>
-        /// <param name="userPassword">User password</param>
-        /// <returns>A task that represents the asynchronous operation</returns>
-        public virtual async Task UpdateUserPasswordAsync(UserPassword userPassword)
-        {
-            await _userPasswordRepository.UpdateAsync(userPassword);
-        }
+        ///// <summary>
+        ///// Update a user password
+        ///// </summary>
+        ///// <param name="userPassword">User password</param>
+        ///// <returns>A task that represents the asynchronous operation</returns>
+        //public virtual async Task UpdateUserPasswordAsync(UserPassword userPassword)
+        //{
+        //    await _userPasswordRepository.UpdateAsync(userPassword);
+        //}
 
-        /// <summary>
-        /// Check whether password recovery token is valid
-        /// </summary>
-        /// <param name="user">User</param>
-        /// <param name="token">Token to validate</param>
-        /// <returns>
-        /// A task that represents the asynchronous operation
-        /// The task result contains the result
-        /// </returns>
-        public virtual async Task<bool> IsPasswordRecoveryTokenValidAsync(User user, string token)
-        {
-            ArgumentNullException.ThrowIfNull(user);
+        ///// <summary>
+        ///// Check whether password recovery token is valid
+        ///// </summary>
+        ///// <param name="user">User</param>
+        ///// <param name="token">Token to validate</param>
+        ///// <returns>
+        ///// A task that represents the asynchronous operation
+        ///// The task result contains the result
+        ///// </returns>
+        //public virtual async Task<bool> IsPasswordRecoveryTokenValidAsync(User user, string token)
+        //{
+        //    ArgumentNullException.ThrowIfNull(user);
 
-            var cPrt = await _genericAttributeService.GetAttributeAsync<string>(user, UserDefaults.PasswordRecoveryTokenAttribute);
-            if (string.IsNullOrEmpty(cPrt))
-                return false;
+        //    var cPrt = await _genericAttributeService.GetAttributeAsync<string>(user, UserDefaults.PasswordRecoveryTokenAttribute);
+        //    if (string.IsNullOrEmpty(cPrt))
+        //        return false;
 
-            if (!cPrt.Equals(token, StringComparison.InvariantCultureIgnoreCase))
-                return false;
+        //    if (!cPrt.Equals(token, StringComparison.InvariantCultureIgnoreCase))
+        //        return false;
 
-            return true;
-        }
+        //    return true;
+        //}
 
-        /// <summary>
-        /// Check whether password recovery link is expired
-        /// </summary>
-        /// <param name="user">User</param>
-        /// <returns>
-        /// A task that represents the asynchronous operation
-        /// The task result contains the result
-        /// </returns>
-        public virtual async Task<bool> IsPasswordRecoveryLinkExpiredAsync(User user)
-        {
-            ArgumentNullException.ThrowIfNull(user);
+        ///// <summary>
+        ///// Check whether password recovery link is expired
+        ///// </summary>
+        ///// <param name="user">User</param>
+        ///// <returns>
+        ///// A task that represents the asynchronous operation
+        ///// The task result contains the result
+        ///// </returns>
+        //public virtual async Task<bool> IsPasswordRecoveryLinkExpiredAsync(User user)
+        //{
+        //    ArgumentNullException.ThrowIfNull(user);
 
-            if (_userSettings.PasswordRecoveryLinkDaysValid == 0)
-                return false;
+        //    if (_userSettings.PasswordRecoveryLinkDaysValid == 0)
+        //        return false;
 
-            var generatedDate = await _genericAttributeService.GetAttributeAsync<DateTime?>(user, UserDefaults.PasswordRecoveryTokenDateGeneratedAttribute);
-            if (!generatedDate.HasValue)
-                return false;
+        //    var generatedDate = await _genericAttributeService.GetAttributeAsync<DateTime?>(user, UserDefaults.PasswordRecoveryTokenDateGeneratedAttribute);
+        //    if (!generatedDate.HasValue)
+        //        return false;
 
-            var daysPassed = (DateTime.UtcNow - generatedDate.Value).TotalDays;
-            if (daysPassed > _userSettings.PasswordRecoveryLinkDaysValid)
-                return true;
+        //    var daysPassed = (DateTime.UtcNow - generatedDate.Value).TotalDays;
+        //    if (daysPassed > _userSettings.PasswordRecoveryLinkDaysValid)
+        //        return true;
 
-            return false;
-        }
+        //    return false;
+        //}
 
-        /// <summary>
-        /// Check whether user password is expired 
-        /// </summary>
-        /// <param name="user">User</param>
-        /// <returns>
-        /// A task that represents the asynchronous operation
-        /// The task result contains the rue if password is expired; otherwise false
-        /// </returns>
-        public virtual async Task<bool> IsPasswordExpiredAsync(User user)
-        {
-            ArgumentNullException.ThrowIfNull(user);
+        ///// <summary>
+        ///// Check whether user password is expired 
+        ///// </summary>
+        ///// <param name="user">User</param>
+        ///// <returns>
+        ///// A task that represents the asynchronous operation
+        ///// The task result contains the rue if password is expired; otherwise false
+        ///// </returns>
+        //public virtual async Task<bool> IsPasswordExpiredAsync(User user)
+        //{
+        //    ArgumentNullException.ThrowIfNull(user);
 
-            //the guests don't have a password
-            if (await IsGuestAsync(user))
-                return false;
+        //    //the guests don't have a password
+        //    if (await IsGuestAsync(user))
+        //        return false;
 
-            //password lifetime is disabled for user
-            if (!(await GetUserRolesAsync(user)).Any(role => role.Active && role.EnablePasswordLifetime))
-                return false;
+        //    //password lifetime is disabled for user
+        //    if (!(await GetUserRolesAsync(user)).Any(role => role.Active && role.EnablePasswordLifetime))
+        //        return false;
 
-            //setting disabled for all
-            if (_userSettings.PasswordLifetime == 0)
-                return false;
+        //    //setting disabled for all
+        //    if (_userSettings.PasswordLifetime == 0)
+        //        return false;
 
-            var cacheKey = _staticCacheManager.PrepareKeyForShortTermCache(UserServicesDefaults.UserPasswordLifetimeCacheKey, user);
+        //    var cacheKey = _staticCacheManager.PrepareKeyForShortTermCache(UserServicesDefaults.UserPasswordLifetimeCacheKey, user);
 
-            //get current password usage time
-            var currentLifetime = await _staticCacheManager.GetAsync(cacheKey, async () =>
-            {
-                var userPassword = await GetCurrentPasswordAsync(user.Id);
-                //password is not found, so return max value to force user to change password
-                if (userPassword == null)
-                    return int.MaxValue;
+        //    //get current password usage time
+        //    var currentLifetime = await _staticCacheManager.GetAsync(cacheKey, async () =>
+        //    {
+        //        var userPassword = await GetCurrentPasswordAsync(user.Id);
+        //        //password is not found, so return max value to force user to change password
+        //        if (userPassword == null)
+        //            return int.MaxValue;
 
-                return (DateTime.UtcNow - userPassword.CreatedOnUtc).Days;
-            });
+        //        return (DateTime.UtcNow - userPassword.CreatedOnUtc).Days;
+        //    });
 
-            return currentLifetime >= _userSettings.PasswordLifetime;
-        }
+        //    return currentLifetime >= _userSettings.PasswordLifetime;
+        //}
 
-        #endregion
+        //#endregion
 
-        #region User address mapping
+        //#region User address mapping
 
-        /// <summary>
-        /// Remove a user-address mapping record
-        /// </summary>
-        /// <param name="user">User</param>
-        /// <param name="address">Address</param>
-        /// <returns>A task that represents the asynchronous operation</returns>
-        public virtual async Task RemoveUserAddressAsync(User user, Address address)
-        {
-            ArgumentNullException.ThrowIfNull(user);
+        ///// <summary>
+        ///// Remove a user-address mapping record
+        ///// </summary>
+        ///// <param name="user">User</param>
+        ///// <param name="address">Address</param>
+        ///// <returns>A task that represents the asynchronous operation</returns>
+        //public virtual async Task RemoveUserAddressAsync(User user, Address address)
+        //{
+        //    ArgumentNullException.ThrowIfNull(user);
 
-            if (await _userAddressMappingRepository.Table
-                .FirstOrDefaultAsync(m => m.AddressId == address.Id && m.UserId == user.Id)
-                is UserAddressMapping mapping)
-            {
-                if (user.BillingAddressId == address.Id)
-                    user.BillingAddressId = null;
-                if (user.ShippingAddressId == address.Id)
-                    user.ShippingAddressId = null;
+        //    if (await _userAddressMappingRepository.Table
+        //        .FirstOrDefaultAsync(m => m.AddressId == address.Id && m.UserId == user.Id)
+        //        is UserAddressMapping mapping)
+        //    {
+        //        if (user.BillingAddressId == address.Id)
+        //            user.BillingAddressId = null;
+        //        if (user.ShippingAddressId == address.Id)
+        //            user.ShippingAddressId = null;
 
-                await _userAddressMappingRepository.DeleteAsync(mapping);
-            }
-        }
+        //        await _userAddressMappingRepository.DeleteAsync(mapping);
+        //    }
+        //}
 
-        /// <summary>
-        /// Inserts a user-address mapping record
-        /// </summary>
-        /// <param name="user">User</param>
-        /// <param name="address">Address</param>
-        /// <returns>A task that represents the asynchronous operation</returns>
-        public virtual async Task InsertUserAddressAsync(User user, Address address)
-        {
-            ArgumentNullException.ThrowIfNull(user);
+        ///// <summary>
+        ///// Inserts a user-address mapping record
+        ///// </summary>
+        ///// <param name="user">User</param>
+        ///// <param name="address">Address</param>
+        ///// <returns>A task that represents the asynchronous operation</returns>
+        //public virtual async Task InsertUserAddressAsync(User user, Address address)
+        //{
+        //    ArgumentNullException.ThrowIfNull(user);
 
-            ArgumentNullException.ThrowIfNull(address);
+        //    ArgumentNullException.ThrowIfNull(address);
 
-            if (await _userAddressMappingRepository.Table
-                .FirstOrDefaultAsync(m => m.AddressId == address.Id && m.UserId == user.Id)
-                is null)
-            {
-                var mapping = new UserAddressMapping
-                {
-                    AddressId = address.Id,
-                    UserId = user.Id
-                };
+        //    if (await _userAddressMappingRepository.Table
+        //        .FirstOrDefaultAsync(m => m.AddressId == address.Id && m.UserId == user.Id)
+        //        is null)
+        //    {
+        //        var mapping = new UserAddressMapping
+        //        {
+        //            AddressId = address.Id,
+        //            UserId = user.Id
+        //        };
 
-                await _userAddressMappingRepository.InsertAsync(mapping);
-            }
-        }
+        //        await _userAddressMappingRepository.InsertAsync(mapping);
+        //    }
+        //}
 
-        /// <summary>
-        /// Gets a list of addresses mapped to user
-        /// </summary>
-        /// <param name="userId">User identifier</param>
-        /// <returns>
-        /// A task that represents the asynchronous operation
-        /// The task result contains the result
-        /// </returns>
-        public virtual async Task<IList<Address>> GetAddressesByUserIdAsync(int userId)
-        {
-            var query = from address in _userAddressRepository.Table
-                        join cam in _userAddressMappingRepository.Table on address.Id equals cam.AddressId
-                        where cam.UserId == userId
-                        select address;
+        ///// <summary>
+        ///// Gets a list of addresses mapped to user
+        ///// </summary>
+        ///// <param name="userId">User identifier</param>
+        ///// <returns>
+        ///// A task that represents the asynchronous operation
+        ///// The task result contains the result
+        ///// </returns>
+        //public virtual async Task<IList<Address>> GetAddressesByUserIdAsync(int userId)
+        //{
+        //    var query = from address in _userAddressRepository.Table
+        //                join cam in _userAddressMappingRepository.Table on address.Id equals cam.AddressId
+        //                where cam.UserId == userId
+        //                select address;
 
-            var key = _staticCacheManager.PrepareKeyForShortTermCache(UserServicesDefaults.UserAddressesCacheKey, userId);
+        //    var key = _staticCacheManager.PrepareKeyForShortTermCache(UserServicesDefaults.UserAddressesCacheKey, userId);
 
-            return await _staticCacheManager.GetAsync(key, async () => await query.ToListAsync());
-        }
+        //    return await _staticCacheManager.GetAsync(key, async () => await query.ToListAsync());
+        //}
 
-        /// <summary>
-        /// Gets a address mapped to user
-        /// </summary>
-        /// <param name="userId">User identifier</param>
-        /// <param name="addressId">Address identifier</param>
-        /// <returns>
-        /// A task that represents the asynchronous operation
-        /// The task result contains the result
-        /// </returns>
-        public virtual async Task<Address> GetUserAddressAsync(int userId, int addressId)
-        {
-            if (userId == 0 || addressId == 0)
-                return null;
+        ///// <summary>
+        ///// Gets a address mapped to user
+        ///// </summary>
+        ///// <param name="userId">User identifier</param>
+        ///// <param name="addressId">Address identifier</param>
+        ///// <returns>
+        ///// A task that represents the asynchronous operation
+        ///// The task result contains the result
+        ///// </returns>
+        //public virtual async Task<Address> GetUserAddressAsync(int userId, int addressId)
+        //{
+        //    if (userId == 0 || addressId == 0)
+        //        return null;
 
-            var query = from address in _userAddressRepository.Table
-                        join cam in _userAddressMappingRepository.Table on address.Id equals cam.AddressId
-                        where cam.UserId == userId && address.Id == addressId
-                        select address;
+        //    var query = from address in _userAddressRepository.Table
+        //                join cam in _userAddressMappingRepository.Table on address.Id equals cam.AddressId
+        //                where cam.UserId == userId && address.Id == addressId
+        //                select address;
 
-            var key = _staticCacheManager.PrepareKeyForShortTermCache(UserServicesDefaults.UserAddressCacheKey, userId, addressId);
+        //    var key = _staticCacheManager.PrepareKeyForShortTermCache(UserServicesDefaults.UserAddressCacheKey, userId, addressId);
 
-            return await _staticCacheManager.GetAsync(key, async () => await query.FirstOrDefaultAsync());
-        }
+        //    return await _staticCacheManager.GetAsync(key, async () => await query.FirstOrDefaultAsync());
+        //}
 
-        /// <summary>
-        /// Gets a user billing address
-        /// </summary>
-        /// <param name="user">User identifier</param>
-        /// <returns>
-        /// A task that represents the asynchronous operation
-        /// The task result contains the result
-        /// </returns>
-        public virtual async Task<Address> GetUserBillingAddressAsync(User user)
-        {
-            ArgumentNullException.ThrowIfNull(user);
+        ///// <summary>
+        ///// Gets a user billing address
+        ///// </summary>
+        ///// <param name="user">User identifier</param>
+        ///// <returns>
+        ///// A task that represents the asynchronous operation
+        ///// The task result contains the result
+        ///// </returns>
+        //public virtual async Task<Address> GetUserBillingAddressAsync(User user)
+        //{
+        //    ArgumentNullException.ThrowIfNull(user);
 
-            return await GetUserAddressAsync(user.Id, user.BillingAddressId ?? 0);
-        }
+        //    return await GetUserAddressAsync(user.Id, user.BillingAddressId ?? 0);
+        //}
 
-        /// <summary>
-        /// Gets a user shipping address
-        /// </summary>
-        /// <param name="user">User</param>
-        /// <returns>
-        /// A task that represents the asynchronous operation
-        /// The task result contains the result
-        /// </returns>
-        public virtual async Task<Address> GetUserShippingAddressAsync(User user)
-        {
-            ArgumentNullException.ThrowIfNull(user);
+        ///// <summary>
+        ///// Gets a user shipping address
+        ///// </summary>
+        ///// <param name="user">User</param>
+        ///// <returns>
+        ///// A task that represents the asynchronous operation
+        ///// The task result contains the result
+        ///// </returns>
+        //public virtual async Task<Address> GetUserShippingAddressAsync(User user)
+        //{
+        //    ArgumentNullException.ThrowIfNull(user);
 
-            return await GetUserAddressAsync(user.Id, user.ShippingAddressId ?? 0);
-        }
+        //    return await GetUserAddressAsync(user.Id, user.ShippingAddressId ?? 0);
+        //}
 
-        #endregion
+        //#endregion
 
         #endregion
     }

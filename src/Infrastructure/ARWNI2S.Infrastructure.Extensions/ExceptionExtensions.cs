@@ -1,4 +1,4 @@
-﻿namespace ARWNI2S.Infrastructure
+﻿namespace ARWNI2S.Infrastructure.Extensions
 {
     public static class ExceptionExtensions
     {

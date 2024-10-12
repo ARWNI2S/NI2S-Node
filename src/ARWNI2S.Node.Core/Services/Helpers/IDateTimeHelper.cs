@@ -1,4 +1,4 @@
-﻿using ARWNI2S.Node.Core.Entities.Users;
+﻿using ARWNI2S.Infrastructure.Entities;
 using System.Collections.ObjectModel;
 
 namespace ARWNI2S.Node.Core.Services.Helpers
@@ -73,9 +73,9 @@ namespace ARWNI2S.Node.Core.Services.Helpers
         /// <param name="user">User</param>
         /// <returns>
         /// A task that represents the asynchronous operation
-        /// The task result contains the user time zone; if user is null, then default server time zone
+        /// The task result contains the user time zone; if user is null, then default node time zone
         /// </returns>
-        Task<TimeZoneInfo> GetUserTimeZoneAsync(INodeUser user);
+        Task<TimeZoneInfo> GetUserTimeZoneAsync(INI2SUser user);
 
         /// <summary>
         /// Gets the current user time zone
@@ -87,9 +87,9 @@ namespace ARWNI2S.Node.Core.Services.Helpers
         Task<TimeZoneInfo> GetCurrentTimeZoneAsync();
 
         /// <summary>
-        /// Gets or sets a default server time zone
+        /// Gets or sets a default node time zone
         /// </summary>
-        TimeZoneInfo DefaultServerTimeZone
+        TimeZoneInfo DefaultNodeTimeZone
         {
             get;
         }

@@ -1,4 +1,4 @@
-﻿using ARWNI2S.Node.Core.Entities.Users;
+﻿using ARWNI2S.Infrastructure.Entities;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 
@@ -147,12 +147,12 @@ namespace ARWNI2S.Node.Core.Services.Helpers
         /// <param name="user">User</param>
         /// <returns>
         /// A task that represents the asynchronous operation
-        /// The task result contains the user time zone; if user is null, then default server time zone
+        /// The task result contains the user time zone; if user is null, then default node time zone
         /// </returns>
-        public virtual Task<TimeZoneInfo> GetUserTimeZoneAsync(INodeUser user)
+        public virtual Task<TimeZoneInfo> GetUserTimeZoneAsync(INI2SUser user)
         {
             if (!_dateTimeSettings.AllowUsersToSetTimeZone)
-                return Task.FromResult(DefaultServerTimeZone);
+                return Task.FromResult(DefaultNodeTimeZone);
 
             TimeZoneInfo timeZoneInfo = null;
 
@@ -170,7 +170,7 @@ namespace ARWNI2S.Node.Core.Services.Helpers
                 Debug.Write(exc.ToString());
             }
 
-            return Task.FromResult(timeZoneInfo ?? DefaultServerTimeZone);
+            return Task.FromResult(timeZoneInfo ?? DefaultNodeTimeZone);
         }
 
         /// <summary>
@@ -186,17 +186,17 @@ namespace ARWNI2S.Node.Core.Services.Helpers
         }
 
         /// <summary>
-        /// Gets or sets a default server time zone
+        /// Gets or sets a default node time zone
         /// </summary>
-        public virtual TimeZoneInfo DefaultServerTimeZone
+        public virtual TimeZoneInfo DefaultNodeTimeZone
         {
             get
             {
                 TimeZoneInfo timeZoneInfo = null;
                 try
                 {
-                    if (!string.IsNullOrEmpty(_dateTimeSettings.DefaultServerTimeZoneId))
-                        timeZoneInfo = FindTimeZoneById(_dateTimeSettings.DefaultServerTimeZoneId);
+                    if (!string.IsNullOrEmpty(_dateTimeSettings.DefaultNodeTimeZoneId))
+                        timeZoneInfo = FindTimeZoneById(_dateTimeSettings.DefaultNodeTimeZoneId);
                 }
                 catch (Exception exc)
                 {

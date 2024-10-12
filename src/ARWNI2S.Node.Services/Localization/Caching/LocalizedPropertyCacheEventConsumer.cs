@@ -1,7 +1,7 @@
 ﻿using ARWNI2S.Node.Data.Entities.Localization;
-using ARWNI2S.Node.Data.Services.Caching;
+using ARWNI2S.Node.Services.Caching;
 
-namespace ARWNI2S.Node.Data.Services.Localization.Caching
+namespace ARWNI2S.Node.Services.Localization.Caching
 {
     /// <summary>
     /// Represents a localized property cache event consumer

@@ -1,8 +1,8 @@
 ﻿using ARWNI2S.Node.Core.Events;
 using ARWNI2S.Node.Core.Infrastructure;
-using ARWNI2S.Node.Data.Services.Logging;
+using ARWNI2S.Node.Services.Logging;
 
-namespace ARWNI2S.Node.Data.Services.Events
+namespace ARWNI2S.Node.Services.Events
 {
     /// <summary>
     /// Represents the event publisher implementation
@@ -33,7 +33,7 @@ namespace ARWNI2S.Node.Data.Services.Events
                     //log error, we put in to nested try-catch to prevent possible cyclic (if some error occurs)
                     try
                     {
-                        var logger = EngineContext.Current.Resolve<ILogger>();
+                        var logger = EngineContext.Current.Resolve<ILogService>();
                         if (logger == null)
                             return;
 
@@ -68,7 +68,7 @@ namespace ARWNI2S.Node.Data.Services.Events
                     //log error, we put in to nested try-catch to prevent possible cyclic (if some error occurs)
                     try
                     {
-                        var logger = EngineContext.Current.Resolve<ILogger>();
+                        var logger = EngineContext.Current.Resolve<ILogService>();
                         if (logger == null)
                             return;
 

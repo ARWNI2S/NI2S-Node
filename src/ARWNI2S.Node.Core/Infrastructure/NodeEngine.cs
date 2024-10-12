@@ -3,6 +3,7 @@ using ARWNI2S.Node.Core.Infrastructure.Mapper;
 using AutoMapper;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using System.Reflection;
 
 namespace ARWNI2S.Node.Core.Infrastructure
@@ -130,27 +131,27 @@ namespace ARWNI2S.Node.Core.Infrastructure
             AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
         }
 
-        ///// <summary>
-        ///// Configure HTTP request pipeline
-        ///// </summary>
-        ///// <param name="application">Builder for configuring an application's request pipeline</param>
-        //public virtual void ConfigureRequestPipeline(INodeHostBuilder application)
-        //{
-        //    ServiceProvider = application.ApplicationServices;
+        /// <summary>
+        /// Configure HTTP request pipeline
+        /// </summary>
+        /// <param name="application">Builder for configuring an application's request pipeline</param>
+        public virtual void ConfigureEngine(IHost application)//INodeHostBuilder application)
+        {
+            ServiceProvider = application.Services;
 
-        //    //find startup configurations provided by other assemblies
-        //    var typeFinder = Singleton<ITypeFinder>.Instance;
-        //    var startupConfigurations = typeFinder.FindClassesOfType<INI2SStartup>();
+            //find startup configurations provided by other assemblies
+            var typeFinder = Singleton<ITypeFinder>.Instance;
+            var startupConfigurations = typeFinder.FindClassesOfType<INI2SStartup>();
 
-        //    //create and sort instances of startup configurations
-        //    var instances = startupConfigurations
-        //        .Select(startup => (INI2SStartup)Activator.CreateInstance(startup))
-        //        .OrderBy(startup => startup.Order);
+            //create and sort instances of startup configurations
+            var instances = startupConfigurations
+                .Select(startup => (INI2SStartup)Activator.CreateInstance(startup))
+                .OrderBy(startup => startup.Order);
 
-        //    //configure request pipeline
-        //    foreach (var instance in instances)
-        //        instance.Configure(application);
-        //}
+            //configure request pipeline
+            foreach (var instance in instances)
+                instance.Configure(application);
+        }
 
         /// <summary>
         /// Resolve dependency

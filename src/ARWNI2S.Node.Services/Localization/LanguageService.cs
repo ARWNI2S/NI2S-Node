@@ -1,11 +1,13 @@
 ﻿using ARWNI2S.Node.Core.Caching;
-using ARWNI2S.Node.Data.Services.Configuration;
-using ARWNI2S.Node.Data.Services.Clustering;
-using System.Globalization;
+using ARWNI2S.Node.Core.Entities.Localization;
+using ARWNI2S.Node.Data;
 using ARWNI2S.Node.Data.Entities.Localization;
 using ARWNI2S.Node.Data.Extensions;
+using ARWNI2S.Node.Services.Clustering;
+using ARWNI2S.Node.Services.Configuration;
+using System.Globalization;
 
-namespace ARWNI2S.Node.Data.Services.Localization
+namespace ARWNI2S.Node.Services.Localization
 {
     /// <summary>
     /// Language service
@@ -17,7 +19,7 @@ namespace ARWNI2S.Node.Data.Services.Localization
         private readonly IRepository<Language> _languageRepository;
         private readonly ISettingService _settingService;
         private readonly IStaticCacheManager _staticCacheManager;
-        private readonly INodeMappingService _serverMappingService;
+        private readonly INodeMappingService _nodeMappingService;
         private readonly LocalizationSettings _localizationSettings;
 
         #endregion
@@ -27,13 +29,13 @@ namespace ARWNI2S.Node.Data.Services.Localization
         public LanguageService(IRepository<Language> languageRepository,
             ISettingService settingService,
             IStaticCacheManager staticCacheManager,
-            INodeMappingService serverMappingService,
+            INodeMappingService nodeMappingService,
             LocalizationSettings localizationSettings)
         {
             _languageRepository = languageRepository;
             _settingService = settingService;
             _staticCacheManager = staticCacheManager;
-            _serverMappingService = serverMappingService;
+            _nodeMappingService = nodeMappingService;
             _localizationSettings = localizationSettings;
         }
 
@@ -68,16 +70,16 @@ namespace ARWNI2S.Node.Data.Services.Localization
         /// <summary>
         /// Gets all languages
         /// </summary>
-        /// <param name="serverId">Load records allowed only in a specified node; pass 0 to load all records</param>
+        /// <param name="nodeId">Load records allowed only in a specified node; pass 0 to load all records</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>
         /// A task that represents the asynchronous operation
         /// The task result contains the languages
         /// </returns>
-        public virtual async Task<IList<Language>> GetAllLanguagesAsync(bool showHidden = false, int serverId = 0)
+        public virtual async Task<IList<Language>> GetAllLanguagesAsync(bool showHidden = false, int nodeId = 0)
         {
             //cacheable copy
-            var key = _staticCacheManager.PrepareKeyForDefaultCache(LocalizationServicesDefaults.LanguagesAllCacheKey, serverId, showHidden);
+            var key = _staticCacheManager.PrepareKeyForDefaultCache(LocalizationServicesDefaults.LanguagesAllCacheKey, nodeId, showHidden);
 
             var languages = await _staticCacheManager.GetAsync(key, async () =>
             {
@@ -90,10 +92,10 @@ namespace ARWNI2S.Node.Data.Services.Localization
                     return query;
                 });
 
-                //server mapping
-                if (serverId > 0)
+                //node mapping
+                if (nodeId > 0)
                     allLanguages = await allLanguages
-                        .WhereAwait(async l => await _serverMappingService.AuthorizeAsync(l, serverId))
+                        .WhereAwait(async l => await _nodeMappingService.AuthorizeAsync(l, nodeId))
                         .ToListAsync();
 
                 return allLanguages;
@@ -105,15 +107,15 @@ namespace ARWNI2S.Node.Data.Services.Localization
         /// <summary>
         /// Gets all languages
         /// </summary>
-        /// <param name="serverId">Load records allowed only in a specified node; pass 0 to load all records</param>
+        /// <param name="nodeId">Load records allowed only in a specified node; pass 0 to load all records</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>
         /// The languages
         /// </returns>
-        public virtual IList<Language> GetAllLanguages(bool showHidden = false, int serverId = 0)
+        public virtual IList<Language> GetAllLanguages(bool showHidden = false, int nodeId = 0)
         {
             //cacheable copy
-            var key = _staticCacheManager.PrepareKeyForDefaultCache(LocalizationServicesDefaults.LanguagesAllCacheKey, serverId, showHidden);
+            var key = _staticCacheManager.PrepareKeyForDefaultCache(LocalizationServicesDefaults.LanguagesAllCacheKey, nodeId, showHidden);
 
             var languages = _staticCacheManager.Get(key, () =>
             {
@@ -126,10 +128,10 @@ namespace ARWNI2S.Node.Data.Services.Localization
                     return query;
                 });
 
-                //server mapping
-                if (serverId > 0)
+                //node mapping
+                if (nodeId > 0)
                     allLanguages = allLanguages
-                        .Where(l => _serverMappingService.Authorize(l, serverId))
+                        .Where(l => _nodeMappingService.Authorize(l, nodeId))
                         .ToList();
 
                 return allLanguages;

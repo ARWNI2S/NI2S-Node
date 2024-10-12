@@ -1,7 +1,8 @@
-﻿using ARWNI2S.Node.Data.Entities.ScheduleTasks;
+﻿using ARWNI2S.Node.Data;
+using ARWNI2S.Node.Data.Entities.ScheduleTasks;
 using ARWNI2S.Node.Data.Extensions;
 
-namespace ARWNI2S.Node.Data.Services.ScheduleTasks
+namespace ARWNI2S.Node.Services.ScheduleTasks
 {
     /// <summary>
     /// Task service

@@ -4,7 +4,7 @@ using Microsoft.Extensions.Caching.Distributed;
 using StackExchange.Redis;
 using System.Net;
 
-namespace ARWNI2S.Node.Data.Services.Caching
+namespace ARWNI2S.Node.Services.Caching
 {
     /// <summary>
     /// Represents a redis distributed cache 
@@ -19,11 +19,11 @@ namespace ARWNI2S.Node.Data.Services.Caching
 
         #region Ctor
 
-        public RedisCacheManager(AppSettings appSettings,
+        public RedisCacheManager(NI2SSettings ni2sSettings,
             IDistributedCache distributedCache,
             IRedisConnectionWrapper connectionWrapper,
             ICacheKeyManager cacheKeyManager)
-            : base(appSettings, distributedCache, cacheKeyManager)
+            : base(ni2sSettings, distributedCache, cacheKeyManager)
         {
             _connectionWrapper = connectionWrapper;
         }

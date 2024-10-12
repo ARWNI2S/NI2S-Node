@@ -44,7 +44,7 @@ namespace ARWNI2S.Node.Core.Entities.Localization
 
         /// <summary>
         /// A value indicating whether to we should ignore RTL language property for admin area.
-        /// It's useful for administrators with RTL languages for public server but preferring LTR for admin area
+        /// It's useful for administrators with RTL languages for public node but preferring LTR for admin area
         /// </summary>
         public bool IgnoreRtlPropertyForAdminArea { get; set; }
     }

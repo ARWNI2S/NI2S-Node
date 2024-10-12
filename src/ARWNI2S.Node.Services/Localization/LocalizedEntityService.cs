@@ -1,6 +1,7 @@
-﻿using ARWNI2S.Node.Core;
+﻿using ARWNI2S.Infrastructure;
 using ARWNI2S.Node.Core.Caching;
 using ARWNI2S.Node.Core.Entities.Localization;
+using ARWNI2S.Node.Data;
 using ARWNI2S.Node.Data.Entities;
 using ARWNI2S.Node.Data.Entities.Localization;
 using ARWNI2S.Node.Data.Extensions;
@@ -8,7 +9,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 
 
-namespace ARWNI2S.Node.Data.Services.Localization
+namespace ARWNI2S.Node.Services.Localization
 {
     /// <summary>
     /// Provides information about localizable entities

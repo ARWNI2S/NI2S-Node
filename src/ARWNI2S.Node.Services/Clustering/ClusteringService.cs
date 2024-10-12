@@ -1,26 +1,27 @@
 ﻿using ARWNI2S.Node.Core;
+using ARWNI2S.Node.Data;
 using ARWNI2S.Node.Data.Entities.Clustering;
 using ARWNI2S.Node.Data.Extensions;
 
-namespace ARWNI2S.Node.Data.Services.Clustering
+namespace ARWNI2S.Node.Services.Clustering
 {
     /// <summary>
-    /// Server service
+    /// Clustering service
     /// </summary>
     public partial class ClusteringService : IClusteringService
     {
         #region Fields
 
-        private readonly IRepository<BladeServer> _serverRepository;
+        private readonly IRepository<NI2SNode> _nodeRepository;
         private static readonly char[] separator = new[] { ',' };
 
         #endregion
 
         #region Ctor
 
-        public ClusteringService(IRepository<BladeServer> serverRepository)
+        public ClusteringService(IRepository<NI2SNode> nodeRepository)
         {
-            _serverRepository = serverRepository;
+            _nodeRepository = nodeRepository;
         }
 
         #endregion
@@ -30,17 +31,17 @@ namespace ARWNI2S.Node.Data.Services.Clustering
         /// <summary>
         /// Parse comma-separated Hosts
         /// </summary>
-        /// <param name="server">Server</param>
+        /// <param name="node">Node</param>
         /// <returns>Comma-separated hosts</returns>
-        protected virtual string[] ParseHostValues(BladeServer server)
+        protected virtual string[] ParseHostValues(NI2SNode node)
         {
-            ArgumentNullException.ThrowIfNull(server);
+            ArgumentNullException.ThrowIfNull(node);
 
             var parsedValues = new List<string>();
-            if (string.IsNullOrEmpty(server.Hosts))
+            if (string.IsNullOrEmpty(node.Hosts))
                 return parsedValues.ToArray();
 
-            var hosts = server.Hosts.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+            var hosts = node.Hosts.Split(separator, StringSplitOptions.RemoveEmptyEntries);
             foreach (var host in hosts)
             {
                 var tmp = host.Trim();
@@ -56,127 +57,127 @@ namespace ARWNI2S.Node.Data.Services.Clustering
         #region Methods
 
         /// <summary>
-        /// Deletes a server
+        /// Deletes a node
         /// </summary>
-        /// <param name="server">Server</param>
+        /// <param name="node">Node</param>
         /// <returns>A task that represents the asynchronous operation</returns>
-        public virtual async Task DeleteServerAsync(BladeServer server)
+        public virtual async Task DeleteNodeAsync(NI2SNode node)
         {
-            ArgumentNullException.ThrowIfNull(server);
+            ArgumentNullException.ThrowIfNull(node);
 
-            var allNodes = await GetAllServersAsync();
+            var allNodes = await GetAllNodesAsync();
             if (allNodes.Count == 1)
-                throw new ServerException("You cannot delete the only configured server");
+                throw new NodeException("You cannot delete the only configured node");
 
-            await _serverRepository.DeleteAsync(server);
+            await _nodeRepository.DeleteAsync(node);
         }
 
         /// <summary>
-        /// Gets all servers
+        /// Gets all nodes
         /// </summary>
         /// <returns>
         /// A task that represents the asynchronous operation
-        /// The task result contains the servers
+        /// The task result contains the nodes
         /// </returns>
-        public virtual async Task<IList<BladeServer>> GetAllServersAsync()
+        public virtual async Task<IList<NI2SNode>> GetAllNodesAsync()
         {
-            return await _serverRepository.GetAllAsync(query =>
+            return await _nodeRepository.GetAllAsync(query =>
             {
                 return from s in query orderby s.DisplayOrder, s.Id select s;
             }, _ => default, includeDeleted: false);
         }
 
         /// <summary>
-        /// Gets all servers
+        /// Gets all nodes
         /// </summary>
         /// <returns>
-        /// The servers
+        /// The nodes
         /// </returns>
-        public virtual IList<BladeServer> GetAllNodes()
+        public virtual IList<NI2SNode> GetAllNodes()
         {
-            return _serverRepository.GetAll(query =>
+            return _nodeRepository.GetAll(query =>
             {
                 return from s in query orderby s.DisplayOrder, s.Id select s;
             }, _ => default, includeDeleted: false);
         }
 
         /// <summary>
-        /// Gets a server 
+        /// Gets a node 
         /// </summary>
-        /// <param name="serverId">Server identifier</param>
+        /// <param name="nodeId">Node identifier</param>
         /// <returns>
         /// A task that represents the asynchronous operation
-        /// The task result contains the server
+        /// The task result contains the node
         /// </returns>
-        public virtual async Task<BladeServer> GetNodeByIdAsync(int serverId)
+        public virtual async Task<NI2SNode> GetNodeByIdAsync(int nodeId)
         {
-            return await _serverRepository.GetByIdAsync(serverId, cache => default, false);
+            return await _nodeRepository.GetByIdAsync(nodeId, cache => default, false);
         }
 
         /// <summary>
-        /// Inserts a server
+        /// Inserts a node
         /// </summary>
-        /// <param name="server">Server</param>
+        /// <param name="node">Node</param>
         /// <returns>A task that represents the asynchronous operation</returns>
-        public virtual async Task InsertServerAsync(BladeServer server)
+        public virtual async Task InsertNodeAsync(NI2SNode node)
         {
-            await _serverRepository.InsertAsync(server);
+            await _nodeRepository.InsertAsync(node);
         }
 
         /// <summary>
-        /// Updates the server
+        /// Updates the node
         /// </summary>
-        /// <param name="server">Server</param>
+        /// <param name="node">Node</param>
         /// <returns>A task that represents the asynchronous operation</returns>
-        public virtual async Task UpdateServerAsync(BladeServer server)
+        public virtual async Task UpdateNodeAsync(NI2SNode node)
         {
-            await _serverRepository.UpdateAsync(server);
+            await _nodeRepository.UpdateAsync(node);
         }
 
         /// <summary>
-        /// Updates the server
+        /// Updates the node
         /// </summary>
-        /// <param name="server">Server</param>
-        public virtual void UpdateNode(BladeServer server)
+        /// <param name="node">Node</param>
+        public virtual void UpdateNode(NI2SNode node)
         {
-            _serverRepository.Update(server);
+            _nodeRepository.Update(node);
         }
 
         /// <summary>
-        /// Indicates whether a server contains a specified host
+        /// Indicates whether a node contains a specified host
         /// </summary>
-        /// <param name="server">Server</param>
+        /// <param name="node">Node</param>
         /// <param name="host">Host</param>
         /// <returns>true - contains, false - no</returns>
-        public virtual bool ContainsHostValue(BladeServer server, string host)
+        public virtual bool ContainsHostValue(NI2SNode node, string host)
         {
-            ArgumentNullException.ThrowIfNull(server);
+            ArgumentNullException.ThrowIfNull(node);
 
             if (string.IsNullOrEmpty(host))
                 return false;
 
-            var contains = ParseHostValues(server).Any(x => x.Equals(host, StringComparison.InvariantCultureIgnoreCase));
+            var contains = ParseHostValues(node).Any(x => x.Equals(host, StringComparison.InvariantCultureIgnoreCase));
 
             return contains;
         }
 
         /// <summary>
-        /// Returns a list of names of not existing servers
+        /// Returns a list of names of not existing nodes
         /// </summary>
-        /// <param name="serverIdsNames">The names and/or IDs of the server to check</param>
+        /// <param name="nodeIdsNames">The names and/or IDs of the node to check</param>
         /// <returns>
         /// A task that represents the asynchronous operation
-        /// The task result contains the list of names and/or IDs not existing servers
+        /// The task result contains the list of names and/or IDs not existing nodes
         /// </returns>
-        public async Task<string[]> GetNotExistingServersAsync(string[] serverIdsNames)
+        public async Task<string[]> GetNotExistingNodesAsync(string[] nodeIdsNames)
         {
-            ArgumentNullException.ThrowIfNull(serverIdsNames);
+            ArgumentNullException.ThrowIfNull(nodeIdsNames);
 
-            var query = _serverRepository.Table;
-            var queryFilter = serverIdsNames.Distinct().ToArray();
+            var query = _nodeRepository.Table;
+            var queryFilter = nodeIdsNames.Distinct().ToArray();
             //filtering by name
-            var filter = await query.Select(server => server.Name)
-                .Where(server => queryFilter.Contains(server))
+            var filter = await query.Select(node => node.Name)
+                .Where(node => queryFilter.Contains(node))
                 .ToListAsync();
             queryFilter = queryFilter.Except(filter).ToArray();
 
@@ -185,8 +186,8 @@ namespace ARWNI2S.Node.Data.Services.Clustering
                 return queryFilter.ToArray();
 
             //filtering by IDs
-            filter = await query.Select(server => server.Id.ToString())
-                .Where(server => queryFilter.Contains(server))
+            filter = await query.Select(node => node.Id.ToString())
+                .Where(node => queryFilter.Contains(node))
                 .ToListAsync();
             queryFilter = queryFilter.Except(filter).ToArray();
 

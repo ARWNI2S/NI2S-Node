@@ -2,9 +2,9 @@
 using ARWNI2S.Node.Core.Events;
 using ARWNI2S.Node.Core.Infrastructure;
 using ARWNI2S.Node.Data.Entities;
-using ARWNI2S.Node.Data.Services.Events;
+using ARWNI2S.Node.Services.Events;
 
-namespace ARWNI2S.Node.Data.Services.Caching
+namespace ARWNI2S.Node.Services.Caching
 {
     /// <summary>
     /// Represents the base entity cache event consumer

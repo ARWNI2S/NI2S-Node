@@ -1,7 +1,9 @@
 ﻿using ARWNI2S.Infrastructure;
 using ARWNI2S.Infrastructure.Configuration;
+using ARWNI2S.Node.Core.Caching;
 using ARWNI2S.Node.Core.Configuration;
 using ARWNI2S.Node.Core.Infrastructure;
+using ARWNI2S.Node.Core.Runtime;
 using ARWNI2S.Node.Services.Plugins;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -46,7 +48,7 @@ namespace ARWNI2S.Node.Runtime.Infrastructure.Hosting
 
             //TODO: READ SECRETS FROM KEYVAULT use SecretAttribute decorated properties
 
-            var nodeSettings = NodeSettingsHelper.SaveNodeSettings(configurations, CommonHelper.DefaultFileProvider, false);
+            var nodeSettings = NI2SSettingsHelper.SaveNodeSettings(configurations, CommonHelper.DefaultFileProvider, false);
             services.AddSingleton(nodeSettings);
         }
 
@@ -58,8 +60,8 @@ namespace ARWNI2S.Node.Runtime.Infrastructure.Hosting
         public static void ConfigureApplicationServices(this IServiceCollection services,
             HostBuilderContext context)
         {
-            //add accessor to HttpContext
-            //services.AddHttpContextAccessor();
+            //add accessor to Context
+            services.AddContextAccessor();
 
             //initialize modules
             var moduleConfig = new ModuleConfig();
@@ -72,56 +74,65 @@ namespace ARWNI2S.Node.Runtime.Infrastructure.Hosting
             engine.ConfigureServices(services, context.Configuration);
         }
 
-        ///// <summary>
-        ///// Adds services required for distributed cache
-        ///// </summary>
-        ///// <param name="services">Collection of service descriptors</param>
-        //public static void AddDistributedCache(this IServiceCollection services)
-        //{
-        //    var nodeSettings = Singleton<NodeSettings>.Instance;
-        //    var distributedCacheConfig = nodeSettings.Get<DistributedCacheConfig>();
+        /// <summary>
+        /// Register HttpContextAccessor
+        /// </summary>
+        /// <param name="services">Collection of service descriptors</param>
+        public static void AddContextAccessor(this IServiceCollection services)
+        {
+            services.AddSingleton<IExecutionContextAccessor, RuntimeContextAccessor>();
+        }
 
-        //    if (!distributedCacheConfig.Enabled)
-        //        return;
+        /// <summary>
+        /// Adds services required for distributed cache
+        /// </summary>
+        /// <param name="services">Collection of service descriptors</param>
+        public static void AddDistributedCache(this IServiceCollection services)
+        {
+            var nodeSettings = Singleton<NI2SSettings>.Instance;
+            var distributedCacheConfig = nodeSettings.Get<DistributedCacheConfig>();
 
-        //    switch (distributedCacheConfig.DistributedCacheType)
-        //    {
-        //        case DistributedCacheType.Memory:
-        //            services.AddDistributedMemoryCache();
-        //            break;
+            if (!distributedCacheConfig.Enabled)
+                return;
 
-        //        case DistributedCacheType.SqlServer:
-        //            services.AddDistributedSqlServerCache(options =>
-        //            {
-        //                options.ConnectionString = distributedCacheConfig.ConnectionString;
-        //                options.SchemaName = distributedCacheConfig.SchemaName;
-        //                options.TableName = distributedCacheConfig.TableName;
-        //            });
-        //            break;
+            switch (distributedCacheConfig.DistributedCacheType)
+            {
+                case DistributedCacheType.Memory:
+                    services.AddDistributedMemoryCache();
+                    break;
 
-        //        case DistributedCacheType.Redis:
-        //            services.AddStackExchangeRedisCache(options =>
-        //            {
-        //                options.Configuration = distributedCacheConfig.ConnectionString;
-        //                options.InstanceName = distributedCacheConfig.InstanceName ?? string.Empty;
-        //            });
-        //            break;
+                case DistributedCacheType.SqlServer:
+                    services.AddDistributedSqlServerCache(options =>
+                    {
+                        options.ConnectionString = distributedCacheConfig.ConnectionString;
+                        options.SchemaName = distributedCacheConfig.SchemaName;
+                        options.TableName = distributedCacheConfig.TableName;
+                    });
+                    break;
 
-        //        case DistributedCacheType.RedisSynchronizedMemory:
-        //            services.AddStackExchangeRedisCache(options =>
-        //            {
-        //                options.Configuration = distributedCacheConfig.ConnectionString;
-        //                options.InstanceName = distributedCacheConfig.InstanceName ?? string.Empty;
-        //            });
-        //            break;
-        //    }
-        //}
+                case DistributedCacheType.Redis:
+                    services.AddStackExchangeRedisCache(options =>
+                    {
+                        options.Configuration = distributedCacheConfig.ConnectionString;
+                        options.InstanceName = distributedCacheConfig.InstanceName ?? string.Empty;
+                    });
+                    break;
+
+                case DistributedCacheType.RedisSynchronizedMemory:
+                    services.AddStackExchangeRedisCache(options =>
+                    {
+                        options.Configuration = distributedCacheConfig.ConnectionString;
+                        options.InstanceName = distributedCacheConfig.InstanceName ?? string.Empty;
+                    });
+                    break;
+            }
+        }
 
         ///// <summary>
         ///// Adds data protection services
         ///// </summary>
         ///// <param name="services">Collection of service descriptors</param>
-        //public static void AddServerDataProtection(this IServiceCollection services)
+        //public static void AddNodeDataProtection(this IServiceCollection services)
         //{
         //    var nodeSettings = Singleton<NodeSettings>.Instance;
         //    if (nodeSettings.Get<AzureBlobConfig>().Enabled && nodeSettings.Get<AzureBlobConfig>().StoreDataProtectionKeys)
@@ -155,7 +166,7 @@ namespace ARWNI2S.Node.Runtime.Infrastructure.Hosting
         ///// Adds authentication service
         ///// </summary>
         ///// <param name="services">Collection of service descriptors</param>
-        //public static void AddServerAuthentication(this IServiceCollection services)
+        //public static void AddNodeAuthentication(this IServiceCollection services)
         //{
         //    //set default authentication schemes
         //    var authenticationBuilder = services.AddAuthentication(options =>
@@ -218,7 +229,7 @@ namespace ARWNI2S.Node.Runtime.Infrastructure.Hosting
         ///// </summary>
         ///// <param name="services">Collection of service descriptors</param>
         ///// <returns>A builder for configuring MVC services</returns>
-        //public static IMvcBuilder AddServerMvc(this IServiceCollection services)
+        //public static IMvcBuilder AddNodeMvc(this IServiceCollection services)
         //{
         //    //add basic MVC feature
         //    var mvcBuilder = services.AddControllersWithViews();
@@ -253,11 +264,11 @@ namespace ARWNI2S.Node.Runtime.Infrastructure.Hosting
         //        options.ModelBinderProviders.Insert(0, new InvariantNumberModelBinderProvider());
         //        options.ModelBinderProviders.Insert(1, new CustomPropertiesModelBinderProvider());
         //        //add custom display metadata provider 
-        //        options.ModelMetadataDetailsProviders.Add(new ServerMetadataProvider());
+        //        options.ModelMetadataDetailsProviders.Add(new NodeMetadataProvider());
 
         //        //in .NET model binding for a non-nullable property may fail with an error message "The value '' is invalid"
         //        //here we set the locale name as the message, we'll replace it with the actual one later when not-null validation failed
-        //        options.ModelBindingMessageProvider.SetValueMustNotBeNullAccessor(_ => ServerValidationDefaults.NotNullValidationLocaleName);
+        //        options.ModelBindingMessageProvider.SetValueMustNotBeNullAccessor(_ => NodeValidationDefaults.NotNullValidationLocaleName);
         //    });
 
         //    //add fluent validation
@@ -280,17 +291,17 @@ namespace ARWNI2S.Node.Runtime.Infrastructure.Hosting
         ///// Register custom RedirectResultExecutor
         ///// </summary>
         ///// <param name="services">Collection of service descriptors</param>
-        //public static void AddServerRedirectResultExecutor(this IServiceCollection services)
+        //public static void AddNodeRedirectResultExecutor(this IServiceCollection services)
         //{
         //    //we use custom redirect executor as a workaround to allow using non-ASCII characters in redirect URLs
-        //    services.AddScoped<IActionResultExecutor<RedirectResult>, ServerRedirectResultExecutor>();
+        //    services.AddScoped<IActionResultExecutor<RedirectResult>, NodeRedirectResultExecutor>();
         //}
 
         ///// <summary>
         ///// Add and configure MiniProfiler service
         ///// </summary>
         ///// <param name="services">Collection of service descriptors</param>
-        //public static void AddServerMiniProfiler(this IServiceCollection services)
+        //public static void AddNodeMiniProfiler(this IServiceCollection services)
         //{
         //    //whether database is already installed
         //    if (!DataSettingsManager.IsDatabaseInstalled())
@@ -314,7 +325,7 @@ namespace ARWNI2S.Node.Runtime.Infrastructure.Hosting
         ///// Add and configure WebMarkupMin service
         ///// </summary>
         ///// <param name="services">Collection of service descriptors</param>
-        //public static void AddServerWebMarkupMin(this IServiceCollection services)
+        //public static void AddNodeWebMarkupMin(this IServiceCollection services)
         //{
         //    //check whether database is installed
         //    if (!DataSettingsManager.IsDatabaseInstalled())
@@ -348,7 +359,7 @@ namespace ARWNI2S.Node.Runtime.Infrastructure.Hosting
         ///// Adds WebOptimizer to the specified <see cref="IServiceCollection"/> and enables CSS and JavaScript minification.
         ///// </summary>
         ///// <param name="services">Collection of service descriptors</param>
-        //public static void AddServerWebOptimizer(this IServiceCollection services)
+        //public static void AddNodeWebOptimizer(this IServiceCollection services)
         //{
         //    var nodeSettings = Singleton<NodeSettings>.Instance;
         //    var cssBundling = nodeSettings.Get<WebOptimizerConfig>().EnableCssBundling;
@@ -374,12 +385,12 @@ namespace ARWNI2S.Node.Runtime.Infrastructure.Hosting
         ///// Add and configure default HTTP clients
         ///// </summary>
         ///// <param name="services">Collection of service descriptors</param>
-        //public static void AddServerHttpClients(this IServiceCollection services)
+        //public static void AddNodeHttpClients(this IServiceCollection services)
         //{
         //    //default client
         //    services.AddHttpClient(HttpDefaults.DefaultHttpClient).WithProxy();
 
-        //    //client to request current server
+        //    //client to request current node
         //    services.AddHttpClient<ServerHttpClient>();
 
         //    //client to request dragonCorp official site

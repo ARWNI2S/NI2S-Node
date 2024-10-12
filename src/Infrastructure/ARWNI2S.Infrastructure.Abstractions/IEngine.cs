@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace ARWNI2S.Infrastructure
 {
@@ -12,11 +13,11 @@ namespace ARWNI2S.Infrastructure
         /// <param name="configuration">Configuration of the application</param>
         void ConfigureServices(IServiceCollection services, IConfiguration configuration);
 
-        ///// <summary>
-        ///// Configure HTTP request pipeline
-        ///// </summary>
-        ///// <param name="application">Builder for configuring an application's request pipeline</param>
-        //void ConfigureRequestPipeline(INodeHostBuilder application);
+        /// <summary>
+        /// Configure NI2S engine
+        /// </summary>
+        /// <param name="application">Builder for configuring a NI2S node's engine</param>
+        void ConfigureEngine(IHost application); // INodeHostBuilder application);
 
         /// <summary>
         /// Resolve dependency

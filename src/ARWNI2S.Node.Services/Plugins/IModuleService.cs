@@ -13,7 +13,7 @@ namespace ARWNI2S.Node.Services.Plugins
         /// <typeparam name="TModule">The type of modules to get</typeparam>
         /// <param name="loadMode">Filter by load modules mode</param>
         /// <param name="user">Filter by  user; pass null to load all records</param>
-        /// <param name="serverId">Filter by server; pass 0 to load all records</param>
+        /// <param name="nodeId">Filter by node; pass 0 to load all records</param>
         /// <param name="group">Filter by module group; pass null to load all records</param>
         /// <param name="friendlyName">Filter by module friendly name; pass null to load all records</param>
         /// <param name="author">Filter by module author; pass null to load all records</param>
@@ -23,7 +23,7 @@ namespace ARWNI2S.Node.Services.Plugins
         /// The task result contains the module descriptors
         /// </returns>
         Task<IList<ModuleDescriptor>> GetModuleDescriptorsAsync<TModule>(LoadModulesMode loadMode = LoadModulesMode.InstalledOnly,
-            INI2SUser user = null, int serverId = 0, string group = null, string dependsOnSystemName = "", string friendlyName = null, string author = null) where TModule : class, IModule;
+            INI2SUser user = null, int nodeId = 0, string group = null, string dependsOnSystemName = "", string friendlyName = null, string author = null) where TModule : class, IModule;
 
         /// <summary>
         /// Get a module descriptor by the system name
@@ -32,7 +32,7 @@ namespace ARWNI2S.Node.Services.Plugins
         /// <param name="systemName">Module system name</param>
         /// <param name="loadMode">Load modules mode</param>
         /// <param name="user">Filter by  user; pass null to load all records</param>
-        /// <param name="serverId">Filter by server; pass 0 to load all records</param>
+        /// <param name="nodeId">Filter by node; pass 0 to load all records</param>
         /// <param name="group">Filter by module group; pass null to load all records</param>
         /// <returns>
         /// A task that represents the asynchronous operation
@@ -40,7 +40,7 @@ namespace ARWNI2S.Node.Services.Plugins
         /// </returns>
         Task<ModuleDescriptor> GetModuleDescriptorBySystemNameAsync<TModule>(string systemName,
             LoadModulesMode loadMode = LoadModulesMode.InstalledOnly,
-            INI2SUser user = null, int serverId = 0, string group = null) where TModule : class, IModule;
+            INI2SUser user = null, int nodeId = 0, string group = null) where TModule : class, IModule;
 
         /// <summary>
         /// Get modules
@@ -48,14 +48,14 @@ namespace ARWNI2S.Node.Services.Plugins
         /// <typeparam name="TModule">The type of modules to get</typeparam>
         /// <param name="loadMode">Filter by load modules mode</param>
         /// <param name="user">Filter by  user; pass null to load all records</param>
-        /// <param name="serverId">Filter by server; pass 0 to load all records</param>
+        /// <param name="nodeId">Filter by node; pass 0 to load all records</param>
         /// <param name="group">Filter by module group; pass null to load all records</param>
         /// <returns>
         /// A task that represents the asynchronous operation
         /// The task result contains the modules
         /// </returns>
         Task<IList<TModule>> GetModulesAsync<TModule>(LoadModulesMode loadMode = LoadModulesMode.InstalledOnly,
-            INI2SUser user = null, int serverId = 0, string group = null) where TModule : class, IModule;
+            INI2SUser user = null, int nodeId = 0, string group = null) where TModule : class, IModule;
 
         /// <summary>
         /// Find a module by the type which is located into the same assembly as a module

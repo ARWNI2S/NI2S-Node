@@ -1,7 +1,7 @@
 ﻿using ARWNI2S.Node.Core.Caching;
-using ARWNI2S.Node.Data.Services.ScheduleTasks;
+using ARWNI2S.Node.Services.ScheduleTasks;
 
-namespace ARWNI2S.Node.Data.Services.Caching
+namespace ARWNI2S.Node.Services.Caching
 {
     /// <summary>
     /// Clear cache scheduled task implementation

@@ -2,16 +2,16 @@
 using ARWNI2S.Node.Core.Configuration;
 using Microsoft.Extensions.Caching.Distributed;
 
-namespace ARWNI2S.Node.Data.Services.Caching
+namespace ARWNI2S.Node.Services.Caching
 {
     public class MemoryDistributedCacheManager : DistributedCacheManager
     {
         #region Ctor
 
-        public MemoryDistributedCacheManager(AppSettings appSettings,
+        public MemoryDistributedCacheManager(NI2SSettings ni2sSettings,
             IDistributedCache distributedCache,
             ICacheKeyManager cacheKeyManager)
-            : base(appSettings, distributedCache, cacheKeyManager)
+            : base(ni2sSettings, distributedCache, cacheKeyManager)
         {
         }
 

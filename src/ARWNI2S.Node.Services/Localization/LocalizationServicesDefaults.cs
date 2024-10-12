@@ -1,7 +1,7 @@
 ﻿using ARWNI2S.Node.Core.Caching;
 using ARWNI2S.Node.Data.Entities.Localization;
 
-namespace ARWNI2S.Node.Data.Services.Localization
+namespace ARWNI2S.Node.Services.Localization
 {
     /// <summary>
     /// Represents default values related to localization services
@@ -40,7 +40,7 @@ namespace ARWNI2S.Node.Data.Services.Localization
         /// Gets a key for caching
         /// </summary>
         /// <remarks>
-        /// {0} : server ID
+        /// {0} : node ID
         /// {1} : show hidden records?
         /// </remarks>
         public static CacheKey LanguagesAllCacheKey => new("ni2s.language.all.{0}-{1}", LanguagesByNodePrefix, EntityCacheDefaults<Language>.AllPrefix);
@@ -49,7 +49,7 @@ namespace ARWNI2S.Node.Data.Services.Localization
         /// Gets a key pattern to clear cache
         /// </summary>
         /// <remarks>
-        /// {0} : server ID
+        /// {0} : node ID
         /// </remarks>
         public static string LanguagesByNodePrefix => "ni2s.language.all.{0}";
 

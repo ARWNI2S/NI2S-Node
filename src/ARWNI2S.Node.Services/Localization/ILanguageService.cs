@@ -1,7 +1,7 @@
 ﻿using ARWNI2S.Node.Data.Entities.Localization;
 using System.Globalization;
 
-namespace ARWNI2S.Node.Data.Services.Localization
+namespace ARWNI2S.Node.Services.Localization
 {
     /// <summary>
     /// Language service interface
@@ -18,23 +18,23 @@ namespace ARWNI2S.Node.Data.Services.Localization
         /// <summary>
         /// Gets all languages
         /// </summary>
-        /// <param name="serverId">Load records allowed only in a specified server; pass 0 to load all records</param>
+        /// <param name="nodeId">Load records allowed only in a specified node; pass 0 to load all records</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>
         /// A task that represents the asynchronous operation
         /// The task result contains the languages
         /// </returns>
-        Task<IList<Language>> GetAllLanguagesAsync(bool showHidden = false, int serverId = 0);
+        Task<IList<Language>> GetAllLanguagesAsync(bool showHidden = false, int nodeId = 0);
 
         /// <summary>
         /// Gets all languages
         /// </summary>
-        /// <param name="serverId">Load records allowed only in a specified server; pass 0 to load all records</param>
+        /// <param name="nodeId">Load records allowed only in a specified node; pass 0 to load all records</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>
         /// The languages
         /// </returns>
-        IList<Language> GetAllLanguages(bool showHidden = false, int serverId = 0);
+        IList<Language> GetAllLanguages(bool showHidden = false, int nodeId = 0);
 
         /// <summary>
         /// Gets a language

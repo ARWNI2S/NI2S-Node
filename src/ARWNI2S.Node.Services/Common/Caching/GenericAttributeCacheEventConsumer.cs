@@ -1,7 +1,7 @@
 ﻿using ARWNI2S.Node.Data.Entities.Common;
-using ARWNI2S.Node.Data.Services.Caching;
+using ARWNI2S.Node.Services.Caching;
 
-namespace ARWNI2S.Node.Data.Services.Common.Caching
+namespace ARWNI2S.Node.Services.Common.Caching
 {
     /// <summary>
     /// Represents a generic attribute cache event consumer

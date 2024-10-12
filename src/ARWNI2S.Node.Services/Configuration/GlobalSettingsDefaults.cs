@@ -1,7 +1,7 @@
 ﻿using ARWNI2S.Node.Core.Caching;
 using ARWNI2S.Node.Data.Entities.Configuration;
 
-namespace ARWNI2S.Node.Data.Services.Configuration
+namespace ARWNI2S.Node.Services.Configuration
 {
     /// <summary>
     /// Represents default values related to settings

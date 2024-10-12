@@ -1,11 +1,12 @@
-﻿using ARWNI2S.Node.Core.Entities;
+﻿using ARWNI2S.Infrastructure.Entities;
+using ARWNI2S.Node.Core.Entities;
 
 namespace ARWNI2S.Node.Data.Entities.Users
 {
     /// <summary>
     /// Represents a user
     /// </summary>
-    public partial class User : BaseDataEntity, ISoftDeletedEntity
+    public partial class User : BaseDataEntity, INI2SUser, ISoftDeletedEntity
     {
         public User()
         {
@@ -220,7 +221,7 @@ namespace ARWNI2S.Node.Data.Entities.Users
         /// <summary>
         ///  Gets or sets the node identifier in which user registered
         /// </summary>
-        public int RegisteredInServerId { get; set; }
+        public int RegisteredInNodeId { get; set; }
 
         /// <summary>
         /// Gets or sets the billing address identifier
@@ -232,17 +233,5 @@ namespace ARWNI2S.Node.Data.Entities.Users
         /// </summary>
         public int? ShippingAddressId { get; set; }
 
-        #region Custom properties
-
-        /// <summary>
-        /// Gets or sets the vat number status
-        /// </summary>
-        public VatNumberStatus VatNumberStatus
-        {
-            get => (VatNumberStatus)VatNumberStatusId;
-            set => VatNumberStatusId = (int)value;
-        }
-
-        #endregion
     }
 }

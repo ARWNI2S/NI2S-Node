@@ -1,12 +1,10 @@
-﻿//using TheCorporateWars.Server.Services.Catalog;
+﻿using ARWNI2S.Node.Data.Entities.Clustering;
+using ARWNI2S.Node.Services.Caching;
 
-using ARWNI2S.Node.Data.Entities.Clustering;
-using ARWNI2S.Node.Data.Services.Caching;
-
-namespace ARWNI2S.Node.Data.Services.Clustering.Caching
+namespace ARWNI2S.Node.Services.Clustering.Caching
 {
     /// <summary>
-    /// Represents a server mapping cache event consumer
+    /// Represents a node mapping cache event consumer
     /// </summary>
     public partial class NodeMappingCacheEventConsumer : CacheEventConsumer<NodeMapping>
     {

@@ -17,7 +17,7 @@ namespace ARWNI2S.Node.Data
         /// </summary>
         /// <param name="dataProviderType">Data provider type</param>
         /// <returns></returns>
-        public static IServerDataProvider GetDataProvider(DataProviderType dataProviderType)
+        public static INI2SDataProvider GetDataProvider(DataProviderType dataProviderType)
         {
             return dataProviderType switch
             {
@@ -35,7 +35,7 @@ namespace ARWNI2S.Node.Data
         /// <summary>
         /// Gets data provider
         /// </summary>
-        public IServerDataProvider DataProvider
+        public INI2SDataProvider DataProvider
         {
             get
             {

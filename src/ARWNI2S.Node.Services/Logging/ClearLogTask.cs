@@ -1,7 +1,7 @@
-﻿using ARWNI2S.Node.Data.Entities.Common;
-using ARWNI2S.Node.Data.Services.ScheduleTasks;
+﻿using ARWNI2S.Node.Core.Common;
+using ARWNI2S.Node.Services.ScheduleTasks;
 
-namespace ARWNI2S.Node.Data.Services.Logging
+namespace ARWNI2S.Node.Services.Logging
 {
     /// <summary>
     /// Represents a task to clear [Log] table
@@ -11,14 +11,14 @@ namespace ARWNI2S.Node.Data.Services.Logging
         #region Fields
 
         private readonly CommonSettings _commonSettings;
-        private readonly ILogger _logger;
+        private readonly ILogService _logger;
 
         #endregion
 
         #region Ctor
 
         public ClearLogTask(CommonSettings commonSettings,
-            ILogger logger)
+            ILogService logger)
         {
             _commonSettings = commonSettings;
             _logger = logger;

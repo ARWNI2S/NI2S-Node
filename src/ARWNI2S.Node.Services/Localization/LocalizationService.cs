@@ -1,21 +1,22 @@
-﻿using ARWNI2S.Infrastructure.Configuration;
+﻿using ARWNI2S.Infrastructure;
+using ARWNI2S.Infrastructure.Configuration;
 using ARWNI2S.Node.Core;
 using ARWNI2S.Node.Core.Caching;
 using ARWNI2S.Node.Core.Entities.Localization;
+using ARWNI2S.Node.Data;
 using ARWNI2S.Node.Data.Entities;
 using ARWNI2S.Node.Data.Entities.Localization;
-using ARWNI2S.Node.Data.Entities.Security;
 using ARWNI2S.Node.Data.Extensions;
-using ARWNI2S.Node.Data.Services.Configuration;
-using ARWNI2S.Node.Data.Services.ExportImport;
-using ARWNI2S.Node.Data.Services.Logging;
-using ARWNI2S.Node.Data.Services.Plugins;
+using ARWNI2S.Node.Services.Configuration;
+using ARWNI2S.Node.Services.ExportImport;
+using ARWNI2S.Node.Services.Logging;
+using ARWNI2S.Node.Services.Plugins;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 using System.Xml;
 
-namespace ARWNI2S.Node.Data.Services.Localization
+namespace ARWNI2S.Node.Services.Localization
 {
     /// <summary>
     /// Provides information about localization
@@ -26,7 +27,7 @@ namespace ARWNI2S.Node.Data.Services.Localization
 
         protected readonly ILanguageService _languageService;
         protected readonly ILocalizedEntityService _localizedEntityService;
-        protected readonly ILogger _logger;
+        protected readonly ILogService _logger;
         protected readonly IRepository<LocaleStringResource> _lsrRepository;
         protected readonly ISettingService _settingService;
         //protected readonly IGameSettingService _gameSettingService;
@@ -40,7 +41,7 @@ namespace ARWNI2S.Node.Data.Services.Localization
 
         public LocalizationService(ILanguageService languageService,
             ILocalizedEntityService localizedEntityService,
-            ILogger logger,
+            ILogService logger,
             IRepository<LocaleStringResource> lsrRepository,
             ISettingService settingService,
             //IGameSettingService gameSettingService,
@@ -311,7 +312,7 @@ namespace ARWNI2S.Node.Data.Services.Localization
         /// Gets all locale string resources by language identifier
         /// </summary>
         /// <param name="languageId">Language identifier</param>
-        /// <param name="loadPublicLocales">A value indicating whether to load data for the public server only (if "false", then for admin area only. If null, then load all locales. We use it for performance optimization of the site startup</param>
+        /// <param name="loadPublicLocales">A value indicating whether to load data for the public node only (if "false", then for admin area only. If null, then load all locales. We use it for performance optimization of the site startup</param>
         /// <returns>
         /// A task that represents the asynchronous operation
         /// The task result contains the locale string resources
@@ -609,7 +610,7 @@ namespace ARWNI2S.Node.Data.Services.Localization
         /// <param name="settings">Settings</param>
         /// <param name="keySelector">Key selector</param>
         /// <param name="languageId">Language identifier</param>
-        /// <param name="serverId">Server identifier</param>
+        /// <param name="nodeId">Node identifier</param>
         /// <param name="returnDefaultValue">A value indicating whether to return default value (if localized is not found)</param>
         /// <param name="ensureTwoPublishedLanguages">A value indicating whether to ensure that we have at least two published languages; otherwise, load only default value</param>
         /// <returns>
@@ -617,13 +618,13 @@ namespace ARWNI2S.Node.Data.Services.Localization
         /// The task result contains the localized property
         /// </returns>
         public virtual async Task<string> GetLocalizedSettingAsync<TSettings>(TSettings settings, Expression<Func<TSettings, string>> keySelector,
-            int languageId, int serverId, bool returnDefaultValue = true, bool ensureTwoPublishedLanguages = true)
+            int languageId, int nodeId, bool returnDefaultValue = true, bool ensureTwoPublishedLanguages = true)
             where TSettings : ISettings, new()
         {
             var key = _settingService.GetSettingKey(settings, keySelector);
 
-            //we do not support localized settings per server (overridden server settings)
-            var setting = await _settingService.GetSettingAsync(key, serverId: serverId, loadSharedValueIfNotFound: true);
+            //we do not support localized settings per node (overridden node settings)
+            var setting = await _settingService.GetSettingAsync(key, nodeId: nodeId, loadSharedValueIfNotFound: true);
             if (setting == null)
                 return null;
 
@@ -647,7 +648,7 @@ namespace ARWNI2S.Node.Data.Services.Localization
         {
             var key = _settingService.GetSettingKey(settings, keySelector);
 
-            //we do not support localized settings per server (overridden server settings)
+            //we do not support localized settings per node (overridden node settings)
             var setting = await _settingService.GetSettingAsync(key);
             if (setting == null)
                 return;
@@ -674,7 +675,7 @@ namespace ARWNI2S.Node.Data.Services.Localization
         //{
         //    var key = _gameSettingService.GetSettingKey(settings, keySelector);
 
-        //    //we do not support localized settings per server (overridden server settings)
+        //    //we do not support localized settings per node (overridden node settings)
         //    var setting = await _gameSettingService.GetSettingAsync(key, loadSharedValueIfNotFound: true);
         //    if (setting == null)
         //        return null;
@@ -700,7 +701,7 @@ namespace ARWNI2S.Node.Data.Services.Localization
         //{
         //    var key = _gameSettingService.GetSettingKey(settings, keySelector);
 
-        //    //we do not support localized settings per server (overridden server settings)
+        //    //we do not support localized settings per node (overridden node settings)
         //    var setting = await _gameSettingService.GetSettingAsync(key);
         //    if (setting == null)
         //        return;
@@ -735,82 +736,82 @@ namespace ARWNI2S.Node.Data.Services.Localization
             return result;
         }
 
-        /// <summary>
-        /// Get localized value of enum
-        /// We don't have UI to manage permission localizable name. That's why we're using this method
-        /// </summary>
-        /// <param name="permissionRecord">Permission record</param>
-        /// <param name="languageId">Language identifier; pass null to use the current working language</param>
-        /// <returns>
-        /// A task that represents the asynchronous operation
-        /// The task result contains the localized value
-        /// </returns>
-        public virtual async Task<string> GetLocalizedPermissionNameAsync(PermissionRecord permissionRecord, int? languageId = null)
-        {
-            ArgumentNullException.ThrowIfNull(permissionRecord);
+        ///// <summary>
+        ///// Get localized value of enum
+        ///// We don't have UI to manage permission localizable name. That's why we're using this method
+        ///// </summary>
+        ///// <param name="permissionRecord">Permission record</param>
+        ///// <param name="languageId">Language identifier; pass null to use the current working language</param>
+        ///// <returns>
+        ///// A task that represents the asynchronous operation
+        ///// The task result contains the localized value
+        ///// </returns>
+        //public virtual async Task<string> GetLocalizedPermissionNameAsync(PermissionRecord permissionRecord, int? languageId = null)
+        //{
+        //    ArgumentNullException.ThrowIfNull(permissionRecord);
 
-            //localized value
-            var workingLanguage = await _languageService.GetLanguageByCultureAsync(await _workContext.GetWorkingCultureAsync());
-            var resourceName = $"{LocalizationServicesDefaults.PermissionLocaleStringResourcesPrefix}{permissionRecord.SystemName}";
-            var result = await GetResourceAsync(resourceName, languageId ?? workingLanguage.Id, false, string.Empty, true);
+        //    //localized value
+        //    var workingLanguage = await _languageService.GetLanguageByCultureAsync(await _workContext.GetWorkingCultureAsync());
+        //    var resourceName = $"{LocalizationServicesDefaults.PermissionLocaleStringResourcesPrefix}{permissionRecord.SystemName}";
+        //    var result = await GetResourceAsync(resourceName, languageId ?? workingLanguage.Id, false, string.Empty, true);
 
-            //set default value if required
-            if (string.IsNullOrEmpty(result))
-                result = permissionRecord.Name;
+        //    //set default value if required
+        //    if (string.IsNullOrEmpty(result))
+        //        result = permissionRecord.Name;
 
-            return result;
-        }
+        //    return result;
+        //}
 
-        /// <summary>
-        /// Save localized name of a permission
-        /// </summary>
-        /// <param name="permissionRecord">Permission record</param>
-        /// <returns>A task that represents the asynchronous operation</returns>
-        public virtual async Task SaveLocalizedPermissionNameAsync(PermissionRecord permissionRecord)
-        {
-            ArgumentNullException.ThrowIfNull(permissionRecord);
+        ///// <summary>
+        ///// Save localized name of a permission
+        ///// </summary>
+        ///// <param name="permissionRecord">Permission record</param>
+        ///// <returns>A task that represents the asynchronous operation</returns>
+        //public virtual async Task SaveLocalizedPermissionNameAsync(PermissionRecord permissionRecord)
+        //{
+        //    ArgumentNullException.ThrowIfNull(permissionRecord);
 
-            var resourceName = $"{LocalizationServicesDefaults.PermissionLocaleStringResourcesPrefix}{permissionRecord.SystemName}";
-            var resourceValue = permissionRecord.Name;
+        //    var resourceName = $"{LocalizationServicesDefaults.PermissionLocaleStringResourcesPrefix}{permissionRecord.SystemName}";
+        //    var resourceValue = permissionRecord.Name;
 
-            foreach (var lang in await _languageService.GetAllLanguagesAsync(true))
-            {
-                var lsr = await GetLocaleStringResourceByNameAsync(resourceName, lang.Id, false);
-                if (lsr == null)
-                {
-                    lsr = new LocaleStringResource
-                    {
-                        LanguageId = lang.Id,
-                        ResourceName = resourceName,
-                        ResourceValue = resourceValue
-                    };
-                    await InsertLocaleStringResourceAsync(lsr);
-                }
-                else
-                {
-                    lsr.ResourceValue = resourceValue;
-                    await UpdateLocaleStringResourceAsync(lsr);
-                }
-            }
-        }
+        //    foreach (var lang in await _languageService.GetAllLanguagesAsync(true))
+        //    {
+        //        var lsr = await GetLocaleStringResourceByNameAsync(resourceName, lang.Id, false);
+        //        if (lsr == null)
+        //        {
+        //            lsr = new LocaleStringResource
+        //            {
+        //                LanguageId = lang.Id,
+        //                ResourceName = resourceName,
+        //                ResourceValue = resourceValue
+        //            };
+        //            await InsertLocaleStringResourceAsync(lsr);
+        //        }
+        //        else
+        //        {
+        //            lsr.ResourceValue = resourceValue;
+        //            await UpdateLocaleStringResourceAsync(lsr);
+        //        }
+        //    }
+        //}
 
-        /// <summary>
-        /// Delete a localized name of a permission
-        /// </summary>
-        /// <param name="permissionRecord">Permission record</param>
-        /// <returns>A task that represents the asynchronous operation</returns>
-        public virtual async Task DeleteLocalizedPermissionNameAsync(PermissionRecord permissionRecord)
-        {
-            ArgumentNullException.ThrowIfNull(permissionRecord);
+        ///// <summary>
+        ///// Delete a localized name of a permission
+        ///// </summary>
+        ///// <param name="permissionRecord">Permission record</param>
+        ///// <returns>A task that represents the asynchronous operation</returns>
+        //public virtual async Task DeleteLocalizedPermissionNameAsync(PermissionRecord permissionRecord)
+        //{
+        //    ArgumentNullException.ThrowIfNull(permissionRecord);
 
-            var resourceName = $"{LocalizationServicesDefaults.PermissionLocaleStringResourcesPrefix}{permissionRecord.SystemName}";
-            foreach (var lang in await _languageService.GetAllLanguagesAsync(true))
-            {
-                var lsr = await GetLocaleStringResourceByNameAsync(resourceName, lang.Id, false);
-                if (lsr != null)
-                    await DeleteLocaleStringResourceAsync(lsr);
-            }
-        }
+        //    var resourceName = $"{LocalizationServicesDefaults.PermissionLocaleStringResourcesPrefix}{permissionRecord.SystemName}";
+        //    foreach (var lang in await _languageService.GetAllLanguagesAsync(true))
+        //    {
+        //        var lsr = await GetLocaleStringResourceByNameAsync(resourceName, lang.Id, false);
+        //        if (lsr != null)
+        //            await DeleteLocaleStringResourceAsync(lsr);
+        //    }
+        //}
 
         /// <summary>
         /// Add a locale resource (if new) or update an existing one
