@@ -28,7 +28,6 @@
     <Compile Include="Entities\Clustering\INI2SNode.cs" />
     <Compile Include="Entities\Clustering\INodeMappingSupported.cs" />
     <Compile Include="Entities\Clustering\NodeSettings.cs" />
-    <Compile Include="Entities\ISoftDeletedEntity.cs" />
     <Compile Include="Entities\Localization\ILocalizedEntity.cs" />
     <Compile Include="Entities\Localization\ILocalizedEnum.cs" />
     <Compile Include="Entities\Localization\LocalizationSettings.cs" />
@@ -48,6 +47,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Infrastructure\ARWNI2S.Infrastructure\ARWNI2S.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Entities\World\" />
   </ItemGroup>
 
 </Project>

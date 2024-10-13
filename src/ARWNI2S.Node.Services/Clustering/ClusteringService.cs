@@ -114,6 +114,15 @@ namespace ARWNI2S.Node.Services.Clustering
             return await _nodeRepository.GetByIdAsync(nodeId, cache => default, false);
         }
 
+        public async Task<NI2SNode> GetNodeByNodeIdAsync(Guid nodeId)
+        {
+            var query = _nodeRepository.Table;
+
+            query = query.Where(x => x.NodeId == nodeId);
+
+            return await query.FirstOrDefaultAsync();
+        }
+
         /// <summary>
         /// Inserts a node
         /// </summary>
@@ -169,21 +178,23 @@ namespace ARWNI2S.Node.Services.Clustering
         /// A task that represents the asynchronous operation
         /// The task result contains the list of names and/or IDs not existing nodes
         /// </returns>
-        public async Task<string[]> GetNotExistingNodesAsync(string[] nodeIdsNames)
+        public async Task<Guid[]> GetNotExistingNodesAsync(string[] nodeIdsNames)
         {
             ArgumentNullException.ThrowIfNull(nodeIdsNames);
 
             var query = _nodeRepository.Table;
+            
             var queryFilter = nodeIdsNames.Distinct().ToArray();
+
             //filtering by name
-            var filter = await query.Select(node => node.Name)
+            var filter = await query.Select(node => node.NodeId.ToString())
                 .Where(node => queryFilter.Contains(node))
                 .ToListAsync();
             queryFilter = queryFilter.Except(filter).ToArray();
 
             //if some names not found
             if (queryFilter.Length == 0)
-                return queryFilter.ToArray();
+                return [];
 
             //filtering by IDs
             filter = await query.Select(node => node.Id.ToString())
@@ -191,8 +202,13 @@ namespace ARWNI2S.Node.Services.Clustering
                 .ToListAsync();
             queryFilter = queryFilter.Except(filter).ToArray();
 
-            return queryFilter.ToArray();
+            var queryResult = await query.Select(node => node.NodeId)
+                .Where(node => queryFilter.Contains(node.ToString()))
+                .ToListAsync();
+
+            return [.. queryResult];
         }
+
 
         #endregion
     }

@@ -1,6 +1,5 @@
 ﻿using ARWNI2S.Infrastructure.Collections.Generic;
 using ARWNI2S.Node.Core.Caching;
-using ARWNI2S.Node.Core.Entities;
 using ARWNI2S.Node.Core.Events;
 using ARWNI2S.Node.Data.Entities;
 using ARWNI2S.Node.Data.Extensions;

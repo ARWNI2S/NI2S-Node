@@ -1,32 +1,36 @@
 ﻿using ARWNI2S.Infrastructure.Entities;
-using ARWNI2S.Node.Core.Entities.Localization;
 
 namespace ARWNI2S.Node.Core.Entities.Clustering
 {
     /// <summary>
     /// Represents a NI2S node
     /// </summary>
-    public partial interface INI2SNode : INI2SEntity, ILocalizedEntity, ISoftDeletedEntity
+    public partial interface INI2SNode : INI2SEntity
     {
         /// <summary>
-        /// Gets or sets the node name
+        /// Gets or sets the node id
         /// </summary>
-        string Name { get; set; }
+        Guid NodeId { get; set; }
 
         /// <summary>
-        /// Gets or sets the node metadata
+        /// Gets or sets the node metadata in simple json format
         /// </summary>
         string Metadata { get; set; }
-
-        /// <summary>
-        /// Gets or sets the node description
-        /// </summary>
-        string Description { get; set; }
 
         /// <summary>
         /// Gets or sets the node IP address
         /// </summary>
         string IpAddress { get; set; }
+
+        /// <summary>
+        /// Gets or sets the node public port
+        /// </summary>
+        string PublicPort { get; set; }
+
+        /// <summary>
+        /// Gets or sets the node relay port
+        /// </summary>
+        string RelayPort { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether SSL is enabled

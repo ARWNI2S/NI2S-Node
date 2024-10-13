@@ -1,4 +1,4 @@
-﻿namespace ARWNI2S.Node.Core.Entities
+﻿namespace ARWNI2S.Node.Data.Entities
 {
     /// <summary>
     /// Represents a soft-deleted (without actually deleting from storage) entity

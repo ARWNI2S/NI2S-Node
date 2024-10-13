@@ -18,15 +18,10 @@ namespace ARWNI2S.Node.Runtime.Infrastructure
         /// <param name="configuration">Configuration of the application</param>
         public void ConfigureServices(IServiceCollection services, IConfiguration configuration) { }
 
-        ///// <summary>
-        ///// Configure the using of added middleware
-        ///// </summary>
-        ///// <param name="application">Builder for configuring an application's request pipeline</param>
-        //public void Configure(IApplicationBuilder application)
-        //{
-        //    application.UseDraCoProxy();
-        //}
-
+        /// <summary>
+        /// Configure the using of added middleware
+        /// </summary>
+        /// <param name="application">Builder for configuring an application's request pipeline</param>
         public void Configure(IHost application)
         {
             application.UseNodeProxy();

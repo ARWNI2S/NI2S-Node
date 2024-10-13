@@ -42,6 +42,16 @@ namespace ARWNI2S.Node.Services.Clustering
         Task<NI2SNode> GetNodeByIdAsync(int nodeId);
 
         /// <summary>
+        /// Gets a node 
+        /// </summary>
+        /// <param name="nodeId">Node identifier</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation
+        /// The task result contains the node
+        /// </returns>
+        Task<NI2SNode> GetNodeByNodeIdAsync(Guid nodeId);
+
+        /// <summary>
         /// Inserts a node
         /// </summary>
         /// <param name="node">Node</param>
@@ -77,6 +87,6 @@ namespace ARWNI2S.Node.Services.Clustering
         /// A task that represents the asynchronous operation
         /// The task result contains the list of names and/or IDs not existing nodes
         /// </returns>
-        Task<string[]> GetNotExistingNodesAsync(string[] nodeIdsNames);
+        Task<Guid[]> GetNotExistingNodesAsync(string[] nodeIdsNames);
     }
 }

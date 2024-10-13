@@ -7,17 +7,12 @@ namespace ARWNI2S.Node.Data.Entities.Clustering
     /// </summary>
     public partial class NI2SNode : BaseDataEntity, INI2SNode
     {
-        /// <summary>
-        /// Gets or sets the node name
-        /// </summary>
-        public string Name { get; set; }
+        public Guid NodeId { get; set; }
 
         public string Metadata { get; set; }
-        public string Description { get; set; }
         public string IpAddress { get; set; }
-        public string CurrentState { get; set; }
-        public int AverageEntities { get; set; }
-        public int MaxEntities { get; set; }
+        public string PublicPort { get; set; }
+        public string RelayPort { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether SSL is enabled
@@ -39,9 +34,8 @@ namespace ARWNI2S.Node.Data.Entities.Clustering
         /// </summary>
         public int DisplayOrder { get; set; }
 
-        /// <summary>
-        /// Gets or sets a value indicating whether the entity has been deleted
-        /// </summary>
-        public bool Deleted { get; set; }
+        public string CurrentState { get; set; }
+        public int AverageEntities { get; set; }
+        public int MaxEntities { get; set; }
     }
 }

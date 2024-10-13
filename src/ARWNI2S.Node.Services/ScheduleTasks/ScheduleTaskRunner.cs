@@ -150,7 +150,7 @@ namespace ARWNI2S.Node.Services.ScheduleTasks
                 await _scheduleTaskService.UpdateTaskAsync(scheduleTask);
 
                 var message = string.Format(await _localizationService.GetResourceAsync("ScheduleTasks.Error"), scheduleTask.Name,
-                    exc.Message, scheduleTask.Type, node.Name, scheduleTaskUrl);
+                    exc.Message, scheduleTask.Type, node.NodeId, scheduleTaskUrl);
 
                 //log error
                 await _logger.ErrorAsync(message, exc);

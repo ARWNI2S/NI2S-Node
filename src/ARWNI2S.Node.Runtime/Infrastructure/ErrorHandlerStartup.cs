@@ -20,22 +20,10 @@ namespace ARWNI2S.Node.Runtime.Infrastructure
         {
         }
 
-        ///// <summary>
-        ///// Configure the using of added middleware
-        ///// </summary>
-        ///// <param name="application">Builder for configuring an application's request pipeline</param>
-        //public void Configure(IApplicationBuilder application)
-        //{
-        //    //exception handling
-        //    application.UseNodeExceptionHandler();
-
-        //    //handle 400 errors (bad request)
-        //    application.UseBadRequestResult();
-
-        //    //handle 404 errors (not found)
-        //    application.UsePageNotFound();
-        //}
-
+        /// <summary>
+        /// Configure the using of added services
+        /// </summary>
+        /// <param name="application">Builder for configuring an application's request pipeline</param>
         public void Configure(IHost application)
         {
             //exception handling

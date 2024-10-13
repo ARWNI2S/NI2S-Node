@@ -78,7 +78,7 @@
                 if (result.TryGetValue(key, out var list))
                     list.Add(value);
                 else
-                    result[key] = new List<TValue> { value };
+                    result[key] = [value];
             }
 
             return result;

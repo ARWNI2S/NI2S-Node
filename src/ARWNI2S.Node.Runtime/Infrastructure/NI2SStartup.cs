@@ -111,7 +111,7 @@ namespace ARWNI2S.Node.Runtime.Infrastructure
             //services.AddScoped<ICurrencyService, CurrencyService>();
             //services.AddScoped<IMeasureService, MeasureService>();
             //services.AddScoped<IStateProvinceService, StateProvinceService>();
-            //services.AddScoped<INodeService, NodeService>();
+            //services.AddScoped<IClusteringService, NodeService>();
             //services.AddScoped<INodeMappingService, NodeMappingService>();
             //services.AddScoped<ILocalizationService, LocalizationService>();
             //services.AddScoped<ILocalizedEntityService, LocalizedEntityService>();
