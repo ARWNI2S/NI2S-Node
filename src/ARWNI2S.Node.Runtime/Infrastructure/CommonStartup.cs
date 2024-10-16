@@ -28,7 +28,7 @@ namespace ARWNI2S.Node.Runtime.Infrastructure
             //services.AddHttpSession();
 
             //add default HTTP clients
-            //services.AddDraCoHttpClients();
+            //services.AddNI2SHttpClients();
 
             //add anti-forgery
             //services.AddAntiForgery();
@@ -57,7 +57,7 @@ namespace ARWNI2S.Node.Runtime.Infrastructure
         //    application.UseSession();
 
         //    //use request localization
-        //    application.UseDraCoRequestLocalization();
+        //    application.UseNI2SRequestLocalization();
         //}
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace ARWNI2S.Node.Runtime.Infrastructure
             //application.UseSession();
 
             //use request localization
-            //application.UseDraCoRequestLocalization();
+            //application.UseNI2SRequestLocalization();
         }
 
         /// <summary>

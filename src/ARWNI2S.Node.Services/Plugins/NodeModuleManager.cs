@@ -139,7 +139,7 @@ namespace ARWNI2S.Node.Services.Plugins
         /// </summary>
         /// <param name="assemblyFile">Path to the module assembly file</param>
         /// <param name="moduleConfig">Module config</param>
-        /// <param name="fileProvider">DraCo file provider</param>
+        /// <param name="fileProvider">NI2S file provider</param>
         /// <returns>Assembly</returns>
         private static Assembly PerformFileDeploy(string assemblyFile, ModuleConfig moduleConfig, IEngineFileProvider fileProvider)
         {

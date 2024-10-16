@@ -2,7 +2,7 @@
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
 
-namespace ARWNI2S.Node.Data.Services.Configuration
+namespace ARWNI2S.Node.Services.Configuration
 {
     public partial class AzureKeyVaultService : IAzureKeyVaultService
     {

@@ -142,7 +142,7 @@ namespace ARWNI2S.Node.Runtime.Infrastructure
             //services.AddScoped<INewsService, NewsService>();
             //services.AddScoped<ISystemMessageService, SystemMessageService>();
             //services.AddScoped<IDateTimeHelper, DateTimeHelper>();
-            //services.AddScoped<IDraCoHtmlHelper, DraCoHtmlHelper>();
+            //services.AddScoped<INI2SHtmlHelper, NI2SHtmlHelper>();
             //services.AddScoped<IScheduleTaskService, ScheduleTaskService>();
             //services.AddScoped<IExportManager, ExportManager>();
             //services.AddScoped<IImportManager, ImportManager>();
@@ -155,7 +155,7 @@ namespace ARWNI2S.Node.Runtime.Infrastructure
             //services.AddScoped<IBBCodeHelper, BBCodeHelper>();
             //services.AddScoped<IHtmlFormatter, HtmlFormatter>();
             //services.AddScoped<IVideoService, VideoService>();
-            //services.AddScoped<IDraCoUrlHelper, DraCoUrlHelper>();
+            //services.AddScoped<INI2SUrlHelper, NI2SUrlHelper>();
 
             //services.AddScoped<IMetaverseService, MetaverseService>();
             //services.AddScoped<IBlockchainService, BlockchainService>();

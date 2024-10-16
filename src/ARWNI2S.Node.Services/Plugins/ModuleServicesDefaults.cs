@@ -11,7 +11,7 @@ namespace ARWNI2S.Node.Services.Plugins
         /// <summary>
         /// Gets the path to file that contains installed module system names
         /// </summary>
-        public static string ModulesInfoFilePath => "~/App_Data/modules.json";
+        public static string ModulesInfoFilePath => "~/Node_Data/modules.json";
 
         /// <summary>
         /// Gets the path to modules folder
@@ -51,7 +51,7 @@ namespace ARWNI2S.Node.Services.Plugins
         /// <summary>
         /// Gets the path to temp directory with uploads
         /// </summary>
-        public static string UploadsTempPath => "~/App_Data/TempUploads";
+        public static string UploadsTempPath => "~/Node_Data/TempUploads";
 
         /// <summary>
         /// Gets the name of the file containing information about the uploaded items

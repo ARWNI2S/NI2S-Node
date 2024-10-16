@@ -28,7 +28,7 @@ namespace ARWNI2S.Node.Data.Entities.Directory
         public int PrimaryExchangeRateCurrencyId { get; set; }
 
         /// <summary>
-        /// Active exchange rate provider system name (of a addon)
+        /// Active exchange rate provider system name (of a module)
         /// </summary>
         public string ActiveExchangeRateProviderSystemName { get; set; }
 

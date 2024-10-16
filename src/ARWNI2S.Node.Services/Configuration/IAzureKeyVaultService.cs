@@ -1,4 +1,4 @@
-﻿namespace ARWNI2S.Node.Data.Services.Configuration
+﻿namespace ARWNI2S.Node.Services.Configuration
 {
     public partial interface IAzureKeyVaultService
     {
