@@ -3,13 +3,21 @@ using ARWNI2S.Infrastructure.Configuration;
 using ARWNI2S.Node.Core;
 using ARWNI2S.Node.Core.Caching;
 using ARWNI2S.Node.Core.Configuration;
+using ARWNI2S.Node.Core.Events;
 using ARWNI2S.Node.Core.Infrastructure;
+using ARWNI2S.Node.Core.Services.Helpers;
 using ARWNI2S.Node.Data;
 using ARWNI2S.Node.Services.Caching;
+using ARWNI2S.Node.Services.Clustering;
+using ARWNI2S.Node.Services.Common;
 using ARWNI2S.Node.Services.Configuration;
+using ARWNI2S.Node.Services.Directory;
 using ARWNI2S.Node.Services.Events;
+using ARWNI2S.Node.Services.Localization;
+using ARWNI2S.Node.Services.Logging;
 using ARWNI2S.Node.Services.Plugins;
 using ARWNI2S.Node.Services.ScheduleTasks;
+using ARWNI2S.Node.Services.Users;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -30,12 +38,8 @@ namespace ARWNI2S.Node.Runtime.Infrastructure
         {
             //file provider
             services.AddScoped<IEngineFileProvider, EngineFileProvider>();
-
-            //web helper
+            //node helper
             services.AddScoped<INodeHelper, NodeHelper>();
-
-            //user agent helper
-            //services.AddScoped<IUserAgentHelper, UserAgentHelper>();
 
             //modules
             services.AddScoped<IModuleService, ModuleService>();
@@ -83,108 +87,22 @@ namespace ARWNI2S.Node.Runtime.Infrastructure
             services.AddScoped<INodeContext, NI2SNodeContext>();
 
             //services
-            //services.AddScoped<ITopicTemplateService, TopicTemplateService>();
-            //services.AddScoped<IAddressAttributeFormatter, AddressAttributeFormatter>();
-            //services.AddScoped<IAddressAttributeParser, AddressAttributeParser>();
-            //services.AddScoped<IAddressAttributeService, AddressAttributeService>();
-            //services.AddScoped<IAddressService, AddressService>();
-            //services.AddScoped<IAffiliateService, AffiliateService>();
-            //services.AddScoped<IPartnerService, PartnerService>();
-            //services.AddScoped<IGamesService, GamesService>();
-            //services.AddScoped<IGamePublisherService, GamePublisherService>();
-            //services.AddScoped<IPartnerAttributeFormatter, PartnerAttributeFormatter>();
-            //services.AddScoped<IPartnerAttributeParser, PartnerAttributeParser>();
-            //services.AddScoped<IPartnerAttributeService, PartnerAttributeService>();
-            //services.AddScoped<ISearchTermService, SearchTermService>();
-            //services.AddScoped<IGenericAttributeService, GenericAttributeService>();
-            //services.AddScoped<IMaintenanceService, MaintenanceService>();
-            //services.AddScoped<IUserAttributeFormatter, UserAttributeFormatter>();
-            //services.AddScoped<IUserAttributeParser, UserAttributeParser>();
-            //services.AddScoped<IUserAttributeService, UserAttributeService>();
-            //services.AddScoped<IUserService, UserService>();
-            //services.AddScoped<IUserRegistrationService, UserRegistrationService>();
-            //services.AddScoped<IUserReportService, UserReportService>();
-            //services.AddScoped<IPermissionService, PermissionService>();
-            //services.AddScoped<IAclService, AclService>();
-            //services.AddScoped<IGeoLookupService, GeoLookupService>();
-            //services.AddScoped<ICountryService, CountryService>();
-            //services.AddScoped<ICurrencyService, CurrencyService>();
-            //services.AddScoped<IMeasureService, MeasureService>();
-            //services.AddScoped<IStateProvinceService, StateProvinceService>();
-            //services.AddScoped<IClusteringService, NodeService>();
-            //services.AddScoped<INodeMappingService, NodeMappingService>();
-            //services.AddScoped<ILocalizationService, LocalizationService>();
-            //services.AddScoped<ILocalizedEntityService, LocalizedEntityService>();
-            //services.AddScoped<ILanguageService, LanguageService>();
-            //services.AddScoped<IDownloadService, DownloadService>();
-            //services.AddScoped<IMessageTemplateService, MessageTemplateService>();
-            //services.AddScoped<IQueuedEmailService, QueuedEmailService>();
-            //services.AddScoped<INewsLetterSubscriptionService, NewsLetterSubscriptionService>();
-            //services.AddScoped<INotificationService, NotificationService>();
-            //services.AddScoped<ICampaignService, CampaignService>();
-            //services.AddScoped<IEmailAccountService, EmailAccountService>();
-            //services.AddScoped<IWorkflowMessageService, WorkflowMessageService>();
-            //services.AddScoped<IMessageTokenProvider, MessageTokenProvider>();
-            //services.AddScoped<ITokenizer, Tokenizer>();
-            //services.AddScoped<ISmtpBuilder, SmtpBuilder>();
-            //services.AddScoped<IEmailSender, EmailSender>();
-            //services.AddScoped<IEncryptionService, EncryptionService>();
-            //services.AddScoped<IAuthenticationService, CookieAuthenticationService>();
-            //services.AddScoped<IUrlRecordService, UrlRecordService>();
-            //services.AddScoped<ITaxCategoryService, TaxCategoryService>();
-            //services.AddScoped<ITaxService, TaxService>();
-            //services.AddScoped<ILogger, DefaultLogger>();
-            //services.AddScoped<IUserActivityService, UserActivityService>();
-            //services.AddScoped<IGdprService, GdprService>();
-            //services.AddScoped<IPollService, PollService>();
-            //services.AddScoped<IBlogService, BlogService>();
-            //services.AddScoped<ITopicService, TopicService>();
-            //services.AddScoped<INewsService, NewsService>();
-            //services.AddScoped<ISystemMessageService, SystemMessageService>();
-            //services.AddScoped<IDateTimeHelper, DateTimeHelper>();
-            //services.AddScoped<INI2SHtmlHelper, NI2SHtmlHelper>();
-            //services.AddScoped<IScheduleTaskService, ScheduleTaskService>();
-            //services.AddScoped<IExportManager, ExportManager>();
-            //services.AddScoped<IImportManager, ImportManager>();
-            //services.AddScoped<IUploadService, UploadService>();
-            //services.AddScoped<IExternalAuthenticationService, ExternalAuthenticationService>();
-            //services.AddScoped<IWalletAuthenticationService, WalletAuthenticationService>();
-            //services.AddSingleton<IRoutePublisher, RoutePublisher>();
-            //services.AddSingleton<IEventPublisher, EventPublisher>();
-            //services.AddScoped<ISettingService, SettingService>();
-            //services.AddScoped<IBBCodeHelper, BBCodeHelper>();
-            //services.AddScoped<IHtmlFormatter, HtmlFormatter>();
-            //services.AddScoped<IVideoService, VideoService>();
-            //services.AddScoped<INI2SUrlHelper, NI2SUrlHelper>();
-
-            //services.AddScoped<IMetaverseService, MetaverseService>();
-            //services.AddScoped<IBlockchainService, BlockchainService>();
-            //services.AddScoped<ICryptoAddressService, CryptoAddressService>();
-            //services.AddScoped<ITokenService, TokenService>();
-            //services.AddScoped<INonFungibleTokenService, NonFungibleTokenService>();
-            //services.AddScoped<ISmartContractService, SmartContractService>();
-            //services.AddScoped<IBlockchainApiService, BlockchainApiService>();
-
-            //services.AddScoped<IAchievementService, AchievementService>();
-            //services.AddScoped<IGameplayService, GameplayService>();
-            //services.AddScoped<IPlayerCreationService, PlayerCreationService>();
-            //services.AddScoped<IGovernanceService, GovernanceService>();
-            //services.AddScoped<IRankService, RankService>();
-            //services.AddScoped<IPlayerService, PlayerService>();
-            //services.AddScoped<IPlayerAttributeFormatter, PlayerAttributeFormatter>();
-            //services.AddScoped<IPlayerAttributeParser, PlayerAttributeParser>();
-            //services.AddScoped<IPlayerAttributeService, PlayerAttributeService>();
-            //services.AddScoped<IPlayerExperienceService, PlayerExperienceService>();
-            //services.AddScoped<IInventoryService, InventoryService>();
-            //services.AddScoped<IQuestService, QuestService>();
-            //services.AddScoped<IQuestEnrollmentService, QuestEnrollmentService>();
-            //services.AddScoped<IGoalService, GoalService>();
-            //services.AddScoped<IGoalAttributeService, GoalAttributeService>();
-            //services.AddScoped<IGoalAttributeParser, GoalAttributeParser>();
-            //services.AddScoped<IGoalAttributeFormatter, GoalAttributeFormatter>();
-            //services.AddScoped<IRewardService, RewardService>();
-            //services.AddScoped<ITournamentService, TournamentService>();
-            //services.AddScoped<ITournamentEnrollmentService, TournamentEnrollmentService>();
+            services.AddScoped<IGenericAttributeService, GenericAttributeService>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ICurrencyService, CurrencyService>();
+            services.AddScoped<IMeasureService, MeasureService>();
+            services.AddScoped<IClusteringService, ClusteringService>();
+            services.AddScoped<INodeMappingService, NodeMappingService>();
+            services.AddScoped<ILocalizationService, LocalizationService>();
+            services.AddScoped<ILocalizedEntityService, LocalizedEntityService>();
+            services.AddScoped<ILanguageService, LanguageService>();
+            services.AddScoped<ILogService, DefaultLogger>();
+            services.AddScoped<IUserActivityService, UserActivityService>();
+            services.AddScoped<IDateTimeHelper, DateTimeHelper>();
+            services.AddScoped<IScheduleTaskService, ScheduleTaskService>();
+            services.AddScoped<IUploadService, UploadService>();
+            services.AddSingleton<INodeEventPublisher, EventPublisher>();
+            services.AddScoped<ISettingService, SettingService>();
 
             //module managers
             services.AddScoped(typeof(IModuleManager<>), typeof(ModuleManager<>));
@@ -216,23 +134,6 @@ namespace ARWNI2S.Node.Runtime.Infrastructure
                 });
             }
 
-            //picture service
-            //if (ni2sSettings.Get<AzureBlobConfig>().Enabled)
-            //    services.AddScoped<IPictureService, AzurePictureService>();
-            //else
-            //    services.AddScoped<IPictureService, PictureService>();
-
-            ////roxy file manager
-            //services.AddScoped<IRoxyFilemanService, RoxyFilemanService>();
-            //services.AddScoped<IRoxyFilemanFileProvider, RoxyFilemanFileProvider>();
-
-            ////installation service
-            //services.AddScoped<IInstallationService, InstallationService>();
-
-            ////slug route transformer
-            //if (DataSettingsManager.IsDatabaseInstalled())
-            //    services.AddScoped<SlugRouteTransformer>();
-
             //schedule tasks
             services.AddSingleton<ITaskScheduler, Services.ScheduleTasks.TaskScheduler>();
             services.AddTransient<IScheduleTaskRunner, ScheduleTaskRunner>();
@@ -247,9 +148,6 @@ namespace ARWNI2S.Node.Runtime.Infrastructure
                 }, typeof(IConsumer<>)))
                     services.AddScoped(findInterface, consumer);
 
-            //XML sitemap
-            //services.AddScoped<IXmlSiteMap, XmlSiteMap>();
-
             //register the Lazy resolver for .Net IoC
             var useAutofac = ni2sSettings.Get<CommonConfig>().UseAutofac;
             if (!useAutofac)
@@ -259,14 +157,6 @@ namespace ARWNI2S.Node.Runtime.Infrastructure
         public void Configure(IHost application)
         {
         }
-
-        ///// <summary>
-        ///// Configure the using of added middleware
-        ///// </summary>
-        ///// <param name="application">Builder for configuring an application's request pipeline</param>
-        //public void Configure(IApplicationBuilder application)
-        //{
-        //}
 
         /// <summary>
         /// Gets order of this startup configuration implementation

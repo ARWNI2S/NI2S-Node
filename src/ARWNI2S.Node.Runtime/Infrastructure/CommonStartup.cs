@@ -41,41 +41,15 @@ namespace ARWNI2S.Node.Runtime.Infrastructure
             //});
         }
 
-        ///// <summary>
-        ///// Configure the using of added middleware
-        ///// </summary>
-        ///// <param name="application">Builder for configuring an application's request pipeline</param>
-        //public void Configure(IApplicationBuilder application)
-        //{
-        //    //check whether requested page is keep alive page
-        //    application.UseKeepAlive();
-
-        //    //check whether database is installed
-        //    application.UseInstallUrl();
-
-        //    //use HTTP session
-        //    application.UseSession();
-
-        //    //use request localization
-        //    application.UseNI2SRequestLocalization();
-        //}
-
         /// <summary>
         /// Configure the using of added middleware
         /// </summary>
         /// <param name="application">Builder for configuring an application's request pipeline</param>
         public void Configure(IHost application)
         {
-            //check whether requested page is keep alive page
             //application.UseKeepAlive();
-
-            //check whether database is installed
             //application.UseInstallUrl();
-
-            //use HTTP session
             //application.UseSession();
-
-            //use request localization
             //application.UseNI2SRequestLocalization();
         }
 
