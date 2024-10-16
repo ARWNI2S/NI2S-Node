@@ -1,6 +1,7 @@
-﻿using System.Globalization;
+﻿using Microsoft.AspNetCore.Http;
+using System.Globalization;
 
-namespace ARWNI2S.Node.Data.Services.Plugins
+namespace ARWNI2S.Node.Services.Plugins
 {
     /// <summary>
     /// Represents a service for uploading application extensions (modules or themes) and favicon and app icons

@@ -24,7 +24,7 @@
             //public static readonly string AddNewNews = "AddNewNews";
             public static readonly string AddNewSetting = "AddNewSetting";
             public static readonly string AddNewStateProvince = "AddNewStateProvince";
-            public static readonly string AddNewServer = "AddNewServer";
+            public static readonly string AddNewNode = "AddNewNode";
             //public static readonly string AddNewTopic = "AddNewTopic";
             //public static readonly string AddNewPartner = "AddNewPartner";
             //public static readonly string AddNewPartnerAttribute = "AddNewPartnerAttribute";
@@ -73,7 +73,7 @@
             public static readonly string DeleteSetting = "DeleteSetting";
             public static readonly string DeleteSpecAttribute = "DeleteSpecAttribute";
             public static readonly string DeleteStateProvince = "DeleteStateProvince";
-            public static readonly string DeleteServer = "DeleteServer";
+            public static readonly string DeleteNode = "DeleteNode";
             public static readonly string DeleteSystemLog = "DeleteSystemLog";
             //public static readonly string DeleteTopic = "DeleteTopic";
             //public static readonly string DeletePartner = "DeletePartner";
@@ -120,7 +120,7 @@
             public static readonly string EditModule = "EditModule";
             public static readonly string EditSettings = "EditSettings";
             public static readonly string EditStateProvince = "EditStateProvince";
-            public static readonly string EditServer = "EditServer";
+            public static readonly string EditNode = "EditNode";
             public static readonly string EditTask = "EditTask";
             //public static readonly string EditPartner = "EditPartner";
             //public static readonly string EditPartnerAttribute = "EditPartnerAttribute";

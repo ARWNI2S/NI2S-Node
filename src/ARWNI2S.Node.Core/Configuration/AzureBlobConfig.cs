@@ -1,4 +1,5 @@
-﻿using ARWNI2S.Node.Core.Security.Secrets;
+﻿using ARWNI2S.Infrastructure.Configuration;
+using ARWNI2S.Node.Core.Security.Secrets;
 using Newtonsoft.Json;
 
 namespace ARWNI2S.Node.Core.Configuration

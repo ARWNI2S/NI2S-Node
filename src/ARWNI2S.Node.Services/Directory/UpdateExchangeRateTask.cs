@@ -1,7 +1,7 @@
 ﻿using ARWNI2S.Node.Data.Entities.Directory;
-using ARWNI2S.Node.Data.Services.ScheduleTasks;
+using ARWNI2S.Node.Services.ScheduleTasks;
 
-namespace ARWNI2S.Node.Data.Services.Directory
+namespace ARWNI2S.Node.Services.Directory
 {
     /// <summary>
     /// Represents a task for updating exchange rates

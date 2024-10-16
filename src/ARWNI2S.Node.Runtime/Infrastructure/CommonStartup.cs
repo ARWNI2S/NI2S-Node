@@ -37,7 +37,7 @@ namespace ARWNI2S.Node.Runtime.Infrastructure
             //services.AddRouting(options =>
             //{
             //    //add constraint key for language
-            //    options.ConstraintMap[MetalinkRoutingDefaults.LanguageParameterTransformer] = typeof(LanguageParameterTransformer);
+            //    options.ConstraintMap[PortalRoutingDefaults.LanguageParameterTransformer] = typeof(LanguageParameterTransformer);
             //});
         }
 

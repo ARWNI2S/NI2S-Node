@@ -5,37 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Entities\**" />
-    <Compile Remove="Network\Extensions\**" />
-    <EmbeddedResource Remove="Entities\**" />
-    <EmbeddedResource Remove="Network\Extensions\**" />
-    <None Remove="Entities\**" />
-    <None Remove="Network\Extensions\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Remove="Configuration\AzureBlobConfig.cs" />
-    <Compile Remove="Infrastructure\NI2SEnvironment.cs" />
-    <Compile Remove="IWebHelper.cs" />
-    <Compile Remove="NI2SVersion.cs" />
-    <Compile Remove="Services\Helpers\BrowscapXmlParser.cs" />
-    <Compile Remove="Services\Helpers\IUserAgentHelper.cs" />
-    <Compile Remove="Services\Helpers\UserAgentHelper.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Include="Entities\BaseEntity.cs" />
-    <Compile Include="Entities\Clustering\INI2SNode.cs" />
-    <Compile Include="Entities\Clustering\INodeMappingSupported.cs" />
-    <Compile Include="Entities\Clustering\NodeSettings.cs" />
-    <Compile Include="Entities\Localization\ILocalizedEntity.cs" />
-    <Compile Include="Entities\Localization\ILocalizedEnum.cs" />
-    <Compile Include="Entities\Localization\LocalizationSettings.cs" />
-    <Compile Include="Entities\Users\UserDefaults.cs" />
-    <Compile Include="Entities\Users\UserSettings.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Autofac.Extensions.DependencyInjection" />
     <PackageReference Include="AutoMapper" />
     <PackageReference Include="Azure.Security.KeyVault.Secrets" />

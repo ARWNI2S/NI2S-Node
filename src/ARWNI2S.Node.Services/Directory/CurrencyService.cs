@@ -1,9 +1,10 @@
 ﻿using ARWNI2S.Node.Core;
+using ARWNI2S.Node.Data;
 using ARWNI2S.Node.Data.Entities.Directory;
 using ARWNI2S.Node.Data.Extensions;
-using ARWNI2S.Node.Data.Services.Clustering;
+using ARWNI2S.Node.Services.Clustering;
 
-namespace ARWNI2S.Node.Data.Services.Directory
+namespace ARWNI2S.Node.Services.Directory
 {
     /// <summary>
     /// Currency service
@@ -145,10 +146,10 @@ namespace ARWNI2S.Node.Data.Services.Directory
         public virtual async Task<IList<ExchangeRate>> GetCurrencyLiveRatesAsync(string currencyCode = null)
         {
             var exchangeRateProvider = await _exchangeRateModuleManager.LoadCurrencyModuleAsync()
-                ?? throw new ServerException("Active exchange rate provider cannot be loaded");
+                ?? throw new NodeException("Active exchange rate provider cannot be loaded");
 
             currencyCode ??= (await GetCurrencyByIdAsync(_currencySettings.PrimaryExchangeRateCurrencyId))?.CurrencyCode
-                ?? throw new ServerException("Primary exchange rate currency is not set");
+                ?? throw new NodeException("Primary exchange rate currency is not set");
 
             return await exchangeRateProvider.GetCurrencyLiveRatesAsync(currencyCode);
         }
@@ -180,7 +181,7 @@ namespace ARWNI2S.Node.Data.Services.Directory
         {
             ArgumentNullException.ThrowIfNull(sourceCurrencyCode);
 
-            var primaryServerCurrency = await GetCurrencyByIdAsync(_currencySettings.PrimaryServerCurrencyId);
+            var primaryServerCurrency = await GetCurrencyByIdAsync(_currencySettings.PrimaryNodeCurrencyId);
             var result = await ConvertCurrencyAsync(amount, sourceCurrencyCode, primaryServerCurrency);
 
             return result;
@@ -197,7 +198,7 @@ namespace ARWNI2S.Node.Data.Services.Directory
         /// </returns>
         public virtual async Task<decimal> ConvertFromPrimaryServerCurrencyAsync(decimal amount, Currency targetCurrencyCode)
         {
-            var primaryServerCurrency = await GetCurrencyByIdAsync(_currencySettings.PrimaryServerCurrencyId);
+            var primaryServerCurrency = await GetCurrencyByIdAsync(_currencySettings.PrimaryNodeCurrencyId);
             var result = await ConvertCurrencyAsync(amount, primaryServerCurrency, targetCurrencyCode);
 
             return result;
@@ -242,14 +243,14 @@ namespace ARWNI2S.Node.Data.Services.Directory
         {
             ArgumentNullException.ThrowIfNull(sourceCurrencyCode);
 
-            var primaryExchangeRateCurrency = await GetCurrencyByIdAsync(_currencySettings.PrimaryExchangeRateCurrencyId) ?? throw new ServerException("Primary exchange rate currency cannot be loaded");
+            var primaryExchangeRateCurrency = await GetCurrencyByIdAsync(_currencySettings.PrimaryExchangeRateCurrencyId) ?? throw new NodeException("Primary exchange rate currency cannot be loaded");
             var result = amount;
             if (result == decimal.Zero || sourceCurrencyCode.Id == primaryExchangeRateCurrency.Id)
                 return result;
 
             var exchangeRate = sourceCurrencyCode.Rate;
             if (exchangeRate == decimal.Zero)
-                throw new ServerException($"Exchange rate not found for currency [{sourceCurrencyCode.Name}]");
+                throw new NodeException($"Exchange rate not found for currency [{sourceCurrencyCode.Name}]");
             result /= exchangeRate;
 
             return result;
@@ -268,14 +269,14 @@ namespace ARWNI2S.Node.Data.Services.Directory
         {
             ArgumentNullException.ThrowIfNull(targetCurrencyCode);
 
-            var primaryExchangeRateCurrency = await GetCurrencyByIdAsync(_currencySettings.PrimaryExchangeRateCurrencyId) ?? throw new ServerException("Primary exchange rate currency cannot be loaded");
+            var primaryExchangeRateCurrency = await GetCurrencyByIdAsync(_currencySettings.PrimaryExchangeRateCurrencyId) ?? throw new NodeException("Primary exchange rate currency cannot be loaded");
             var result = amount;
             if (result == decimal.Zero || targetCurrencyCode.Id == primaryExchangeRateCurrency.Id)
                 return result;
 
             var exchangeRate = targetCurrencyCode.Rate;
             if (exchangeRate == decimal.Zero)
-                throw new ServerException($"Exchange rate not found for currency [{targetCurrencyCode.Name}]");
+                throw new NodeException($"Exchange rate not found for currency [{targetCurrencyCode.Name}]");
             result *= exchangeRate;
 
             return result;

@@ -1,5 +1,5 @@
-﻿using ARWNI2S.Node.Core.Entities.Localization;
-using ARWNI2S.Node.Data.Entities.Clustering;
+﻿using ARWNI2S.Node.Core.Entities.Clustering;
+using ARWNI2S.Node.Core.Entities.Localization;
 
 namespace ARWNI2S.Node.Data.Entities.Directory
 {
@@ -36,7 +36,7 @@ namespace ARWNI2S.Node.Data.Entities.Directory
         /// <summary>
         /// Gets or sets a value indicating whether the entity is limited/restricted to certain nodes
         /// </summary>
-        public bool LimitedToServers { get; set; }
+        public bool LimitedToNodes { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the entity is published
@@ -47,16 +47,6 @@ namespace ARWNI2S.Node.Data.Entities.Directory
         /// Gets or sets the display order
         /// </summary>
         public int DisplayOrder { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether this currency is a cryptocurrency
-        /// </summary>
-        public bool IsCryptocurrency { get; set; }
-
-        /// <summary>
-        /// Gets or sets the currency decimal places
-        /// </summary>
-        public int DecimalPlaces { get; set; }
 
         /// <summary>
         /// Gets or sets the date and time of instance creation

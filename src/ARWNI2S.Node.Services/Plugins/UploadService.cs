@@ -1,12 +1,15 @@
-﻿using ARWNI2S.Node.Core;
-using ARWNI2S.Node.Core.Infrastructure;
+﻿using ARWNI2S.Infrastructure;
+using ARWNI2S.Node.Core;
+using ARWNI2S.Node.Services.Common;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Internal;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System.Globalization;
 using System.IO.Compression;
 using System.Runtime.Serialization;
 
-namespace ARWNI2S.Node.Data.Services.Plugins
+namespace ARWNI2S.Node.Services.Plugins
 {
     /// <summary>
     /// Represents the implementation of a service for uploading application extensions (modules or themes) and favicon and app icons
@@ -16,7 +19,7 @@ namespace ARWNI2S.Node.Data.Services.Plugins
         #region Fields
 
         private readonly IEngineFileProvider _fileProvider;
-        private readonly IServerContext _serverContext;
+        private readonly INodeContext _nodeContext;
         //private readonly IThemeProvider _themeProvider;
 
         #endregion
@@ -24,12 +27,12 @@ namespace ARWNI2S.Node.Data.Services.Plugins
         #region Ctor
 
         public UploadService(IEngineFileProvider fileProvider,
-            IServerContext serverContext//,
+            INodeContext nodeContext//,
                                         //IThemeProvider themeProvider
             )
         {
             _fileProvider = fileProvider;
-            _serverContext = serverContext;
+            _nodeContext = nodeContext;
             //_themeProvider = themeProvider;
         }
 
@@ -88,7 +91,7 @@ namespace ARWNI2S.Node.Data.Services.Plugins
 
                 if (rootDirectories.Count != 1)
                 {
-                    throw new ServerException("The archive should contain only one root module or theme directory. " +
+                    throw new NodeException("The archive should contain only one root module or theme directory. " +
                         "For example, Payments.PayPalDirect or DefaultClean. " +
                         $"To upload multiple items, the archive should have the '{ModuleServicesDefaults.UploadedItemsFileName}' file in the root");
                 }
@@ -117,7 +120,7 @@ namespace ARWNI2S.Node.Data.Services.Plugins
 
                         //ensure that the module current version is supported
                         if (!((ModuleDescriptor)descriptor).SupportedVersions.Contains(NI2SVersion.CURRENT_VERSION))
-                            throw new ServerException($"This module doesn't support the current version - {NI2SVersion.CURRENT_VERSION}");
+                            throw new NodeException($"This module doesn't support the current version - {NI2SVersion.CURRENT_VERSION}");
                     }
 
                     //or whether a theme is upload 
@@ -129,10 +132,10 @@ namespace ARWNI2S.Node.Data.Services.Plugins
             }
 
             if (descriptor == null)
-                throw new ServerException("No descriptor file is found. It should be in the root of the archive.");
+                throw new NodeException("No descriptor file is found. It should be in the root of the archive.");
 
             if (string.IsNullOrEmpty(uploadedItemDirectoryName))
-                throw new ServerException($"Cannot get the {(descriptor is ModuleDescriptor ? "module" : "theme")} directory name");
+                throw new NodeException($"Cannot get the {(descriptor is ModuleDescriptor ? "module" : "theme")} directory name");
 
             //get path to upload
             var directoryPath = modulesDirectory;
@@ -284,6 +287,17 @@ namespace ARWNI2S.Node.Data.Services.Plugins
 
         #region Methods
 
+        //public async Task ProcessFileAsync(byte[] fileBytes, string fileName)
+        //{
+        //    using (var stream = new MemoryStream(fileBytes))
+        //    {
+        //        IFormFile formFile = new FormFile(stream, 0, fileBytes.Length, "file", fileName);
+
+        //        // Ahora puedes usar formFile como normalmente lo harías en tu servicio de MVC
+        //        await _uploadService.UploadModulesAsync(formFile);
+        //    }
+        //}
+
         /// <summary>
         /// Upload modules and/or themes
         /// </summary>
@@ -302,7 +316,7 @@ namespace ARWNI2S.Node.Data.Services.Plugins
             {
                 //only zip archives are supported
                 if (!_fileProvider.GetFileExtension(archivefile.FileName)?.Equals(".zip", StringComparison.InvariantCultureIgnoreCase) ?? true)
-                    throw new ServerException("Only zip archives are supported");
+                    throw new NodeException("Only zip archives are supported");
 
                 //ensure that temp directory is created
                 var tempDirectory = _fileProvider.MapPath(ModuleServicesDefaults.UploadsTempPath);
@@ -314,7 +328,7 @@ namespace ARWNI2S.Node.Data.Services.Plugins
                     await archivefile.CopyToAsync(fileStream);
 
                 //try to get information about the uploaded items from the JSON file in the root of the archive
-                //you can find a sample of such descriptive file in Libraries\TheCorporateWars.Server.Core\Modules\Samples\
+                //you can find a sample of such descriptive file in Libraries\TheCorporateWars.Node.Core\Modules\Samples\
                 var uploadedItems = await GetUploadedItemsAsync(zipFilePath);
                 if (!uploadedItems?.Any() ?? true)
                 {
@@ -348,10 +362,10 @@ namespace ARWNI2S.Node.Data.Services.Plugins
             {
                 //only zip archives are supported
                 if (!_fileProvider.GetFileExtension(archivefile.FileName)?.Equals(".zip", StringComparison.InvariantCultureIgnoreCase) ?? true)
-                    throw new ServerException("Only zip archives are supported (*.zip)");
+                    throw new NodeException("Only zip archives are supported (*.zip)");
 
-                //check if there is a folder for favicon and app icons for the current node (all node icons folders are in wwwroot/icons and are called icons_{serverId})
-                var nodeIconsPath = _fileProvider.GetAbsolutePath(string.Format(CommonServicesDefaults.FaviconAndAppIconsPath, await _serverContext.GetActiveServerScopeConfigurationAsync()));
+                //check if there is a folder for favicon and app icons for the current node (all node icons folders are in wwwroot/icons and are called icons_{nodeId})
+                var nodeIconsPath = _fileProvider.GetAbsolutePath(string.Format(CommonServicesDefaults.FaviconAndAppIconsPath, await _nodeContext.GetActiveNodeScopeConfigurationAsync()));
 
                 CreateDirectory(nodeIconsPath);
 
@@ -380,10 +394,10 @@ namespace ARWNI2S.Node.Data.Services.Plugins
 
             //only icons are supported
             if (!_fileProvider.GetFileExtension(favicon.FileName)?.Equals(".ico", StringComparison.InvariantCultureIgnoreCase) ?? true)
-                throw new ServerException("Only icons are supported (*.ico)");
+                throw new NodeException("Only icons are supported (*.ico)");
 
-            //check if there is a folder for favicon (favicon folder is in wwwroot/icons and is called icons_{serverId})
-            var nodeFaviconPath = _fileProvider.GetAbsolutePath(string.Format(CommonServicesDefaults.FaviconAndAppIconsPath, await _serverContext.GetActiveServerScopeConfigurationAsync()));
+            //check if there is a folder for favicon (favicon folder is in wwwroot/icons and is called icons_{nodeId})
+            var nodeFaviconPath = _fileProvider.GetAbsolutePath(string.Format(CommonServicesDefaults.FaviconAndAppIconsPath, await _nodeContext.GetActiveNodeScopeConfigurationAsync()));
 
             CreateDirectory(nodeFaviconPath);
 
@@ -415,7 +429,7 @@ namespace ARWNI2S.Node.Data.Services.Plugins
                 //1. check if the archive with localization of templates is in its place
                 var ziplocalePatternPath = getPath(CommonServicesDefaults.LocalePatternPath, CommonServicesDefaults.LocalePatternArchiveName);
                 if (!_fileProvider.GetFileExtension(ziplocalePatternPath)?.Equals(".zip", StringComparison.InvariantCultureIgnoreCase) ?? true)
-                    throw new ServerException($"Archive '{CommonServicesDefaults.LocalePatternArchiveName}' to retrieve localization patterns not found.");
+                    throw new NodeException($"Archive '{CommonServicesDefaults.LocalePatternArchiveName}' to retrieve localization patterns not found.");
 
                 var currentCulture = cultureInfo is not null ? cultureInfo : CultureInfo.CurrentCulture;
 

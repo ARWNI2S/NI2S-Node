@@ -1,4 +1,4 @@
-﻿namespace ARWNI2S.Node.Data.Services.Plugins
+﻿namespace ARWNI2S.Node.Services.Plugins
 {
     /// <summary>
     /// Modules uploaded event

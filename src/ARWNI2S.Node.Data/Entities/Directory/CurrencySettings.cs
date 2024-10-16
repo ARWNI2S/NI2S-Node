@@ -15,7 +15,7 @@ namespace ARWNI2S.Node.Data.Entities.Directory
         /// <summary>
         /// Primary node currency identifier
         /// </summary>
-        public int PrimaryServerCurrencyId { get; set; }
+        public int PrimaryNodeCurrencyId { get; set; }
 
         /// <summary>
         /// A value indicating whether to allow uset to select display currency
@@ -28,7 +28,7 @@ namespace ARWNI2S.Node.Data.Entities.Directory
         public int PrimaryExchangeRateCurrencyId { get; set; }
 
         /// <summary>
-        /// Active exchange rate provider system name (of a module)
+        /// Active exchange rate provider system name (of a addon)
         /// </summary>
         public string ActiveExchangeRateProviderSystemName { get; set; }
 

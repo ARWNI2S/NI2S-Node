@@ -1,6 +1,6 @@
 ﻿using ARWNI2S.Node.Data.Entities.Directory;
 
-namespace ARWNI2S.Node.Data.Services.Directory
+namespace ARWNI2S.Node.Services.Directory
 {
     /// <summary>
     /// Currency service

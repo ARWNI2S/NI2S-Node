@@ -1,7 +1,7 @@
 ﻿using ARWNI2S.Node.Data.Entities.Directory;
-using ARWNI2S.Node.Data.Services.Plugins;
+using ARWNI2S.Node.Services.Plugins;
 
-namespace ARWNI2S.Node.Data.Services.Directory
+namespace ARWNI2S.Node.Services.Directory
 {
     /// <summary>
     /// Exchange rate provider interface

@@ -1,7 +1,8 @@
 ﻿using ARWNI2S.Node.Core;
+using ARWNI2S.Node.Data;
 using ARWNI2S.Node.Data.Entities.Directory;
 
-namespace ARWNI2S.Node.Data.Services.Directory
+namespace ARWNI2S.Node.Services.Directory
 {
     /// <summary>
     /// Measure dimension service
@@ -167,7 +168,7 @@ namespace ARWNI2S.Node.Data.Services.Directory
 
             var exchangeRatio = targetMeasureDimension.Ratio;
             if (exchangeRatio == decimal.Zero)
-                throw new ServerException($"Exchange ratio not set for dimension [{targetMeasureDimension.Name}]");
+                throw new NodeException($"Exchange ratio not set for dimension [{targetMeasureDimension.Name}]");
             result *= exchangeRatio;
 
             return result;
@@ -194,7 +195,7 @@ namespace ARWNI2S.Node.Data.Services.Directory
 
             var exchangeRatio = sourceMeasureDimension.Ratio;
             if (exchangeRatio == decimal.Zero)
-                throw new ServerException($"Exchange ratio not set for dimension [{sourceMeasureDimension.Name}]");
+                throw new NodeException($"Exchange ratio not set for dimension [{sourceMeasureDimension.Name}]");
             result /= exchangeRatio;
 
             return result;
@@ -339,7 +340,7 @@ namespace ARWNI2S.Node.Data.Services.Directory
 
             var exchangeRatio = targetMeasureWeight.Ratio;
             if (exchangeRatio == decimal.Zero)
-                throw new ServerException($"Exchange ratio not set for weight [{targetMeasureWeight.Name}]");
+                throw new NodeException($"Exchange ratio not set for weight [{targetMeasureWeight.Name}]");
             result *= exchangeRatio;
 
             return result;
@@ -365,7 +366,7 @@ namespace ARWNI2S.Node.Data.Services.Directory
 
             var exchangeRatio = sourceMeasureWeight.Ratio;
             if (exchangeRatio == decimal.Zero)
-                throw new ServerException($"Exchange ratio not set for weight [{sourceMeasureWeight.Name}]");
+                throw new NodeException($"Exchange ratio not set for weight [{sourceMeasureWeight.Name}]");
             result /= exchangeRatio;
 
             return result;

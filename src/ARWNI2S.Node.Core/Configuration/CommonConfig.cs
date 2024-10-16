@@ -12,20 +12,6 @@ namespace ARWNI2S.Node.Core.Configuration
         /// </summary>
         public bool DisplayFullErrorStack { get; private set; } = false;
 
-        /// <summary>
-        /// Gets or sets path to additional database with crawler only user agent strings
-        /// </summary>
-        public string CrawlerOnlyAdditionalUserAgentStringsPath { get; private set; } = "~/App_Data/additional.crawlers.xml";
-
-        /// <summary>
-        /// Gets or sets a value indicating whether to store TempData in the session state. By default the cookie-based TempData provider is used to store TempData in cookies.
-        /// </summary>
-        public bool UseSessionStateTempDataProvider { get; private set; } = false;
-
-        /// <summary>
-        /// Gets or sets a value that indicates whether to use MiniProfiler services
-        /// </summary>
-        public bool MiniProfilerEnabled { get; private set; } = false;
 
         /// <summary>
         /// The length of time, in milliseconds, before the running schedule task times out. Set null to use default value

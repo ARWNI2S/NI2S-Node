@@ -1,9 +1,9 @@
 ﻿using ARWNI2S.Node.Data.Entities.Directory;
 using ARWNI2S.Node.Data.Entities.Users;
-using ARWNI2S.Node.Data.Services.Plugins;
-using ARWNI2S.Node.Data.Services.Users;
+using ARWNI2S.Node.Services.Plugins;
+using ARWNI2S.Node.Services.Users;
 
-namespace ARWNI2S.Node.Data.Services.Directory
+namespace ARWNI2S.Node.Services.Directory
 {
     /// <summary>
     /// Represents an exchange rate module manager implementation

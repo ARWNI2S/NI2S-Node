@@ -24,6 +24,9 @@ namespace ARWNI2S.Node.Core.Infrastructure
                 : hostEnvironment.ContentRootPath;
         }
 
+        protected EngineFileProvider(string root)
+            : base(root) { }
+
         #region Utilities
 
         private static void DeleteDirectoryRecursive(string path)
