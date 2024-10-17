@@ -5,12 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Tools\**" />
-    <EmbeddedResource Remove="Tools\**" />
-    <None Remove="Tools\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\ARWNI2S.Infrastructure.Commons\ARWNI2S.Infrastructure.Commons.csproj" />
     <ProjectReference Include="..\ARWNI2S.Infrastructure.Extensions\ARWNI2S.Infrastructure.Extensions.csproj" />
   </ItemGroup>

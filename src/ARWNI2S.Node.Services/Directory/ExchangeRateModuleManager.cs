@@ -58,7 +58,7 @@ namespace ARWNI2S.Node.Services.Directory
         /// <returns>Result</returns>
         public virtual bool IsModuleActive(IExchangeRateProvider exchangeRateProvider)
         {
-            return IsModuleActive(exchangeRateProvider, new List<string> { _currencySettings.ActiveExchangeRateProviderSystemName/*, _tokenSettings.ActiveExchangeRateProviderSystemName*/ });
+            return IsModuleActive(exchangeRateProvider, [_currencySettings.ActiveExchangeRateProviderSystemName/*, _tokenSettings.ActiveExchangeRateProviderSystemName*/]);
         }
 
 

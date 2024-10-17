@@ -7,8 +7,6 @@
 
   <ItemGroup>
     <Compile Remove="Interop\IAppDomainManager.cs" />
-    <Compile Remove="Logging\ILogConsumer.cs" />
-    <Compile Remove="Logging\LoggingEnums.cs" />
     <Compile Remove="Timing\TimeSpanExtension.cs" />
   </ItemGroup>
 

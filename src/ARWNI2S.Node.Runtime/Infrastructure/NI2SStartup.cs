@@ -135,7 +135,7 @@ namespace ARWNI2S.Node.Runtime.Infrastructure
             }
 
             //schedule tasks
-            services.AddSingleton<ITaskScheduler, Services.ScheduleTasks.TaskScheduler>();
+            services.AddSingleton<ITaskScheduler, Node.Services.ScheduleTasks.TaskScheduler>();
             services.AddTransient<IScheduleTaskRunner, ScheduleTaskRunner>();
 
             //event consumers
