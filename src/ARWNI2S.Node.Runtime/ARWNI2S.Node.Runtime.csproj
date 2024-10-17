@@ -26,4 +26,8 @@
     <ProjectReference Include="..\ARWNI2S.Node.Services\ARWNI2S.Node.Services.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Engine\Registry\" />
+  </ItemGroup>
+
 </Project>
