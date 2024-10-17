@@ -1,4 +1,4 @@
-﻿namespace ARWNI2S.Node.Runtime.Engine.Core
+﻿namespace ARWNI2S.Node.Runtime.Core
 {
     public interface ISimulableEntity
     {

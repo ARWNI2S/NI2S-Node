@@ -135,7 +135,7 @@ namespace ARWNI2S.Node.Core.Infrastructure
         /// Configure HTTP request pipeline
         /// </summary>
         /// <param name="application">Builder for configuring an application's request pipeline</param>
-        public virtual void ConfigureEngine(IHost application)//INodeHostBuilder application)
+        public virtual void ConfigureEngine(IHost application)
         {
             ServiceProvider = application.Services;
 

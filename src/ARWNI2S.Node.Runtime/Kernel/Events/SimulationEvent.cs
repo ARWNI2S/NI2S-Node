@@ -1,4 +1,4 @@
-﻿namespace ARWNI2S.Node.Runtime.Engine.Events
+﻿namespace ARWNI2S.Node.Runtime.Kernel.Events
 {
     internal sealed class SimulationEvent
     {

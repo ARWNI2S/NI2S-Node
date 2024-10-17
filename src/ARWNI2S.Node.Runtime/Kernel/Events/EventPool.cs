@@ -1,6 +1,6 @@
 ﻿using ARWNI2S.Infrastructure.Memory;
 
-namespace ARWNI2S.Node.Runtime.Engine.Events
+namespace ARWNI2S.Node.Runtime.Kernel.Events
 {
     internal class EventPool : ObjectPool<SimulationEvent>, IEventPool
     {
