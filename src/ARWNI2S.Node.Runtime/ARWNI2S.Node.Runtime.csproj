@@ -5,11 +5,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Clustering\**" />
+    <EmbeddedResource Remove="Clustering\**" />
+    <None Remove="Clustering\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Infrastructure\AuthenticationStartup.cs" />
     <Compile Remove="Infrastructure\AuthorizationStartup.cs" />
     <Compile Remove="Infrastructure\Hosting\HostApplicationBuilderExtensions.cs" />
     <Compile Remove="Infrastructure\MetalinkEndpoints.cs" />
     <Compile Remove="Infrastructure\MvcStartup.cs" />
+    <Compile Remove="Infrastructure\OrleansStartup.cs" />
     <Compile Remove="Infrastructure\RoutingStartup.cs" />
     <Compile Remove="Infrastructure\StaticFilesStartup.cs" />
     <Compile Remove="Infrastructure\WebMarkupMinStartup.cs" />
@@ -17,7 +24,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Caching.Memory" />
-    <PackageReference Include="Microsoft.Orleans.Server" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" />
   </ItemGroup>
 
   <ItemGroup>
@@ -28,6 +35,8 @@
 
   <ItemGroup>
     <Folder Include="Engine\Registry\" />
+    <Folder Include="Entities\Actors\" />
+    <Folder Include="Services\" />
   </ItemGroup>
 
 </Project>
