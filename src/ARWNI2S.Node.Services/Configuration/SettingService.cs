@@ -2,7 +2,7 @@
 using ARWNI2S.Infrastructure.Configuration;
 using ARWNI2S.Node.Core.Caching;
 using ARWNI2S.Node.Data;
-using ARWNI2S.Node.Data.Entities.Configuration;
+using ARWNI2S.Node.Core.Entities.Configuration;
 using System.ComponentModel;
 using System.Linq.Expressions;
 using System.Reflection;

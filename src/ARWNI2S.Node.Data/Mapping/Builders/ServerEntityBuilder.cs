@@ -1,4 +1,4 @@
-﻿using ARWNI2S.Node.Data.Entities;
+﻿using ARWNI2S.Node.Core.Entities;
 using FluentMigrator.Builders.Create.Table;
 
 namespace ARWNI2S.Node.Data.Mapping.Builders
@@ -10,7 +10,7 @@ namespace ARWNI2S.Node.Data.Mapping.Builders
     /// <remarks>
     /// Entity type <typeparamref name="TEntity"/> is needed to determine the right entity builder for a specific entity type
     /// </remarks>
-    public abstract partial class ServerEntityBuilder<TEntity> : IEntityBuilder where TEntity : BaseDataEntity
+    public abstract partial class ServerEntityBuilder<TEntity> : IEntityBuilder where TEntity : BaseEntity
     {
         /// <summary>
         /// Apply entity configuration

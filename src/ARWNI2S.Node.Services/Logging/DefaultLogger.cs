@@ -4,7 +4,7 @@ using ARWNI2S.Infrastructure.Logging;
 using ARWNI2S.Node.Core;
 using ARWNI2S.Node.Core.Common;
 using ARWNI2S.Node.Data;
-using ARWNI2S.Node.Data.Entities.Logging;
+using ARWNI2S.Node.Core.Entities.Logging;
 
 namespace ARWNI2S.Node.Services.Logging
 {

@@ -1,6 +1,5 @@
 ﻿using ARWNI2S.Node.Core.Entities.Clustering;
-using ARWNI2S.Node.Data.Entities;
-using ARWNI2S.Node.Data.Entities.Clustering;
+using ARWNI2S.Node.Core.Entities;
 
 namespace ARWNI2S.Node.Services.Clustering
 {
@@ -19,7 +18,7 @@ namespace ARWNI2S.Node.Services.Clustering
         /// A task that represents the asynchronous operation
         /// The task result contains the filtered query
         /// </returns>
-        Task<IQueryable<TEntity>> ApplyNodeMapping<TEntity>(IQueryable<TEntity> query, int nodeId) where TEntity : BaseDataEntity, INodeMappingSupported;
+        Task<IQueryable<TEntity>> ApplyNodeMapping<TEntity>(IQueryable<TEntity> query, int nodeId) where TEntity : BaseEntity, INodeMappingSupported;
 
         /// <summary>
         /// Deletes a node mapping record
@@ -37,7 +36,7 @@ namespace ARWNI2S.Node.Services.Clustering
         /// A task that represents the asynchronous operation
         /// The task result contains the node mapping records
         /// </returns>
-        Task<IList<NodeMapping>> GetNodeMappingsAsync<TEntity>(TEntity entity) where TEntity : BaseDataEntity, INodeMappingSupported;
+        Task<IList<NodeMapping>> GetNodeMappingsAsync<TEntity>(TEntity entity) where TEntity : BaseEntity, INodeMappingSupported;
 
         /// <summary>
         /// Inserts a node mapping record
@@ -46,7 +45,7 @@ namespace ARWNI2S.Node.Services.Clustering
         /// <param name="entity">Entity</param>
         /// <param name="nodeId">Node id</param>
         /// <returns>A task that represents the asynchronous operation</returns>
-        Task InsertNodeMappingAsync<TEntity>(TEntity entity, int nodeId) where TEntity : BaseDataEntity, INodeMappingSupported;
+        Task InsertNodeMappingAsync<TEntity>(TEntity entity, int nodeId) where TEntity : BaseEntity, INodeMappingSupported;
 
         /// <summary>
         /// Find node identifiers with granted access (mapped to the entity)
@@ -57,7 +56,7 @@ namespace ARWNI2S.Node.Services.Clustering
         /// A task that represents the asynchronous operation
         /// The task result contains the node identifiers
         /// </returns>
-        Task<int[]> GetNodesIdsWithAccessAsync<TEntity>(TEntity entity) where TEntity : BaseDataEntity, INodeMappingSupported;
+        Task<int[]> GetNodesIdsWithAccessAsync<TEntity>(TEntity entity) where TEntity : BaseEntity, INodeMappingSupported;
 
         /// <summary>
         /// Find node identifiers with granted access (mapped to the entity)
@@ -67,7 +66,7 @@ namespace ARWNI2S.Node.Services.Clustering
         /// <returns>
         /// The node identifiers
         /// </returns>
-        int[] GetNodesIdsWithAccess<TEntity>(TEntity entity) where TEntity : BaseDataEntity, INodeMappingSupported;
+        int[] GetNodesIdsWithAccess<TEntity>(TEntity entity) where TEntity : BaseEntity, INodeMappingSupported;
 
         /// <summary>
         /// Authorize whether entity could be accessed in the current node (mapped to this node)
@@ -78,7 +77,7 @@ namespace ARWNI2S.Node.Services.Clustering
         /// A task that represents the asynchronous operation
         /// The task result contains the rue - authorized; otherwise, false
         /// </returns>
-        Task<bool> AuthorizeAsync<TEntity>(TEntity entity) where TEntity : BaseDataEntity, INodeMappingSupported;
+        Task<bool> AuthorizeAsync<TEntity>(TEntity entity) where TEntity : BaseEntity, INodeMappingSupported;
 
         /// <summary>
         /// Authorize whether entity could be accessed in a node (mapped to this node)
@@ -90,7 +89,7 @@ namespace ARWNI2S.Node.Services.Clustering
         /// A task that represents the asynchronous operation
         /// The task result contains the rue - authorized; otherwise, false
         /// </returns>
-        Task<bool> AuthorizeAsync<TEntity>(TEntity entity, int nodeId) where TEntity : BaseDataEntity, INodeMappingSupported;
+        Task<bool> AuthorizeAsync<TEntity>(TEntity entity, int nodeId) where TEntity : BaseEntity, INodeMappingSupported;
 
         /// <summary>
         /// Authorize whether entity could be accessed in a node (mapped to this node)
@@ -101,6 +100,6 @@ namespace ARWNI2S.Node.Services.Clustering
         /// <returns>
         /// The rue - authorized; otherwise, false
         /// </returns>
-        bool Authorize<TEntity>(TEntity entity, int nodeId) where TEntity : BaseDataEntity, INodeMappingSupported;
+        bool Authorize<TEntity>(TEntity entity, int nodeId) where TEntity : BaseEntity, INodeMappingSupported;
     }
 }

@@ -1,4 +1,4 @@
-﻿using ARWNI2S.Node.Data.Entities.Localization;
+﻿using ARWNI2S.Node.Core.Entities.Localization;
 using System.Globalization;
 
 namespace ARWNI2S.Node.Services.Localization

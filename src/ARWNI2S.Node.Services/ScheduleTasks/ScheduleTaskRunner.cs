@@ -1,7 +1,7 @@
 ﻿using ARWNI2S.Node.Core;
 using ARWNI2S.Node.Core.Caching;
 using ARWNI2S.Node.Core.Infrastructure;
-using ARWNI2S.Node.Data.Entities.ScheduleTasks;
+using ARWNI2S.Node.Core.Entities.ScheduleTasks;
 using ARWNI2S.Node.Services.Localization;
 using ARWNI2S.Node.Services.Logging;
 

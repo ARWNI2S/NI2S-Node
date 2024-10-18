@@ -2,9 +2,9 @@
 using ARWNI2S.Infrastructure.Collections.Generic;
 using ARWNI2S.Node.Core;
 using ARWNI2S.Node.Data;
-using ARWNI2S.Node.Data.Entities;
-using ARWNI2S.Node.Data.Entities.Logging;
-using ARWNI2S.Node.Data.Entities.Users;
+using ARWNI2S.Node.Core.Entities;
+using ARWNI2S.Node.Core.Entities.Logging;
+using ARWNI2S.Node.Core.Entities.Users;
 
 namespace ARWNI2S.Node.Services.Logging
 {
@@ -91,7 +91,7 @@ namespace ARWNI2S.Node.Services.Logging
         /// A task that represents the asynchronous operation
         /// The task result contains the activity log item
         /// </returns>
-        public virtual async Task<ActivityLog> InsertActivityAsync(string systemKeyword, string comment, BaseDataEntity entity = null)
+        public virtual async Task<ActivityLog> InsertActivityAsync(string systemKeyword, string comment, BaseEntity entity = null)
         {
             return await InsertActivityAsync((User)await _workContext.GetCurrentUserAsync(), systemKeyword, comment, entity);
         }
@@ -107,7 +107,7 @@ namespace ARWNI2S.Node.Services.Logging
         /// A task that represents the asynchronous operation
         /// The task result contains the activity log item
         /// </returns>
-        public virtual async Task<ActivityLog> InsertActivityAsync(User user, string systemKeyword, string comment, BaseDataEntity entity = null)
+        public virtual async Task<ActivityLog> InsertActivityAsync(User user, string systemKeyword, string comment, BaseEntity entity = null)
         {
             if (user == null)
                 return null;

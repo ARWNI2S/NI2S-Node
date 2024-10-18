@@ -1,7 +1,7 @@
 ﻿using ARWNI2S.Node.Core.Caching;
 using ARWNI2S.Node.Core.Events;
 using ARWNI2S.Node.Core.Infrastructure;
-using ARWNI2S.Node.Data.Entities;
+using ARWNI2S.Node.Core.Entities;
 using ARWNI2S.Node.Services.Events;
 
 namespace ARWNI2S.Node.Services.Caching
@@ -14,7 +14,7 @@ namespace ARWNI2S.Node.Services.Caching
         IConsumer<EntityCreatedEvent<TEntity>>,
         IConsumer<EntityUpdatedEvent<TEntity>>,
         IConsumer<EntityDeletedEvent<TEntity>>
-        where TEntity : BaseDataEntity
+        where TEntity : BaseEntity
     {
         #region Fields
 

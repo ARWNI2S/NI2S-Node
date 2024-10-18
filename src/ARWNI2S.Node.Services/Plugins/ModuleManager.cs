@@ -1,5 +1,5 @@
 ﻿using ARWNI2S.Infrastructure.Entities;
-using ARWNI2S.Node.Data.Entities.Users;
+using ARWNI2S.Node.Core.Entities.Users;
 using ARWNI2S.Node.Services.Users;
 
 namespace ARWNI2S.Node.Services.Plugins

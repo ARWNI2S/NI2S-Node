@@ -2,8 +2,7 @@
 using ARWNI2S.Node.Core.Caching;
 using ARWNI2S.Node.Core.Entities.Localization;
 using ARWNI2S.Node.Data;
-using ARWNI2S.Node.Data.Entities;
-using ARWNI2S.Node.Data.Entities.Localization;
+using ARWNI2S.Node.Core.Entities;
 using ARWNI2S.Node.Data.Extensions;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -218,7 +217,7 @@ namespace ARWNI2S.Node.Services.Localization
         public virtual async Task SaveLocalizedValueAsync<T>(T entity,
             Expression<Func<T, string>> keySelector,
             string localeValue,
-            int languageId) where T : BaseDataEntity, ILocalizedEntity
+            int languageId) where T : BaseEntity, ILocalizedEntity
         {
             await SaveLocalizedValueAsync<T, string>(entity, keySelector, localeValue, languageId);
         }
@@ -236,7 +235,7 @@ namespace ARWNI2S.Node.Services.Localization
         public virtual async Task SaveLocalizedValueAsync<T, TPropType>(T entity,
             Expression<Func<T, TPropType>> keySelector,
             TPropType localeValue,
-            int languageId) where T : BaseDataEntity, ILocalizedEntity
+            int languageId) where T : BaseEntity, ILocalizedEntity
         {
             ArgumentNullException.ThrowIfNull(entity);
 

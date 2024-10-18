@@ -1,4 +1,4 @@
-﻿using ARWNI2S.Node.Data.Entities;
+﻿using ARWNI2S.Node.Core.Entities;
 using FluentMigrator.Runner.VersionTableInfo;
 
 namespace ARWNI2S.Node.Data.Migrations
@@ -6,7 +6,7 @@ namespace ARWNI2S.Node.Data.Migrations
     /// <summary>
     /// The migration version table
     /// </summary>
-    public partial class MigrationVersionInfo : BaseDataEntity, IVersionTableMetaData
+    public partial class MigrationVersionInfo : BaseEntity, IVersionTableMetaData
     {
         #region Ctor
 

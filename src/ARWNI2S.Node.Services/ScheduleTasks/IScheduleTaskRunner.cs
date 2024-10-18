@@ -1,4 +1,4 @@
-﻿using ARWNI2S.Node.Data.Entities.ScheduleTasks;
+﻿using ARWNI2S.Node.Core.Entities.ScheduleTasks;
 
 namespace ARWNI2S.Node.Services.ScheduleTasks
 {

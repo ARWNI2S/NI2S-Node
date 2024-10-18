@@ -1,7 +1,7 @@
 ﻿using ARWNI2S.Infrastructure.Collections.Generic;
 using ARWNI2S.Node.Core.Caching;
 using ARWNI2S.Node.Core.Events;
-using ARWNI2S.Node.Data.Entities;
+using ARWNI2S.Node.Core.Entities;
 using ARWNI2S.Node.Data.Extensions;
 using System.Linq.Expressions;
 using System.Transactions;
@@ -12,7 +12,7 @@ namespace ARWNI2S.Node.Data
     /// Represents the entity repository implementation
     /// </summary>
     /// <typeparam name="TEntity">Entity type</typeparam>
-    public partial class EntityRepository<TEntity> : IRepository<TEntity> where TEntity : BaseDataEntity
+    public partial class EntityRepository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity
     {
         #region Fields
 

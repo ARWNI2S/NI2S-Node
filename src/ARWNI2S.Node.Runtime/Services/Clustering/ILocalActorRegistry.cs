@@ -1,4 +1,4 @@
-﻿namespace ARWNI2S.Node.Runtime.Clustering
+﻿namespace ARWNI2S.Node.Runtime.Services.Clustering
 {
     // Interface for the Local Actor Registry
     public interface ILocalActorRegistry

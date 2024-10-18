@@ -1,5 +1,5 @@
 ﻿using ARWNI2S.Infrastructure;
-using ARWNI2S.Node.Runtime.Infrastructure.Hosting;
+using ARWNI2S.Node.Runtime.Infrastructure.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -29,11 +29,11 @@ namespace ARWNI2S.Node.Runtime.Infrastructure
             //exception handling
             application.UseNI2SExceptionHandler();
 
-            //handle 400 errors (bad request)
-            application.UseBadRequestResult();
+            ////handle 400 errors (bad request)
+            //application.UseBadRequestResult();
 
-            //handle 404 errors (not found)
-            application.UseNotFoundResult();
+            ////handle 404 errors (not found)
+            //application.UseNotFoundResult();
         }
 
         /// <summary>

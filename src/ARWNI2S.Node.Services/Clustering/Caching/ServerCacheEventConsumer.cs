@@ -1,4 +1,4 @@
-﻿using ARWNI2S.Node.Data.Entities.Clustering;
+﻿using ARWNI2S.Node.Core.Entities.Clustering;
 using ARWNI2S.Node.Services.Caching;
 using ARWNI2S.Node.Services.Localization;
 

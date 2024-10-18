@@ -1,6 +1,6 @@
 ﻿using ARWNI2S.Infrastructure.Collections.Generic;
 using ARWNI2S.Node.Core.Caching;
-using ARWNI2S.Node.Data.Entities;
+using ARWNI2S.Node.Core.Entities;
 using System.Linq.Expressions;
 
 namespace ARWNI2S.Node.Data
@@ -9,7 +9,7 @@ namespace ARWNI2S.Node.Data
     /// Represents an entity repository
     /// </summary>
     /// <typeparam name="TEntity">Entity type</typeparam>
-    public partial interface IRepository<TEntity> where TEntity : BaseDataEntity
+    public partial interface IRepository<TEntity> where TEntity : BaseEntity
     {
         #region Methods
 

@@ -2,6 +2,16 @@
 
 namespace ARWNI2S.Node.Core.Entities.Clustering
 {
+    public enum NodeState : byte
+    {
+        Offline = 0,
+        Online = 1,
+        Joining = 10,
+        Leaving = 11,
+        
+        Error = 255
+    }
+
     /// <summary>
     /// Represents a NI2S node
     /// </summary>
@@ -55,7 +65,7 @@ namespace ARWNI2S.Node.Core.Entities.Clustering
         /// <summary>
         /// Gets or sets the current node state
         /// </summary>
-        string CurrentState { get; set; }
+        NodeState CurrentState { get; set; }
 
         /// <summary>
         /// Gets or sets the average number of entities in the node

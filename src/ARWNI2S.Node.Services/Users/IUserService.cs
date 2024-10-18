@@ -1,5 +1,5 @@
 ﻿using ARWNI2S.Infrastructure.Collections.Generic;
-using ARWNI2S.Node.Data.Entities.Users;
+using ARWNI2S.Node.Core.Entities.Users;
 namespace ARWNI2S.Node.Services.Users
 {
     /// <summary>

@@ -1,5 +1,5 @@
 ﻿using ARWNI2S.Node.Core.Caching;
-using ARWNI2S.Node.Data.Entities.Directory;
+using ARWNI2S.Node.Core.Entities.Directory;
 
 namespace ARWNI2S.Node.Services.Directory
 {

@@ -1,4 +1,4 @@
-﻿using ARWNI2S.Node.Data.Entities.Clustering;
+﻿using ARWNI2S.Node.Core.Entities.Clustering;
 
 namespace ARWNI2S.Node.Services.Clustering
 {

@@ -10,6 +10,8 @@ namespace ARWNI2S.Node.Core.Entities
         /// <summary>
         /// Gets or sets the entity identifier
         /// </summary>
-        public object Id { get; set; }
+        public int Id { get; set; }
+
+        object INI2SEntity.Id => Id;
     }
 }

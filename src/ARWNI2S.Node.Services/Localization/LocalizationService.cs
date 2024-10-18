@@ -4,8 +4,7 @@ using ARWNI2S.Node.Core;
 using ARWNI2S.Node.Core.Caching;
 using ARWNI2S.Node.Core.Entities.Localization;
 using ARWNI2S.Node.Data;
-using ARWNI2S.Node.Data.Entities;
-using ARWNI2S.Node.Data.Entities.Localization;
+using ARWNI2S.Node.Core.Entities;
 using ARWNI2S.Node.Data.Extensions;
 using ARWNI2S.Node.Services.Configuration;
 using ARWNI2S.Node.Services.ExportImport;
@@ -553,7 +552,7 @@ namespace ARWNI2S.Node.Services.Localization
         /// </returns>
         public virtual async Task<TPropType> GetLocalizedAsync<TEntity, TPropType>(TEntity entity, Expression<Func<TEntity, TPropType>> keySelector,
             int? languageId = null, bool returnDefaultValue = true, bool ensureTwoPublishedLanguages = true)
-            where TEntity : BaseDataEntity, ILocalizedEntity
+            where TEntity : BaseEntity, ILocalizedEntity
         {
             ArgumentNullException.ThrowIfNull(entity);
 

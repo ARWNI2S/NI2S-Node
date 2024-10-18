@@ -8,7 +8,6 @@ using ARWNI2S.Node.Core.Infrastructure;
 using ARWNI2S.Node.Core.Services.Helpers;
 using ARWNI2S.Node.Data;
 using ARWNI2S.Node.Services.Caching;
-using ARWNI2S.Node.Services.Clustering;
 using ARWNI2S.Node.Services.Common;
 using ARWNI2S.Node.Services.Configuration;
 using ARWNI2S.Node.Services.Directory;
@@ -84,15 +83,13 @@ namespace ARWNI2S.Node.Runtime.Infrastructure
             services.AddScoped<IWorkContext, NodeWorkContext>();
 
             //node context
-            services.AddScoped<INodeContext, NI2SNodeContext>();
+            services.AddScoped<INodeContext, LocalNodeContext>();
 
             //services
             services.AddScoped<IGenericAttributeService, GenericAttributeService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ICurrencyService, CurrencyService>();
             services.AddScoped<IMeasureService, MeasureService>();
-            services.AddScoped<IClusteringService, ClusteringService>();
-            services.AddScoped<INodeMappingService, NodeMappingService>();
             services.AddScoped<ILocalizationService, LocalizationService>();
             services.AddScoped<ILocalizedEntityService, LocalizedEntityService>();
             services.AddScoped<ILanguageService, LanguageService>();

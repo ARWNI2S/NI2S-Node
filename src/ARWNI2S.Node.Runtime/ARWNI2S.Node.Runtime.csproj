@@ -7,7 +7,7 @@
   <ItemGroup>
     <Compile Remove="Infrastructure\AuthenticationStartup.cs" />
     <Compile Remove="Infrastructure\AuthorizationStartup.cs" />
-    <Compile Remove="Infrastructure\Hosting\HostApplicationBuilderExtensions.cs" />
+    <Compile Remove="Infrastructure\Extensions\HostApplicationBuilderExtensions.cs" />
     <Compile Remove="Infrastructure\MetalinkEndpoints.cs" />
     <Compile Remove="Infrastructure\MvcStartup.cs" />
     <Compile Remove="Infrastructure\RoutingStartup.cs" />
@@ -16,9 +16,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Azure.Storage.Blobs" />
     <PackageReference Include="Microsoft.Extensions.Caching.Memory" />
     <PackageReference Include="Microsoft.Extensions.Hosting" />
     <PackageReference Include="Microsoft.Orleans.Client" />
+    <PackageReference Include="Microsoft.Orleans.Clustering.AzureStorage" />
+    <PackageReference Include="Microsoft.Orleans.Clustering.Redis" />
     <PackageReference Include="Microsoft.Orleans.Core.Abstractions" />
   </ItemGroup>
 

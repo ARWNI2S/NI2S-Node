@@ -1,6 +1,6 @@
 ﻿using ARWNI2S.Node.Core.Configuration;
 using ARWNI2S.Node.Core.Infrastructure;
-using ARWNI2S.Node.Runtime.Infrastructure.Hosting;
+using ARWNI2S.Node.Runtime.Infrastructure.Extensions;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;

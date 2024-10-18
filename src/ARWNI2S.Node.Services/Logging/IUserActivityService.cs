@@ -1,7 +1,7 @@
 ﻿using ARWNI2S.Infrastructure.Collections.Generic;
-using ARWNI2S.Node.Data.Entities;
-using ARWNI2S.Node.Data.Entities.Logging;
-using ARWNI2S.Node.Data.Entities.Users;
+using ARWNI2S.Node.Core.Entities;
+using ARWNI2S.Node.Core.Entities.Logging;
+using ARWNI2S.Node.Core.Entities.Users;
 
 namespace ARWNI2S.Node.Services.Logging
 {
@@ -46,7 +46,7 @@ namespace ARWNI2S.Node.Services.Logging
         /// A task that represents the asynchronous operation
         /// The task result contains the activity log item
         /// </returns>
-        Task<ActivityLog> InsertActivityAsync(string systemKeyword, string comment, BaseDataEntity entity = null);
+        Task<ActivityLog> InsertActivityAsync(string systemKeyword, string comment, BaseEntity entity = null);
 
         /// <summary>
         /// Inserts an activity log item
@@ -59,7 +59,7 @@ namespace ARWNI2S.Node.Services.Logging
         /// A task that represents the asynchronous operation
         /// The task result contains the activity log item
         /// </returns>
-        Task<ActivityLog> InsertActivityAsync(User user, string systemKeyword, string comment, BaseDataEntity entity = null);
+        Task<ActivityLog> InsertActivityAsync(User user, string systemKeyword, string comment, BaseEntity entity = null);
 
         /// <summary>
         /// Deletes an activity log item

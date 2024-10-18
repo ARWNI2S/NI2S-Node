@@ -1,7 +1,6 @@
 ﻿using ARWNI2S.Infrastructure.Configuration;
 using ARWNI2S.Node.Core.Entities.Localization;
-using ARWNI2S.Node.Data.Entities;
-using ARWNI2S.Node.Data.Entities.Localization;
+using ARWNI2S.Node.Core.Entities;
 using ARWNI2S.Node.Services.Plugins;
 using System.Linq.Expressions;
 
@@ -145,7 +144,7 @@ namespace ARWNI2S.Node.Services.Localization
         /// </returns>
         Task<TPropType> GetLocalizedAsync<TEntity, TPropType>(TEntity entity, Expression<Func<TEntity, TPropType>> keySelector,
             int? languageId = null, bool returnDefaultValue = true, bool ensureTwoPublishedLanguages = true)
-            where TEntity : BaseDataEntity, ILocalizedEntity;
+            where TEntity : BaseEntity, ILocalizedEntity;
 
         /// <summary>
         /// Get localized property of setting

@@ -1,4 +1,4 @@
-﻿using ARWNI2S.Node.Data.Entities.Configuration;
+﻿using ARWNI2S.Node.Core.Entities.Configuration;
 using FluentMigrator.Builders.Create.Table;
 
 namespace ARWNI2S.Node.Data.Mapping.Builders.Configuration

@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "ClearModuleAssemblies": {
-      "commandName": "Project",
-      "commandLineArgs": "OutputPath=D:\\ARWNI2S\\Narrative-Simulator\\NI2S-Node\\src\\tools\\ClearModuleAssemblies\\..\\..\\AWRNI2S.Node\\bin\\Debug\\net8.0\\|ModulePath=D:\\ARWNI2S\\Narrative-Simulator\\NI2S-Node\\src\\tools\\ClearModuleAssemblies\\..\\..\\AWRNI2S.Node\\Modules\\|SaveLocalesFolders="
-    }
-  }
-}

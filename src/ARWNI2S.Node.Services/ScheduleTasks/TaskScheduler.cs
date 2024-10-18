@@ -3,7 +3,7 @@ using ARWNI2S.Node.Core.Configuration;
 using ARWNI2S.Node.Core.Infrastructure;
 using ARWNI2S.Node.Core.Network;
 using ARWNI2S.Node.Data;
-using ARWNI2S.Node.Data.Entities.ScheduleTasks;
+using ARWNI2S.Node.Core.Entities.ScheduleTasks;
 using ARWNI2S.Node.Services.Localization;
 using ARWNI2S.Node.Services.Logging;
 using Microsoft.Extensions.DependencyInjection;

@@ -1,6 +1,5 @@
 ﻿using ARWNI2S.Node.Core.Entities.Localization;
-using ARWNI2S.Node.Data.Entities;
-using ARWNI2S.Node.Data.Entities.Localization;
+using ARWNI2S.Node.Core.Entities;
 using System.Linq.Expressions;
 
 namespace ARWNI2S.Node.Services.Localization
@@ -47,7 +46,7 @@ namespace ARWNI2S.Node.Services.Localization
         Task SaveLocalizedValueAsync<T>(T entity,
             Expression<Func<T, string>> keySelector,
             string localeValue,
-            int languageId) where T : BaseDataEntity, ILocalizedEntity;
+            int languageId) where T : BaseEntity, ILocalizedEntity;
 
         /// <summary>
         /// Save localized value
@@ -62,6 +61,6 @@ namespace ARWNI2S.Node.Services.Localization
         Task SaveLocalizedValueAsync<T, TPropType>(T entity,
            Expression<Func<T, TPropType>> keySelector,
            TPropType localeValue,
-           int languageId) where T : BaseDataEntity, ILocalizedEntity;
+           int languageId) where T : BaseEntity, ILocalizedEntity;
     }
 }

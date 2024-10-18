@@ -1,6 +1,6 @@
 ﻿using ARWNI2S.Node.Core;
 using ARWNI2S.Node.Data;
-using ARWNI2S.Node.Data.Entities.Clustering;
+using ARWNI2S.Node.Core.Entities.Clustering;
 using ARWNI2S.Node.Data.Extensions;
 
 namespace ARWNI2S.Node.Services.Clustering

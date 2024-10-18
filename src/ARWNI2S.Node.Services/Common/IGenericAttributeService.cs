@@ -1,5 +1,5 @@
-﻿using ARWNI2S.Node.Data.Entities;
-using ARWNI2S.Node.Data.Entities.Common;
+﻿using ARWNI2S.Node.Core.Entities;
+using ARWNI2S.Node.Core.Entities.Common;
 
 namespace ARWNI2S.Node.Services.Common
 {
@@ -56,7 +56,7 @@ namespace ARWNI2S.Node.Services.Common
         /// <param name="value">Value</param>
         /// <param name="serverId">Server identifier; pass 0 if this attribute will be available for all servers</param>
         /// <returns>A task that represents the asynchronous operation</returns>
-        Task SaveAttributeAsync<TPropType>(BaseDataEntity entity, string key, TPropType value, int serverId = 0);
+        Task SaveAttributeAsync<TPropType>(BaseEntity entity, string key, TPropType value, int serverId = 0);
 
         /// <summary>
         /// Get an attribute of an entity
@@ -70,7 +70,7 @@ namespace ARWNI2S.Node.Services.Common
         /// A task that represents the asynchronous operation
         /// The task result contains the attribute
         /// </returns>
-        Task<TPropType> GetAttributeAsync<TPropType>(BaseDataEntity entity, string key, int serverId = 0, TPropType defaultValue = default);
+        Task<TPropType> GetAttributeAsync<TPropType>(BaseEntity entity, string key, int serverId = 0, TPropType defaultValue = default);
 
         /// <summary>
         /// Get an attribute of an entity
@@ -86,6 +86,6 @@ namespace ARWNI2S.Node.Services.Common
         /// The task result contains the attribute
         /// </returns>
         Task<TPropType> GetAttributeAsync<TEntity, TPropType>(int entityId, string key, int serverId = 0, TPropType defaultValue = default)
-            where TEntity : BaseDataEntity;
+            where TEntity : BaseEntity;
     }
 }

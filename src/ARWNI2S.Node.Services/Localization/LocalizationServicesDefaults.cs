@@ -1,5 +1,5 @@
 ﻿using ARWNI2S.Node.Core.Caching;
-using ARWNI2S.Node.Data.Entities.Localization;
+using ARWNI2S.Node.Core.Entities.Localization;
 
 namespace ARWNI2S.Node.Services.Localization
 {

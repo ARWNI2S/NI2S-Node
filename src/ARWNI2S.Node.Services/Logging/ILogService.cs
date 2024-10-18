@@ -1,7 +1,7 @@
 ﻿using ARWNI2S.Infrastructure.Collections.Generic;
 using ARWNI2S.Infrastructure.Entities;
 using ARWNI2S.Infrastructure.Logging;
-using ARWNI2S.Node.Data.Entities.Logging;
+using ARWNI2S.Node.Core.Entities.Logging;
 
 namespace ARWNI2S.Node.Services.Logging
 {

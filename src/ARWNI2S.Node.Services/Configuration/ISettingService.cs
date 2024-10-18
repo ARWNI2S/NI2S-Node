@@ -1,5 +1,5 @@
 ﻿using ARWNI2S.Infrastructure.Configuration;
-using ARWNI2S.Node.Data.Entities.Configuration;
+using ARWNI2S.Node.Core.Entities.Configuration;
 using System.Linq.Expressions;
 
 namespace ARWNI2S.Node.Services.Configuration

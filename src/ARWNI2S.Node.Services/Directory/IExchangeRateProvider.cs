@@ -1,4 +1,4 @@
-﻿using ARWNI2S.Node.Data.Entities.Directory;
+﻿using ARWNI2S.Node.Core.Entities.Directory;
 using ARWNI2S.Node.Services.Plugins;
 
 namespace ARWNI2S.Node.Services.Directory

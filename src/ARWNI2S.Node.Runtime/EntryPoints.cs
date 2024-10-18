@@ -1,5 +1,5 @@
 using ARWNI2S.Node.Runtime.Hosting;
-using ARWNI2S.Node.Runtime.Infrastructure.Hosting;
+using ARWNI2S.Node.Runtime.Infrastructure.Extensions;
 using Microsoft.Extensions.Hosting;
 
 namespace ARWNI2S.Node.Runtime

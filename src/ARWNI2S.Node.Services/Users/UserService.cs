@@ -5,8 +5,7 @@ using ARWNI2S.Node.Core.Caching;
 using ARWNI2S.Node.Core.Entities.Users;
 using ARWNI2S.Node.Core.Infrastructure;
 using ARWNI2S.Node.Data;
-using ARWNI2S.Node.Data.Entities.Clustering;
-using ARWNI2S.Node.Data.Entities.Users;
+using ARWNI2S.Node.Core.Entities.Clustering;
 using ARWNI2S.Node.Data.Extensions;
 using ARWNI2S.Node.Services.Localization;
 

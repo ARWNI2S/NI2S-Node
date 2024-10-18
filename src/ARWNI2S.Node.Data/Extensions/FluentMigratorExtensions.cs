@@ -1,6 +1,6 @@
 ﻿using ARWNI2S.Infrastructure;
 using ARWNI2S.Node.Core.Infrastructure;
-using ARWNI2S.Node.Data.Entities;
+using ARWNI2S.Node.Core.Entities;
 using ARWNI2S.Node.Data.Mapping;
 using ARWNI2S.Node.Data.Mapping.Builders;
 using FluentMigrator.Builders.Alter.Table;
@@ -81,13 +81,13 @@ namespace ARWNI2S.Node.Data.Extensions
         /// <param name="onDelete">Behavior for DELETEs</param>
         /// <typeparam name="TPrimary"></typeparam>
         /// <returns>Set column options or create a new column or set a foreign key cascade rule</returns>
-        public static ICreateTableColumnOptionOrForeignKeyCascadeOrWithColumnSyntax ForeignKey<TPrimary>(this ICreateTableColumnOptionOrWithColumnSyntax column, string primaryTableName = null, string primaryColumnName = null, Rule onDelete = Rule.Cascade) where TPrimary : BaseDataEntity
+        public static ICreateTableColumnOptionOrForeignKeyCascadeOrWithColumnSyntax ForeignKey<TPrimary>(this ICreateTableColumnOptionOrWithColumnSyntax column, string primaryTableName = null, string primaryColumnName = null, Rule onDelete = Rule.Cascade) where TPrimary : BaseEntity
         {
             if (string.IsNullOrEmpty(primaryTableName))
                 primaryTableName = NameCompatibilityManager.GetTableName(typeof(TPrimary));
 
             if (string.IsNullOrEmpty(primaryColumnName))
-                primaryColumnName = nameof(BaseDataEntity.Id);
+                primaryColumnName = nameof(BaseEntity.Id);
 
             return column.Indexed().ForeignKey(primaryTableName, primaryColumnName).OnDelete(onDelete);
         }
@@ -101,13 +101,13 @@ namespace ARWNI2S.Node.Data.Extensions
         /// <param name="onDelete">Behavior for DELETEs</param>
         /// <typeparam name="TPrimary"></typeparam>
         /// <returns>Alter/add a column with an optional foreign key</returns>
-        public static IAlterTableColumnOptionOrAddColumnOrAlterColumnOrForeignKeyCascadeSyntax ForeignKey<TPrimary>(this IAlterTableColumnOptionOrAddColumnOrAlterColumnSyntax column, string primaryTableName = null, string primaryColumnName = null, Rule onDelete = Rule.Cascade) where TPrimary : BaseDataEntity
+        public static IAlterTableColumnOptionOrAddColumnOrAlterColumnOrForeignKeyCascadeSyntax ForeignKey<TPrimary>(this IAlterTableColumnOptionOrAddColumnOrAlterColumnSyntax column, string primaryTableName = null, string primaryColumnName = null, Rule onDelete = Rule.Cascade) where TPrimary : BaseEntity
         {
             if (string.IsNullOrEmpty(primaryTableName))
                 primaryTableName = NameCompatibilityManager.GetTableName(typeof(TPrimary));
 
             if (string.IsNullOrEmpty(primaryColumnName))
-                primaryColumnName = nameof(BaseDataEntity.Id);
+                primaryColumnName = nameof(BaseEntity.Id);
 
             return column.Indexed().ForeignKey(primaryTableName, primaryColumnName).OnDelete(onDelete);
         }
@@ -117,7 +117,7 @@ namespace ARWNI2S.Node.Data.Extensions
         /// </summary>
         /// <param name="expressionRoot">The root expression for a CREATE operation</param>
         /// <typeparam name="TEntity">Entity type</typeparam>
-        public static void TableFor<TEntity>(this ICreateExpressionRoot expressionRoot) where TEntity : BaseDataEntity
+        public static void TableFor<TEntity>(this ICreateExpressionRoot expressionRoot) where TEntity : BaseEntity
         {
             var type = typeof(TEntity);
             var builder = expressionRoot.Table(NameCompatibilityManager.GetTableName(type)) as CreateTableExpressionBuilder;
@@ -143,7 +143,7 @@ namespace ARWNI2S.Node.Data.Extensions
             {
                 var pk = new ColumnDefinition
                 {
-                    Name = nameof(BaseDataEntity.Id),
+                    Name = nameof(BaseEntity.Id),
                     Type = DbType.Int32,
                     IsIdentity = true,
                     TableName = NameCompatibilityManager.GetTableName(type),
@@ -156,7 +156,7 @@ namespace ARWNI2S.Node.Data.Extensions
 
             var propertiesToAutoMap = type
                 .GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.SetProperty)
-                .Where(pi => pi.DeclaringType != typeof(BaseDataEntity) &&
+                .Where(pi => pi.DeclaringType != typeof(BaseEntity) &&
                 !pi.HasAttribute<NotMappedAttribute>() && !pi.HasAttribute<NotColumnAttribute>() &&
                 !expression.Columns.Any(x => x.Name.Equals(NameCompatibilityManager.GetColumnName(type, pi.Name), StringComparison.OrdinalIgnoreCase)) &&
                 TypeMapping.ContainsKey(pi.PropertyType.GetTypeToMap().propType));

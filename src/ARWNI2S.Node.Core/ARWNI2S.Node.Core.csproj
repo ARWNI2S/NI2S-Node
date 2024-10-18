@@ -18,8 +18,4 @@
     <ProjectReference Include="..\Infrastructure\ARWNI2S.Infrastructure\ARWNI2S.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Entities\World\" />
-  </ItemGroup>
-
 </Project>
