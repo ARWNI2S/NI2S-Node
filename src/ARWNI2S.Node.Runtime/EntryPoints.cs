@@ -1,8 +1,8 @@
-using ARWNI2S.Node.Runtime.Hosting;
-using ARWNI2S.Node.Runtime.Infrastructure.Extensions;
+using ARWNI2S.Runtime.Hosting;
+using ARWNI2S.Runtime.Infrastructure.Extensions;
 using Microsoft.Extensions.Hosting;
 
-namespace ARWNI2S.Node.Runtime
+namespace ARWNI2S.Runtime
 {
     public sealed class EntryPoints
     {

@@ -1,11 +1,11 @@
 ﻿using ARWNI2S.Node.Core.Configuration;
 using ARWNI2S.Node.Core.Infrastructure;
-using ARWNI2S.Node.Runtime.Infrastructure.Extensions;
+using ARWNI2S.Runtime.Infrastructure.Extensions;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 
-namespace ARWNI2S.Node.Runtime.Hosting
+namespace ARWNI2S.Runtime.Hosting
 {
     public sealed class NodeHostBuilder : HostBuilder, IHostBuilder
     {

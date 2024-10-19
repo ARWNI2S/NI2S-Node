@@ -100,7 +100,7 @@ namespace ARWNI2S.Node.Services.Plugins
             if (OriginalAssemblyFile == null)
                 throw new NodeException($"Cannot load original assembly path for {SystemName} module.");
 
-            var filePath = fileProvider.Combine(fileProvider.GetDirectoryName(OriginalAssemblyFile), ModuleServicesDefaults.DescriptionFileName);
+            var filePath = fileProvider.Combine(fileProvider.GetDirectoryName(OriginalAssemblyFile), NI2SModuleDefaults.DescriptionFileName);
             if (!fileProvider.FileExists(filePath))
                 throw new NodeException($"Description file for {SystemName} module does not exist. {filePath}");
 

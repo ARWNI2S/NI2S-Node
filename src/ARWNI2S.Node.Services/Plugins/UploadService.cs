@@ -52,7 +52,7 @@ namespace ARWNI2S.Node.Services.Plugins
             using var archive = ZipFile.OpenRead(archivePath);
             //try to get the entry containing information about the uploaded items 
             var uploadedItemsFileEntry = archive.Entries
-                .FirstOrDefault(entry => entry.Name.Equals(ModuleServicesDefaults.UploadedItemsFileName, StringComparison.InvariantCultureIgnoreCase)
+                .FirstOrDefault(entry => entry.Name.Equals(NI2SModuleDefaults.UploadedItemsFileName, StringComparison.InvariantCultureIgnoreCase)
                     && string.IsNullOrEmpty(_fileProvider.GetDirectoryName(entry.FullName)));
             if (uploadedItemsFileEntry == null)
                 return null;
@@ -76,7 +76,7 @@ namespace ARWNI2S.Node.Services.Plugins
         protected virtual async Task<IDescriptor> UploadSingleItemAsync(string archivePath)
         {
             //get path to the modules directory
-            var modulesDirectory = _fileProvider.MapPath(ModuleServicesDefaults.UploadedPath);
+            var modulesDirectory = _fileProvider.MapPath(NI2SModuleDefaults.UploadedPath);
 
             //ensure modules directory is created
             _fileProvider.CreateDirectory(modulesDirectory);
@@ -92,7 +92,7 @@ namespace ARWNI2S.Node.Services.Plugins
                 {
                     throw new NodeException("The archive should contain only one root module or theme directory. " +
                         "For example, Payments.PayPalDirect or DefaultClean. " +
-                        $"To upload multiple items, the archive should have the '{ModuleServicesDefaults.UploadedItemsFileName}' file in the root");
+                        $"To upload multiple items, the archive should have the '{NI2SModuleDefaults.UploadedItemsFileName}' file in the root");
                 }
 
                 //get directory name (remove the ending /)
@@ -103,7 +103,7 @@ namespace ARWNI2S.Node.Services.Plugins
                 {
                     //whether it's a module descriptor
                     var isModuleDescriptor = entry.FullName
-                        .Equals($"{uploadedItemDirectoryName}/{ModuleServicesDefaults.DescriptionFileName}", StringComparison.InvariantCultureIgnoreCase);
+                        .Equals($"{uploadedItemDirectoryName}/{NI2SModuleDefaults.DescriptionFileName}", StringComparison.InvariantCultureIgnoreCase);
 
                     if (!isModuleDescriptor)
                         continue;
@@ -164,7 +164,7 @@ namespace ARWNI2S.Node.Services.Plugins
         protected virtual async Task<IList<IDescriptor>> UploadMultipleItemsAsync(string archivePath, IList<UploadedItem> uploadedItems)
         {
             //get path to the modules directory
-            var modulesDirectory = _fileProvider.MapPath(ModuleServicesDefaults.UploadedPath);
+            var modulesDirectory = _fileProvider.MapPath(NI2SModuleDefaults.UploadedPath);
 
             //ensure modules directory is created
             _fileProvider.CreateDirectory(modulesDirectory);
@@ -188,7 +188,7 @@ namespace ARWNI2S.Node.Services.Plugins
                     //get path to the descriptor entry in the archive
                     var descriptorPath = string.Empty;
                     if (item.Type == UploadedItemType.Module)
-                        descriptorPath = $"{itemPath}{ModuleServicesDefaults.DescriptionFileName}";
+                        descriptorPath = $"{itemPath}{NI2SModuleDefaults.DescriptionFileName}";
 
                     //try to get the descriptor entry
                     var descriptorEntry = archive.Entries.FirstOrDefault(entry => entry.FullName.Equals(descriptorPath, StringComparison.InvariantCultureIgnoreCase));
@@ -318,7 +318,7 @@ namespace ARWNI2S.Node.Services.Plugins
                     throw new NodeException("Only zip archives are supported");
 
                 //ensure that temp directory is created
-                var tempDirectory = _fileProvider.MapPath(ModuleServicesDefaults.UploadsTempPath);
+                var tempDirectory = _fileProvider.MapPath(NI2SModuleDefaults.UploadsTempPath);
                 _fileProvider.CreateDirectory(tempDirectory);
 
                 //copy original archive to the temp directory

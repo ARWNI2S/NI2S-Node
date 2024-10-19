@@ -1,4 +1,4 @@
-﻿namespace ARWNI2S.Node.Runtime.Clustering
+﻿namespace ARWNI2S.Runtime.Clustering
 {
     public class ClusteringDefaults
     {

@@ -1,7 +1,6 @@
 ﻿using ARWNI2S.Infrastructure;
 using ARWNI2S.Infrastructure.Entities;
 using ARWNI2S.Node.Core;
-using ARWNI2S.Node.Core.Entities.Clustering;
 using ARWNI2S.Node.Core.Infrastructure;
 using ARWNI2S.Node.Core.Entities.Users;
 using ARWNI2S.Node.Data.Extensions;
@@ -10,6 +9,7 @@ using ARWNI2S.Node.Services.Localization;
 using ARWNI2S.Node.Services.Logging;
 using ARWNI2S.Node.Services.Users;
 using System.Reflection;
+using ARWNI2S.Node.Core.Entities.Clustering;
 
 namespace ARWNI2S.Node.Services.Plugins
 {
@@ -20,7 +20,7 @@ namespace ARWNI2S.Node.Services.Plugins
     {
         #region Fields
 
-        private readonly NodeSettings _nodeSettings;
+        private readonly ClusteringSettings _nodeSettings;
         private readonly IUserService _userService;
         //private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IMigrationManager _migrationManager;
@@ -34,7 +34,7 @@ namespace ARWNI2S.Node.Services.Plugins
 
         #region Ctor
 
-        public ModuleService(NodeSettings nodeSettings,
+        public ModuleService(ClusteringSettings nodeSettings,
             IUserService userService,
             //IHttpContextAccessor httpContextAccessor,
             IMigrationManager migrationManager,
@@ -205,7 +205,7 @@ namespace ARWNI2S.Node.Services.Plugins
         protected virtual bool ModulesUploaded()
         {
             var modulesDirectories =
-                _fileProvider.GetDirectories(_fileProvider.MapPath(ModuleServicesDefaults.UploadedPath));
+                _fileProvider.GetDirectories(_fileProvider.MapPath(NI2SModuleDefaults.UploadedPath));
 
             if (modulesDirectories.Length == 0)
                 return false;
@@ -475,7 +475,7 @@ namespace ARWNI2S.Node.Services.Plugins
                 moduleDescriptor.moduleDescriptor.ShowInModulesList = true;
 
             //clear the uploaded directory
-            foreach (var directory in _fileProvider.GetDirectories(_fileProvider.MapPath(ModuleServicesDefaults.UploadedPath)))
+            foreach (var directory in _fileProvider.GetDirectories(_fileProvider.MapPath(NI2SModuleDefaults.UploadedPath)))
                 _fileProvider.DeleteDirectory(directory);
         }
 

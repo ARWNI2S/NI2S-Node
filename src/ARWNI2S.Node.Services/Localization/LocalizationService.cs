@@ -14,7 +14,7 @@ using System.Reflection;
 using System.Text;
 using System.Xml;
 using ARWNI2S.Node.Core.Entities.Security;
-using ARWNI2S.Node.Core.Services.Plugins;
+using ARWNI2S.Node.Services.Plugins;
 
 namespace ARWNI2S.Node.Services.Localization
 {

@@ -7,7 +7,7 @@ using System.Runtime.Versioning;
 using System.Security.AccessControl;
 using System.Security.Principal;
 
-namespace ARWNI2S.Node.Runtime.Security
+namespace ARWNI2S.Runtime.Security
 {
     /// <summary>
     /// File permission helper
@@ -281,7 +281,7 @@ namespace ARWNI2S.Node.Runtime.Security
         {
             return new List<string>
             {
-                fileProvider.MapPath(ModuleServicesDefaults.ModulesInfoFilePath),
+                fileProvider.MapPath(NI2SModuleDefaults.ModulesInfoFilePath),
                 fileProvider.MapPath(ConfigurationDefaults.NodeSettingsFilePath)
             };
         }

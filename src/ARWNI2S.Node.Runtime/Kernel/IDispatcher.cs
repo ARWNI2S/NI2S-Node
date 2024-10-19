@@ -1,4 +1,4 @@
-﻿namespace ARWNI2S.Node.Runtime.Kernel
+﻿namespace ARWNI2S.Runtime.Kernel
 {
     internal interface IDispatcher
     {

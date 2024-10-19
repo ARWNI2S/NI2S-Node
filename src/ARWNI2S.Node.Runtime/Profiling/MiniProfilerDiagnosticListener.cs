@@ -2,7 +2,7 @@
 using StackExchange.Profiling;
 using StackExchange.Profiling.Internal;
 
-namespace ARWNI2S.Node.Runtime.Profiling
+namespace ARWNI2S.Runtime.Profiling
 {
     public class MiniProfilerDiagnosticListener : IMiniProfilerDiagnosticListener
     {

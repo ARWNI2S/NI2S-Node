@@ -1,4 +1,4 @@
-﻿namespace ARWNI2S.Node.Runtime.Services.Clustering
+﻿namespace ARWNI2S.Runtime.Services.Clustering
 {
     public interface IActorDirectoryService : IGrainWithIntegerKey
     {

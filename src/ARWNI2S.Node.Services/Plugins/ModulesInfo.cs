@@ -58,7 +58,7 @@ namespace ARWNI2S.Node.Services.Plugins
                 return false;
 
             //directory is directly in modules directory
-            if (!_fileProvider.GetDirectoryNameOnly(parent).Equals(ModuleServicesDefaults.PathName, StringComparison.InvariantCultureIgnoreCase))
+            if (!_fileProvider.GetDirectoryNameOnly(parent).Equals(NI2SModuleDefaults.PathName, StringComparison.InvariantCultureIgnoreCase))
                 return false;
 
             return true;
@@ -77,7 +77,7 @@ namespace ARWNI2S.Node.Services.Plugins
             var result = new List<(string DescriptionFile, ModuleDescriptor ModuleDescriptor)>();
 
             //try to find description files in the module directory
-            var files = _fileProvider.GetFiles(directoryName, ModuleServicesDefaults.DescriptionFileName, false);
+            var files = _fileProvider.GetFiles(directoryName, NI2SModuleDefaults.DescriptionFileName, false);
 
             //populate result list
             foreach (var descriptionFile in files)
@@ -122,7 +122,7 @@ namespace ARWNI2S.Node.Services.Plugins
         public virtual void LoadModuleInfo()
         {
             //check whether modules info file exists
-            var filePath = _fileProvider.MapPath(ModuleServicesDefaults.ModulesInfoFilePath);
+            var filePath = _fileProvider.MapPath(NI2SModuleDefaults.ModulesInfoFilePath);
 
             //try to get module info from the JSON file
             var text = _fileProvider.FileExists(filePath)
@@ -135,7 +135,7 @@ namespace ARWNI2S.Node.Services.Plugins
             var incompatibleModules = new Dictionary<string, ModuleIncompatibleType>();
 
             //ensure modules directory is created
-            var modulesDirectory = _fileProvider.MapPath(ModuleServicesDefaults.Path);
+            var modulesDirectory = _fileProvider.MapPath(NI2SModuleDefaults.Path);
             _fileProvider.CreateDirectory(modulesDirectory);
 
             //load module descriptors from the module directory
@@ -237,7 +237,7 @@ namespace ARWNI2S.Node.Services.Plugins
         public virtual async Task SaveAsync()
         {
             //save the file
-            var filePath = _fileProvider.MapPath(ModuleServicesDefaults.ModulesInfoFilePath);
+            var filePath = _fileProvider.MapPath(NI2SModuleDefaults.ModulesInfoFilePath);
             var text = JsonConvert.SerializeObject(this, Formatting.Indented);
             await _fileProvider.WriteAllTextAsync(filePath, text, Encoding.UTF8);
         }
@@ -248,7 +248,7 @@ namespace ARWNI2S.Node.Services.Plugins
         public virtual void Save()
         {
             //save the file
-            var filePath = _fileProvider.MapPath(ModuleServicesDefaults.ModulesInfoFilePath);
+            var filePath = _fileProvider.MapPath(NI2SModuleDefaults.ModulesInfoFilePath);
             var text = JsonConvert.SerializeObject(this, Formatting.Indented);
             _fileProvider.WriteAllText(filePath, text, Encoding.UTF8);
         }

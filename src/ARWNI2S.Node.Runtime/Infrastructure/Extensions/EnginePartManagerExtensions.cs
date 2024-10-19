@@ -1,37 +1,38 @@
 ﻿using ARWNI2S.Infrastructure;
-using ARWNI2S.Node.Core;
 using ARWNI2S.Node.Core.ComponentModel;
 using ARWNI2S.Node.Core.Configuration;
 using ARWNI2S.Node.Core.Infrastructure;
 using ARWNI2S.Node.Data.Mapping;
+using ARWNI2S.Node.Services.Plugins;
+using ARWNI2S.Runtime.Core.Components;
 using System.Reflection;
 
-namespace ARWNI2S.Node.Services.Plugins
+namespace ARWNI2S.Runtime.Infrastructure.Extensions
 {
     /// <summary>
     /// Represents application part manager extensions
     /// </summary>
-    public static partial class NodeModuleManager
+    public static partial class EnginePartManagerExtensions
     {
         #region Fields
 
         private static readonly IEngineFileProvider _fileProvider;
         private static readonly List<KeyValuePair<string, Version>> _baseAppLibraries;
         private static readonly Dictionary<string, Version> _moduleLibraries;
-        private static readonly Dictionary<string, ModuleLoadedAssemblyInfo> _loadedAssemblies = [];
+        private static readonly Dictionary<string, ModuleLoadedAssemblyInfo> _loadedAssemblies = new();
         private static readonly ReaderWriterLockSlim _locker = new();
 
         #endregion
 
         #region Ctor
 
-        static NodeModuleManager()
+        static EnginePartManagerExtensions()
         {
             //we use the default file provider, since the DI isn't initialized yet
             _fileProvider = CommonHelper.DefaultFileProvider;
 
-            _baseAppLibraries = [];
-            _moduleLibraries = [];
+            _baseAppLibraries = new List<KeyValuePair<string, Version>>();
+            _moduleLibraries = new Dictionary<string, Version>();
 
             //get all libraries from /bin/{version}/ directory
             foreach (var file in _fileProvider.GetFiles(AppDomain.CurrentDomain.BaseDirectory, "*.dll"))
@@ -43,7 +44,7 @@ namespace ARWNI2S.Node.Services.Plugins
                     _baseAppLibraries.Add(new KeyValuePair<string, Version>(_fileProvider.GetFileName(file), GetAssemblyVersion(file)));
 
             //get all libraries from refs directory
-            var refsPathName = _fileProvider.Combine(Environment.CurrentDirectory, ModuleServicesDefaults.RefsPathName);
+            var refsPathName = _fileProvider.Combine(Environment.CurrentDirectory, NI2SModuleDefaults.RefsPathName);
             if (_fileProvider.DirectoryExists(refsPathName))
                 foreach (var file in _fileProvider.GetFiles(refsPathName, "*.dll"))
                     _baseAppLibraries.Add(new KeyValuePair<string, Version>(_fileProvider.GetFileName(file), GetAssemblyVersion(file)));
@@ -80,7 +81,7 @@ namespace ARWNI2S.Node.Services.Plugins
             return null;
         }
 
-        private static void CheckCompatible(ModuleDescriptor moduleDescriptor, Dictionary<string, Version> assemblies)
+        private static void CheckCompatible(ModuleDescriptor moduleDescriptor, IDictionary<string, Version> assemblies)
         {
             var refFiles = moduleDescriptor.ModuleFiles.Where(file =>
                 !_fileProvider.GetFileName(file).Equals(_fileProvider.GetFileName(moduleDescriptor.OriginalAssemblyFile))).ToList();
@@ -103,10 +104,11 @@ namespace ARWNI2S.Node.Services.Plugins
         /// <summary>
         /// Load and register the assembly
         /// </summary>
+        /// <param name="applicationPartManager">Application part manager</param>
         /// <param name="assemblyFile">Path to the assembly file</param>
         /// <param name="useUnsafeLoadAssembly">Indicating whether to load an assembly into the load-from context, bypassing some security checks</param>
         /// <returns>Assembly</returns>
-        private static Assembly AddApplicationModule(string assemblyFile, bool useUnsafeLoadAssembly)
+        private static Assembly AddApplicationParts(EnginePartManager applicationPartManager, string assemblyFile, bool useUnsafeLoadAssembly)
         {
             //try to load a assembly
             Assembly assembly;
@@ -131,25 +133,31 @@ namespace ARWNI2S.Node.Services.Plugins
                     throw;
             }
 
+            //register the module definition
+            applicationPartManager.ApplicationParts.Add(new AssemblyPart(assembly));
+
             return assembly;
         }
 
         /// <summary>
         /// Perform file deploy and return loaded assembly
         /// </summary>
+        /// <param name="applicationPartManager">Application part manager</param>
         /// <param name="assemblyFile">Path to the module assembly file</param>
         /// <param name="moduleConfig">Module config</param>
-        /// <param name="fileProvider">NI2S file provider</param>
+        /// <param name="fileProvider">Nop file provider</param>
         /// <returns>Assembly</returns>
-        private static Assembly PerformFileDeploy(string assemblyFile, ModuleConfig moduleConfig, IEngineFileProvider fileProvider)
+        private static Assembly PerformFileDeploy(this EnginePartManager applicationPartManager,
+            string assemblyFile, ModuleConfig moduleConfig, IEngineFileProvider fileProvider)
         {
             //ensure for proper directory structure
             if (string.IsNullOrEmpty(assemblyFile) ||
                 string.IsNullOrEmpty(fileProvider.GetParentDirectory(assemblyFile)))
                 throw new InvalidOperationException(
-                    $"The module directory for the {fileProvider.GetFileName(assemblyFile)} file exists in a directory outside of the allowed dragonCorp directory hierarchy");
+                    $"The module directory for the {fileProvider.GetFileName(assemblyFile)} file exists in a directory outside of the allowed nopCommerce directory hierarchy");
 
-            var assembly = AddApplicationModule(assemblyFile, moduleConfig.UseUnsafeLoadAssembly);
+            var assembly =
+                AddApplicationParts(applicationPartManager, assemblyFile, moduleConfig.UseUnsafeLoadAssembly);
 
             // delete the .deps file
             if (assemblyFile.EndsWith(".dll"))
@@ -180,7 +188,7 @@ namespace ARWNI2S.Node.Services.Plugins
                 //get filename without extension
                 var fileNameWithoutExtension = _fileProvider.GetFileNameWithoutExtension(filePath);
                 if (string.IsNullOrEmpty(fileNameWithoutExtension))
-                    throw new NodeException($"Cannot get file extension for {fileName}");
+                    throw new Exception($"Cannot get file extension for {fileName}");
 
                 foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
                 {
@@ -190,14 +198,15 @@ namespace ARWNI2S.Node.Services.Plugins
                         continue;
 
                     //loaded assembly not found
-                    if (!_loadedAssemblies.TryGetValue(assemblyName, out ModuleLoadedAssemblyInfo value))
+                    if (!_loadedAssemblies.TryGetValue(assemblyName, out var moduleLoadedAssemblyInfo))
                     {
-                        value = new ModuleLoadedAssemblyInfo(assemblyName, GetAssemblyVersion(assembly.Location));
                         //add it to the list to find collisions later
-                        _loadedAssemblies.Add(assemblyName, value);
+                        moduleLoadedAssemblyInfo = new ModuleLoadedAssemblyInfo(assemblyName, GetAssemblyVersion(assembly.Location));
+                        _loadedAssemblies.Add(assemblyName, moduleLoadedAssemblyInfo);
                     }
 
-                    value.References.Add((moduleName, GetAssemblyVersion(filePath)));
+                    //set assembly name and module name for further using
+                    moduleLoadedAssemblyInfo.References.Add((moduleName, GetAssemblyVersion(filePath)));
 
                     return true;
                 }
@@ -218,9 +227,12 @@ namespace ARWNI2S.Node.Services.Plugins
         /// <summary>
         /// Initialize modules system
         /// </summary>
+        /// <param name="applicationPartManager">Application part manager</param>
         /// <param name="moduleConfig">Module config</param>
-        public static void InitializeModules(ModuleConfig moduleConfig)
+        public static void InitializeModules(this EnginePartManager applicationPartManager, ModuleConfig moduleConfig)
         {
+            ArgumentNullException.ThrowIfNull(applicationPartManager);
+
             ArgumentNullException.ThrowIfNull(moduleConfig);
 
             //perform with locked access to resources
@@ -229,11 +241,11 @@ namespace ARWNI2S.Node.Services.Plugins
                 try
                 {
                     //ensure modules directory is created
-                    var modulesDirectory = _fileProvider.MapPath(ModuleServicesDefaults.Path);
+                    var modulesDirectory = _fileProvider.MapPath(NI2SModuleDefaults.Path);
                     _fileProvider.CreateDirectory(modulesDirectory);
 
                     //ensure uploaded directory is created
-                    var uploadedPath = _fileProvider.MapPath(ModuleServicesDefaults.UploadedPath);
+                    var uploadedPath = _fileProvider.MapPath(NI2SModuleDefaults.UploadedPath);
                     _fileProvider.CreateDirectory(uploadedPath);
 
                     foreach (var directory in _fileProvider.GetDirectories(uploadedPath))
@@ -255,7 +267,8 @@ namespace ARWNI2S.Node.Services.Plugins
                         var mainModuleFile = moduleDescriptor.OriginalAssemblyFile;
 
                         //try to deploy main module assembly 
-                        moduleDescriptor.ReferencedAssembly = PerformFileDeploy(mainModuleFile, moduleConfig, _fileProvider);
+                        moduleDescriptor.ReferencedAssembly =
+                            applicationPartManager.PerformFileDeploy(mainModuleFile, moduleConfig, _fileProvider);
 
                         //and then deploy all other referenced assemblies
                         var filesToDeploy = moduleDescriptor.ModuleFiles.Where(file =>
@@ -263,7 +276,7 @@ namespace ARWNI2S.Node.Services.Plugins
                             !IsAlreadyLoaded(file, moduleDescriptor.SystemName)).ToList();
 
                         foreach (var file in filesToDeploy)
-                            PerformFileDeploy(file, moduleConfig, _fileProvider);
+                            applicationPartManager.PerformFileDeploy(file, moduleConfig, _fileProvider);
 
                         //determine a module type (only one module per assembly is allowed)
                         var moduleType = moduleDescriptor.ReferencedAssembly.GetTypes().FirstOrDefault(type =>
@@ -273,6 +286,7 @@ namespace ARWNI2S.Node.Services.Plugins
                         if (moduleType != default)
                             moduleDescriptor.ModuleType = moduleType;
                     }
+
 
                     var assemblies = _baseAppLibraries.ToList();
                     foreach (var moduleLoadedAssemblyInfo in _loadedAssemblies)
@@ -295,7 +309,7 @@ namespace ARWNI2S.Node.Services.Plugins
                     for (var inner = exception; inner != null; inner = inner.InnerException)
                         message = $"{message}{inner.Message}{Environment.NewLine}";
 
-                    throw new NodeException(message, exception);
+                    throw new Exception(message, exception);
                 }
 
                 ModulesInfo.AssemblyLoadedCollision = _loadedAssemblies.Select(item => item.Value)

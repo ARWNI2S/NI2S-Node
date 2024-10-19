@@ -1,6 +1,6 @@
 ﻿using ARWNI2S.Node.Core.Runtime;
 
-namespace ARWNI2S.Node.Runtime
+namespace ARWNI2S.Runtime
 {
     internal class RuntimeContextAccessor : IExecutionContextAccessor
     {

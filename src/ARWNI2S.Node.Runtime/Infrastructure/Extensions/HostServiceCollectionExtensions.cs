@@ -6,10 +6,7 @@ using ARWNI2S.Node.Core.Configuration;
 using ARWNI2S.Node.Core.Infrastructure;
 using ARWNI2S.Node.Core.Runtime;
 using ARWNI2S.Node.Data;
-using ARWNI2S.Node.Runtime.Clustering;
-using ARWNI2S.Node.Runtime.Data;
 using ARWNI2S.Node.Services.Clustering;
-using ARWNI2S.Node.Services.Plugins;
 using Azure.Data.Tables;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,9 +19,12 @@ using StackExchange.Redis;
 using System.Net;
 using StackExchange.Profiling.Storage;
 using ARWNI2S.Node.Services.Security;
-using ARWNI2S.Node.Runtime.Profiling;
+using ARWNI2S.Runtime.Data;
+using ARWNI2S.Runtime.Clustering;
+using ARWNI2S.Runtime.Profiling;
+using ARWNI2S.Runtime.Core.Extensions;
 
-namespace ARWNI2S.Node.Runtime.Infrastructure.Extensions
+namespace ARWNI2S.Runtime.Infrastructure.Extensions
 {
     /// <summary>
     /// Represents extensions of IServiceCollection
@@ -83,7 +83,7 @@ namespace ARWNI2S.Node.Runtime.Infrastructure.Extensions
             //initialize modules
             var moduleConfig = new ModuleConfig();
             context.Configuration.GetSection(nameof(ModuleConfig)).Bind(moduleConfig, options => options.BindNonPublicProperties = true);
-            ni2sCoreBuilder.ModuleManager.InitializeModules(moduleConfig);
+            ni2sCoreBuilder.PartManager.InitializeModules(moduleConfig);
 
             //create engine and configure service provider
             var engine = EngineContext.Create();
@@ -196,7 +196,8 @@ namespace ARWNI2S.Node.Runtime.Infrastructure.Extensions
                                 {
                                     if (string.IsNullOrEmpty(clusterConfig.ConnectionString))
                                         throw new NodeException("Unable to configure SqlServer storage clustering: missing connection string.");
-                                    client = client.UseAdoNetClustering(options => {
+                                    client = client.UseAdoNetClustering(options =>
+                                    {
                                         options.Invariant = Constants.INVARIANT_NAME_SQL_SERVER;
                                         options.ConnectionString = clusterConfig.ConnectionString;
                                     });

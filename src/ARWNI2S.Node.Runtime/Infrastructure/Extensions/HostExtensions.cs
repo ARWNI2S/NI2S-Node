@@ -9,7 +9,7 @@ using ARWNI2S.Node.Services.ScheduleTasks;
 using Microsoft.Extensions.Hosting;
 using System.Reflection;
 
-namespace ARWNI2S.Node.Runtime.Infrastructure.Extensions
+namespace ARWNI2S.Runtime.Infrastructure.Extensions
 {
     public static class HostExtensions
     {

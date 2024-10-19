@@ -8,7 +8,6 @@ using ARWNI2S.Node.Core.Events;
 using ARWNI2S.Node.Core.Infrastructure;
 using ARWNI2S.Node.Core.Services.Helpers;
 using ARWNI2S.Node.Data;
-using ARWNI2S.Node.Runtime.Services.Installation;
 using ARWNI2S.Node.Services.Caching;
 using ARWNI2S.Node.Services.Clustering;
 using ARWNI2S.Node.Services.Common;
@@ -22,11 +21,12 @@ using ARWNI2S.Node.Services.Plugins;
 using ARWNI2S.Node.Services.ScheduleTasks;
 using ARWNI2S.Node.Services.Security;
 using ARWNI2S.Node.Services.Users;
+using ARWNI2S.Runtime.Services.Installation;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace ARWNI2S.Node.Runtime.Infrastructure
+namespace ARWNI2S.Runtime.Infrastructure
 {
     /// <summary>
     /// Represents the registering services on application startup
@@ -138,9 +138,9 @@ namespace ARWNI2S.Node.Runtime.Infrastructure
             {
                 services.AddScoped(setting, serviceProvider =>
                 {
-                    var nodeId = (int)(DataSettingsManager.IsDatabaseInstalled()
+                    var nodeId = DataSettingsManager.IsDatabaseInstalled()
                         ? serviceProvider.GetRequiredService<INodeContext>().GetCurrentNode()?.Id ?? 0
-                        : 0);
+                        : 0;
 
                     return serviceProvider.GetRequiredService<ISettingService>().LoadSettingAsync(setting, nodeId).Result;
                 });

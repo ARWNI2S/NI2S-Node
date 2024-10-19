@@ -5,7 +5,7 @@ namespace ARWNI2S.Node.Services.Plugins
     /// <summary>
     /// Represents default values related to modules
     /// </summary>
-    public static partial class ModuleServicesDefaults
+    public static partial class NI2SModuleDefaults
     {
 
         /// <summary>

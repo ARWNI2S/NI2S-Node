@@ -2,7 +2,7 @@
 using ARWNI2S.Node.Core.Entities.Clustering;
 using ARWNI2S.Node.Services.Clustering;
 
-namespace ARWNI2S.Node.Runtime.Clustering
+namespace ARWNI2S.Runtime.Clustering
 {
     public sealed class ClusterManager
     {
@@ -28,7 +28,7 @@ namespace ARWNI2S.Node.Runtime.Clustering
             var node = nodeId.HasValue ? await _clusteringService.GetNodeByNodeIdAsync(nodeId.Value) ?? await _nodeContext.GetCurrentNodeAsync()
                 : await _nodeContext.GetCurrentNodeAsync();
 
-            if (node == null || (nodeId.HasValue && node.NodeId != nodeId.Value))
+            if (node == null || nodeId.HasValue && node.NodeId != nodeId.Value)
             {
                 node = new NI2SNode
                 {

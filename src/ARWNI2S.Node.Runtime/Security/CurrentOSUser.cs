@@ -2,7 +2,7 @@
 using System.Runtime.Versioning;
 using System.Security.Principal;
 
-namespace ARWNI2S.Node.Runtime.Security
+namespace ARWNI2S.Runtime.Security
 {
     /// <summary>
     /// Represent information about current OS user 

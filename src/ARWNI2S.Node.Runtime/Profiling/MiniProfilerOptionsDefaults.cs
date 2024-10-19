@@ -3,7 +3,7 @@ using Microsoft.Extensions.Options;
 using StackExchange.Profiling;
 using StackExchange.Profiling.Storage;
 
-namespace ARWNI2S.Node.Runtime.Profiling
+namespace ARWNI2S.Runtime.Profiling
 {
     /// <summary>
     /// Configures the default (important: with DI for IMemoryCache) before further user configuration.

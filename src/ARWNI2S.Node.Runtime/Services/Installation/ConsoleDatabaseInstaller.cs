@@ -2,17 +2,16 @@
 using ARWNI2S.Node.Core;
 using ARWNI2S.Node.Core.Caching;
 using ARWNI2S.Node.Core.Configuration;
-using ARWNI2S.Node.Core.Services.Plugins;
 using ARWNI2S.Node.Data;
 using ARWNI2S.Node.Data.Configuration;
-using ARWNI2S.Node.Runtime.Security;
 using ARWNI2S.Node.Services.Common;
 using ARWNI2S.Node.Services.Installation;
 using ARWNI2S.Node.Services.Plugins;
 using ARWNI2S.Node.Services.Security;
+using ARWNI2S.Runtime.Security;
 using System.Globalization;
 
-namespace ARWNI2S.Node.Runtime.Services.Installation
+namespace ARWNI2S.Runtime.Services.Installation
 {
     internal class ConsoleDatabaseInstaller : IDatabaseInstaller
     {
@@ -87,7 +86,7 @@ namespace ARWNI2S.Node.Runtime.Services.Installation
                 var dataProvider = DataProviderManager.GetDataProvider(dataProviderType);
 
                 string connectionString = await PromptForConnectionString();
-                if (!connectionString.Replace(" ", "").Contains(dataProviderType == DataProviderType.SqlServer ? ";InitialCatalog=" : ";Database=")) 
+                if (!connectionString.Replace(" ", "").Contains(dataProviderType == DataProviderType.SqlServer ? ";InitialCatalog=" : ";Database="))
                 {
                     string databaseName = await PromptForDatabaseName();
                     connectionString += $"{(dataProviderType == DataProviderType.SqlServer ? "; Initial Catalog = " : "; Database = ")}{databaseName}";
@@ -193,7 +192,7 @@ namespace ARWNI2S.Node.Runtime.Services.Installation
                     await _permissionService.Value.InstallPermissionsAsync(provider);
                 }
 
-                if(await PromptRestartOrContinue())
+                if (await PromptRestartOrContinue())
                 {
                     if (DataSettingsManager.IsDatabaseInstalled())
                         return;
