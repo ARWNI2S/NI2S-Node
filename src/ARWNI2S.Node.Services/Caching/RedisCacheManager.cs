@@ -1,4 +1,5 @@
-﻿using ARWNI2S.Node.Core.Caching;
+﻿using ARWNI2S.Infrastructure.Collections;
+using ARWNI2S.Node.Core.Caching;
 using ARWNI2S.Node.Core.Configuration;
 using Microsoft.Extensions.Caching.Distributed;
 using StackExchange.Redis;
@@ -13,7 +14,7 @@ namespace ARWNI2S.Node.Services.Caching
     {
         #region Fields
 
-        private readonly IRedisConnectionWrapper _connectionWrapper;
+        protected readonly IRedisConnectionWrapper _connectionWrapper;
 
         #endregion
 
@@ -22,8 +23,9 @@ namespace ARWNI2S.Node.Services.Caching
         public RedisCacheManager(NI2SSettings ni2sSettings,
             IDistributedCache distributedCache,
             IRedisConnectionWrapper connectionWrapper,
-            ICacheKeyManager cacheKeyManager)
-            : base(ni2sSettings, distributedCache, cacheKeyManager)
+            ICacheKeyManager cacheKeyManager,
+            IConcurrentCollection<object> concurrentCollection)
+            : base(ni2sSettings, distributedCache, cacheKeyManager, concurrentCollection)
         {
             _connectionWrapper = connectionWrapper;
         }

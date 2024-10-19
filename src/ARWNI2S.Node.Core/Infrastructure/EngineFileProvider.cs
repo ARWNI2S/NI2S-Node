@@ -263,7 +263,7 @@ namespace ARWNI2S.Node.Core.Infrastructure
 
             allPaths.AddRange(paths);
 
-            return Combine(allPaths.ToArray());
+            return Combine([.. allPaths]);
         }
 
         /// <summary>

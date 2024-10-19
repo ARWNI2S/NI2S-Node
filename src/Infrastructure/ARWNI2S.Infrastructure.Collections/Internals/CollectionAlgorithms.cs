@@ -5214,7 +5214,7 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
                 // to the correct size array. The latter algorithm seems more efficient, although
                 // it allocates extra memory for the list which is then discarded.
                 List<T> list = new List<T>(collection);
-                return list.ToArray();
+                return [.. list];
             }
         }
 

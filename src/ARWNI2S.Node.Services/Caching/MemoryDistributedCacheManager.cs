@@ -1,4 +1,5 @@
-﻿using ARWNI2S.Node.Core.Caching;
+﻿using ARWNI2S.Infrastructure.Collections;
+using ARWNI2S.Node.Core.Caching;
 using ARWNI2S.Node.Core.Configuration;
 using Microsoft.Extensions.Caching.Distributed;
 
@@ -10,8 +11,9 @@ namespace ARWNI2S.Node.Services.Caching
 
         public MemoryDistributedCacheManager(NI2SSettings ni2sSettings,
             IDistributedCache distributedCache,
-            ICacheKeyManager cacheKeyManager)
-            : base(ni2sSettings, distributedCache, cacheKeyManager)
+            ICacheKeyManager cacheKeyManager,
+            IConcurrentCollection<object> concurrentCollection)
+            : base(ni2sSettings, distributedCache, cacheKeyManager, concurrentCollection)
         {
         }
 

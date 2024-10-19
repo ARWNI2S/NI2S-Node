@@ -1,4 +1,7 @@
-﻿namespace ARWNI2S.Node.Data.Mapping.Builders.Security
+﻿using ARWNI2S.Node.Core.Entities.Security;
+using FluentMigrator.Builders.Create.Table;
+
+namespace ARWNI2S.Node.Data.Mapping.Builders.Security
 {
     /// <summary>
     /// Represents a permission record entity builder

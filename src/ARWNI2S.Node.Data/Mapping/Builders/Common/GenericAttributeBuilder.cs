@@ -1,4 +1,7 @@
-﻿namespace ARWNI2S.Node.Data.Mapping.Builders.Common
+﻿using ARWNI2S.Node.Core.Entities.Common;
+using FluentMigrator.Builders.Create.Table;
+
+namespace ARWNI2S.Node.Data.Mapping.Builders.Common
 {
     /// <summary>
     /// Represents a generic attribute entity builder

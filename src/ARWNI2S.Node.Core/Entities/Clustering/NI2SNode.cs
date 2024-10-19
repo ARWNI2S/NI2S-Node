@@ -1,10 +1,22 @@
 ﻿namespace ARWNI2S.Node.Core.Entities.Clustering
 {
+    public enum NodeState : byte
+    {
+        Offline = 0,
+        Online = 1,
+        Joining = 10,
+        Leaving = 11,
+
+        Error = 255
+    }
+
     /// <summary>
     /// Represents a node
     /// </summary>
-    public partial class NI2SNode : BaseEntity, INI2SNode
+    public partial class NI2SNode : BaseEntity
     {
+        public string Name { get; set; }
+
         public Guid NodeId { get; set; }
 
         public string Metadata { get; set; }

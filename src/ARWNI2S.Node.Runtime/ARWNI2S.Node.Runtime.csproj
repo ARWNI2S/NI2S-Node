@@ -20,9 +20,9 @@
     <PackageReference Include="Microsoft.Extensions.Caching.Memory" />
     <PackageReference Include="Microsoft.Extensions.Hosting" />
     <PackageReference Include="Microsoft.Orleans.Client" />
+    <PackageReference Include="Microsoft.Orleans.Clustering.AdoNet" />
     <PackageReference Include="Microsoft.Orleans.Clustering.AzureStorage" />
     <PackageReference Include="Microsoft.Orleans.Clustering.Redis" />
-    <PackageReference Include="Microsoft.Orleans.Core.Abstractions" />
   </ItemGroup>
 
   <ItemGroup>

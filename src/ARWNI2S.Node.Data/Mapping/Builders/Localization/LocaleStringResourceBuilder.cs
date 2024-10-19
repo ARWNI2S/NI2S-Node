@@ -1,4 +1,8 @@
-﻿namespace ARWNI2S.Node.Data.Mapping.Builders.Localization
+﻿using ARWNI2S.Node.Core.Entities.Localization;
+using ARWNI2S.Node.Data.Extensions;
+using FluentMigrator.Builders.Create.Table;
+
+namespace ARWNI2S.Node.Data.Mapping.Builders.Localization
 {
     /// <summary>
     /// Represents a locale string resource entity builder

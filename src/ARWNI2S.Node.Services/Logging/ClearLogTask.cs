@@ -1,4 +1,4 @@
-﻿using ARWNI2S.Node.Core.Common;
+﻿using ARWNI2S.Node.Core.Entities.Common;
 using ARWNI2S.Node.Services.ScheduleTasks;
 
 namespace ARWNI2S.Node.Services.Logging

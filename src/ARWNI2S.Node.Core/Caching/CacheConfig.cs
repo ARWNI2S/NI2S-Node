@@ -21,5 +21,8 @@ namespace ARWNI2S.Node.Core.Caching
         /// Gets or sets the bundled files cache time in minutes
         /// </summary>
         public int BundledFilesCacheTime { get; private set; } = 120;
+
+        /// <inheritdoc/>
+        public int GetOrder() => 2;
     }
 }

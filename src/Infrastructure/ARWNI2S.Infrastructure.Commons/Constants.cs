@@ -19,7 +19,7 @@
 
         //public const string NI2S_SQL_UTILS_DLL = "Softwar.NI2S.SQLTools";
 
-        //public const string INVARIANT_NAME_SQL_SERVER = "System.Data.SqlClient";
+        public const string INVARIANT_NAME_SQL_SERVER = "System.Data.SqlClient";
 
         ///// <summary>
         ///// The default timeout before a request is assumed to have failed.

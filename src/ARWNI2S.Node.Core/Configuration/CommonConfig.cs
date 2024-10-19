@@ -34,5 +34,11 @@ namespace ARWNI2S.Node.Core.Configuration
         /// If value is set to false then the default .Net IoC container will be use
         /// </summary>
         public bool UseAutofac { get; set; } = true;
+
+        /// <summary>
+        /// Gets or sets a value that indicates whether to use MiniProfiler services
+        /// </summary>
+        public bool MiniProfilerEnabled { get; private set; } = false;
+
     }
 }

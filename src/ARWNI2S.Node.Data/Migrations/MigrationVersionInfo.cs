@@ -87,7 +87,7 @@ namespace ARWNI2S.Node.Data.Migrations
         /// <summary>
         /// TODO: FluentMigrator.Runner.VersionTableInfo NEW VERSION
         /// </summary>
-        public bool CreateWithPrimaryKey => throw new NotImplementedException();
+        public bool CreateWithPrimaryKey { get; }
 
         #endregion
 

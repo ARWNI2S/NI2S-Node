@@ -7,5 +7,8 @@
         /// </summary>
         /// <returns>String of IP address</returns>
         string GetCurrentIpAddress();
+
+        void RestartAppDomain();
+
     }
 }

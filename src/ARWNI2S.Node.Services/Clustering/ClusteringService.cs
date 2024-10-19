@@ -39,7 +39,7 @@ namespace ARWNI2S.Node.Services.Clustering
 
             var parsedValues = new List<string>();
             if (string.IsNullOrEmpty(node.Hosts))
-                return parsedValues.ToArray();
+                return [.. parsedValues];
 
             var hosts = node.Hosts.Split(separator, StringSplitOptions.RemoveEmptyEntries);
             foreach (var host in hosts)
@@ -49,7 +49,7 @@ namespace ARWNI2S.Node.Services.Clustering
                     parsedValues.Add(tmp);
             }
 
-            return parsedValues.ToArray();
+            return [.. parsedValues];
         }
 
         #endregion

@@ -1,4 +1,7 @@
-﻿namespace ARWNI2S.Node.Data.Mapping.Builders.ScheduleTasks
+﻿using ARWNI2S.Node.Core.Entities.ScheduleTasks;
+using FluentMigrator.Builders.Create.Table;
+
+namespace ARWNI2S.Node.Data.Mapping.Builders.ScheduleTasks
 {
     /// <summary>
     /// Represents a schedule task entity builder

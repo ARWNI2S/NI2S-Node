@@ -17,5 +17,8 @@ namespace ARWNI2S.Node.Core.Configuration
         /// Gets or sets a value indicating whether to download and setup the regional language pack during installation
         /// </summary>
         public bool InstallRegionalResources { get; private set; } = true;
+
+        /// <inheritdoc/>
+        public int GetOrder() => 3;
     }
 }

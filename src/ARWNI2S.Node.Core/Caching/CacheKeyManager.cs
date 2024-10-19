@@ -1,4 +1,4 @@
-﻿using ARWNI2S.Infrastructure;
+﻿using ARWNI2S.Infrastructure.Collections;
 
 namespace ARWNI2S.Node.Core.Caching
 {
@@ -10,7 +10,12 @@ namespace ARWNI2S.Node.Core.Caching
     /// </remarks>
     public partial class CacheKeyManager : ICacheKeyManager
     {
-        protected readonly ConcurrentTrie<byte> _keys = new();
+        protected readonly IConcurrentCollection<byte> _keys;
+
+        public CacheKeyManager(IConcurrentCollection<byte> keys)
+        {
+            _keys = keys;
+        }
 
         /// <summary>
         /// Add the key

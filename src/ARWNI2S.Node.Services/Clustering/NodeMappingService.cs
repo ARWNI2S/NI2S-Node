@@ -14,7 +14,7 @@ namespace ARWNI2S.Node.Services.Clustering
     {
         #region Fields
 
-        private readonly NodeSettings _nodeSettings;
+        private readonly ClusteringSettings _nodeSettings;
         private readonly IRepository<NodeMapping> _nodeMappingRepository;
         private readonly IStaticCacheManager _staticCacheManager;
         private readonly INodeContext _nodeContext;
@@ -23,7 +23,7 @@ namespace ARWNI2S.Node.Services.Clustering
 
         #region Ctor
 
-        public NodeMappingService(NodeSettings nodeSettings,
+        public NodeMappingService(ClusteringSettings nodeSettings,
             //NodeSettings nodeSettings,
             IRepository<NodeMapping> nodeMappingRepository,
             IStaticCacheManager staticCacheManager,

@@ -210,7 +210,7 @@ namespace ARWNI2S.Infrastructure.Collections.Tree
                 throw new ArgumentException("node is not a child of this");
 
             index.Reverse();
-            return index.ToArray();
+            return [.. index];
         }
 
         public int[] GetIndexPath()

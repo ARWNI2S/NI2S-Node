@@ -1,4 +1,6 @@
-﻿using System.Data;
+﻿using FluentMigrator.Builders.Create.Table;
+
+using System.Data;
 
 namespace ARWNI2S.Node.Data.Mapping.Builders.Common
 {

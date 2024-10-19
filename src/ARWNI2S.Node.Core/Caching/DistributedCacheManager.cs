@@ -1,4 +1,4 @@
-﻿using ARWNI2S.Infrastructure;
+﻿using ARWNI2S.Infrastructure.Collections;
 using ARWNI2S.Node.Core.Configuration;
 using Microsoft.Extensions.Caching.Distributed;
 using Newtonsoft.Json;
@@ -18,7 +18,8 @@ namespace ARWNI2S.Node.Core.Caching
         /// </summary>
         protected readonly ICacheKeyManager _localKeyManager;
         protected readonly IDistributedCache _distributedCache;
-        protected readonly ConcurrentTrie<object> _perRequestCache = new();
+        protected readonly IConcurrentCollection<object> _concurrentCollection;
+
 
         /// <summary>
         /// Holds ongoing acquisition tasks, used to avoid duplicating work
@@ -31,7 +32,8 @@ namespace ARWNI2S.Node.Core.Caching
 
         protected DistributedCacheManager(NI2SSettings nodeSettings,
             IDistributedCache distributedCache,
-            ICacheKeyManager cacheKeyManager)
+            ICacheKeyManager cacheKeyManager,
+            IConcurrentCollection<object> concurrentCollection)
             : base(nodeSettings)
         {
             _distributedCache = distributedCache;
@@ -48,7 +50,7 @@ namespace ARWNI2S.Node.Core.Caching
         /// <returns>A task that represents the asynchronous operation</returns>
         protected void ClearInstanceData()
         {
-            _perRequestCache.Clear();
+            _concurrentCollection.Clear();
             _localKeyManager.Clear();
         }
 
@@ -61,7 +63,7 @@ namespace ARWNI2S.Node.Core.Caching
         protected IEnumerable<string> RemoveByPrefixInstanceData(string prefix, params object[] prefixParameters)
         {
             var keyPrefix = PrepareKeyPrefix(prefix, prefixParameters);
-            _perRequestCache.Prune(keyPrefix, out _);
+            _concurrentCollection.Prune(keyPrefix, out _);
 
             return _localKeyManager.RemoveByPrefix(keyPrefix);
         }
@@ -87,7 +89,7 @@ namespace ARWNI2S.Node.Core.Caching
         /// <param name="value">Value for caching</param>
         protected void SetLocal(string key, object value)
         {
-            _perRequestCache.Add(key, value);
+            _concurrentCollection.Add(key, value);
             _localKeyManager.AddKey(key);
         }
 
@@ -97,7 +99,7 @@ namespace ARWNI2S.Node.Core.Caching
         /// <param name="key">Cache key</param>
         protected void RemoveLocal(string key)
         {
-            _perRequestCache.Remove(key);
+            _concurrentCollection.Remove(key);
             _localKeyManager.RemoveKey(key);
         }
 
@@ -158,7 +160,7 @@ namespace ARWNI2S.Node.Core.Caching
         /// </returns>
         public async Task<T> GetAsync<T>(CacheKey key, Func<Task<T>> acquire)
         {
-            if (_perRequestCache.TryGetValue(key.Key, out var data))
+            if (_concurrentCollection.TryGetValue(key.Key, out var data))
                 return (T)data;
 
             var lazy = _ongoing.GetOrAdd(key.Key, _ => new(async () => await acquire(), true));

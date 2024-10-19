@@ -56,6 +56,9 @@ namespace ARWNI2S.Node.Core.Configuration
         /// </summary>
         [JsonIgnore]
         public bool DataProtectionKeysEncryptWithVault => !string.IsNullOrEmpty(DataProtectionKeysVaultId);
+
+        /// <inheritdoc/>
+        public int GetOrder() => 2;
     }
 
     ///// <summary>

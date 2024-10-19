@@ -1,8 +1,9 @@
 ﻿using ARWNI2S.Infrastructure.Configuration;
 using ARWNI2S.Node.Core.Entities.Localization;
 using ARWNI2S.Node.Core.Entities;
-using ARWNI2S.Node.Services.Plugins;
 using System.Linq.Expressions;
+using ARWNI2S.Node.Core.Entities.Security;
+using ARWNI2S.Node.Core.Services.Plugins;
 
 namespace ARWNI2S.Node.Services.Localization
 {
@@ -224,31 +225,31 @@ namespace ARWNI2S.Node.Services.Localization
         /// </returns>
         Task<string> GetLocalizedEnumAsync<TEnum>(TEnum enumValue, int? languageId = null) where TEnum : struct;
 
-        ///// <summary>
-        ///// Get localized value of enum
-        ///// We don't have UI to manage permission localizable name. That's why we're using this method
-        ///// </summary>
-        ///// <param name="permissionRecord">Permission record</param>
-        ///// <param name="languageId">Language identifier; pass null to use the current working language</param>
-        ///// <returns>
-        ///// A task that represents the asynchronous operation
-        ///// The task result contains the localized value
-        ///// </returns>
-        //Task<string> GetLocalizedPermissionNameAsync(PermissionRecord permissionRecord, int? languageId = null);
+        /// <summary>
+        /// Get localized value of enum
+        /// We don't have UI to manage permission localizable name. That's why we're using this method
+        /// </summary>
+        /// <param name="permissionRecord">Permission record</param>
+        /// <param name="languageId">Language identifier; pass null to use the current working language</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation
+        /// The task result contains the localized value
+        /// </returns>
+        Task<string> GetLocalizedPermissionNameAsync(PermissionRecord permissionRecord, int? languageId = null);
 
-        ///// <summary>
-        ///// Save localized name of a permission
-        ///// </summary>
-        ///// <param name="permissionRecord">Permission record</param>
-        ///// <returns>A task that represents the asynchronous operation</returns>
-        //Task SaveLocalizedPermissionNameAsync(PermissionRecord permissionRecord);
+        /// <summary>
+        /// Save localized name of a permission
+        /// </summary>
+        /// <param name="permissionRecord">Permission record</param>
+        /// <returns>A task that represents the asynchronous operation</returns>
+        Task SaveLocalizedPermissionNameAsync(PermissionRecord permissionRecord);
 
-        ///// <summary>
-        ///// Delete a localized name of a permission
-        ///// </summary>
-        ///// <param name="permissionRecord">Permission record</param>
-        ///// <returns>A task that represents the asynchronous operation</returns>
-        //Task DeleteLocalizedPermissionNameAsync(PermissionRecord permissionRecord);
+        /// <summary>
+        /// Delete a localized name of a permission
+        /// </summary>
+        /// <param name="permissionRecord">Permission record</param>
+        /// <returns>A task that represents the asynchronous operation</returns>
+        Task DeleteLocalizedPermissionNameAsync(PermissionRecord permissionRecord);
 
         /// <summary>
         /// Add a locale resource (if new) or update an existing one

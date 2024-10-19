@@ -1,4 +1,14 @@
-﻿using FluentMigrator;
+﻿using ARWNI2S.Node.Core.Entities.Clustering;
+using ARWNI2S.Node.Core.Entities.Common;
+using ARWNI2S.Node.Core.Entities.Configuration;
+using ARWNI2S.Node.Core.Entities.Directory;
+using ARWNI2S.Node.Core.Entities.Localization;
+using ARWNI2S.Node.Core.Entities.Logging;
+using ARWNI2S.Node.Core.Entities.ScheduleTasks;
+using ARWNI2S.Node.Core.Entities.Security;
+using ARWNI2S.Node.Core.Entities.Users;
+using ARWNI2S.Node.Data.Extensions;
+using FluentMigrator;
 
 namespace ARWNI2S.Node.Data.Migrations.Installation
 {
@@ -14,85 +24,44 @@ namespace ARWNI2S.Node.Data.Migrations.Installation
         /// </summary>
         public override void Up()
         {
-            ////Servers
-            //Create.TableFor<NI2SNode>();
-            //Create.TableFor<ServerMapping>();
+            //Clustering
+            Create.TableFor<NI2SNode>();
+            Create.TableFor<NodeMapping>();
 
-            ////Directory
-            //Create.TableFor<Country>();
-            //Create.TableFor<Currency>();
-            //Create.TableFor<MeasureDimension>();
-            //Create.TableFor<MeasureWeight>();
-            //Create.TableFor<StateProvince>();
+            //Directory
+            Create.TableFor<Currency>();
+            Create.TableFor<MeasureDimension>();
+            Create.TableFor<MeasureWeight>();
 
-            ////Common
-            //Create.TableFor<Address>();
-            //Create.TableFor<AddressAttribute>();
-            //Create.TableFor<AddressAttributeValue>();
-            //Create.TableFor<GenericAttribute>();
-            //Create.TableFor<SearchTerm>();
+            //Common
+            Create.TableFor<GenericAttribute>();
 
-            ////Configuration
-            //Create.TableFor<Setting>();
+            //Configuration
+            Create.TableFor<Setting>();
 
-            ////Localization
-            //Create.TableFor<Language>();
-            //Create.TableFor<LocaleStringResource>();
-            //Create.TableFor<LocalizedProperty>();
+            //Localization
+            Create.TableFor<Language>();
+            Create.TableFor<LocaleStringResource>();
+            Create.TableFor<LocalizedProperty>();
 
-            ////Users
-            //Create.TableFor<User>();
-            //Create.TableFor<UserAttribute>();
-            //Create.TableFor<UserAttributeValue>();
-            //Create.TableFor<UserPassword>();
-            //Create.TableFor<UserAddressMapping>();
-            //Create.TableFor<UserRole>();
-            //Create.TableFor<UserUserRoleMapping>();
-            //Create.TableFor<ExternalAuthenticationRecord>();
+            //Users
+            Create.TableFor<User>();
+            Create.TableFor<UserPassword>();
+            Create.TableFor<UserRole>();
+            Create.TableFor<UserUserRoleMapping>();
 
-            ////Assets
-            //Create.TableFor<UnrealAsset>();
+            //Logging
+            Create.TableFor<ActivityLogType>();
+            Create.TableFor<ActivityLog>();
+            Create.TableFor<Log>();
 
-            ////Gameplay
+            //ScheduleTasks
+            Create.TableFor<ScheduleTask>();
 
-            ////Gameplay/Configuration
-            //Create.TableFor<GameplaySetting>();
-
-            ////Gameplay/Localization
-            //Create.TableFor<GameLanguage>();
-            //Create.TableFor<LocaleGameStringResource>();
-            //Create.TableFor<LocalizedGameplayProperty>();
-
-            ////Gdpr
-            //Create.TableFor<GdprConsent>();
-            //Create.TableFor<GdprLog>();
-
-            ////Logging
-            //Create.TableFor<ActivityLogType>();
-            //Create.TableFor<ActivityLog>();
-            //Create.TableFor<Log>();
-
-            ////Media
-            //Create.TableFor<Download>();
-            //Create.TableFor<Picture>();
-            //Create.TableFor<PictureBinary>();
-            //Create.TableFor<Video>();
-
-            ////Messages
-            //Create.TableFor<Campaign>();
-            //Create.TableFor<EmailAccount>();
-            //Create.TableFor<MessageTemplate>();
-            //Create.TableFor<NewsLetterSubscription>();
-            //Create.TableFor<QueuedEmail>();
-            //Create.TableFor<SystemMessage>();
-
-            ////ScheduleTasks
-            //Create.TableFor<ScheduleTask>();
-
-            ////Security
-            //Create.TableFor<AclRecord>();
-            //Create.TableFor<PermissionRecord>();
-            //Create.TableFor<PermissionRecordUserRoleMapping>();
+            //Security
+            Create.TableFor<AclRecord>();
+            Create.TableFor<PermissionRecord>();
+            Create.TableFor<PermissionRecordUserRoleMapping>();
         }
     }
 }

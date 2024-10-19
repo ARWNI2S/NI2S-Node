@@ -33,7 +33,7 @@ namespace ARWNI2S.Node.Core.Caching
         /// <returns>Cache key</returns>
         public virtual CacheKey Create(Func<object, object> createCacheKeyParameters, params object[] keyObjects)
         {
-            var cacheKey = new CacheKey(Key, Prefixes.ToArray());
+            var cacheKey = new CacheKey(Key, [.. Prefixes]);
 
             if (keyObjects.Length == 0)
                 return cacheKey;

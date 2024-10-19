@@ -457,77 +457,77 @@ namespace ARWNI2S.Node.Services.Users
 
         #endregion
 
-        //#region User passwords
+        #region User passwords
 
-        ///// <summary>
-        ///// Gets user passwords
-        ///// </summary>
-        ///// <param name="userId">User identifier; pass null to load all records</param>
-        ///// <param name="passwordFormat">Password format; pass null to load all records</param>
-        ///// <param name="passwordsToReturn">Number of returning passwords; pass null to load all records</param>
-        ///// <returns>
-        ///// A task that represents the asynchronous operation
-        ///// The task result contains the list of user passwords
-        ///// </returns>
-        //Task<IList<UserPassword>> GetUserPasswordsAsync(int? userId = null,
-        //    PasswordFormat? passwordFormat = null, int? passwordsToReturn = null);
+        /// <summary>
+        /// Gets user passwords
+        /// </summary>
+        /// <param name="userId">User identifier; pass null to load all records</param>
+        /// <param name="passwordFormat">Password format; pass null to load all records</param>
+        /// <param name="passwordsToReturn">Number of returning passwords; pass null to load all records</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation
+        /// The task result contains the list of user passwords
+        /// </returns>
+        Task<IList<UserPassword>> GetUserPasswordsAsync(int? userId = null,
+            PasswordFormat? passwordFormat = null, int? passwordsToReturn = null);
 
-        ///// <summary>
-        ///// Get current user password
-        ///// </summary>
-        ///// <param name="userId">User identifier</param>
-        ///// <returns>
-        ///// A task that represents the asynchronous operation
-        ///// The task result contains the user password
-        ///// </returns>
-        //Task<UserPassword> GetCurrentPasswordAsync(int userId);
+        /// <summary>
+        /// Get current user password
+        /// </summary>
+        /// <param name="userId">User identifier</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation
+        /// The task result contains the user password
+        /// </returns>
+        Task<UserPassword> GetCurrentPasswordAsync(int userId);
 
-        ///// <summary>
-        ///// Insert a user password
-        ///// </summary>
-        ///// <param name="userPassword">User password</param>
-        ///// <returns>A task that represents the asynchronous operation</returns>
-        //Task InsertUserPasswordAsync(UserPassword userPassword);
+        /// <summary>
+        /// Insert a user password
+        /// </summary>
+        /// <param name="userPassword">User password</param>
+        /// <returns>A task that represents the asynchronous operation</returns>
+        Task InsertUserPasswordAsync(UserPassword userPassword);
 
-        ///// <summary>
-        ///// Update a user password
-        ///// </summary>
-        ///// <param name="userPassword">User password</param>
-        ///// <returns>A task that represents the asynchronous operation</returns>
-        //Task UpdateUserPasswordAsync(UserPassword userPassword);
+        /// <summary>
+        /// Update a user password
+        /// </summary>
+        /// <param name="userPassword">User password</param>
+        /// <returns>A task that represents the asynchronous operation</returns>
+        Task UpdateUserPasswordAsync(UserPassword userPassword);
 
-        ///// <summary>
-        ///// Check whether password recovery token is valid
-        ///// </summary>
-        ///// <param name="user">User</param>
-        ///// <param name="token">Token to validate</param>
-        ///// <returns>
-        ///// A task that represents the asynchronous operation
-        ///// The task result contains the result
-        ///// </returns>
-        //Task<bool> IsPasswordRecoveryTokenValidAsync(User user, string token);
+        /// <summary>
+        /// Check whether password recovery token is valid
+        /// </summary>
+        /// <param name="user">User</param>
+        /// <param name="token">Token to validate</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation
+        /// The task result contains the result
+        /// </returns>
+        Task<bool> IsPasswordRecoveryTokenValidAsync(User user, string token);
 
-        ///// <summary>
-        ///// Check whether password recovery link is expired
-        ///// </summary>
-        ///// <param name="user">User</param>
-        ///// <returns>
-        ///// A task that represents the asynchronous operation
-        ///// The task result contains the result
-        ///// </returns>
-        //Task<bool> IsPasswordRecoveryLinkExpiredAsync(User user);
+        /// <summary>
+        /// Check whether password recovery link is expired
+        /// </summary>
+        /// <param name="user">User</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation
+        /// The task result contains the result
+        /// </returns>
+        Task<bool> IsPasswordRecoveryLinkExpiredAsync(User user);
 
-        ///// <summary>
-        ///// Check whether user password is expired 
-        ///// </summary>
-        ///// <param name="user">User</param>
-        ///// <returns>
-        ///// A task that represents the asynchronous operation
-        ///// The task result contains the rue if password is expired; otherwise false
-        ///// </returns>
-        //Task<bool> IsPasswordExpiredAsync(User user);
+        /// <summary>
+        /// Check whether user password is expired 
+        /// </summary>
+        /// <param name="user">User</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation
+        /// The task result contains the rue if password is expired; otherwise false
+        /// </returns>
+        Task<bool> IsPasswordExpiredAsync(User user);
 
-        //#endregion
+        #endregion
 
         //#region User address mapping
 

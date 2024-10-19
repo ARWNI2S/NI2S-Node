@@ -1,4 +1,6 @@
-﻿namespace ARWNI2S.Node.Data.Mapping.Builders.Common
+﻿using FluentMigrator.Builders.Create.Table;
+
+namespace ARWNI2S.Node.Data.Mapping.Builders.Common
 {
     /// <summary>
     /// Represents a address attribute entity builder

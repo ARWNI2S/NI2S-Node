@@ -116,7 +116,7 @@ namespace ARWNI2S.Node.Data
                 fileProvider.DeleteFile(filePath_json);
                 fileProvider.DeleteFile(filePath_txt);
 
-                NI2SSettingsHelper.SaveNodeSettings([dataSettings], fileProvider);
+                NI2SSettingsHelper.SaveNI2SSettings([dataSettings], fileProvider);
                 Singleton<DataConfig>.Instance = dataSettings;
             }
             else
@@ -134,7 +134,7 @@ namespace ARWNI2S.Node.Data
         /// <param name="fileProvider">File provider</param>
         public static void SaveSettings(DataConfig dataSettings, IEngineFileProvider fileProvider)
         {
-            NI2SSettingsHelper.SaveNodeSettings([dataSettings], fileProvider);
+            NI2SSettingsHelper.SaveNI2SSettings([dataSettings], fileProvider);
             LoadSettings(fileProvider, reload: true);
         }
 

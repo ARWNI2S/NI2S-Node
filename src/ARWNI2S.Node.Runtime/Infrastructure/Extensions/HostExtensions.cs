@@ -2,6 +2,7 @@
 using ARWNI2S.Node.Core.Infrastructure;
 using ARWNI2S.Node.Data;
 using ARWNI2S.Node.Data.Migrations;
+using ARWNI2S.Node.Services.Installation;
 using ARWNI2S.Node.Services.Logging;
 using ARWNI2S.Node.Services.Plugins;
 using ARWNI2S.Node.Services.ScheduleTasks;
@@ -29,6 +30,11 @@ namespace ARWNI2S.Node.Runtime.Infrastructure.Extensions
         public static async Task StartEngineAsync(this IHost _)
         {
             var engine = EngineContext.Current;
+
+            if (!DataSettingsManager.IsDatabaseInstalled())
+            {
+                await engine.Resolve<IDatabaseInstaller>().InstallDatabaseAsync();
+            }
 
             //further actions are performed only when the database is installed
             if (DataSettingsManager.IsDatabaseInstalled())
@@ -151,7 +157,6 @@ namespace ARWNI2S.Node.Runtime.Infrastructure.Extensions
 
         public static void UseNI2SClustering(this IHost application)
         {
-
         }
     }
 }

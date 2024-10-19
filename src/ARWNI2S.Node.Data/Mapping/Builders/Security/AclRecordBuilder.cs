@@ -1,4 +1,9 @@
-﻿namespace ARWNI2S.Node.Data.Mapping.Builders.Security
+﻿using ARWNI2S.Node.Core.Entities.Security;
+using ARWNI2S.Node.Core.Entities.Users;
+using ARWNI2S.Node.Data.Extensions;
+using FluentMigrator.Builders.Create.Table;
+
+namespace ARWNI2S.Node.Data.Mapping.Builders.Security
 {
     /// <summary>
     /// Represents a ACL record entity builder

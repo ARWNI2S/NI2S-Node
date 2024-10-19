@@ -1,21 +1,22 @@
-﻿using ARWNI2S.Node.Core.Entities.Clustering;
+﻿using ARWNI2S.Node.Core.Configuration;
+using ARWNI2S.Node.Core.Entities.Clustering;
 using ARWNI2S.Node.Services.Clustering;
 
 namespace ARWNI2S.Node.Runtime.Clustering
 {
     public sealed class ClusterManager
     {
-        private readonly NodeSettings _nodeSettings;
+        //private readonly NodeSettings _nodeSettings;
         private readonly LocalNodeContext _nodeContext;
         private readonly IClusteringService _clusteringService;
         private readonly INodeMappingService _nodeMappingService;
 
-        public ClusterManager(NodeSettings nodeSettings,
+        public ClusterManager(NI2SSettings nodeSettings,
             LocalNodeContext nodeContext,
             IClusteringService clusteringService,
             INodeMappingService nodeMappingService)
         {
-            _nodeSettings = nodeSettings;
+            //_nodeSettings = nodeSettings;
             _nodeContext = nodeContext;
             _clusteringService = clusteringService;
             _nodeMappingService = nodeMappingService;

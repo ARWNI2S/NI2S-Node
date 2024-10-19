@@ -1,4 +1,5 @@
 ﻿using ARWNI2S.Infrastructure;
+using ARWNI2S.Infrastructure.Collections;
 using ARWNI2S.Infrastructure.Configuration;
 using ARWNI2S.Node.Core;
 using ARWNI2S.Node.Core.Caching;
@@ -7,15 +8,19 @@ using ARWNI2S.Node.Core.Events;
 using ARWNI2S.Node.Core.Infrastructure;
 using ARWNI2S.Node.Core.Services.Helpers;
 using ARWNI2S.Node.Data;
+using ARWNI2S.Node.Runtime.Services.Installation;
 using ARWNI2S.Node.Services.Caching;
+using ARWNI2S.Node.Services.Clustering;
 using ARWNI2S.Node.Services.Common;
 using ARWNI2S.Node.Services.Configuration;
 using ARWNI2S.Node.Services.Directory;
 using ARWNI2S.Node.Services.Events;
+using ARWNI2S.Node.Services.Installation;
 using ARWNI2S.Node.Services.Localization;
 using ARWNI2S.Node.Services.Logging;
 using ARWNI2S.Node.Services.Plugins;
 using ARWNI2S.Node.Services.ScheduleTasks;
+using ARWNI2S.Node.Services.Security;
 using ARWNI2S.Node.Services.Users;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -48,7 +53,10 @@ namespace ARWNI2S.Node.Runtime.Infrastructure
             var ni2sSettings = Singleton<NI2SSettings>.Instance;
             var distributedCacheConfig = ni2sSettings.Get<DistributedCacheConfig>();
 
+            services.AddTransient(typeof(IConcurrentCollection<>), typeof(ConcurrentTrie<>));
+
             services.AddSingleton<ICacheKeyManager, CacheKeyManager>();
+            services.AddScoped<IShortTermCacheManager, PerRequestCacheManager>();
 
             if (distributedCacheConfig.Enabled)
             {
@@ -56,18 +64,22 @@ namespace ARWNI2S.Node.Runtime.Infrastructure
                 {
                     case DistributedCacheType.Memory:
                         services.AddScoped<IStaticCacheManager, MemoryDistributedCacheManager>();
+                        services.AddScoped<ICacheKeyService, MemoryDistributedCacheManager>();
                         break;
                     case DistributedCacheType.SqlServer:
                         services.AddScoped<IStaticCacheManager, MsSqlServerCacheManager>();
+                        services.AddScoped<ICacheKeyService, MsSqlServerCacheManager>();
                         break;
                     case DistributedCacheType.Redis:
                         services.AddSingleton<IRedisConnectionWrapper, RedisConnectionWrapper>();
                         services.AddScoped<IStaticCacheManager, RedisCacheManager>();
+                        services.AddScoped<ICacheKeyService, RedisCacheManager>();
                         break;
                     case DistributedCacheType.RedisSynchronizedMemory:
                         services.AddSingleton<IRedisConnectionWrapper, RedisConnectionWrapper>();
                         services.AddSingleton<ISynchronizedMemoryCache, RedisSynchronizedMemoryCache>();
                         services.AddSingleton<IStaticCacheManager, SynchronizedMemoryCacheManager>();
+                        services.AddScoped<ICacheKeyService, SynchronizedMemoryCacheManager>();
                         break;
                 }
 
@@ -77,6 +89,7 @@ namespace ARWNI2S.Node.Runtime.Infrastructure
             {
                 services.AddSingleton<ILocker, MemoryCacheLocker>();
                 services.AddSingleton<IStaticCacheManager, MemoryCacheManager>();
+                services.AddScoped<ICacheKeyService, MemoryCacheManager>();
             }
 
             //work context
@@ -87,12 +100,18 @@ namespace ARWNI2S.Node.Runtime.Infrastructure
 
             //services
             services.AddScoped<IGenericAttributeService, GenericAttributeService>();
+            //services.AddScoped<IMaintenanceService, MaintenanceService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IPermissionService, PermissionService>();
+            services.AddScoped<IAclService, AclService>();
             services.AddScoped<ICurrencyService, CurrencyService>();
             services.AddScoped<IMeasureService, MeasureService>();
+            services.AddScoped<IClusteringService, ClusteringService>();
+            services.AddScoped<INodeMappingService, NodeMappingService>();
             services.AddScoped<ILocalizationService, LocalizationService>();
             services.AddScoped<ILocalizedEntityService, LocalizedEntityService>();
             services.AddScoped<ILanguageService, LanguageService>();
+            services.AddScoped<IEncryptionService, EncryptionService>();
             services.AddScoped<ILogService, DefaultLogger>();
             services.AddScoped<IUserActivityService, UserActivityService>();
             services.AddScoped<IDateTimeHelper, DateTimeHelper>();
@@ -104,14 +123,10 @@ namespace ARWNI2S.Node.Runtime.Infrastructure
             //module managers
             services.AddScoped(typeof(IModuleManager<>), typeof(ModuleManager<>));
             //services.AddScoped<IAuthenticationModuleManager, AuthenticationModuleManager>();
-            //services.AddScoped<IBlockchainRpcApiModuleManager, BlockchainRpcApiModuleManager>();
-            //services.AddScoped<IMetaverseModuleManager, MetaverseModuleManager>();
             //services.AddScoped<IMultiFactorAuthenticationModuleManager, MultiFactorAuthenticationModuleManager>();
-            //services.AddScoped<IWalletExtensionModuleManager, WalletExtensionModuleManager>();
             //services.AddScoped<IWidgetModuleManager, WidgetModuleManager>();
             //services.AddScoped<IExchangeRateModuleManager, ExchangeRateModuleManager>();
             //services.AddScoped<ITaxModuleManager, TaxModuleManager>();
-            //services.AddScoped<ITournamentModuleManager, TournamentModuleManager>();
 
             //services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
 
@@ -130,6 +145,12 @@ namespace ARWNI2S.Node.Runtime.Infrastructure
                     return serviceProvider.GetRequiredService<ISettingService>().LoadSettingAsync(setting, nodeId).Result;
                 });
             }
+
+            //installation service      
+            services.AddScoped<IInstallationService, InstallationService>();
+
+            if (!DataSettingsManager.IsDatabaseInstalled() && Environment.UserInteractive)
+                services.AddScoped<IDatabaseInstaller, ConsoleDatabaseInstaller>();
 
             //schedule tasks
             services.AddSingleton<ITaskScheduler, Node.Services.ScheduleTasks.TaskScheduler>();

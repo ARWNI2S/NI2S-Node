@@ -95,6 +95,20 @@ namespace ARWNI2S.Infrastructure
             return random.Next(min, max);
         }
 
+        /// <summary>
+        /// Generate random digit code
+        /// </summary>
+        /// <returns>Result string</returns>
+        public static string GenerateRandomGuidString()
+        {
+            const string chars = "ABCDEF0123456789";
+            using var random = new SecureRandomNumberGenerator();
+            var str = string.Empty;
+            for (var i = 0; i < 32; i++)
+                str = string.Concat(str, chars[random.Next(chars.Length)].ToString());
+            return str;
+        }
+
         public static string GenerateShortPublicAddress(string publicAddress)
         {
             var addr = publicAddress.StartsWith("0x") ? publicAddress.Remove(0, 2) : publicAddress; //romove 0x

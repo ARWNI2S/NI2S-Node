@@ -1,4 +1,7 @@
-﻿namespace ARWNI2S.Node.Data.Mapping.Builders.Logging
+﻿using ARWNI2S.Node.Core.Entities.Logging;
+using FluentMigrator.Builders.Create.Table;
+
+namespace ARWNI2S.Node.Data.Mapping.Builders.Logging
 {
     /// <summary>
     /// Represents an activity log type entity builder

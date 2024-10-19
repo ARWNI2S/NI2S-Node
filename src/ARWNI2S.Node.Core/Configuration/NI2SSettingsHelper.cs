@@ -8,7 +8,7 @@ using System.Text;
 namespace ARWNI2S.Node.Core.Configuration
 {
     /// <summary>
-    /// Represents the node settings helper
+    /// Represents the ni2s settings helper
     /// </summary>
     public partial class NI2SSettingsHelper
     {
@@ -21,22 +21,22 @@ namespace ARWNI2S.Node.Core.Configuration
         #region Methods
 
         /// <summary>
-        /// Create node settings with the passed configurations and save it to the file
+        /// Create ni2s settings with the passed configurations and save it to the file
         /// </summary>
         /// <param name="configurations">Configurations to save</param>
         /// <param name="fileProvider">File provider</param>
-        /// <param name="overwrite">Whether to overwrite nodesettings file</param>
+        /// <param name="overwrite">Whether to overwrite ni2ssettings file</param>
         /// <returns>Node settings</returns>
-        public static NI2SSettings SaveNodeSettings(IList<IConfig> configurations, IEngineFileProvider fileProvider, bool overwrite = true)
+        public static NI2SSettings SaveNI2SSettings(IList<IConfig> configurations, IEngineFileProvider fileProvider, bool overwrite = true)
         {
             ArgumentNullException.ThrowIfNull(configurations);
 
             _configurationOrder ??= configurations.ToDictionary(config => config.Name, config => config.GetOrder());
 
-            //create node settings
-            var nodeSettings = Singleton<NI2SSettings>.Instance ?? new NI2SSettings();
-            nodeSettings.Update(configurations);
-            Singleton<NI2SSettings>.Instance = nodeSettings;
+            //create ni2s settings
+            var ni2sSettings = Singleton<NI2SSettings>.Instance ?? new NI2SSettings();
+            ni2sSettings.Update(configurations);
+            Singleton<NI2SSettings>.Instance = ni2sSettings;
 
             //create file if not exists
             var filePath = fileProvider.MapPath(ConfigurationDefaults.NodeSettingsFilePath);
@@ -53,21 +53,21 @@ namespace ARWNI2S.Node.Core.Configuration
             }
 
             //sort configurations for display by order (e.g. data configuration with 0 will be the first)
-            nodeSettings.Configuration = configuration
+            ni2sSettings.Configuration = configuration
                 .SelectMany(outConfig => _configurationOrder.Where(inConfig => inConfig.Key == outConfig.Key).DefaultIfEmpty(),
                     (outConfig, inConfig) => new { OutConfig = outConfig, InConfig = inConfig })
                 .OrderBy(config => config.InConfig.Value)
                 .Select(config => config.OutConfig)
                 .ToDictionary(config => config.Key, config => config.Value);
 
-            //save node settings to the file
+            //save ni2s settings to the file
             if (!fileExists || overwrite)
             {
-                var text = JsonConvert.SerializeObject(nodeSettings, Formatting.Indented);//, new JsonSerializerSettings { ContractResolver = new SecretContractResolver() });
+                var text = JsonConvert.SerializeObject(ni2sSettings, Formatting.Indented);//, new JsonSerializerSettings { ContractResolver = new SecretContractResolver() });
                 fileProvider.WriteAllText(filePath, text, Encoding.UTF8);
             }
 
-            return nodeSettings;
+            return ni2sSettings;
         }
 
         #endregion

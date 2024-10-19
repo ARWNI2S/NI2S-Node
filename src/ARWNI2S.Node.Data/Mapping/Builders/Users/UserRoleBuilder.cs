@@ -1,4 +1,7 @@
-﻿namespace ARWNI2S.Node.Data.Mapping.Builders.Users
+﻿using ARWNI2S.Node.Core.Entities.Users;
+using FluentMigrator.Builders.Create.Table;
+
+namespace ARWNI2S.Node.Data.Mapping.Builders.Users
 {
     /// <summary>
     /// Represents a user role entity builder

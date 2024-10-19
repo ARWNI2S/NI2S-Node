@@ -5,6 +5,7 @@ using ARWNI2S.Node.Core.Caching;
 using ARWNI2S.Node.Core.Configuration;
 using ARWNI2S.Node.Core.Infrastructure;
 using ARWNI2S.Node.Core.Runtime;
+using ARWNI2S.Node.Data;
 using ARWNI2S.Node.Runtime.Clustering;
 using ARWNI2S.Node.Runtime.Data;
 using ARWNI2S.Node.Services.Clustering;
@@ -13,9 +14,15 @@ using Azure.Data.Tables;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using Orleans.Configuration;
+using StackExchange.Profiling.Internal;
+using StackExchange.Profiling;
 using StackExchange.Redis;
 using System.Net;
+using StackExchange.Profiling.Storage;
+using ARWNI2S.Node.Services.Security;
+using ARWNI2S.Node.Runtime.Profiling;
 
 namespace ARWNI2S.Node.Runtime.Infrastructure.Extensions
 {
@@ -55,7 +62,7 @@ namespace ARWNI2S.Node.Runtime.Infrastructure.Extensions
 
             //TODO: READ SECRETS FROM KEYVAULT use SecretAttribute decorated properties
 
-            var nodeSettings = NI2SSettingsHelper.SaveNodeSettings(configurations, CommonHelper.DefaultFileProvider, false);
+            var nodeSettings = NI2SSettingsHelper.SaveNI2SSettings(configurations, CommonHelper.DefaultFileProvider, false);
             services.AddSingleton(nodeSettings);
         }
 
@@ -70,10 +77,13 @@ namespace ARWNI2S.Node.Runtime.Infrastructure.Extensions
             //add accessor to Context
             services.AddContextAccessor();
 
+            //add core services
+            var ni2sCoreBuilder = services.AddNI2SCore();
+
             //initialize modules
             var moduleConfig = new ModuleConfig();
             context.Configuration.GetSection(nameof(ModuleConfig)).Bind(moduleConfig, options => options.BindNonPublicProperties = true);
-            NodeModuleManager.InitializeModules(moduleConfig);
+            ni2sCoreBuilder.ModuleManager.InitializeModules(moduleConfig);
 
             //create engine and configure service provider
             var engine = EngineContext.Create();
@@ -135,12 +145,14 @@ namespace ARWNI2S.Node.Runtime.Infrastructure.Extensions
         public static void AddNI2SFrontline(this IServiceCollection services)
         {
             var ni2sSettings = Singleton<NI2SSettings>.Instance;
-            var clusterConfig = ni2sSettings.Get<ClusterConfig>();
+            var nodeConfig = ni2sSettings.Get<NodeConfig>();
 
             // notice: Orleans Silo Nodes will throw exception if UseFrontline enabled.
             // frontline services enables orleans client access, disable if no realtime simulation data is needed.
-            if (clusterConfig.UseFrontline)
+            if (nodeConfig.NodeType == NodeType.Frontline)
             {
+                var clusterConfig = ni2sSettings.Get<ClusterConfig>();
+
                 services.AddOrleansClient(client =>
                 {
                     client = client.Configure<ClusterOptions>(options =>
@@ -180,6 +192,16 @@ namespace ARWNI2S.Node.Runtime.Infrastructure.Extensions
                                     });
                                     break;
                                 }
+                            case SimulationClusteringType.SqlServer:
+                                {
+                                    if (string.IsNullOrEmpty(clusterConfig.ConnectionString))
+                                        throw new NodeException("Unable to configure SqlServer storage clustering: missing connection string.");
+                                    client = client.UseAdoNetClustering(options => {
+                                        options.Invariant = Constants.INVARIANT_NAME_SQL_SERVER;
+                                        options.ConnectionString = clusterConfig.ConnectionString;
+                                    });
+                                    break;
+                                }
                             case SimulationClusteringType.Localhost:
                             default:
                                 {
@@ -204,6 +226,53 @@ namespace ARWNI2S.Node.Runtime.Infrastructure.Extensions
 
             services.AddSingleton<ClusterManager>();
         }
+
+        /// <summary>
+        /// Add and configure MiniProfiler service
+        /// </summary>
+        /// <param name="services">Collection of service descriptors</param>
+        public static void AddNI2SMiniProfiler(this IServiceCollection services)
+        {
+            //whether database is already installed
+            if (!DataSettingsManager.IsDatabaseInstalled())
+                return;
+
+            var nodeSettings = Singleton<NI2SSettings>.Instance;
+            if (nodeSettings.Get<CommonConfig>().MiniProfilerEnabled)
+            {
+                services.AddMiniProfiler(miniProfilerOptions =>
+                {
+                    //use memory cache provider for storing each result
+                    ((MemoryCacheStorage)miniProfilerOptions.Storage).CacheDuration = TimeSpan.FromMinutes(nodeSettings.Get<CacheConfig>().DefaultCacheTime);
+
+                    //determine who can access the MiniProfiler results
+                    miniProfilerOptions.ResultsAuthorize = request => EngineContext.Current.Resolve<IPermissionService>().AuthorizeAsync(StandardPermissionProvider.AccessProfiling).Result;
+                });
+            }
+        }
+
+        /// <summary>
+        /// Adds MiniProfiler timings for actions and views.
+        /// </summary>
+        /// <param name="services">The services collection to configure.</param>
+        /// <param name="configureOptions">An <see cref="Action{MiniProfilerOptions}"/> to configure options for MiniProfiler.</param>
+        private static IMiniProfilerBuilder AddMiniProfiler(this IServiceCollection services, Action<MiniProfilerOptions> configureOptions = null)
+        {
+            services.AddMemoryCache(); // Unconditionally register an IMemoryCache since it's the most common and default case
+            services.AddSingleton<IConfigureOptions<MiniProfilerOptions>, MiniProfilerOptionsDefaults>();
+            if (configureOptions != null)
+            {
+                services.Configure(configureOptions);
+            }
+            // Set background statics
+            services.Configure<MiniProfilerOptions>(o => MiniProfiler.Configure(o));
+            services.AddSingleton<DiagnosticInitializer>(); // For any IMiniProfilerDiagnosticListener registration
+
+            services.AddSingleton<IMiniProfilerDiagnosticListener, MiniProfilerDiagnosticListener>(); // For view and action profiling
+
+            return new MiniProfilerBuilder(services);
+        }
+
     }
 
 
@@ -376,30 +445,6 @@ namespace ARWNI2S.Node.Runtime.Infrastructure.Extensions
     //{
     //    //we use custom redirect executor as a workaround to allow using non-ASCII characters in redirect URLs
     //    services.AddScoped<IActionResultExecutor<RedirectResult>, NodeRedirectResultExecutor>();
-    //}
-
-    ///// <summary>
-    ///// Add and configure MiniProfiler service
-    ///// </summary>
-    ///// <param name="services">Collection of service descriptors</param>
-    //public static void AddNodeMiniProfiler(this IServiceCollection services)
-    //{
-    //    //whether database is already installed
-    //    if (!DataSettingsManager.IsDatabaseInstalled())
-    //        return;
-
-    //    var nodeSettings = Singleton<NodeSettings>.Instance;
-    //    if (nodeSettings.Get<CommonConfig>().MiniProfilerEnabled)
-    //    {
-    //        services.AddMiniProfiler(miniProfilerOptions =>
-    //        {
-    //            //use memory cache provider for storing each result
-    //            ((MemoryCacheStorage)miniProfilerOptions.Storage).CacheDuration = TimeSpan.FromMinutes(nodeSettings.Get<CacheConfig>().DefaultCacheTime);
-
-    //            //determine who can access the MiniProfiler results
-    //            miniProfilerOptions.ResultsAuthorize = request => EngineContext.Current.Resolve<IPermissionService>().AuthorizeAsync(StandardPermissionProvider.AccessProfiling).Result;
-    //        });
-    //    }
     //}
 
     ///// <summary>

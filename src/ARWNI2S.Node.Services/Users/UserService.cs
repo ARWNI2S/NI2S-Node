@@ -8,6 +8,7 @@ using ARWNI2S.Node.Data;
 using ARWNI2S.Node.Core.Entities.Clustering;
 using ARWNI2S.Node.Data.Extensions;
 using ARWNI2S.Node.Services.Localization;
+using ARWNI2S.Node.Services.Common;
 
 namespace ARWNI2S.Node.Services.Users
 {
@@ -18,22 +19,23 @@ namespace ARWNI2S.Node.Services.Users
     {
         #region Fields
 
-        private readonly UserSettings _userSettings;
-        //private readonly IGenericAttributeService _genericAttributeService;
-        private readonly INI2SDataProvider _dataProvider;
-        //private readonly IRepository<Address> _userAddressRepository;
-        //private readonly IRepository<BlogComment> _blogCommentRepository;
-        private readonly IRepository<User> _userRepository;
-        //private readonly IRepository<UserAddressMapping> _userAddressMappingRepository;
-        private readonly IRepository<UserUserRoleMapping> _userUserRoleMappingRepository;
-        //private readonly IRepository<UserPassword> _userPasswordRepository;
-        private readonly IRepository<UserRole> _userRoleRepository;
-        //private readonly IRepository<GenericAttribute> _gaRepository;
-        //private readonly IRepository<CryptoAddress> _cryptoAddressRepository;
-        //private readonly IRepository<NewsComment> _newsCommentRepository;
-        //private readonly IRepository<PollVotingRecord> _pollVotingRecordRepository;
-        private readonly IStaticCacheManager _staticCacheManager;
-        private readonly INodeContext _nodeContext;
+        protected readonly UserSettings _userSettings;
+        protected readonly IGenericAttributeService _genericAttributeService;
+        protected readonly INI2SDataProvider _dataProvider;
+        //protected readonly IRepository<Address> _userAddressRepository;
+        //protected readonly IRepository<BlogComment> _blogCommentRepository;
+        protected readonly IRepository<User> _userRepository;
+        //protected readonly IRepository<UserAddressMapping> _userAddressMappingRepository;
+        protected readonly IRepository<UserUserRoleMapping> _userUserRoleMappingRepository;
+        protected readonly IRepository<UserPassword> _userPasswordRepository;
+        protected readonly IRepository<UserRole> _userRoleRepository;
+        //protected readonly IRepository<GenericAttribute> _gaRepository;
+        //protected readonly IRepository<CryptoAddress> _cryptoAddressRepository;
+        //protected readonly IRepository<NewsComment> _newsCommentRepository;
+        //protected readonly IRepository<PollVotingRecord> _pollVotingRecordRepository;
+        protected readonly IShortTermCacheManager _shortTermCacheManager;
+        protected readonly IStaticCacheManager _staticCacheManager;
+        protected readonly INodeContext _nodeContext;
 
         #endregion
 
@@ -41,25 +43,26 @@ namespace ARWNI2S.Node.Services.Users
 
         public UserService(
             UserSettings userSettings,
-            //IGenericAttributeService genericAttributeService,
+            IGenericAttributeService genericAttributeService,
             INI2SDataProvider dataProvider,
             //IRepository<Address> userAddressRepository,
             //IRepository<BlogComment> blogCommentRepository,
             IRepository<User> userRepository,
             //IRepository<UserAddressMapping> userAddressMappingRepository,
             IRepository<UserUserRoleMapping> userUserRoleMappingRepository,
-            //IRepository<UserPassword> userPasswordRepository,
+            IRepository<UserPassword> userPasswordRepository,
             IRepository<UserRole> userRoleRepository,
             //IRepository<GenericAttribute> gaRepository,
             //IRepository<CryptoAddress> cryptoAddressRepository,
             //IRepository<NewsComment> newsCommentRepository,
             //IRepository<PollVotingRecord> pollVotingRecordRepository,
+            IShortTermCacheManager shortTermCacheManager,
             IStaticCacheManager staticCacheManager,
             INodeContext nodeContext
             )
         {
             _userSettings = userSettings;
-            //_genericAttributeService = genericAttributeService;
+            _genericAttributeService = genericAttributeService;
             _dataProvider = dataProvider;
             //_userAddressRepository = userAddressRepository;
             //_blogCommentRepository = blogCommentRepository;
@@ -72,8 +75,26 @@ namespace ARWNI2S.Node.Services.Users
             //_cryptoAddressRepository = cryptoAddressRepository;
             //_newsCommentRepository = newsCommentRepository;
             //_pollVotingRecordRepository = pollVotingRecordRepository;
+            _shortTermCacheManager = shortTermCacheManager;
             _staticCacheManager = staticCacheManager;
             _nodeContext = nodeContext;
+        }
+
+        #endregion
+
+        #region Utilities
+
+        /// <summary>
+        /// Gets a dictionary of all user roles mapped by ID.
+        /// </summary>
+        /// <returns>
+        /// A task that represents the asynchronous operation and contains a dictionary of all user roles mapped by ID.
+        /// </returns>
+        protected virtual async Task<IDictionary<int, UserRole>> GetAllUserRolesDictionaryAsync()
+        {
+            return await _staticCacheManager.GetAsync(
+                _staticCacheManager.PrepareKeyForDefaultCache(EntityCacheDefaults<UserRole>.AllCacheKey),
+                async () => await _userRoleRepository.Table.ToDictionaryAsync(cr => cr.Id));
         }
 
         #endregion
@@ -318,8 +339,7 @@ namespace ARWNI2S.Node.Services.Users
         /// </returns>
         public virtual async Task<User> GetUserByIdAsync(int userId)
         {
-            return await _userRepository.GetByIdAsync(userId,
-                cache => cache.PrepareKeyForShortTermCache(EntityCacheDefaults<User>.ByIdCacheKey, userId));
+            return await _userRepository.GetByIdAsync(userId, cache => default, useShortTermCache: true);
         }
 
         /// <summary>
@@ -936,14 +956,14 @@ namespace ARWNI2S.Node.Services.Users
         {
             ArgumentNullException.ThrowIfNull(user);
 
-            return await _userRoleRepository.GetAllAsync(query =>
-            {
-                return from cr in query
-                       join crm in _userUserRoleMappingRepository.Table on cr.Id equals crm.UserRoleId
-                       where crm.UserId == user.Id &&
-                             (showHidden || cr.Active)
-                       select cr;
-            }, cache => cache.PrepareKeyForShortTermCache(UserServicesDefaults.UserRolesCacheKey, user, showHidden));
+            var allRolesById = await GetAllUserRolesDictionaryAsync();
+
+            var mappings = await _shortTermCacheManager.GetAsync(
+                async () => await _userUserRoleMappingRepository.GetAllAsync(query => query.Where(crm => crm.UserId == user.Id)), UserServicesDefaults.UserRolesCacheKey, user);
+
+            return mappings.Select(mapping => allRolesById.TryGetValue(mapping.UserRoleId, out var role) ? role : null)
+                .Where(cr => cr != null && (showHidden || cr.Active))
+                .ToList();
 
         }
 
@@ -1098,165 +1118,165 @@ namespace ARWNI2S.Node.Services.Users
 
         #endregion
 
-        //#region User passwords
+        #region User passwords
 
-        ///// <summary>
-        ///// Gets user passwords
-        ///// </summary>
-        ///// <param name="userId">User identifier; pass null to load all records</param>
-        ///// <param name="passwordFormat">Password format; pass null to load all records</param>
-        ///// <param name="passwordsToReturn">Number of returning passwords; pass null to load all records</param>
-        ///// <returns>
-        ///// A task that represents the asynchronous operation
-        ///// The task result contains the list of user passwords
-        ///// </returns>
-        //public virtual async Task<IList<UserPassword>> GetUserPasswordsAsync(int? userId = null,
-        //    PasswordFormat? passwordFormat = null, int? passwordsToReturn = null)
-        //{
-        //    var query = _userPasswordRepository.Table;
+        /// <summary>
+        /// Gets user passwords
+        /// </summary>
+        /// <param name="userId">User identifier; pass null to load all records</param>
+        /// <param name="passwordFormat">Password format; pass null to load all records</param>
+        /// <param name="passwordsToReturn">Number of returning passwords; pass null to load all records</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation
+        /// The task result contains the list of user passwords
+        /// </returns>
+        public virtual async Task<IList<UserPassword>> GetUserPasswordsAsync(int? userId = null,
+            PasswordFormat? passwordFormat = null, int? passwordsToReturn = null)
+        {
+            var query = _userPasswordRepository.Table;
 
-        //    //filter by user
-        //    if (userId.HasValue)
-        //        query = query.Where(password => password.UserId == userId.Value);
+            //filter by user
+            if (userId.HasValue)
+                query = query.Where(password => password.UserId == userId.Value);
 
-        //    //filter by password format
-        //    if (passwordFormat.HasValue)
-        //        query = query.Where(password => password.PasswordFormatId == (int)passwordFormat.Value);
+            //filter by password format
+            if (passwordFormat.HasValue)
+                query = query.Where(password => password.PasswordFormatId == (int)passwordFormat.Value);
 
-        //    //get the latest passwords
-        //    if (passwordsToReturn.HasValue)
-        //        query = query.OrderByDescending(password => password.CreatedOnUtc).Take(passwordsToReturn.Value);
+            //get the latest passwords
+            if (passwordsToReturn.HasValue)
+                query = query.OrderByDescending(password => password.CreatedOnUtc).Take(passwordsToReturn.Value);
 
-        //    return await query.ToListAsync();
-        //}
+            return await query.ToListAsync();
+        }
 
-        ///// <summary>
-        ///// Get current user password
-        ///// </summary>
-        ///// <param name="userId">User identifier</param>
-        ///// <returns>
-        ///// A task that represents the asynchronous operation
-        ///// The task result contains the user password
-        ///// </returns>
-        //public virtual async Task<UserPassword> GetCurrentPasswordAsync(int userId)
-        //{
-        //    if (userId == 0)
-        //        return null;
+        /// <summary>
+        /// Get current user password
+        /// </summary>
+        /// <param name="userId">User identifier</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation
+        /// The task result contains the user password
+        /// </returns>
+        public virtual async Task<UserPassword> GetCurrentPasswordAsync(int userId)
+        {
+            if (userId == 0)
+                return null;
 
-        //    //return the latest password
-        //    return (await GetUserPasswordsAsync(userId, passwordsToReturn: 1)).FirstOrDefault();
-        //}
+            //return the latest password
+            return (await GetUserPasswordsAsync(userId, passwordsToReturn: 1)).FirstOrDefault();
+        }
 
-        ///// <summary>
-        ///// Insert a user password
-        ///// </summary>
-        ///// <param name="userPassword">User password</param>
-        ///// <returns>A task that represents the asynchronous operation</returns>
-        //public virtual async Task InsertUserPasswordAsync(UserPassword userPassword)
-        //{
-        //    await _userPasswordRepository.InsertAsync(userPassword);
-        //}
+        /// <summary>
+        /// Insert a user password
+        /// </summary>
+        /// <param name="userPassword">User password</param>
+        /// <returns>A task that represents the asynchronous operation</returns>
+        public virtual async Task InsertUserPasswordAsync(UserPassword userPassword)
+        {
+            await _userPasswordRepository.InsertAsync(userPassword);
+        }
 
-        ///// <summary>
-        ///// Update a user password
-        ///// </summary>
-        ///// <param name="userPassword">User password</param>
-        ///// <returns>A task that represents the asynchronous operation</returns>
-        //public virtual async Task UpdateUserPasswordAsync(UserPassword userPassword)
-        //{
-        //    await _userPasswordRepository.UpdateAsync(userPassword);
-        //}
+        /// <summary>
+        /// Update a user password
+        /// </summary>
+        /// <param name="userPassword">User password</param>
+        /// <returns>A task that represents the asynchronous operation</returns>
+        public virtual async Task UpdateUserPasswordAsync(UserPassword userPassword)
+        {
+            await _userPasswordRepository.UpdateAsync(userPassword);
+        }
 
-        ///// <summary>
-        ///// Check whether password recovery token is valid
-        ///// </summary>
-        ///// <param name="user">User</param>
-        ///// <param name="token">Token to validate</param>
-        ///// <returns>
-        ///// A task that represents the asynchronous operation
-        ///// The task result contains the result
-        ///// </returns>
-        //public virtual async Task<bool> IsPasswordRecoveryTokenValidAsync(User user, string token)
-        //{
-        //    ArgumentNullException.ThrowIfNull(user);
+        /// <summary>
+        /// Check whether password recovery token is valid
+        /// </summary>
+        /// <param name="user">User</param>
+        /// <param name="token">Token to validate</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation
+        /// The task result contains the result
+        /// </returns>
+        public virtual async Task<bool> IsPasswordRecoveryTokenValidAsync(User user, string token)
+        {
+            ArgumentNullException.ThrowIfNull(user);
 
-        //    var cPrt = await _genericAttributeService.GetAttributeAsync<string>(user, UserDefaults.PasswordRecoveryTokenAttribute);
-        //    if (string.IsNullOrEmpty(cPrt))
-        //        return false;
+            var cPrt = await _genericAttributeService.GetAttributeAsync<string>(user, UserDefaults.PasswordRecoveryTokenAttribute);
+            if (string.IsNullOrEmpty(cPrt))
+                return false;
 
-        //    if (!cPrt.Equals(token, StringComparison.InvariantCultureIgnoreCase))
-        //        return false;
+            if (!cPrt.Equals(token, StringComparison.InvariantCultureIgnoreCase))
+                return false;
 
-        //    return true;
-        //}
+            return true;
+        }
 
-        ///// <summary>
-        ///// Check whether password recovery link is expired
-        ///// </summary>
-        ///// <param name="user">User</param>
-        ///// <returns>
-        ///// A task that represents the asynchronous operation
-        ///// The task result contains the result
-        ///// </returns>
-        //public virtual async Task<bool> IsPasswordRecoveryLinkExpiredAsync(User user)
-        //{
-        //    ArgumentNullException.ThrowIfNull(user);
+        /// <summary>
+        /// Check whether password recovery link is expired
+        /// </summary>
+        /// <param name="user">User</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation
+        /// The task result contains the result
+        /// </returns>
+        public virtual async Task<bool> IsPasswordRecoveryLinkExpiredAsync(User user)
+        {
+            ArgumentNullException.ThrowIfNull(user);
 
-        //    if (_userSettings.PasswordRecoveryLinkDaysValid == 0)
-        //        return false;
+            if (_userSettings.PasswordRecoveryLinkDaysValid == 0)
+                return false;
 
-        //    var generatedDate = await _genericAttributeService.GetAttributeAsync<DateTime?>(user, UserDefaults.PasswordRecoveryTokenDateGeneratedAttribute);
-        //    if (!generatedDate.HasValue)
-        //        return false;
+            var generatedDate = await _genericAttributeService.GetAttributeAsync<DateTime?>(user, UserDefaults.PasswordRecoveryTokenDateGeneratedAttribute);
+            if (!generatedDate.HasValue)
+                return false;
 
-        //    var daysPassed = (DateTime.UtcNow - generatedDate.Value).TotalDays;
-        //    if (daysPassed > _userSettings.PasswordRecoveryLinkDaysValid)
-        //        return true;
+            var daysPassed = (DateTime.UtcNow - generatedDate.Value).TotalDays;
+            if (daysPassed > _userSettings.PasswordRecoveryLinkDaysValid)
+                return true;
 
-        //    return false;
-        //}
+            return false;
+        }
 
-        ///// <summary>
-        ///// Check whether user password is expired 
-        ///// </summary>
-        ///// <param name="user">User</param>
-        ///// <returns>
-        ///// A task that represents the asynchronous operation
-        ///// The task result contains the rue if password is expired; otherwise false
-        ///// </returns>
-        //public virtual async Task<bool> IsPasswordExpiredAsync(User user)
-        //{
-        //    ArgumentNullException.ThrowIfNull(user);
+        /// <summary>
+        /// Check whether user password is expired 
+        /// </summary>
+        /// <param name="user">User</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation
+        /// The task result contains the rue if password is expired; otherwise false
+        /// </returns>
+        public virtual async Task<bool> IsPasswordExpiredAsync(User user)
+        {
+            ArgumentNullException.ThrowIfNull(user);
 
-        //    //the guests don't have a password
-        //    if (await IsGuestAsync(user))
-        //        return false;
+            //the guests don't have a password
+            if (await IsGuestAsync(user))
+                return false;
 
-        //    //password lifetime is disabled for user
-        //    if (!(await GetUserRolesAsync(user)).Any(role => role.Active && role.EnablePasswordLifetime))
-        //        return false;
+            //password lifetime is disabled for user
+            if (!(await GetUserRolesAsync(user)).Any(role => role.Active && role.EnablePasswordLifetime))
+                return false;
 
-        //    //setting disabled for all
-        //    if (_userSettings.PasswordLifetime == 0)
-        //        return false;
+            //setting disabled for all
+            if (_userSettings.PasswordLifetime == 0)
+                return false;
 
-        //    var cacheKey = _staticCacheManager.PrepareKeyForShortTermCache(UserServicesDefaults.UserPasswordLifetimeCacheKey, user);
+            var cacheKey = _staticCacheManager.PrepareKeyForShortTermCache(UserServicesDefaults.UserPasswordLifetimeCacheKey, user);
 
-        //    //get current password usage time
-        //    var currentLifetime = await _staticCacheManager.GetAsync(cacheKey, async () =>
-        //    {
-        //        var userPassword = await GetCurrentPasswordAsync(user.Id);
-        //        //password is not found, so return max value to force user to change password
-        //        if (userPassword == null)
-        //            return int.MaxValue;
+            //get current password usage time
+            var currentLifetime = await _staticCacheManager.GetAsync(cacheKey, async () =>
+            {
+                var userPassword = await GetCurrentPasswordAsync(user.Id);
+                //password is not found, so return max value to force user to change password
+                if (userPassword == null)
+                    return int.MaxValue;
 
-        //        return (DateTime.UtcNow - userPassword.CreatedOnUtc).Days;
-        //    });
+                return (DateTime.UtcNow - userPassword.CreatedOnUtc).Days;
+            });
 
-        //    return currentLifetime >= _userSettings.PasswordLifetime;
-        //}
+            return currentLifetime >= _userSettings.PasswordLifetime;
+        }
 
-        //#endregion
+        #endregion
 
         //#region User address mapping
 

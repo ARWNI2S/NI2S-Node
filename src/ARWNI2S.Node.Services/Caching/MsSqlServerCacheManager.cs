@@ -1,4 +1,5 @@
-﻿using ARWNI2S.Node.Core.Caching;
+﻿using ARWNI2S.Infrastructure.Collections;
+using ARWNI2S.Node.Core.Caching;
 using ARWNI2S.Node.Core.Configuration;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Caching.Distributed;
@@ -13,7 +14,7 @@ namespace ARWNI2S.Node.Services.Caching
     {
         #region Fields
 
-        private readonly DistributedCacheConfig _distributedCacheConfig;
+        protected readonly DistributedCacheConfig _distributedCacheConfig;
 
         #endregion
 
@@ -21,8 +22,9 @@ namespace ARWNI2S.Node.Services.Caching
 
         public MsSqlServerCacheManager(NI2SSettings ni2sSettings,
             IDistributedCache distributedCache,
-            ICacheKeyManager cacheKeyManager)
-            : base(ni2sSettings, distributedCache, cacheKeyManager)
+            ICacheKeyManager cacheKeyManager,
+            IConcurrentCollection<object> concurrentCollection)
+            : base(ni2sSettings, distributedCache, cacheKeyManager, concurrentCollection)
         {
             _distributedCacheConfig = ni2sSettings.Get<DistributedCacheConfig>();
         }

@@ -13,23 +13,8 @@ namespace ARWNI2S.Node.Core.Entities.Security
         public string EncryptionKey { get; set; }
 
         /// <summary>
-        /// Gets or sets a list of admin area allowed IP addresses
+        /// Gets or sets a list of admin allowed IP addresses
         /// </summary>
-        public List<string> AdminAreaAllowedIpAddresses { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether honeypot is enabled on the registration page
-        /// </summary>
-        public bool HoneypotEnabled { get; set; }
-
-        /// <summary>
-        /// Gets or sets a honeypot input name
-        /// </summary>
-        public string HoneypotInputName { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether to allow non-ASCII characters in headers
-        /// </summary>
-        public bool AllowNonAsciiCharactersInHeaders { get; set; }
+        public List<string> AdminAllowedIpAddresses { get; set; }
     }
 }

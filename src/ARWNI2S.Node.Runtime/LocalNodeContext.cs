@@ -131,9 +131,9 @@ namespace ARWNI2S.Node.Runtime
             return _cachedActiveNodeScopeConfiguration ?? 0;
         }
 
-        async Task<INI2SNode> INodeContext.GetCurrentNodeAsync() => await GetCurrentNodeAsync();
+        async Task<NI2SNode> INodeContext.GetCurrentNodeAsync() => await GetCurrentNodeAsync();
 
-        INI2SNode INodeContext.GetCurrentNode() => GetCurrentNode();
+        NI2SNode INodeContext.GetCurrentNode() => GetCurrentNode();
 
         #endregion
     }

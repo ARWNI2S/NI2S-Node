@@ -11,12 +11,12 @@ namespace ARWNI2S.Node.Core
         /// Gets the current node
         /// </summary>
         /// <returns>A task that represents the asynchronous operation</returns>
-        Task<INI2SNode> GetCurrentNodeAsync();
+        Task<NI2SNode> GetCurrentNodeAsync();
 
         /// <summary>
         /// Gets the current node
         /// </summary>
-        INI2SNode GetCurrentNode();
+        NI2SNode GetCurrentNode();
 
         /// <summary>
         /// Gets active node scope configuration

@@ -328,13 +328,13 @@ namespace ARWNI2S.Node.Core
         //    return CommonHelper.To<T>(_httpContextAccessor.HttpContext.Request.Query[name].ToString());
         //}
 
-        ///// <summary>
-        ///// Restart application domain
-        ///// </summary>
-        //public virtual void RestartAppDomain()
-        //{
-        //    _hostApplicationLifetime.StopApplication();
-        //}
+        /// <summary>
+        /// Restart application domain
+        /// </summary>
+        public virtual void RestartAppDomain()
+        {
+            _hostApplicationLifetime.StopApplication();
+        }
 
         ///// <summary>
         ///// Gets a value that indicates whether the client is being redirected to a new location

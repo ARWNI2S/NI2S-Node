@@ -1,4 +1,7 @@
-﻿namespace ARWNI2S.Node.Data.Mapping.Builders.Directory
+﻿using ARWNI2S.Node.Core.Entities.Directory;
+using FluentMigrator.Builders.Create.Table;
+
+namespace ARWNI2S.Node.Data.Mapping.Builders.Directory
 {
     /// <summary>
     /// Represents a currency entity builder
