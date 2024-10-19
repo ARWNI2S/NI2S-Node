@@ -4,9 +4,9 @@ using System.Runtime.CompilerServices;
 namespace ARWNI2S.Node.Core.Infrastructure
 {
     /// <summary>
-    /// Provides access to the singleton instance of the DragonCorp engine.
+    /// Provides access to the singleton instance of the Node Engine.
     /// </summary>
-    public partial class EngineContext
+    public partial class NodeEngineContext
     {
         #region Methods
 

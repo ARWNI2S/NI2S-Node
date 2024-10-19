@@ -7,22 +7,21 @@ using ARWNI2S.Node.Core.Infrastructure;
 using ARWNI2S.Node.Core.Runtime;
 using ARWNI2S.Node.Data;
 using ARWNI2S.Node.Services.Clustering;
+using ARWNI2S.Node.Services.Security;
+using ARWNI2S.Runtime.Clustering;
+using ARWNI2S.Runtime.Data;
+using ARWNI2S.Runtime.Profiling;
 using Azure.Data.Tables;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Orleans.Configuration;
-using StackExchange.Profiling.Internal;
 using StackExchange.Profiling;
+using StackExchange.Profiling.Internal;
+using StackExchange.Profiling.Storage;
 using StackExchange.Redis;
 using System.Net;
-using StackExchange.Profiling.Storage;
-using ARWNI2S.Node.Services.Security;
-using ARWNI2S.Runtime.Data;
-using ARWNI2S.Runtime.Clustering;
-using ARWNI2S.Runtime.Profiling;
-using ARWNI2S.Runtime.Core.Extensions;
 
 namespace ARWNI2S.Runtime.Infrastructure.Extensions
 {
@@ -86,7 +85,7 @@ namespace ARWNI2S.Runtime.Infrastructure.Extensions
             ni2sCoreBuilder.PartManager.InitializeModules(moduleConfig);
 
             //create engine and configure service provider
-            var engine = EngineContext.Create();
+            var engine = NodeEngineContext.Create();
 
             engine.ConfigureServices(services, context.Configuration);
         }
@@ -97,7 +96,7 @@ namespace ARWNI2S.Runtime.Infrastructure.Extensions
         /// <param name="services">Collection of service descriptors</param>
         public static void AddContextAccessor(this IServiceCollection services)
         {
-            services.AddSingleton<IExecutionContextAccessor, RuntimeContextAccessor>();
+            services.AddSingleton<IRuntimeContextAccessor, RuntimeContextAccessor>();
         }
 
         /// <summary>
@@ -247,7 +246,7 @@ namespace ARWNI2S.Runtime.Infrastructure.Extensions
                     ((MemoryCacheStorage)miniProfilerOptions.Storage).CacheDuration = TimeSpan.FromMinutes(nodeSettings.Get<CacheConfig>().DefaultCacheTime);
 
                     //determine who can access the MiniProfiler results
-                    miniProfilerOptions.ResultsAuthorize = request => EngineContext.Current.Resolve<IPermissionService>().AuthorizeAsync(StandardPermissionProvider.AccessProfiling).Result;
+                    miniProfilerOptions.ResultsAuthorize = request => NodeEngineContext.Current.Resolve<IPermissionService>().AuthorizeAsync(StandardPermissionProvider.AccessProfiling).Result;
                 });
             }
         }

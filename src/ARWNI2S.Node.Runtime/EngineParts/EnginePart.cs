@@ -1,4 +1,4 @@
-﻿namespace ARWNI2S.Runtime.Core.Components
+﻿namespace ARWNI2S.Runtime.EngineParts
 {
     /// <summary>
     /// A part of an NI2S application.

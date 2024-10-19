@@ -1,8 +1,8 @@
-﻿using ARWNI2S.Runtime.Core.Builder;
-using ARWNI2S.Runtime.Core.Components;
+﻿using ARWNI2S.Runtime.EngineParts;
+using ARWNI2S.Runtime.Infrastructure.Builder;
 using System.Reflection;
 
-namespace ARWNI2S.Runtime.Core.Features
+namespace ARWNI2S.Runtime.Features
 {
     /// <summary>
     /// The list of controllers types in an MVC application. The <see cref="ActorFeature"/> can be populated

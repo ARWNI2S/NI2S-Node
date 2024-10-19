@@ -1,6 +1,7 @@
 ﻿using ARWNI2S.Node.Core.Configuration;
 using ARWNI2S.Node.Core.Entities.Clustering;
 using ARWNI2S.Node.Services.Clustering;
+using System.Net;
 
 namespace ARWNI2S.Runtime.Clustering
 {
@@ -36,7 +37,7 @@ namespace ARWNI2S.Runtime.Clustering
                     CurrentState = NodeState.Offline,
                     DefaultLanguageId = 0,
                     DisplayOrder = (await _clusteringService.GetAllNodesAsync()).Max(n => n.DisplayOrder) + 1,
-                    Hosts = Environment.MachineName,
+                    Hosts = Dns.GetHostName(),
                     NodeId = nodeId ?? new Guid(),
                     PublicPort = ClusteringDefaults.PublicPort,
                     RelayPort = ClusteringDefaults.RelayPort,

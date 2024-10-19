@@ -1,5 +1,6 @@
 ﻿using ARWNI2S.Infrastructure;
 using ARWNI2S.Node.Core.Infrastructure.Mapper;
+using ARWNI2S.Node.Core.Runtime;
 using AutoMapper;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,10 +24,9 @@ namespace ARWNI2S.Node.Core.Infrastructure
         {
             if (scope == null)
             {
-                //var accessor = ServiceProvider?.GetService<IContextAccessor>();
-                //var context = accessor?.CurrentContext;
-                //return context?.ContextServices ?? ServiceProvider;
-                return ServiceProvider;
+                var accessor = ServiceProvider?.GetService<IRuntimeContextAccessor>();
+                var context = accessor?.EngineContext;
+                return context?.ContextServices ?? ServiceProvider;
             }
             return scope.ServiceProvider;
         }

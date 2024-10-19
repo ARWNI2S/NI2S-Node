@@ -1,6 +1,6 @@
 ﻿using ARWNI2S.Runtime.Properties;
 
-namespace ARWNI2S.Runtime.Core.Components
+namespace ARWNI2S.Runtime.EngineParts
 {
     /// <summary>
     /// Provides a <see cref="EnginePartFactory"/> type.

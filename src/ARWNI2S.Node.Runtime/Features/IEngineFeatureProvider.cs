@@ -1,6 +1,6 @@
-﻿using ARWNI2S.Runtime.Core.Components;
+﻿using ARWNI2S.Runtime.EngineParts;
 
-namespace ARWNI2S.Runtime.Core.Features
+namespace ARWNI2S.Runtime.Features
 {
     /// <summary>
     /// Marker interface for <see cref="IEngineFeatureProvider"/>

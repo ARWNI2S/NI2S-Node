@@ -1,8 +1,8 @@
-﻿using ARWNI2S.Runtime.Core.Attributes;
-using ARWNI2S.Runtime.Core.Components;
+﻿using ARWNI2S.Runtime.Attributes;
+using ARWNI2S.Runtime.EngineParts;
 using System.Reflection;
 
-namespace ARWNI2S.Runtime.Core.Features.Providers
+namespace ARWNI2S.Runtime.Features.Providers
 {
     /// <summary>
     /// Discovers controllers from a list of <see cref="EnginePart"/> instances.

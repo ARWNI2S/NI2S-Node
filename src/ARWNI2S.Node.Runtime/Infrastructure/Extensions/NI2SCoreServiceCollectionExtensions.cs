@@ -1,11 +1,12 @@
-﻿using ARWNI2S.Runtime.Core.Builder;
-using ARWNI2S.Runtime.Core.Components;
-using ARWNI2S.Runtime.Core.Features.Providers;
+﻿using ARWNI2S.Node.Core;
+using ARWNI2S.Runtime.EngineParts;
+using ARWNI2S.Runtime.Features.Providers;
+using ARWNI2S.Runtime.Infrastructure.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 
-namespace ARWNI2S.Runtime.Core.Extensions
+namespace ARWNI2S.Runtime.Infrastructure.Extensions
 {
     internal static class NI2SCoreServiceCollectionExtensions
     {

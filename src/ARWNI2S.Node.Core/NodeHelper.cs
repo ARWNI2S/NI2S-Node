@@ -13,7 +13,7 @@ namespace ARWNI2S.Node.Core
 
         //private readonly IActionContextAccessor _actionContextAccessor;
         private readonly IHostApplicationLifetime _hostApplicationLifetime;
-        private readonly IExecutionContextAccessor _executionContextAccessor;
+        private readonly IRuntimeContextAccessor _engineContextAccessor;
         //private readonly IUrlHelperFactory _urlHelperFactory;
         private readonly Lazy<INodeContext> _nodeContext;
 
@@ -23,13 +23,13 @@ namespace ARWNI2S.Node.Core
 
         public NodeHelper(//IActionContextAccessor actionContextAccessor,
             IHostApplicationLifetime hostApplicationLifetime,
-            IExecutionContextAccessor executionContextAccessor,
+            IRuntimeContextAccessor engineContextAccessor,
             //IUrlHelperFactory urlHelperFactory,
             Lazy<INodeContext> nodeContext)
         {
             //_actionContextAccessor = actionContextAccessor;
             _hostApplicationLifetime = hostApplicationLifetime;
-            _executionContextAccessor = executionContextAccessor;
+            _engineContextAccessor = engineContextAccessor;
             //_urlHelperFactory = urlHelperFactory;
             _nodeContext = nodeContext;
         }
@@ -38,27 +38,27 @@ namespace ARWNI2S.Node.Core
 
         #region Utilities
 
-        /// <summary>
-        /// Check whether current HTTP request is available
-        /// </summary>
-        /// <returns>True if available; otherwise false</returns>
-        protected virtual bool IsRequestAvailable()
-        {
-            if (_executionContextAccessor?.ExecutionContext == null)
-                return false;
+        ///// <summary>
+        ///// Check whether current HTTP request is available
+        ///// </summary>
+        ///// <returns>True if available; otherwise false</returns>
+        //protected virtual bool IsRequestAvailable()
+        //{
+        //    if (_engineContextAccessor?.EngineContext == null)
+        //        return false;
 
-            try
-            {
-                if (_executionContextAccessor.ExecutionContext.Request == null)
-                    return false;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+        //    try
+        //    {
+        //        if (_engineContextAccessor.EngineContext.Request == null)
+        //            return false;
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return false;
+        //    }
 
-            return true;
-        }
+        //    return true;
+        //}
 
         /// <summary>
         /// Is IP address specified
@@ -95,10 +95,10 @@ namespace ARWNI2S.Node.Core
         /// <returns>String of IP address</returns>
         public virtual string GetCurrentIpAddress()
         {
-            if (!IsRequestAvailable())
-                return string.Empty;
+            //if (!IsRequestAvailable())
+            //    return string.Empty;
 
-            if (_executionContextAccessor.ExecutionContext.Connection?.RemoteIpAddress is not IPAddress remoteIp)
+            if (_engineContextAccessor.EngineContext?.Connection?.RemoteIpAddress is not IPAddress remoteIp)
                 return "";
 
             if (remoteIp.Equals(IPAddress.IPv6Loopback))

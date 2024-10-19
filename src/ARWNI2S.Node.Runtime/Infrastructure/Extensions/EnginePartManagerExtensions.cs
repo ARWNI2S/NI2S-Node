@@ -4,7 +4,7 @@ using ARWNI2S.Node.Core.Configuration;
 using ARWNI2S.Node.Core.Infrastructure;
 using ARWNI2S.Node.Data.Mapping;
 using ARWNI2S.Node.Services.Plugins;
-using ARWNI2S.Runtime.Core.Components;
+using ARWNI2S.Runtime.EngineParts;
 using System.Reflection;
 
 namespace ARWNI2S.Runtime.Infrastructure.Extensions

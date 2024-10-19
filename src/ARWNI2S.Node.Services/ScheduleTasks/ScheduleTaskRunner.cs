@@ -55,14 +55,14 @@ namespace ARWNI2S.Node.Services.ScheduleTasks
 
             try
             {
-                instance = EngineContext.Current.Resolve(type);
+                instance = NodeEngineContext.Current.Resolve(type);
             }
             catch
             {
                 // ignored
             }
 
-            instance ??= EngineContext.Current.ResolveUnregistered(type);
+            instance ??= NodeEngineContext.Current.ResolveUnregistered(type);
 
             if (instance is not IScheduleTask task)
                 return;

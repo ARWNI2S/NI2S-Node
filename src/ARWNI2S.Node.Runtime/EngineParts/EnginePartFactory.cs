@@ -1,12 +1,12 @@
 ﻿using System.Reflection;
 
-namespace ARWNI2S.Runtime.Core.Components
+namespace ARWNI2S.Runtime.EngineParts
 {
     /// <summary>
     /// Specifies a contract for synthesizing one or more <see cref="EnginePart"/> instances
     /// from an <see cref="Assembly"/>.
     /// <para>
-    /// By default, Mvc registers each application assembly that it discovers as an <see cref="AssemblyPart"/>.
+    /// By default, NI2S registers each application assembly that it discovers as an <see cref="AssemblyPart"/>.
     /// Assemblies can optionally specify an <see cref="EnginePartFactory"/> to configure parts for the assembly
     /// by using <see cref="ProvideEnginePartFactoryAttribute"/>.
     /// </para>

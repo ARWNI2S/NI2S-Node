@@ -17,7 +17,7 @@ namespace ARWNI2S.Runtime
         #region Fields
 
         private readonly IGenericAttributeService _genericAttributeService;
-        private readonly IExecutionContextAccessor _executionContextAccessor;
+        private readonly IRuntimeContextAccessor _engineContextAccessor;
         private readonly IRepository<NI2SNode> _nodeRepository;
         private readonly IClusteringService _clusterService;
 
@@ -32,17 +32,17 @@ namespace ARWNI2S.Runtime
         /// Ctor
         /// </summary>
         /// <param name="genericAttributeService">Generic attribute service</param>
-        /// <param name="executionContextAccessor">HTTP context accessor</param>
+        /// <param name="engineContextAccessor">HTTP context accessor</param>
         /// <param name="nodeRepository">NI2SNode repository</param>
         /// <param name="clusterService">NI2SNode service</param>
         public LocalNodeContext(
             IGenericAttributeService genericAttributeService,
-            IExecutionContextAccessor executionContextAccessor,
+            IRuntimeContextAccessor engineContextAccessor,
             IRepository<NI2SNode> nodeRepository,
             IClusteringService clusterService)
         {
             _genericAttributeService = genericAttributeService;
-            _executionContextAccessor = executionContextAccessor;
+            _engineContextAccessor = engineContextAccessor;
             _nodeRepository = nodeRepository;
             _clusterService = clusterService;
         }
@@ -62,7 +62,7 @@ namespace ARWNI2S.Runtime
                 return _cachedNode;
 
             //try to determine the current node by HOST header
-            string host = _executionContextAccessor.ExecutionContext?.Request.Host;
+            string host = _engineContextAccessor.EngineContext?.LocalHost;
 
             var allNodes = await _clusterService.GetAllNodesAsync();
             var node = allNodes.FirstOrDefault(s => _clusterService.ContainsHostValue(s, host));
@@ -85,7 +85,7 @@ namespace ARWNI2S.Runtime
                 return _cachedNode;
 
             //try to determine the current node by HOST header
-            string host = _executionContextAccessor.ExecutionContext?.Request.Host;
+            string host = _engineContextAccessor.EngineContext?.LocalHost;
 
             //we cannot call async methods here. otherwise, an application can hang. so it's a workaround to avoid that
             var allNodes = _nodeRepository.GetAll(query =>
@@ -117,7 +117,7 @@ namespace ARWNI2S.Runtime
             if ((await _clusterService.GetAllNodesAsync()).Count > 1)
             {
                 //do not inject IWorkContext via constructor because it'll cause circular references
-                var currentUser = (User)await EngineContext.Current.Resolve<IWorkContext>().GetCurrentUserAsync();
+                var currentUser = (User)await NodeEngineContext.Current.Resolve<IWorkContext>().GetCurrentUserAsync();
 
                 //try to get node identifier from attributes
                 var nodeId = await _genericAttributeService

@@ -2,13 +2,14 @@
 using ARWNI2S.Infrastructure.Collections.Generic;
 using ARWNI2S.Node.Core;
 using ARWNI2S.Node.Core.Caching;
+using ARWNI2S.Node.Core.Entities.Clustering;
+using ARWNI2S.Node.Core.Entities.Common;
 using ARWNI2S.Node.Core.Entities.Users;
 using ARWNI2S.Node.Core.Infrastructure;
 using ARWNI2S.Node.Data;
-using ARWNI2S.Node.Core.Entities.Clustering;
 using ARWNI2S.Node.Data.Extensions;
-using ARWNI2S.Node.Services.Localization;
 using ARWNI2S.Node.Services.Common;
+using ARWNI2S.Node.Services.Localization;
 
 namespace ARWNI2S.Node.Services.Users
 {
@@ -22,17 +23,11 @@ namespace ARWNI2S.Node.Services.Users
         protected readonly UserSettings _userSettings;
         protected readonly IGenericAttributeService _genericAttributeService;
         protected readonly INI2SDataProvider _dataProvider;
-        //protected readonly IRepository<Address> _userAddressRepository;
-        //protected readonly IRepository<BlogComment> _blogCommentRepository;
         protected readonly IRepository<User> _userRepository;
-        //protected readonly IRepository<UserAddressMapping> _userAddressMappingRepository;
         protected readonly IRepository<UserUserRoleMapping> _userUserRoleMappingRepository;
         protected readonly IRepository<UserPassword> _userPasswordRepository;
         protected readonly IRepository<UserRole> _userRoleRepository;
-        //protected readonly IRepository<GenericAttribute> _gaRepository;
-        //protected readonly IRepository<CryptoAddress> _cryptoAddressRepository;
-        //protected readonly IRepository<NewsComment> _newsCommentRepository;
-        //protected readonly IRepository<PollVotingRecord> _pollVotingRecordRepository;
+        protected readonly IRepository<GenericAttribute> _gaRepository;
         protected readonly IShortTermCacheManager _shortTermCacheManager;
         protected readonly IStaticCacheManager _staticCacheManager;
         protected readonly INodeContext _nodeContext;
@@ -45,17 +40,11 @@ namespace ARWNI2S.Node.Services.Users
             UserSettings userSettings,
             IGenericAttributeService genericAttributeService,
             INI2SDataProvider dataProvider,
-            //IRepository<Address> userAddressRepository,
-            //IRepository<BlogComment> blogCommentRepository,
             IRepository<User> userRepository,
-            //IRepository<UserAddressMapping> userAddressMappingRepository,
             IRepository<UserUserRoleMapping> userUserRoleMappingRepository,
             IRepository<UserPassword> userPasswordRepository,
             IRepository<UserRole> userRoleRepository,
-            //IRepository<GenericAttribute> gaRepository,
-            //IRepository<CryptoAddress> cryptoAddressRepository,
-            //IRepository<NewsComment> newsCommentRepository,
-            //IRepository<PollVotingRecord> pollVotingRecordRepository,
+            IRepository<GenericAttribute> gaRepository,
             IShortTermCacheManager shortTermCacheManager,
             IStaticCacheManager staticCacheManager,
             INodeContext nodeContext
@@ -64,17 +53,11 @@ namespace ARWNI2S.Node.Services.Users
             _userSettings = userSettings;
             _genericAttributeService = genericAttributeService;
             _dataProvider = dataProvider;
-            //_userAddressRepository = userAddressRepository;
-            //_blogCommentRepository = blogCommentRepository;
             _userRepository = userRepository;
-            //_userAddressMappingRepository = userAddressMappingRepository;
             _userUserRoleMappingRepository = userUserRoleMappingRepository;
-            //_userPasswordRepository = userPasswordRepository;
+            _userPasswordRepository = userPasswordRepository;
             _userRoleRepository = userRoleRepository;
-            //_gaRepository = gaRepository;
-            //_cryptoAddressRepository = cryptoAddressRepository;
-            //_newsCommentRepository = newsCommentRepository;
-            //_pollVotingRecordRepository = pollVotingRecordRepository;
+            _gaRepository = gaRepository;
             _shortTermCacheManager = shortTermCacheManager;
             _staticCacheManager = staticCacheManager;
             _nodeContext = nodeContext;
@@ -751,7 +734,7 @@ namespace ARWNI2S.Node.Services.Users
             if (!string.IsNullOrWhiteSpace(firstName) && !string.IsNullOrWhiteSpace(lastName))
             {
                 //do not inject ILocalizationService via constructor because it'll cause circular references
-                var format = await EngineContext.Current.Resolve<ILocalizationService>().GetResourceAsync("User.FullNameFormat");
+                var format = await NodeEngineContext.Current.Resolve<ILocalizationService>().GetResourceAsync("User.FullNameFormat");
 
                 fullName = string.Format(format, firstName, lastName);
             }

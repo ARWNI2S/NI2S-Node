@@ -2,6 +2,7 @@
 using ARWNI2S.Infrastructure.Configuration;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using System.Net;
 using System.Runtime.Serialization;
 
 namespace ARWNI2S.Node.Core.Configuration
@@ -21,9 +22,14 @@ namespace ARWNI2S.Node.Core.Configuration
 
     public partial class NodeConfig : IConfig
     {
-        public string NodeName { get; set; } = $"{Environment.MachineName}:{Environment.ProcessId}";
+        public string NodeName { get; set; } = $"{Dns.GetHostName()}:{Environment.ProcessId}";
 
         public Guid NodeId { get; set; } = new (CommonHelper.GenerateRandomGuidString());
+
+        public ushort Port { get; set; } = 46600;
+
+        [JsonIgnore]
+        public ushort RelayPort { get; } = 46633;
 
         /// <summary>
         /// Gets or sets the node type.

@@ -1,4 +1,4 @@
-﻿namespace ARWNI2S.Runtime.Core.Attributes
+﻿namespace ARWNI2S.Runtime.Attributes
 {
     /// <summary>
     /// Indicates that the type and any derived types that this attribute is applied to

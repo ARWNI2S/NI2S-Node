@@ -1,4 +1,4 @@
-﻿namespace ARWNI2S.Runtime.Core
+﻿namespace ARWNI2S.Node.Core
 {
     /// <summary>
     /// Provides programmatic configuration for the MVC framework.

@@ -11,10 +11,20 @@ namespace ARWNI2S.Node.Services.Logging
     /// <summary>
     /// Default logger
     /// </summary>
-    public partial class DefaultLogger(CommonSettings commonSettings,
-        IRepository<Log> logRepository,
-        INodeHelper nodeHelper) : ILogService
+    public partial class DefaultLogger : ILogService
     {
+        private readonly CommonSettings _commonSettings;
+        private readonly IRepository<Log> _logRepository;
+        private readonly INodeHelper _nodeHelper;
+
+        public DefaultLogger(CommonSettings commonSettings,
+            IRepository<Log> logRepository,
+            INodeHelper nodeHelper)
+        {
+            _commonSettings = commonSettings;
+            _logRepository = logRepository;
+            _nodeHelper = nodeHelper;
+        }
 
         #region Utilities
 
@@ -25,13 +35,13 @@ namespace ARWNI2S.Node.Services.Logging
         /// <returns>Result</returns>
         protected virtual bool IgnoreLog(string message)
         {
-            if (commonSettings.IgnoreLogWordlist.Count == 0)
+            if (_commonSettings.IgnoreLogWordlist.Count == 0)
                 return false;
 
             if (string.IsNullOrWhiteSpace(message))
                 return false;
 
-            return commonSettings
+            return _commonSettings
                 .IgnoreLogWordlist
                 .Any(x => message.Contains(x, StringComparison.InvariantCultureIgnoreCase));
         }
@@ -63,7 +73,7 @@ namespace ARWNI2S.Node.Services.Logging
         {
             ArgumentNullException.ThrowIfNull(log);
 
-            await logRepository.DeleteAsync(log, false);
+            await _logRepository.DeleteAsync(log, false);
         }
 
         /// <summary>
@@ -73,7 +83,7 @@ namespace ARWNI2S.Node.Services.Logging
         /// <returns>A task that represents the asynchronous operation</returns>
         public virtual async Task DeleteLogsAsync(IList<Log> logs)
         {
-            await logRepository.DeleteAsync(logs, false);
+            await _logRepository.DeleteAsync(logs, false);
         }
 
         /// <summary>
@@ -84,9 +94,9 @@ namespace ARWNI2S.Node.Services.Logging
         public virtual async Task ClearLogAsync(DateTime? olderThan = null)
         {
             if (olderThan == null)
-                await logRepository.TruncateAsync();
+                await _logRepository.TruncateAsync();
             else
-                await logRepository.DeleteAsync(p => p.CreatedOnUtc < olderThan.Value);
+                await _logRepository.DeleteAsync(p => p.CreatedOnUtc < olderThan.Value);
         }
 
         /// <summary>
@@ -106,7 +116,7 @@ namespace ARWNI2S.Node.Services.Logging
             string message = "", LogLevel? logLevel = null,
             int pageIndex = 0, int pageSize = int.MaxValue)
         {
-            var logs = await logRepository.GetAllPagedAsync(query =>
+            var logs = await _logRepository.GetAllPagedAsync(query =>
             {
                 if (fromUtc.HasValue)
                     query = query.Where(l => fromUtc.Value <= l.CreatedOnUtc);
@@ -138,7 +148,7 @@ namespace ARWNI2S.Node.Services.Logging
         /// </returns>
         public virtual async Task<Log> GetLogByIdAsync(int logId)
         {
-            return await logRepository.GetByIdAsync(logId);
+            return await _logRepository.GetByIdAsync(logId);
         }
 
         /// <summary>
@@ -151,7 +161,7 @@ namespace ARWNI2S.Node.Services.Logging
         /// </returns>
         public virtual async Task<IList<Log>> GetLogByIdsAsync(int[] logIds)
         {
-            return await logRepository.GetByIdsAsync(logIds);
+            return await _logRepository.GetByIdsAsync(logIds);
         }
 
         /// <summary>
@@ -176,12 +186,12 @@ namespace ARWNI2S.Node.Services.Logging
                 LogLevel = logLevel,
                 ShortMessage = shortMessage,
                 FullMessage = fullMessage,
-                IpAddress = nodeHelper.GetCurrentIpAddress(),
+                IpAddress = _nodeHelper.GetCurrentIpAddress(),
                 UserId = user?.Id,
                 CreatedOnUtc = DateTime.UtcNow
             };
 
-            await logRepository.InsertAsync(log, false);
+            await _logRepository.InsertAsync(log, false);
 
             return log;
         }
@@ -207,12 +217,12 @@ namespace ARWNI2S.Node.Services.Logging
                 LogLevel = logLevel,
                 ShortMessage = shortMessage,
                 FullMessage = fullMessage,
-                IpAddress = nodeHelper.GetCurrentIpAddress(),
+                IpAddress = _nodeHelper.GetCurrentIpAddress(),
                 UserId = user?.Id,
                 CreatedOnUtc = DateTime.UtcNow
             };
 
-            logRepository.Insert(log, false);
+            _logRepository.Insert(log, false);
 
             return log;
         }

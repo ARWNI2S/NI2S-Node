@@ -1,7 +1,7 @@
-﻿using ARWNI2S.Runtime.Core.Components;
+﻿using ARWNI2S.Runtime.EngineParts;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace ARWNI2S.Runtime.Core.Builder
+namespace ARWNI2S.Runtime.Infrastructure.Builder
 {
     /// <summary>
     /// Allows fine grained configuration of essential MVC services.

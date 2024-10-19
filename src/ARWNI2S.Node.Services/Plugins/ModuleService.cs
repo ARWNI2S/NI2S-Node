@@ -376,7 +376,7 @@ namespace ARWNI2S.Node.Services.Plugins
                         var dependsOnSystemNames = dependsOn.Aggregate((all, current) => $"{all}, {current}");
 
                         //do not inject services via constructor because it'll cause circular references
-                        var localizationService = EngineContext.Current.Resolve<ILocalizationService>();
+                        var localizationService = NodeEngineContext.Current.Resolve<ILocalizationService>();
 
                         var errorMessage = string.Format(await localizationService.GetResourceAsync("Admin.Modules.Errors.InstallDependsOn"), string.IsNullOrEmpty(descriptor.FriendlyName) ? descriptor.SystemName : descriptor.FriendlyName, dependsOnSystemNames);
 
@@ -424,7 +424,7 @@ namespace ARWNI2S.Node.Services.Plugins
                     var dependsOnSystemNames = dependsOn.Aggregate((all, current) => $"{all}, {current}");
 
                     //do not inject services via constructor because it'll cause circular references
-                    var localizationService = EngineContext.Current.Resolve<ILocalizationService>();
+                    var localizationService = NodeEngineContext.Current.Resolve<ILocalizationService>();
 
                     var errorMessage = string.Format(await localizationService.GetResourceAsync("Admin.Modules.Errors.UninstallDependsOn"),
                         string.IsNullOrEmpty(descriptor.FriendlyName) ? descriptor.SystemName : descriptor.FriendlyName,
@@ -503,8 +503,8 @@ namespace ARWNI2S.Node.Services.Plugins
                 return;
 
             //do not inject services via constructor because it'll cause circular references
-            var localizationService = EngineContext.Current.Resolve<ILocalizationService>();
-            var userActivityService = EngineContext.Current.Resolve<IUserActivityService>();
+            var localizationService = NodeEngineContext.Current.Resolve<ILocalizationService>();
+            var userActivityService = NodeEngineContext.Current.Resolve<IUserActivityService>();
 
             //install modules
             foreach (var descriptor in moduleDescriptors.OrderBy(moduleDescriptor => moduleDescriptor.moduleDescriptor.DisplayOrder))
@@ -559,8 +559,8 @@ namespace ARWNI2S.Node.Services.Plugins
                 return;
 
             //do not inject services via constructor because it'll cause circular references
-            var localizationService = EngineContext.Current.Resolve<ILocalizationService>();
-            var userActivityService = EngineContext.Current.Resolve<IUserActivityService>();
+            var localizationService = NodeEngineContext.Current.Resolve<ILocalizationService>();
+            var userActivityService = NodeEngineContext.Current.Resolve<IUserActivityService>();
 
             //uninstall modules
             foreach (var descriptor in moduleDescriptors.OrderByDescending(moduleDescriptor => moduleDescriptor.moduleDescriptor.DisplayOrder))
@@ -614,8 +614,8 @@ namespace ARWNI2S.Node.Services.Plugins
                 return;
 
             //do not inject services via constructor because it'll cause circular references
-            var localizationService = EngineContext.Current.Resolve<ILocalizationService>();
-            var userActivityService = EngineContext.Current.Resolve<IUserActivityService>();
+            var localizationService = NodeEngineContext.Current.Resolve<ILocalizationService>();
+            var userActivityService = NodeEngineContext.Current.Resolve<IUserActivityService>();
 
             //delete modules
             foreach (var (moduleDescriptor, needToDeploy) in moduleDescriptors)

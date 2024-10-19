@@ -1,7 +1,7 @@
-﻿using ARWNI2S.Runtime.Core.Features;
+﻿using ARWNI2S.Runtime.Features;
 using System.Reflection;
 
-namespace ARWNI2S.Runtime.Core.Components
+namespace ARWNI2S.Runtime.EngineParts
 {
     /// <summary>
     /// Manages the parts and features of an NI2S application.

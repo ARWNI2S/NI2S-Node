@@ -1,4 +1,4 @@
-﻿namespace ARWNI2S.Runtime.Core.Components
+﻿namespace ARWNI2S.Runtime.EngineParts
 {
     /// <summary>
     /// Specifies an assembly to be added as an <see cref="EnginePart" />.

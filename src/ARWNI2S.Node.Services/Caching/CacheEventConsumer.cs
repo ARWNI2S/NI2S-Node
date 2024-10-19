@@ -26,7 +26,7 @@ namespace ARWNI2S.Node.Services.Caching
 
         protected CacheEventConsumer()
         {
-            _staticCacheManager = EngineContext.Current.Resolve<IStaticCacheManager>();
+            _staticCacheManager = NodeEngineContext.Current.Resolve<IStaticCacheManager>();
         }
 
         #endregion
