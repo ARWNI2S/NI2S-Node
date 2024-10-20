@@ -21,6 +21,7 @@
     <Compile Remove="Infrastructure\StaticFilesStartup.cs" />
     <Compile Remove="Infrastructure\WebMarkupMinStartup.cs" />
     <Compile Remove="RuntimeContext.cs" />
+    <Compile Remove="Services\Localization\ConnectionTagsCultureProvider.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -53,6 +54,10 @@
     <ProjectReference Include="..\ARWNI2S.Node.Core\ARWNI2S.Node.Core.csproj" />
     <ProjectReference Include="..\ARWNI2S.Node.Data\ARWNI2S.Node.Data.csproj" />
     <ProjectReference Include="..\ARWNI2S.Node.Services\ARWNI2S.Node.Services.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Services\Localization\" />
   </ItemGroup>
 
 </Project>

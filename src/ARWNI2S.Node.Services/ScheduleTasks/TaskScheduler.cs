@@ -176,7 +176,7 @@ namespace ARWNI2S.Node.Services.ScheduleTasks
                 try
                 {
                     //create and configure client
-                    client = HttpClientFactory.CreateClient(NetworkDefaults.DefaultHttpClient);
+                    client = HttpClientFactory.CreateClient(HttpDefaults.DefaultHttpClient);
                     if (_timeout.HasValue)
                         client.Timeout = TimeSpan.FromMilliseconds(_timeout.Value);
 

@@ -12,7 +12,7 @@ namespace ARWNI2S.Runtime.EngineParts
         /// Gets the list of <see cref="IEngineFeatureProvider"/>s.
         /// </summary>
         public IList<IEngineFeatureProvider> FeatureProviders { get; } =
-            new List<IEngineFeatureProvider>();
+            [];
 
         /// <summary>
         /// Gets the list of <see cref="EnginePart"/> instances.
@@ -23,7 +23,7 @@ namespace ARWNI2S.Runtime.EngineParts
         /// multiple <see cref="EnginePart"/> instances resolve equivalent feature values.
         /// </para>
         /// </summary>
-        public IList<EnginePart> ApplicationParts { get; } = new List<EnginePart>();
+        public IList<EnginePart> ApplicationParts { get; } = [];
 
         /// <summary>
         /// Populates the given <paramref name="feature"/> using the list of

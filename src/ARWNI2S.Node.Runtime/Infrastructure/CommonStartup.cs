@@ -28,7 +28,7 @@ namespace ARWNI2S.Runtime.Infrastructure
             //services.AddHttpSession();
 
             //add default HTTP clients
-            //services.AddNI2SHttpClients();
+            services.AddNI2SHttpClients();
 
             //add anti-forgery
             //services.AddAntiForgery();

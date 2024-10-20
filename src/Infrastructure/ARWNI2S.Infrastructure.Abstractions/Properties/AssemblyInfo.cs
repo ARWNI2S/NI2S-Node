@@ -17,6 +17,9 @@ using System.Runtime.InteropServices;
 // en COM.
 
 [assembly: Guid("f94a0f1c-3717-4ec5-babf-b26243f1239c")]
+
+[assembly: InternalsVisibleTo("ARWNI2S.GDESK")]
+
 [assembly: InternalsVisibleTo("ARWNI2S.Infrastructure.Collections")]
 [assembly: InternalsVisibleTo("ARWNI2S.Infrastructure.Commons")]
 

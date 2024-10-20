@@ -127,19 +127,16 @@ namespace ARWNI2S.Runtime.Services.Installation
 		protected virtual async Task InstallNodeAsync()
 		{
 			var nodeConfig = _nI2SSettings.Get<NodeConfig>();
-			//TODO: NODE THINGS
-			//TODO: CONTINUE HERE FILL NODE FROM NODECONFIG
 			var nodes = new List<NI2SNode>
 			{
 				new() {
 					Name = nodeConfig.NodeName,
 					CurrentState = NodeState.Joining,
 					Hosts = $"{Dns.GetHostName()}:{nodeConfig.Port}",
-					IpAddress = _nodeHelper.GetCurrentIpAddress() ?? Dns.GetHostName(),
-					Metadata = null,
+					IpAddress = _nodeHelper.GetCurrentIpAddress(),
 					NodeId = nodeConfig.NodeId,
-					PublicPort = null,
-					RelayPort = null,
+					PublicPort = nodeConfig.Port.ToString(),
+					RelayPort = nodeConfig.RelayPort.ToString(),
 					SslEnabled = false,
 				}
 			};
@@ -262,7 +259,7 @@ namespace ARWNI2S.Runtime.Services.Installation
 				try
 				{
 					var httpClientFactory = NodeEngineContext.Current.Resolve<IHttpClientFactory>();
-					var httpClient = httpClientFactory.CreateClient(NetworkDefaults.DefaultHttpClient);
+					var httpClient = httpClientFactory.CreateClient(HttpDefaults.DefaultHttpClient);
 					await using var stream = await httpClient.GetStreamAsync(languagePackInfo.languagePackDownloadLink);
 					using var streamReader = new StreamReader(stream);
 					await localizationService.ImportResourcesFromXmlAsync(userLanguage, streamReader);
@@ -294,23 +291,6 @@ namespace ARWNI2S.Runtime.Services.Installation
 					await localizationService.ImportResourcesFromXmlAsync(userLanguage, streamReader);
 				}
 			}
-
-#if DEBUG
-			//Install resources for user culture
-			var debugLanguage = new Language
-			{
-				Name = "Debug",
-				LanguageCulture = "en",
-				UniqueSeoCode = "xx",
-				FlagImageFileName = "debug.png",
-				Rtl = false,
-				Published = true,
-				DisplayOrder = 10
-			};
-			await InsertInstallationDataAsync(debugLanguage);
-
-#endif
-
 		}
 
 		/// <returns>A task that represents the asynchronous operation</returns>

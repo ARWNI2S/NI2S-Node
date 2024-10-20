@@ -4,10 +4,12 @@ using ARWNI2S.Node.Core;
 using ARWNI2S.Node.Core.Caching;
 using ARWNI2S.Node.Core.Configuration;
 using ARWNI2S.Node.Core.Infrastructure;
+using ARWNI2S.Node.Core.Network;
 using ARWNI2S.Node.Core.Runtime;
 using ARWNI2S.Node.Data;
 using ARWNI2S.Node.Services.Clustering;
 using ARWNI2S.Node.Services.Security;
+using ARWNI2S.Portal.Services.Common;
 using ARWNI2S.Runtime.Clustering;
 using ARWNI2S.Runtime.Data;
 using ARWNI2S.Runtime.Profiling;
@@ -225,6 +227,25 @@ namespace ARWNI2S.Runtime.Infrastructure.Extensions
             services.AddScoped<INodeMappingService, NodeMappingService>();
 
             services.AddSingleton<ClusterManager>();
+        }
+
+        /// <summary>
+        /// Add and configure default HTTP clients
+        /// </summary>
+        /// <param name="services">Collection of service descriptors</param>
+        public static void AddNI2SHttpClients(this IServiceCollection services)
+        {
+            //default client
+            services.AddHttpClient(HttpDefaults.DefaultHttpClient).WithProxy();
+
+            //client to request current node
+            services.AddHttpClient<NodeHttpClient>();
+
+            ////client to request dragonCorp official site
+            //services.AddHttpClient<DraCoHttpClient>().WithProxy();
+
+            ////client to request reCAPTCHA service
+            //services.AddHttpClient<CaptchaHttpClient>().WithProxy();
         }
 
         /// <summary>
@@ -507,23 +528,5 @@ namespace ARWNI2S.Runtime.Infrastructure.Extensions
     //    services.AddWebOptimizer(null, cssSettings, codeSettings);
     //}
 
-    ///// <summary>
-    ///// Add and configure default HTTP clients
-    ///// </summary>
-    ///// <param name="services">Collection of service descriptors</param>
-    //public static void AddNodeHttpClients(this IServiceCollection services)
-    //{
-    //    //default client
-    //    services.AddHttpClient(HttpDefaults.DefaultHttpClient).WithProxy();
-
-    //    //client to request current node
-    //    services.AddHttpClient<ServerHttpClient>();
-
-    //    //client to request dragonCorp official site
-    //    services.AddHttpClient<ServerHttpClient>().WithProxy();
-
-    //    //client to request reCAPTCHA service
-    //    services.AddHttpClient<CaptchaHttpClient>().WithProxy();
-    //}
 
 }

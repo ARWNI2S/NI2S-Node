@@ -2,6 +2,7 @@
 using ARWNI2S.Node.Core;
 using ARWNI2S.Node.Core.Entities.Localization;
 using ARWNI2S.Node.Core.Entities.Users;
+using ARWNI2S.Node.Core.Runtime;
 using ARWNI2S.Node.Services.Localization;
 using ARWNI2S.Node.Services.Users;
 using System.Globalization;
@@ -15,13 +16,15 @@ namespace ARWNI2S.Runtime
     {
         #region Fields
 
-        //private readonly CookieSettings _cookieSettings;
+        //private readonly TagSettings _tagSettings;
         //private readonly CurrencySettings _currencySettings;
         //private readonly TokenSettings _tokenSettings;
         //private readonly IAuthenticationService _authenticationService;
         //private readonly ICurrencyService _currencyService;
         //private readonly ITokenService _tokenService;
         private readonly IUserService _userService;
+        private readonly IRuntimeContextAccessor _runtimeContextAccessor;
+
         //private readonly IGenericAttributeService _genericAttributeService;
         //private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ILanguageService _languageService;
@@ -32,7 +35,7 @@ namespace ARWNI2S.Runtime
         //private readonly IPlayerService _playerService;
         //private readonly IPartnerService _partnerService;
         //private readonly IWebHelper _webHelper;
-        //private readonly LocalizationSettings _localizationSettings;
+        private readonly LocalizationSettings _localizationSettings;
         //private readonly TaxSettings _taxSettings;
 
         private CultureInfo _workingCulture;
@@ -51,28 +54,28 @@ namespace ARWNI2S.Runtime
         #region Ctor
 
         public NodeWorkContext(
-                //CookieSettings cookieSettings,
+                //TagSettings tagSettings,
                 //    CurrencySettings currencySettings,
                 //    TokenSettings tokenSettings,
                 //    IAuthenticationService authenticationService,
                 //    ICurrencyService currencyService,
                 //    ITokenService tokenService,
                 IUserService userService,
-                    //    IGenericAttributeService genericAttributeService,
-                    //    IHttpContextAccessor httpContextAccessor,
+                        //    IGenericAttributeService genericAttributeService,
+                        IRuntimeContextAccessor runtimeContextAccessor,
                     ILanguageService languageService,
-                //    IBlockchainService blockchainService,
-                INodeContext nodeContext
-            //    INodeMappingService nodeMappingService,
-            //    IUserAgentHelper userAgentHelper,
-            //    IPartnerService partnerService,
-            //    IPlayerService playerService,
-            //    IWebHelper webHelper,
-            //    LocalizationSettings localizationSettings,
-            //    TaxSettings taxSettings
+                // IBlockchainService blockchainService,
+                INodeContext nodeContext,
+            // INodeMappingService nodeMappingService,
+            // IUserAgentHelper userAgentHelper,
+            // IPartnerService partnerService,
+            // IPlayerService playerService,
+            // IWebHelper webHelper,
+             LocalizationSettings localizationSettings
+            // TaxSettings taxSettings
             )
         {
-            //    _cookieSettings = cookieSettings;
+            //    _tagSettings = tagSettings;
             //    _currencySettings = currencySettings;
             //    _tokenSettings = tokenSettings;
             //    _authenticationService = authenticationService;
@@ -80,8 +83,8 @@ namespace ARWNI2S.Runtime
             //    _tokenService = tokenService;
             _userService = userService;
             //    _genericAttributeService = genericAttributeService;
-            //    _httpContextAccessor = httpContextAccessor;
-            //    _languageService = languageService;
+            _runtimeContextAccessor = runtimeContextAccessor;
+            _languageService = languageService;
             //    _blockchainService = blockchainService;
             _nodeContext = nodeContext;
             //    _nodeMappingService = nodeMappingService;
@@ -89,7 +92,7 @@ namespace ARWNI2S.Runtime
             //    _partnerService = partnerService;
             //    _playerService = playerService;
             //    _webHelper = webHelper;
-            //    _localizationSettings = localizationSettings;
+            _localizationSettings = localizationSettings;
             //    _taxSettings = taxSettings;
         }
 
@@ -123,99 +126,107 @@ namespace ARWNI2S.Runtime
         }
 
         ///// <summary>
-        ///// Get dragoncorp user cookie
+        ///// Get dragoncorp user tag
         ///// </summary>
-        ///// <returns>String value of cookie</returns>
-        //protected virtual string GetUserCookie()
+        ///// <returns>String value of tag</returns>
+        //protected virtual string GetUserTag()
         //{
-        //    var cookieName = $"{CookieDefaults.Prefix}{CookieDefaults.UserCookie}";
-        //    return _httpContextAccessor.HttpContext?.Request?.Cookies[cookieName];
+        //    var tagName = $"{TagDefaults.Prefix}{TagDefaults.UserTag}";
+        //    return _httpContextAccessor.HttpContext?.Request?.Tags[tagName];
         //}
 
         ///// <summary>
-        ///// Set dragoncorp user cookie
+        ///// Set dragoncorp user tag
         ///// </summary>
         ///// <param name="userGuid">Guid of the user</param>
-        //protected virtual void SetUserCookie(Guid userGuid)
+        //protected virtual void SetUserTag(Guid userGuid)
         //{
         //    if (_httpContextAccessor.HttpContext?.Response?.HasStarted ?? true)
         //        return;
 
-        //    //delete current cookie value
-        //    var cookieName = $"{CookieDefaults.Prefix}{CookieDefaults.UserCookie}";
-        //    _httpContextAccessor.HttpContext.Response.Cookies.Delete(cookieName);
+        //    //delete current tag value
+        //    var tagName = $"{TagDefaults.Prefix}{TagDefaults.UserTag}";
+        //    _httpContextAccessor.HttpContext.Response.Tags.Delete(tagName);
 
-        //    //get date of cookie expiration
-        //    var cookieExpires = _cookieSettings.UserCookieExpires;
-        //    var cookieExpiresDate = DateTime.Now.AddHours(cookieExpires);
+        //    //get date of tag expiration
+        //    var tagExpires = _tagSettings.UserTagExpires;
+        //    var tagExpiresDate = DateTime.Now.AddHours(tagExpires);
 
-        //    //if passed guid is empty set cookie as expired
+        //    //if passed guid is empty set tag as expired
         //    if (userGuid == Guid.Empty)
-        //        cookieExpiresDate = DateTime.Now.AddMonths(-1);
+        //        tagExpiresDate = DateTime.Now.AddMonths(-1);
 
-        //    //set new cookie value
-        //    var options = new CookieOptions
+        //    //set new tag value
+        //    var options = new TagOptions
         //    {
         //        HttpOnly = true,
-        //        Expires = cookieExpiresDate,
+        //        Expires = tagExpiresDate,
         //        Secure = _webHelper.IsCurrentConnectionSecured()
         //    };
-        //    _httpContextAccessor.HttpContext.Response.Cookies.Append(cookieName, userGuid.ToString(), options);
+        //    _httpContextAccessor.HttpContext.Response.Tags.Append(tagName, userGuid.ToString(), options);
         //}
 
-        ///// <summary>
-        ///// Set language culture cookie
-        ///// </summary>
-        ///// <param name="language">Language</param>
-        //protected virtual void SetLanguageCookie(Language language)
-        //{
-        //    if (_httpContextAccessor.HttpContext?.Response?.HasStarted ?? true)
-        //        return;
+        /// <summary>
+        /// Set language culture tag
+        /// </summary>
+        /// <param name="language">Language</param>
+        protected virtual void SetContextLanguage(Language language)
+        {
+            // TODO : DESIGN LOCALIZATION AND LANGUAGE
+            //        USE TO KEEP TRACK OF IN GAME LANGUAGE TO USER LANGUAGE... ETC...
 
-        //    //delete current cookie value
-        //    var cookieName = $"{CookieDefaults.Prefix}{CookieDefaults.CultureCookie}";
-        //    _httpContextAccessor.HttpContext.Response.Cookies.Delete(cookieName);
+            //if (_runtimeContextAccessor.EngineContext?.HasStarted() ?? true)
+            //    return;
 
-        //    if (string.IsNullOrEmpty(language?.LanguageCulture))
-        //        return;
+            ////delete current tag value
+            //var tagName = $"{ContextDefaults.Prefix}{ContextDefaults.CultureSuffix}";
+            //_runtimeContextAccessor.EngineContext.Connection.Tags.Delete(tagName);
 
-        //    //set new cookie value
-        //    var value = CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(language.LanguageCulture));
-        //    var options = new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) };
-        //    _httpContextAccessor.HttpContext.Response.Cookies.Append(cookieName, value, options);
-        //}
+            //if (string.IsNullOrEmpty(language?.LanguageCulture))
+            //    return;
 
-        ///// <summary>
-        ///// Get language from the request
-        ///// </summary>
-        ///// <returns>
-        ///// A task that represents the asynchronous operation
-        ///// The task result contains the found language
-        ///// </returns>
-        //protected virtual async Task<Language> GetLanguageFromRequestAsync()
-        //{
-        //    var requestCultureFeature = _httpContextAccessor.HttpContext?.Features.Get<IRequestCultureFeature>();
-        //    if (requestCultureFeature is null)
-        //        return null;
+            ////set new tag value
+            //var value = ConnectionTagsCultureProvider.MakeTagValue(language);
+            //var options = new TagOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) };
+            //_httpContextAccessor.HttpContext.Response.Tags.Append(tagName, value, options);
+        }
 
-        //    //whether we should detect the current language by user settings
-        //    if (requestCultureFeature.Provider is not SeoUrlCultureProvider && !_localizationSettings.AutomaticallyDetectLanguage)
-        //        return null;
+        /// <summary>
+        /// Get language from the request
+        /// </summary>
+        /// <returns>
+        /// A task that represents the asynchronous operation
+        /// The task result contains the found language
+        /// </returns>
+        protected virtual async Task<Language> GetLanguageFromContextAsync()
+        {
+            // TODO : DESIGN LOCALIZATION AND LANGUAGE
+            //        USE TO KEEP TRACK OF IN GAME LANGUAGE TO USER LANGUAGE... ETC...
 
-        //    //get request culture
-        //    if (requestCultureFeature.RequestCulture is null)
-        //        return null;
 
-        //    //try to get language by culture name
-        //    var requestLanguage = (await _languageService.GetAllLanguagesAsync()).FirstOrDefault(language =>
-        //        language.LanguageCulture.Equals(requestCultureFeature.RequestCulture.Culture.Name, StringComparison.InvariantCultureIgnoreCase));
 
-        //    //check language availability
-        //    if (requestLanguage == null || !requestLanguage.Published || !await _nodeMappingService.AuthorizeAsync(requestLanguage))
-        //        return null;
+            //var requestCultureFeature = _runtimeContextAccessor.EngineContext?.Features.Get<IRequestCultureFeature>();
+            //if (requestCultureFeature is null)
+            //    return null;
 
-        //    return requestLanguage;
-        //}
+            ////whether we should detect the current language by user settings
+            //if (requestCultureFeature.Provider is not SeoUrlCultureProvider && !_localizationSettings.AutomaticallyDetectLanguage)
+            //    return null;
+
+            ////get request culture
+            //if (requestCultureFeature.RequestCulture is null)
+            //    return null;
+
+            ////try to get language by culture name
+            //var requestLanguage = (await _languageService.GetAllLanguagesAsync()).FirstOrDefault(language =>
+            //    language.LanguageCulture.Equals(requestCultureFeature.RequestCulture.Culture.Name, StringComparison.InvariantCultureIgnoreCase));
+
+            ////check language availability
+            //if (requestLanguage == null || !requestLanguage.Published || !await _nodeMappingService.AuthorizeAsync(requestLanguage))
+                return await Task.FromResult<Language>(null);
+
+            //return requestLanguage;
+        }
 
         #endregion
 
@@ -289,13 +300,13 @@ namespace ARWNI2S.Runtime
                 if (user == null || user.Deleted || !user.Active || user.RequireReLogin)
                 {
                     //get guest user
-                    //var userCookie = GetUserCookie();
-                    //if (Guid.TryParse(userCookie, out var userGuid))
+                    //var userTag = GetUserTag();
+                    //if (Guid.TryParse(userTag, out var userGuid))
                     //{
-                    //    //get user from cookie (should not be registered)
-                    //    var userByCookie = await _userService.GetUserByGuidAsync(userGuid);
-                    //    if (userByCookie != null && !await _userService.IsRegisteredAsync(userByCookie))
-                    //        user = userByCookie;
+                    //    //get user from tag (should not be registered)
+                    //    var userByTag = await _userService.GetUserByGuidAsync(userGuid);
+                    //    if (userByTag != null && !await _userService.IsRegisteredAsync(userByTag))
+                    //        user = userByTag;
                     //}
                 }
 
@@ -306,10 +317,10 @@ namespace ARWNI2S.Runtime
                 }
             }
 
-            if (!user.Deleted && user.Active && !user.RequireReLogin)
+            if (/*TODO: remove : user != null &&*/user != null && !user.Deleted && user.Active && !user.RequireReLogin)
             {
-                //set user cookie
-                //SetUserCookie(user.UserGuid);
+                //set user tag
+                //SetUserTag(user.UserGuid);
 
                 //cache the found user
                 _cachedUser = user;
@@ -344,8 +355,8 @@ namespace ARWNI2S.Runtime
             user.LanguageId = language?.Id;
             await _userService.UpdateUserAsync(user);
 
-            //set cookie
-            //SetLanguageCookie(language);
+            //set tag
+            //SetLanguageTag(language);
 
             //then reset the cached value
             _cachedLanguage = null;
@@ -365,36 +376,36 @@ namespace ARWNI2S.Runtime
             var node = await _nodeContext.GetCurrentNodeAsync();
 
             //whether we should detect the language from the request
-            //var detectedLanguage = await GetLanguageFromRequestAsync();
+            var detectedLanguage = await GetLanguageFromContextAsync();
 
             //get current saved language identifier
-            var currentLanguageId = user.LanguageId;
+            var currentLanguageId = user?.LanguageId;
 
             //if the language is detected we need to save it
-            //if (detectedLanguage != null)
-            //{
-            //    //save the detected language identifier if it differs from the current one
-            //    if (detectedLanguage.Id != currentLanguageId)
-            //        await SetWorkingLanguageAsync(detectedLanguage);
-            //}
-            //else
-            //{
-            var allNodeLanguages = await _languageService.GetAllLanguagesAsync(nodeId: node.Id);
+            if (detectedLanguage != null)
+            {
+                //save the detected language identifier if it differs from the current one
+                if (detectedLanguage.Id != currentLanguageId)
+                    await SetWorkingLanguageAsync(detectedLanguage);
+            }
+            else
+            {
+                var allNodeLanguages = await _languageService.GetAllLanguagesAsync(nodeId: node.Id);
 
-            //check user language availability
-            var detectedLanguage = allNodeLanguages.FirstOrDefault(language => language.Id == currentLanguageId);
+                //check user language availability
+                detectedLanguage = allNodeLanguages.FirstOrDefault(language => language.Id == currentLanguageId);
 
-            //it not found, then try to get the default language for the current node (if specified)
-            detectedLanguage ??= allNodeLanguages.FirstOrDefault(language => language.Id == node.DefaultLanguageId);
+                //it not found, then try to get the default language for the current node (if specified)
+                detectedLanguage ??= allNodeLanguages.FirstOrDefault(language => language.Id == node.DefaultLanguageId);
 
-            //if the default language for the current node not found, then try to get the first one
-            detectedLanguage ??= allNodeLanguages.FirstOrDefault();
+                //if the default language for the current node not found, then try to get the first one
+                detectedLanguage ??= allNodeLanguages.FirstOrDefault();
 
-            //if there are no languages for the current node try to get the first one regardless of the node
-            detectedLanguage ??= (await _languageService.GetAllLanguagesAsync()).FirstOrDefault();
+                //if there are no languages for the current node try to get the first one regardless of the node
+                detectedLanguage ??= (await _languageService.GetAllLanguagesAsync()).FirstOrDefault();
 
-            //SetLanguageCookie(detectedLanguage);
-            //}
+                SetContextLanguage(detectedLanguage);
+            }
 
             //cache the found language
             _cachedLanguage = detectedLanguage;
@@ -493,8 +504,8 @@ namespace ARWNI2S.Runtime
         //    await _userService.UpdateUserAsync(user);
 
         //    //URGENT SET WALLET? WALLET COOKIE?
-        //    //set cookie
-        //    //SetBlockchainCookie(blockchain);
+        //    //set tag
+        //    //SetBlockchainTag(blockchain);
 
         //    //then reset the cached value
         //    _cachedBlockchain = null;
@@ -546,7 +557,7 @@ namespace ARWNI2S.Runtime
         //    //    //if there are no blockchains for the current node try to get the first one regardless of the node
         //    //    detectedBlockchain ??= (await _blockchainService.GetAllBlockchainsAsync()).FirstOrDefault();
 
-        //    //    SetBlockchainCookie(detectedBlockchain);
+        //    //    SetBlockchainTag(detectedBlockchain);
         //    //}
 
         //    ////cache the found blockchain

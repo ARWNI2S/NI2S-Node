@@ -19,7 +19,7 @@ namespace ARWNI2S.Runtime.Infrastructure.Extensions
         private static readonly IEngineFileProvider _fileProvider;
         private static readonly List<KeyValuePair<string, Version>> _baseAppLibraries;
         private static readonly Dictionary<string, Version> _moduleLibraries;
-        private static readonly Dictionary<string, ModuleLoadedAssemblyInfo> _loadedAssemblies = new();
+        private static readonly Dictionary<string, ModuleLoadedAssemblyInfo> _loadedAssemblies = [];
         private static readonly ReaderWriterLockSlim _locker = new();
 
         #endregion
@@ -31,8 +31,8 @@ namespace ARWNI2S.Runtime.Infrastructure.Extensions
             //we use the default file provider, since the DI isn't initialized yet
             _fileProvider = CommonHelper.DefaultFileProvider;
 
-            _baseAppLibraries = new List<KeyValuePair<string, Version>>();
-            _moduleLibraries = new Dictionary<string, Version>();
+            _baseAppLibraries = [];
+            _moduleLibraries = [];
 
             //get all libraries from /bin/{version}/ directory
             foreach (var file in _fileProvider.GetFiles(AppDomain.CurrentDomain.BaseDirectory, "*.dll"))

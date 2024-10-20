@@ -15,6 +15,6 @@ namespace ARWNI2S.Runtime.Features
         /// <summary>
         /// Gets the list of controller types in an MVC application.
         /// </summary>
-        public IList<TypeInfo> Controllers { get; } = new List<TypeInfo>();
+        public IList<TypeInfo> Controllers { get; } = [];
     }
 }

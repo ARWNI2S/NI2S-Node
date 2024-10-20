@@ -228,7 +228,7 @@ public partial class EntityRepository<TEntity> : IRepository<TEntity> where TEnt
     public virtual async Task<IList<TEntity>> GetByIdsAsync(IList<int> ids, Func<ICacheKeyService, CacheKey> getCacheKey = null, bool includeDeleted = true)
     {
         if (ids?.Any() != true)
-            return new List<TEntity>();
+            return [];
 
         static IList<TEntity> sortByIdList(IList<int> listOfId, IDictionary<int, TEntity> entitiesById)
         {
@@ -271,7 +271,7 @@ public partial class EntityRepository<TEntity> : IRepository<TEntity> where TEnt
             .Where(entity => entity != default)
             .ToDictionaryAsync(entity => entity.Id, entity => entity);
         var missingIds = ids.Except(cachedById.Keys).ToList();
-        var missingEntities = missingIds.Count > 0 ? await getByIdsAsync(missingIds, false) : new List<TEntity>();
+        var missingEntities = missingIds.Count > 0 ? await getByIdsAsync(missingIds, false) : [];
 
         foreach (var entity in missingEntities)
         {

@@ -650,7 +650,7 @@ namespace ARWNI2S.Infrastructure.Collections
             public TrieNode(string label = "")
             {
                 Label = label;
-                Children = new Dictionary<char, TrieNode>();
+                Children = [];
             }
 
             public TrieNode(ReadOnlySpan<char> label) : this(label.ToString())

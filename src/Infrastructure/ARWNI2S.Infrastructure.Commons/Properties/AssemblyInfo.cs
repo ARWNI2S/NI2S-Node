@@ -18,6 +18,8 @@ using System.Runtime.InteropServices;
 
 [assembly: Guid("5324a80a-a77d-4a41-8659-c020ac96e9e0")]
 
+[assembly: InternalsVisibleTo("ARWNI2S.GDESK")]
+
 [assembly: InternalsVisibleTo("ARWNI2S.Node.Runtime")]
 
 [assembly: InternalsVisibleTo("ARWNI2S.Narrator.Framework")]
