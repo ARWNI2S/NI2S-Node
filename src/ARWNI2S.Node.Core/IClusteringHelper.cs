@@ -1,6 +1,6 @@
 ﻿namespace ARWNI2S.Node.Core
 {
-    public interface INodeHelper
+    public interface IClusteringHelper
     {
         /// <summary>
         /// Get IP address from the NI2S context

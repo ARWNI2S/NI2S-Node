@@ -1,4 +1,4 @@
-﻿namespace ARWNI2S.Infrastructure.Collections.Tree
+﻿namespace ARWNI2S.Infrastructure.Collections.Trees
 {
     public enum TreeNodeEvent
     {

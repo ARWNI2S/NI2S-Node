@@ -1,5 +1,4 @@
-﻿using ARWNI2S.Node.Core.Network;
-using ARWNI2S.Node.Core.Runtime;
+﻿using ARWNI2S.Infrastructure.Engine;
 
 namespace ARWNI2S.Node.Core.Services.Localization
 {
@@ -63,18 +62,18 @@ namespace ARWNI2S.Node.Core.Services.Localization
     }
 
     /// <summary>
-    /// Represents a provider for determining the culture information of an <see cref="ConnectionInfo"/>.
+    /// Represents a provider for determining the culture information of an <see cref="ContextInfo"/>.
     /// </summary>
     public interface IRequestCultureProvider
     {
         /// <summary>
         /// Implements the provider to determine the culture of the given request.
         /// </summary>
-        /// <param name="context">The <see cref="IRuntimeContext"/> for the request.</param>
+        /// <param name="context">The <see cref="IEngineContext"/> for the request.</param>
         /// <returns>
         ///     The determined <see cref="CultureProviderResult"/>.
         ///     Returns <c>null</c> if the provider couldn't determine a <see cref="CultureProviderResult"/>.
         /// </returns>
-        Task<CultureProviderResult> DetermineProviderCultureResult(IRuntimeContext context);
+        Task<CultureProviderResult> DetermineProviderCultureResult(IEngineContext context);
     }
 }

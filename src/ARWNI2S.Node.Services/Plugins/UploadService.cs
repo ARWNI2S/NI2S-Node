@@ -18,7 +18,7 @@ namespace ARWNI2S.Node.Services.Plugins
         #region Fields
 
         private readonly IEngineFileProvider _fileProvider;
-        private readonly INodeContext _nodeContext;
+        private readonly IClusteringContext _nodeContext;
         //private readonly IThemeProvider _themeProvider;
 
         #endregion
@@ -26,7 +26,7 @@ namespace ARWNI2S.Node.Services.Plugins
         #region Ctor
 
         public UploadService(IEngineFileProvider fileProvider,
-            INodeContext nodeContext//,
+            IClusteringContext nodeContext//,
                                         //IThemeProvider themeProvider
             )
         {

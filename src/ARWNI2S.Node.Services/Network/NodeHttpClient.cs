@@ -1,7 +1,7 @@
 ﻿using ARWNI2S.Node.Core;
 using ARWNI2S.Node.Services.Common;
 
-namespace ARWNI2S.Portal.Services.Common
+namespace ARWNI2S.Node.Services.Network
 {
     /// <summary>
     /// Represents the HTTP client to request current node
@@ -17,7 +17,7 @@ namespace ARWNI2S.Portal.Services.Common
         #region Ctor
 
         public NodeHttpClient(HttpClient client,
-            INodeHelper nodeHelper)
+            IClusteringHelper nodeHelper)
         {
             //configure client
             client.BaseAddress = new Uri(nodeHelper.GetNodeLocation());

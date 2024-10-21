@@ -1,14 +1,14 @@
 ﻿using System.Net;
 using System.Security.Cryptography.X509Certificates;
 
-namespace ARWNI2S.Node.Core.Network
+namespace ARWNI2S.Infrastructure.Engine
 {
     /// <summary>
     /// Represents a underlying persistent remote connection.
     /// </summary>
-    public abstract class ConnectionInfo
+    public abstract class ContextInfo
     {
-        protected ConnectionInfo()
+        protected ContextInfo()
         {
 
         }

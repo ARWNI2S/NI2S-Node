@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 
-namespace ARWNI2S.Infrastructure.Collections.Tree
+namespace ARWNI2S.Infrastructure.Collections.Trees
 {
     /// <summary>
     /// Implements a collection of Tree Nodes (Node&lt;T&gt; />)

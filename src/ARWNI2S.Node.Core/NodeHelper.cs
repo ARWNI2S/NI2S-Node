@@ -1,4 +1,4 @@
-﻿using ARWNI2S.Node.Core.Runtime;
+﻿using ARWNI2S.Infrastructure.Engine;
 using ARWNI2S.Node.Core.Runtime.Extensions;
 using Microsoft.Extensions.Hosting;
 using System.Net;
@@ -9,21 +9,21 @@ namespace ARWNI2S.Node.Core
     /// <summary>
     /// Represents a node helper
     /// </summary>
-    public partial class NodeHelper : INodeHelper
+    public partial class NodeHelper : IClusteringHelper
     {
         #region Fields  
 
         private readonly IHostApplicationLifetime _hostApplicationLifetime;
-        private readonly IRuntimeContextAccessor _runtimeContextAccessor;
-        private readonly Lazy<INodeContext> _nodeContext;
+        private readonly IEngineContextAccessor _runtimeContextAccessor;
+        private readonly Lazy<IClusteringContext> _nodeContext;
 
         #endregion
 
         #region Ctor
 
         public NodeHelper(IHostApplicationLifetime hostApplicationLifetime,
-            IRuntimeContextAccessor runtimeContextAccessor,
-            Lazy<INodeContext> nodeContext)
+            IEngineContextAccessor runtimeContextAccessor,
+            Lazy<IClusteringContext> nodeContext)
         {
             //_actionContextAccessor = actionContextAccessor;
             _hostApplicationLifetime = hostApplicationLifetime;
@@ -42,7 +42,7 @@ namespace ARWNI2S.Node.Core
         public virtual string GetCurrentIpAddress()
         {
             // TODO: CHECK
-            if (_runtimeContextAccessor.EngineContext?.Connection?.RemoteIpAddress is IPAddress remoteIp)
+            if (_runtimeContextAccessor.EngineContext?.Info?.RemoteIpAddress is IPAddress remoteIp)
             {
                 if (remoteIp.Equals(IPAddress.IPv6Loopback))
                     return IPAddress.Loopback.ToString();

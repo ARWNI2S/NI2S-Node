@@ -21,7 +21,7 @@ namespace ARWNI2S.Runtime.Services.Installation
         private readonly Lazy<IPermissionService> _permissionService;
         private readonly Lazy<IModuleService> _moduleService;
         private readonly Lazy<IStaticCacheManager> _staticCacheManager;
-        private readonly Lazy<INodeHelper> _nodeHelper;
+        private readonly Lazy<IClusteringHelper> _nodeHelper;
 
         public ConsoleDatabaseInstaller(NI2SSettings nI2SSettings,
             Lazy<IInstallationService> installationService,
@@ -29,7 +29,7 @@ namespace ARWNI2S.Runtime.Services.Installation
             Lazy<IPermissionService> permissionService,
             Lazy<IModuleService> moduleService,
             Lazy<IStaticCacheManager> staticCacheManager,
-            Lazy<INodeHelper> nodeHelper)
+            Lazy<IClusteringHelper> nodeHelper)
         {
             _nI2SSettings = nI2SSettings;
             _installationService = installationService;

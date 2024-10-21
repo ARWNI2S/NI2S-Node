@@ -1,5 +1,5 @@
 ﻿using System.Collections;
-using ARWNI2S.Infrastructure.Collections.Tree;
+using ARWNI2S.Infrastructure.Collections.Trees;
 
 namespace ARWNI2S.Infrastructure.Collections
 {

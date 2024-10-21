@@ -1,10 +1,9 @@
-﻿using ARWNI2S.Node.Core.Network;
-using ARWNI2S.Node.Core.Runtime;
+﻿using ARWNI2S.Infrastructure.Engine;
 
 namespace ARWNI2S.Node.Core.Services.Localization
 {
     /// <summary>
-    /// An abstract base class provider for determining the culture information of an <see cref="ConnectionInfo"/>.
+    /// An abstract base class provider for determining the culture information of an <see cref="ContextInfo"/>.
     /// </summary>
     public abstract class RequestCultureProvider : IRequestCultureProvider
     {
@@ -20,6 +19,6 @@ namespace ARWNI2S.Node.Core.Services.Localization
         //public RequestLocalizationOptions? Options { get; set; }
 
         /// <inheritdoc />
-        public abstract Task<CultureProviderResult> DetermineProviderCultureResult(IRuntimeContext context);
+        public abstract Task<CultureProviderResult> DetermineProviderCultureResult(IEngineContext context);
     }
 }

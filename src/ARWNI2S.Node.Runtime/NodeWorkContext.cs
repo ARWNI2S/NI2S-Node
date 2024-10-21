@@ -1,8 +1,8 @@
-﻿using ARWNI2S.Infrastructure.Entities;
+﻿using ARWNI2S.Infrastructure.Engine;
+using ARWNI2S.Infrastructure.Entities;
 using ARWNI2S.Node.Core;
 using ARWNI2S.Node.Core.Entities.Localization;
 using ARWNI2S.Node.Core.Entities.Users;
-using ARWNI2S.Node.Core.Runtime;
 using ARWNI2S.Node.Services.Localization;
 using ARWNI2S.Node.Services.Users;
 using System.Globalization;
@@ -23,13 +23,13 @@ namespace ARWNI2S.Runtime
         //private readonly ICurrencyService _currencyService;
         //private readonly ITokenService _tokenService;
         private readonly IUserService _userService;
-        private readonly IRuntimeContextAccessor _runtimeContextAccessor;
+        private readonly IEngineContextAccessor _runtimeContextAccessor;
 
         //private readonly IGenericAttributeService _genericAttributeService;
         //private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ILanguageService _languageService;
         //private readonly IBlockchainService _blockchainService;
-        private readonly INodeContext _nodeContext;
+        private readonly IClusteringContext _nodeContext;
         //private readonly INodeMappingService _nodeMappingService;
         //private readonly IUserAgentHelper _userAgentHelper;
         //private readonly IPlayerService _playerService;
@@ -62,10 +62,10 @@ namespace ARWNI2S.Runtime
                 //    ITokenService tokenService,
                 IUserService userService,
                         //    IGenericAttributeService genericAttributeService,
-                        IRuntimeContextAccessor runtimeContextAccessor,
+                        IEngineContextAccessor runtimeContextAccessor,
                     ILanguageService languageService,
                 // IBlockchainService blockchainService,
-                INodeContext nodeContext,
+                IClusteringContext nodeContext,
             // INodeMappingService nodeMappingService,
             // IUserAgentHelper userAgentHelper,
             // IPartnerService partnerService,

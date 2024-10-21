@@ -6,9 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Properties\**" />
-    <EmbeddedResource Remove="Properties\**" />
-    <None Remove="Properties\**" />
+    <Compile Remove="EngineParts\**" />
+    <Compile Remove="Entities\**" />
+    <EmbeddedResource Remove="EngineParts\**" />
+    <EmbeddedResource Remove="Entities\**" />
+    <None Remove="EngineParts\**" />
+    <None Remove="Entities\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,23 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <Generator>ResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Azure.Storage.Blobs" />
-    <PackageReference Include="Microsoft.Extensions.Caching.Memory" />
     <PackageReference Include="Microsoft.Extensions.Hosting" />
     <PackageReference Include="Microsoft.Orleans.Client" />
     <PackageReference Include="Microsoft.Orleans.Clustering.AdoNet" />
@@ -51,6 +38,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Infrastructure\ARWNI2S.GDESK\ARWNI2S.GDESK.csproj" />
+    <ProjectReference Include="..\..\..\Infrastructure\ARWNI2S.MVRM.Core\ARWNI2S.MVRM.Core.csproj" />
     <ProjectReference Include="..\ARWNI2S.Node.Core\ARWNI2S.Node.Core.csproj" />
     <ProjectReference Include="..\ARWNI2S.Node.Data\ARWNI2S.Node.Data.csproj" />
     <ProjectReference Include="..\ARWNI2S.Node.Services\ARWNI2S.Node.Services.csproj" />

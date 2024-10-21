@@ -1,4 +1,4 @@
-﻿namespace ARWNI2S.Infrastructure.Collections.Tree
+﻿namespace ARWNI2S.Infrastructure.Collections.Trees
 {
     /// <summary>
     /// Stateful helper class to build simple tree structures.

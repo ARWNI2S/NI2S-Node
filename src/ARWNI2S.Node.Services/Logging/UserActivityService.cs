@@ -17,7 +17,7 @@ namespace ARWNI2S.Node.Services.Logging
 
         private readonly IRepository<ActivityLog> _activityLogRepository;
         private readonly IRepository<ActivityLogType> _activityLogTypeRepository;
-        private readonly INodeHelper _nodeHelper;
+        private readonly IClusteringHelper _nodeHelper;
         private readonly IWorkContext _workContext;
 
         #endregion
@@ -26,7 +26,7 @@ namespace ARWNI2S.Node.Services.Logging
 
         public UserActivityService(IRepository<ActivityLog> activityLogRepository,
             IRepository<ActivityLogType> activityLogTypeRepository,
-            INodeHelper nodeHelper,
+            IClusteringHelper nodeHelper,
             IWorkContext workContext)
         {
             _activityLogRepository = activityLogRepository;

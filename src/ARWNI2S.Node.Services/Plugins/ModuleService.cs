@@ -27,7 +27,7 @@ namespace ARWNI2S.Node.Services.Plugins
         private readonly ILogService _logger;
         private readonly IEngineFileProvider _fileProvider;
         private readonly IModulesInfo _modulesInfo;
-        private readonly INodeHelper _webHelper;
+        private readonly IClusteringHelper _webHelper;
         //private readonly MediaSettings _mediaSettings;
 
         #endregion
@@ -40,7 +40,7 @@ namespace ARWNI2S.Node.Services.Plugins
             IMigrationManager migrationManager,
             ILogService logger,
             IEngineFileProvider fileProvider,
-            INodeHelper nodeHelper//,
+            IClusteringHelper nodeHelper//,
             //MediaSettings mediaSettings
             )
         {

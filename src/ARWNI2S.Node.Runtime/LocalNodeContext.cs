@@ -1,8 +1,8 @@
-﻿using ARWNI2S.Node.Core;
+﻿using ARWNI2S.Infrastructure.Engine;
+using ARWNI2S.Node.Core;
 using ARWNI2S.Node.Core.Entities.Clustering;
 using ARWNI2S.Node.Core.Entities.Users;
 using ARWNI2S.Node.Core.Infrastructure;
-using ARWNI2S.Node.Core.Runtime;
 using ARWNI2S.Node.Data;
 using ARWNI2S.Node.Services.Clustering;
 using ARWNI2S.Node.Services.Common;
@@ -12,12 +12,12 @@ namespace ARWNI2S.Runtime
     /// <summary>
     /// NI2SNode context for web application
     /// </summary>
-    public partial class LocalNodeContext : INodeContext
+    public partial class LocalNodeContext : IClusteringContext
     {
         #region Fields
 
         private readonly IGenericAttributeService _genericAttributeService;
-        private readonly IRuntimeContextAccessor _engineContextAccessor;
+        private readonly IEngineContextAccessor _engineContextAccessor;
         private readonly IRepository<NI2SNode> _nodeRepository;
         private readonly IClusteringService _clusterService;
 
@@ -37,7 +37,7 @@ namespace ARWNI2S.Runtime
         /// <param name="clusterService">NI2SNode service</param>
         public LocalNodeContext(
             IGenericAttributeService genericAttributeService,
-            IRuntimeContextAccessor engineContextAccessor,
+            IEngineContextAccessor engineContextAccessor,
             IRepository<NI2SNode> nodeRepository,
             IClusteringService clusterService)
         {
@@ -131,9 +131,9 @@ namespace ARWNI2S.Runtime
             return _cachedActiveNodeScopeConfiguration ?? 0;
         }
 
-        async Task<NI2SNode> INodeContext.GetCurrentNodeAsync() => await GetCurrentNodeAsync();
+        async Task<NI2SNode> IClusteringContext.GetCurrentNodeAsync() => await GetCurrentNodeAsync();
 
-        NI2SNode INodeContext.GetCurrentNode() => GetCurrentNode();
+        NI2SNode IClusteringContext.GetCurrentNode() => GetCurrentNode();
 
         #endregion
     }

@@ -1,4 +1,4 @@
-﻿namespace ARWNI2S.Infrastructure.Collections.Tree
+﻿namespace ARWNI2S.Infrastructure.Collections.Trees
 {
     /// <summary>
     /// A TreeRoot object acts as source of tree node events. A single instance is associated

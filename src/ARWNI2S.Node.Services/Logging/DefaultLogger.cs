@@ -15,11 +15,11 @@ namespace ARWNI2S.Node.Services.Logging
     {
         private readonly CommonSettings _commonSettings;
         private readonly IRepository<Log> _logRepository;
-        private readonly INodeHelper _nodeHelper;
+        private readonly IClusteringHelper _nodeHelper;
 
         public DefaultLogger(CommonSettings commonSettings,
             IRepository<Log> logRepository,
-            INodeHelper nodeHelper)
+            IClusteringHelper nodeHelper)
         {
             _commonSettings = commonSettings;
             _logRepository = logRepository;

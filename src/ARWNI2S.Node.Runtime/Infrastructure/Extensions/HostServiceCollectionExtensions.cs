@@ -1,15 +1,16 @@
-﻿using ARWNI2S.Infrastructure;
+﻿using ARWNI2S.Engine.Hosting.Extensions;
+using ARWNI2S.Infrastructure;
 using ARWNI2S.Infrastructure.Configuration;
+using ARWNI2S.Infrastructure.Engine;
 using ARWNI2S.Node.Core;
 using ARWNI2S.Node.Core.Caching;
 using ARWNI2S.Node.Core.Configuration;
 using ARWNI2S.Node.Core.Infrastructure;
 using ARWNI2S.Node.Core.Network;
-using ARWNI2S.Node.Core.Runtime;
 using ARWNI2S.Node.Data;
 using ARWNI2S.Node.Services.Clustering;
+using ARWNI2S.Node.Services.Network;
 using ARWNI2S.Node.Services.Security;
-using ARWNI2S.Portal.Services.Common;
 using ARWNI2S.Runtime.Clustering;
 using ARWNI2S.Runtime.Data;
 using ARWNI2S.Runtime.Profiling;
@@ -98,7 +99,7 @@ namespace ARWNI2S.Runtime.Infrastructure.Extensions
         /// <param name="services">Collection of service descriptors</param>
         public static void AddContextAccessor(this IServiceCollection services)
         {
-            services.AddSingleton<IRuntimeContextAccessor, RuntimeContextAccessor>();
+            services.AddSingleton<IEngineContextAccessor, RuntimeContextAccessor>();
         }
 
         /// <summary>

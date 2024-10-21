@@ -1,6 +1,6 @@
 ﻿using System.Xml.Serialization;
 
-namespace ARWNI2S.Infrastructure.Collections.Tree
+namespace ARWNI2S.Infrastructure.Collections.Trees
 {
     interface ITreeNodeMapper<T, V>
     {

@@ -43,7 +43,7 @@ namespace ARWNI2S.Runtime.Infrastructure
             //file provider
             services.AddScoped<IEngineFileProvider, EngineFileProvider>();
             //node helper
-            services.AddScoped<INodeHelper, NodeHelper>();
+            services.AddScoped<IClusteringHelper, NodeHelper>();
 
             //modules
             services.AddScoped<IModuleService, ModuleService>();
@@ -96,7 +96,7 @@ namespace ARWNI2S.Runtime.Infrastructure
             services.AddScoped<IWorkContext, NodeWorkContext>();
 
             //node context
-            services.AddScoped<INodeContext, LocalNodeContext>();
+            services.AddScoped<IClusteringContext, LocalNodeContext>();
 
             //services
             services.AddScoped<IGenericAttributeService, GenericAttributeService>();
@@ -139,7 +139,7 @@ namespace ARWNI2S.Runtime.Infrastructure
                 services.AddScoped(setting, serviceProvider =>
                 {
                     var nodeId = DataSettingsManager.IsDatabaseInstalled()
-                        ? serviceProvider.GetRequiredService<INodeContext>().GetCurrentNode()?.Id ?? 0
+                        ? serviceProvider.GetRequiredService<IClusteringContext>().GetCurrentNode()?.Id ?? 0
                         : 0;
 
                     return serviceProvider.GetRequiredService<ISettingService>().LoadSettingAsync(setting, nodeId).Result;

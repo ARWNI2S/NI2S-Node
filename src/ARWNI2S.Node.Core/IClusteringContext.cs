@@ -5,7 +5,7 @@ namespace ARWNI2S.Node.Core
     /// <summary>
     /// Node context
     /// </summary>
-    public interface INodeContext
+    public interface IClusteringContext
     {
         /// <summary>
         /// Gets the current node
