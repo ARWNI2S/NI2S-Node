@@ -54,7 +54,7 @@ namespace ARWNI2S.Runtime.Infrastructure.Extensions
                 assembly = Assembly.GetAssembly(typeof(IMigrationManager));
                 migrationManager.ApplyUpMigrations(assembly, MigrationProcessType.Update);
 
-                var taskScheduler = engine.Resolve<ITaskScheduler>();
+                var taskScheduler = engine.Resolve<IClusterTaskScheduler>();
                 await taskScheduler.InitializeAsync();
                 taskScheduler.StartScheduler();
             }

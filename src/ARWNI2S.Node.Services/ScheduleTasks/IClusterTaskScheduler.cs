@@ -3,7 +3,7 @@
     /// <summary>
     /// Task manager interface
     /// </summary>
-    public interface ITaskScheduler
+    public interface IClusterTaskScheduler
     {
         /// <summary>
         /// Initializes task scheduler

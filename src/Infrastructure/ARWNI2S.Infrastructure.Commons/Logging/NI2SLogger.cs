@@ -9,7 +9,7 @@ namespace ARWNI2S.Infrastructure.Logging
     /// Interface of NI2S runtime for logging services. 
     /// </summary>
     [Serializable]
-    public abstract class NI2SLogger : ILogger
+    public abstract class NI2SLogger
     {
         /// <summary> 
         /// Current TraceLevelLevel set for this logger.
@@ -220,47 +220,6 @@ namespace ARWNI2S.Infrastructure.Logging
         public abstract void TrackTrace(string message, IDictionary<string, string> properties);
 
         #endregion
-
-        void ILogger.Log<TState>(Microsoft.Extensions.Logging.LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)
-        {
-            switch (logLevel)
-            {
-                case Microsoft.Extensions.Logging.LogLevel.Debug:
-                    Verbose(eventId.Id, formatter(state, exception), exception);
-                    break;
-                case Microsoft.Extensions.Logging.LogLevel.Trace:
-                case Microsoft.Extensions.Logging.LogLevel.Information:
-                    Info(eventId.Id, formatter(state, exception), exception);
-                    break;
-                case Microsoft.Extensions.Logging.LogLevel.Warning:
-                    Warn(eventId.Id, formatter(state, exception), exception);
-                    break;
-                case Microsoft.Extensions.Logging.LogLevel.Critical:
-                case Microsoft.Extensions.Logging.LogLevel.Error:
-                    Error(eventId.Id, formatter(state, exception), exception);
-                    break;
-                case Microsoft.Extensions.Logging.LogLevel.None:
-                default:
-                    break;
-            }
-        }
-
-        bool ILogger.IsEnabled(Microsoft.Extensions.Logging.LogLevel logLevel)
-        {
-            return logLevel switch
-            {
-                Microsoft.Extensions.Logging.LogLevel.Debug => IsVerbose,
-                Microsoft.Extensions.Logging.LogLevel.Information => IsInfo,
-                Microsoft.Extensions.Logging.LogLevel.Warning => IsWarning,
-                Microsoft.Extensions.Logging.LogLevel.Trace or Microsoft.Extensions.Logging.LogLevel.Critical or Microsoft.Extensions.Logging.LogLevel.Error => true,
-                _ => false,
-            };
-        }
-
-        IDisposable ILogger.BeginScope<TState>(TState state)
-        {
-            throw new NotImplementedException();
-        }
 
     }
 }

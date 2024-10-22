@@ -80,12 +80,13 @@ namespace ARWNI2S.Runtime.Infrastructure.Extensions
             services.AddContextAccessor();
 
             //add core services
-            var ni2sCoreBuilder = services.AddNI2SCore();
+            services.AddGDESK();
+            var mvrmCoreBuilder = services.AddMVRMCore();
 
             //initialize modules
             var moduleConfig = new ModuleConfig();
             context.Configuration.GetSection(nameof(ModuleConfig)).Bind(moduleConfig, options => options.BindNonPublicProperties = true);
-            ni2sCoreBuilder.PartManager.InitializeModules(moduleConfig);
+            mvrmCoreBuilder.PartManager.InitializeModules(moduleConfig);
 
             //create engine and configure service provider
             var engine = NodeEngineContext.Create();

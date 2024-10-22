@@ -153,7 +153,7 @@ namespace ARWNI2S.Runtime.Infrastructure
                 services.AddScoped<IDatabaseInstaller, ConsoleDatabaseInstaller>();
 
             //schedule tasks
-            services.AddSingleton<ITaskScheduler, Node.Services.ScheduleTasks.TaskScheduler>();
+            services.AddSingleton<IClusterTaskScheduler, Node.Services.ScheduleTasks.ClusterTaskScheduler>();
             services.AddTransient<IScheduleTaskRunner, ScheduleTaskRunner>();
 
             //event consumers

@@ -11,13 +11,13 @@ using Microsoft.Extensions.DependencyInjection;
 namespace ARWNI2S.Node.Services.ScheduleTasks
 {
     /// <summary>
-    /// Represents task manager
+    /// Represents background cluster task manager
     /// </summary>
-    public partial class TaskScheduler : ITaskScheduler
+    public partial class ClusterTaskScheduler : IClusterTaskScheduler
     {
         #region Fields
 
-        protected static readonly List<TaskThread> _taskThreads = [];
+        protected static readonly List<ClusterTaskThread> _taskThreads = [];
         protected readonly NI2SSettings _ni2sSettings;
         protected readonly IScheduleTaskService _scheduleTaskService;
         protected readonly IClusteringContext _nodeContext;
@@ -26,16 +26,16 @@ namespace ARWNI2S.Node.Services.ScheduleTasks
 
         #region Ctor
 
-        public TaskScheduler(NI2SSettings ni2sSettings,
+        public ClusterTaskScheduler(NI2SSettings ni2sSettings,
             IHttpClientFactory httpClientFactory,
             IScheduleTaskService scheduleTaskService,
             IServiceScopeFactory serviceScopeFactory,
             IClusteringContext nodeContext)
         {
             _ni2sSettings = ni2sSettings;
-            TaskThread.HttpClientFactory = httpClientFactory;
+            ClusterTaskThread.HttpClientFactory = httpClientFactory;
             _scheduleTaskService = scheduleTaskService;
-            TaskThread.ServiceScopeFactory = serviceScopeFactory;
+            ClusterTaskThread.ServiceScopeFactory = serviceScopeFactory;
             _nodeContext = nodeContext;
         }
 
@@ -66,7 +66,7 @@ namespace ARWNI2S.Node.Services.ScheduleTasks
 
             foreach (var scheduleTask in scheduleTasks)
             {
-                var taskThread = new TaskThread(scheduleTask, scheduleTaskUrl, timeout)
+                var taskThread = new ClusterTaskThread(scheduleTask, scheduleTaskUrl, timeout)
                 {
                     Seconds = scheduleTask.Seconds
                 };
@@ -133,7 +133,7 @@ namespace ARWNI2S.Node.Services.ScheduleTasks
         /// <summary>
         /// Represents task thread
         /// </summary>
-        protected partial class TaskThread : IDisposable
+        protected partial class ClusterTaskThread : IDisposable
         {
             #region Fields
 
@@ -151,7 +151,7 @@ namespace ARWNI2S.Node.Services.ScheduleTasks
 
             #region Ctor
 
-            public TaskThread(ScheduleTask task, string scheduleTaskUrl, int? timeout)
+            public ClusterTaskThread(ScheduleTask task, string scheduleTaskUrl, int? timeout)
             {
                 _scheduleTaskUrl = scheduleTaskUrl;
                 _scheduleTask = task;
