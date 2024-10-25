@@ -112,7 +112,7 @@ namespace ARWNI2S.Runtime.Infrastructure
             services.AddScoped<ILocalizedEntityService, LocalizedEntityService>();
             services.AddScoped<ILanguageService, LanguageService>();
             services.AddScoped<IEncryptionService, EncryptionService>();
-            services.AddScoped<ILogService, DefaultLogger>();
+            services.AddScoped<ILogService, NodeDbLogger>();
             services.AddScoped<IUserActivityService, UserActivityService>();
             services.AddScoped<IDateTimeHelper, DateTimeHelper>();
             services.AddScoped<IScheduleTaskService, ScheduleTaskService>();

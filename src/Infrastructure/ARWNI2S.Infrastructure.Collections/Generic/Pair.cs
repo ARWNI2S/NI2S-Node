@@ -162,7 +162,7 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
             if (obj is Pair<TFirst, TSecond>)
                 return CompareTo((Pair<TFirst, TSecond>)obj);
             else
-                throw new ArgumentException(LocalizedStrings.Collections_BadComparandType, "obj");
+                throw new ArgumentException(LocalizedStrings.Collections_BadComparandType, nameof(obj));
         }
 
         /// <summary>

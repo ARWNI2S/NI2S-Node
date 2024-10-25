@@ -206,7 +206,7 @@ namespace ARWNI2S.Infrastructure.Collections
             if (count < 0)
                 throw new IndexOutOfRangeException(LocalizedStrings.Collections_ArgMustNotBeNegative);
             if (arrayIndex < 0)
-                throw new ArgumentOutOfRangeException("arrayIndex", arrayIndex, LocalizedStrings.Collections_ArgMustNotBeNegative);
+                throw new ArgumentOutOfRangeException(nameof(arrayIndex), arrayIndex, LocalizedStrings.Collections_ArgMustNotBeNegative);
             if (arrayIndex >= array.Length || count > array.Length - arrayIndex)
                 throw new ArgumentException("arrayIndex", LocalizedStrings.Collections_ArrayTooSmall);
 
@@ -288,7 +288,7 @@ namespace ARWNI2S.Infrastructure.Collections
             if (count < 0)
                 throw new IndexOutOfRangeException(LocalizedStrings.Collections_ArgMustNotBeNegative);
             if (index < 0)
-                throw new ArgumentOutOfRangeException("index", index, LocalizedStrings.Collections_ArgMustNotBeNegative);
+                throw new ArgumentOutOfRangeException(nameof(index), index, LocalizedStrings.Collections_ArgMustNotBeNegative);
             if (index >= array.Length || count > array.Length - index)
                 throw new ArgumentException("index", LocalizedStrings.Collections_ArrayTooSmall);
 

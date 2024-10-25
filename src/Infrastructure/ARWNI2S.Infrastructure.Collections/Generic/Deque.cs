@@ -159,9 +159,9 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
             set
             {
                 if (value < Count)
-                    throw new ArgumentOutOfRangeException("value", LocalizedStrings.Collections_CapacityLessThanCount);
+                    throw new ArgumentOutOfRangeException(nameof(value), LocalizedStrings.Collections_CapacityLessThanCount);
                 if (value > int.MaxValue - 1)
-                    throw new ArgumentOutOfRangeException("value");
+                    throw new ArgumentOutOfRangeException(nameof(value));
                 if (value == Capacity)
                     return;
 
@@ -212,12 +212,12 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
             {
                 int i = index + start;
                 if (i < start)  // handles both the case where index < 0, or the above addition overflow to a negative number.
-                    throw new ArgumentOutOfRangeException("index");
+                    throw new ArgumentOutOfRangeException(nameof(index));
 
                 if (end >= start)
                 {
                     if (i >= end)
-                        throw new ArgumentOutOfRangeException("index");
+                        throw new ArgumentOutOfRangeException(nameof(index));
                     return buffer[i];
                 }
                 else
@@ -227,7 +227,7 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
                     {
                         i -= length;
                         if (i >= end)
-                            throw new ArgumentOutOfRangeException("index");
+                            throw new ArgumentOutOfRangeException(nameof(index));
                     }
                     return buffer[i];
                 }
@@ -241,12 +241,12 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
 
                 int i = index + start;
                 if (i < start)  // handles both the case where index < 0, or the above addition overflow to a negative number.
-                    throw new ArgumentOutOfRangeException("index");
+                    throw new ArgumentOutOfRangeException(nameof(index));
 
                 if (end >= start)
                 {
                     if (i >= end)
-                        throw new ArgumentOutOfRangeException("index");
+                        throw new ArgumentOutOfRangeException(nameof(index));
                     buffer[i] = value;
                 }
                 else
@@ -256,7 +256,7 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
                     {
                         i -= length;
                         if (i >= end)
-                            throw new ArgumentOutOfRangeException("index");
+                            throw new ArgumentOutOfRangeException(nameof(index));
                     }
                     buffer[i] = value;
                 }
@@ -322,7 +322,7 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
 
             int count = Count;
             if (index < 0 || index > Count)
-                throw new ArgumentOutOfRangeException("index");
+                throw new ArgumentOutOfRangeException(nameof(index));
 
             if (buffer == null)
             {
@@ -412,7 +412,7 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
 
             int count = Count;
             if (index < 0 || index > Count)
-                throw new ArgumentOutOfRangeException("index");
+                throw new ArgumentOutOfRangeException(nameof(index));
 
             // We need an ICollection, because we need the count of the collection.
             // If needed, copy the items to a temporary list.
@@ -522,7 +522,7 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
             int count = Count;
 
             if (index < 0 || index >= count)
-                throw new ArgumentOutOfRangeException("index");
+                throw new ArgumentOutOfRangeException(nameof(index));
 
             int length = buffer.Length;
             int i; // index of removed item
@@ -604,9 +604,9 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
             int dequeCount = Count;
 
             if (index < 0 || index >= dequeCount)
-                throw new ArgumentOutOfRangeException("index");
+                throw new ArgumentOutOfRangeException(nameof(index));
             if (count < 0 || count > dequeCount - index)
-                throw new ArgumentOutOfRangeException("count");
+                throw new ArgumentOutOfRangeException(nameof(count));
             if (count == 0)
                 return;
 

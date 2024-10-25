@@ -172,7 +172,7 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
             if (obj is Triple<TFirst, TSecond, TThird>)
                 return CompareTo((Triple<TFirst, TSecond, TThird>)obj);
             else
-                throw new ArgumentException(LocalizedStrings.Collections_BadComparandType, "obj");
+                throw new ArgumentException(LocalizedStrings.Collections_BadComparandType, nameof(obj));
         }
 
         /// <summary>

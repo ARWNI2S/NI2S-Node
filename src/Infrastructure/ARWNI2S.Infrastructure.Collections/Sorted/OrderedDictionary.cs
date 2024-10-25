@@ -440,7 +440,7 @@ namespace ARWNI2S.Infrastructure.Collections.Sorted
 
             bool added = _tree.Insert(pair, DuplicatePolicy.DoNothing, out KeyValuePair<TKey, TValue> dummy);
             if (!added)
-                throw new ArgumentException(LocalizedStrings.Collections_KeyAlreadyPresent, "key");
+                throw new ArgumentException(LocalizedStrings.Collections_KeyAlreadyPresent, nameof(key));
         }
 
         /// <summary>
@@ -745,7 +745,7 @@ namespace ARWNI2S.Infrastructure.Collections.Sorted
                 set
                 {
                     if (!KeyInView(key))
-                        throw new ArgumentException(LocalizedStrings.Collections_OutOfViewRange, "key");
+                        throw new ArgumentException(LocalizedStrings.Collections_OutOfViewRange, nameof(key));
                     else
                         _myDictionary[key] = value;
                 }

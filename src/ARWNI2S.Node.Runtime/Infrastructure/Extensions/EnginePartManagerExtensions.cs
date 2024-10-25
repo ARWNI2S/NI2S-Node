@@ -121,7 +121,7 @@ namespace ARWNI2S.Runtime.Infrastructure.Extensions
             {
                 if (useUnsafeLoadAssembly)
                 {
-                    //if an application has been copied from the web, it is flagged by Windows as being a web application,
+                    //if an application has been copied from the web, it is flagged by Windows as being a application,
                     //even if it resides on the local computer.You can change that designation by changing the file properties,
                     //or you can use the<loadFromRemoteSources> element to grant the assembly full trust.As an alternative,
                     //you can use the UnsafeLoadFrom method to load a local assembly that the operating system has flagged as

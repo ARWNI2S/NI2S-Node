@@ -1,4 +1,5 @@
 ﻿using ARWNI2S.Infrastructure.Logging;
+using Microsoft.Extensions.Logging;
 
 namespace ARWNI2S.Infrastructure.Telemetry.Consumers
 {
@@ -8,7 +9,7 @@ namespace ARWNI2S.Infrastructure.Telemetry.Consumers
     public class FileTelemetryConsumer : ITraceTelemetryConsumer
     {
         private StreamWriter _logOutput;
-        private readonly object _lockObj = new object();
+        private readonly object _lockObj = new();
         private string _logFileName;
 
         /// <summary>
@@ -16,7 +17,7 @@ namespace ARWNI2S.Infrastructure.Telemetry.Consumers
         /// </summary>
         public FileTelemetryConsumer(string fileName)
         {
-            _logFileName = TraceLogger.LoggerDirectory + "\\" + fileName;
+            _logFileName = fileName;
 
             if (!File.Exists(_logFileName))
                 File.Create(_logFileName).Close();
@@ -96,7 +97,7 @@ namespace ARWNI2S.Infrastructure.Telemetry.Consumers
             catch (Exception exc)
             {
                 var msg = string.Format("Ignoring error closing log file {0} - {1}", _logFileName,
-                    TraceLogger.PrintException(exc));
+                    exc.PrintException());
                 ConsoleText.WriteLine(msg);
             }
             finally

@@ -1,10 +1,23 @@
-﻿using System.Net;
+﻿using Microsoft.Extensions.Logging;
+using System.Net;
 using System.Text;
 
 namespace ARWNI2S.Infrastructure.Logging
 {
     internal static class TraceParserUtils
     {
+        /// <summary>
+        /// Trave Levels table
+        /// </summary>
+        private static string[] TraceLevelTable = { "TRACE     ",
+                                                   "DEBUG     ",
+                                                   "INFO      ",
+                                                   "WARNING   ",
+                                                   "ERROR     ",
+                                                   "CRITICAL  ",
+                                                   "NONE      " };
+
+
         public static string PrintProperties(string message, IDictionary<string, string> properties)
         {
             if (properties == null || properties.Keys.Count == 0)
@@ -112,11 +125,11 @@ namespace ARWNI2S.Infrastructure.Logging
                 // This is just a temporal solution to ease the dev. process, can remove later.
                 ip = string.Empty;
             }
-            string exc = includeStackTrace ? TraceLogger.PrintException(exception) : TraceLogger.PrintExceptionWithoutStackTrace(exception);
+            string exc = includeStackTrace ? exception.PrintException() : exception.PrintExceptionWithoutStackTrace();
             string msg = string.Format("[{0} {1,5}\t{2}\t{3}\t{4}\t{5}]\t{6}\t{7}",
-                TraceLogger.PrintDate(timestamp),               //0
+                timestamp.PrintDate(),                          //0
                 Thread.CurrentThread.ManagedThreadId,           //1
-                TraceLogger.TraceLevelTable[(int)severity],     //2
+                TraceLevelTable[(int)severity],                 //2
                 errorCode,                                      //3
                 caller,                                         //4
                 ip,                                             //5

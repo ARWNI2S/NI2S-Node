@@ -215,7 +215,7 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
                 // It is recoded as an interative algorithm for performance.
 
                 if (root == null || index < 0 || index >= root.Count)
-                    throw new ArgumentOutOfRangeException("index");
+                    throw new ArgumentOutOfRangeException(nameof(index));
 
                 Node current = root;
                 ConcatNode curConcat = current as ConcatNode;
@@ -244,7 +244,7 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
                 // It is recoded as an interative algorithm for performance.
 
                 if (root == null || index < 0 || index >= root.Count)
-                    throw new ArgumentOutOfRangeException("index");
+                    throw new ArgumentOutOfRangeException(nameof(index));
 
                 // Like List<T>, we stop enumerations after a set operation. This could be made
                 // to not happen, but it would be complex, because set operations on a shared node
@@ -326,7 +326,7 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
                 else if (index == Count)
                     Add(item);
                 else
-                    throw new ArgumentOutOfRangeException("index");
+                    throw new ArgumentOutOfRangeException(nameof(index));
             }
             else
             {
@@ -372,7 +372,7 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
                 else if (index == Count)
                     AddRange(collection);
                 else
-                    throw new ArgumentOutOfRangeException("index");
+                    throw new ArgumentOutOfRangeException(nameof(index));
             }
             else
             {
@@ -427,7 +427,7 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
                 else if (index == Count)
                     AddRange(list);
                 else
-                    throw new ArgumentOutOfRangeException("index");
+                    throw new ArgumentOutOfRangeException(nameof(index));
             }
             else
             {
@@ -490,9 +490,9 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
             if (count == 0)
                 return;              // nothing to do.
             if (index < 0 || index >= Count)
-                throw new ArgumentOutOfRangeException("index");
+                throw new ArgumentOutOfRangeException(nameof(index));
             if (count < 0 || count > Count - index)
-                throw new ArgumentOutOfRangeException("count");
+                throw new ArgumentOutOfRangeException(nameof(count));
 
             StopEnumerations();
 
@@ -819,9 +819,9 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
                 return [];
 
             if (index < 0 || index >= Count)
-                throw new ArgumentOutOfRangeException("index");
+                throw new ArgumentOutOfRangeException(nameof(index));
             if (count < 0 || count > Count - index)
-                throw new ArgumentOutOfRangeException("count");
+                throw new ArgumentOutOfRangeException(nameof(count));
 
             return new BigList<T>(root.Subrange(index, index + count - 1));
         }
@@ -846,9 +846,9 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
         public sealed override IList<T> Range(int index, int count)
         {
             if (index < 0 || index > Count || index == Count && count != 0)
-                throw new ArgumentOutOfRangeException("index");
+                throw new ArgumentOutOfRangeException(nameof(index));
             if (count < 0 || count > Count || count + index > Count)
-                throw new ArgumentOutOfRangeException("count");
+                throw new ArgumentOutOfRangeException(nameof(count));
 
             return new BigListRange(this, index, count);
         }
@@ -886,7 +886,7 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
                     // Set current to the node containing start, and set startIndex to
                     // the index within that node.
                     if (start < 0 || start >= root.Count)
-                        throw new ArgumentOutOfRangeException("start");
+                        throw new ArgumentOutOfRangeException(nameof(start));
 
                     currentConcat = current as ConcatNode;
                     startIndex = start;
@@ -1052,7 +1052,7 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
         private static Node NCopiesOfNode(int copies, Node node)
         {
             if (copies < 0)
-                throw new ArgumentOutOfRangeException("copies", LocalizedStrings.Collections_ArgMustNotBeNegative);
+                throw new ArgumentOutOfRangeException(nameof(copies), LocalizedStrings.Collections_ArgMustNotBeNegative);
 
             // Do the simple cases.
             if (copies == 0 || node == null)
@@ -2844,7 +2844,7 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
             public override void Insert(int index, T item)
             {
                 if (index < 0 || index > _count)
-                    throw new ArgumentOutOfRangeException("index");
+                    throw new ArgumentOutOfRangeException(nameof(index));
 
                 _wrappedList.Insert(_start + index, item);
                 ++_count;
@@ -2853,7 +2853,7 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
             public override void RemoveAt(int index)
             {
                 if (index < 0 || index >= _count)
-                    throw new ArgumentOutOfRangeException("index");
+                    throw new ArgumentOutOfRangeException(nameof(index));
 
                 _wrappedList.RemoveAt(_start + index);
                 --_count;
@@ -2864,14 +2864,14 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
                 get
                 {
                     if (index < 0 || index >= _count)
-                        throw new ArgumentOutOfRangeException("index");
+                        throw new ArgumentOutOfRangeException(nameof(index));
 
                     return _wrappedList[_start + index];
                 }
                 set
                 {
                     if (index < 0 || index >= _count)
-                        throw new ArgumentOutOfRangeException("index");
+                        throw new ArgumentOutOfRangeException(nameof(index));
 
                     _wrappedList[_start + index] = value;
                 }

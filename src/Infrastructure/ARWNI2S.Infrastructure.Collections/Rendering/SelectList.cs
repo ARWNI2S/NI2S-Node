@@ -37,7 +37,7 @@ namespace ARWNI2S.Infrastructure.Collections.Rendering
             get { return FindIndex(0, item => item.Selected); }
             set
             {
-                if (value < 0 || value >= this.Count)
+                if (value < 0 || value >= Count)
                     throw new ArgumentOutOfRangeException(nameof(value));
 
                 foreach (var item in this)

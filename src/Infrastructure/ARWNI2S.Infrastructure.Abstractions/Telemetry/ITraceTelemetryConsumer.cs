@@ -1,4 +1,4 @@
-﻿using ARWNI2S.Infrastructure.Logging;
+﻿using Microsoft.Extensions.Logging;
 
 namespace ARWNI2S.Infrastructure.Telemetry
 {

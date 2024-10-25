@@ -280,7 +280,7 @@ namespace ARWNI2S.Infrastructure.Collections
         public T GetItemByIndex(int index)
         {
             if (index < 0 || index >= _count)
-                throw new ArgumentOutOfRangeException("index");
+                throw new ArgumentOutOfRangeException(nameof(index));
 
             Node current = _root;           // current search location in the tree
 

@@ -6,6 +6,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Telemetry\**" />
+    <EmbeddedResource Remove="Telemetry\**" />
+    <None Remove="Telemetry\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Configuration\ITraceConfiguration.cs" />
+    <Compile Remove="Logging\ILogConsumer.cs" />
+    <Compile Remove="Logging\LoggingEnums.cs" />
     <Compile Remove="Timing\AsyncTaskSafeTimer.cs" />
     <Compile Remove="Timing\DebugTimer.cs" />
     <Compile Remove="Timing\HiResTimer.cs" />

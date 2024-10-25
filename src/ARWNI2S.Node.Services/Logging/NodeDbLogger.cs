@@ -1,23 +1,23 @@
 ﻿using ARWNI2S.Infrastructure.Collections.Generic;
 using ARWNI2S.Infrastructure.Entities;
-using ARWNI2S.Infrastructure.Logging;
 using ARWNI2S.Node.Core;
-using ARWNI2S.Node.Data;
-using ARWNI2S.Node.Core.Entities.Logging;
 using ARWNI2S.Node.Core.Entities.Common;
+using ARWNI2S.Node.Core.Entities.Logging;
+using ARWNI2S.Node.Data;
+using Microsoft.Extensions.Logging;
 
 namespace ARWNI2S.Node.Services.Logging
 {
     /// <summary>
     /// Default logger
     /// </summary>
-    public partial class DefaultLogger : ILogService
+    public partial class NodeDbLogger : ILogService
     {
         private readonly CommonSettings _commonSettings;
         private readonly IRepository<Log> _logRepository;
         private readonly IClusteringHelper _nodeHelper;
 
-        public DefaultLogger(CommonSettings commonSettings,
+        public NodeDbLogger(CommonSettings commonSettings,
             IRepository<Log> logRepository,
             IClusteringHelper nodeHelper)
         {
@@ -59,7 +59,7 @@ namespace ARWNI2S.Node.Services.Logging
         {
             return level switch
             {
-                LogLevel.Verbose or LogLevel.Verbose2 or LogLevel.Verbose3 => false,
+                LogLevel.Debug => false,
                 _ => true,
             };
         }
@@ -240,8 +240,8 @@ namespace ARWNI2S.Node.Services.Logging
             if (exception is ThreadAbortException)
                 return;
 
-            if (IsEnabled(LogLevel.Info))
-                await InsertLogAsync(LogLevel.Info, message, exception?.ToString() ?? string.Empty, user);
+            if (IsEnabled(LogLevel.Information))
+                await InsertLogAsync(LogLevel.Information, message, exception?.ToString() ?? string.Empty, user);
         }
 
         /// <summary>
@@ -256,8 +256,8 @@ namespace ARWNI2S.Node.Services.Logging
             if (exception is ThreadAbortException)
                 return;
 
-            if (IsEnabled(LogLevel.Info))
-                InsertLog(LogLevel.Info, message, exception?.ToString() ?? string.Empty, user);
+            if (IsEnabled(LogLevel.Information))
+                InsertLog(LogLevel.Information, message, exception?.ToString() ?? string.Empty, user);
         }
 
         /// <summary>

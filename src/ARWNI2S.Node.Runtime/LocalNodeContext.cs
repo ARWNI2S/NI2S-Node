@@ -10,7 +10,7 @@ using ARWNI2S.Node.Services.Common;
 namespace ARWNI2S.Runtime
 {
     /// <summary>
-    /// NI2SNode context for web application
+    /// NI2SNode context for application
     /// </summary>
     public partial class LocalNodeContext : IClusteringContext
     {

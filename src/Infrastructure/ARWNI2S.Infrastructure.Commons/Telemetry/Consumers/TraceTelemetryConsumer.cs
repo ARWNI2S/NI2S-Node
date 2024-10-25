@@ -1,4 +1,5 @@
 ﻿using ARWNI2S.Infrastructure.Logging;
+using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 
 namespace ARWNI2S.Infrastructure.Telemetry.Consumers
@@ -34,18 +35,16 @@ namespace ARWNI2S.Infrastructure.Telemetry.Consumers
                 case LogLevel.Error:
                     Trace.TraceError(message);
                     break;
-                case LogLevel.Info:
+                case LogLevel.Information:
                     Trace.TraceInformation(message);
                     break;
-                case LogLevel.Verbose:
-                case LogLevel.Verbose2:
-                case LogLevel.Verbose3:
+                case LogLevel.Debug:
                     Trace.WriteLine(message);
                     break;
                 case LogLevel.Warning:
                     Trace.TraceWarning(message);
                     break;
-                case LogLevel.Off:
+                case LogLevel.None:
                     return;
             }
             Trace.Flush();

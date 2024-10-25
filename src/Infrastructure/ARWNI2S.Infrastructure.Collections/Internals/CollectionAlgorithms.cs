@@ -65,7 +65,7 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
             public override void Insert(int index, T item)
             {
                 if (index < 0 || index > _count)
-                    throw new ArgumentOutOfRangeException("index");
+                    throw new ArgumentOutOfRangeException(nameof(index));
 
                 _wrappedList.Insert(_start + index, item);
                 ++_count;
@@ -74,7 +74,7 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
             public override void RemoveAt(int index)
             {
                 if (index < 0 || index >= _count)
-                    throw new ArgumentOutOfRangeException("index");
+                    throw new ArgumentOutOfRangeException(nameof(index));
 
                 _wrappedList.RemoveAt(_start + index);
                 --_count;
@@ -93,14 +93,14 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
                 get
                 {
                     if (index < 0 || index >= _count)
-                        throw new ArgumentOutOfRangeException("index");
+                        throw new ArgumentOutOfRangeException(nameof(index));
 
                     return _wrappedList[_start + index];
                 }
                 set
                 {
                     if (index < 0 || index >= _count)
-                        throw new ArgumentOutOfRangeException("index");
+                        throw new ArgumentOutOfRangeException(nameof(index));
 
                     _wrappedList[_start + index] = value;
                 }
@@ -136,11 +136,11 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         public static IList<T> Range<T>(IList<T> list, int start, int count)
         {
             if (list == null)
-                throw new ArgumentOutOfRangeException("list");
+                throw new ArgumentOutOfRangeException(nameof(list));
             if (start < 0 || start > list.Count || start == list.Count && count != 0)
-                throw new ArgumentOutOfRangeException("start");
+                throw new ArgumentOutOfRangeException(nameof(start));
             if (count < 0 || count > list.Count || count + start > list.Count)
-                throw new ArgumentOutOfRangeException("count");
+                throw new ArgumentOutOfRangeException(nameof(count));
 
             return new ListRange<T>(list, start, count);
         }
@@ -191,7 +191,7 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
             public override void Insert(int index, T item)
             {
                 if (index < 0 || index > _count)
-                    throw new ArgumentOutOfRangeException("index");
+                    throw new ArgumentOutOfRangeException(nameof(index));
 
                 int i = _start + index;
 
@@ -207,7 +207,7 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
             public override void RemoveAt(int index)
             {
                 if (index < 0 || index >= _count)
-                    throw new ArgumentOutOfRangeException("index");
+                    throw new ArgumentOutOfRangeException(nameof(index));
 
                 int i = _start + index;
 
@@ -223,14 +223,14 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
                 get
                 {
                     if (index < 0 || index >= _count)
-                        throw new ArgumentOutOfRangeException("index");
+                        throw new ArgumentOutOfRangeException(nameof(index));
 
                     return _wrappedArray[_start + index];
                 }
                 set
                 {
                     if (index < 0 || index >= _count)
-                        throw new ArgumentOutOfRangeException("index");
+                        throw new ArgumentOutOfRangeException(nameof(index));
 
                     _wrappedArray[_start + index] = value;
                 }
@@ -258,11 +258,11 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         public static IList<T> Range<T>(T[] array, int start, int count)
         {
             if (array == null)
-                throw new ArgumentOutOfRangeException("array");
+                throw new ArgumentOutOfRangeException(nameof(array));
             if (start < 0 || start > array.Length || start == array.Length && count != 0)
-                throw new ArgumentOutOfRangeException("start");
+                throw new ArgumentOutOfRangeException(nameof(start));
             if (count < 0 || count > array.Length || count + start > array.Length)
-                throw new ArgumentOutOfRangeException("count");
+                throw new ArgumentOutOfRangeException(nameof(count));
 
             return new ArrayRange<T>(array, start, count);
         }
@@ -889,7 +889,7 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
                 int count = _wrappedCollection.Count;
 
                 if (index < 0)
-                    throw new ArgumentOutOfRangeException("index", index, LocalizedStrings.Collections_ArgMustNotBeNegative);
+                    throw new ArgumentOutOfRangeException(nameof(index), index, LocalizedStrings.Collections_ArgMustNotBeNegative);
                 if (index >= array.Length || count > array.Length - index)
                     throw new ArgumentException("index", LocalizedStrings.Collections_ArrayTooSmall);
 
@@ -1048,7 +1048,7 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
                 int count = _wrappedList.Count;
 
                 if (index < 0)
-                    throw new ArgumentOutOfRangeException("index", index, LocalizedStrings.Collections_ArgMustNotBeNegative);
+                    throw new ArgumentOutOfRangeException(nameof(index), index, LocalizedStrings.Collections_ArgMustNotBeNegative);
                 if (index >= array.Length || count > array.Length - index)
                     throw new ArgumentException("index", LocalizedStrings.Collections_ArrayTooSmall);
 
@@ -1142,7 +1142,7 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
             public override void Insert(int index, T item)
             {
                 if (index < 0 || index > _wrappedArray.Length)
-                    throw new ArgumentOutOfRangeException("index");
+                    throw new ArgumentOutOfRangeException(nameof(index));
 
                 if (index + 1 < _wrappedArray.Length)
                     Array.Copy(_wrappedArray, index, _wrappedArray, index + 1, _wrappedArray.Length - index - 1);
@@ -1153,7 +1153,7 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
             public override void RemoveAt(int index)
             {
                 if (index < 0 || index >= _wrappedArray.Length)
-                    throw new ArgumentOutOfRangeException("index");
+                    throw new ArgumentOutOfRangeException(nameof(index));
 
                 if (index < _wrappedArray.Length - 1)
                     Array.Copy(_wrappedArray, index + 1, _wrappedArray, index, _wrappedArray.Length - index - 1);
@@ -1165,14 +1165,14 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
                 get
                 {
                     if (index < 0 || index >= _wrappedArray.Length)
-                        throw new ArgumentOutOfRangeException("index");
+                        throw new ArgumentOutOfRangeException(nameof(index));
 
                     return _wrappedArray[index];
                 }
                 set
                 {
                     if (index < 0 || index >= _wrappedArray.Length)
-                        throw new ArgumentOutOfRangeException("index");
+                        throw new ArgumentOutOfRangeException(nameof(index));
 
                     _wrappedArray[index] = value;
                 }
@@ -1182,11 +1182,11 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
             {
                 ArgumentNullException.ThrowIfNull(array);
                 if (array.Length < _wrappedArray.Length)
-                    throw new ArgumentException("array is too short", "array");
+                    throw new ArgumentException("array is too short", nameof(array));
                 if (arrayIndex < 0 || arrayIndex >= array.Length)
-                    throw new ArgumentOutOfRangeException("arrayIndex");
+                    throw new ArgumentOutOfRangeException(nameof(arrayIndex));
                 if (array.Length + arrayIndex < _wrappedArray.Length)
-                    throw new ArgumentOutOfRangeException("arrayIndex");
+                    throw new ArgumentOutOfRangeException(nameof(arrayIndex));
 
                 Array.Copy(_wrappedArray, 0, array, arrayIndex, _wrappedArray.Length);
             }
@@ -1335,7 +1335,7 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
             if (list is T[])
                 list = new ArrayWrapper<T>((T[])list);
             if (list.IsReadOnly)
-                throw new ArgumentException(LocalizedStrings.Collections_ListIsReadOnly, "list");
+                throw new ArgumentException(LocalizedStrings.Collections_ListIsReadOnly, nameof(list));
 
             int listCount = list.Count;
             for (int index = 0; index < listCount; ++index)
@@ -1362,7 +1362,7 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
             if (list is T[])
                 list = new ArrayWrapper<T>((T[])list);
             if (list.IsReadOnly)
-                throw new ArgumentException(LocalizedStrings.Collections_ListIsReadOnly, "list");
+                throw new ArgumentException(LocalizedStrings.Collections_ListIsReadOnly, nameof(list));
 
             int listCount = list.Count;
             for (int index = 0; index < listCount; ++index)
@@ -1492,7 +1492,7 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
             if (list is T[])
                 list = new ArrayWrapper<T>((T[])list);
             if (list.IsReadOnly)
-                throw new ArgumentException(LocalizedStrings.Collections_ListIsReadOnly, "list");
+                throw new ArgumentException(LocalizedStrings.Collections_ListIsReadOnly, nameof(list));
 
             T current = default;
             T item;
@@ -1578,7 +1578,7 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
             ArgumentNullException.ThrowIfNull(list);
             ArgumentNullException.ThrowIfNull(predicate);
             if (count < 1)
-                throw new ArgumentOutOfRangeException("count");
+                throw new ArgumentOutOfRangeException(nameof(count));
 
             int listCount = list.Count;
             if (listCount < count)
@@ -1626,7 +1626,7 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
             ArgumentNullException.ThrowIfNull(list);
             ArgumentNullException.ThrowIfNull(predicate);
             if (count < 1)
-                throw new ArgumentOutOfRangeException("count");
+                throw new ArgumentOutOfRangeException(nameof(count));
 
             int listCount = list.Count;
             if (count > listCount)
@@ -2995,7 +2995,7 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
             if (list is T[])
                 list = new ArrayWrapper<T>((T[])list);
             if (list.IsReadOnly)
-                throw new ArgumentException(LocalizedStrings.Collections_ListIsReadOnly, "list");
+                throw new ArgumentException(LocalizedStrings.Collections_ListIsReadOnly, nameof(list));
 
             int count = list.Count;
             for (int i = count - 1; i >= 1; --i)
@@ -3053,7 +3053,7 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
 
             int listCount = list.Count;
             if (count < 0 || count > listCount)
-                throw new ArgumentOutOfRangeException("count");
+                throw new ArgumentOutOfRangeException(nameof(count));
 
             T[] result = new T[count];  // the result array.
             Dictionary<int, T> swappedValues = new Dictionary<int, T>(count);   // holds swapped values from the list.
@@ -3622,7 +3622,7 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
             }
 
             if (list.IsReadOnly)
-                throw new ArgumentException(LocalizedStrings.Collections_ListIsReadOnly, "list");
+                throw new ArgumentException(LocalizedStrings.Collections_ListIsReadOnly, nameof(list));
 
             // Instead of a recursive procedure, we use an explicit stack to hold
             // ranges that we still need to sort.
@@ -3852,7 +3852,7 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
             if (list is T[])
                 list = new ArrayWrapper<T>((T[])list);
             if (list.IsReadOnly)
-                throw new ArgumentException(LocalizedStrings.Collections_ListIsReadOnly, "list");
+                throw new ArgumentException(LocalizedStrings.Collections_ListIsReadOnly, nameof(list));
 
             // The stable sort algorithms also uses QuickSort. An additional array of indices (order) is
             // used to maintain the original order of items in the array, and that array is used
@@ -4827,7 +4827,7 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
             if (collection is T[])
                 collection = new ArrayWrapper<T>((T[])collection);
             if (collection.IsReadOnly)
-                throw new ArgumentException(LocalizedStrings.Collections_ListIsReadOnly, "collection");
+                throw new ArgumentException(LocalizedStrings.Collections_ListIsReadOnly, nameof(collection));
 
             if (collection is IList<T> list)
             {
@@ -4983,7 +4983,7 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
             if (list is T[])
                 list = new ArrayWrapper<T>((T[])list);
             if (list.IsReadOnly)
-                throw new ArgumentException(LocalizedStrings.Collections_ListIsReadOnly, "list");
+                throw new ArgumentException(LocalizedStrings.Collections_ListIsReadOnly, nameof(list));
 
             // Move from opposite ends of the list, swapping when necessary.
             int i = 0, j = list.Count - 1;
@@ -5030,7 +5030,7 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
             if (list is T[])
                 list = new ArrayWrapper<T>((T[])list);
             if (list.IsReadOnly)
-                throw new ArgumentException(LocalizedStrings.Collections_ListIsReadOnly, "list");
+                throw new ArgumentException(LocalizedStrings.Collections_ListIsReadOnly, nameof(list));
 
             int listCount = list.Count;
             if (listCount == 0)
@@ -5301,7 +5301,7 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         public static IEnumerable<T> NCopiesOf<T>(int n, T item)
         {
             if (n < 0)
-                throw new ArgumentOutOfRangeException("n", n, LocalizedStrings.Collections_ArgMustNotBeNegative);
+                throw new ArgumentOutOfRangeException(nameof(n), n, LocalizedStrings.Collections_ArgMustNotBeNegative);
 
             while (n-- > 0)
             {
@@ -5325,7 +5325,7 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         {
             ArgumentNullException.ThrowIfNull(list);
             if (list.IsReadOnly)
-                throw new ArgumentException(LocalizedStrings.Collections_ListIsReadOnly, "list");
+                throw new ArgumentException(LocalizedStrings.Collections_ListIsReadOnly, nameof(list));
 
             int count = list.Count;
             for (int i = 0; i < count; ++i)
@@ -5366,14 +5366,14 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
         {
             ArgumentNullException.ThrowIfNull(list);
             if (list.IsReadOnly)
-                throw new ArgumentException(LocalizedStrings.Collections_ListIsReadOnly, "list");
+                throw new ArgumentException(LocalizedStrings.Collections_ListIsReadOnly, nameof(list));
 
             if (count == 0)
                 return;
             if (start < 0 || start >= list.Count)
-                throw new ArgumentOutOfRangeException("start");
+                throw new ArgumentOutOfRangeException(nameof(start));
             if (count < 0 || count > list.Count || start > list.Count - count)
-                throw new ArgumentOutOfRangeException("count");
+                throw new ArgumentOutOfRangeException(nameof(count));
 
             for (int i = start; i < count + start; ++i)
             {
@@ -5398,9 +5398,9 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
             if (count == 0)
                 return;
             if (start < 0 || start >= array.Length)
-                throw new ArgumentOutOfRangeException("start");
+                throw new ArgumentOutOfRangeException(nameof(start));
             if (count < 0 || count > array.Length || start > array.Length - count)
-                throw new ArgumentOutOfRangeException("count");
+                throw new ArgumentOutOfRangeException(nameof(count));
 
             for (int i = start; i < count + start; ++i)
             {
@@ -5441,7 +5441,7 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
             ArgumentNullException.ThrowIfNull(dest);
 
             if (destIndex < 0 || destIndex > dest.Length)
-                throw new ArgumentOutOfRangeException("destIndex");
+                throw new ArgumentOutOfRangeException(nameof(destIndex));
 
             using (IEnumerator<T> sourceEnum = source.GetEnumerator())
             {
@@ -5449,7 +5449,7 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
                 while (sourceEnum.MoveNext())
                 {
                     if (destIndex >= dest.Length)
-                        throw new ArgumentException(LocalizedStrings.Collections_ArrayTooSmall, "dest");
+                        throw new ArgumentException(LocalizedStrings.Collections_ArrayTooSmall, nameof(dest));
                     dest[destIndex++] = sourceEnum.Current;
                 }
             }
@@ -5473,14 +5473,14 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
             ArgumentNullException.ThrowIfNull(source);
             ArgumentNullException.ThrowIfNull(dest);
             if (dest.IsReadOnly)
-                throw new ArgumentException(LocalizedStrings.Collections_ListIsReadOnly, "dest");
+                throw new ArgumentException(LocalizedStrings.Collections_ListIsReadOnly, nameof(dest));
 
             int destCount = dest.Count;
 
             if (destIndex < 0 || destIndex > destCount)
-                throw new ArgumentOutOfRangeException("destIndex");
+                throw new ArgumentOutOfRangeException(nameof(destIndex));
             if (count < 0)
-                throw new ArgumentOutOfRangeException("count");
+                throw new ArgumentOutOfRangeException(nameof(count));
 
             using (IEnumerator<T> sourceEnum = source.GetEnumerator())
             {
@@ -5522,9 +5522,9 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
             int destCount = dest.Length;
 
             if (destIndex < 0 || destIndex > destCount)
-                throw new ArgumentOutOfRangeException("destIndex");
+                throw new ArgumentOutOfRangeException(nameof(destIndex));
             if (count < 0 || destIndex + count > destCount)
-                throw new ArgumentOutOfRangeException("count");
+                throw new ArgumentOutOfRangeException(nameof(count));
 
             using (IEnumerator<T> sourceEnum = source.GetEnumerator())
             {
@@ -5558,17 +5558,17 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
             ArgumentNullException.ThrowIfNull(source);
             ArgumentNullException.ThrowIfNull(dest);
             if (dest.IsReadOnly)
-                throw new ArgumentException(LocalizedStrings.Collections_ListIsReadOnly, "dest");
+                throw new ArgumentException(LocalizedStrings.Collections_ListIsReadOnly, nameof(dest));
 
             int sourceCount = source.Count;
             int destCount = dest.Count;
 
             if (sourceIndex < 0 || sourceIndex >= sourceCount)
-                throw new ArgumentOutOfRangeException("sourceIndex");
+                throw new ArgumentOutOfRangeException(nameof(sourceIndex));
             if (destIndex < 0 || destIndex > destCount)
-                throw new ArgumentOutOfRangeException("destIndex");
+                throw new ArgumentOutOfRangeException(nameof(destIndex));
             if (count < 0)
-                throw new ArgumentOutOfRangeException("count");
+                throw new ArgumentOutOfRangeException(nameof(count));
             if (count > sourceCount - sourceIndex)
                 count = sourceCount - sourceIndex;
 
@@ -5634,11 +5634,11 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
             int destCount = dest.Length;
 
             if (sourceIndex < 0 || sourceIndex >= sourceCount)
-                throw new ArgumentOutOfRangeException("sourceIndex");
+                throw new ArgumentOutOfRangeException(nameof(sourceIndex));
             if (destIndex < 0 || destIndex > destCount)
-                throw new ArgumentOutOfRangeException("destIndex");
+                throw new ArgumentOutOfRangeException(nameof(destIndex));
             if (count < 0 || destIndex + count > destCount)
-                throw new ArgumentOutOfRangeException("count");
+                throw new ArgumentOutOfRangeException(nameof(count));
 
             if (count > sourceCount - sourceIndex)
                 count = sourceCount - sourceIndex;
@@ -5688,7 +5688,7 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
             if (list is T[])
                 list = new ArrayWrapper<T>((T[])list);
             if (list.IsReadOnly)
-                throw new ArgumentException(LocalizedStrings.Collections_ListIsReadOnly, "list");
+                throw new ArgumentException(LocalizedStrings.Collections_ListIsReadOnly, nameof(list));
 
             int i, j;
             i = 0;
@@ -5747,7 +5747,7 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
             if (list is T[])
                 list = new ArrayWrapper<T>((T[])list);
             if (list.IsReadOnly)
-                throw new ArgumentException(LocalizedStrings.Collections_ListIsReadOnly, "list");
+                throw new ArgumentException(LocalizedStrings.Collections_ListIsReadOnly, nameof(list));
 
             int count = list.Count;
             if (count != 0)

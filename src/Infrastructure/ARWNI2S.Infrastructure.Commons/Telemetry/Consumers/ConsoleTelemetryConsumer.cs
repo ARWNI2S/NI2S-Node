@@ -1,4 +1,5 @@
 ﻿using ARWNI2S.Infrastructure.Logging;
+using Microsoft.Extensions.Logging;
 
 namespace ARWNI2S.Infrastructure.Telemetry.Consumers
 {
@@ -41,18 +42,16 @@ namespace ARWNI2S.Infrastructure.Telemetry.Consumers
                 case LogLevel.Error:
                     ConsoleText.WriteError(message);
                     break;
-                case LogLevel.Info:
+                case LogLevel.Information:
                     ConsoleText.WriteStatus(message);
                     break;
-                case LogLevel.Verbose:
-                case LogLevel.Verbose2:
-                case LogLevel.Verbose3:
+                case LogLevel.Debug:
                     ConsoleText.WriteUsage(message);
                     break;
                 case LogLevel.Warning:
                     ConsoleText.WriteWarning(message);
                     break;
-                case LogLevel.Off:
+                case LogLevel.None:
                     return;
                 default:
                     TrackTrace(message);

@@ -4,6 +4,12 @@ namespace ARWNI2S.Infrastructure
 {
     internal class Constants
     {
+        #region SIMULATION CONSTANTS
+
+        public static readonly int MINIMUM_DESIRED_FRAMERATE = 15;
+
+        #endregion
+
         #region TIME CONSTANTS
 
         /// <summary>
@@ -66,6 +72,5 @@ namespace ARWNI2S.Infrastructure
         public static readonly Guid _UUID_WORLD_ACTOR = new("00000001-0001-0001-0001-000000000001");
 
         #endregion
-
     }
 }

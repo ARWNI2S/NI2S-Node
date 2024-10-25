@@ -932,7 +932,7 @@ namespace ARWNI2S.Infrastructure.Collections.Sorted
             public sealed override void Add(TKey key, TValue value)
             {
                 if (!KeyInView(key))
-                    throw new ArgumentException(LocalizedStrings.Collections_OutOfViewRange, "key");
+                    throw new ArgumentException(LocalizedStrings.Collections_OutOfViewRange, nameof(key));
                 else
                     _myDictionary.Add(key, value);
             }

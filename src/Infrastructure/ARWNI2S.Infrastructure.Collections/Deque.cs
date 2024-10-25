@@ -840,11 +840,11 @@ namespace ARWNI2S.Infrastructure.Collections
 
             if (array == null)
             {
-                throw new ArgumentNullException("array");
+                throw new ArgumentNullException(nameof(array));
             }
             else if (index < 0)
             {
-                throw new ArgumentOutOfRangeException("index", index,
+                throw new ArgumentOutOfRangeException(nameof(index), index,
                     "Index is less than zero.");
             }
             else if (array.Rank > 1)

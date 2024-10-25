@@ -10,7 +10,7 @@ using System.Globalization;
 namespace ARWNI2S.Runtime
 {
     /// <summary>
-    /// Represents work context for web application
+    /// Represents work context for application
     /// </summary>
     public partial class NodeWorkContext : IWorkContext
     {

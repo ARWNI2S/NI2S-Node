@@ -1,6 +1,7 @@
 ﻿using ARWNI2S.Infrastructure.Extensions;
 using ARWNI2S.Infrastructure.Logging;
 using ARWNI2S.Infrastructure.Resources;
+using Microsoft.Extensions.Logging;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
@@ -228,7 +229,7 @@ namespace ARWNI2S.Infrastructure.Utilities
         /// <summary>
         /// 
         /// </summary>
-        public static void SafeExecute(Action action, NI2SLogger logger = null, string caller = null)
+        public static void SafeExecute(Action action, ILogger logger = null, string caller = null)
         {
             SafeExecute(action, logger, caller == null ? (Func<string>)null : () => caller);
         }
@@ -238,7 +239,7 @@ namespace ARWNI2S.Infrastructure.Utilities
         /// callerGetter function is called only in faulty case (now string is generated in the success case).
         /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
-        public static void SafeExecute(Action action, NI2SLogger logger, Func<string> callerGetter)
+        public static void SafeExecute(Action action, ILogger logger, Func<string> callerGetter)
         {
             try
             {
@@ -261,7 +262,7 @@ namespace ARWNI2S.Infrastructure.Utilities
                         }
                         foreach (var e in exc.FlattenAggregate())
                         {
-                            logger.Warn((int)TraceCode.NodeRuntime_Error_100325, String.Format(ErrorStrings.NodeRuntime_Error_100325, e.GetType().FullName, caller ?? string.Empty), exc);
+                            logger.LogWarning((int)ErrorCode.NodeRuntime_Error_100325, String.Format(ErrorStrings.NodeRuntime_Error_100325, e.GetType().FullName, caller ?? string.Empty), exc);
                         }
                     }
                 }

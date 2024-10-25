@@ -81,7 +81,7 @@ namespace ARWNI2S.Infrastructure.Collections
         {
             if (ContainsKey(key))
             {
-                throw new ArgumentException(LocalizedStrings.Collections_KeyAlreadyPresent, "key");
+                throw new ArgumentException(LocalizedStrings.Collections_KeyAlreadyPresent, nameof(key));
             }
             else
             {

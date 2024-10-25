@@ -73,7 +73,7 @@ namespace ARWNI2S.Infrastructure.Collections
         {
             if (maxSize <= 0)
             {
-                throw new ArgumentOutOfRangeException("maxSize", "LRU maxSize must be greater than 0");
+                throw new ArgumentOutOfRangeException(nameof(maxSize), "LRU maxSize must be greater than 0");
             }
             MaximumSize = maxSize;
             requiredFreshness = maxAge;

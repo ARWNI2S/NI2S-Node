@@ -37,7 +37,7 @@ namespace ARWNI2S.Runtime.Infrastructure.Extensions
         /// Configure base application settings
         /// </summary>
         /// <param name="services">Collection of service descriptors</param>
-        /// <param name="context">A builder for web applications and services</param>
+        /// <param name="context">A builder for applications and services</param>
         public static void ConfigureApplicationSettings(this IServiceCollection services,
             HostBuilderContext context)
         {
@@ -72,7 +72,7 @@ namespace ARWNI2S.Runtime.Infrastructure.Extensions
         /// Add services to the application and configure service provider
         /// </summary>
         /// <param name="services">Collection of service descriptors</param>
-        /// <param name="context">A builder for web applications and services</param>
+        /// <param name="context">A builder for applications and services</param>
         public static void ConfigureApplicationServices(this IServiceCollection services,
             HostBuilderContext context)
         {
@@ -80,7 +80,10 @@ namespace ARWNI2S.Runtime.Infrastructure.Extensions
             services.AddContextAccessor();
 
             //add core services
-            services.AddGDESK();
+            services.AddGDESK(builder => { 
+
+            });
+
             var mvrmCoreBuilder = services.AddMVRMCore();
 
             //initialize modules

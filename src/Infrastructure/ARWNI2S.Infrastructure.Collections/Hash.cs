@@ -378,7 +378,7 @@ namespace ARWNI2S.Infrastructure.Collections
             {
                 // Don't allow hopelessly inefficient load factors.
                 if (value < 0.25 || value > 0.95)
-                    throw new ArgumentOutOfRangeException("value", value, LocalizedStrings.Collections_InvalidLoadFactor);
+                    throw new ArgumentOutOfRangeException(nameof(value), value, LocalizedStrings.Collections_InvalidLoadFactor);
 
                 StopEnumerations();
 

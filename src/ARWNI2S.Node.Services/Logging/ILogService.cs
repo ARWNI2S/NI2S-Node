@@ -1,22 +1,15 @@
 ﻿using ARWNI2S.Infrastructure.Collections.Generic;
 using ARWNI2S.Infrastructure.Entities;
-using ARWNI2S.Infrastructure.Logging;
 using ARWNI2S.Node.Core.Entities.Logging;
+using Microsoft.Extensions.Logging;
 
 namespace ARWNI2S.Node.Services.Logging
 {
     /// <summary>
     /// Logger interface
     /// </summary>
-    public partial interface ILogService
+    public partial interface ILogService //: ILogger<ILogService>
     {
-        /// <summary>
-        /// Determines whether a log level is enabled
-        /// </summary>
-        /// <param name="level">Log level</param>
-        /// <returns>Result</returns>
-        bool IsEnabled(LogLevel level);
-
         /// <summary>
         /// Deletes a log item
         /// </summary>

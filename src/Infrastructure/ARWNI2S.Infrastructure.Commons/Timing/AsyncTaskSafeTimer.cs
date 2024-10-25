@@ -1,17 +1,19 @@
-﻿namespace ARWNI2S.Infrastructure.Timing
+﻿using Microsoft.Extensions.Logging;
+
+namespace ARWNI2S.Infrastructure.Timing
 {
     internal class AsyncTaskSafeTimer : IDisposable
     {
         private readonly SafeTimerBase safeTimerBase;
 
-        public AsyncTaskSafeTimer(Func<object, Task> asynTaskCallback, object state)
+        public AsyncTaskSafeTimer(Func<object, Task> asynTaskCallback, object state, ILogger logger = null)
         {
-            safeTimerBase = new SafeTimerBase(asynTaskCallback, state);
+            safeTimerBase = new SafeTimerBase(asynTaskCallback, state, logger);
         }
 
-        public AsyncTaskSafeTimer(Func<object, Task> asynTaskCallback, object state, TimeSpan dueTime, TimeSpan period)
+        public AsyncTaskSafeTimer(Func<object, Task> asynTaskCallback, object state, TimeSpan dueTime, TimeSpan period, ILogger logger = null)
         {
-            safeTimerBase = new SafeTimerBase(asynTaskCallback, state, dueTime, period);
+            safeTimerBase = new SafeTimerBase(asynTaskCallback, state, dueTime, period, logger);
         }
 
         public void Start(TimeSpan dueTime, TimeSpan period)

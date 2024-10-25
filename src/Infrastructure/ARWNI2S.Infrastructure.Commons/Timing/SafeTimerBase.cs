@@ -1,11 +1,11 @@
 ﻿using ARWNI2S.Infrastructure.Logging;
 using ARWNI2S.Infrastructure.Resources;
+using Microsoft.Extensions.Logging;
 
 namespace ARWNI2S.Infrastructure.Timing
 {
     /// <summary>
     /// SafeTimerBase - an public base class for implementing sync and async timers in NI2S.
-    /// 
     /// </summary>
     internal class SafeTimerBase : IDisposable
     {
@@ -17,26 +17,30 @@ namespace ARWNI2S.Infrastructure.Timing
         private bool timerStarted;
         private DateTime previousTickTime;
         private int totalNumTicks;
-        private TraceLogger logger;
+        private ILogger logger;
 
-        public SafeTimerBase(Func<object, Task> asynTaskCallback, object state)
+        public SafeTimerBase(Func<object, Task> asynTaskCallback, object state, ILogger logger = null)
         {
+            this.logger = logger;
             Init(asynTaskCallback, null, state, Constants.INFINITE_TIMESPAN, Constants.INFINITE_TIMESPAN);
         }
 
-        public SafeTimerBase(Func<object, Task> asynTaskCallback, object state, TimeSpan dueTime, TimeSpan period)
+        public SafeTimerBase(Func<object, Task> asynTaskCallback, object state, TimeSpan dueTime, TimeSpan period, ILogger logger = null)
         {
+            this.logger = logger;
             Init(asynTaskCallback, null, state, dueTime, period);
             Start(dueTime, period);
         }
 
-        public SafeTimerBase(TimerCallback syncCallback, object state)
+        public SafeTimerBase(TimerCallback syncCallback, object state, ILogger logger = null)
         {
+            this.logger = logger;
             Init(null, syncCallback, state, Constants.INFINITE_TIMESPAN, Constants.INFINITE_TIMESPAN);
         }
 
-        public SafeTimerBase(TimerCallback syncCallback, object state, TimeSpan dueTime, TimeSpan period)
+        public SafeTimerBase(TimerCallback syncCallback, object state, TimeSpan dueTime, TimeSpan period, ILogger logger = null)
         {
+            this.logger = logger;
             Init(null, syncCallback, state, dueTime, period);
             Start(dueTime, period);
         }
@@ -46,7 +50,7 @@ namespace ARWNI2S.Infrastructure.Timing
             if (timerStarted)
                 throw new InvalidOperationException(string.Format(ErrorStrings.SafeTimerBase_Start_InvalidOperationException_Format, GetFullName()));
             if (period == TimeSpan.Zero)
-                throw new ArgumentOutOfRangeException("period", period, ErrorStrings.SafeTimerBase_TimeSpan_ArgumentOutOfRangeException_Format);
+                throw new ArgumentOutOfRangeException(nameof(period), period, ErrorStrings.SafeTimerBase_TimeSpan_ArgumentOutOfRangeException_Format);
 
             timerFrequency = period;
             dueTime = due;
@@ -58,14 +62,14 @@ namespace ARWNI2S.Infrastructure.Timing
         private void Init(Func<object, Task> asynCallback, TimerCallback synCallback, object state, TimeSpan due, TimeSpan period)
         {
             if (synCallback == null && asynCallback == null)
-                throw new ArgumentNullException("synCallback", ErrorStrings.SafeTimerBase_Init_ArgumentNullException_Message);
+                throw new ArgumentNullException(nameof(synCallback), ErrorStrings.SafeTimerBase_Init_ArgumentNullException_Message);
 
             int numNonNulls = (asynCallback != null ? 1 : 0) + (synCallback != null ? 1 : 0);
 
             if (numNonNulls > 1)
-                throw new ArgumentNullException("synCallback", ErrorStrings.SafeTimerBase_Init_InvalidOperationException_Message);
+                throw new ArgumentNullException(nameof(synCallback), ErrorStrings.SafeTimerBase_Init_InvalidOperationException_Message);
             if (period == TimeSpan.Zero)
-                throw new ArgumentOutOfRangeException("period", period, ErrorStrings.SafeTimerBase_TimeSpan_ArgumentOutOfRangeException_Format);
+                throw new ArgumentOutOfRangeException(nameof(period), period, ErrorStrings.SafeTimerBase_TimeSpan_ArgumentOutOfRangeException_Format);
 
             asynTaskCallback = asynCallback;
             syncCallbackFunc = synCallback;
@@ -73,10 +77,7 @@ namespace ARWNI2S.Infrastructure.Timing
             dueTime = due;
             totalNumTicks = 0;
 
-            logger = TraceLogger.GetLogger(GetFullName(), LoggerType.Runtime);
-
-            if (logger.IsVerbose)
-                logger.Verbose(TraceCode.TimerChanging, LocalizedStrings.TimerChanging_Creating, GetFullName(), due, period);
+            this.logger.LogDebug(ErrorCode.TimerChanging, LocalizedStrings.TimerChanging_Creating, GetFullName(), due, period);
 
             timer = new Timer(HandleTimerCallback, state, Constants.INFINITE_TIMESPAN, Constants.INFINITE_TIMESPAN);
         }
@@ -99,7 +100,6 @@ namespace ARWNI2S.Infrastructure.Timing
             }
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         public void DisposeTimer()
         {
             if (timer != null)
@@ -108,13 +108,13 @@ namespace ARWNI2S.Infrastructure.Timing
                 {
                     var t = timer;
                     timer = null;
-                    if (logger.IsVerbose) logger.Verbose(TraceCode.TimerDisposing, "Disposing timer {0}", GetFullName());
+                    logger.LogDebug(ErrorCode.TimerDisposing, "Disposing timer {0}", GetFullName());
                     t.Dispose();
 
                 }
                 catch (Exception exc)
                 {
-                    logger.Warn(TraceCode.TimerDisposeError,
+                    logger.LogWarning(ErrorCode.TimerDisposeError,
                         string.Format("Ignored error disposing timer {0}", GetFullName()), exc);
                 }
             }
@@ -139,11 +139,11 @@ namespace ARWNI2S.Infrastructure.Timing
         public bool CheckTimerFreeze(DateTime lastCheckTime, Func<string> callerName)
         {
             return CheckTimerDelay(previousTickTime, totalNumTicks,
-                        dueTime, timerFrequency, logger, () => string.Format("{0}.{1}", GetFullName(), callerName()), TraceCode.Timer_SafeTimerIsNotTicking, true);
+                        dueTime, timerFrequency, logger, () => string.Format("{0}.{1}", GetFullName(), callerName()), ErrorCode.Timer_SafeTimerIsNotTicking, true);
         }
 
         public static bool CheckTimerDelay(DateTime previousTickTime, int totalNumTicks,
-                        TimeSpan dueTime, TimeSpan timerFrequency, TraceLogger logger, Func<string> getName, TraceCode errorCode, bool freezeCheck)
+                        TimeSpan dueTime, TimeSpan timerFrequency, ILogger logger, Func<string> getName, ErrorCode errorCode, bool freezeCheck)
         {
             TimeSpan timeSinceLastTick = DateTime.UtcNow - previousTickTime;
             TimeSpan exceptedTimeToNexTick = totalNumTicks == 0 ? dueTime : timerFrequency;
@@ -162,17 +162,17 @@ namespace ARWNI2S.Infrastructure.Timing
             var errMsg = string.Format(ErrorStrings.SafeTimerBase_CheckTimerDelay_ErrorMessage,
                 freezeCheck ? ErrorStrings.SafeTimerBase_CheckTimerDelay_FreezeAlertMessage : "-", // 0
                 getName == null ? "" : getName(),   // 1
-                TraceLogger.PrintDate(previousTickTime), // 2
+                LogFormatter.PrintDate(previousTickTime), // 2
                 timeSinceLastTick,                  // 3
                 exceptedTimeToNexTick);             // 4
 
             if (freezeCheck)
             {
-                logger.Error(errorCode, errMsg);
+                logger.LogError(errorCode, errMsg);
             }
             else
             {
-                logger.Warn(errorCode, errMsg);
+                logger.LogWarning(errorCode, errMsg);
             }
             return false;
         }
@@ -183,16 +183,15 @@ namespace ARWNI2S.Infrastructure.Timing
         /// <param name="newDueTime">A TimeSpan representing the amount of time to delay before invoking the callback method specified when the Timer was constructed. Specify negative one (-1) milliseconds to prevent the timer from restarting. Specify zero (0) to restart the timer immediately.</param>
         /// <param name="period">The time interval between invocations of the callback method specified when the Timer was constructed. Specify negative one (-1) milliseconds to disable periodic signaling.</param>
         /// <returns><c>true</c> if the timer was successfully updated; otherwise, <c>false</c>.</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         private bool Change(TimeSpan newDueTime, TimeSpan period)
         {
-            if (period == TimeSpan.Zero) throw new ArgumentOutOfRangeException("period", period, string.Format("Cannot use TimeSpan.Zero for timer {0} period", GetFullName()));
+            if (period == TimeSpan.Zero) throw new ArgumentOutOfRangeException(nameof(period), period, string.Format("Cannot use TimeSpan.Zero for timer {0} period", GetFullName()));
 
             if (timer == null) return false;
 
             timerFrequency = period;
 
-            if (logger.IsVerbose) logger.Verbose(TraceCode.TimerChanging, LocalizedStrings.TimerChanging, GetFullName(), newDueTime, period);
+            logger.LogDebug(ErrorCode.TimerChanging, LocalizedStrings.TimerChanging, GetFullName(), newDueTime, period);
 
             try
             {
@@ -201,7 +200,7 @@ namespace ARWNI2S.Infrastructure.Timing
             }
             catch (Exception exc)
             {
-                logger.Warn(TraceCode.TimerChangeError,
+                logger.LogWarning(ErrorCode.TimerChangeError,
                     string.Format(ErrorStrings.TimerChangeError, GetFullName()), exc);
                 return false;
             }
@@ -221,18 +220,17 @@ namespace ARWNI2S.Infrastructure.Timing
             }
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         private void HandleSyncTimerCallback(object state)
         {
             try
             {
-                if (logger.IsVerbose3) logger.Verbose3(TraceCode.TimerBeforeCallback, LocalizedStrings.TimerBeforeCallbackSync, GetFullName());
+                logger.LogDebug(ErrorCode.TimerBeforeCallback, LocalizedStrings.TimerBeforeCallbackSync, GetFullName());
                 syncCallbackFunc(state);
-                if (logger.IsVerbose3) logger.Verbose3(TraceCode.TimerAfterCallback, LocalizedStrings.TimerAfterCallbackSync, GetFullName());
+                logger.LogDebug(ErrorCode.TimerAfterCallback, LocalizedStrings.TimerAfterCallbackSync, GetFullName());
             }
             catch (Exception exc)
             {
-                logger.Warn(TraceCode.TimerCallbackError, string.Format(ErrorStrings.TimerCallbackErrorSync, exc.Message, GetFullName()), exc);
+                logger.LogWarning(ErrorCode.TimerCallbackError, string.Format(ErrorStrings.TimerCallbackErrorSync, exc.Message, GetFullName()), exc);
             }
             finally
             {
@@ -257,13 +255,13 @@ namespace ARWNI2S.Infrastructure.Timing
 
             try
             {
-                if (logger.IsVerbose3) logger.Verbose3(TraceCode.TimerBeforeCallback, LocalizedStrings.TimerBeforeCallbackAsync, GetFullName());
+                logger.LogDebug(ErrorCode.TimerBeforeCallback, LocalizedStrings.TimerBeforeCallbackAsync, GetFullName());
                 await asynTaskCallback(state);
-                if (logger.IsVerbose3) logger.Verbose3(TraceCode.TimerAfterCallback, LocalizedStrings.TimerAfterCallbackAsync, GetFullName());
+                logger.LogDebug(ErrorCode.TimerAfterCallback, LocalizedStrings.TimerAfterCallbackAsync, GetFullName());
             }
             catch (Exception exc)
             {
-                logger.Warn(TraceCode.TimerCallbackError, string.Format(ErrorStrings.TimerCallbackErrorAsync, exc.Message, GetFullName()), exc);
+                logger.LogWarning(ErrorCode.TimerCallbackError, string.Format(ErrorStrings.TimerCallbackErrorAsync, exc.Message, GetFullName()), exc);
             }
             finally
             {
@@ -273,7 +271,6 @@ namespace ARWNI2S.Infrastructure.Timing
             }
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         private void QueueNextTimerTick()
         {
             try
@@ -282,30 +279,30 @@ namespace ARWNI2S.Infrastructure.Timing
 
                 totalNumTicks++;
 
-                if (logger.IsVerbose3) logger.Verbose3(TraceCode.TimerChanging, LocalizedStrings.TimerChanging_Queue, GetFullName());
+                logger.LogDebug(ErrorCode.TimerChanging, LocalizedStrings.TimerChanging_Queue, GetFullName());
 
                 if (timerFrequency == Constants.INFINITE_TIMESPAN)
                 {
                     //timer.Change(Constants.INFINITE_TIMESPAN, Constants.INFINITE_TIMESPAN);
                     DisposeTimer();
 
-                    if (logger.IsVerbose) logger.Verbose(TraceCode.TimerStopped, LocalizedStrings.TimerStopped, GetFullName());
+                    logger.LogDebug(ErrorCode.TimerStopped, LocalizedStrings.TimerStopped, GetFullName());
                 }
                 else
                 {
                     timer.Change(timerFrequency, Constants.INFINITE_TIMESPAN);
 
-                    if (logger.IsVerbose3) logger.Verbose3(TraceCode.TimerNextTick, LocalizedStrings.TimerNextTick, GetFullName(), timerFrequency);
+                    logger.LogDebug(ErrorCode.TimerNextTick, LocalizedStrings.TimerNextTick, GetFullName(), timerFrequency);
                 }
             }
             catch (ObjectDisposedException ode)
             {
-                logger.Warn(TraceCode.TimerDisposeError,
+                logger.LogWarning(ErrorCode.TimerDisposeError,
                     string.Format(ErrorStrings.TimerDisposeError, GetFullName()), ode);
             }
             catch (Exception exc)
             {
-                logger.Error(TraceCode.TimerQueueTickError,
+                logger.LogError(ErrorCode.TimerQueueTickError,
                     string.Format(ErrorStrings.TimerQueueTickError, GetFullName()), exc);
             }
         }

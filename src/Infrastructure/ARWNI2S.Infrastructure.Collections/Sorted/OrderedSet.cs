@@ -298,7 +298,7 @@ namespace ARWNI2S.Infrastructure.Collections.Sorted
             get
             {
                 if (index < 0 || index >= Count)
-                    throw new ArgumentOutOfRangeException("index");
+                    throw new ArgumentOutOfRangeException(nameof(index));
 
                 return _tree.GetItemByIndex(index);
             }
@@ -1008,7 +1008,7 @@ namespace ARWNI2S.Infrastructure.Collections.Sorted
                         int firstIndex = _mySet._tree.FirstItemInRange(_rangeTester, out T dummy);
                         int lastIndex = _mySet._tree.LastItemInRange(_rangeTester, out dummy);
                         if (firstIndex < 0 || lastIndex < 0 || index < 0 || index >= lastIndex - firstIndex + 1)
-                            throw new ArgumentOutOfRangeException("index");
+                            throw new ArgumentOutOfRangeException(nameof(index));
 
                         if (_reversed)
                             return _mySet[lastIndex - index];
@@ -1286,7 +1286,7 @@ namespace ARWNI2S.Infrastructure.Collections.Sorted
             public new bool Add(T item)
             {
                 if (!ItemInView(item))
-                    throw new ArgumentException(LocalizedStrings.Collections_OutOfViewRange, "item");
+                    throw new ArgumentException(LocalizedStrings.Collections_OutOfViewRange, nameof(item));
                 else
                     return _mySet.Add(item);
             }
@@ -1426,7 +1426,7 @@ namespace ARWNI2S.Infrastructure.Collections.Sorted
                         int firstIndex = _mySet._tree.FirstItemInRange(_rangeTester, out T dummy);
                         int lastIndex = _mySet._tree.LastItemInRange(_rangeTester, out dummy);
                         if (firstIndex < 0 || lastIndex < 0 || index < 0 || index >= lastIndex - firstIndex + 1)
-                            throw new ArgumentOutOfRangeException("index");
+                            throw new ArgumentOutOfRangeException(nameof(index));
 
                         if (_reversed)
                             return _mySet[lastIndex - index];
