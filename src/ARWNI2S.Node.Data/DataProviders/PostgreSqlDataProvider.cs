@@ -63,7 +63,7 @@ namespace ARWNI2S.Node.Data.DataProviders
         /// <param name="dataConnection">A database connection object</param>
         /// <typeparam name="TEntity">Entity type</typeparam>
         /// <returns>Returns the name of the sequence, or NULL if no sequence is associated with the column</returns>
-        protected virtual string GetSequenceName<TEntity>(DataConnection dataConnection) where TEntity : BaseEntity
+        protected virtual string GetSequenceName<TEntity>(DataConnection dataConnection) where TEntity : DataEntity
         {
             ArgumentNullException.ThrowIfNull(dataConnection);
 
@@ -200,7 +200,7 @@ namespace ARWNI2S.Node.Data.DataProviders
         /// A task that represents the asynchronous operation
         /// The task result contains the integer identity; null if cannot get the result
         /// </returns>
-        public virtual Task<int?> GetTableIdentAsync<TEntity>() where TEntity : BaseEntity
+        public virtual Task<int?> GetTableIdentAsync<TEntity>() where TEntity : DataEntity
         {
             using var currentConnection = CreateDataConnection();
 
@@ -218,7 +218,7 @@ namespace ARWNI2S.Node.Data.DataProviders
         /// <typeparam name="TEntity">Entity type</typeparam>
         /// <param name="ident">Identity value</param>
         /// <returns>A task that represents the asynchronous operation</returns>
-        public virtual async Task SetTableIdentAsync<TEntity>(int ident) where TEntity : BaseEntity
+        public virtual async Task SetTableIdentAsync<TEntity>(int ident) where TEntity : DataEntity
         {
             var currentIdent = await GetTableIdentAsync<TEntity>();
             if (!currentIdent.HasValue || ident <= currentIdent.Value)

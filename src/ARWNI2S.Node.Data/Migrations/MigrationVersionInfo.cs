@@ -6,7 +6,7 @@ namespace ARWNI2S.Node.Data.Migrations
     /// <summary>
     /// The migration version table
     /// </summary>
-    public partial class MigrationVersionInfo : BaseEntity, IVersionTableMetaData
+    public partial class MigrationVersionInfo : DataEntity, IVersionTableMetaData
     {
         #region Ctor
 

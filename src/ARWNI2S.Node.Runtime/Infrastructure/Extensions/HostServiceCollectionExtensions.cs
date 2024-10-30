@@ -1,4 +1,5 @@
-﻿using ARWNI2S.Engine.Hosting.Extensions;
+﻿using ARWNI2S.Engine.Configuration;
+using ARWNI2S.Engine.Hosting.Extensions;
 using ARWNI2S.Infrastructure;
 using ARWNI2S.Infrastructure.Configuration;
 using ARWNI2S.Infrastructure.Engine;
@@ -80,8 +81,12 @@ namespace ARWNI2S.Runtime.Infrastructure.Extensions
             services.AddContextAccessor();
 
             //add core services
-            services.AddGDESK(builder => { 
+            services.AddGDESK(builder => {
+                //// Registrar GDESKConfig para cargarlo desde appsettings.json
+                //services.Configure<GDESKConfig>(config);
 
+                // Registrar GDESKConfig como un servicio accesible desde el contenedor
+                services.AddSingleton(resolver => resolver.GetRequiredService<IOptions<GDESKConfig>>().Value);
             });
 
             var mvrmCoreBuilder = services.AddMVRMCore();

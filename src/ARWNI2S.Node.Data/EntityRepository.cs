@@ -13,7 +13,7 @@ namespace ARWNI2S.Node.Data;
 /// Represents the entity repository implementation
 /// </summary>
 /// <typeparam name="TEntity">Entity type</typeparam>
-public partial class EntityRepository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity
+public partial class EntityRepository<TEntity> : IRepository<TEntity> where TEntity : DataEntity
 {
     #region Fields
 

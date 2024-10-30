@@ -3,7 +3,7 @@
     /// <summary>
     /// Represents an activity log record
     /// </summary>
-    public partial class ActivityLog : BaseEntity
+    public partial class ActivityLog : DataEntity
     {
         /// <summary>
         /// Gets or sets the activity log type identifier

@@ -184,7 +184,7 @@ namespace ARWNI2S.Node.Data.Mapping
         /// <returns>Array of mapping attributes.</returns>
         public MappingAttribute[] GetAttributes(Type type)
         {
-            if (!type.IsSubclassOf(typeof(BaseEntity)))
+            if (!type.IsSubclassOf(typeof(DataEntity)))
                 return [];
 
             var attribute = Types.GetOrAdd((type, null), _ =>
@@ -208,7 +208,7 @@ namespace ARWNI2S.Node.Data.Mapping
         /// <returns>Array of attributes.</returns>
         public MappingAttribute[] GetAttributes(Type type, MemberInfo memberInfo)
         {
-            if (!type.IsSubclassOf(typeof(BaseEntity)))
+            if (!type.IsSubclassOf(typeof(DataEntity)))
                 return [];
 
             var entityDescriptor = NI2SDataMappingSchema.GetEntityDescriptor(type);

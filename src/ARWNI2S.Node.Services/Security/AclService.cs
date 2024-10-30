@@ -64,7 +64,7 @@ namespace ARWNI2S.Node.Services.Security
         /// A task that represents the asynchronous operation
         /// The task result contains the rue if exist; otherwise false
         /// </returns>
-        protected virtual async Task<bool> IsEntityAclMappingExistAsync<TEntity>() where TEntity : BaseEntity, IAclSupported
+        protected virtual async Task<bool> IsEntityAclMappingExistAsync<TEntity>() where TEntity : DataEntity, IAclSupported
         {
             var entityName = typeof(TEntity).Name;
             var key = _staticCacheManager.PrepareKeyForDefaultCache(SecurityServicesDefaults.EntityAclRecordExistsCacheKey, entityName);
@@ -91,7 +91,7 @@ namespace ARWNI2S.Node.Services.Security
         /// The task result contains the filtered query
         /// </returns>
         public virtual async Task<IQueryable<TEntity>> ApplyAcl<TEntity>(IQueryable<TEntity> query, User user)
-            where TEntity : BaseEntity, IAclSupported
+            where TEntity : DataEntity, IAclSupported
         {
             ArgumentNullException.ThrowIfNull(query);
 
@@ -112,7 +112,7 @@ namespace ARWNI2S.Node.Services.Security
         /// The task result contains the filtered query
         /// </returns>
         public virtual async Task<IQueryable<TEntity>> ApplyAcl<TEntity>(IQueryable<TEntity> query, int[] userRoleIds)
-            where TEntity : BaseEntity, IAclSupported
+            where TEntity : DataEntity, IAclSupported
         {
             ArgumentNullException.ThrowIfNull(query);
 
@@ -146,7 +146,7 @@ namespace ARWNI2S.Node.Services.Security
         /// A task that represents the asynchronous operation
         /// The task result contains the aCL records
         /// </returns>
-        public virtual async Task<IList<AclRecord>> GetAclRecordsAsync<TEntity>(TEntity entity) where TEntity : BaseEntity, IAclSupported
+        public virtual async Task<IList<AclRecord>> GetAclRecordsAsync<TEntity>(TEntity entity) where TEntity : DataEntity, IAclSupported
         {
             ArgumentNullException.ThrowIfNull(entity);
 
@@ -169,7 +169,7 @@ namespace ARWNI2S.Node.Services.Security
         /// <param name="entity">Entity</param>
         /// <param name="userRoleId">User role id</param>
         /// <returns>A task that represents the asynchronous operation</returns>
-        public virtual async Task InsertAclRecordAsync<TEntity>(TEntity entity, int userRoleId) where TEntity : BaseEntity, IAclSupported
+        public virtual async Task InsertAclRecordAsync<TEntity>(TEntity entity, int userRoleId) where TEntity : DataEntity, IAclSupported
         {
             ArgumentNullException.ThrowIfNull(entity);
 
@@ -197,7 +197,7 @@ namespace ARWNI2S.Node.Services.Security
         /// A task that represents the asynchronous operation
         /// The task result contains the user role identifiers
         /// </returns>
-        public virtual async Task<int[]> GetUserRoleIdsWithAccessAsync<TEntity>(TEntity entity) where TEntity : BaseEntity, IAclSupported
+        public virtual async Task<int[]> GetUserRoleIdsWithAccessAsync<TEntity>(TEntity entity) where TEntity : DataEntity, IAclSupported
         {
             ArgumentNullException.ThrowIfNull(entity);
 
@@ -223,7 +223,7 @@ namespace ARWNI2S.Node.Services.Security
         /// A task that represents the asynchronous operation
         /// The task result contains the rue - authorized; otherwise, false
         /// </returns>
-        public virtual async Task<bool> AuthorizeAsync<TEntity>(TEntity entity) where TEntity : BaseEntity, IAclSupported
+        public virtual async Task<bool> AuthorizeAsync<TEntity>(TEntity entity) where TEntity : DataEntity, IAclSupported
         {
             return await AuthorizeAsync(entity, (User)await _workContext.GetCurrentUserAsync());
         }
@@ -238,7 +238,7 @@ namespace ARWNI2S.Node.Services.Security
         /// A task that represents the asynchronous operation
         /// The task result contains the rue - authorized; otherwise, false
         /// </returns>
-        public virtual async Task<bool> AuthorizeAsync<TEntity>(TEntity entity, User user) where TEntity : BaseEntity, IAclSupported
+        public virtual async Task<bool> AuthorizeAsync<TEntity>(TEntity entity, User user) where TEntity : DataEntity, IAclSupported
         {
             if (entity == null)
                 return false;

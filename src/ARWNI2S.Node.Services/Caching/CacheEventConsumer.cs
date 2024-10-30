@@ -14,7 +14,7 @@ namespace ARWNI2S.Node.Services.Caching
         IConsumer<EntityCreatedEvent<TEntity>>,
         IConsumer<EntityUpdatedEvent<TEntity>>,
         IConsumer<EntityDeletedEvent<TEntity>>
-        where TEntity : BaseEntity
+        where TEntity : DataEntity
     {
         #region Fields
 

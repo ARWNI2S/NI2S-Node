@@ -16,5 +16,10 @@ namespace ARWNI2S.Node.Core.Entities.Directory
         /// Base weight identifier
         /// </summary>
         public int BaseWeightId { get; set; }
+
+        /// <summary>
+        /// Base temperature identifier
+        /// </summary>
+        public int BaseTemperatureId { get; set; }
     }
 }

@@ -3,7 +3,7 @@
     /// <summary>
     /// Represents a user password
     /// </summary>
-    public partial class UserPassword : BaseEntity
+    public partial class UserPassword : DataEntity
     {
         public UserPassword()
         {

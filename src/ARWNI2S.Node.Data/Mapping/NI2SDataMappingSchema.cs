@@ -27,7 +27,7 @@ namespace ARWNI2S.Node.Data.Mapping
         /// <returns>Mapped entity descriptor</returns>
         public static NI2SDataEntityDescriptor GetEntityDescriptor(Type entityType)
         {
-            if (!typeof(BaseEntity).IsAssignableFrom(entityType))
+            if (!typeof(DataEntity).IsAssignableFrom(entityType))
                 return null;
 
             return EntityDescriptors.GetOrAdd(entityType, t =>

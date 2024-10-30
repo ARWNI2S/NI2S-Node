@@ -8,6 +8,6 @@
         /// <summary>
         /// Gets the entity id object
         /// </summary>
-        public object Id { get; }
+        object Id { get; }
     }
 }

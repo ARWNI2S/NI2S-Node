@@ -13,7 +13,7 @@
     /// <summary>
     /// Represents a node
     /// </summary>
-    public partial class NI2SNode : BaseEntity
+    public partial class NI2SNode : DataEntity
     {
         public string Name { get; set; }
 

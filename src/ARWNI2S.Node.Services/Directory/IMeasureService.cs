@@ -8,6 +8,92 @@ namespace ARWNI2S.Node.Services.Directory
     public partial interface IMeasureService
     {
         /// <summary>
+        /// Deletes measure temperature
+        /// </summary>
+        /// <param name="measureTemperature">Measure temperature</param>
+        /// <returns>A task that represents the asynchronous operation</returns>
+        Task DeleteMeasureTemperatureAsync(MeasureTemperature measureTemperature);
+
+        /// <summary>
+        /// Gets a measure temperature by identifier
+        /// </summary>
+        /// <param name="measureTemperatureId">Measure temperature identifier</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation
+        /// The task result contains the measure temperature
+        /// </returns>
+        Task<MeasureTemperature> GetMeasureTemperatureByIdAsync(int measureTemperatureId);
+
+        /// <summary>
+        /// Gets a measure temperature by system keyword
+        /// </summary>
+        /// <param name="systemKeyword">The system keyword</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation
+        /// The task result contains the measure temperature
+        /// </returns>
+        Task<MeasureTemperature> GetMeasureTemperatureBySystemKeywordAsync(string systemKeyword);
+
+        /// <summary>
+        /// Gets all measure temperatures
+        /// </summary>
+        /// <returns>
+        /// A task that represents the asynchronous operation
+        /// The task result contains the measure temperatures
+        /// </returns>
+        Task<IList<MeasureTemperature>> GetAllMeasureTemperaturesAsync();
+
+        /// <summary>
+        /// Inserts a measure temperature
+        /// </summary>
+        /// <param name="measure">Measure temperature</param>
+        /// <returns>A task that represents the asynchronous operation</returns>
+        Task InsertMeasureTemperatureAsync(MeasureTemperature measure);
+
+        /// <summary>
+        /// Updates the measure temperature
+        /// </summary>
+        /// <param name="measure">Measure temperature</param>
+        /// <returns>A task that represents the asynchronous operation</returns>
+        Task UpdateMeasureTemperatureAsync(MeasureTemperature measure);
+
+        /// <summary>
+        /// Converts temperature
+        /// </summary>
+        /// <param name="value">Value to convert</param>
+        /// <param name="sourceMeasureTemperature">Source temperature</param>
+        /// <param name="targetMeasureTemperature">Target temperature</param>
+        /// <param name="round">A value indicating whether a result should be rounded</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation
+        /// The task result contains the converted value
+        /// </returns>
+        Task<decimal> ConvertTemperatureAsync(decimal value,
+            MeasureTemperature sourceMeasureTemperature, MeasureTemperature targetMeasureTemperature, bool round = true);
+
+        /// <summary>
+        /// Converts from primary temperature
+        /// </summary>
+        /// <param name="value">Value to convert</param>
+        /// <param name="targetMeasureTemperature">Target temperature</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation
+        /// The task result contains the converted value
+        /// </returns>
+        Task<decimal> ConvertFromPrimaryMeasureTemperatureAsync(decimal value, MeasureTemperature targetMeasureTemperature);
+
+        /// <summary>
+        /// Converts to primary measure temperature
+        /// </summary>
+        /// <param name="value">Value to convert</param>
+        /// <param name="sourceMeasureTemperature">Source temperature</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation
+        /// The task result contains the converted value
+        /// </returns>
+        Task<decimal> ConvertToPrimaryMeasureTemperatureAsync(decimal value, MeasureTemperature sourceMeasureTemperature);
+
+        /// <summary>
         /// Deletes measure dimension
         /// </summary>
         /// <param name="measureDimension">Measure dimension</param>

@@ -46,7 +46,7 @@ namespace ARWNI2S.Node.Services.Localization
         Task SaveLocalizedValueAsync<T>(T entity,
             Expression<Func<T, string>> keySelector,
             string localeValue,
-            int languageId) where T : BaseEntity, ILocalizedEntity;
+            int languageId) where T : DataEntity, ILocalizedEntity;
 
         /// <summary>
         /// Save localized value
@@ -61,6 +61,6 @@ namespace ARWNI2S.Node.Services.Localization
         Task SaveLocalizedValueAsync<T, TPropType>(T entity,
            Expression<Func<T, TPropType>> keySelector,
            TPropType localeValue,
-           int languageId) where T : BaseEntity, ILocalizedEntity;
+           int languageId) where T : DataEntity, ILocalizedEntity;
     }
 }

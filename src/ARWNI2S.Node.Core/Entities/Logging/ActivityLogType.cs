@@ -3,7 +3,7 @@
     /// <summary>
     /// Represents an activity log type record
     /// </summary>
-    public partial class ActivityLogType : BaseEntity
+    public partial class ActivityLogType : DataEntity
     {
         /// <summary>
         /// Gets or sets the system keyword

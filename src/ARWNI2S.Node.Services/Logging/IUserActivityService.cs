@@ -46,7 +46,7 @@ namespace ARWNI2S.Node.Services.Logging
         /// A task that represents the asynchronous operation
         /// The task result contains the activity log item
         /// </returns>
-        Task<ActivityLog> InsertActivityAsync(string systemKeyword, string comment, BaseEntity entity = null);
+        Task<ActivityLog> InsertActivityAsync(string systemKeyword, string comment, DataEntity entity = null);
 
         /// <summary>
         /// Inserts an activity log item
@@ -59,7 +59,7 @@ namespace ARWNI2S.Node.Services.Logging
         /// A task that represents the asynchronous operation
         /// The task result contains the activity log item
         /// </returns>
-        Task<ActivityLog> InsertActivityAsync(User user, string systemKeyword, string comment, BaseEntity entity = null);
+        Task<ActivityLog> InsertActivityAsync(User user, string systemKeyword, string comment, DataEntity entity = null);
 
         /// <summary>
         /// Deletes an activity log item

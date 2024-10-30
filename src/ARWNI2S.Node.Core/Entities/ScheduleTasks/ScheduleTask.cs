@@ -3,7 +3,7 @@
     /// <summary>
     /// Schedule task
     /// </summary>
-    public partial class ScheduleTask : BaseEntity
+    public partial class ScheduleTask : DataEntity
     {
         /// <summary>
         /// Gets or sets the name

@@ -166,7 +166,7 @@ namespace ARWNI2S.Node.Data.DataProviders
         /// A task that represents the asynchronous operation
         /// The task result contains the integer identity; null if cannot get the result
         /// </returns>
-        public virtual async Task<int?> GetTableIdentAsync<TEntity>() where TEntity : BaseEntity
+        public virtual async Task<int?> GetTableIdentAsync<TEntity>() where TEntity : DataEntity
         {
             using var currentConnection = CreateDataConnection();
             var tableName = NI2SDataMappingSchema.GetEntityDescriptor(typeof(TEntity)).EntityName;
@@ -210,7 +210,7 @@ namespace ARWNI2S.Node.Data.DataProviders
         /// <typeparam name="TEntity">Entity type</typeparam>
         /// <param name="ident">Identity value</param>
         /// <returns>A task that represents the asynchronous operation</returns>
-        public virtual async Task SetTableIdentAsync<TEntity>(int ident) where TEntity : BaseEntity
+        public virtual async Task SetTableIdentAsync<TEntity>(int ident) where TEntity : DataEntity
         {
             var currentIdent = await GetTableIdentAsync<TEntity>();
             if (!currentIdent.HasValue || ident <= currentIdent.Value)

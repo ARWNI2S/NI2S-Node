@@ -11,6 +11,7 @@ namespace ARWNI2S.Node.Services.Directory
     {
         #region Fields
 
+        private readonly IRepository<MeasureTemperature> _measureTemperatureRepository;
         private readonly IRepository<MeasureDimension> _measureDimensionRepository;
         private readonly IRepository<MeasureWeight> _measureWeightRepository;
         private readonly MeasureSettings _measureSettings;
@@ -19,10 +20,12 @@ namespace ARWNI2S.Node.Services.Directory
 
         #region Ctor
 
-        public MeasureService(IRepository<MeasureDimension> measureDimensionRepository,
+        public MeasureService(IRepository<MeasureTemperature> measureTemperatureRepository,
+            IRepository<MeasureDimension> measureDimensionRepository,
             IRepository<MeasureWeight> measureWeightRepository,
             MeasureSettings measureSettings)
         {
+            _measureTemperatureRepository = measureTemperatureRepository;
             _measureDimensionRepository = measureDimensionRepository;
             _measureWeightRepository = measureWeightRepository;
             _measureSettings = measureSettings;
@@ -31,6 +34,176 @@ namespace ARWNI2S.Node.Services.Directory
         #endregion
 
         #region Methods
+
+        #region Temperatures
+
+        /// <summary>
+        /// Deletes measure temperature
+        /// </summary>
+        /// <param name="measureTemperature">Measure temperature</param>
+        /// <returns>A task that represents the asynchronous operation</returns>
+        public virtual async Task DeleteMeasureTemperatureAsync(MeasureTemperature measureTemperature)
+        {
+            await _measureTemperatureRepository.DeleteAsync(measureTemperature);
+        }
+
+        /// <summary>
+        /// Gets a measure temperature by identifier
+        /// </summary>
+        /// <param name="measureTemperatureId">Measure temperature identifier</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation
+        /// The task result contains the measure temperature
+        /// </returns>
+        public virtual async Task<MeasureTemperature> GetMeasureTemperatureByIdAsync(int measureTemperatureId)
+        {
+            return await _measureTemperatureRepository.GetByIdAsync(measureTemperatureId, cache => default);
+        }
+
+        /// <summary>
+        /// Gets a measure temperature by system keyword
+        /// </summary>
+        /// <param name="systemKeyword">The system keyword</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation
+        /// The task result contains the measure temperature
+        /// </returns>
+        public virtual async Task<MeasureTemperature> GetMeasureTemperatureBySystemKeywordAsync(string systemKeyword)
+        {
+            if (string.IsNullOrEmpty(systemKeyword))
+                return null;
+
+            var measureTemperatures = await GetAllMeasureTemperaturesAsync();
+            foreach (var measureTemperature in measureTemperatures)
+                if (measureTemperature.SystemKeyword.Equals(systemKeyword, StringComparison.InvariantCultureIgnoreCase))
+                    return measureTemperature;
+            return null;
+        }
+
+        /// <summary>
+        /// Gets all measure temperatures
+        /// </summary>
+        /// <returns>
+        /// A task that represents the asynchronous operation
+        /// The task result contains the measure temperatures
+        /// </returns>
+        public virtual async Task<IList<MeasureTemperature>> GetAllMeasureTemperaturesAsync()
+        {
+            var measureTemperatures = await _measureTemperatureRepository.GetAllAsync(query =>
+            {
+                return from mw in query
+                       orderby mw.DisplayOrder, mw.Id
+                       select mw;
+            }, cache => default);
+
+            return measureTemperatures;
+        }
+
+        /// <summary>
+        /// Inserts a measure temperature
+        /// </summary>
+        /// <param name="measure">Measure temperature</param>
+        /// <returns>A task that represents the asynchronous operation</returns>
+        public virtual async Task InsertMeasureTemperatureAsync(MeasureTemperature measure)
+        {
+            await _measureTemperatureRepository.InsertAsync(measure);
+        }
+
+        /// <summary>
+        /// Updates the measure temperature
+        /// </summary>
+        /// <param name="measure">Measure temperature</param>
+        /// <returns>A task that represents the asynchronous operation</returns>
+        public virtual async Task UpdateMeasureTemperatureAsync(MeasureTemperature measure)
+        {
+            await _measureTemperatureRepository.UpdateAsync(measure);
+        }
+
+        /// <summary>
+        /// Converts temperature
+        /// </summary>
+        /// <param name="value">Value to convert</param>
+        /// <param name="sourceMeasureTemperature">Source temperature</param>
+        /// <param name="targetMeasureTemperature">Target temperature</param>
+        /// <param name="round">A value indicating whether a result should be rounded</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation
+        /// The task result contains the converted value
+        /// </returns>
+        public virtual async Task<decimal> ConvertTemperatureAsync(decimal value,
+            MeasureTemperature sourceMeasureTemperature, MeasureTemperature targetMeasureTemperature, bool round = true)
+        {
+            ArgumentNullException.ThrowIfNull(sourceMeasureTemperature);
+
+            ArgumentNullException.ThrowIfNull(targetMeasureTemperature);
+
+            var result = value;
+            if (result != decimal.Zero && sourceMeasureTemperature.Id != targetMeasureTemperature.Id)
+            {
+                result = await ConvertToPrimaryMeasureTemperatureAsync(result, sourceMeasureTemperature);
+                result = await ConvertFromPrimaryMeasureTemperatureAsync(result, targetMeasureTemperature);
+            }
+
+            if (round)
+                result = Math.Round(result, 2);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Converts from primary temperature
+        /// </summary>
+        /// <param name="value">Value to convert</param>
+        /// <param name="targetMeasureTemperature">Target temperature</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation
+        /// The task result contains the converted value
+        /// </returns>
+        public virtual async Task<decimal> ConvertFromPrimaryMeasureTemperatureAsync(decimal value,
+            MeasureTemperature targetMeasureTemperature)
+        {
+            ArgumentNullException.ThrowIfNull(targetMeasureTemperature);
+
+            var result = value;
+            var baseTemperatureIn = await GetMeasureTemperatureByIdAsync(_measureSettings.BaseTemperatureId);
+            if (result == decimal.Zero || targetMeasureTemperature.Id == baseTemperatureIn.Id)
+                return result;
+
+            var exchangeRatio = targetMeasureTemperature.Ratio;
+            if (exchangeRatio == decimal.Zero)
+                throw new NodeException($"Exchange ratio not set for temperature [{targetMeasureTemperature.Name}]");
+            result *= exchangeRatio;
+
+            return result;
+        }
+
+        /// <summary>
+        /// Converts to primary measure temperature
+        /// </summary>
+        /// <param name="value">Value to convert</param>
+        /// <param name="sourceMeasureTemperature">Source temperature</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation
+        /// The task result contains the converted value
+        /// </returns>
+        public virtual async Task<decimal> ConvertToPrimaryMeasureTemperatureAsync(decimal value, MeasureTemperature sourceMeasureTemperature)
+        {
+            ArgumentNullException.ThrowIfNull(sourceMeasureTemperature);
+
+            var result = value;
+            var baseTemperatureIn = await GetMeasureTemperatureByIdAsync(_measureSettings.BaseTemperatureId);
+            if (result == decimal.Zero || sourceMeasureTemperature.Id == baseTemperatureIn.Id)
+                return result;
+
+            var exchangeRatio = sourceMeasureTemperature.Ratio;
+            if (exchangeRatio == decimal.Zero)
+                throw new NodeException($"Exchange ratio not set for temperature [{sourceMeasureTemperature.Name}]");
+            result /= exchangeRatio;
+
+            return result;
+        }
+
+        #endregion
 
         #region Dimensions
 

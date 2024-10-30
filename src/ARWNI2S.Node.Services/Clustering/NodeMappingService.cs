@@ -57,7 +57,7 @@ namespace ARWNI2S.Node.Services.Clustering
         /// A task that represents the asynchronous operation
         /// The task result contains the rue if exists; otherwise false
         /// </returns>
-        protected virtual async Task<bool> IsEntityMappingExistsAsync<TEntity>() where TEntity : BaseEntity, INodeMappingSupported
+        protected virtual async Task<bool> IsEntityMappingExistsAsync<TEntity>() where TEntity : DataEntity, INodeMappingSupported
         {
             var entityName = typeof(TEntity).Name;
             var key = _staticCacheManager.PrepareKeyForDefaultCache(ClusteringServiceDefaults.NodeMappingExistsCacheKey, entityName);
@@ -84,7 +84,7 @@ namespace ARWNI2S.Node.Services.Clustering
         /// The task result contains the filtered query
         /// </returns>
         public virtual async Task<IQueryable<TEntity>> ApplyNodeMapping<TEntity>(IQueryable<TEntity> query, int nodeId)
-            where TEntity : BaseEntity, INodeMappingSupported
+            where TEntity : DataEntity, INodeMappingSupported
         {
             ArgumentNullException.ThrowIfNull(query);
 
@@ -116,7 +116,7 @@ namespace ARWNI2S.Node.Services.Clustering
         /// A task that represents the asynchronous operation
         /// The task result contains the node mapping records
         /// </returns>
-        public virtual async Task<IList<NodeMapping>> GetNodeMappingsAsync<TEntity>(TEntity entity) where TEntity : BaseEntity, INodeMappingSupported
+        public virtual async Task<IList<NodeMapping>> GetNodeMappingsAsync<TEntity>(TEntity entity) where TEntity : DataEntity, INodeMappingSupported
         {
             ArgumentNullException.ThrowIfNull(entity);
 
@@ -142,7 +142,7 @@ namespace ARWNI2S.Node.Services.Clustering
         /// <param name="entity">Entity</param>
         /// <param name="nodeId">Node id</param>
         /// <returns>A task that represents the asynchronous operation</returns>
-        public virtual async Task InsertNodeMappingAsync<TEntity>(TEntity entity, int nodeId) where TEntity : BaseEntity, INodeMappingSupported
+        public virtual async Task InsertNodeMappingAsync<TEntity>(TEntity entity, int nodeId) where TEntity : DataEntity, INodeMappingSupported
         {
             ArgumentNullException.ThrowIfNull(entity);
 
@@ -170,7 +170,7 @@ namespace ARWNI2S.Node.Services.Clustering
         /// A task that represents the asynchronous operation
         /// The task result contains the node identifiers
         /// </returns>
-        public virtual async Task<int[]> GetNodesIdsWithAccessAsync<TEntity>(TEntity entity) where TEntity : BaseEntity, INodeMappingSupported
+        public virtual async Task<int[]> GetNodesIdsWithAccessAsync<TEntity>(TEntity entity) where TEntity : DataEntity, INodeMappingSupported
         {
             ArgumentNullException.ThrowIfNull(entity);
 
@@ -195,7 +195,7 @@ namespace ARWNI2S.Node.Services.Clustering
         /// <returns>
         /// The node identifiers
         /// </returns>
-        public virtual int[] GetNodesIdsWithAccess<TEntity>(TEntity entity) where TEntity : BaseEntity, INodeMappingSupported
+        public virtual int[] GetNodesIdsWithAccess<TEntity>(TEntity entity) where TEntity : DataEntity, INodeMappingSupported
         {
             ArgumentNullException.ThrowIfNull(entity);
 
@@ -221,7 +221,7 @@ namespace ARWNI2S.Node.Services.Clustering
         /// A task that represents the asynchronous operation
         /// The task result contains the rue - authorized; otherwise, false
         /// </returns>
-        public virtual async Task<bool> AuthorizeAsync<TEntity>(TEntity entity) where TEntity : BaseEntity, INodeMappingSupported
+        public virtual async Task<bool> AuthorizeAsync<TEntity>(TEntity entity) where TEntity : DataEntity, INodeMappingSupported
         {
             var node = (NI2SNode)await _nodeContext.GetCurrentNodeAsync();
 
@@ -238,7 +238,7 @@ namespace ARWNI2S.Node.Services.Clustering
         /// A task that represents the asynchronous operation
         /// The task result contains the rue - authorized; otherwise, false
         /// </returns>
-        public virtual async Task<bool> AuthorizeAsync<TEntity>(TEntity entity, int nodeId) where TEntity : BaseEntity, INodeMappingSupported
+        public virtual async Task<bool> AuthorizeAsync<TEntity>(TEntity entity, int nodeId) where TEntity : DataEntity, INodeMappingSupported
         {
             if (entity == null)
                 return false;
@@ -271,7 +271,7 @@ namespace ARWNI2S.Node.Services.Clustering
         /// <returns>
         /// The rue - authorized; otherwise, false
         /// </returns>
-        public virtual bool Authorize<TEntity>(TEntity entity, int nodeId) where TEntity : BaseEntity, INodeMappingSupported
+        public virtual bool Authorize<TEntity>(TEntity entity, int nodeId) where TEntity : DataEntity, INodeMappingSupported
         {
             if (entity == null)
                 return false;

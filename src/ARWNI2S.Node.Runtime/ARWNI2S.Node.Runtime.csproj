@@ -7,13 +7,10 @@
 
   <ItemGroup>
     <Compile Remove="EngineParts\**" />
-    <Compile Remove="Entities\**" />
     <Compile Remove="NewFolder\**" />
     <EmbeddedResource Remove="EngineParts\**" />
-    <EmbeddedResource Remove="Entities\**" />
     <EmbeddedResource Remove="NewFolder\**" />
     <None Remove="EngineParts\**" />
-    <None Remove="Entities\**" />
     <None Remove="NewFolder\**" />
   </ItemGroup>
 
@@ -49,6 +46,7 @@
 
   <ItemGroup>
     <Folder Include="Services\Localization\" />
+    <Folder Include="Simulation\Models\" />
   </ItemGroup>
 
 </Project>

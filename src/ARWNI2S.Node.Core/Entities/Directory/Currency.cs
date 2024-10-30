@@ -6,7 +6,7 @@ namespace ARWNI2S.Node.Core.Entities.Directory
     /// <summary>
     /// Represents a currency
     /// </summary>
-    public partial class Currency : BaseEntity, ILocalizedEntity, INodeMappingSupported
+    public partial class Currency : DataEntity, ILocalizedEntity, INodeMappingSupported
     {
         /// <summary>
         /// Gets or sets the name

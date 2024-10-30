@@ -5,7 +5,7 @@ namespace ARWNI2S.Node.Core.Entities.Logging
     /// <summary>
     /// Represents a log record
     /// </summary>
-    public partial class Log : BaseEntity
+    public partial class Log : DataEntity
     {
         /// <summary>
         /// Gets or sets the log level identifier

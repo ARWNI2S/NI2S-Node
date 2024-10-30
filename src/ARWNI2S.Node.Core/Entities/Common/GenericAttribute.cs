@@ -3,7 +3,7 @@
     /// <summary>
     /// Represents a generic attribute
     /// </summary>
-    public partial class GenericAttribute : BaseEntity
+    public partial class GenericAttribute : DataEntity
     {
         /// <summary>
         /// Gets or sets the entity identifier

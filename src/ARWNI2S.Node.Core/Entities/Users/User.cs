@@ -5,7 +5,7 @@ namespace ARWNI2S.Node.Core.Entities.Users
     /// <summary>
     /// Represents a user
     /// </summary>
-    public partial class User : BaseEntity, INI2SUser, ISoftDeletedEntity
+    public partial class User : DataEntity, INI2SUser, ISoftDeletedEntity
     {
         public User()
         {

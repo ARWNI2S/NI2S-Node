@@ -31,10 +31,10 @@ namespace ARWNI2S.Infrastructure.Timing
         #region Locals
         private bool _isUsingQPF;
         private bool _isTimerStopped;
-        private long _ticksPerSecond;
-        private long _stopTime;
-        private long _lastElapsedTime;
-        private long _baseTime;
+        private ulong _ticksPerSecond;
+        private ulong _stopTime;
+        private ulong _lastElapsedTime;
+        private ulong _baseTime;
         #endregion
 
         #region Propiedad
@@ -67,7 +67,7 @@ namespace ARWNI2S.Infrastructure.Timing
             if (!_isUsingQPF) return; //Nada que hacer
 
             //Obtener el tiempo actual o el de parada
-            long time = 0;
+            ulong time = 0;
 
             if (_stopTime != 0)
                 time = _stopTime;
@@ -79,6 +79,7 @@ namespace ARWNI2S.Infrastructure.Timing
             _stopTime = 0;
             _isTimerStopped = false;
         }
+
         /// <summary>
         /// Inicia el temporizador.
         /// </summary>
@@ -87,7 +88,7 @@ namespace ARWNI2S.Infrastructure.Timing
             if (!_isUsingQPF) return; //Nada que hacer
 
             //Obtener el tiempo actual o el de parada
-            long time = 0;
+            ulong time = 0;
 
             if (_stopTime != 0)
                 time = _stopTime;
@@ -112,7 +113,7 @@ namespace ARWNI2S.Infrastructure.Timing
             if (!_isTimerStopped)
             {
                 //Obtener el tiempo actual o el de parada
-                long time = 0;
+                ulong time = 0;
 
                 if (_stopTime != 0)
                     time = _stopTime;
@@ -126,27 +127,17 @@ namespace ARWNI2S.Infrastructure.Timing
         }
 
         /// <summary>
-        /// Metodo para avanzar el timer 1/10 de segundo.
-        /// </summary>
-        public void Advance()
-        {
-            if (!_isUsingQPF) return; //Nada que hacer
-
-            _stopTime += _ticksPerSecond / 10;
-        }
-
-        /// <summary>
         /// Metodo para obtener el tiempo absoluto desde que se inicio el sistema, en milisegundos.
         /// </summary>
         /// <returns>
         /// El tiempo transcurrido desde que se inicio el temporizador, en milisegundos.
         /// </returns>
-        public double GetAbsoluteTime()
+        public double GetAbsoluteTimeMs()
         {
             if (!_isUsingQPF) return -1.0; //Nada que hacer
 
             //Obtener el tiempo actual o el de parada
-            long time = 0;
+            ulong time = 0;
 
             if (_stopTime != 0)
                 time = _stopTime;
@@ -156,18 +147,19 @@ namespace ARWNI2S.Infrastructure.Timing
             double absolueTime = time / (double)_ticksPerSecond;
             return absolueTime * 1000.0; //en milisegundos.
         }
+
         /// <summary>
         /// Metodo para obtener el tiempo actual modificado segun paradas y avances, en milisegundos.
         /// </summary>
         /// <returns>
         /// El tiempo actual del temporizador, en milisegundos.
         /// </returns>
-        public double GetTime()
+        public double GetTimeMs()
         {
             if (!_isUsingQPF) return -1.0; //Nada que hacer
 
             //Obtener el tiempo actual o el de parada
-            long time = 0;
+            ulong time = 0;
             if (_stopTime != 0)
                 time = _stopTime;
             else
@@ -176,6 +168,7 @@ namespace ARWNI2S.Infrastructure.Timing
             double appTime = (time - _baseTime) / (double)_ticksPerSecond;
             return appTime * 1000.0; //en milisegundos.
         }
+
         /// <summary>
         /// Metodo para obtener el tiempo transcurrido entre dos llamadas GetElapsedTime(), modificado segun paradas y
         /// avances, en milisegundos.
@@ -183,12 +176,12 @@ namespace ARWNI2S.Infrastructure.Timing
         /// <returns>
         /// El tiempo transcurrido desde la ultima llamada GetElapsedTime(), en milisegundos.
         /// </returns>
-        public double GetElapsedTime()
+        public double GetElapsedTimeMs()
         {
             if (!_isUsingQPF) return -1.0; //Nada que hacer
 
             //Obtener el tiempo actual o el de parada
-            long time = 0;
+            ulong time = 0;
             if (_stopTime != 0)
                 time = _stopTime;
             else

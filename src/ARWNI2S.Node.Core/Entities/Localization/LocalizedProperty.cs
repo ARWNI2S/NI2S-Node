@@ -3,7 +3,7 @@
     /// <summary>
     /// Represents a localized property
     /// </summary>
-    public partial class LocalizedProperty : BaseEntity
+    public partial class LocalizedProperty : DataEntity
     {
         /// <summary>
         /// Gets or sets the entity identifier

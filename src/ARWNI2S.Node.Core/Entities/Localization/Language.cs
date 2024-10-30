@@ -5,7 +5,7 @@ namespace ARWNI2S.Node.Core.Entities.Localization
     /// <summary>
     /// Represents a language
     /// </summary>
-    public partial class Language : BaseEntity, INodeMappingSupported
+    public partial class Language : DataEntity, INodeMappingSupported
     {
         /// <summary>
         /// Gets or sets the name

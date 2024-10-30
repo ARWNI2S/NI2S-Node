@@ -3,7 +3,7 @@
     /// <summary>
     /// Represents a node mapping record
     /// </summary>
-    public partial class NodeMapping : BaseEntity
+    public partial class NodeMapping : DataEntity
     {
         /// <summary>
         /// Gets or sets the entity identifier

@@ -4,7 +4,7 @@ using ARWNI2S.Infrastructure.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
-namespace ARWNI2S.Engine.Hosting.Extensions
+namespace ARWNI2S.Runtime.Infrastructure.Extensions
 {
     public static class GDESKServiceCollectionExtensions
     {

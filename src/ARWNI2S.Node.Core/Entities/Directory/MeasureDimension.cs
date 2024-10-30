@@ -3,7 +3,7 @@ namespace ARWNI2S.Node.Core.Entities.Directory
     /// <summary>
     /// Represents a measure dimension
     /// </summary>
-    public partial class MeasureDimension : BaseEntity
+    public partial class MeasureDimension : DataEntity
     {
         /// <summary>
         /// Gets or sets the name

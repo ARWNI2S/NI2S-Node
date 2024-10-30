@@ -91,7 +91,7 @@ namespace ARWNI2S.Node.Services.Logging
         /// A task that represents the asynchronous operation
         /// The task result contains the activity log item
         /// </returns>
-        public virtual async Task<ActivityLog> InsertActivityAsync(string systemKeyword, string comment, BaseEntity entity = null)
+        public virtual async Task<ActivityLog> InsertActivityAsync(string systemKeyword, string comment, DataEntity entity = null)
         {
             return await InsertActivityAsync((User)await _workContext.GetCurrentUserAsync(), systemKeyword, comment, entity);
         }
@@ -107,7 +107,7 @@ namespace ARWNI2S.Node.Services.Logging
         /// A task that represents the asynchronous operation
         /// The task result contains the activity log item
         /// </returns>
-        public virtual async Task<ActivityLog> InsertActivityAsync(User user, string systemKeyword, string comment, BaseEntity entity = null)
+        public virtual async Task<ActivityLog> InsertActivityAsync(User user, string systemKeyword, string comment, DataEntity entity = null)
         {
             if (user == null)
                 return null;

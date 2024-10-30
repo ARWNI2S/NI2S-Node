@@ -146,7 +146,7 @@ namespace ARWNI2S.Node.Data.DataProviders
         /// <returns>Dictionary</returns>
         public virtual async Task<IDictionary<int, string>> GetFieldHashesAsync<TEntity>(Expression<Func<TEntity, bool>> predicate,
             Expression<Func<TEntity, int>> keySelector,
-            Expression<Func<TEntity, object>> fieldSelector) where TEntity : BaseEntity
+            Expression<Func<TEntity, object>> fieldSelector) where TEntity : DataEntity
         {
             if (keySelector.Body is not MemberExpression keyMember ||
                 keyMember.Member is not PropertyInfo keyPropInfo)
@@ -177,7 +177,7 @@ namespace ARWNI2S.Node.Data.DataProviders
         /// </summary>
         /// <typeparam name="TEntity">Entity type</typeparam>
         /// <returns>Queryable source</returns>
-        public virtual IQueryable<TEntity> GetTable<TEntity>() where TEntity : BaseEntity
+        public virtual IQueryable<TEntity> GetTable<TEntity>() where TEntity : DataEntity
         {
             var options = new DataOptions()
                 .UseConnectionString(LinqToDbDataProvider, GetCurrentConnectionString())
@@ -199,7 +199,7 @@ namespace ARWNI2S.Node.Data.DataProviders
         /// A task that represents the asynchronous operation
         /// The task result contains the inserted entity
         /// </returns>
-        public virtual async Task<TEntity> InsertEntityAsync<TEntity>(TEntity entity) where TEntity : BaseEntity
+        public virtual async Task<TEntity> InsertEntityAsync<TEntity>(TEntity entity) where TEntity : DataEntity
         {
             using var dataContext = CreateDataConnection();
             entity.Id = await dataContext.InsertWithInt32IdentityAsync(entity);
@@ -212,7 +212,7 @@ namespace ARWNI2S.Node.Data.DataProviders
         /// <param name="entity"></param>
         /// <typeparam name="TEntity"></typeparam>
         /// <returns>Inserted entity</returns>
-        public virtual TEntity InsertEntity<TEntity>(TEntity entity) where TEntity : BaseEntity
+        public virtual TEntity InsertEntity<TEntity>(TEntity entity) where TEntity : DataEntity
         {
             using var dataContext = CreateDataConnection();
             entity.Id = dataContext.InsertWithInt32Identity(entity);
@@ -226,7 +226,7 @@ namespace ARWNI2S.Node.Data.DataProviders
         /// <param name="entity">Entity with data to update</param>
         /// <typeparam name="TEntity">Entity type</typeparam>
         /// <returns>A task that represents the asynchronous operation</returns>
-        public virtual async Task UpdateEntityAsync<TEntity>(TEntity entity) where TEntity : BaseEntity
+        public virtual async Task UpdateEntityAsync<TEntity>(TEntity entity) where TEntity : DataEntity
         {
             using var dataContext = CreateDataConnection();
             await dataContext.UpdateAsync(entity);
@@ -238,7 +238,7 @@ namespace ARWNI2S.Node.Data.DataProviders
         /// </summary>
         /// <param name="entity">Entity with data to update</param>
         /// <typeparam name="TEntity">Entity type</typeparam>
-        public virtual void UpdateEntity<TEntity>(TEntity entity) where TEntity : BaseEntity
+        public virtual void UpdateEntity<TEntity>(TEntity entity) where TEntity : DataEntity
         {
             using var dataContext = CreateDataConnection();
             dataContext.Update(entity);
@@ -251,7 +251,7 @@ namespace ARWNI2S.Node.Data.DataProviders
         /// <param name="entities">Entities with data to update</param>
         /// <typeparam name="TEntity">Entity type</typeparam>
         /// <returns>A task that represents the asynchronous operation</returns>
-        public virtual async Task UpdateEntitiesAsync<TEntity>(IEnumerable<TEntity> entities) where TEntity : BaseEntity
+        public virtual async Task UpdateEntitiesAsync<TEntity>(IEnumerable<TEntity> entities) where TEntity : DataEntity
         {
             //we don't use the Merge API on this level, because this API not support all databases.
             //you may see all supported databases by the following link: https://linq2db.github.io/articles/sql/merge/Merge-API.html#supported-databases
@@ -265,7 +265,7 @@ namespace ARWNI2S.Node.Data.DataProviders
         /// </summary>
         /// <param name="entities">Entities with data to update</param>
         /// <typeparam name="TEntity">Entity type</typeparam>
-        public virtual void UpdateEntities<TEntity>(IEnumerable<TEntity> entities) where TEntity : BaseEntity
+        public virtual void UpdateEntities<TEntity>(IEnumerable<TEntity> entities) where TEntity : DataEntity
         {
             //we don't use the Merge API on this level, because this API not support all databases.
             //you may see all supported databases by the following link: https://linq2db.github.io/articles/sql/merge/Merge-API.html#supported-databases
@@ -280,7 +280,7 @@ namespace ARWNI2S.Node.Data.DataProviders
         /// <param name="entity">Entity for delete operation</param>
         /// <typeparam name="TEntity">Entity type</typeparam>
         /// <returns>A task that represents the asynchronous operation</returns>
-        public virtual async Task DeleteEntityAsync<TEntity>(TEntity entity) where TEntity : BaseEntity
+        public virtual async Task DeleteEntityAsync<TEntity>(TEntity entity) where TEntity : DataEntity
         {
             using var dataContext = CreateDataConnection();
             await dataContext.DeleteAsync(entity);
@@ -292,7 +292,7 @@ namespace ARWNI2S.Node.Data.DataProviders
         /// </summary>
         /// <param name="entity">Entity for delete operation</param>
         /// <typeparam name="TEntity">Entity type</typeparam>
-        public virtual void DeleteEntity<TEntity>(TEntity entity) where TEntity : BaseEntity
+        public virtual void DeleteEntity<TEntity>(TEntity entity) where TEntity : DataEntity
         {
             using var dataContext = CreateDataConnection();
             dataContext.Delete(entity);
@@ -304,7 +304,7 @@ namespace ARWNI2S.Node.Data.DataProviders
         /// <param name="entities">Entities for delete operation</param>
         /// <typeparam name="TEntity">Entity type</typeparam>
         /// <returns>A task that represents the asynchronous operation</returns>
-        public virtual async Task BulkDeleteEntitiesAsync<TEntity>(IList<TEntity> entities) where TEntity : BaseEntity
+        public virtual async Task BulkDeleteEntitiesAsync<TEntity>(IList<TEntity> entities) where TEntity : DataEntity
         {
             using var dataContext = CreateDataConnection();
             if (entities.All(entity => entity.Id == 0))
@@ -325,7 +325,7 @@ namespace ARWNI2S.Node.Data.DataProviders
         /// </summary>
         /// <param name="entities">Entities for delete operation</param>
         /// <typeparam name="TEntity">Entity type</typeparam>
-        public virtual void BulkDeleteEntities<TEntity>(IList<TEntity> entities) where TEntity : BaseEntity
+        public virtual void BulkDeleteEntities<TEntity>(IList<TEntity> entities) where TEntity : DataEntity
         {
             using var dataContext = CreateDataConnection();
             if (entities.All(entity => entity.Id == 0))
@@ -346,7 +346,7 @@ namespace ARWNI2S.Node.Data.DataProviders
         /// A task that represents the asynchronous operation
         /// The task result contains the number of deleted records
         /// </returns>
-        public virtual async Task<int> BulkDeleteEntitiesAsync<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : BaseEntity
+        public virtual async Task<int> BulkDeleteEntitiesAsync<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : DataEntity
         {
             using var dataContext = CreateDataConnection();
             return await dataContext.GetTable<TEntity>()
@@ -362,7 +362,7 @@ namespace ARWNI2S.Node.Data.DataProviders
         /// <returns>
         /// The number of deleted records
         /// </returns>
-        public virtual int BulkDeleteEntities<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : BaseEntity
+        public virtual int BulkDeleteEntities<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : DataEntity
         {
             using var dataContext = CreateDataConnection();
             return dataContext.GetTable<TEntity>()
@@ -376,7 +376,7 @@ namespace ARWNI2S.Node.Data.DataProviders
         /// <param name="entities">Entities for insert operation</param>
         /// <typeparam name="TEntity">Entity type</typeparam>
         /// <returns>A task that represents the asynchronous operation</returns>
-        public virtual async Task BulkInsertEntitiesAsync<TEntity>(IEnumerable<TEntity> entities) where TEntity : BaseEntity
+        public virtual async Task BulkInsertEntitiesAsync<TEntity>(IEnumerable<TEntity> entities) where TEntity : DataEntity
         {
             using var dataContext = CreateDataConnection(LinqToDbDataProvider);
             await dataContext.BulkCopyAsync(new BulkCopyOptions(), entities.RetrieveIdentity(dataContext));
@@ -387,7 +387,7 @@ namespace ARWNI2S.Node.Data.DataProviders
         /// </summary>
         /// <param name="entities">Entities for insert operation</param>
         /// <typeparam name="TEntity">Entity type</typeparam>
-        public virtual void BulkInsertEntities<TEntity>(IEnumerable<TEntity> entities) where TEntity : BaseEntity
+        public virtual void BulkInsertEntities<TEntity>(IEnumerable<TEntity> entities) where TEntity : DataEntity
         {
             using var dataContext = CreateDataConnection(LinqToDbDataProvider);
             dataContext.BulkCopy(new BulkCopyOptions(), entities.RetrieveIdentity(dataContext));
@@ -448,7 +448,7 @@ namespace ARWNI2S.Node.Data.DataProviders
         /// </summary>
         /// <param name="resetIdentity">Performs reset identity column</param>
         /// <typeparam name="TEntity">Entity type</typeparam>
-        public virtual async Task TruncateAsync<TEntity>(bool resetIdentity = false) where TEntity : BaseEntity
+        public virtual async Task TruncateAsync<TEntity>(bool resetIdentity = false) where TEntity : DataEntity
         {
             using var dataContext = CreateDataConnection(LinqToDbDataProvider);
             await dataContext.GetTable<TEntity>().TruncateAsync(resetIdentity);

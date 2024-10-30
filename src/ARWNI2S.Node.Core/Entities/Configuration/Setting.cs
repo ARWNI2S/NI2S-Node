@@ -5,7 +5,7 @@ namespace ARWNI2S.Node.Core.Entities.Configuration
     /// <summary>
     /// Represents a setting
     /// </summary>
-    public partial class Setting : BaseEntity, ILocalizedEntity
+    public partial class Setting : DataEntity, ILocalizedEntity
     {
         public Setting()
         {

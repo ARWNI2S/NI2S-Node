@@ -3,7 +3,7 @@
     /// <summary>
     /// Represents an ACL record
     /// </summary>
-    public partial class AclRecord : BaseEntity
+    public partial class AclRecord : DataEntity
     {
         /// <summary>
         /// Gets or sets the entity identifier

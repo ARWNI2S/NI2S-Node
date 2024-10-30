@@ -19,7 +19,7 @@ namespace ARWNI2S.Node.Services.Security
         /// A task that represents the asynchronous operation
         /// The task result contains the filtered query
         /// </returns>
-        Task<IQueryable<TEntity>> ApplyAcl<TEntity>(IQueryable<TEntity> query, User user) where TEntity : BaseEntity, IAclSupported;
+        Task<IQueryable<TEntity>> ApplyAcl<TEntity>(IQueryable<TEntity> query, User user) where TEntity : DataEntity, IAclSupported;
 
         /// <summary>
         /// Apply ACL to the passed query
@@ -31,7 +31,7 @@ namespace ARWNI2S.Node.Services.Security
         /// A task that represents the asynchronous operation
         /// The task result contains the filtered query
         /// </returns>
-        Task<IQueryable<TEntity>> ApplyAcl<TEntity>(IQueryable<TEntity> query, int[] userRoleIds) where TEntity : BaseEntity, IAclSupported;
+        Task<IQueryable<TEntity>> ApplyAcl<TEntity>(IQueryable<TEntity> query, int[] userRoleIds) where TEntity : DataEntity, IAclSupported;
 
         /// <summary>
         /// Deletes an ACL record
@@ -49,7 +49,7 @@ namespace ARWNI2S.Node.Services.Security
         /// A task that represents the asynchronous operation
         /// The task result contains the aCL records
         /// </returns>
-        Task<IList<AclRecord>> GetAclRecordsAsync<TEntity>(TEntity entity) where TEntity : BaseEntity, IAclSupported;
+        Task<IList<AclRecord>> GetAclRecordsAsync<TEntity>(TEntity entity) where TEntity : DataEntity, IAclSupported;
 
         /// <summary>
         /// Inserts an ACL record
@@ -58,7 +58,7 @@ namespace ARWNI2S.Node.Services.Security
         /// <param name="entity">Entity</param>
         /// <param name="userRoleId">User role id</param>
         /// <returns>A task that represents the asynchronous operation</returns>
-        Task InsertAclRecordAsync<TEntity>(TEntity entity, int userRoleId) where TEntity : BaseEntity, IAclSupported;
+        Task InsertAclRecordAsync<TEntity>(TEntity entity, int userRoleId) where TEntity : DataEntity, IAclSupported;
 
         /// <summary>
         /// Find user role identifiers with granted access
@@ -69,7 +69,7 @@ namespace ARWNI2S.Node.Services.Security
         /// A task that represents the asynchronous operation
         /// The task result contains the user role identifiers
         /// </returns>
-        Task<int[]> GetUserRoleIdsWithAccessAsync<TEntity>(TEntity entity) where TEntity : BaseEntity, IAclSupported;
+        Task<int[]> GetUserRoleIdsWithAccessAsync<TEntity>(TEntity entity) where TEntity : DataEntity, IAclSupported;
 
         /// <summary>
         /// Authorize ACL permission
@@ -80,7 +80,7 @@ namespace ARWNI2S.Node.Services.Security
         /// A task that represents the asynchronous operation
         /// The task result contains the rue - authorized; otherwise, false
         /// </returns>
-        Task<bool> AuthorizeAsync<TEntity>(TEntity entity) where TEntity : BaseEntity, IAclSupported;
+        Task<bool> AuthorizeAsync<TEntity>(TEntity entity) where TEntity : DataEntity, IAclSupported;
 
         /// <summary>
         /// Authorize ACL permission
@@ -92,6 +92,6 @@ namespace ARWNI2S.Node.Services.Security
         /// A task that represents the asynchronous operation
         /// The task result contains the rue - authorized; otherwise, false
         /// </returns>
-        Task<bool> AuthorizeAsync<TEntity>(TEntity entity, User user) where TEntity : BaseEntity, IAclSupported;
+        Task<bool> AuthorizeAsync<TEntity>(TEntity entity, User user) where TEntity : DataEntity, IAclSupported;
     }
 }

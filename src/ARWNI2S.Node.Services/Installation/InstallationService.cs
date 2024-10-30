@@ -81,19 +81,19 @@ namespace ARWNI2S.Node.Services.Installation
         #region Utilities
 
         /// <returns>A task that represents the asynchronous operation</returns>
-        protected virtual async Task<T> InsertInstallationDataAsync<T>(T entity) where T : BaseEntity
+        protected virtual async Task<T> InsertInstallationDataAsync<T>(T entity) where T : DataEntity
         {
             return await _dataProvider.InsertEntityAsync(entity);
         }
 
         /// <returns>A task that represents the asynchronous operation</returns>
-        protected virtual async Task InsertInstallationDataAsync<T>(params T[] entities) where T : BaseEntity
+        protected virtual async Task InsertInstallationDataAsync<T>(params T[] entities) where T : DataEntity
         {
             await _dataProvider.BulkInsertEntitiesAsync(entities);
         }
 
         /// <returns>A task that represents the asynchronous operation</returns>
-        protected virtual async Task InsertInstallationDataAsync<T>(IList<T> entities) where T : BaseEntity
+        protected virtual async Task InsertInstallationDataAsync<T>(IList<T> entities) where T : DataEntity
         {
             if (!entities.Any())
                 return;
@@ -102,13 +102,13 @@ namespace ARWNI2S.Node.Services.Installation
         }
 
         /// <returns>A task that represents the asynchronous operation</returns>
-        protected virtual async Task UpdateInstallationDataAsync<T>(T entity) where T : BaseEntity
+        protected virtual async Task UpdateInstallationDataAsync<T>(T entity) where T : DataEntity
         {
             await _dataProvider.UpdateEntityAsync(entity);
         }
 
         /// <returns>A task that represents the asynchronous operation</returns>
-        protected virtual async Task UpdateInstallationDataAsync<T>(IList<T> entities) where T : BaseEntity
+        protected virtual async Task UpdateInstallationDataAsync<T>(IList<T> entities) where T : DataEntity
         {
             if (!entities.Any())
                 return;

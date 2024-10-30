@@ -111,7 +111,7 @@ namespace ARWNI2S.Node.Services.Common
         /// <param name="value">Value</param>
         /// <param name="serverId">Server identifier; pass 0 if this attribute will be available for all servers</param>
         /// <returns>A task that represents the asynchronous operation</returns>
-        public virtual async Task SaveAttributeAsync<TPropType>(BaseEntity entity, string key, TPropType value, int serverId = 0)
+        public virtual async Task SaveAttributeAsync<TPropType>(DataEntity entity, string key, TPropType value, int serverId = 0)
         {
             ArgumentNullException.ThrowIfNull(entity);
 
@@ -170,7 +170,7 @@ namespace ARWNI2S.Node.Services.Common
         /// A task that represents the asynchronous operation
         /// The task result contains the attribute
         /// </returns>
-        public virtual async Task<TPropType> GetAttributeAsync<TPropType>(BaseEntity entity, string key, int serverId = 0, TPropType defaultValue = default)
+        public virtual async Task<TPropType> GetAttributeAsync<TPropType>(DataEntity entity, string key, int serverId = 0, TPropType defaultValue = default)
         {
             ArgumentNullException.ThrowIfNull(entity);
 
@@ -209,7 +209,7 @@ namespace ARWNI2S.Node.Services.Common
         /// The task result contains the attribute
         /// </returns>
         public virtual async Task<TPropType> GetAttributeAsync<TEntity, TPropType>(int entityId, string key, int serverId = 0, TPropType defaultValue = default)
-            where TEntity : BaseEntity
+            where TEntity : DataEntity
         {
             var entity = (TEntity)Activator.CreateInstance(typeof(TEntity));
             entity.Id = entityId;

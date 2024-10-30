@@ -8,11 +8,7 @@ namespace ARWNI2S.Infrastructure.Memory
     /// <typeparam name="T">Any object</typeparam>
     public abstract class ObjectPool<T> : IPool<T>, IDisposable
     {
-#if DEBUG
-        private static readonly int RECOMMENDED_MAXSIZE = 50;
-#else
         private static readonly int RECOMMENDED_MAXSIZE = 5000;
-#endif
 
         /// <summary>
         /// Contiene los objetos actualmente en la reserva de memoria.
@@ -81,13 +77,13 @@ namespace ARWNI2S.Infrastructure.Memory
         /// <summary>
         /// Constructor por defecto.
         /// </summary>
-        public ObjectPool()
+        protected ObjectPool()
             : this(0, RECOMMENDED_MAXSIZE) { }
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="maxSize">El tamaño maximo de la reserva de memoria.</param>
-        public ObjectPool(int maxSize)
+        protected ObjectPool(int maxSize)
             : this(0, maxSize) { }
         /// <summary>
         /// Constructor.
@@ -95,7 +91,7 @@ namespace ARWNI2S.Infrastructure.Memory
         /// <param name="maxSize">El tamaño maximo de la reserva de memoria.</param>
         /// <param name="fill">Indica si deben iniciarse todos los objetos de la reserva de memoria.</param>
         [SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors", Justification = "Pool pattern implementation used for item creation internally.")]
-        public ObjectPool(int maxSize, bool fill)
+        protected ObjectPool(int maxSize, bool fill)
             : this(fill ? maxSize : 0, maxSize) { }
 
         /// <summary>
@@ -106,7 +102,7 @@ namespace ARWNI2S.Infrastructure.Memory
         /// no crearan ningun objeto, un numero mayor que <paramref name="maxSize"/> inicializa la reserva de memoria al maximo de
         /// su capacidad.</param>
         [SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors", Justification = "Pool pattern implementation used for item creation internally.")]
-        public ObjectPool(int maxSize, int initialObjects)
+        protected ObjectPool(int maxSize, int initialObjects)
         {
             Initialize(initialObjects, maxSize);
         }

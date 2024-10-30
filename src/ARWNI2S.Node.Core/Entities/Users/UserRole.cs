@@ -3,7 +3,7 @@
     /// <summary>
     /// Represents a user role
     /// </summary>
-    public partial class UserRole : BaseEntity
+    public partial class UserRole : DataEntity
     {
         /// <summary>
         /// Gets or sets the user role name

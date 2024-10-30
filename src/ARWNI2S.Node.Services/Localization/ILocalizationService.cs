@@ -145,7 +145,7 @@ namespace ARWNI2S.Node.Services.Localization
         /// </returns>
         Task<TPropType> GetLocalizedAsync<TEntity, TPropType>(TEntity entity, Expression<Func<TEntity, TPropType>> keySelector,
             int? languageId = null, bool returnDefaultValue = true, bool ensureTwoPublishedLanguages = true)
-            where TEntity : BaseEntity, ILocalizedEntity;
+            where TEntity : DataEntity, ILocalizedEntity;
 
         /// <summary>
         /// Get localized property of setting

@@ -3,7 +3,7 @@
     /// <summary>
     /// Represents a locale string resource
     /// </summary>
-    public partial class LocaleStringResource : BaseEntity
+    public partial class LocaleStringResource : DataEntity
     {
         /// <summary>
         /// Gets or sets the language identifier

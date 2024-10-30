@@ -217,7 +217,7 @@ namespace ARWNI2S.Node.Services.Localization
         public virtual async Task SaveLocalizedValueAsync<T>(T entity,
             Expression<Func<T, string>> keySelector,
             string localeValue,
-            int languageId) where T : BaseEntity, ILocalizedEntity
+            int languageId) where T : DataEntity, ILocalizedEntity
         {
             await SaveLocalizedValueAsync<T, string>(entity, keySelector, localeValue, languageId);
         }
@@ -235,7 +235,7 @@ namespace ARWNI2S.Node.Services.Localization
         public virtual async Task SaveLocalizedValueAsync<T, TPropType>(T entity,
             Expression<Func<T, TPropType>> keySelector,
             TPropType localeValue,
-            int languageId) where T : BaseEntity, ILocalizedEntity
+            int languageId) where T : DataEntity, ILocalizedEntity
         {
             ArgumentNullException.ThrowIfNull(entity);
 

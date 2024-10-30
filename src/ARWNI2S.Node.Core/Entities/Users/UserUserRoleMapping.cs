@@ -3,7 +3,7 @@
     /// <summary>
     /// Represents a user-user role mapping class
     /// </summary>
-    public partial class UserUserRoleMapping : BaseEntity
+    public partial class UserUserRoleMapping : DataEntity
     {
         /// <summary>
         /// Gets or sets the user identifier

@@ -553,7 +553,7 @@ namespace ARWNI2S.Node.Services.Localization
         /// </returns>
         public virtual async Task<TPropType> GetLocalizedAsync<TEntity, TPropType>(TEntity entity, Expression<Func<TEntity, TPropType>> keySelector,
             int? languageId = null, bool returnDefaultValue = true, bool ensureTwoPublishedLanguages = true)
-            where TEntity : BaseEntity, ILocalizedEntity
+            where TEntity : DataEntity, ILocalizedEntity
         {
             ArgumentNullException.ThrowIfNull(entity);
 
