@@ -1,5 +1,4 @@
-﻿using ARWNI2S.Engine.Simulation.Entities;
-using ARWNI2S.Engine.Simulation.Objects;
+﻿using ARWNI2S.Engine.Simulation;
 using ARWNI2S.Infrastructure.Entities;
 using ARWNI2S.Node.Core.Entities;
 
@@ -8,18 +7,13 @@ namespace ARWNI2S.Runtime.Simulation.Objects
     /// <summary>
     /// Represents a narrative interactive intelligent simulation abstract object
     /// </summary>
-    public abstract class NI2SObject : GameObjectBase, INI2SEntity
+    public abstract class NI2SObject : SimulableBase, INI2SEntity
     {
         protected abstract object Id { get; }
 
         public DataEntity DataEntity { get; protected set; } = null;
 
         protected NI2SObject() { }
-
-        public override void InitializeGameObject(IGameObjectBuilder objectBuilder)
-        {
-            base.InitializeGameObject(objectBuilder);
-        }
 
         public abstract void BeginPlay();
 
@@ -40,11 +34,5 @@ namespace ARWNI2S.Runtime.Simulation.Objects
         {
             base.DataEntity = dataEntity;
         }
-
-        public override void InitializeGameObject(IGameObjectBuilder objectBuilder)
-        {
-            base.InitializeGameObject(objectBuilder);
-        }
     }
-
 }

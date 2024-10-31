@@ -4,6 +4,12 @@ namespace ARWNI2S.Infrastructure
 {
     internal class Constants
     {
+        #region CONVENTIONS
+
+        public static readonly string NAME_None = "NAME_None";
+
+        #endregion
+
         #region SIMULATION CONSTANTS
 
         public static readonly int MINIMUM_DESIRED_FRAMERATE = 15;
