@@ -5,6 +5,22 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Authentication\AuthenticationMiddleware.cs" />
+    <Compile Remove="Authentication\CookieAuthenticationService.cs" />
+    <Compile Remove="Authentication\Extensions\EngineContextAuthenticationExtensions.cs" />
+    <Compile Remove="Authentication\External\ExternalAuthenticationService.cs" />
+    <Compile Remove="Authentication\TokenAuthenticationService.cs" />
+    <Compile Remove="Session\ISessionService.cs" />
+    <Compile Remove="Session\ISessionStateService.cs" />
+    <Compile Remove="Session\NodeUserSessionHelper.cs" />
+    <Compile Remove="Session\SessionService.cs" />
+    <Compile Remove="Session\SessionServicesDefaults.cs" />
+    <Compile Remove="Session\SessionState.cs" />
+    <Compile Remove="Session\SessionStateService.cs" />
+    <Compile Remove="Users\UserRegistrationService.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Http" />
     <PackageReference Include="Microsoft.Extensions.Http" />
   </ItemGroup>
@@ -12,6 +28,11 @@
   <ItemGroup>
     <ProjectReference Include="..\ARWNI2S.Node.Core\ARWNI2S.Node.Core.csproj" />
     <ProjectReference Include="..\ARWNI2S.Node.Data\ARWNI2S.Node.Data.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Authentication\Extensions\" />
+    <Folder Include="Session\" />
   </ItemGroup>
 
 </Project>

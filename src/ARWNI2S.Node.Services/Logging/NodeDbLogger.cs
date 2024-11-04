@@ -1,8 +1,8 @@
 ﻿using ARWNI2S.Infrastructure.Collections.Generic;
 using ARWNI2S.Infrastructure.Entities;
-using ARWNI2S.Node.Core;
 using ARWNI2S.Node.Core.Entities.Common;
 using ARWNI2S.Node.Core.Entities.Logging;
+using ARWNI2S.Node.Core.Network;
 using ARWNI2S.Node.Data;
 using Microsoft.Extensions.Logging;
 
@@ -15,11 +15,11 @@ namespace ARWNI2S.Node.Services.Logging
     {
         private readonly CommonSettings _commonSettings;
         private readonly IRepository<Log> _logRepository;
-        private readonly IClusteringHelper _nodeHelper;
+        private readonly INI2SNetHelper _nodeHelper;
 
         public NodeDbLogger(CommonSettings commonSettings,
             IRepository<Log> logRepository,
-            IClusteringHelper nodeHelper)
+            INI2SNetHelper nodeHelper)
         {
             _commonSettings = commonSettings;
             _logRepository = logRepository;

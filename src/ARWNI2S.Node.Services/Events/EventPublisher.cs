@@ -20,7 +20,7 @@ namespace ARWNI2S.Node.Services.Events
         public virtual async Task PublishAsync<TEvent>(TEvent @event)
         {
             //get all event consumers
-            var consumers = NodeEngineContext.Current.ResolveAll<IConsumer<TEvent>>().ToList();
+            var consumers = EngineContext.Current.ResolveAll<IConsumer<TEvent>>().ToList();
             foreach (var consumer in consumers)
             {
                 try
@@ -33,7 +33,7 @@ namespace ARWNI2S.Node.Services.Events
                     //log error, we put in to nested try-catch to prevent possible cyclic (if some error occurs)
                     try
                     {
-                        var logger = NodeEngineContext.Current.Resolve<ILogService>();
+                        var logger = EngineContext.Current.Resolve<ILogService>();
                         if (logger == null)
                             return;
 
@@ -55,7 +55,7 @@ namespace ARWNI2S.Node.Services.Events
         public virtual void Publish<TEvent>(TEvent @event)
         {
             //get all event consumers
-            var consumers = NodeEngineContext.Current.ResolveAll<IConsumer<TEvent>>().ToList();
+            var consumers = EngineContext.Current.ResolveAll<IConsumer<TEvent>>().ToList();
 
             foreach (var consumer in consumers)
                 try
@@ -68,7 +68,7 @@ namespace ARWNI2S.Node.Services.Events
                     //log error, we put in to nested try-catch to prevent possible cyclic (if some error occurs)
                     try
                     {
-                        var logger = NodeEngineContext.Current.Resolve<ILogService>();
+                        var logger = EngineContext.Current.Resolve<ILogService>();
                         if (logger == null)
                             return;
 

@@ -40,6 +40,16 @@ namespace ARWNI2S.Node.Core.Entities.Clustering
         /// </summary>
         public bool IgnoreNodeLimitations { get; set; }
 
+        /// <summary>
+        /// Gets or sets a value indicating the health monitor frequency in seconds
+        /// </summary>
+        public int HealthMonitorFrequencySeconds { get; set; } = 60;
+
+        /// <summary>
+        /// Gets or sets a value indicating the health monitor ping timeout
+        /// </summary>
+        public int HealthMonitorTimeoutMs { get; set; } = 3000;
+
         ///// <summary>
         ///// Gets or sets a value indicating whether the new content feature is enabled
         ///// </summary>

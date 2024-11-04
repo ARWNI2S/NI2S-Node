@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 namespace ARWNI2S.Infrastructure
 {
     /// <summary>
-    /// A class that finds types needed by DragonCorp by looping assemblies in the 
+    /// A class that finds types needed by ARWNI2S by looping assemblies in the 
     /// currently executing AppDomain. Only assemblies whose names matches
     /// certain patterns are investigated and an optional list of assemblies
     /// referenced by <see cref="AssemblyNames"/> are always investigated.
@@ -75,7 +75,7 @@ namespace ARWNI2S.Infrastructure
         /// The name of the assembly to check.
         /// </param>
         /// <returns>
-        /// True if the assembly should be loaded into DragonCorp.
+        /// True if the assembly should be loaded into ARWNI2S.
         /// </returns>
         protected virtual bool Matches(string assemblyFullName)
         {
@@ -292,7 +292,7 @@ namespace ARWNI2S.Infrastructure
         /// <summary>The app domain to look for types in.</summary>
         public virtual AppDomain App => AppDomain.CurrentDomain;
 
-        /// <summary>Gets or sets whether DragonCorp should iterate assemblies in the app domain when loading DragonCorp types. Loading patterns are applied when loading these assemblies.</summary>
+        /// <summary>Gets or sets whether ARWNI2S should iterate assemblies in the app domain when loading ARWNI2S types. Loading patterns are applied when loading these assemblies.</summary>
         public bool LoadAppDomainAssemblies { get; set; } = true;
 
         /// <summary>Gets or sets assemblies loaded a startup in addition to those loaded in the AppDomain.</summary>
@@ -302,7 +302,7 @@ namespace ARWNI2S.Infrastructure
         public string AssemblySkipLoadingPattern { get; set; } = "^System|^mscorlib|^Microsoft|^AjaxControlToolkit|^Antlr3|^Autofac|^AutoMapper|^Castle|^ComponentArt|^CppCodeProvider|^DotNetOpenAuth|^EntityFramework|^EPPlus|^FluentValidation|^ImageResizer|^itextsharp|^log4net|^MaxMind|^MbUnit|^MiniProfiler|^Mono.Math|^MvcContrib|^Newtonsoft|^NHibernate|^nunit|^Org.Mentalis|^PerlRegex|^QuickGraph|^Recaptcha|^Remotion|^RestSharp|^Rhino|^Telerik|^Iesi|^TestDriven|^TestFu|^UserAgentStringLibrary|^VJSharpCodeProvider|^WebActivator|^WebDev|^WebGrease";
 
         /// <summary>Gets or sets the pattern for dll that will be investigated. For ease of use this defaults to match all but to increase performance you might want to configure a pattern that includes assemblies and your own.</summary>
-        /// <remarks>If you change this so that DragonCorp assemblies aren't investigated (e.g. by not including something like "^tcw|..." you may break core functionality.</remarks>
+        /// <remarks>If you change this so that ARWNI2S assemblies aren't investigated (e.g. by not including something like "^tcw|..." you may break core functionality.</remarks>
         public string AssemblyRestrictToLoadingPattern { get; set; } = ".*";
 
         #endregion

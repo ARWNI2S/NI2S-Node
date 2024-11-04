@@ -5,6 +5,7 @@ using ARWNI2S.Node.Data;
 using ARWNI2S.Node.Core.Entities;
 using ARWNI2S.Node.Core.Entities.Logging;
 using ARWNI2S.Node.Core.Entities.Users;
+using ARWNI2S.Node.Core.Network;
 
 namespace ARWNI2S.Node.Services.Logging
 {
@@ -17,7 +18,7 @@ namespace ARWNI2S.Node.Services.Logging
 
         private readonly IRepository<ActivityLog> _activityLogRepository;
         private readonly IRepository<ActivityLogType> _activityLogTypeRepository;
-        private readonly IClusteringHelper _nodeHelper;
+        private readonly INI2SNetHelper _nodeHelper;
         private readonly IWorkContext _workContext;
 
         #endregion
@@ -26,7 +27,7 @@ namespace ARWNI2S.Node.Services.Logging
 
         public UserActivityService(IRepository<ActivityLog> activityLogRepository,
             IRepository<ActivityLogType> activityLogTypeRepository,
-            IClusteringHelper nodeHelper,
+            INI2SNetHelper nodeHelper,
             IWorkContext workContext)
         {
             _activityLogRepository = activityLogRepository;

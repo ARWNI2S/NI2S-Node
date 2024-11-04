@@ -26,6 +26,10 @@ namespace ARWNI2S.Infrastructure.Logging
         {
             logger.LogError((int)errorCode, exception, message);
         }
+        public static void LogCritical(this ILogger logger, ErrorCode errorCode, string message, Exception exception = null)
+        {
+            logger.LogCritical((int)errorCode, exception, message);
+        }
 
         #endregion
 

@@ -1,8 +1,10 @@
 ﻿using ARWNI2S.Infrastructure.Engine;
 using ARWNI2S.Node.Core;
+using ARWNI2S.Node.Core.Configuration;
 using ARWNI2S.Node.Core.Entities.Clustering;
 using ARWNI2S.Node.Core.Entities.Users;
 using ARWNI2S.Node.Core.Infrastructure;
+using ARWNI2S.Node.Core.Network;
 using ARWNI2S.Node.Data;
 using ARWNI2S.Node.Services.Clustering;
 using ARWNI2S.Node.Services.Common;
@@ -12,12 +14,13 @@ namespace ARWNI2S.Runtime
     /// <summary>
     /// NI2SNode context for application
     /// </summary>
-    public partial class LocalNodeContext : IClusteringContext
+    public partial class LocalNodeContext : INodeContext
     {
+        private readonly NodeConfig _nodeConfig;
         #region Fields
 
         private readonly IGenericAttributeService _genericAttributeService;
-        private readonly IEngineContextAccessor _engineContextAccessor;
+        private readonly INetworkContextAccessor _netContextAccessor;
         private readonly IRepository<NI2SNode> _nodeRepository;
         private readonly IClusteringService _clusterService;
 
@@ -32,17 +35,18 @@ namespace ARWNI2S.Runtime
         /// Ctor
         /// </summary>
         /// <param name="genericAttributeService">Generic attribute service</param>
-        /// <param name="engineContextAccessor">HTTP context accessor</param>
+        ///// <param name="engineContextAccessor">HTTP context accessor</param>
         /// <param name="nodeRepository">NI2SNode repository</param>
         /// <param name="clusterService">NI2SNode service</param>
-        public LocalNodeContext(
+        public LocalNodeContext(NI2SSettings ni2sSettings,
             IGenericAttributeService genericAttributeService,
-            IEngineContextAccessor engineContextAccessor,
+            //IEngineContextAccessor engineContextAccessor,
             IRepository<NI2SNode> nodeRepository,
             IClusteringService clusterService)
         {
+            _nodeConfig = ni2sSettings.Get<NodeConfig>();
             _genericAttributeService = genericAttributeService;
-            _engineContextAccessor = engineContextAccessor;
+            //_engineContextAccessor = engineContextAccessor;
             _nodeRepository = nodeRepository;
             _clusterService = clusterService;
         }
@@ -52,25 +56,15 @@ namespace ARWNI2S.Runtime
         #region Properties
 
         /// <summary>
-        /// Gets the current node
+        /// Gets the local node
         /// </summary>
         /// <returns>A task that represents the asynchronous operation</returns>
-        public virtual async Task<NI2SNode> GetCurrentNodeAsync()
+        public virtual async Task<NI2SNode> GetLocalNodeAsync()
         {
-            //TODO: 001 - REVIEW GET ONLY LOCAL NODE
             if (_cachedNode != null)
                 return _cachedNode;
 
-            //try to determine the current node by HOST header
-            string host = _engineContextAccessor.EngineContext?.LocalHost;
-
-            var allNodes = await _clusterService.GetAllNodesAsync();
-            var node = allNodes.FirstOrDefault(s => _clusterService.ContainsHostValue(s, host));
-
-            //load the first found node
-            node ??= allNodes.FirstOrDefault();
-
-            _cachedNode = node ?? throw new NodeException("No node could be loaded");
+            _cachedNode = await _clusterService.GetNodeByNodeIdAsync(_nodeConfig.NodeId) ?? throw new NodeException("No node could be loaded");
 
             return _cachedNode;
         }
@@ -80,12 +74,11 @@ namespace ARWNI2S.Runtime
         /// </summary>
         public virtual NI2SNode GetCurrentNode()
         {
-            //TODO: 001 - REVIEW GET ONLY LOCAL NODE
             if (_cachedNode != null)
                 return _cachedNode;
 
             //try to determine the current node by HOST header
-            string host = _engineContextAccessor.EngineContext?.LocalHost;
+            string host = _netContextAccessor.NetworkContext?.LocalHost;
 
             //we cannot call async methods here. otherwise, an application can hang. so it's a workaround to avoid that
             var allNodes = _nodeRepository.GetAll(query =>
@@ -93,12 +86,7 @@ namespace ARWNI2S.Runtime
                 return from s in query orderby s.DisplayOrder, s.Id select s;
             }, _ => default, includeDeleted: false);
 
-            var node = allNodes.FirstOrDefault(s => _clusterService.ContainsHostValue(s, host));
-
-            //load the first found node
-            node ??= allNodes.FirstOrDefault();
-
-            _cachedNode = node ?? throw new NodeException("No node could be loaded");
+            _cachedNode = allNodes.FirstOrDefault(n => n.NodeId == _nodeConfig.NodeId) ?? throw new NodeException("No node could be loaded");
 
             return _cachedNode;
         }
@@ -117,11 +105,11 @@ namespace ARWNI2S.Runtime
             if ((await _clusterService.GetAllNodesAsync()).Count > 1)
             {
                 //do not inject IWorkContext via constructor because it'll cause circular references
-                var currentUser = (User)await NodeEngineContext.Current.Resolve<IWorkContext>().GetCurrentUserAsync();
+                var currentUser = (User)await EngineContext.Current.Resolve<IWorkContext>().GetCurrentUserAsync();
 
                 //try to get node identifier from attributes
                 var nodeId = await _genericAttributeService
-                    .GetAttributeAsync<int>(currentUser, UserDefaults.AdminAreaNodeScopeConfigurationAttribute);
+                    .GetAttributeAsync<int>(currentUser, UserDefaults.NodeScopeConfigurationAttribute);
 
                 _cachedActiveNodeScopeConfiguration = (await _clusterService.GetNodeByIdAsync(nodeId))?.Id ?? 0;
             }
@@ -131,9 +119,9 @@ namespace ARWNI2S.Runtime
             return _cachedActiveNodeScopeConfiguration ?? 0;
         }
 
-        async Task<NI2SNode> IClusteringContext.GetCurrentNodeAsync() => await GetCurrentNodeAsync();
+        async Task<NI2SNode> INodeContext.GetCurrentNodeAsync() => await GetLocalNodeAsync();
 
-        NI2SNode IClusteringContext.GetCurrentNode() => GetCurrentNode();
+        NI2SNode INodeContext.GetCurrentNode() => GetCurrentNode();
 
         #endregion
     }

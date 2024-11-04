@@ -102,10 +102,10 @@ namespace ARWNI2S.Node.Core.Entities.Users
         /// </summary>
         public int FailedPasswordLockoutMinutes { get; set; }
 
-        ///// <summary>
-        ///// User registration type
-        ///// </summary>
-        //public UserRegistrationType UserRegistrationType { get; set; }
+        /// <summary>
+        /// User registration type
+        /// </summary>
+        public UserRegistrationType UserRegistrationType { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether users are allowed to upload avatars.
@@ -142,45 +142,10 @@ namespace ARWNI2S.Node.Core.Entities.Users
         /// </summary>
         public bool NotifyNewUserRegistration { get; set; }
 
-        ///// <summary>
-        ///// Gets or sets a value indicating whether to hide 'Downloadable products' tab on 'My account' page
-        ///// </summary>
-        //public bool HideDownloadableProductsTab { get; set; }
-
-        ///// <summary>
-        ///// Gets or sets a value indicating whether to hide 'Back in stock subscriptions' tab on 'My account' page
-        ///// </summary>
-        //public bool HideBackInStockSubscriptionsTab { get; set; }
-
         /// <summary>
         /// Gets or sets a value indicating whether to validate user when downloading products
         /// </summary>
         public bool DownloadableProductsValidateUser { get; set; }
-
-        ///// <summary>
-        ///// User name formatting
-        ///// </summary>
-        //public UserNameFormat UserNameFormat { get; set; }
-
-        ///// <summary>
-        ///// Gets or sets a value indicating whether 'Newsletter' form field is enabled
-        ///// </summary>
-        //public bool NewsletterEnabled { get; set; }
-
-        ///// <summary>
-        ///// Gets or sets a value indicating whether 'Newsletter' checkbox is ticked by default on the registration page
-        ///// </summary>
-        //public bool NewsletterTickedByDefault { get; set; }
-
-        ///// <summary>
-        ///// Gets or sets a value indicating whether to hide newsletter box
-        ///// </summary>
-        //public bool HideNewsletterBlock { get; set; }
-
-        ///// <summary>
-        ///// Gets or sets a value indicating whether newsletter block should allow to unsubscribe
-        ///// </summary>
-        //public bool NewsletterBlockAllowToUnsubscribe { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating the number of minutes for 'online users' module
@@ -206,21 +171,6 @@ namespace ARWNI2S.Node.Core.Entities.Users
         /// Gets or sets a value indicating whether deleted user records should be prefixed suffixed with "-DELETED"
         /// </summary>
         public bool SuffixDeletedUsers { get; set; }
-
-        ///// <summary>
-        ///// Gets or sets a value indicating whether to force entering email twice
-        ///// </summary>
-        //public bool EnteringEmailTwice { get; set; }
-
-        ///// <summary>
-        ///// Gets or sets a value indicating whether registration is required for downloadable products
-        ///// </summary>
-        //public bool RequireRegistrationForDownloadableProducts { get; set; }
-
-        ///// <summary>
-        ///// Gets or sets a value indicating whether to check gift card balance
-        ///// </summary>
-        //public bool AllowUsersToCheckGiftCardBalance { get; set; }
 
         /// <summary>
         /// Gets or sets interval (in minutes) with which the Delete Guest Task runs

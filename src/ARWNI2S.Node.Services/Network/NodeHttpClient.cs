@@ -1,4 +1,4 @@
-﻿using ARWNI2S.Node.Core;
+﻿using ARWNI2S.Node.Core.Network;
 using ARWNI2S.Node.Services.Common;
 
 namespace ARWNI2S.Node.Services.Network
@@ -17,7 +17,7 @@ namespace ARWNI2S.Node.Services.Network
         #region Ctor
 
         public NodeHttpClient(HttpClient client,
-            IClusteringHelper nodeHelper)
+            INI2SNetHelper nodeHelper)
         {
             //configure client
             client.BaseAddress = new Uri(nodeHelper.GetNodeLocation());

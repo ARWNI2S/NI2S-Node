@@ -18,7 +18,7 @@ namespace ARWNI2S.Node.Services.Plugins
         #region Fields
 
         private readonly IEngineFileProvider _fileProvider;
-        private readonly IClusteringContext _nodeContext;
+        private readonly INodeContext _nodeContext;
         //private readonly IThemeProvider _themeProvider;
 
         #endregion
@@ -26,7 +26,7 @@ namespace ARWNI2S.Node.Services.Plugins
         #region Ctor
 
         public UploadService(IEngineFileProvider fileProvider,
-            IClusteringContext nodeContext//,
+            INodeContext nodeContext//,
                                         //IThemeProvider themeProvider
             )
         {
@@ -292,7 +292,7 @@ namespace ARWNI2S.Node.Services.Plugins
         //    {
         //        IFormFile formFile = new FormFile(stream, 0, fileBytes.Length, "file", fileName);
 
-        //        // Ahora puedes usar formFile como normalmente lo harías en tu servicio de MVC
+        //        // Ahora puedes usar formFile como normalmente lo harías en tu servicio de MVRM
         //        await _uploadService.UploadModulesAsync(formFile);
         //    }
         //}

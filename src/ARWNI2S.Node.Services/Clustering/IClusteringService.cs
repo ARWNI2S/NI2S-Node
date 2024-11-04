@@ -21,7 +21,7 @@ namespace ARWNI2S.Node.Services.Clustering
         /// A task that represents the asynchronous operation
         /// The task result contains the nodes
         /// </returns>
-        Task<IList<NI2SNode>> GetAllNodesAsync();
+        Task<IList<NI2SNode>> GetAllNodesAsync(NodeState? nodeState = null);
 
         /// <summary>
         /// Gets all nodes
@@ -78,6 +78,21 @@ namespace ARWNI2S.Node.Services.Clustering
         /// <param name="host">Host</param>
         /// <returns>true - contains, false - no</returns>
         bool ContainsHostValue(NI2SNode node, string host);
+
+        /// <summary>
+        /// Gets current cluster map registration
+        /// </summary>
+        /// <returns>
+        /// A task that represents the asynchronous operation
+        /// The task result contains the nodes
+        /// </returns>
+        Task<ClusterMap> GetClusterMapRegistrationAsync();
+
+        /// <summary>
+        /// Gets the actual cluster status
+        /// </summary>
+        /// <returns>A <see cref="ClusterStatus"/> containing updated data</returns>
+        ClusterStatus GetClusterStatus();
 
         /// <summary>
         /// Returns a list of names of not existing nodes

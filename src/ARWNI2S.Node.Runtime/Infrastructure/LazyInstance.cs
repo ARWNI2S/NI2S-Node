@@ -9,7 +9,7 @@ namespace ARWNI2S.Runtime.Infrastructure
     public partial class LazyInstance<T> : Lazy<T> where T : class
     {
         public LazyInstance()
-            : base(() => NodeEngineContext.Current.Resolve<T>())
+            : base(() => EngineContext.Current.Resolve<T>())
         {
 
         }

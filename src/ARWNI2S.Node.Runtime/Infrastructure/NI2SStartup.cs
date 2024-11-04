@@ -150,7 +150,7 @@ namespace ARWNI2S.Runtime.Infrastructure
             services.AddScoped<IInstallationService, InstallationService>();
 
             if (!DataSettingsManager.IsDatabaseInstalled() && Environment.UserInteractive)
-                services.AddScoped<IDatabaseInstaller, ConsoleDatabaseInstaller>();
+                services.AddScoped<IClusterInstaller, ConsoleInteractiveInstaller>();
 
             //schedule tasks
             services.AddSingleton<IClusterTaskScheduler, Node.Services.ScheduleTasks.ClusterTaskScheduler>();

@@ -6,6 +6,7 @@ using ARWNI2S.Node.Core.Entities.Localization;
 using ARWNI2S.Node.Core.Entities.Logging;
 using ARWNI2S.Node.Core.Entities.ScheduleTasks;
 using ARWNI2S.Node.Core.Entities.Security;
+using ARWNI2S.Node.Core.Entities.Session;
 using ARWNI2S.Node.Core.Entities.Users;
 using ARWNI2S.Node.Data.Extensions;
 using FluentMigrator;
@@ -30,8 +31,12 @@ namespace ARWNI2S.Node.Data.Migrations.Installation
 
             //Directory
             Create.TableFor<Currency>();
+            Create.TableFor<Calendar>();
+            Create.TableFor<MeasureTime>();
             Create.TableFor<MeasureDimension>();
             Create.TableFor<MeasureWeight>();
+            Create.TableFor<MeasureTemperature>();
+            Create.TableFor<CalendarMeasureTimeMapping>();
 
             //Common
             Create.TableFor<GenericAttribute>();
@@ -49,6 +54,9 @@ namespace ARWNI2S.Node.Data.Migrations.Installation
             Create.TableFor<UserPassword>();
             Create.TableFor<UserRole>();
             Create.TableFor<UserUserRoleMapping>();
+
+            //Session
+            Create.TableFor<SessionRecord>();
 
             //Logging
             Create.TableFor<ActivityLogType>();

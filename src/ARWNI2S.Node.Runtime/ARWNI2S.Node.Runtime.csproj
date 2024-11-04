@@ -6,25 +6,45 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Configuration\**" />
+    <Compile Remove="Data\**" />
     <Compile Remove="EngineParts\**" />
-    <Compile Remove="NewFolder\**" />
+    <Compile Remove="Infrastructure\**" />
+    <Compile Remove="Network\**" />
+    <Compile Remove="Security\**" />
+    <Compile Remove="Services\**" />
+    <Compile Remove="Simulation\**" />
+    <EmbeddedResource Remove="Configuration\**" />
+    <EmbeddedResource Remove="Data\**" />
     <EmbeddedResource Remove="EngineParts\**" />
-    <EmbeddedResource Remove="NewFolder\**" />
+    <EmbeddedResource Remove="Infrastructure\**" />
+    <EmbeddedResource Remove="Network\**" />
+    <EmbeddedResource Remove="Security\**" />
+    <EmbeddedResource Remove="Services\**" />
+    <EmbeddedResource Remove="Simulation\**" />
+    <None Remove="Configuration\**" />
+    <None Remove="Data\**" />
     <None Remove="EngineParts\**" />
-    <None Remove="NewFolder\**" />
+    <None Remove="Infrastructure\**" />
+    <None Remove="Network\**" />
+    <None Remove="Security\**" />
+    <None Remove="Services\**" />
+    <None Remove="Simulation\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="Infrastructure\AuthenticationStartup.cs" />
-    <Compile Remove="Infrastructure\AuthorizationStartup.cs" />
-    <Compile Remove="Infrastructure\Extensions\HostApplicationBuilderExtensions.cs" />
-    <Compile Remove="Infrastructure\MetalinkEndpoints.cs" />
-    <Compile Remove="Infrastructure\MvcStartup.cs" />
-    <Compile Remove="Infrastructure\RoutingStartup.cs" />
-    <Compile Remove="Infrastructure\StaticFilesStartup.cs" />
-    <Compile Remove="Infrastructure\WebMarkupMinStartup.cs" />
+    <Compile Remove="Clustering\ClusteringDefaults.cs" />
+    <Compile Remove="Clustering\ClusterStatus.cs" />
+    <Compile Remove="Clustering\NodeHealthMonitorService.cs" />
+    <Compile Remove="Hosting\Extensions\GDESKServiceCollectionExtensions.cs" />
+    <Compile Remove="LocalNodeContext.cs" />
+    <Compile Remove="NodeWorkContext.cs" />
     <Compile Remove="RuntimeContext.cs" />
-    <Compile Remove="Services\Localization\ConnectionTagsCultureProvider.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Data\ConnectionStringOptionsExtensions.cs" />
+    <Compile Include="Infrastructure\LazyInstance.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -34,6 +54,8 @@
     <PackageReference Include="Microsoft.Orleans.Clustering.AdoNet" />
     <PackageReference Include="Microsoft.Orleans.Clustering.AzureStorage" />
     <PackageReference Include="Microsoft.Orleans.Clustering.Redis" />
+    <PackageReference Include="SuperSocket.ProtoBase" />
+    <PackageReference Include="SuperSocket.Server" />
   </ItemGroup>
 
   <ItemGroup>
@@ -42,11 +64,6 @@
     <ProjectReference Include="..\ARWNI2S.Node.Core\ARWNI2S.Node.Core.csproj" />
     <ProjectReference Include="..\ARWNI2S.Node.Data\ARWNI2S.Node.Data.csproj" />
     <ProjectReference Include="..\ARWNI2S.Node.Services\ARWNI2S.Node.Services.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Services\Localization\" />
-    <Folder Include="Simulation\Models\" />
   </ItemGroup>
 
 </Project>

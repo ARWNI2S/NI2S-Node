@@ -1,4 +1,4 @@
-﻿using ARWNI2S.Engine.Simulation;
+﻿using ARWNI2S.Engine.Simulation.Simulable;
 using ARWNI2S.Infrastructure.Entities;
 using ARWNI2S.Node.Core.Entities;
 
@@ -16,6 +16,7 @@ namespace ARWNI2S.Runtime.Simulation.Objects
         protected NI2SObject() { }
 
         public abstract void BeginPlay();
+
 
         object INI2SEntity.Id => Id;
     }

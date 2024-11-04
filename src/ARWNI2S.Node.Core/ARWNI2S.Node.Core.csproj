@@ -6,11 +6,20 @@
 
   <ItemGroup>
     <Compile Remove="Engine\**" />
+    <Compile Remove="Runtime\**" />
+    <Compile Remove="Services\Localization\**" />
     <EmbeddedResource Remove="Engine\**" />
+    <EmbeddedResource Remove="Runtime\**" />
+    <EmbeddedResource Remove="Services\Localization\**" />
     <None Remove="Engine\**" />
+    <None Remove="Runtime\**" />
+    <None Remove="Services\Localization\**" />
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Infrastructure\IEngineContext.cs" />
+    <Compile Remove="Infrastructure\IEngineContextAccessor.cs" />
+    <Compile Remove="Network\ConnectionManager.cs" />
     <Compile Remove="Network\INodeConnection.cs" />
   </ItemGroup>
 
@@ -22,6 +31,7 @@
     <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" />
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" />
     <PackageReference Include="Newtonsoft.Json" />
+    <PackageReference Include="SuperSocket.Server.Abstractions" />
   </ItemGroup>
 
   <ItemGroup>

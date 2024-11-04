@@ -21,8 +21,8 @@
 
         public string Metadata { get; set; }
         public string IpAddress { get; set; }
-        public string PublicPort { get; set; }
-        public string RelayPort { get; set; }
+        public int PublicPort { get; set; }
+        public int RelayPort { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether SSL is enabled

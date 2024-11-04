@@ -18,7 +18,7 @@ namespace ARWNI2S.Node.Services.ScheduleTasks
         protected readonly ILocker _locker;
         protected readonly ILogService _logger;
         protected readonly IScheduleTaskService _scheduleTaskService;
-        protected readonly IClusteringContext _nodeContext;
+        protected readonly INodeContext _nodeContext;
 
         #endregion
 
@@ -28,7 +28,7 @@ namespace ARWNI2S.Node.Services.ScheduleTasks
             ILocker locker,
             ILogService logger,
             IScheduleTaskService scheduleTaskService,
-            IClusteringContext nodeContext)
+            INodeContext nodeContext)
         {
             _localizationService = localizationService;
             _locker = locker;
@@ -55,14 +55,14 @@ namespace ARWNI2S.Node.Services.ScheduleTasks
 
             try
             {
-                instance = NodeEngineContext.Current.Resolve(type);
+                instance = EngineContext.Current.Resolve(type);
             }
             catch
             {
                 // ignored
             }
 
-            instance ??= NodeEngineContext.Current.ResolveUnregistered(type);
+            instance ??= EngineContext.Current.ResolveUnregistered(type);
 
             if (instance is not IScheduleTask task)
                 return;

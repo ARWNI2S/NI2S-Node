@@ -1,14 +1,19 @@
 ﻿using ARWNI2S.Node.Core.Configuration;
 using ARWNI2S.Node.Core.Infrastructure;
-using ARWNI2S.Runtime.Infrastructure.Extensions;
+using ARWNI2S.Node.Core.Network.Protocol;
+using ARWNI2S.Runtime.Hosting.Extensions;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
+using SuperSocket.Server.Host;
 
 namespace ARWNI2S.Runtime.Hosting
 {
-    public sealed class NodeHostBuilder : HostBuilder, IHostBuilder
+    public sealed class NodeHostBuilder : SuperSocketHostBuilder<NI2SProtoPacket>, IHostBuilder
     {
+        private NodeHostBuilder(string[] args)
+            : base(args) { }
+
         public static IHost CreateRuntimeHost(string[] args)
         {
             var host = Create(args).Build();
@@ -30,9 +35,7 @@ namespace ARWNI2S.Runtime.Hosting
 
         public static IHostBuilder Create(string[] args)
         {
-            NodeHostBuilder builder = new();
-
-            builder.ConfigureDefaults(args);
+            NodeHostBuilder builder = new(args);
 
             builder.ConfigureAppConfiguration((hostingContext, config) =>
             {

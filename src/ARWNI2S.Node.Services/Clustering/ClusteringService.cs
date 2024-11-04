@@ -79,10 +79,13 @@ namespace ARWNI2S.Node.Services.Clustering
         /// A task that represents the asynchronous operation
         /// The task result contains the nodes
         /// </returns>
-        public virtual async Task<IList<NI2SNode>> GetAllNodesAsync()
+        public virtual async Task<IList<NI2SNode>> GetAllNodesAsync(NodeState? nodeState = null)
         {
             return await _nodeRepository.GetAllAsync(query =>
             {
+                if (nodeState != null)
+                    query = query.Where(n => n.CurrentState == nodeState);
+
                 return from s in query orderby s.DisplayOrder, s.Id select s;
             }, _ => default, includeDeleted: false);
         }
@@ -183,7 +186,7 @@ namespace ARWNI2S.Node.Services.Clustering
             ArgumentNullException.ThrowIfNull(nodeIdsNames);
 
             var query = _nodeRepository.Table;
-            
+
             var queryFilter = nodeIdsNames.Distinct().ToArray();
 
             //filtering by name
@@ -209,6 +212,45 @@ namespace ARWNI2S.Node.Services.Clustering
             return [.. queryResult];
         }
 
+        public async Task<ClusterMap> GetClusterMapRegistrationAsync()
+        {
+            var allNodes = await GetAllNodesAsync();
+
+            return new ClusterMap()
+            {
+                OnlineNodes = allNodes.Where(n => n.CurrentState == NodeState.Online).ToList(),
+                OfflineNodes = allNodes.Where(n => n.CurrentState == NodeState.Offline).ToList(),
+                NodesWithError = allNodes.Where(n => n.CurrentState == NodeState.Error).ToList(),
+
+                SpinningUpNodes = allNodes.Where(n => n.CurrentState == NodeState.Joining).ToList(),
+                SpinningDownNodes = allNodes.Where(n => n.CurrentState == NodeState.Leaving).ToList(),
+
+                ClusterStatus = new ClusterStatus
+                {
+                    OnlineNodes = allNodes.Count(n => n.CurrentState == NodeState.Online),
+                    OfflineNodes = allNodes.Count(n => n.CurrentState == NodeState.Offline),
+                    NodesWithError = allNodes.Count(n => n.CurrentState == NodeState.Error),
+
+                    SpinningUpNodes = allNodes.Count(n => n.CurrentState == NodeState.Joining),
+                    SpinningDownNodes = allNodes.Count(n => n.CurrentState == NodeState.Leaving)
+                }
+            };
+        }
+
+        public ClusterStatus GetClusterStatus()
+        {
+            var allNodes = GetAllNodes();
+
+            return new ClusterStatus
+            {
+                OnlineNodes = allNodes.Count(n => n.CurrentState == NodeState.Online),
+                OfflineNodes = allNodes.Count(n => n.CurrentState == NodeState.Offline),
+                NodesWithError = allNodes.Count(n => n.CurrentState == NodeState.Error),
+
+                SpinningUpNodes = allNodes.Count(n => n.CurrentState == NodeState.Joining),
+                SpinningDownNodes = allNodes.Count(n => n.CurrentState == NodeState.Leaving)
+            };
+        }
 
         #endregion
     }

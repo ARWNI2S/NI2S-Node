@@ -111,9 +111,9 @@
         public static string ImpersonatedUserIdAttribute => "ImpersonatedUserId";
 
         /// <summary>
-        /// Gets a name of generic attribute to store the value of 'AdminAreaNodeScopeConfiguration'
+        /// Gets a name of generic attribute to store the value of 'NodeScopeConfiguration'
         /// </summary>
-        public static string AdminAreaNodeScopeConfigurationAttribute => "AdminAreaNodeScopeConfiguration";
+        public static string NodeScopeConfigurationAttribute => "NodeScopeConfiguration";
 
         /// <summary>
         /// Gets a name of generic attribute to store the value of 'SelectedPaymentMethod'

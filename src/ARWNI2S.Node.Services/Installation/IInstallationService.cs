@@ -7,6 +7,8 @@ namespace ARWNI2S.Node.Services.Installation
     /// </summary>
     public partial interface IInstallationService
     {
+        Task InstallNodeAsync(string adminUserEmail, string passwordUserPassword);
+
         /// <summary>
         /// Install required data
         /// </summary>

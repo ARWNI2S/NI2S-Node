@@ -30,7 +30,7 @@ namespace ARWNI2S.Node.Services.Users
         protected readonly IRepository<GenericAttribute> _gaRepository;
         protected readonly IShortTermCacheManager _shortTermCacheManager;
         protected readonly IStaticCacheManager _staticCacheManager;
-        protected readonly IClusteringContext _nodeContext;
+        protected readonly INodeContext _nodeContext;
 
         #endregion
 
@@ -47,7 +47,7 @@ namespace ARWNI2S.Node.Services.Users
             IRepository<GenericAttribute> gaRepository,
             IShortTermCacheManager shortTermCacheManager,
             IStaticCacheManager staticCacheManager,
-            IClusteringContext nodeContext
+            INodeContext nodeContext
             )
         {
             _userSettings = userSettings;
@@ -734,7 +734,7 @@ namespace ARWNI2S.Node.Services.Users
             if (!string.IsNullOrWhiteSpace(firstName) && !string.IsNullOrWhiteSpace(lastName))
             {
                 //do not inject ILocalizationService via constructor because it'll cause circular references
-                var format = await NodeEngineContext.Current.Resolve<ILocalizationService>().GetResourceAsync("User.FullNameFormat");
+                var format = await EngineContext.Current.Resolve<ILocalizationService>().GetResourceAsync("User.FullNameFormat");
 
                 fullName = string.Format(format, firstName, lastName);
             }

@@ -4,7 +4,7 @@ namespace ARWNI2S.Infrastructure
 {
     /// <summary>
     /// Classes implementing this interface provide information about types 
-    /// to various services in the DragonCorp engine.
+    /// to various services in the ARWNI2S engine.
     /// </summary>
     public interface ITypeFinder
     {

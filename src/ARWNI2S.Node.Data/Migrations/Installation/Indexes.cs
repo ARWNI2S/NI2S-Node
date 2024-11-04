@@ -16,21 +16,11 @@ namespace ARWNI2S.Node.Data.Migrations.Installation
 
         public override void Up()
         {
-            //Create.Index("IX_VirtualFileRecord_Slug")
-            //    .OnTable(nameof(VirtualFileRecord))
-            //    .OnColumn(nameof(VirtualFileRecord.Slug))
-            //.Ascending()
-            //.WithOptions()
-            //    .NonClustered();
+            Create.Index("IX_NI2SNode_NodeId").OnTable(nameof(NI2SNode))
+                .OnColumn(nameof(NI2SNode.NodeId)).Unique()
+                .WithOptions().NonClustered();
 
-            //Create.Index("IX_VirtualFileRecord_Custom_1").OnTable(nameof(VirtualFileRecord))
-            //    .OnColumn(nameof(VirtualFileRecord.EntityId)).Ascending()
-            //    .OnColumn(nameof(VirtualFileRecord.EntityName)).Ascending()
-            //    .OnColumn(nameof(VirtualFileRecord.LanguageId)).Ascending()
-            //    .OnColumn(nameof(VirtualFileRecord.IsActive)).Ascending()
-            //    .WithOptions().NonClustered();
-
-            Create.Index("IX_ServerMapping_EntityId_EntityName").OnTable(nameof(NodeMapping))
+            Create.Index("IX_NodeMapping_EntityId_EntityName").OnTable(nameof(NodeMapping))
                 .OnColumn(nameof(NodeMapping.EntityId)).Ascending()
                 .OnColumn(nameof(NodeMapping.EntityName)).Ascending()
                 .WithOptions().NonClustered();

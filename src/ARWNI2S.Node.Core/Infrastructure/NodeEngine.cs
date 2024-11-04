@@ -1,6 +1,6 @@
 ﻿using ARWNI2S.Infrastructure;
-using ARWNI2S.Infrastructure.Engine;
 using ARWNI2S.Node.Core.Infrastructure.Mapper;
+using ARWNI2S.Node.Core.Network;
 using AutoMapper;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,7 +10,7 @@ using System.Reflection;
 namespace ARWNI2S.Node.Core.Infrastructure
 {
     /// <summary>
-    /// Represents DragonCorp™ metalink backend engine
+    /// Represents NI2S™ system backend engine
     /// </summary>
     public partial class NodeEngine : IEngine
     {
@@ -24,8 +24,8 @@ namespace ARWNI2S.Node.Core.Infrastructure
         {
             if (scope == null)
             {
-                var accessor = ServiceProvider?.GetService<IEngineContextAccessor>();
-                var context = accessor?.EngineContext;
+                var accessor = ServiceProvider?.GetService<INetworkContextAccessor>();
+                var context = accessor?.NetworkContext;
                 return context?.ContextServices ?? ServiceProvider;
             }
             return scope.ServiceProvider;
@@ -132,12 +132,12 @@ namespace ARWNI2S.Node.Core.Infrastructure
         }
 
         /// <summary>
-        /// Configure HTTP request pipeline
+        /// Configure required engine components
         /// </summary>
-        /// <param name="application">Builder for configuring an application's request pipeline</param>
-        public virtual void ConfigureEngine(IHost application)
+        /// <param name="host">Builded host containing engine components</param>
+        public virtual void ConfigureEngine(IHost host)
         {
-            ServiceProvider = application.Services;
+            ServiceProvider = host.Services;
 
             //find startup configurations provided by other assemblies
             var typeFinder = Singleton<ITypeFinder>.Instance;
@@ -150,7 +150,7 @@ namespace ARWNI2S.Node.Core.Infrastructure
 
             //configure request pipeline
             foreach (var instance in instances)
-                instance.Configure(application);
+                instance.Configure(host);
         }
 
         /// <summary>

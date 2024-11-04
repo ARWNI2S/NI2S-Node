@@ -17,7 +17,7 @@ namespace ARWNI2S.Node.Services.Clustering
         private readonly ClusteringSettings _nodeSettings;
         private readonly IRepository<NodeMapping> _nodeMappingRepository;
         private readonly IStaticCacheManager _staticCacheManager;
-        private readonly IClusteringContext _nodeContext;
+        private readonly INodeContext _nodeContext;
 
         #endregion
 
@@ -27,7 +27,7 @@ namespace ARWNI2S.Node.Services.Clustering
             //NodeSettings nodeSettings,
             IRepository<NodeMapping> nodeMappingRepository,
             IStaticCacheManager staticCacheManager,
-            IClusteringContext nodeContext)
+            INodeContext nodeContext)
         {
             _nodeSettings = nodeSettings;
             _nodeMappingRepository = nodeMappingRepository;

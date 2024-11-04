@@ -31,9 +31,9 @@ namespace ARWNI2S.Node.Data.Mapping
 
                 var typeFinder = Singleton<ITypeFinder>.Instance;
                 var compatibilities = typeFinder.FindClassesOfType<INameCompatibility>()
-                    ?.Select(type => NodeEngineContext.Current.ResolveUnregistered(type) as INameCompatibility).ToList() ?? [];
+                    ?.Select(type => EngineContext.Current.ResolveUnregistered(type) as INameCompatibility).ToList() ?? [];
 
-                compatibilities.AddRange(AdditionalNameCompatibilities.Select(type => NodeEngineContext.Current.ResolveUnregistered(type) as INameCompatibility));
+                compatibilities.AddRange(AdditionalNameCompatibilities.Select(type => EngineContext.Current.ResolveUnregistered(type) as INameCompatibility));
 
                 foreach (var nameCompatibility in compatibilities.Distinct())
                 {
