@@ -1,5 +1,5 @@
 ﻿using ARWNI2S.Infrastructure;
-using ARWNI2S.Runtime.Infrastructure.Extensions;
+using ARWNI2S.Runtime.Hosting.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -25,7 +25,7 @@ namespace ARWNI2S.Runtime.Infrastructure
             services.AddDistributedCache();
 
             //add HTTP sesion state feature
-            //services.AddHttpSession();
+            services.AddNI2SSession();
 
             //add default HTTP clients
             services.AddNI2SHttpClients();
@@ -56,6 +56,6 @@ namespace ARWNI2S.Runtime.Infrastructure
         /// <summary>
         /// Gets order of this startup configuration implementation
         /// </summary>
-        public int Order => 100; //common services should be loaded after error handlers
+        public int Order => 200; //common services should be loaded after clustering services
     }
 }

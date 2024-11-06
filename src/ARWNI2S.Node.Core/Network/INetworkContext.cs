@@ -1,4 +1,6 @@
 ﻿
+using SuperSocket.Connection;
+
 namespace ARWNI2S.Node.Core.Network
 {
     public interface INetworkContext
@@ -8,7 +10,9 @@ namespace ARWNI2S.Node.Core.Network
         NI2SRequest Request { get; }
 
         IConnection Connection { get; }
+
         NI2SResponse Response { get; }
+
         Dictionary<string, object> Items { get; }
     }
 }

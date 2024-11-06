@@ -34,9 +34,10 @@
 
   <ItemGroup>
     <Compile Remove="Clustering\ClusteringDefaults.cs" />
+    <Compile Remove="Clustering\ClusterManager.cs" />
     <Compile Remove="Clustering\ClusterStatus.cs" />
-    <Compile Remove="Clustering\NodeHealthMonitorService.cs" />
     <Compile Remove="Hosting\Extensions\GDESKServiceCollectionExtensions.cs" />
+    <Compile Remove="Hosting\NodeRuntimeHost.cs" />
     <Compile Remove="LocalNodeContext.cs" />
     <Compile Remove="NodeWorkContext.cs" />
     <Compile Remove="RuntimeContext.cs" />
@@ -44,7 +45,13 @@
 
   <ItemGroup>
     <Compile Include="Data\ConnectionStringOptionsExtensions.cs" />
+    <Compile Include="Infrastructure\ClusterStartup.cs" />
+    <Compile Include="Infrastructure\CommonStartup.cs" />
+    <Compile Include="Infrastructure\ErrorHandlerStartup.cs" />
     <Compile Include="Infrastructure\LazyInstance.cs" />
+    <Compile Include="Infrastructure\ProxyStartup.cs" />
+    <Compile Include="Network\NI2SFrontlineService.cs" />
+    <Compile Include="Network\Session\NI2SSession.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -64,6 +71,10 @@
     <ProjectReference Include="..\ARWNI2S.Node.Core\ARWNI2S.Node.Core.csproj" />
     <ProjectReference Include="..\ARWNI2S.Node.Data\ARWNI2S.Node.Data.csproj" />
     <ProjectReference Include="..\ARWNI2S.Node.Services\ARWNI2S.Node.Services.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Network\Command\" />
   </ItemGroup>
 
 </Project>

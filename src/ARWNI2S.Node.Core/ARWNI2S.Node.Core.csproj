@@ -20,6 +20,7 @@
     <Compile Remove="Infrastructure\IEngineContext.cs" />
     <Compile Remove="Infrastructure\IEngineContextAccessor.cs" />
     <Compile Remove="Network\ConnectionManager.cs" />
+    <Compile Remove="Network\IConnection.cs" />
     <Compile Remove="Network\INodeConnection.cs" />
   </ItemGroup>
 

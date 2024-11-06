@@ -78,10 +78,10 @@ namespace ARWNI2S.Node.Core
         /// <returns>String of IP address</returns>
         public virtual string GetCurrentIpAddress()
         {
-            if (!IsRequestAvailable() || _netContextAccessor.NetworkContext!.Connection.RemoteIpAddress is not { } remoteIp)
+            if (!IsRequestAvailable() || _netContextAccessor.NetworkContext!.Connection.RemoteEndPoint is not IPEndPoint remoteIp)
                 return string.Empty;
 
-            return (remoteIp.Equals(IPAddress.IPv6Loopback) ? IPAddress.Loopback : remoteIp).ToString();
+            return (remoteIp.Address.Equals(IPAddress.IPv6Loopback) ? IPAddress.Loopback : remoteIp.Address).ToString();
         }
 
         /// <summary>

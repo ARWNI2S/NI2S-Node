@@ -4,6 +4,7 @@ using ARWNI2S.Node.Core.Network.Protocol;
 using ARWNI2S.Runtime.Hosting.Extensions;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SuperSocket.Server.Host;
 
@@ -13,6 +14,27 @@ namespace ARWNI2S.Runtime.Hosting
     {
         private NodeHostBuilder(string[] args)
             : base(args) { }
+
+        public override IHost Build()
+        {
+            return base.Build();
+        }
+
+        protected override void RegisterBasicServices(HostBuilderContext builderContext, IServiceCollection servicesInHost, IServiceCollection services)
+        {
+            base.RegisterBasicServices(builderContext, servicesInHost, services);
+        }
+
+        protected override void RegisterDefaultHostedService(IServiceCollection servicesInHost)
+        {
+            base.RegisterDefaultHostedService(servicesInHost);
+        }
+
+        protected override void RegisterDefaultServices(HostBuilderContext builderContext, IServiceCollection servicesInHost, IServiceCollection services)
+        {
+            base.RegisterDefaultServices(builderContext, servicesInHost, services);
+        }
+
 
         public static IHost CreateRuntimeHost(string[] args)
         {
@@ -51,14 +73,16 @@ namespace ARWNI2S.Runtime.Hosting
                 config.AddEnvironmentVariables();
             });
 
+            builder.ConfigureSuperSocketServer();
+
             // Configurar servicios de la aplicación y ajustes
             builder.ConfigureServices((context, services) =>
             {
                 // Load application settings
                 services.ConfigureApplicationSettings(context);
 
-                var nodeSettings = Singleton<NI2SSettings>.Instance;
-                var useAutofac = nodeSettings.Get<CommonConfig>().UseAutofac;
+                var ni2sSettings = Singleton<NI2SSettings>.Instance;
+                var useAutofac = ni2sSettings.Get<CommonConfig>().UseAutofac;
 
                 if (useAutofac)
                     builder.UseServiceProviderFactory(new AutofacServiceProviderFactory());

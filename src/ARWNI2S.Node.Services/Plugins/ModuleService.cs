@@ -35,7 +35,7 @@ namespace ARWNI2S.Node.Services.Plugins
 
         #region Ctor
 
-        public ModuleService(ClusteringSettings nodeSettings,
+        public ModuleService(ClusteringSettings ni2sSettings,
             IUserService userService,
             //IHttpContextAccessor httpContextAccessor,
             IMigrationManager migrationManager,
@@ -45,7 +45,7 @@ namespace ARWNI2S.Node.Services.Plugins
             //MediaSettings mediaSettings
             )
         {
-            _nodeSettings = nodeSettings;
+            _nodeSettings = ni2sSettings;
             _userService = userService;
             //_httpContextAccessor = httpContextAccessor;
             _migrationManager = migrationManager;

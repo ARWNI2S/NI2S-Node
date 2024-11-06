@@ -6,8 +6,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Network\**" />
     <Compile Remove="Telemetry\**" />
+    <EmbeddedResource Remove="Network\**" />
     <EmbeddedResource Remove="Telemetry\**" />
+    <None Remove="Network\**" />
     <None Remove="Telemetry\**" />
   </ItemGroup>
 

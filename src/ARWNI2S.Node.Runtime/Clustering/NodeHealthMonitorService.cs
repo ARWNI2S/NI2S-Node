@@ -1,34 +1,41 @@
 ﻿using ARWNI2S.Node.Core.Configuration;
 using ARWNI2S.Node.Core.Entities.Clustering;
 using ARWNI2S.Node.Core.Infrastructure;
+using ARWNI2S.Node.Core.Network;
+using ARWNI2S.Node.Core.Network.Client;
+using ARWNI2S.Node.Core.Network.Protocol;
 using ARWNI2S.Node.Services.Clustering;
-using ARWNI2S.Runtime.Network;
+using ARWNI2S.Runtime.Clustering.Extensions;
+using ARWNI2S.Runtime.Clustering.Messages;
+using System.Net;
 using System.Net.Sockets;
 
 namespace ARWNI2S.Runtime.Clustering
 {
     public class NodeHealthMonitorService : NodeRuntimeService
     {
-        private readonly ClusteringSettings _settings;
-        private readonly IClusteringService _clusteringService;
-        private readonly NodeConnectionManager _connectionManager;
+        protected readonly ClusteringSettings _settings;
+        protected readonly IClusteringService _clusteringService;
+        //protected readonly NodeConnectionManager _connectionManager;
+        protected readonly INodeClient<NI2SProtoPacket, NI2SProtoPacket> _nodeClient;
 
         protected IList<string> knownNodes = [];
-        protected TcpClient tcpClient = new();
 
         protected ClusterMap clusterMap;
 
         public NodeHealthMonitorService(ClusteringSettings settings,
             IClusteringService clusteringService,
-            ClusterManager clusterManager,
-            NodeConnectionManager connectionManager)
+            //NodeConnectionManager connectionManager,
+            INodeClientFactory clientFactory)
         {
             _settings = settings;
             _clusteringService = clusteringService;
-            _connectionManager = connectionManager;
+            //_connectionManager = connectionManager;
+            _nodeClient = clientFactory.GetOrCreateClient<NodeHealthMonitorService>();
         }
 
         #region Utilities
+
 
         #endregion
 
@@ -88,14 +95,15 @@ namespace ARWNI2S.Runtime.Clustering
         {
             try
             {
-                var connectTask = tcpClient.ConnectAsync(node.IpAddress, node.RelayPort);
-                var timeoutTask = Task.Delay(_settings.HealthMonitorTimeoutMs, stoppingToken);
-
-                var completedTask = await Task.WhenAny(connectTask, timeoutTask);
-                return completedTask == connectTask && tcpClient.Connected;
+                return await _nodeClient.ConnectAsync(new IPEndPoint(IPAddress.Parse(node.IpAddress), node.RelayPort), stoppingToken);
             }
-            catch
+            catch (SocketException e)
             {
+                if (e.SocketErrorCode == SocketError.AccessDenied || e.SocketErrorCode == SocketError.AddressAlreadyInUse)
+                {
+                    //TODO: error control
+                }
+
                 return false;
             }
         }
@@ -125,21 +133,19 @@ namespace ARWNI2S.Runtime.Clustering
             }
         }
 
-        private async Task<bool> RequestQuorumAsync(NI2SNode sourceNode, Guid targetNode, CancellationToken stoppingToken)
+        private async Task<bool> RequestQuorumAsync(NI2SNode votingNode, Guid targetNode, CancellationToken stoppingToken)
         {
-            // Simulamos una llamada remota al nodo sourceNode para que haga ping a targetNode
+            // Simulamos una llamada remota al nodo votingNode para que haga ping a targetNode
             // En una implementación real, sería una comunicación a través de sockets o un RPC
             try
             {
-                await tcpClient.ConnectAsync(sourceNode.IpAddress, sourceNode.RelayPort); // Conectar al puerto del otro nodo
-                var stream = tcpClient.GetStream();
-                byte[] pingRequest = System.Text.Encoding.UTF8.GetBytes($"PING:{targetNode}");
+                bool connected = await _nodeClient.ConnectAsync(new IPEndPoint(IPAddress.Parse(votingNode.IpAddress), votingNode.RelayPort), stoppingToken);
 
-                await stream.WriteAsync(pingRequest, stoppingToken);
-                byte[] buffer = new byte[1024];
-                int bytesRead = await stream.ReadAsync(buffer, stoppingToken);
+                await _nodeClient.SendQuorumRequestAsync(new QuorumRequest(targetNode, votingNode));
 
-                return bytesRead > 0 && System.Text.Encoding.UTF8.GetString(buffer, 0, bytesRead) == "PONG";
+                var data = await _nodeClient.ReceiveQuorumResponseAsync();
+
+                return data.HasErrors && data.Vote;
             }
             catch
             {
@@ -160,7 +166,7 @@ namespace ARWNI2S.Runtime.Clustering
 
         public override void Dispose()
         {
-            tcpClient.Dispose();
+            //_nodeClient.Dispose();
             base.Dispose();
         }
     }

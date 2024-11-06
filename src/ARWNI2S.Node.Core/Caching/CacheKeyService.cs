@@ -28,9 +28,9 @@ namespace ARWNI2S.Node.Core.Caching
 
         #region Ctor
 
-        protected CacheKeyService(NI2SSettings nodeSettings)
+        protected CacheKeyService(NI2SSettings ni2sSettings)
         {
-            _nodeSettings = nodeSettings;
+            _nodeSettings = ni2sSettings;
         }
 
         #endregion

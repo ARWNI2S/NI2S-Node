@@ -30,7 +30,7 @@
         public bool SslEnabled { get; set; }
 
         /// <summary>
-        /// Gets or sets the comma separated list of possible HTTP_HOST values
+        /// Gets or sets the comma separated list of possible HOST values
         /// </summary>
         public string Hosts { get; set; }
 

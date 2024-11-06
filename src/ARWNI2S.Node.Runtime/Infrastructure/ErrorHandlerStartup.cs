@@ -1,9 +1,10 @@
 ﻿using ARWNI2S.Infrastructure;
-using ARWNI2S.Runtime.Infrastructure.Extensions;
+using ARWNI2S.Runtime.Hosting.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
+// INIT STEP 2.1
 namespace ARWNI2S.Runtime.Infrastructure
 {
     /// <summary>

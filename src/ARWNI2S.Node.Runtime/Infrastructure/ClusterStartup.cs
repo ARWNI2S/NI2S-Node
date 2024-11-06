@@ -1,5 +1,5 @@
 ﻿using ARWNI2S.Infrastructure;
-using ARWNI2S.Runtime.Infrastructure.Extensions;
+using ARWNI2S.Runtime.Hosting.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -10,16 +10,18 @@ namespace ARWNI2S.Runtime.Infrastructure
     {
         public void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
-            services.AddNI2SFrontline();
+            //services.AddNI2SSuperSocketServices();
 
-            services.AddNI2SClustering();
+            services.AddClusteringServices();
+
+            services.AddNI2SRuntimeServices();
         }
 
         public void Configure(IHost application)
         {
-            application.UseNI2SClustering();
+            application.UseClustering();
         }
 
-        public int Order => 150;    // Puedes ajustar el orden según sea necesario
+        public int Order => 100;     // clustering services should be loaded after error handlers
     }
 }

@@ -30,11 +30,11 @@ namespace ARWNI2S.Node.Core.Caching
 
         #region Ctor
 
-        protected DistributedCacheManager(NI2SSettings nodeSettings,
+        protected DistributedCacheManager(NI2SSettings ni2sSettings,
             IDistributedCache distributedCache,
             ICacheKeyManager cacheKeyManager,
             IConcurrentCollection<object> concurrentCollection)
-            : base(nodeSettings)
+            : base(ni2sSettings)
         {
             _distributedCache = distributedCache;
             _localKeyManager = cacheKeyManager;

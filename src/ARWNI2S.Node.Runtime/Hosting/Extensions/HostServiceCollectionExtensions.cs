@@ -6,6 +6,7 @@ using ARWNI2S.Node.Core.Caching;
 using ARWNI2S.Node.Core.Configuration;
 using ARWNI2S.Node.Core.Infrastructure;
 using ARWNI2S.Node.Core.Network;
+using ARWNI2S.Node.Core.Network.Client;
 using ARWNI2S.Node.Core.Network.Protocol;
 using ARWNI2S.Node.Data;
 using ARWNI2S.Node.Services.Clustering;
@@ -65,8 +66,8 @@ namespace ARWNI2S.Runtime.Hosting.Extensions
 
             //TODO: READ SECRETS FROM KEYVAULT use SecretAttribute decorated properties
 
-            var nodeSettings = NI2SSettingsHelper.SaveNI2SSettings(configurations, CommonHelper.DefaultFileProvider, false);
-            services.AddSingleton(nodeSettings);
+            var ni2sSettings = NI2SSettingsHelper.SaveNI2SSettings(configurations, CommonHelper.DefaultFileProvider, false);
+            services.AddSingleton(ni2sSettings);
         }
 
         /// <summary>
@@ -102,59 +103,28 @@ namespace ARWNI2S.Runtime.Hosting.Extensions
             engine.ConfigureServices(services, context.Configuration);
         }
 
-        /// <summary>
-        /// Register RuntimeContextAccessor
-        /// </summary>
-        /// <param name="services">Collection of service descriptors</param>
-        public static void AddContextAccessor(this IServiceCollection services)
+        public static void AddClusteringServices(this IServiceCollection services)
         {
-            services.AddSingleton<INetworkContextAccessor, RuntimeContextAccessor>();
-            services.AddSingleton<IPackageHandlingContextAccessor<NI2SProtoPacket>, RuntimeContextAccessor>();
-        }
+            var ni2sSettings = Singleton<NI2SSettings>.Instance;
+            var nodeConfig = ni2sSettings.Get<NodeConfig>();
+            var clusterConfig = ni2sSettings.Get<ClusterConfig>();
 
-        /// <summary>
-        /// Adds services required for distributed cache
-        /// </summary>
-        /// <param name="services">Collection of service descriptors</param>
-        public static void AddDistributedCache(this IServiceCollection services)
-        {
-            var nodeSettings = Singleton<NI2SSettings>.Instance;
-            var distributedCacheConfig = nodeSettings.Get<DistributedCacheConfig>();
+            services.AddSingleton<INodeClientFactory, NodeClientFactory>();
 
-            if (!distributedCacheConfig.Enabled)
-                return;
+            services.AddScoped<IClusteringService, ClusteringService>();
+            services.AddScoped<INodeMappingService, NodeMappingService>();
 
-            switch (distributedCacheConfig.DistributedCacheType)
-            {
-                case DistributedCacheType.Memory:
-                    services.AddDistributedMemoryCache();
-                    break;
+            //services.AddSingleton<ClusterManager>();
 
-                case DistributedCacheType.SqlServer:
-                    services.AddDistributedSqlServerCache(options =>
-                    {
-                        options.ConnectionString = distributedCacheConfig.ConnectionString;
-                        options.SchemaName = distributedCacheConfig.SchemaName;
-                        options.TableName = distributedCacheConfig.TableName;
-                    });
-                    break;
+            services.AddHostedService<NodeHealthMonitorService>();
 
-                case DistributedCacheType.Redis:
-                case DistributedCacheType.RedisSynchronizedMemory:
-                    services.AddStackExchangeRedisCache(options =>
-                    {
-                        options.Configuration = distributedCacheConfig.ConnectionString;
-                        options.InstanceName = distributedCacheConfig.InstanceName ?? string.Empty;
-                    });
-                    break;
-            }
         }
 
         /// <summary>
         /// Adds frontline (orleans client) services
         /// </summary>
         /// <param name="services">Collection of service descriptors</param>
-        public static void AddNI2SFrontline(this IServiceCollection services)
+        public static void AddNI2SRuntimeServices(this IServiceCollection services)
         {
             var ni2sSettings = Singleton<NI2SSettings>.Instance;
             var nodeConfig = ni2sSettings.Get<NodeConfig>();
@@ -230,14 +200,77 @@ namespace ARWNI2S.Runtime.Hosting.Extensions
                     }
                 });
             }
+       
+
+
         }
 
-        public static void AddNI2SClustering(this IServiceCollection services)
-        {
-            services.AddScoped<IClusteringService, ClusteringService>();
-            services.AddScoped<INodeMappingService, NodeMappingService>();
 
-            services.AddSingleton<ClusterManager>();
+        /// <summary>
+        /// Register RuntimeContextAccessor
+        /// </summary>
+        /// <param name="services">Collection of service descriptors</param>
+        public static void AddContextAccessor(this IServiceCollection services)
+        {
+            services.AddSingleton<INetworkContextAccessor, RuntimeContextAccessor>();
+            services.AddSingleton<IPackageHandlingContextAccessor<Node.Core.Network.Protocol.NI2SProtoPacket>, RuntimeContextAccessor>();
+        }
+
+        /// <summary>
+        /// Adds services required for application session state
+        /// </summary>
+        /// <param name="services">Collection of service descriptors</param>
+        public static void AddNI2SSession(this IServiceCollection services)
+        {
+            //services.AddSingleton<ISessionFactory, GenericSessionFactory<>>();
+
+            //services.AddSession(options =>
+            //{
+            //    options.Cookie.Name = $"{CookieDefaults.Prefix}{CookieDefaults.SessionCookie}";
+            //    options.Cookie.HttpOnly = true;
+            //    options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
+            //});
+        }
+
+
+
+
+        /// <summary>
+        /// Adds services required for distributed cache
+        /// </summary>
+        /// <param name="services">Collection of service descriptors</param>
+        public static void AddDistributedCache(this IServiceCollection services)
+        {
+            var ni2sSettings = Singleton<NI2SSettings>.Instance;
+            var distributedCacheConfig = ni2sSettings.Get<DistributedCacheConfig>();
+
+            if (!distributedCacheConfig.Enabled)
+                return;
+
+            switch (distributedCacheConfig.DistributedCacheType)
+            {
+                case DistributedCacheType.Memory:
+                    services.AddDistributedMemoryCache();
+                    break;
+
+                case DistributedCacheType.SqlServer:
+                    services.AddDistributedSqlServerCache(options =>
+                    {
+                        options.ConnectionString = distributedCacheConfig.ConnectionString;
+                        options.SchemaName = distributedCacheConfig.SchemaName;
+                        options.TableName = distributedCacheConfig.TableName;
+                    });
+                    break;
+
+                case DistributedCacheType.Redis:
+                case DistributedCacheType.RedisSynchronizedMemory:
+                    services.AddStackExchangeRedisCache(options =>
+                    {
+                        options.Configuration = distributedCacheConfig.ConnectionString;
+                        options.InstanceName = distributedCacheConfig.InstanceName ?? string.Empty;
+                    });
+                    break;
+            }
         }
 
         /// <summary>
@@ -269,13 +302,13 @@ namespace ARWNI2S.Runtime.Hosting.Extensions
             if (!DataSettingsManager.IsDatabaseInstalled())
                 return;
 
-            var nodeSettings = Singleton<NI2SSettings>.Instance;
-            if (nodeSettings.Get<CommonConfig>().MiniProfilerEnabled)
+            var ni2sSettings = Singleton<NI2SSettings>.Instance;
+            if (ni2sSettings.Get<CommonConfig>().MiniProfilerEnabled)
             {
                 services.AddMiniProfiler(miniProfilerOptions =>
                 {
                     //use memory cache provider for storing each result
-                    ((MemoryCacheStorage)miniProfilerOptions.Storage).CacheDuration = TimeSpan.FromMinutes(nodeSettings.Get<CacheConfig>().DefaultCacheTime);
+                    ((MemoryCacheStorage)miniProfilerOptions.Storage).CacheDuration = TimeSpan.FromMinutes(ni2sSettings.Get<CacheConfig>().DefaultCacheTime);
 
                     //determine who can access the MiniProfiler results
                     miniProfilerOptions.ResultsAuthorize = request => EngineContext.Current.Resolve<IPermissionService>().AuthorizeAsync(StandardPermissionProvider.AccessProfiling).Result;
@@ -418,8 +451,8 @@ namespace ARWNI2S.Runtime.Hosting.Extensions
 
     //    mvrmBuilder.AddRazorRuntimeCompilation();
 
-    //    var nodeSettings = Singleton<NodeSettings>.Instance;
-    //    if (nodeSettings.Get<CommonConfig>().UseSessionStateTempDataProvider)
+    //    var ni2sSettings = Singleton<NodeSettings>.Instance;
+    //    if (ni2sSettings.Get<CommonConfig>().UseSessionStateTempDataProvider)
     //    {
     //        //use session-based temp data provider
     //        mvrmBuilder.AddSessionStateTempDataProvider();
@@ -519,9 +552,9 @@ namespace ARWNI2S.Runtime.Hosting.Extensions
     ///// <param name="services">Collection of service descriptors</param>
     //public static void AddNodeWebOptimizer(this IServiceCollection services)
     //{
-    //    var nodeSettings = Singleton<NodeSettings>.Instance;
-    //    var cssBundling = nodeSettings.Get<WebOptimizerConfig>().EnableCssBundling;
-    //    var jsBundling = nodeSettings.Get<WebOptimizerConfig>().EnableJavaScriptBundling;
+    //    var ni2sSettings = Singleton<NodeSettings>.Instance;
+    //    var cssBundling = ni2sSettings.Get<WebOptimizerConfig>().EnableCssBundling;
+    //    var jsBundling = ni2sSettings.Get<WebOptimizerConfig>().EnableJavaScriptBundling;
 
     //    //add minification & bundling
     //    var cssSettings = new CssBundlingSettings

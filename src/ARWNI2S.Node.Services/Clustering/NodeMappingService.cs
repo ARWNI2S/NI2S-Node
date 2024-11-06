@@ -14,7 +14,7 @@ namespace ARWNI2S.Node.Services.Clustering
     {
         #region Fields
 
-        private readonly ClusteringSettings _nodeSettings;
+        private readonly ClusteringSettings _clusterSettings;
         private readonly IRepository<NodeMapping> _nodeMappingRepository;
         private readonly IStaticCacheManager _staticCacheManager;
         private readonly INodeContext _nodeContext;
@@ -23,13 +23,13 @@ namespace ARWNI2S.Node.Services.Clustering
 
         #region Ctor
 
-        public NodeMappingService(ClusteringSettings nodeSettings,
-            //NodeSettings nodeSettings,
+        public NodeMappingService(ClusteringSettings clusterSettings,
+            //NodeSettings ni2sSettings,
             IRepository<NodeMapping> nodeMappingRepository,
             IStaticCacheManager staticCacheManager,
             INodeContext nodeContext)
         {
-            _nodeSettings = nodeSettings;
+            _clusterSettings = clusterSettings;
             _nodeMappingRepository = nodeMappingRepository;
             _staticCacheManager = staticCacheManager;
             _nodeContext = nodeContext;
@@ -88,7 +88,7 @@ namespace ARWNI2S.Node.Services.Clustering
         {
             ArgumentNullException.ThrowIfNull(query);
 
-            if (nodeId == 0 || _nodeSettings.IgnoreNodeLimitations || !await IsEntityMappingExistsAsync<TEntity>())
+            if (nodeId == 0 || _clusterSettings.IgnoreNodeLimitations || !await IsEntityMappingExistsAsync<TEntity>())
                 return query;
 
             return from entity in query
@@ -247,7 +247,7 @@ namespace ARWNI2S.Node.Services.Clustering
                 //return true if no node specified/found
                 return true;
 
-            if (_nodeSettings.IgnoreNodeLimitations)
+            if (_clusterSettings.IgnoreNodeLimitations)
                 return true;
 
             if (!entity.LimitedToNodes)
@@ -280,7 +280,7 @@ namespace ARWNI2S.Node.Services.Clustering
                 //return true if no node specified/found
                 return true;
 
-            if (_nodeSettings.IgnoreNodeLimitations)
+            if (_clusterSettings.IgnoreNodeLimitations)
                 return true;
 
             if (!entity.LimitedToNodes)

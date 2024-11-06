@@ -1,10 +1,9 @@
 ﻿using ARWNI2S.Node.Core.Network;
-using ARWNI2S.Node.Core.Network.Protocol;
 using SuperSocket.Server;
 
 namespace ARWNI2S.Runtime
 {
-    internal class RuntimeContextAccessor : PackageHandlingContextAccessor<NI2SProtoPacket>, INetworkContextAccessor
+    internal class RuntimeContextAccessor : PackageHandlingContextAccessor<Node.Core.Network.Protocol.NI2SProtoPacket>, INetworkContextAccessor
     {
         private static readonly AsyncLocal<NetworkContextHolder> _engineContextCurrent = new();
 
