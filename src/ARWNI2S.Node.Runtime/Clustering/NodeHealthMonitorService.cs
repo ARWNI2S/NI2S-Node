@@ -1,13 +1,9 @@
 ﻿using ARWNI2S.Node.Core.Configuration;
 using ARWNI2S.Node.Core.Entities.Clustering;
 using ARWNI2S.Node.Core.Infrastructure;
-using ARWNI2S.Node.Core.Network;
-using ARWNI2S.Node.Core.Network.Client;
-using ARWNI2S.Node.Core.Network.Protocol;
 using ARWNI2S.Node.Services.Clustering;
 using ARWNI2S.Runtime.Clustering.Extensions;
 using ARWNI2S.Runtime.Clustering.Messages;
-using System.Net;
 using System.Net.Sockets;
 
 namespace ARWNI2S.Runtime.Clustering
@@ -17,7 +13,7 @@ namespace ARWNI2S.Runtime.Clustering
         protected readonly ClusteringSettings _settings;
         protected readonly IClusteringService _clusteringService;
         //protected readonly NodeConnectionManager _connectionManager;
-        protected readonly INodeClient<NI2SProtoPacket, NI2SProtoPacket> _nodeClient;
+        protected readonly NodeClient _nodeClient;
 
         protected IList<string> knownNodes = [];
 
@@ -95,7 +91,7 @@ namespace ARWNI2S.Runtime.Clustering
         {
             try
             {
-                return await _nodeClient.ConnectAsync(new IPEndPoint(IPAddress.Parse(node.IpAddress), node.RelayPort), stoppingToken);
+                return await Task.FromResult(true); //_nodeClient.ConnectAsync(new IPEndPoint(IPAddress.Parse(node.IpAddress), node.RelayPort), stoppingToken);
             }
             catch (SocketException e)
             {
@@ -139,7 +135,7 @@ namespace ARWNI2S.Runtime.Clustering
             // En una implementación real, sería una comunicación a través de sockets o un RPC
             try
             {
-                bool connected = await _nodeClient.ConnectAsync(new IPEndPoint(IPAddress.Parse(votingNode.IpAddress), votingNode.RelayPort), stoppingToken);
+                bool connected = await Task.FromResult(true); //_nodeClient.ConnectAsync(new IPEndPoint(IPAddress.Parse(votingNode.IpAddress), votingNode.RelayPort), stoppingToken);
 
                 await _nodeClient.SendQuorumRequestAsync(new QuorumRequest(targetNode, votingNode));
 

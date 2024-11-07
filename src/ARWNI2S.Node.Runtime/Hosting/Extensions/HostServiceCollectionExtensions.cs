@@ -1,4 +1,7 @@
-﻿using ARWNI2S.Engine.Hosting.Extensions;
+﻿using ARWNI2S.Engine;
+using ARWNI2S.Engine.Hosting.Extensions;
+using ARWNI2S.Engine.Network;
+using ARWNI2S.Engine.Network.Protocol;
 using ARWNI2S.Infrastructure;
 using ARWNI2S.Infrastructure.Configuration;
 using ARWNI2S.Node.Core;
@@ -6,13 +9,11 @@ using ARWNI2S.Node.Core.Caching;
 using ARWNI2S.Node.Core.Configuration;
 using ARWNI2S.Node.Core.Infrastructure;
 using ARWNI2S.Node.Core.Network;
-using ARWNI2S.Node.Core.Network.Client;
-using ARWNI2S.Node.Core.Network.Protocol;
 using ARWNI2S.Node.Data;
 using ARWNI2S.Node.Services.Clustering;
 using ARWNI2S.Node.Services.Network;
 using ARWNI2S.Node.Services.Security;
-using ARWNI2S.Runtime.Clustering;
+//using ARWNI2S.Runtime.Clustering;
 using ARWNI2S.Runtime.Data;
 using ARWNI2S.Runtime.Profiling;
 using Azure.Data.Tables;
@@ -25,7 +26,6 @@ using StackExchange.Profiling;
 using StackExchange.Profiling.Internal;
 using StackExchange.Profiling.Storage;
 using StackExchange.Redis;
-using SuperSocket.Server;
 using System.Net;
 
 namespace ARWNI2S.Runtime.Hosting.Extensions
@@ -109,14 +109,14 @@ namespace ARWNI2S.Runtime.Hosting.Extensions
             var nodeConfig = ni2sSettings.Get<NodeConfig>();
             var clusterConfig = ni2sSettings.Get<ClusterConfig>();
 
-            services.AddSingleton<INodeClientFactory, NodeClientFactory>();
+            //services.AddSingleton<INodeClientFactory, NodeClientFactory>();
 
             services.AddScoped<IClusteringService, ClusteringService>();
             services.AddScoped<INodeMappingService, NodeMappingService>();
 
             //services.AddSingleton<ClusterManager>();
 
-            services.AddHostedService<NodeHealthMonitorService>();
+            //services.AddHostedService<NodeHealthMonitorService>();
 
         }
 
@@ -213,7 +213,7 @@ namespace ARWNI2S.Runtime.Hosting.Extensions
         public static void AddContextAccessor(this IServiceCollection services)
         {
             services.AddSingleton<INetworkContextAccessor, RuntimeContextAccessor>();
-            services.AddSingleton<IPackageHandlingContextAccessor<Node.Core.Network.Protocol.NI2SProtoPacket>, RuntimeContextAccessor>();
+            services.AddSingleton<IPackageHandlingContextAccessor<NI2SProtoPacket>, RuntimeContextAccessor>();
         }
 
         /// <summary>

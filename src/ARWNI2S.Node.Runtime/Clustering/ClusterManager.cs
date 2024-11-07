@@ -19,6 +19,7 @@ namespace ARWNI2S.Runtime.Clustering
             INodeContext nodeContext,
             IClusteringService clusteringService,
             INodeMappingService nodeMappingService,
+            INodeEventPublisher eventPublisher,
             INI2SNetHelper nodeHelper)
         {
             //_nodeSettings = nodeSettings;
@@ -26,6 +27,7 @@ namespace ARWNI2S.Runtime.Clustering
             _nodeContext = nodeContext;
             _clusteringService = clusteringService;
             _nodeMappingService = nodeMappingService;
+            _eventPublisher = eventPublisher;
             _nodeHelper = nodeHelper;
         }
 
@@ -58,6 +60,7 @@ namespace ARWNI2S.Runtime.Clustering
             node.Metadata = null;
             node.CurrentState = NodeState.Joining;
             await _clusteringService.UpdateNodeAsync(node);
+
         }
 
         /// <summary>

@@ -6,11 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Network\**" />
     <Compile Remove="Telemetry\**" />
-    <EmbeddedResource Remove="Network\**" />
     <EmbeddedResource Remove="Telemetry\**" />
-    <None Remove="Network\**" />
     <None Remove="Telemetry\**" />
   </ItemGroup>
 
@@ -33,6 +30,7 @@
     <PackageReference Include="Microsoft.Extensions.FileProviders.Abstractions" />
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" />
     <PackageReference Include="Newtonsoft.Json" />
+    <PackageReference Include="System.IO.Pipelines" />
   </ItemGroup>
 
 </Project>

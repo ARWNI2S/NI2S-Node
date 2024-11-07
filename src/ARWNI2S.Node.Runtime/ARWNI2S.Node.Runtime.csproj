@@ -36,7 +36,12 @@
     <Compile Remove="Clustering\ClusteringDefaults.cs" />
     <Compile Remove="Clustering\ClusterManager.cs" />
     <Compile Remove="Clustering\ClusterStatus.cs" />
+    <Compile Remove="Clustering\Extensions\NodeClientHealthMonitorExtensions.cs" />
+    <Compile Remove="Clustering\Messages\QuorumRequest.cs" />
+    <Compile Remove="Clustering\Messages\QuorumResponse.cs" />
+    <Compile Remove="Clustering\NodeHealthMonitorService.cs" />
     <Compile Remove="Hosting\Extensions\GDESKServiceCollectionExtensions.cs" />
+    <Compile Remove="Hosting\Extensions\SuperSocketHostBuilderExtensions.cs" />
     <Compile Remove="Hosting\NodeRuntimeHost.cs" />
     <Compile Remove="LocalNodeContext.cs" />
     <Compile Remove="NodeWorkContext.cs" />
@@ -51,6 +56,9 @@
     <Compile Include="Infrastructure\LazyInstance.cs" />
     <Compile Include="Infrastructure\ProxyStartup.cs" />
     <Compile Include="Network\NI2SFrontlineService.cs" />
+    <Compile Include="Network\Protocol\DefaultStringEncoderForDI.cs" />
+    <Compile Include="Network\Session\ClearIdleSessionMiddleware.cs" />
+    <Compile Include="Network\Session\DefaultSessionFactory.cs" />
     <Compile Include="Network\Session\NI2SSession.cs" />
   </ItemGroup>
 
@@ -61,11 +69,10 @@
     <PackageReference Include="Microsoft.Orleans.Clustering.AdoNet" />
     <PackageReference Include="Microsoft.Orleans.Clustering.AzureStorage" />
     <PackageReference Include="Microsoft.Orleans.Clustering.Redis" />
-    <PackageReference Include="SuperSocket.ProtoBase" />
-    <PackageReference Include="SuperSocket.Server" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Infrastructure\ARWNI2S.Network\ARWNI2S.Network.csproj" />
     <ProjectReference Include="..\..\..\Infrastructure\ARWNI2S.GDESK\ARWNI2S.GDESK.csproj" />
     <ProjectReference Include="..\..\..\Infrastructure\ARWNI2S.MVRM.Core\ARWNI2S.MVRM.Core.csproj" />
     <ProjectReference Include="..\ARWNI2S.Node.Core\ARWNI2S.Node.Core.csproj" />
@@ -74,6 +81,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Clustering\" />
+    <Folder Include="Clustering\Extensions\" />
+    <Folder Include="Clustering\Messages\" />
     <Folder Include="Network\Command\" />
   </ItemGroup>
 

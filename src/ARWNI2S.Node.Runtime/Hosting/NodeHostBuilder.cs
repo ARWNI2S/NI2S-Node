@@ -1,39 +1,37 @@
 ﻿using ARWNI2S.Node.Core.Configuration;
 using ARWNI2S.Node.Core.Infrastructure;
-using ARWNI2S.Node.Core.Network.Protocol;
 using ARWNI2S.Runtime.Hosting.Extensions;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using SuperSocket.Server.Host;
 
 namespace ARWNI2S.Runtime.Hosting
 {
-    public sealed class NodeHostBuilder : SuperSocketHostBuilder<NI2SProtoPacket>, IHostBuilder
+    public sealed class NodeHostBuilder : HostBuilder, IHostBuilder
     {
-        private NodeHostBuilder(string[] args)
-            : base(args) { }
+        //private NodeHostBuilder(string[] args)
+        //    : base(args) { }
 
-        public override IHost Build()
-        {
-            return base.Build();
-        }
+        //public override IHost Build()
+        //{
+        //    return base.Build();
+        //}
 
-        protected override void RegisterBasicServices(HostBuilderContext builderContext, IServiceCollection servicesInHost, IServiceCollection services)
-        {
-            base.RegisterBasicServices(builderContext, servicesInHost, services);
-        }
+        //protected override void RegisterBasicServices(HostBuilderContext builderContext, IServiceCollection servicesInHost, IServiceCollection services)
+        //{
+        //    base.RegisterBasicServices(builderContext, servicesInHost, services);
+        //}
 
-        protected override void RegisterDefaultHostedService(IServiceCollection servicesInHost)
-        {
-            base.RegisterDefaultHostedService(servicesInHost);
-        }
+        //protected override void RegisterDefaultHostedService(IServiceCollection servicesInHost)
+        //{
+        //    base.RegisterDefaultHostedService(servicesInHost);
+        //}
 
-        protected override void RegisterDefaultServices(HostBuilderContext builderContext, IServiceCollection servicesInHost, IServiceCollection services)
-        {
-            base.RegisterDefaultServices(builderContext, servicesInHost, services);
-        }
+        //protected override void RegisterDefaultServices(HostBuilderContext builderContext, IServiceCollection servicesInHost, IServiceCollection services)
+        //{
+        //    base.RegisterDefaultServices(builderContext, servicesInHost, services);
+        //}
 
 
         public static IHost CreateRuntimeHost(string[] args)
@@ -57,7 +55,7 @@ namespace ARWNI2S.Runtime.Hosting
 
         public static IHostBuilder Create(string[] args)
         {
-            NodeHostBuilder builder = new(args);
+            NodeHostBuilder builder = new(/*args*/);
 
             builder.ConfigureAppConfiguration((hostingContext, config) =>
             {
@@ -73,7 +71,7 @@ namespace ARWNI2S.Runtime.Hosting
                 config.AddEnvironmentVariables();
             });
 
-            builder.ConfigureSuperSocketServer();
+            //builder.ConfigureSuperSocketServer();
 
             // Configurar servicios de la aplicación y ajustes
             builder.ConfigureServices((context, services) =>

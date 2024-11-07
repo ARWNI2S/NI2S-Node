@@ -1,5 +1,5 @@
-﻿using SuperSocket.Connection;
-using SuperSocket.Server;
+﻿using ARWNI2S.Engine.Network;
+using ARWNI2S.Infrastructure.Network.Connection;
 
 namespace ARWNI2S.Runtime.Network.Session
 {

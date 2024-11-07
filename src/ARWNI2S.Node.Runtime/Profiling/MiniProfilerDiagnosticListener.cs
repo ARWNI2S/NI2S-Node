@@ -1,6 +1,6 @@
-﻿using System.Diagnostics;
-using StackExchange.Profiling;
+﻿using StackExchange.Profiling;
 using StackExchange.Profiling.Internal;
+using System.Diagnostics;
 
 namespace ARWNI2S.Runtime.Profiling
 {
