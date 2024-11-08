@@ -1,6 +1,6 @@
 ﻿namespace ARWNI2S.Node.Core.Network
 {
-    public interface INI2SNetHelper
+    public interface INI2SHelper
     {
         /// <summary>
         /// Get IP address from network context

@@ -2,7 +2,7 @@
 
 namespace ARWNI2S.Runtime
 {
-    public abstract class NodeRuntimeService : BackgroundService
+    public abstract class NodeRuntimeService : BackgroundService, ILifecycleParticipant
     {
     }
 }

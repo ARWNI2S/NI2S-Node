@@ -1,5 +1,4 @@
-﻿using ARWNI2S.Engine;
-using ARWNI2S.Infrastructure;
+﻿using ARWNI2S.Infrastructure;
 using ARWNI2S.Node.Core.Infrastructure.Mapper;
 using AutoMapper;
 using Microsoft.Extensions.Configuration;
@@ -24,9 +23,9 @@ namespace ARWNI2S.Node.Core.Infrastructure
         {
             if (scope == null)
             {
-                var accessor = ServiceProvider?.GetService<INetworkContextAccessor>();
-                var context = accessor?.NetworkContext;
-                return context?.ContextServices ?? ServiceProvider;
+                var accessor = ServiceProvider?.GetService<IContextAccessor>();
+                var context = accessor?.Context;
+                return context?.ServiceProvider ?? ServiceProvider;
             }
             return scope.ServiceProvider;
         }

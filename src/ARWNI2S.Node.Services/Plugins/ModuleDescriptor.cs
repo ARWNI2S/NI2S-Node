@@ -54,7 +54,7 @@ namespace ARWNI2S.Node.Services.Plugins
         public virtual TModule Instance<TModule>() where TModule : class, IModule
         {
             //try to resolve module as unregistered service
-            var instance = EngineContext.Current.ResolveUnregistered(ModuleType);
+            var instance = NodeEngineContext.Current.ResolveUnregistered(ModuleType);
 
             //try to get typed instance
             var typedInstance = instance as TModule;

@@ -223,7 +223,7 @@ namespace ARWNI2S.Node.Services.Clustering
         /// </returns>
         public virtual async Task<bool> AuthorizeAsync<TEntity>(TEntity entity) where TEntity : DataEntity, INodeMappingSupported
         {
-            var node = (NI2SNode)await _nodeContext.GetCurrentNodeAsync();
+            var node = await _nodeContext.GetCurrentNodeAsync();
 
             return await AuthorizeAsync(entity, node.Id);
         }

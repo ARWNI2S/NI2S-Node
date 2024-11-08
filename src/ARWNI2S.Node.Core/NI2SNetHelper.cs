@@ -1,5 +1,6 @@
-﻿using ARWNI2S.Engine;
+﻿using ARWNI2S.Infrastructure;
 using ARWNI2S.Infrastructure.Assets;
+using ARWNI2S.Infrastructure.Network;
 using ARWNI2S.Node.Core.Network;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Primitives;
@@ -10,12 +11,12 @@ namespace ARWNI2S.Node.Core
     /// <summary>
     /// Represents a node helper
     /// </summary>
-    public partial class NI2SNetHelper : INI2SNetHelper
+    public partial class NI2SNetHelper : INI2SHelper
     {
         #region Fields  
 
         protected readonly IHostApplicationLifetime _hostApplicationLifetime;
-        protected readonly INetworkContextAccessor _netContextAccessor;
+        protected readonly IContextAccessor _contextAccessor;
         protected readonly Lazy<INodeContext> _nodeContext;
 
         #endregion
@@ -23,11 +24,11 @@ namespace ARWNI2S.Node.Core
         #region Ctor
 
         public NI2SNetHelper(IHostApplicationLifetime hostApplicationLifetime,
-            INetworkContextAccessor netContextAccessor,
+            IContextAccessor contextAccessor,
             Lazy<INodeContext> nodeContext)
         {
             _hostApplicationLifetime = hostApplicationLifetime;
-            _netContextAccessor = netContextAccessor;
+            _contextAccessor = contextAccessor;
             _nodeContext = nodeContext;
         }
 
@@ -41,12 +42,12 @@ namespace ARWNI2S.Node.Core
         /// <returns>True if available; otherwise false</returns>
         protected virtual bool IsRequestAvailable()
         {
-            if (_netContextAccessor?.NetworkContext == null)
+            if (_contextAccessor?.Context == null)
                 return false;
 
             try
             {
-                if (_netContextAccessor.NetworkContext?.Request == null)
+                if (_contextAccessor.Context?.Message == null)
                     return false;
             }
             catch (Exception)
@@ -79,7 +80,7 @@ namespace ARWNI2S.Node.Core
         /// <returns>String of IP address</returns>
         public virtual string GetCurrentIpAddress()
         {
-            if (!IsRequestAvailable() || _netContextAccessor.NetworkContext!.Connection.RemoteEndPoint is not IPEndPoint remoteIp)
+            if (!IsRequestAvailable() || _contextAccessor.Context!.Connection.RemoteEndPoint is not IPEndPoint remoteIp)
                 return string.Empty;
 
             return (remoteIp.Address.Equals(IPAddress.IPv6Loopback) ? IPAddress.Loopback : remoteIp.Address).ToString();
@@ -94,7 +95,7 @@ namespace ARWNI2S.Node.Core
             if (!IsRequestAvailable())
                 return false;
 
-            return _netContextAccessor.NetworkContext.Request.IsSecured;
+            return _contextAccessor.Context.Message.IsSecured;
         }
 
         /// <summary>
@@ -108,7 +109,7 @@ namespace ARWNI2S.Node.Core
                 return string.Empty;
 
             //try to get host from the request HOST header
-            var hostHeader = _netContextAccessor.NetworkContext.Request.Headers[HeaderNames.Host];
+            var hostHeader = _contextAccessor.Context.Message.Headers[HeaderNames.Host];
             if (StringValues.IsNullOrEmpty(hostHeader))
                 return string.Empty;
 
@@ -135,7 +136,7 @@ namespace ARWNI2S.Node.Core
             if (!string.IsNullOrEmpty(nodeHost))
             {
                 //add application path base if exists
-                nodeLocation = IsRequestAvailable() ? $"{nodeHost.TrimEnd('/')}{_netContextAccessor.NetworkContext.Request.PathBase}" : nodeHost;
+                nodeLocation = IsRequestAvailable() ? $"{nodeHost.TrimEnd('/')}{_contextAccessor.Context.Message.PathBase}" : nodeHost;
             }
 
             //if host is empty (it is possible only when NetworkContext is not available), use URL of a node entity configured in admin area
@@ -158,7 +159,7 @@ namespace ARWNI2S.Node.Core
             if (!IsRequestAvailable())
                 return false;
 
-            string path = _netContextAccessor.NetworkContext.Request.Path;
+            string path = _contextAccessor.Context.Message.Path;
 
             //a little workaround. FileExtensionContentTypeProvider contains most of static file extensions. So we can use it
             //source: https://github.com/aspnet/StaticFiles/blob/dev/src/Microsoft.AspNetCore.StaticFiles/FileExtensionContentTypeProvider.cs
@@ -182,7 +183,7 @@ namespace ARWNI2S.Node.Core
         {
             get
             {
-                var response = _netContextAccessor.NetworkContext.Response;
+                var response = _contextAccessor.Context.Response;
                 //ASP.NET 4 style - return response.IsRequestBeingRedirected;
                 int[] redirectionStatusCodes = [StatusCodes.Status301MovedPermanently, StatusCodes.Status302Found];
 
@@ -197,13 +198,13 @@ namespace ARWNI2S.Node.Core
         {
             get
             {
-                if (_netContextAccessor.NetworkContext.Items[HttpDefaults.IsPostBeingDoneRequestItem] == null)
+                if (_contextAccessor.Context.Items[HttpDefaults.IsPostBeingDoneRequestItem] == null)
                     return false;
 
-                return Convert.ToBoolean(_netContextAccessor.NetworkContext.Items[HttpDefaults.IsPostBeingDoneRequestItem]);
+                return Convert.ToBoolean(_contextAccessor.Context.Items[HttpDefaults.IsPostBeingDoneRequestItem]);
             }
 
-            set => _netContextAccessor.NetworkContext.Items[HttpDefaults.IsPostBeingDoneRequestItem] = value;
+            set => _contextAccessor.Context.Items[HttpDefaults.IsPostBeingDoneRequestItem] = value;
         }
 
         /// <summary>

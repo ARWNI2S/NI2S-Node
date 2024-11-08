@@ -1,7 +1,4 @@
-﻿using ARWNI2S.Engine;
-using ARWNI2S.Engine.Hosting.Extensions;
-using ARWNI2S.Engine.Network;
-using ARWNI2S.Engine.Network.Protocol;
+﻿using ARWNI2S.Engine.Hosting.Extensions;
 using ARWNI2S.Infrastructure;
 using ARWNI2S.Infrastructure.Configuration;
 using ARWNI2S.Node.Core;
@@ -98,7 +95,7 @@ namespace ARWNI2S.Runtime.Hosting.Extensions
             mvrmCoreBuilder.PartManager.InitializeModules(moduleConfig);
 
             //create engine and configure service provider
-            var engine = EngineContext.Create();
+            var engine = NodeEngineContext.Create();
 
             engine.ConfigureServices(services, context.Configuration);
         }
@@ -311,7 +308,7 @@ namespace ARWNI2S.Runtime.Hosting.Extensions
                     ((MemoryCacheStorage)miniProfilerOptions.Storage).CacheDuration = TimeSpan.FromMinutes(ni2sSettings.Get<CacheConfig>().DefaultCacheTime);
 
                     //determine who can access the MiniProfiler results
-                    miniProfilerOptions.ResultsAuthorize = request => EngineContext.Current.Resolve<IPermissionService>().AuthorizeAsync(StandardPermissionProvider.AccessProfiling).Result;
+                    miniProfilerOptions.ResultsAuthorize = request => NodeEngineContext.Current.Resolve<IPermissionService>().AuthorizeAsync(StandardPermissionProvider.AccessProfiling).Result;
                 });
             }
         }

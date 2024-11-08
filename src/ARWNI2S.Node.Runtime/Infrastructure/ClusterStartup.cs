@@ -10,7 +10,7 @@ namespace ARWNI2S.Runtime.Infrastructure
     {
         public void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
-            //services.AddNI2SSuperSocketServices();
+            //services.AddNI2SNodeServerServices();
 
             services.AddClusteringServices();
 

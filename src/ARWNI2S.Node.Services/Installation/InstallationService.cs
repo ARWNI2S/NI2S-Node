@@ -43,7 +43,7 @@ namespace ARWNI2S.Node.Services.Installation
 		private readonly IRepository<MeasureDimension> _measureDimensionRepository;
 		private readonly IRepository<MeasureWeight> _measureWeightRepository;
 		private readonly IRepository<NI2SNode> _nodeRepository;
-		private readonly INI2SNetHelper _nodeHelper;
+		private readonly INI2SHelper _nodeHelper;
 
 		#endregion
 
@@ -60,7 +60,7 @@ namespace ARWNI2S.Node.Services.Installation
 			IRepository<MeasureDimension> measureDimensionRepository,
 			IRepository<MeasureWeight> measureWeightRepository,
 			IRepository<NI2SNode> nodeRepository,
-			INI2SNetHelper nodeHelper)
+			INI2SHelper nodeHelper)
 		{
 			_nI2SSettings = nI2SSettings;
 			_dataProvider = dataProvider;
@@ -211,7 +211,7 @@ namespace ARWNI2S.Node.Services.Installation
 		/// <returns>A task that represents the asynchronous operation</returns>
 		protected virtual async Task InstallLanguagesAsync((string languagePackDownloadLink, int languagePackProgress) languagePackInfo, CultureInfo cultureInfo, RegionInfo regionInfo)
 		{
-			var localizationService = EngineContext.Current.Resolve<ILocalizationService>();
+			var localizationService = NodeEngineContext.Current.Resolve<ILocalizationService>();
 
 			var defaultCulture = new CultureInfo(CommonServicesDefaults.DefaultLanguageCulture);
 			var defaultLanguage = new Language
@@ -256,7 +256,7 @@ namespace ARWNI2S.Node.Services.Installation
 				//download and import language pack
 				try
 				{
-					var httpClientFactory = EngineContext.Current.Resolve<IHttpClientFactory>();
+					var httpClientFactory = NodeEngineContext.Current.Resolve<IHttpClientFactory>();
 					var httpClient = httpClientFactory.CreateClient(HttpDefaults.DefaultHttpClient);
 					await using var stream = await httpClient.GetStreamAsync(languagePackInfo.languagePackDownloadLink);
 					using var streamReader = new StreamReader(stream);
@@ -470,7 +470,7 @@ namespace ARWNI2S.Node.Services.Installation
 			var isGermany = country == "DE";
 			var isEurope = ISO3166.FromCountryCode(country)?.SubjectToVat ?? false;
 
-			var settingService = EngineContext.Current.Resolve<ISettingService>();
+			var settingService = NodeEngineContext.Current.Resolve<ISettingService>();
 
 			await settingService.SaveSettingAsync(new CommonSettings
 			{
@@ -680,8 +680,8 @@ namespace ARWNI2S.Node.Services.Installation
 				new UserUserRoleMapping { UserId = adminUser.Id, UserRoleId = urRegistered.Id });
 
 			//set hashed admin password
-			var userService = EngineContext.Current.Resolve<IUserService>();
-			var encryptionService = EngineContext.Current.Resolve<IEncryptionService>();
+			var userService = NodeEngineContext.Current.Resolve<IUserService>();
+			var encryptionService = NodeEngineContext.Current.Resolve<IEncryptionService>();
 
 			//at this point request is valid
 			var userPassword = new UserPassword
@@ -1203,7 +1203,7 @@ namespace ARWNI2S.Node.Services.Installation
 		public virtual async Task InstallNodeAsync(string adminUserEmail, string passwordUserPassword)
 		{
 			//set hashed admin password
-			var userService = EngineContext.Current.Resolve<IUserService>();
+			var userService = NodeEngineContext.Current.Resolve<IUserService>();
 
 			var admin = userService.GetUserByUsernameAsync(adminUserEmail)
 				?? userService.GetUserByEmailAsync(adminUserEmail) ?? throw new NodeException($"Not found: {adminUserEmail}");

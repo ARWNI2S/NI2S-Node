@@ -190,9 +190,9 @@ namespace ARWNI2S.Node.Services.ScheduleTasks
                     using var scope = ServiceScopeFactory.CreateScope();
 
                     // Resolve
-                    var logger = EngineContext.Current.Resolve<ILogService>(scope);
-                    var localizationService = EngineContext.Current.Resolve<ILocalizationService>(scope);
-                    var nodeContext = EngineContext.Current.Resolve<INodeContext>(scope);
+                    var logger = NodeEngineContext.Current.Resolve<ILogService>(scope);
+                    var localizationService = NodeEngineContext.Current.Resolve<ILocalizationService>(scope);
+                    var nodeContext = NodeEngineContext.Current.Resolve<INodeContext>(scope);
 
                     var message = ex.InnerException?.GetType() == typeof(TaskCanceledException) ? await localizationService.GetResourceAsync("ScheduleTasks.TimeoutError") : ex.Message;
                     var node = await nodeContext.GetCurrentNodeAsync();

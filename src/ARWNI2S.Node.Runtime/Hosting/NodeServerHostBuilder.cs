@@ -1,13 +1,14 @@
-using ARWNI2S.Engine.Hosting;
 using ARWNI2S.Engine.Network;
 using ARWNI2S.Engine.Network.Connection;
+using ARWNI2S.Engine.Network.Connections;
+using ARWNI2S.Engine.Network.Host;
 using ARWNI2S.Engine.Network.Middleware;
+using ARWNI2S.Engine.Network.Protocol;
+using ARWNI2S.Engine.Network.Protocol.Factory;
 using ARWNI2S.Engine.Network.Session;
-using ARWNI2S.Infrastructure.Network;
 using ARWNI2S.Infrastructure.Network.Protocol;
 using ARWNI2S.Runtime.Hosting.Extensions;
-using ARWNI2S.Runtime.Network.Protocol;
-using ARWNI2S.Runtime.Network.Session;
+using ARWNI2S.Runtime.Network;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -19,9 +20,9 @@ namespace ARWNI2S.Runtime.Hosting
     {
         private Func<HostBuilderContext, IConfiguration, IConfiguration> _serverOptionsReader;
 
-        protected List<Action<HostBuilderContext, IServiceCollection>> ConfigureServicesActions { get; private set; } = new List<Action<HostBuilderContext, IServiceCollection>>();
+        protected List<Action<HostBuilderContext, IServiceCollection>> ConfigureServicesActions { get; private set; } = [];
 
-        protected List<Action<HostBuilderContext, IServiceCollection>> ConfigureSupplementServicesActions = new List<Action<HostBuilderContext, IServiceCollection>>();
+        protected List<Action<HostBuilderContext, IServiceCollection>> ConfigureSupplementServicesActions = [];
 
         public NodeServerHostBuilder(IHostBuilder hostBuilder)
             : base(hostBuilder)
@@ -130,7 +131,7 @@ namespace ARWNI2S.Runtime.Hosting
         protected virtual bool CheckIfExistHostedService(IServiceCollection services)
         {
             return services.Any(s => s.ServiceType == typeof(IHostedService)
-                && typeof(SuperSocketService<TReceivePackage>).IsAssignableFrom(GetImplementationType(s)));
+                && typeof(NodeServerService<TReceivePackage>).IsAssignableFrom(GetImplementationType(s)));
         }
 
         private Type GetImplementationType(ServiceDescriptor serviceDescriptor)
@@ -154,7 +155,7 @@ namespace ARWNI2S.Runtime.Hosting
 
         protected virtual void RegisterDefaultHostedService(IServiceCollection servicesInHost)
         {
-            RegisterHostedService<SuperSocketService<TReceivePackage>>(servicesInHost);
+            RegisterHostedService<NodeServerService<TReceivePackage>>(servicesInHost);
         }
 
         protected virtual void RegisterHostedService<THostedService>(IServiceCollection servicesInHost)
@@ -203,7 +204,7 @@ namespace ARWNI2S.Runtime.Hosting
         }
 
         public virtual INodeServerHostBuilder<TReceivePackage> UseSession<TSession>()
-            where TSession : IAppSession
+            where TSession : INodeSession
         {
             return UseSessionFactory<GenericSessionFactory<TSession>>();
         }
@@ -222,9 +223,9 @@ namespace ARWNI2S.Runtime.Hosting
         public virtual INodeServerHostBuilder<TReceivePackage> UseHostedService<THostedService>()
             where THostedService : class, IHostedService
         {
-            if (!typeof(SuperSocketService<TReceivePackage>).IsAssignableFrom(typeof(THostedService)))
+            if (!typeof(NodeServerService<TReceivePackage>).IsAssignableFrom(typeof(THostedService)))
             {
-                throw new ArgumentException($"The type parameter should be subclass of {nameof(SuperSocketService<TReceivePackage>)}", nameof(THostedService));
+                throw new ArgumentException($"The type parameter should be subclass of {nameof(NodeServerService<TReceivePackage>)}", nameof(THostedService));
             }
 
             return ConfigureServices((ctx, services) =>

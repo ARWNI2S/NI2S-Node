@@ -43,7 +43,7 @@ namespace ARWNI2S.Infrastructure.Network.Connection
         ProtocolError = 7,
 
         /// <summary>
-        /// SuperSocket internal error
+        /// NodeServer internal error
         /// </summary>
         InternalError = 8,
     }

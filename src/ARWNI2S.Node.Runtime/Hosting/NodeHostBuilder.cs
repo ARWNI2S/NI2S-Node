@@ -3,7 +3,6 @@ using ARWNI2S.Node.Core.Infrastructure;
 using ARWNI2S.Runtime.Hosting.Extensions;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 namespace ARWNI2S.Runtime.Hosting
@@ -71,7 +70,7 @@ namespace ARWNI2S.Runtime.Hosting
                 config.AddEnvironmentVariables();
             });
 
-            //builder.ConfigureSuperSocketServer();
+            //builder.ConfigureNodeServerServer();
 
             // Configurar servicios de la aplicación y ajustes
             builder.ConfigureServices((context, services) =>

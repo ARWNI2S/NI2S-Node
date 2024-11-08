@@ -1,5 +1,5 @@
-using ARWNI2S.Engine.Hosting;
 using ARWNI2S.Engine.Network;
+using ARWNI2S.Engine.Network.Host;
 using ARWNI2S.Infrastructure.Network.Protocol;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -8,7 +8,7 @@ namespace ARWNI2S.Runtime.Hosting
 {
     public class MultipleServerHostBuilder : HostBuilderAdapter<MultipleServerHostBuilder>, IMinimalApiHostBuilder
     {
-        private List<IServerHostBuilderAdapter> _hostBuilderAdapters = new List<IServerHostBuilderAdapter>();
+        private List<IServerHostBuilderAdapter> _hostBuilderAdapters = [];
 
         private MultipleServerHostBuilder()
             : this(args: null)
@@ -98,10 +98,10 @@ namespace ARWNI2S.Runtime.Hosting
             return this;
         }
 
-        public MultipleServerHostBuilder AddServer<TSuperSocketService, TReceivePackage, TPipelineFilter>(Action<NodeServerHostBuilder<TReceivePackage>> hostBuilderDelegate)
+        public MultipleServerHostBuilder AddServer<TNodeServerService, TReceivePackage, TPipelineFilter>(Action<NodeServerHostBuilder<TReceivePackage>> hostBuilderDelegate)
             where TReceivePackage : class
             where TPipelineFilter : IPipelineFilter<TReceivePackage>, new()
-            where TSuperSocketService : SuperSocketService<TReceivePackage>
+            where TNodeServerService : NodeServerService<TReceivePackage>
         {
             var hostBuilder = CreateServerHostBuilder(hostBuilderDelegate);
 
@@ -109,7 +109,7 @@ namespace ARWNI2S.Runtime.Hosting
 
             hostBuilder
                 .UsePipelineFilter<TPipelineFilter>()
-                .UseHostedService<TSuperSocketService>();
+                .UseHostedService<TNodeServerService>();
             return this;
         }
 

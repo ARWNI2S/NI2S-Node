@@ -20,6 +20,7 @@ using System.Runtime.InteropServices;
 
 [assembly: InternalsVisibleTo("ARWNI2S.GDESK")]
 
+[assembly: InternalsVisibleTo("ARWNI2S.Node.Core")]
 [assembly: InternalsVisibleTo("ARWNI2S.Node.Runtime")]
 
 [assembly: InternalsVisibleTo("ARWNI2S.Narrator.Framework")]

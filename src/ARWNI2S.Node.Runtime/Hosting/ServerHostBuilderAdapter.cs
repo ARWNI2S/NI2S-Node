@@ -1,5 +1,5 @@
-using ARWNI2S.Engine.Hosting;
 using ARWNI2S.Engine.Network;
+using ARWNI2S.Engine.Network.Host;
 using ARWNI2S.Runtime.ComponentModel;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -18,7 +18,7 @@ namespace ARWNI2S.Runtime.Hosting
 
         private Func<HostBuilderContext, IServiceCollection, IServiceProvider> _serviceProviderBuilder = null;
 
-        private List<IConfigureContainerAdapter> _configureContainerActions = new List<IConfigureContainerAdapter>();
+        private List<IConfigureContainerAdapter> _configureContainerActions = [];
 
         public ServerHostBuilderAdapter(IHostBuilder hostBuilder)
             : base(hostBuilder)
@@ -128,7 +128,7 @@ namespace ARWNI2S.Runtime.Hosting
 
         protected override void RegisterDefaultHostedService(IServiceCollection servicesInHost)
         {
-            RegisterHostedService<SuperSocketService<TReceivePackage>>(servicesInHost);
+            RegisterHostedService<NodeServerService<TReceivePackage>>(servicesInHost);
         }
 
         private THostedService GetHostedService<THostedService>()

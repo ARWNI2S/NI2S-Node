@@ -231,7 +231,7 @@ namespace ARWNI2S.Infrastructure.Utilities
         /// </summary>
         public static void SafeExecute(Action action, ILogger logger = null, string caller = null)
         {
-            SafeExecute(action, logger, caller == null ? (Func<string>)null : () => caller);
+            SafeExecute(action, logger, caller == null ? null : () => caller);
         }
 
         /// <summary>

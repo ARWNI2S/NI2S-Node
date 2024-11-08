@@ -23,6 +23,8 @@ using System.Runtime.InteropServices;
 [assembly: InternalsVisibleTo("ARWNI2S.Infrastructure.Collections")]
 [assembly: InternalsVisibleTo("ARWNI2S.Infrastructure.Commons")]
 
+[assembly: InternalsVisibleTo("ARWNI2S.Network.Core")]
+
 [assembly: InternalsVisibleTo("ARWNI2S.Node.Core")]
 [assembly: InternalsVisibleTo("ARWNI2S.Node.Data")]
 [assembly: InternalsVisibleTo("ARWNI2S.Node.Runtime")]

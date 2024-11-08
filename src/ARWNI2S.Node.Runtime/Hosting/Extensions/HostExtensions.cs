@@ -19,7 +19,7 @@ namespace ARWNI2S.Runtime.Hosting.Extensions
         public static void ConfigureEngine(this IHost application)
         {
             //application.ConfigureSimulation();
-            EngineContext.Current.ConfigureEngine(application);
+            NodeEngineContext.Current.ConfigureEngine(application);
         }
 
         /// <summary>
@@ -29,7 +29,7 @@ namespace ARWNI2S.Runtime.Hosting.Extensions
         /// <returns>async task</returns>
         public static async Task StartEngineAsync(this IHost _)
         {
-            var engine = EngineContext.Current;
+            var engine = NodeEngineContext.Current;
 
             //if (!DataSettingsManager.IsDatabaseInstalled())
             //{
@@ -68,8 +68,8 @@ namespace ARWNI2S.Runtime.Hosting.Extensions
         {
             //TODO: EXCEPTION HANDLER!!!
 
-            var ni2sSettings = EngineContext.Current.Resolve<NI2SSettings>();
-            var hostEnvironment = EngineContext.Current.Resolve<IHostEnvironment>();
+            var ni2sSettings = NodeEngineContext.Current.Resolve<NI2SSettings>();
+            var hostEnvironment = NodeEngineContext.Current.Resolve<IHostEnvironment>();
             var useDetailedExceptions = ni2sSettings.Get<CommonConfig>().DisplayFullErrorStack || hostEnvironment.IsDevelopment();
             if (useDetailedExceptions)
             {
@@ -120,7 +120,7 @@ namespace ARWNI2S.Runtime.Hosting.Extensions
         {
             //TODO: NODE PROXY/VPN/ETC!!!
 
-            var ni2sSettings = EngineContext.Current.Resolve<NI2SSettings>();
+            var ni2sSettings = NodeEngineContext.Current.Resolve<NI2SSettings>();
 
             if (ni2sSettings.Get<HostingConfig>().UseProxy)
             {

@@ -1,5 +1,5 @@
 ﻿using ARWNI2S.Infrastructure.Network.Protocol;
-using ARWNI2S.Infrastructure.Network.Protocol.ProxyProtocol;
+using ARWNI2S.Infrastructure.Network.Proxy;
 using System.IO.Pipelines;
 using System.Net;
 

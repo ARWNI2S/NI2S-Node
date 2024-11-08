@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Infrastructure\ARWNI2S.Network.Core\ARWNI2S.Network.Core.csproj" />
+    <ProjectReference Include="..\..\..\Infrastructure\ARWNI2S.Network\ARWNI2S.Network.csproj" />
     <ProjectReference Include="..\Infrastructure\ARWNI2S.Infrastructure\ARWNI2S.Infrastructure.csproj" />
   </ItemGroup>
 

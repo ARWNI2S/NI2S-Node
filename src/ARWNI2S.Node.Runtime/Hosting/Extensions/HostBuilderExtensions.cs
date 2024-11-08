@@ -1,11 +1,12 @@
-using ARWNI2S.Engine.Hosting;
 using ARWNI2S.Engine.Network;
 using ARWNI2S.Engine.Network.Connection;
+using ARWNI2S.Engine.Network.Connections;
+using ARWNI2S.Engine.Network.Host;
+using ARWNI2S.Engine.Network.Protocol.Factory;
 using ARWNI2S.Engine.Network.Session;
-using ARWNI2S.Infrastructure.Network;
 using ARWNI2S.Infrastructure.Network.Connection;
 using ARWNI2S.Infrastructure.Network.Protocol;
-using ARWNI2S.Runtime.Network.Session;
+using ARWNI2S.Runtime.Middleware;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.IO.Compression;
@@ -54,7 +55,7 @@ namespace ARWNI2S.Runtime.Hosting.Extensions
             return hostBuilder.UseMiddleware<ClearIdleSessionMiddleware>();
         }
 
-        public static INodeServerHostBuilder<TReceivePackage> UseSessionHandler<TReceivePackage>(this INodeServerHostBuilder<TReceivePackage> hostBuilder, Func<IAppSession, ValueTask> onConnected = null, Func<IAppSession, CloseEventArgs, ValueTask> onClosed = null)
+        public static INodeServerHostBuilder<TReceivePackage> UseSessionHandler<TReceivePackage>(this INodeServerHostBuilder<TReceivePackage> hostBuilder, Func<INodeSession, ValueTask> onConnected = null, Func<INodeSession, CloseEventArgs, ValueTask> onClosed = null)
         {
             return hostBuilder.ConfigureServices(
                 (hostCtx, services) =>
@@ -68,7 +69,7 @@ namespace ARWNI2S.Runtime.Hosting.Extensions
             );
         }
 
-        public static INodeServerHostBuilder<TReceivePackage> ConfigureSuperSocket<TReceivePackage>(this INodeServerHostBuilder<TReceivePackage> hostBuilder, Action<ServerOptions> configurator)
+        public static INodeServerHostBuilder<TReceivePackage> ConfigureNodeServer<TReceivePackage>(this INodeServerHostBuilder<TReceivePackage> hostBuilder, Action<ServerOptions> configurator)
         {
             return hostBuilder.ConfigureServices(
                 (hostCtx, services) =>
@@ -100,7 +101,7 @@ namespace ARWNI2S.Runtime.Hosting.Extensions
             return host.Services.GetService<IEnumerable<IHostedService>>().OfType<IServer>().FirstOrDefault();
         }
 
-        public static INodeServerHostBuilder<TReceivePackage> ConfigureErrorHandler<TReceivePackage>(this INodeServerHostBuilder<TReceivePackage> hostBuilder, Func<IAppSession, PackageHandlingException<TReceivePackage>, ValueTask<bool>> errorHandler)
+        public static INodeServerHostBuilder<TReceivePackage> ConfigureErrorHandler<TReceivePackage>(this INodeServerHostBuilder<TReceivePackage> hostBuilder, Func<INodeSession, PackageHandlingException<TReceivePackage>, ValueTask<bool>> errorHandler)
         {
             return hostBuilder.ConfigureServices(
                 (hostCtx, services) =>
@@ -111,7 +112,7 @@ namespace ARWNI2S.Runtime.Hosting.Extensions
         }
 
         // move to extensions
-        public static INodeServerHostBuilder<TReceivePackage> UsePackageHandler<TReceivePackage>(this INodeServerHostBuilder<TReceivePackage> hostBuilder, Func<IAppSession, TReceivePackage, ValueTask> packageHandler, Func<IAppSession, PackageHandlingException<TReceivePackage>, ValueTask<bool>> errorHandler = null)
+        public static INodeServerHostBuilder<TReceivePackage> UsePackageHandler<TReceivePackage>(this INodeServerHostBuilder<TReceivePackage> hostBuilder, Func<INodeSession, TReceivePackage, ValueTask> packageHandler, Func<INodeSession, PackageHandlingException<TReceivePackage>, ValueTask<bool>> errorHandler = null)
         {
             return hostBuilder.ConfigureServices(
                 (hostCtx, services) =>

@@ -12,10 +12,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="Extensions\LoggingServiceCollectionExtensions.cs" />
     <Compile Remove="Interner.cs" />
     <Compile Remove="InternerConstants.cs" />
     <Compile Remove="Interop\IAppDomainManager.cs" />
+    <Compile Remove="Lifecycle\MigrationContext.cs" />
     <Compile Remove="Logging\ITraceLogger.cs" />
     <Compile Remove="Logging\LoggingTools.cs" />
     <Compile Remove="Logging\ErrorCode.cs" />
@@ -59,10 +59,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>LocalizedStrings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Extensions\" />
   </ItemGroup>
 
 </Project>

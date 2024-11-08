@@ -2,7 +2,6 @@
 using ARWNI2S.Infrastructure.Collections.Generic;
 using ARWNI2S.Node.Core;
 using ARWNI2S.Node.Core.Caching;
-using ARWNI2S.Node.Core.Entities.Clustering;
 using ARWNI2S.Node.Core.Entities.Common;
 using ARWNI2S.Node.Core.Entities.Users;
 using ARWNI2S.Node.Core.Infrastructure;
@@ -467,7 +466,7 @@ namespace ARWNI2S.Node.Services.Users
 
             if (backgroundTaskUser is null)
             {
-                var node = (NI2SNode)await _nodeContext.GetCurrentNodeAsync();
+                var node = await _nodeContext.GetCurrentNodeAsync();
                 //If for any reason the system user isn't in the database, then we add it
                 backgroundTaskUser = new User
                 {
@@ -504,7 +503,7 @@ namespace ARWNI2S.Node.Services.Users
 
             if (searchEngineUser is null)
             {
-                var node = (NI2SNode)await _nodeContext.GetCurrentNodeAsync();
+                var node = await _nodeContext.GetCurrentNodeAsync();
                 //If for any reason the system user isn't in the database, then we add it
                 searchEngineUser = new User
                 {
@@ -734,7 +733,7 @@ namespace ARWNI2S.Node.Services.Users
             if (!string.IsNullOrWhiteSpace(firstName) && !string.IsNullOrWhiteSpace(lastName))
             {
                 //do not inject ILocalizationService via constructor because it'll cause circular references
-                var format = await EngineContext.Current.Resolve<ILocalizationService>().GetResourceAsync("User.FullNameFormat");
+                var format = await NodeEngineContext.Current.Resolve<ILocalizationService>().GetResourceAsync("User.FullNameFormat");
 
                 fullName = string.Format(format, firstName, lastName);
             }

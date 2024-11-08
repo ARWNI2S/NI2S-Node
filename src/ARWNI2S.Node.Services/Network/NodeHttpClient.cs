@@ -17,7 +17,7 @@ namespace ARWNI2S.Node.Services.Network
         #region Ctor
 
         public NodeHttpClient(HttpClient client,
-            INI2SNetHelper nodeHelper)
+            INI2SHelper nodeHelper)
         {
             //configure client
             client.BaseAddress = new Uri(nodeHelper.GetNodeLocation());

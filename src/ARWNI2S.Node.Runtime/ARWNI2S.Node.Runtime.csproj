@@ -10,7 +10,6 @@
     <Compile Remove="Data\**" />
     <Compile Remove="EngineParts\**" />
     <Compile Remove="Infrastructure\**" />
-    <Compile Remove="Network\**" />
     <Compile Remove="Security\**" />
     <Compile Remove="Services\**" />
     <Compile Remove="Simulation\**" />
@@ -18,7 +17,6 @@
     <EmbeddedResource Remove="Data\**" />
     <EmbeddedResource Remove="EngineParts\**" />
     <EmbeddedResource Remove="Infrastructure\**" />
-    <EmbeddedResource Remove="Network\**" />
     <EmbeddedResource Remove="Security\**" />
     <EmbeddedResource Remove="Services\**" />
     <EmbeddedResource Remove="Simulation\**" />
@@ -26,7 +24,6 @@
     <None Remove="Data\**" />
     <None Remove="EngineParts\**" />
     <None Remove="Infrastructure\**" />
-    <None Remove="Network\**" />
     <None Remove="Security\**" />
     <None Remove="Services\**" />
     <None Remove="Simulation\**" />
@@ -41,11 +38,12 @@
     <Compile Remove="Clustering\Messages\QuorumResponse.cs" />
     <Compile Remove="Clustering\NodeHealthMonitorService.cs" />
     <Compile Remove="Hosting\Extensions\GDESKServiceCollectionExtensions.cs" />
-    <Compile Remove="Hosting\Extensions\SuperSocketHostBuilderExtensions.cs" />
+    <Compile Remove="Hosting\Extensions\NodeServerHostBuilderExtensions.cs" />
     <Compile Remove="Hosting\NodeRuntimeHost.cs" />
     <Compile Remove="LocalNodeContext.cs" />
     <Compile Remove="NodeWorkContext.cs" />
     <Compile Remove="RuntimeContext.cs" />
+    <Compile Remove="RuntimeContextAccessor.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -55,11 +53,6 @@
     <Compile Include="Infrastructure\ErrorHandlerStartup.cs" />
     <Compile Include="Infrastructure\LazyInstance.cs" />
     <Compile Include="Infrastructure\ProxyStartup.cs" />
-    <Compile Include="Network\NI2SFrontlineService.cs" />
-    <Compile Include="Network\Protocol\DefaultStringEncoderForDI.cs" />
-    <Compile Include="Network\Session\ClearIdleSessionMiddleware.cs" />
-    <Compile Include="Network\Session\DefaultSessionFactory.cs" />
-    <Compile Include="Network\Session\NI2SSession.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -84,7 +77,6 @@
     <Folder Include="Clustering\" />
     <Folder Include="Clustering\Extensions\" />
     <Folder Include="Clustering\Messages\" />
-    <Folder Include="Network\Command\" />
   </ItemGroup>
 
 </Project>
