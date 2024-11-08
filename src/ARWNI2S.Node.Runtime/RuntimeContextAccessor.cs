@@ -1,11 +1,14 @@
-﻿namespace ARWNI2S.Runtime
+﻿using ARWNI2S.Engine.Network;
+using ARWNI2S.Infrastructure;
+
+namespace ARWNI2S.Runtime
 {
-    internal class RuntimeContextAccessor : PackageHandlingContextAccessor<NI2SProtoPacket>, INetworkContextAccessor
+    internal class RuntimeContextAccessor : /*PackageHandlingContextAccessor<NI2SProtoPacket>,*/ IContextAccessor
     {
-        private static readonly AsyncLocal<NetworkContextHolder> _engineContextCurrent = new();
+        private static readonly AsyncLocal<ContextHolder> _engineContextCurrent = new();
 
         /// <inheritdoc/>
-        public INetworkContext NetworkContext
+        public IContext Context
         {
             get
             {
@@ -24,15 +27,15 @@
                 {
                     // Use an object indirection to hold the EngineContext in the AsyncLocal,
                     // so it can be cleared in all ExecutionContexts when its cleared.
-                    _engineContextCurrent.Value = new NetworkContextHolder { Context = value };
+                    _engineContextCurrent.Value = new ContextHolder { Context = value };
                 }
             }
         }
 
 
-        private sealed class NetworkContextHolder
+        private sealed class ContextHolder
         {
-            public INetworkContext Context;
+            public IContext Context;
         }
     }
 }

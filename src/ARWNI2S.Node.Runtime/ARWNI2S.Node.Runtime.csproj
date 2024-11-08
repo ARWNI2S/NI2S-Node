@@ -43,7 +43,6 @@
     <Compile Remove="LocalNodeContext.cs" />
     <Compile Remove="NodeWorkContext.cs" />
     <Compile Remove="RuntimeContext.cs" />
-    <Compile Remove="RuntimeContextAccessor.cs" />
   </ItemGroup>
 
   <ItemGroup>

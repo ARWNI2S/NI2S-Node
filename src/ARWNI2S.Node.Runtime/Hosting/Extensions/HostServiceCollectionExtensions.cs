@@ -209,8 +209,8 @@ namespace ARWNI2S.Runtime.Hosting.Extensions
         /// <param name="services">Collection of service descriptors</param>
         public static void AddContextAccessor(this IServiceCollection services)
         {
-            services.AddSingleton<INetworkContextAccessor, RuntimeContextAccessor>();
-            services.AddSingleton<IPackageHandlingContextAccessor<NI2SProtoPacket>, RuntimeContextAccessor>();
+            services.AddSingleton<IContextAccessor, RuntimeContextAccessor>();
+            //services.AddSingleton<IPackageHandlingContextAccessor<NI2SProtoPacket>, RuntimeContextAccessor>();
         }
 
         /// <summary>
