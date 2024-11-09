@@ -39,10 +39,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Clustering\ClusteringDefaults.cs" />
+    <Compile Remove="Clustering\ClusterManager.cs" />
+    <Compile Remove="Clustering\ClusterStatus.cs" />
+    <Compile Remove="Clustering\Extensions\NodeClientHealthMonitorExtensions.cs" />
+    <Compile Remove="Clustering\Messages\QuorumRequest.cs" />
+    <Compile Remove="Clustering\Messages\QuorumResponse.cs" />
+    <Compile Remove="Clustering\NodeHealthMonitorService.cs" />
     <Compile Remove="Hosting\Extensions\GDESKServiceCollectionExtensions.cs" />
     <Compile Remove="Hosting\Extensions\HostBuilderExtensions.cs" />
     <Compile Remove="Hosting\Extensions\NodeServerHostBuilderExtensions.cs" />
-    <Compile Remove="Hosting\HostBuilderAdapter.cs" />
     <Compile Remove="Hosting\MultipleServerHostBuilder.cs" />
     <Compile Remove="Hosting\NodeRuntimeHost.cs" />
     <Compile Remove="Hosting\NodeServerHostBuilder.cs" />
@@ -75,6 +81,12 @@
     <ProjectReference Include="..\ARWNI2S.Node.Core\ARWNI2S.Node.Core.csproj" />
     <ProjectReference Include="..\ARWNI2S.Node.Data\ARWNI2S.Node.Data.csproj" />
     <ProjectReference Include="..\ARWNI2S.Node.Services\ARWNI2S.Node.Services.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Clustering\" />
+    <Folder Include="Clustering\Extensions\" />
+    <Folder Include="Clustering\Messages\" />
   </ItemGroup>
 
 </Project>

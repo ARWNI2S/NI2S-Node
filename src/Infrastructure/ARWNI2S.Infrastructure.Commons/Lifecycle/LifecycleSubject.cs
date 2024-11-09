@@ -112,7 +112,7 @@ namespace ARWNI2S.Infrastructure.Lifecycle
                     var stopWatch = ValueStopwatch.StartNew();
                     await Task.WhenAll(observerGroup.Select(orderedObserver => CallOnStart(orderedObserver, cancellationToken)));
                     stopWatch.Stop();
-                    this.PerfMeasureOnStart(stage, stopWatch.Elapsed);
+                    PerfMeasureOnStart(stage, stopWatch.Elapsed);
 
                     OnStartStageCompleted(stage);
                 }
@@ -188,7 +188,7 @@ namespace ARWNI2S.Infrastructure.Lifecycle
                     var stopwatch = ValueStopwatch.StartNew();
                     await Task.WhenAll(observerGroup.Select(orderedObserver => CallOnStop(orderedObserver, cancellationToken)));
                     stopwatch.Stop();
-                    this.PerfMeasureOnStop(stage, stopwatch.Elapsed);
+                    PerfMeasureOnStop(stage, stopwatch.Elapsed);
                 }
                 catch (Exception ex)
                 {

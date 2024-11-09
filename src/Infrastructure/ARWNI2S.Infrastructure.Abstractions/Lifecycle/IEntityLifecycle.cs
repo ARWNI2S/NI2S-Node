@@ -4,38 +4,38 @@ using System.Buffers;
 namespace ARWNI2S.Infrastructure.Lifecycle
 {
     /// <summary>
-    /// The observable grain lifecycle.
+    /// The observable entity lifecycle.
     /// </summary>
     /// <remarks>
-    /// This type is usually used as the generic parameter in <see cref="ILifecycleParticipant{IGrainLifecycle}"/> as
-    /// a means of participating in the lifecycle stages of a grain activation.
+    /// This type is usually used as the generic parameter in <see cref="ILifecycleParticipant{IEntityLifecycle}"/> as
+    /// a means of participating in the lifecycle stages of a entity activation.
     /// </remarks>
     public interface IEntityLifecycle : ILifecycleObservable
     {
         /// <summary>
-        /// Registers a grain migration participant.
+        /// Registers a entity migration participant.
         /// </summary>
         /// <param name="participant">The participant.</param>
-        void AddMigrationParticipant(IGrainMigrationParticipant participant);
+        void AddMigrationParticipant(IEntityMigrationParticipant participant);
 
         /// <summary>
-        /// Unregisters a grain migration participant.
+        /// Unregisters a entity migration participant.
         /// </summary>
         /// <param name="participant">The participant.</param>
-        void RemoveMigrationParticipant(IGrainMigrationParticipant participant);
+        void RemoveMigrationParticipant(IEntityMigrationParticipant participant);
     }
 
-    public interface IGrainMigrationParticipant
+    public interface IEntityMigrationParticipant
     {
         /// <summary>
-        /// Called on the original activation when migration is initiated, after <see cref="IGrainBase.OnDeactivateAsync(DeactivationReason, CancellationToken)"/> completes.
+        /// Called on the original activation when migration is initiated, after <see cref="IEntityBase.OnDeactivateAsync(DeactivationReason, CancellationToken)"/> completes.
         /// The participant can access and update the dehydration context.
         /// </summary>
         /// <param name="dehydrationContext">The dehydration context.</param>
         void OnDehydrate(IDehydrationContext dehydrationContext);
 
         /// <summary>
-        /// Called on the new activation after a migration, before <see cref="IGrainBase.OnActivateAsync(CancellationToken)"/> is called.
+        /// Called on the new activation after a migration, before <see cref="IEntityBase.OnActivateAsync(CancellationToken)"/> is called.
         /// The participant can restore state from the migration context.
         /// </summary>
         /// <param name="rehydrationContext">The rehydration context.</param>
@@ -43,7 +43,7 @@ namespace ARWNI2S.Infrastructure.Lifecycle
     }
 
     /// <summary>
-    /// Records the state of a grain activation which is in the process of being dehydrated for migration to another location.
+    /// Records the state of a entity activation which is in the process of being dehydrated for migration to another location.
     /// </summary>
     public interface IDehydrationContext
     {
@@ -78,7 +78,7 @@ namespace ARWNI2S.Infrastructure.Lifecycle
     }
 
     /// <summary>
-    /// Contains the state of a grain activation which is in the process of being rehydrated after moving from another location.
+    /// Contains the state of a entity activation which is in the process of being rehydrated after moving from another location.
     /// </summary>
     public interface IRehydrationContext
     {

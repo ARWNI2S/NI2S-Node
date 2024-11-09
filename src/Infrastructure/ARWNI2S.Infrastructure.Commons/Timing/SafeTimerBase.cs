@@ -77,7 +77,7 @@ namespace ARWNI2S.Infrastructure.Timing
             dueTime = due;
             totalNumTicks = 0;
 
-            this.logger.LogDebug(ErrorCode.TimerChanging, LocalizedStrings.TimerChanging_Creating, GetFullName(), due, period);
+            logger.LogDebug(ErrorCode.TimerChanging, LocalizedStrings.TimerChanging_Creating, GetFullName(), due, period);
 
             timer = new Timer(HandleTimerCallback, state, Constants.INFINITE_TIMESPAN, Constants.INFINITE_TIMESPAN);
         }
