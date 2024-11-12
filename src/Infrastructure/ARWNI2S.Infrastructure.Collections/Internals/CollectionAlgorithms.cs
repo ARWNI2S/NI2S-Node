@@ -2027,7 +2027,7 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
             ArgumentNullException.ThrowIfNull(equalityComparer);
 
             // Create a set of the items we are looking for, for efficient lookup.
-            Set<T> setToLookFor = new Set<T>(itemsToLookFor, equalityComparer);
+            Set<T> setToLookFor = new(itemsToLookFor, equalityComparer);
 
             // Scan the list for the items.
             int index = 0;
@@ -2111,7 +2111,7 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
             ArgumentNullException.ThrowIfNull(equalityComparer);
 
             // Create a set of the items we are looking for, for efficient lookup.
-            Set<T> setToLookFor = new Set<T>(itemsToLookFor, equalityComparer);
+            Set<T> setToLookFor = new(itemsToLookFor, equalityComparer);
 
             // Scan the list
             for (int index = list.Count - 1; index >= 0; --index)
@@ -2190,7 +2190,7 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
             ArgumentNullException.ThrowIfNull(equalityComparer);
 
             // Create a set of the items we are looking for, for efficient lookup.
-            Set<T> setToLookFor = new Set<T>(itemsToLookFor, equalityComparer);
+            Set<T> setToLookFor = new(itemsToLookFor, equalityComparer);
 
             // Scan the list
             int index = 0;
@@ -2367,8 +2367,8 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
             if (equalityComparer == null)
                 throw new ArgumentException("equalityComparer");
 
-            Bag<T> bag1 = new Bag<T>(collection1, equalityComparer);
-            Bag<T> bag2 = new Bag<T>(collection2, equalityComparer);
+            Bag<T> bag1 = new(collection1, equalityComparer);
+            Bag<T> bag2 = new(collection2, equalityComparer);
             return bag2.IsSupersetOf(bag1);
         }
 
@@ -2416,8 +2416,8 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
             if (equalityComparer == null)
                 throw new ArgumentException("equalityComparer");
 
-            Bag<T> bag1 = new Bag<T>(collection1, equalityComparer);
-            Bag<T> bag2 = new Bag<T>(collection2, equalityComparer);
+            Bag<T> bag1 = new(collection1, equalityComparer);
+            Bag<T> bag2 = new(collection2, equalityComparer);
             return bag2.IsProperSupersetOf(bag1);
         }
 
@@ -2463,7 +2463,7 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
             if (equalityComparer == null)
                 throw new ArgumentException("equalityComparer");
 
-            Set<T> set1 = new Set<T>(collection1, equalityComparer);
+            Set<T> set1 = new(collection1, equalityComparer);
 
             foreach (T item2 in collection2)
             {
@@ -2514,8 +2514,8 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
             if (equalityComparer == null)
                 throw new ArgumentException("equalityComparer");
 
-            Bag<T> bag1 = new Bag<T>(collection1, equalityComparer);
-            Bag<T> bag2 = new Bag<T>(collection2, equalityComparer);
+            Bag<T> bag1 = new(collection1, equalityComparer);
+            Bag<T> bag2 = new(collection2, equalityComparer);
             return bag2.IsEqualTo(bag1);
         }
 
@@ -2571,8 +2571,8 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
             if (equalityComparer == null)
                 throw new ArgumentException("equalityComparer");
 
-            Bag<T> bag1 = new Bag<T>(collection1, equalityComparer);
-            Bag<T> bag2 = new Bag<T>(collection2, equalityComparer);
+            Bag<T> bag1 = new(collection1, equalityComparer);
+            Bag<T> bag2 = new(collection2, equalityComparer);
             return CollectionUtils.CreateEnumerableWrapper(bag1.Intersection(bag2));
         }
 
@@ -2628,8 +2628,8 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
             if (equalityComparer == null)
                 throw new ArgumentException("equalityComparer");
 
-            Bag<T> bag1 = new Bag<T>(collection1, equalityComparer);
-            Bag<T> bag2 = new Bag<T>(collection2, equalityComparer);
+            Bag<T> bag1 = new(collection1, equalityComparer);
+            Bag<T> bag2 = new(collection2, equalityComparer);
             if (bag1.Count > bag2.Count)
             {
                 bag1.UnionWith(bag2);
@@ -2694,8 +2694,8 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
             if (equalityComparer == null)
                 throw new ArgumentException("equalityComparer");
 
-            Bag<T> bag1 = new Bag<T>(collection1, equalityComparer);
-            Bag<T> bag2 = new Bag<T>(collection2, equalityComparer);
+            Bag<T> bag1 = new(collection1, equalityComparer);
+            Bag<T> bag2 = new(collection2, equalityComparer);
             bag1.DifferenceWith(bag2);
             return CollectionUtils.CreateEnumerableWrapper(bag1);
         }
@@ -2752,8 +2752,8 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
             if (equalityComparer == null)
                 throw new ArgumentException("equalityComparer");
 
-            Bag<T> bag1 = new Bag<T>(collection1, equalityComparer);
-            Bag<T> bag2 = new Bag<T>(collection2, equalityComparer);
+            Bag<T> bag1 = new(collection1, equalityComparer);
+            Bag<T> bag2 = new(collection2, equalityComparer);
             if (bag1.Count > bag2.Count)
             {
                 bag1.SymmetricDifferenceWith(bag2);
@@ -2830,7 +2830,7 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
 
             bool firstItem = true;
 
-            System.Text.StringBuilder builder = new System.Text.StringBuilder();
+            System.Text.StringBuilder builder = new();
 
             builder.Append(start);
 
@@ -2872,7 +2872,7 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
             if (dictionary == null)
                 return "null";
 
-            System.Text.StringBuilder builder = new System.Text.StringBuilder();
+            System.Text.StringBuilder builder = new();
 
             builder.Append("{");
 
@@ -3056,7 +3056,7 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
                 throw new ArgumentOutOfRangeException(nameof(count));
 
             T[] result = new T[count];  // the result array.
-            Dictionary<int, T> swappedValues = new Dictionary<int, T>(count);   // holds swapped values from the list.
+            Dictionary<int, T> swappedValues = new(count);   // holds swapped values from the list.
 
             for (int i = 0; i < count; ++i)
             {
@@ -5213,7 +5213,7 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
                 // to copy. Or we could enumerate once, copying to a List, then copy the list
                 // to the correct size array. The latter algorithm seems more efficient, although
                 // it allocates extra memory for the list which is then discarded.
-                List<T> list = new List<T>(collection);
+                List<T> list = new(collection);
                 return [.. list];
             }
         }

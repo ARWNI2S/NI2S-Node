@@ -1,4 +1,3 @@
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // En proyectos de estilo SDK como este, varios atributos de ensamblado que definían
@@ -17,26 +16,3 @@ using System.Runtime.InteropServices;
 // en COM.
 
 [assembly: Guid("f94a0f1c-3717-4ec5-babf-b26243f1239c")]
-
-[assembly: InternalsVisibleTo("ARWNI2S.Node.Core")]
-[assembly: InternalsVisibleTo("ARWNI2S.Node.Data")]
-[assembly: InternalsVisibleTo("ARWNI2S.Node.Runtime")]
-[assembly: InternalsVisibleTo("ARWNI2S.Node.Services")]
-
-[assembly: InternalsVisibleTo("ARWNI2S.Narrator.Core")]
-[assembly: InternalsVisibleTo("ARWNI2S.Narrator.Data")]
-[assembly: InternalsVisibleTo("ARWNI2S.Narrator.Services")]
-[assembly: InternalsVisibleTo("ARWNI2S.Narrator.Framework")]
-[assembly: InternalsVisibleTo("ARWNI2S.Narrator")]
-
-[assembly: InternalsVisibleTo("ARWNI2S.Frontline.Services")]
-[assembly: InternalsVisibleTo("ARWNI2S.Connector.Framework")]
-[assembly: InternalsVisibleTo("ARWNI2S.Connector")]
-[assembly: InternalsVisibleTo("ARWNI2S.EditorNode.Framework")]
-[assembly: InternalsVisibleTo("ARWNI2S.EditorNode")]
-[assembly: InternalsVisibleTo("ARWNI2S.SceneNode.Framework")]
-[assembly: InternalsVisibleTo("ARWNI2S.SceneNode")]
-
-[assembly: InternalsVisibleTo("ARWNI2S.Portal.Services")]
-[assembly: InternalsVisibleTo("ARWNI2S.Portal.Framework")]
-[assembly: InternalsVisibleTo("ARWNI2S.Portal")]

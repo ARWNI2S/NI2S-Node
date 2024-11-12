@@ -39,7 +39,7 @@ namespace ARWNI2S.Infrastructure.Collections.Sorted
         /// <returns>A new KeyValuePair.</returns>
         private static KeyValuePair<TKey, TValue> NewPair(TKey key, TValue value)
         {
-            KeyValuePair<TKey, TValue> pair = new KeyValuePair<TKey, TValue>(key, value);
+            KeyValuePair<TKey, TValue> pair = new(key, value);
             return pair;
         }
 
@@ -50,7 +50,7 @@ namespace ARWNI2S.Infrastructure.Collections.Sorted
         /// <returns>A new KeyValuePair.</returns>
         private static KeyValuePair<TKey, TValue> NewPair(TKey key)
         {
-            KeyValuePair<TKey, TValue> pair = new KeyValuePair<TKey, TValue>(key, default);
+            KeyValuePair<TKey, TValue> pair = new(key, default);
             return pair;
         }
 
@@ -179,7 +179,7 @@ namespace ARWNI2S.Infrastructure.Collections.Sorted
         /// <returns>The cloned dictionary.</returns>
         public OrderedDictionary<TKey, TValue> Clone()
         {
-            OrderedDictionary<TKey, TValue> newDict = new OrderedDictionary<TKey, TValue>(_keyComparer, _pairComparer, _tree.Clone());
+            OrderedDictionary<TKey, TValue> newDict = new(_keyComparer, _pairComparer, _tree.Clone());
             return newDict;
         }
 
@@ -212,7 +212,7 @@ namespace ARWNI2S.Infrastructure.Collections.Sorted
             if (!CollectionUtils.IsCloneableType(typeof(TValue), out bool valueIsValueType))
                 NonCloneableType(typeof(TValue));
 
-            OrderedDictionary<TKey, TValue> newDict = new OrderedDictionary<TKey, TValue>(null, _keyComparer, _pairComparer);
+            OrderedDictionary<TKey, TValue> newDict = new(null, _keyComparer, _pairComparer);
 
             foreach (KeyValuePair<TKey, TValue> pair in _tree)
             {

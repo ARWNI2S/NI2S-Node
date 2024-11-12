@@ -103,7 +103,7 @@ namespace ARWNI2S.Node.Data.DataProviders
         {
             var migrationManager = NodeEngineContext.Current.Resolve<IMigrationManager>();
 
-            var targetAssembly = typeof(NI2SNodeDbStartup).Assembly;
+            var targetAssembly = typeof(NodeEngineDbStartup).Assembly;
             migrationManager.ApplyUpMigrations(targetAssembly);
 
             var typeFinder = Singleton<ITypeFinder>.Instance;

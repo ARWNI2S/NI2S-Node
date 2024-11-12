@@ -42,6 +42,12 @@ namespace ARWNI2S.Infrastructure
 
         #endregion
 
+        #region ASSEMBLY NAMES
+
+        public const string NI2S_DYNAMIC_CODE_ASSEMBLY = "ARWNI2S.Engine.Dynamic";
+
+        #endregion
+
         #region SERVICE NAMES
 
         public const string DEFAULT_STORAGE_PROVIDER_NAME = "Default";
@@ -54,6 +60,7 @@ namespace ARWNI2S.Infrastructure
         #endregion
 
         #region NAMESPACES
+
 
         public const string NI2S_AZURE_UTILS_DLL = "ARWNI2S.Azure";
 

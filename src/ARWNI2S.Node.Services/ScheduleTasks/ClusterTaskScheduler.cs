@@ -20,7 +20,7 @@ namespace ARWNI2S.Node.Services.ScheduleTasks
         protected static readonly List<ClusterTaskThread> _taskThreads = [];
         protected readonly NI2SSettings _ni2sSettings;
         protected readonly IScheduleTaskService _scheduleTaskService;
-        protected readonly INodeContext _nodeContext;
+        protected readonly IClusterContext _nodeContext;
 
         #endregion
 
@@ -30,7 +30,7 @@ namespace ARWNI2S.Node.Services.ScheduleTasks
             IHttpClientFactory httpClientFactory,
             IScheduleTaskService scheduleTaskService,
             IServiceScopeFactory serviceScopeFactory,
-            INodeContext nodeContext)
+            IClusterContext nodeContext)
         {
             _ni2sSettings = ni2sSettings;
             ClusterTaskThread.HttpClientFactory = httpClientFactory;
@@ -192,7 +192,7 @@ namespace ARWNI2S.Node.Services.ScheduleTasks
                     // Resolve
                     var logger = NodeEngineContext.Current.Resolve<ILogService>(scope);
                     var localizationService = NodeEngineContext.Current.Resolve<ILocalizationService>(scope);
-                    var nodeContext = NodeEngineContext.Current.Resolve<INodeContext>(scope);
+                    var nodeContext = NodeEngineContext.Current.Resolve<IClusterContext>(scope);
 
                     var message = ex.InnerException?.GetType() == typeof(TaskCanceledException) ? await localizationService.GetResourceAsync("ScheduleTasks.TimeoutError") : ex.Message;
                     var node = await nodeContext.GetCurrentNodeAsync();

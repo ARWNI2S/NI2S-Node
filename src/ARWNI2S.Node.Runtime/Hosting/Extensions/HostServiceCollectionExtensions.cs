@@ -6,22 +6,15 @@ using ARWNI2S.Node.Core.Caching;
 using ARWNI2S.Node.Core.Configuration;
 using ARWNI2S.Node.Core.Infrastructure;
 using ARWNI2S.Node.Core.Network;
-using ARWNI2S.Node.Data;
 using ARWNI2S.Node.Services.Clustering;
 using ARWNI2S.Node.Services.Network;
-using ARWNI2S.Node.Services.Security;
-//using ARWNI2S.Runtime.Clustering;
-using ARWNI2S.Runtime.Data;
-using ARWNI2S.Runtime.Profiling;
+using ARWNI2S.Runtime.Configuration.Options.Extensions;
+using ARWNI2S.Runtime.Hosting.Builder;
 using Azure.Data.Tables;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
 using Orleans.Configuration;
-using StackExchange.Profiling;
-using StackExchange.Profiling.Internal;
-using StackExchange.Profiling.Storage;
 using StackExchange.Redis;
 using System.Net;
 
@@ -36,19 +29,19 @@ namespace ARWNI2S.Runtime.Hosting.Extensions
         /// Configure base application settings
         /// </summary>
         /// <param name="services">Collection of service descriptors</param>
-        /// <param name="context">A builder for applications and services</param>
-        public static void ConfigureApplicationSettings(this IServiceCollection services,
-            HostBuilderContext context)
+        /// <param name="builder">A builder for applications and services</param>
+        public static void ConfigureEngineSettings(this IServiceCollection services,
+            NodeEngineBuilder builder)
         {
             //let the operating system decide what TLS protocol version to use
             //see https://docs.microsoft.com/dotnet/framework/network-programming/tls
             ServicePointManager.SecurityProtocol = SecurityProtocolType.SystemDefault;
 
             //create default file provider
-            CommonHelper.DefaultFileProvider = new EngineFileProvider(context.HostingEnvironment);
+            CommonHelper.DefaultFileProvider = new EngineFileProvider(builder.Environment);
 
             //register type finder
-            var typeFinder = new NI2SNodeTypeFinder();
+            var typeFinder = new NodeEngineTypeFinder();
             Singleton<ITypeFinder>.Instance = typeFinder;
             services.AddSingleton<ITypeFinder>(typeFinder);
 
@@ -59,7 +52,7 @@ namespace ARWNI2S.Runtime.Hosting.Extensions
                 .ToList();
 
             foreach (var config in configurations)
-                context.Configuration.GetSection(config.Name).Bind(config, options => options.BindNonPublicProperties = true);
+                builder.Configuration.GetSection(config.Name).Bind(config, options => options.BindNonPublicProperties = true);
 
             //TODO: READ SECRETS FROM KEYVAULT use SecretAttribute decorated properties
 
@@ -71,9 +64,9 @@ namespace ARWNI2S.Runtime.Hosting.Extensions
         /// Add services to the application and configure service provider
         /// </summary>
         /// <param name="services">Collection of service descriptors</param>
-        /// <param name="context">A builder for applications and services</param>
-        public static void ConfigureApplicationServices(this IServiceCollection services,
-            HostBuilderContext context)
+        /// <param name="builder">A builder for applications and services</param>
+        public static void ConfigureEngineServices(this IServiceCollection services,
+            NodeEngineBuilder builder)
         {
             //add accessor to Context
             services.AddContextAccessor();
@@ -91,13 +84,13 @@ namespace ARWNI2S.Runtime.Hosting.Extensions
 
             //initialize modules
             var moduleConfig = new ModuleConfig();
-            context.Configuration.GetSection(nameof(ModuleConfig)).Bind(moduleConfig, options => options.BindNonPublicProperties = true);
+            builder.Configuration.GetSection(nameof(ModuleConfig)).Bind(moduleConfig, options => options.BindNonPublicProperties = true);
             mvrmCoreBuilder.PartManager.InitializeModules(moduleConfig);
 
             //create engine and configure service provider
             var engine = NodeEngineContext.Create();
 
-            engine.ConfigureServices(services, context.Configuration);
+            engine.ConfigureServices(services, builder.Configuration);
         }
 
         public static void AddClusteringServices(this IServiceCollection services)
@@ -209,7 +202,7 @@ namespace ARWNI2S.Runtime.Hosting.Extensions
         /// <param name="services">Collection of service descriptors</param>
         public static void AddContextAccessor(this IServiceCollection services)
         {
-            services.AddSingleton<IContextAccessor, RuntimeContextAccessor>();
+            //services.AddSingleton<IFrameContextAccessor, RuntimeContextAccessor>();
             //services.AddSingleton<IPackageHandlingContextAccessor<NI2SProtoPacket>, RuntimeContextAccessor>();
         }
 
@@ -289,51 +282,51 @@ namespace ARWNI2S.Runtime.Hosting.Extensions
             //services.AddHttpClient<CaptchaHttpClient>().WithProxy();
         }
 
-        /// <summary>
-        /// Add and configure MiniProfiler service
-        /// </summary>
-        /// <param name="services">Collection of service descriptors</param>
-        public static void AddNI2SMiniProfiler(this IServiceCollection services)
-        {
-            //whether database is already installed
-            if (!DataSettingsManager.IsDatabaseInstalled())
-                return;
+        ///// <summary>
+        ///// Add and configure MiniProfiler service
+        ///// </summary>
+        ///// <param name="services">Collection of service descriptors</param>
+        //public static void AddNI2SMiniProfiler(this IServiceCollection services)
+        //{
+        //    //whether database is already installed
+        //    if (!DataSettingsManager.IsDatabaseInstalled())
+        //        return;
 
-            var ni2sSettings = Singleton<NI2SSettings>.Instance;
-            if (ni2sSettings.Get<CommonConfig>().MiniProfilerEnabled)
-            {
-                services.AddMiniProfiler(miniProfilerOptions =>
-                {
-                    //use memory cache provider for storing each result
-                    ((MemoryCacheStorage)miniProfilerOptions.Storage).CacheDuration = TimeSpan.FromMinutes(ni2sSettings.Get<CacheConfig>().DefaultCacheTime);
+        //    var ni2sSettings = Singleton<NI2SSettings>.Instance;
+        //    if (ni2sSettings.Get<CommonConfig>().MiniProfilerEnabled)
+        //    {
+        //        services.AddMiniProfiler(miniProfilerOptions =>
+        //        {
+        //            //use memory cache provider for storing each result
+        //            ((MemoryCacheStorage)miniProfilerOptions.Storage).CacheDuration = TimeSpan.FromMinutes(ni2sSettings.Get<CacheConfig>().DefaultCacheTime);
 
-                    //determine who can access the MiniProfiler results
-                    miniProfilerOptions.ResultsAuthorize = request => NodeEngineContext.Current.Resolve<IPermissionService>().AuthorizeAsync(StandardPermissionProvider.AccessProfiling).Result;
-                });
-            }
-        }
+        //            //determine who can access the MiniProfiler results
+        //            miniProfilerOptions.ResultsAuthorize = request => NodeEngineContext.Current.Resolve<IPermissionService>().AuthorizeAsync(StandardPermissionProvider.AccessProfiling).Result;
+        //        });
+        //    }
+        //}
 
-        /// <summary>
-        /// Adds MiniProfiler timings for actions and views.
-        /// </summary>
-        /// <param name="services">The services collection to configure.</param>
-        /// <param name="configureOptions">An <see cref="Action{MiniProfilerOptions}"/> to configure options for MiniProfiler.</param>
-        private static IMiniProfilerBuilder AddMiniProfiler(this IServiceCollection services, Action<MiniProfilerOptions> configureOptions = null)
-        {
-            services.AddMemoryCache(); // Unconditionally register an IMemoryCache since it's the most common and default case
-            services.AddSingleton<IConfigureOptions<MiniProfilerOptions>, MiniProfilerOptionsDefaults>();
-            if (configureOptions != null)
-            {
-                services.Configure(configureOptions);
-            }
-            // Set background statics
-            services.Configure<MiniProfilerOptions>(o => MiniProfiler.Configure(o));
-            services.AddSingleton<DiagnosticInitializer>(); // For any IMiniProfilerDiagnosticListener registration
+        ///// <summary>
+        ///// Adds MiniProfiler timings for actions and views.
+        ///// </summary>
+        ///// <param name="services">The services collection to configure.</param>
+        ///// <param name="configureOptions">An <see cref="Action{MiniProfilerOptions}"/> to configure options for MiniProfiler.</param>
+        //private static IMiniProfilerBuilder AddMiniProfiler(this IServiceCollection services, Action<MiniProfilerOptions> configureOptions = null)
+        //{
+        //    services.AddMemoryCache(); // Unconditionally register an IMemoryCache since it's the most common and default case
+        //    services.AddSingleton<IConfigureOptions<MiniProfilerOptions>, MiniProfilerOptionsDefaults>();
+        //    if (configureOptions != null)
+        //    {
+        //        services.Configure(configureOptions);
+        //    }
+        //    // Set background statics
+        //    services.Configure<MiniProfilerOptions>(o => MiniProfiler.Configure(o));
+        //    services.AddSingleton<DiagnosticInitializer>(); // For any IMiniProfilerDiagnosticListener registration
 
-            services.AddSingleton<IMiniProfilerDiagnosticListener, MiniProfilerDiagnosticListener>(); // For view and action profiling
+        //    services.AddSingleton<IMiniProfilerDiagnosticListener, MiniProfilerDiagnosticListener>(); // For view and action profiling
 
-            return new MiniProfilerBuilder(services);
-        }
+        //    return new MiniProfilerBuilder(services);
+        //}
 
     }
 

@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="..\InternalsVisibleTo.cs" Link="Properties\InternalsVisibleTo.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Telemetry\**" />
     <EmbeddedResource Remove="Telemetry\**" />
     <None Remove="Telemetry\**" />
@@ -13,6 +17,15 @@
 
   <ItemGroup>
     <Compile Remove="Configuration\ITraceConfiguration.cs" />
+    <Compile Remove="EngineParts\DefaultEnginePartFactory.cs" />
+    <Compile Remove="EngineParts\EnginePartFactory.cs" />
+    <Compile Remove="EngineParts\EnginePartManager.cs" />
+    <Compile Remove="EngineParts\ProvideEnginePartFactoryAttribute.cs" />
+    <Compile Remove="EngineParts\RelatedAssemblyAttribute.cs" />
+    <Compile Remove="Engine\IEngineComponent.cs" />
+    <Compile Remove="Engine\IMessage.cs" />
+    <Compile Remove="IContext.cs" />
+    <Compile Remove="IContextAccessor.cs" />
     <Compile Remove="Lifecycle\IEntityLifecycle.cs" />
     <Compile Remove="Logging\ILogConsumer.cs" />
     <Compile Remove="Logging\LoggingEnums.cs" />

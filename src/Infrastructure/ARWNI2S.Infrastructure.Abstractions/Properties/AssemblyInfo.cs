@@ -18,13 +18,5 @@ using System.Runtime.InteropServices;
 
 [assembly: Guid("f94a0f1c-3717-4ec5-babf-b26243f1239c")]
 
-[assembly: InternalsVisibleTo("ARWNI2S.GDESK")]
-
 [assembly: InternalsVisibleTo("ARWNI2S.Infrastructure.Collections")]
 [assembly: InternalsVisibleTo("ARWNI2S.Infrastructure.Commons")]
-
-[assembly: InternalsVisibleTo("ARWNI2S.Network.Core")]
-
-[assembly: InternalsVisibleTo("ARWNI2S.Node.Core")]
-[assembly: InternalsVisibleTo("ARWNI2S.Node.Data")]
-[assembly: InternalsVisibleTo("ARWNI2S.Node.Runtime")]

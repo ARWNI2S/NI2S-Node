@@ -1,4 +1,4 @@
-﻿using ARWNI2S.Infrastructure;
+﻿using ARWNI2S.Infrastructure.Engine;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using System.Runtime.Versioning;
@@ -71,7 +71,7 @@ namespace ARWNI2S.Node.Core.Infrastructure
         /// <returns>The combined paths</returns>
         public virtual string Combine(params string[] paths)
         {
-            var path = Path.Combine(paths.SelectMany(p => IsUncPath(p) ? new[] { p } : p.Split('\\', '/')).ToArray());
+            var path = Path.Combine(paths.SelectMany(p => IsUncPath(p) ? [p] : p.Split('\\', '/')).ToArray());
 
             if (Environment.OSVersion.Platform == PlatformID.Unix && !IsUncPath(path))
                 //add leading slash to correctly form path in the UNIX system
@@ -519,7 +519,7 @@ namespace ARWNI2S.Node.Core.Infrastructure
         /// </returns>
         public virtual async Task<byte[]> ReadAllBytesAsync(string filePath)
         {
-            return File.Exists(filePath) ? await File.ReadAllBytesAsync(filePath) : Array.Empty<byte>();
+            return File.Exists(filePath) ? await File.ReadAllBytesAsync(filePath) : [];
         }
 
         /// <summary>

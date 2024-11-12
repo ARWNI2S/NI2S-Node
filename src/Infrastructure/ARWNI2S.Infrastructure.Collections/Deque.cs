@@ -149,7 +149,7 @@ namespace ARWNI2S.Infrastructure.Collections
         public virtual void PushFront(object obj)
         {
             // The new node to add to the front of the deque.
-            Node newNode = new Node(obj);
+            Node newNode = new(obj);
 
             // Link the new node to the front node. The current front node at 
             // the front of the deque is now the second node in the deque.
@@ -193,7 +193,7 @@ namespace ARWNI2S.Infrastructure.Collections
         public virtual void PushBack(object obj)
         {
             // The new node to add to the back of the deque.
-            Node newNode = new Node(obj);
+            Node newNode = new(obj);
 
             // Link the new node to the back node. The current back node at 
             // the back of the deque is now the second to the last node in the
@@ -913,7 +913,7 @@ namespace ARWNI2S.Infrastructure.Collections
         /// </returns>
         public virtual object Clone()
         {
-            Deque clone = new Deque(this);
+            Deque clone = new(this);
 
             clone._version = _version;
 

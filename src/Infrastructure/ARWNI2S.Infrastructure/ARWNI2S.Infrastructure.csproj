@@ -5,12 +5,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="..\InternalsVisibleTo.cs" Link="Properties\InternalsVisibleTo.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ARWNI2S.Infrastructure.Abstractions\ARWNI2S.Infrastructure.Abstractions.csproj" />
     <ProjectReference Include="..\ARWNI2S.Infrastructure.Collections\ARWNI2S.Infrastructure.Collections.csproj" />
+    <ProjectReference Include="..\ARWNI2S.Infrastructure.Commons\ARWNI2S.Infrastructure.Commons.csproj" />
     <ProjectReference Include="..\ARWNI2S.Infrastructure.Extensions\ARWNI2S.Infrastructure.Extensions.csproj" />
   </ItemGroup>
 

@@ -5,6 +5,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Dispatching\**" />
+    <EmbeddedResource Remove="Dispatching\**" />
+    <None Remove="Dispatching\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\InternalsVisibleTo.cs" Link="Properties\InternalsVisibleTo.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\ARWNI2S.Infrastructure.Abstractions\ARWNI2S.Infrastructure.Abstractions.csproj" />
   </ItemGroup>
 

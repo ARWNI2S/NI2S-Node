@@ -6,26 +6,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Telemetry\**" />
-    <EmbeddedResource Remove="Telemetry\**" />
-    <None Remove="Telemetry\**" />
+    <Compile Remove="Dispatching\**" />
+    <EmbeddedResource Remove="Dispatching\**" />
+    <None Remove="Dispatching\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="Interner.cs" />
-    <Compile Remove="InternerConstants.cs" />
-    <Compile Remove="Interop\IAppDomainManager.cs" />
-    <Compile Remove="Lifecycle\MigrationContext.cs" />
-    <Compile Remove="Logging\ITraceLogger.cs" />
-    <Compile Remove="Logging\LoggingTools.cs" />
-    <Compile Remove="Logging\ErrorCode.cs" />
-    <Compile Remove="Logging\TraceCode.cs" />
-    <Compile Remove="Logging\TraceLogger.cs" />
-    <Compile Remove="Logging\TraceLogger.old.cs" />
-    <Compile Remove="Logging\TraceLoggerFactory.cs" />
-    <Compile Remove="Logging\TraceLoggingBuilder.cs" />
-    <Compile Remove="Logging\TraceParserUtils.cs" />
-    <Compile Remove="Timing\TimeSpanExtension.cs" />
+    <Compile Remove="EngineParts\EnginePartManager.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\InternalsVisibleTo.cs" Link="Properties\InternalsVisibleTo.cs" />
   </ItemGroup>
 
   <ItemGroup>

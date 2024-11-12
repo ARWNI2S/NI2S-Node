@@ -10,7 +10,7 @@ namespace ARWNI2S.Infrastructure.Collections
     internal class HashRing<T>
     {
         private readonly List<IRingIdentifier<T>> sortedRingList;
-        private readonly object lockable = new object();
+        private readonly object lockable = new();
 
         public HashRing()
         {

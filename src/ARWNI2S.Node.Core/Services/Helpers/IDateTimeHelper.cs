@@ -75,7 +75,7 @@ namespace ARWNI2S.Node.Core.Services.Helpers
         /// A task that represents the asynchronous operation
         /// The task result contains the user time zone; if user is null, then default node time zone
         /// </returns>
-        Task<TimeZoneInfo> GetUserTimeZoneAsync(INI2SUser user);
+        Task<TimeZoneInfo> GetUserTimeZoneAsync(IUser user);
 
         /// <summary>
         /// Gets the current user time zone

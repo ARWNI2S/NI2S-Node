@@ -1,5 +1,4 @@
-﻿using ARWNI2S.Infrastructure;
-using ARWNI2S.Infrastructure.Entities;
+﻿using ARWNI2S.Infrastructure.Entities;
 using ARWNI2S.Node.Core;
 using ARWNI2S.Node.Core.Infrastructure;
 using ARWNI2S.Node.Core.Entities.Users;
@@ -11,6 +10,7 @@ using ARWNI2S.Node.Services.Users;
 using System.Reflection;
 using ARWNI2S.Node.Core.Entities.Clustering;
 using ARWNI2S.Node.Core.Network;
+using ARWNI2S.Infrastructure.Engine;
 
 namespace ARWNI2S.Node.Services.Plugins
 {
@@ -104,7 +104,7 @@ namespace ARWNI2S.Node.Services.Plugins
         /// A task that represents the asynchronous operation
         /// The task result contains the result of check
         /// </returns>
-        protected virtual async Task<bool> FilterByUserAsync(ModuleDescriptor moduleDescriptor, INI2SUser user)
+        protected virtual async Task<bool> FilterByUserAsync(ModuleDescriptor moduleDescriptor, IUser user)
         {
             ArgumentNullException.ThrowIfNull(moduleDescriptor);
 
@@ -235,7 +235,7 @@ namespace ARWNI2S.Node.Services.Plugins
         /// The task result contains the module descriptors
         /// </returns>
         public virtual async Task<IList<ModuleDescriptor>> GetModuleDescriptorsAsync<TModule>(LoadModulesMode loadMode = LoadModulesMode.InstalledOnly,
-            INI2SUser user = null, int nodeId = 0, string group = null, string dependsOnSystemName = "", string friendlyName = null, string author = null) where TModule : class, IModule
+            IUser user = null, int nodeId = 0, string group = null, string dependsOnSystemName = "", string friendlyName = null, string author = null) where TModule : class, IModule
         {
             var moduleDescriptors = _modulesInfo.ModuleDescriptors.Select(p => p.moduleDescriptor).ToList();
 
@@ -275,7 +275,7 @@ namespace ARWNI2S.Node.Services.Plugins
         /// </returns>
         public virtual async Task<ModuleDescriptor> GetModuleDescriptorBySystemNameAsync<TModule>(string systemName,
             LoadModulesMode loadMode = LoadModulesMode.InstalledOnly,
-            INI2SUser user = null, int nodeId = 0, string @group = null) where TModule : class, IModule
+            IUser user = null, int nodeId = 0, string @group = null) where TModule : class, IModule
         {
             return (await GetModuleDescriptorsAsync<TModule>(loadMode, user, nodeId, group))
                 .FirstOrDefault(descriptor => descriptor.SystemName.Equals(systemName));
@@ -295,7 +295,7 @@ namespace ARWNI2S.Node.Services.Plugins
         /// </returns>
         public virtual async Task<IList<TModule>> GetModulesAsync<TModule>(
             LoadModulesMode loadMode = LoadModulesMode.InstalledOnly,
-            INI2SUser user = null, int nodeId = 0, string @group = null) where TModule : class, IModule
+            IUser user = null, int nodeId = 0, string @group = null) where TModule : class, IModule
         {
             return (await GetModuleDescriptorsAsync<TModule>(loadMode, user, nodeId, group))
                 .Select(descriptor => descriptor.Instance<TModule>()).ToList();
@@ -354,7 +354,7 @@ namespace ARWNI2S.Node.Services.Plugins
         /// <param name="user">User</param>
         /// <param name="checkDependencies">Specifies whether to check module dependencies</param>
         /// <returns>A task that represents the asynchronous operation</returns>
-        public virtual async Task PrepareModuleToInstallAsync(string systemName, INI2SUser user = null, bool checkDependencies = true)
+        public virtual async Task PrepareModuleToInstallAsync(string systemName, IUser user = null, bool checkDependencies = true)
         {
             //add module name to the appropriate list (if not yet contained) and save changes
             if (_modulesInfo.ModuleNamesToInstall.Any(item => item.SystemName == systemName))

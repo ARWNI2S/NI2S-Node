@@ -113,7 +113,7 @@ namespace ARWNI2S.Infrastructure.Collections
         {
             bool firstItem = true;
 
-            System.Text.StringBuilder builder = new System.Text.StringBuilder();
+            System.Text.StringBuilder builder = new();
 
             builder.Append("{");
 
@@ -410,7 +410,7 @@ namespace ARWNI2S.Infrastructure.Collections
 
             bool firstItem = true;
 
-            System.Text.StringBuilder builder = new System.Text.StringBuilder();
+            System.Text.StringBuilder builder = new();
 
             builder.Append("{");
 
@@ -534,7 +534,7 @@ namespace ARWNI2S.Infrastructure.Collections
                 get
                 {
                     KeyValuePair<TKey, TValue> pair = _enumerator.Current;
-                    DictionaryEntry entry = new DictionaryEntry();
+                    DictionaryEntry entry = new();
                     if (pair.Key != null)
                         entry.Key = pair.Key;
                     entry.Value = pair.Value;

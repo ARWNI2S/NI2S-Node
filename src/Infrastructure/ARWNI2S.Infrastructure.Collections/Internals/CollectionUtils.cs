@@ -40,7 +40,7 @@ namespace ARWNI2S.Infrastructure.Collections.Internals
             string name = type.Name;
 
             // Just use the simple name.
-            int index = name.IndexOfAny(new char[] { '<', '{', '`' });
+            int index = name.IndexOfAny(['<', '{', '`']);
             if (index >= 0)
                 name = name.Substring(0, index);
 

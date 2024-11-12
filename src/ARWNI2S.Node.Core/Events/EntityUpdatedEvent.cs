@@ -6,7 +6,7 @@ namespace ARWNI2S.Node.Core.Events
     /// A container for entities that are updated.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public partial class EntityUpdatedEvent<T> where T : INI2SEntity
+    public partial class EntityUpdatedEvent<T> where T : IEntity
     {
         /// <summary>
         /// Ctor

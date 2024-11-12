@@ -74,7 +74,7 @@ namespace ARWNI2S.Infrastructure.Collections.Trees
         /// <returns>the node that was created</returns>
         public TreeNode<T> Add(T value)
         {
-            TreeNode<T> n = new TreeNode<T>(value);
+            TreeNode<T> n = new(value);
             List.Add(n);
 
             SendOwnerNodeChanged(TreeNodeEvent.ChildAdded, List.Count - 1);
@@ -118,7 +118,7 @@ namespace ARWNI2S.Infrastructure.Collections.Trees
         /// <returns></returns>
         public TreeNode<T> InsertAt(int index, T value)
         {
-            TreeNode<T> n = new TreeNode<T>(value, _owner);
+            TreeNode<T> n = new(value, _owner);
 
             // "tolerant insert"
             if (index < 0)

@@ -6,7 +6,7 @@ namespace ARWNI2S.Node.Data.Mapping.Builders.Clustering
     /// <summary>
     /// Represents a node entity builder
     /// </summary>
-    public partial class NodeBuilder : ServerEntityBuilder<NI2SNode>
+    public partial class NodeBuilder : ServerEntityBuilder<ClusterNode>
     {
         #region Methods
 
@@ -17,14 +17,14 @@ namespace ARWNI2S.Node.Data.Mapping.Builders.Clustering
         public override void MapEntity(CreateTableExpressionBuilder table)
         {
             table
-                .WithColumn(nameof(NI2SNode.Name)).AsString(64).NotNullable()
-                .WithColumn(nameof(NI2SNode.NodeId)).AsGuid().NotNullable()
-                .WithColumn(nameof(NI2SNode.Metadata)).AsString(1000).Nullable()
-                .WithColumn(nameof(NI2SNode.IpAddress)).AsString(100).Nullable()
-                .WithColumn(nameof(NI2SNode.PublicPort)).AsString(100).Nullable()
-                .WithColumn(nameof(NI2SNode.RelayPort)).AsString(100).Nullable()
-                .WithColumn(nameof(NI2SNode.Hosts)).AsString(1000).Nullable()
-                .WithColumn(nameof(NI2SNode.CurrentState)).AsInt32().Nullable();
+                .WithColumn(nameof(ClusterNode.Name)).AsString(64).NotNullable()
+                .WithColumn(nameof(ClusterNode.NodeId)).AsGuid().NotNullable()
+                .WithColumn(nameof(ClusterNode.Metadata)).AsString(1000).Nullable()
+                .WithColumn(nameof(ClusterNode.IpAddress)).AsString(100).Nullable()
+                .WithColumn(nameof(ClusterNode.PublicPort)).AsString(100).Nullable()
+                .WithColumn(nameof(ClusterNode.RelayPort)).AsString(100).Nullable()
+                .WithColumn(nameof(ClusterNode.Hosts)).AsString(1000).Nullable()
+                .WithColumn(nameof(ClusterNode.CurrentState)).AsInt32().Nullable();
         }
 
         #endregion

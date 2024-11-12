@@ -1,5 +1,5 @@
-﻿using ARWNI2S.Infrastructure;
-using ARWNI2S.Infrastructure.Configuration;
+﻿using ARWNI2S.Infrastructure.Configuration;
+using ARWNI2S.Infrastructure.Engine;
 using ARWNI2S.Node.Core.Infrastructure;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -39,7 +39,7 @@ namespace ARWNI2S.Node.Core.Configuration
             Singleton<NI2SSettings>.Instance = ni2sSettings;
 
             //create file if not exists
-            var filePath = fileProvider.MapPath(ConfigurationDefaults.NodeSettingsFilePath);
+            var filePath = fileProvider.MapPath(NI2SConfigurationDefaults.NI2SSettingsFilePath);
             var fileExists = fileProvider.FileExists(filePath);
             fileProvider.CreateFile(filePath);
 

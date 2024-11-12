@@ -1,4 +1,6 @@
 ﻿using ARWNI2S.Infrastructure;
+using ARWNI2S.Infrastructure.Engine;
+using ARWNI2S.Infrastructure.Engine.Builder;
 using ARWNI2S.Node.Core.Infrastructure.Mapper;
 using AutoMapper;
 using Microsoft.Extensions.Configuration;
@@ -11,7 +13,7 @@ namespace ARWNI2S.Node.Core.Infrastructure
     /// <summary>
     /// Represents NI2S™ system backend engine
     /// </summary>
-    public partial class NodeEngine : IEngine
+    public partial class NodeEngine : INodeEngine
     {
         #region Utilities
 
@@ -23,9 +25,9 @@ namespace ARWNI2S.Node.Core.Infrastructure
         {
             if (scope == null)
             {
-                var accessor = ServiceProvider?.GetService<IContextAccessor>();
-                var context = accessor?.Context;
-                return context?.ServiceProvider ?? ServiceProvider;
+                var accessor = ServiceProvider?.GetService<IEngineContextAccessor>();
+                var context = accessor?.EngineContext;
+                return context?.RequestServices ?? ServiceProvider;
             }
             return scope.ServiceProvider;
         }
@@ -103,15 +105,15 @@ namespace ARWNI2S.Node.Core.Infrastructure
         public virtual void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
             //register engine
-            services.AddSingleton<IEngine>(this);
+            services.AddSingleton<INodeEngine>(this);
 
             //find startup configurations provided by other assemblies
             var typeFinder = Singleton<ITypeFinder>.Instance;
-            var startupConfigurations = typeFinder.FindClassesOfType<INI2SStartup>();
+            var startupConfigurations = typeFinder.FindClassesOfType<INodeStartup>();
 
             //create and sort instances of startup configurations
             var instances = startupConfigurations
-                .Select(startup => (INI2SStartup)Activator.CreateInstance(startup))
+                .Select(startup => (INodeStartup)Activator.CreateInstance(startup))
                 .OrderBy(startup => startup.Order);
 
             //configure services
@@ -133,23 +135,23 @@ namespace ARWNI2S.Node.Core.Infrastructure
         /// <summary>
         /// Configure required engine components
         /// </summary>
-        /// <param name="host">Builded host containing engine components</param>
-        public virtual void ConfigureEngine(IHost host)
+        /// <param name="engineBuilder">Builded host containing engine components</param>
+        public virtual void ConfigureEngine(IEngineBuilder engineBuilder)
         {
-            ServiceProvider = host.Services;
+            ServiceProvider = engineBuilder.EngineServices;
 
             //find startup configurations provided by other assemblies
             var typeFinder = Singleton<ITypeFinder>.Instance;
-            var startupConfigurations = typeFinder.FindClassesOfType<INI2SStartup>();
+            var startupConfigurations = typeFinder.FindClassesOfType<INodeStartup>();
 
             //create and sort instances of startup configurations
             var instances = startupConfigurations
-                .Select(startup => (INI2SStartup)Activator.CreateInstance(startup))
+                .Select(startup => (INodeStartup)Activator.CreateInstance(startup))
                 .OrderBy(startup => startup.Order);
 
             //configure request pipeline
             foreach (var instance in instances)
-                instance.Configure(host);
+                instance.Configure(engineBuilder);
         }
 
         /// <summary>
@@ -223,6 +225,11 @@ namespace ARWNI2S.Node.Core.Infrastructure
         /// Service provider
         /// </summary>
         public virtual IServiceProvider ServiceProvider { get; protected set; }
+
+        ///// <summary>
+        ///// Engine features
+        ///// </summary>
+        //public virtual IFeatureCollection Features { get; protected set; }
 
         #endregion
     }

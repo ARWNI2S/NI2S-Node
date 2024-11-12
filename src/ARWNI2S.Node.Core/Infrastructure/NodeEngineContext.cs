@@ -14,10 +14,10 @@ namespace ARWNI2S.Node.Core.Infrastructure
         /// Create a static instance of the ARWNI2S engine.
         /// </summary>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public static IEngine Create()
+        public static INodeEngine Create()
         {
             //create ServerEngine as engine
-            return Singleton<IEngine>.Instance ?? (Singleton<IEngine>.Instance = new NodeEngine());
+            return Singleton<INodeEngine>.Instance ?? (Singleton<INodeEngine>.Instance = new NodeEngine());
         }
 
         /// <summary>
@@ -25,9 +25,9 @@ namespace ARWNI2S.Node.Core.Infrastructure
         /// </summary>
         /// <param name="engine">The engine to use.</param>
         /// <remarks>Only use this method if you know what you're doing.</remarks>
-        public static void Replace(IEngine engine)
+        public static void Replace(INodeEngine engine)
         {
-            Singleton<IEngine>.Instance = engine;
+            Singleton<INodeEngine>.Instance = engine;
         }
 
         #endregion
@@ -37,16 +37,16 @@ namespace ARWNI2S.Node.Core.Infrastructure
         /// <summary>
         /// Gets the singleton ARWNI2S engine used to access ARWNI2S services.
         /// </summary>
-        public static IEngine Current
+        public static INodeEngine Current
         {
             get
             {
-                if (Singleton<IEngine>.Instance == null)
+                if (Singleton<INodeEngine>.Instance == null)
                 {
                     Create();
                 }
 
-                return Singleton<IEngine>.Instance;
+                return Singleton<INodeEngine>.Instance;
             }
         }
 

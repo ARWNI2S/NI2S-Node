@@ -200,7 +200,7 @@ namespace ARWNI2S.Infrastructure.Collections
         /// <param name="value">The value to associated with <paramref name="key"/>.</param>
         public sealed override void Add(TKey key, TValue value)
         {
-            KeyAndValues keyValues = new KeyAndValues(key);
+            KeyAndValues keyValues = new(key);
 
             if (_hash.Find(keyValues, false, out KeyAndValues existing))
             {
@@ -241,7 +241,7 @@ namespace ARWNI2S.Infrastructure.Collections
             {
                 // No item with this key. Add it.
                 keyValues.Count = 1;
-                keyValues.Values = new TValue[1] { value };
+                keyValues.Values = [value];
                 _hash.Insert(keyValues, true, out existing);
                 return;
             }
@@ -257,7 +257,7 @@ namespace ARWNI2S.Infrastructure.Collections
         /// therefore removed). False if <paramref name="value"/> was not associated with <paramref name="key"/>.</returns>
         public sealed override bool Remove(TKey key, TValue value)
         {
-            KeyAndValues keyValues = new KeyAndValues(key);
+            KeyAndValues keyValues = new(key);
 
             if (_hash.Find(keyValues, false, out KeyAndValues existing))
             {
@@ -392,7 +392,7 @@ namespace ARWNI2S.Infrastructure.Collections
         /// <returns>True if <paramref name="value"/> is associated with <paramref name="key"/>.</returns>
         public sealed override bool Contains(TKey key, TValue value)
         {
-            KeyAndValues find = new KeyAndValues(key);
+            KeyAndValues find = new(key);
             if (_hash.Find(find, false, out KeyAndValues item))
             {
                 int existingCount = item.Count;
@@ -420,7 +420,7 @@ namespace ARWNI2S.Infrastructure.Collections
         /// one value associated with it. Returns false otherwise.</returns>
         public sealed override bool ContainsKey(TKey key)
         {
-            KeyAndValues find = new KeyAndValues(key);
+            KeyAndValues find = new(key);
             return _hash.Find(find, false, out KeyAndValues temp);
         }
 
@@ -467,7 +467,7 @@ namespace ARWNI2S.Infrastructure.Collections
         /// <returns>True if the dictionary contains key. False if the dictionary does not contain key.</returns>
         protected sealed override bool TryEnumerateValuesForKey(TKey key, out IEnumerator<TValue> values)
         {
-            KeyAndValues find = new KeyAndValues(key);
+            KeyAndValues find = new(key);
             if (_hash.Find(find, false, out KeyAndValues item))
             {
                 values = EnumerateValues(item);
@@ -488,7 +488,7 @@ namespace ARWNI2S.Infrastructure.Collections
         /// is not present in the dictionary, zero is returned.</returns>
         protected sealed override int CountValues(TKey key)
         {
-            KeyAndValues find = new KeyAndValues(key);
+            KeyAndValues find = new(key);
             if (_hash.Find(find, false, out KeyAndValues item))
             {
                 return item.Count;
@@ -557,7 +557,7 @@ namespace ARWNI2S.Infrastructure.Collections
             // It's tempting to do a more efficient cloning, utilizing the hash.Clone() method. However, we can't know that
             // the cloned version of the key has the same hash value.
 
-            MultiDictionary<TKey, TValue> newDict = new MultiDictionary<TKey, TValue>(_allowDuplicateValues, _keyEqualityComparer, _valueEqualityComparer);
+            MultiDictionary<TKey, TValue> newDict = new(_allowDuplicateValues, _keyEqualityComparer, _valueEqualityComparer);
 
             foreach (KeyAndValues item in _hash)
             {

@@ -19,7 +19,7 @@ namespace ARWNI2S.Node.Data.Mapping.Builders.Clustering
         {
             table
                 .WithColumn(nameof(NodeMapping.EntityName)).AsString(400).NotNullable()
-                .WithColumn(nameof(NodeMapping.NodeId)).AsInt32().ForeignKey<NI2SNode>();
+                .WithColumn(nameof(NodeMapping.NodeId)).AsInt32().ForeignKey<ClusterNode>();
         }
 
         #endregion

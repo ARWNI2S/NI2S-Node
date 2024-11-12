@@ -196,4 +196,7 @@
   <data name="Logger_LogMessageTruncated_Format" xml:space="preserve">
     <value>"{0}. MESSAGE TRUNCATED AT THIS POINT!! Max message size = {1}"</value>
   </data>
+  <data name="ArgumentCannotBeNullOrEmpty" xml:space="preserve">
+    <value>ArgumentCannotBeNullOrEmpty</value>
+  </data>
 </root>

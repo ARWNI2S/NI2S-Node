@@ -16,8 +16,8 @@ namespace ARWNI2S.Node.Data.Migrations.Installation
 
         public override void Up()
         {
-            Create.Index("IX_NI2SNode_NodeId").OnTable(nameof(NI2SNode))
-                .OnColumn(nameof(NI2SNode.NodeId)).Unique()
+            Create.Index("IX_NI2SNode_NodeId").OnTable(nameof(ClusterNode))
+                .OnColumn(nameof(ClusterNode.NodeId)).Unique()
                 .WithOptions().NonClustered();
 
             Create.Index("IX_NodeMapping_EntityId_EntityName").OnTable(nameof(NodeMapping))

@@ -9,7 +9,7 @@ namespace ARWNI2S.Infrastructure.Collections
     {
         internal static class Factory
         {
-            private static readonly ThreadLocal<JenkinsHash> hashGenerator = new ThreadLocal<JenkinsHash>(() => new JenkinsHash());
+            private static readonly ThreadLocal<JenkinsHash> hashGenerator = new(() => new JenkinsHash());
 
             /// <summary>
             /// Get an instance of Jenkins hash generator

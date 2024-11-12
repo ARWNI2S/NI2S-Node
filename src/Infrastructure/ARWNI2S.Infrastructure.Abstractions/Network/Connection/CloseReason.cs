@@ -23,7 +23,7 @@ namespace ARWNI2S.Infrastructure.Network.Connection
         LocalClosing = 3,
 
         /// <summary>
-        /// Application error
+        /// Engine error
         /// </summary>
         ApplicationError = 4,
 

@@ -127,7 +127,7 @@ namespace ARWNI2S.Infrastructure.Collections
             /// <returns>The cloned node.</returns>
             public Node Clone()
             {
-                Node newNode = new Node();
+                Node newNode = new();
                 newNode.item = item;
 
                 newNode._count = _count;
@@ -196,7 +196,7 @@ namespace ARWNI2S.Infrastructure.Collections
         /// <returns>Clone version of this tree.</returns>
         public RedBlackTree<T> Clone()
         {
-            RedBlackTree<T> newTree = new RedBlackTree<T>(_comparer);
+            RedBlackTree<T> newTree = new(_comparer);
             newTree._count = _count;
             if (_root != null)
                 newTree._root = _root.Clone();

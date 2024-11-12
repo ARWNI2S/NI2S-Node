@@ -26,7 +26,7 @@ namespace ARWNI2S.Node.Data.Migrations.Installation
         public override void Up()
         {
             //Clustering
-            Create.TableFor<NI2SNode>();
+            Create.TableFor<ClusterNode>();
             Create.TableFor<NodeMapping>();
 
             //Directory

@@ -18,7 +18,7 @@ namespace ARWNI2S.Node.Services.ScheduleTasks
         protected readonly ILocker _locker;
         protected readonly ILogService _logger;
         protected readonly IScheduleTaskService _scheduleTaskService;
-        protected readonly INodeContext _nodeContext;
+        protected readonly IClusterContext _nodeContext;
 
         #endregion
 
@@ -28,7 +28,7 @@ namespace ARWNI2S.Node.Services.ScheduleTasks
             ILocker locker,
             ILogService logger,
             IScheduleTaskService scheduleTaskService,
-            INodeContext nodeContext)
+            IClusterContext nodeContext)
         {
             _localizationService = localizationService;
             _locker = locker;

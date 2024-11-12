@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Net;
 using System.Text.RegularExpressions;
+using ARWNI2S.Infrastructure.Engine;
 
 namespace ARWNI2S.Infrastructure
 {
@@ -211,7 +212,7 @@ namespace ARWNI2S.Infrastructure
                 throw new NI2SException("The property '{0}' on the instance of type '{1}' does not have a setter.", propertyName, instanceType);
             if (value != null && !value.GetType().IsAssignableFrom(pi.PropertyType))
                 value = To(value, pi.PropertyType);
-            pi.SetValue(instance, value, Array.Empty<object>());
+            pi.SetValue(instance, value, []);
         }
 
         /// <summary>

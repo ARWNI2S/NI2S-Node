@@ -296,7 +296,7 @@ namespace ARWNI2S.Infrastructure.Collections
         {
             bool firstItem = true;
 
-            System.Text.StringBuilder builder = new System.Text.StringBuilder();
+            System.Text.StringBuilder builder = new();
 
             builder.Append("{");
 
@@ -351,7 +351,7 @@ namespace ARWNI2S.Infrastructure.Collections
 
             bool firstItem = true;
 
-            System.Text.StringBuilder builder = new System.Text.StringBuilder();
+            System.Text.StringBuilder builder = new();
 
             builder.Append("{");
 

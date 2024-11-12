@@ -335,7 +335,7 @@ namespace ARWNI2S.Infrastructure.Collections.Trees
         {
             get
             {
-                Queue<TreeNode<T>> todo = new Queue<TreeNode<T>>();
+                Queue<TreeNode<T>> todo = new();
                 todo.Enqueue(this);
                 while (0 < todo.Count)
                 {

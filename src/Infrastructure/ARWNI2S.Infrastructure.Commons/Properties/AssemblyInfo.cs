@@ -1,4 +1,3 @@
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // En proyectos de estilo SDK como este, varios atributos de ensamblado que definían
@@ -18,13 +17,3 @@ using System.Runtime.InteropServices;
 
 [assembly: Guid("5324a80a-a77d-4a41-8659-c020ac96e9e0")]
 
-[assembly: InternalsVisibleTo("ARWNI2S.GDESK")]
-
-[assembly: InternalsVisibleTo("ARWNI2S.Network.Core")]
-[assembly: InternalsVisibleTo("ARWNI2S.Network.Relayer")]
-[assembly: InternalsVisibleTo("ARWNI2S.Network")]
-
-[assembly: InternalsVisibleTo("ARWNI2S.Node.Core")]
-[assembly: InternalsVisibleTo("ARWNI2S.Node.Runtime")]
-
-[assembly: InternalsVisibleTo("ARWNI2S.Narrator.Framework")]

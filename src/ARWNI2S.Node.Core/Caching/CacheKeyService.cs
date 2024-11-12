@@ -78,8 +78,8 @@ namespace ARWNI2S.Node.Core.Caching
             return parameter switch
             {
                 null => "null",
-                IEnumerable<INI2SEntity> entities => CreateIdsHash(entities.Select(entity => entity.Id)),
-                INI2SEntity entity => entity.Id,
+                IEnumerable<IEntity> entities => CreateIdsHash(entities.Select(entity => entity.Id)),
+                IEntity entity => entity.Id,
                 //IEnumerable<BaseEntity> entities => CreateIdsHash(entities.Select(entity => entity.Id)),
                 //BaseEntity entity => entity.Id,
                 decimal param => param.ToString(CultureInfo.InvariantCulture),

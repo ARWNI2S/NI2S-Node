@@ -27,13 +27,13 @@ namespace ARWNI2S.Infrastructure.Collections
         #region Fields
 
         // The skip list header. It also serves as the NIL node.
-        private Node header = new Node(MaxLevel);
+        private Node header = new(MaxLevel);
 
         // Comparer for comparing keys.
         private IComparer comparer;
 
         // Random number generator for generating random node levels.
-        private Random random = new Random();
+        private Random random = new();
 
         // Current maximum list level.
         private int listLevel;
@@ -420,7 +420,7 @@ namespace ARWNI2S.Infrastructure.Collections
             }
 
             // Create the new node.
-            Node newNode = new Node(newLevel, key, val);
+            Node newNode = new(newLevel, key, val);
 
             // Insert the new node into the skip list.
             for (int i = 0; i < newLevel; i++)

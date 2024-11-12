@@ -72,8 +72,8 @@ namespace ARWNI2S.Node.Services.Security
         /// <returns>Permissions</returns>
         public virtual IEnumerable<PermissionRecord> GetPermissions()
         {
-            return new[]
-            {
+            return
+            [
                 AccessAdminPanel,
                 AccessGameplay,
                 AccessOfflineNode,
@@ -126,7 +126,7 @@ namespace ARWNI2S.Node.Services.Security
                 ManageScheduleTasks,
                 ManageNI2SSettings,
                 PublicNodeAllowNavigation,
-            };
+            ];
         }
 
         /// <summary>

@@ -1,5 +1,6 @@
-﻿using ARWNI2S.Engine.EngineParts;
-using ARWNI2S.Infrastructure;
+﻿using ARWNI2S.Infrastructure;
+using ARWNI2S.Infrastructure.Engine;
+using ARWNI2S.Infrastructure.EngineParts;
 using ARWNI2S.Node.Core.ComponentModel;
 using ARWNI2S.Node.Core.Configuration;
 using ARWNI2S.Node.Core.Infrastructure;

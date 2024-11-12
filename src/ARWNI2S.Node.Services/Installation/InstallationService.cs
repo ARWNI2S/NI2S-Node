@@ -1,4 +1,5 @@
 ﻿using ARWNI2S.Infrastructure;
+using ARWNI2S.Infrastructure.Engine;
 using ARWNI2S.Node.Core;
 using ARWNI2S.Node.Core.Configuration;
 using ARWNI2S.Node.Core.Entities;
@@ -42,7 +43,7 @@ namespace ARWNI2S.Node.Services.Installation
 		private readonly IRepository<Language> _languageRepository;
 		private readonly IRepository<MeasureDimension> _measureDimensionRepository;
 		private readonly IRepository<MeasureWeight> _measureWeightRepository;
-		private readonly IRepository<NI2SNode> _nodeRepository;
+		private readonly IRepository<ClusterNode> _nodeRepository;
 		private readonly INI2SHelper _nodeHelper;
 
 		#endregion
@@ -59,7 +60,7 @@ namespace ARWNI2S.Node.Services.Installation
 			IRepository<Language> languageRepository,
 			IRepository<MeasureDimension> measureDimensionRepository,
 			IRepository<MeasureWeight> measureWeightRepository,
-			IRepository<NI2SNode> nodeRepository,
+			IRepository<ClusterNode> nodeRepository,
 			INI2SHelper nodeHelper)
 		{
 			_nI2SSettings = nI2SSettings;
@@ -125,7 +126,7 @@ namespace ARWNI2S.Node.Services.Installation
 		protected virtual async Task InstallNodeAsync()
 		{
 			var nodeConfig = _nI2SSettings.Get<NodeConfig>();
-			var nodes = new List<NI2SNode>
+			var nodes = new List<ClusterNode>
 			{
 				new() {
 					Name = nodeConfig.NodeName,

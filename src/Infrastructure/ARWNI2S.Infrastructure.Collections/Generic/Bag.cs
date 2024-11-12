@@ -46,7 +46,7 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
         /// <returns>A new KeyValuePair.</returns>
         private static KeyValuePair<T, int> NewPair(T item, int count)
         {
-            KeyValuePair<T, int> pair = new KeyValuePair<T, int>(item, count);
+            KeyValuePair<T, int> pair = new(item, count);
             return pair;
         }
 
@@ -57,7 +57,7 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
         /// <returns>A new KeyValuePair.</returns>
         private static KeyValuePair<T, int> NewPair(T item)
         {
-            KeyValuePair<T, int> pair = new KeyValuePair<T, int>(item, 0);
+            KeyValuePair<T, int> pair = new(item, 0);
             return pair;
         }
 
@@ -155,7 +155,7 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
         /// <returns>The cloned bag.</returns>
         public Bag<T> Clone()
         {
-            Bag<T> newBag = new Bag<T>(_equalityComparer, _keyEqualityComparer, _hash.Clone(null), _count);
+            Bag<T> newBag = new(_equalityComparer, _keyEqualityComparer, _hash.Clone(null), _count);
             return newBag;
         }
 
@@ -174,7 +174,7 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
             if (!CollectionUtils.IsCloneableType(typeof(T), out bool itemIsValueType))
                 throw new InvalidOperationException(string.Format(LocalizedStrings.Collections_TypeNotCloneable, typeof(T).FullName));
 
-            Hash<KeyValuePair<T, int>> newHash = new Hash<KeyValuePair<T, int>>(_equalityComparer);
+            Hash<KeyValuePair<T, int>> newHash = new(_equalityComparer);
 
             // Clone each item, and add it to the new ordered bag.
             foreach (KeyValuePair<T, int> pair in _hash)
@@ -837,7 +837,7 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
                 smaller = otherBag; larger = this;
             }
 
-            Hash<KeyValuePair<T, int>> newHash = new Hash<KeyValuePair<T, int>>(_equalityComparer);
+            Hash<KeyValuePair<T, int>> newHash = new(_equalityComparer);
             int newCount = 0;
             int copiesInSmaller, copiesInLarger, copies;
 

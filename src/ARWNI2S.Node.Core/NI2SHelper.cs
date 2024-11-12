@@ -1,5 +1,5 @@
-﻿using ARWNI2S.Infrastructure;
-using ARWNI2S.Infrastructure.Assets;
+﻿using ARWNI2S.Infrastructure.Assets;
+using ARWNI2S.Infrastructure.Engine;
 using ARWNI2S.Infrastructure.Network;
 using ARWNI2S.Node.Core.Network;
 using Microsoft.Extensions.Hosting;
@@ -16,19 +16,19 @@ namespace ARWNI2S.Node.Core
         #region Fields  
 
         protected readonly IHostApplicationLifetime _hostApplicationLifetime;
-        protected readonly IContextAccessor _contextAccessor;
-        protected readonly Lazy<INodeContext> _nodeContext;
+        protected readonly IEngineContextAccessor _gameContextAccessor;
+        protected readonly Lazy<IClusterContext> _nodeContext;
 
         #endregion
 
         #region Ctor
 
         public NI2SHelper(IHostApplicationLifetime hostApplicationLifetime,
-            IContextAccessor contextAccessor,
-            Lazy<INodeContext> nodeContext)
+            IEngineContextAccessor gameContextAccessor,
+            Lazy<IClusterContext> nodeContext)
         {
             _hostApplicationLifetime = hostApplicationLifetime;
-            _contextAccessor = contextAccessor;
+            _gameContextAccessor = gameContextAccessor;
             _nodeContext = nodeContext;
         }
 
@@ -40,14 +40,14 @@ namespace ARWNI2S.Node.Core
         /// Check whether current HTTP request is available
         /// </summary>
         /// <returns>True if available; otherwise false</returns>
-        protected virtual bool IsRequestAvailable()
+        protected virtual bool IsEventAvailable()
         {
-            if (_contextAccessor?.Context == null)
+            if (_gameContextAccessor?.EngineContext == null)
                 return false;
 
             try
             {
-                if (_contextAccessor.Context?.Message == null)
+                if (_gameContextAccessor.EngineContext?.Event == null)
                     return false;
             }
             catch (Exception)
@@ -80,7 +80,7 @@ namespace ARWNI2S.Node.Core
         /// <returns>String of IP address</returns>
         public virtual string GetCurrentIpAddress()
         {
-            if (!IsRequestAvailable() || _contextAccessor.Context!.Connection.RemoteEndPoint is not IPEndPoint remoteIp)
+            if (!IsEventAvailable() || _gameContextAccessor.EngineContext!.Connection.RemoteEndPoint is not IPEndPoint remoteIp)
                 return string.Empty;
 
             return (remoteIp.Address.Equals(IPAddress.IPv6Loopback) ? IPAddress.Loopback : remoteIp.Address).ToString();
@@ -92,10 +92,10 @@ namespace ARWNI2S.Node.Core
         /// <returns>True if it's secured, otherwise false</returns>
         public virtual bool IsCurrentConnectionSecured()
         {
-            if (!IsRequestAvailable())
+            if (!IsEventAvailable())
                 return false;
 
-            return _contextAccessor.Context.Message.IsSecured;
+            return _gameContextAccessor.EngineContext.Event.IsSecured;
         }
 
         /// <summary>
@@ -105,11 +105,11 @@ namespace ARWNI2S.Node.Core
         /// <returns>Node host location</returns>
         public virtual string GetNodeHost(bool useSsl)
         {
-            if (!IsRequestAvailable())
+            if (!IsEventAvailable())
                 return string.Empty;
 
             //try to get host from the request HOST header
-            var hostHeader = _contextAccessor.Context.Message.Headers[HeaderNames.Host];
+            var hostHeader = _gameContextAccessor.EngineContext.Event.Headers[HeaderNames.Host];
             if (StringValues.IsNullOrEmpty(hostHeader))
                 return string.Empty;
 
@@ -136,7 +136,7 @@ namespace ARWNI2S.Node.Core
             if (!string.IsNullOrEmpty(nodeHost))
             {
                 //add application path base if exists
-                nodeLocation = IsRequestAvailable() ? $"{nodeHost.TrimEnd('/')}{_contextAccessor.Context.Message.PathBase}" : nodeHost;
+                nodeLocation = IsEventAvailable() ? $"{nodeHost.TrimEnd('/')}{_gameContextAccessor.EngineContext.Message.PathBase}" : nodeHost;
             }
 
             //if host is empty (it is possible only when NetworkContext is not available), use URL of a node entity configured in admin area
@@ -156,10 +156,10 @@ namespace ARWNI2S.Node.Core
         /// <returns>True if the request targets a static resource file.</returns>
         public virtual bool IsStaticAsset()
         {
-            if (!IsRequestAvailable())
+            if (!IsEventAvailable())
                 return false;
 
-            string path = _contextAccessor.Context.Message.Path;
+            string path = _gameContextAccessor.EngineContext.Event.Path;
 
             //a little workaround. FileExtensionContentTypeProvider contains most of static file extensions. So we can use it
             //source: https://github.com/aspnet/StaticFiles/blob/dev/src/Microsoft.AspNetCore.StaticFiles/FileExtensionContentTypeProvider.cs
@@ -183,7 +183,7 @@ namespace ARWNI2S.Node.Core
         {
             get
             {
-                var response = _contextAccessor.Context.Response;
+                var response = _gameContextAccessor.EngineContext.Event.Redirection;
                 //ASP.NET 4 style - return response.IsRequestBeingRedirected;
                 int[] redirectionStatusCodes = [StatusCodes.Status301MovedPermanently, StatusCodes.Status302Found];
 
@@ -198,13 +198,13 @@ namespace ARWNI2S.Node.Core
         {
             get
             {
-                if (_contextAccessor.Context.Items[HttpDefaults.IsPostBeingDoneRequestItem] == null)
+                if (_gameContextAccessor.EngineContext.Items[HttpDefaults.IsPostBeingDoneRequestItem] == null)
                     return false;
 
-                return Convert.ToBoolean(_contextAccessor.Context.Items[HttpDefaults.IsPostBeingDoneRequestItem]);
+                return Convert.ToBoolean(_gameContextAccessor.EngineContext.Items[HttpDefaults.IsPostBeingDoneRequestItem]);
             }
 
-            set => _contextAccessor.Context.Items[HttpDefaults.IsPostBeingDoneRequestItem] = value;
+            set => _gameContextAccessor.EngineContext.Items[HttpDefaults.IsPostBeingDoneRequestItem] = value;
         }
 
         /// <summary>

@@ -3,6 +3,7 @@ using System.Reflection;
 using System.Text;
 using ARWNI2S.Node.Core;
 using ARWNI2S.Infrastructure;
+using ARWNI2S.Infrastructure.Engine;
 
 namespace ARWNI2S.Node.Services.Plugins
 {

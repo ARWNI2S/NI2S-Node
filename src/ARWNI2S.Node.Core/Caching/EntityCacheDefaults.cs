@@ -5,7 +5,7 @@ namespace ARWNI2S.Node.Core.Caching
     /// <summary>
     /// Represents default values related to caching entities
     /// </summary>
-    public static partial class EntityCacheDefaults<TEntity> where TEntity : INI2SEntity
+    public static partial class EntityCacheDefaults<TEntity> where TEntity : IEntity
     {
         /// <summary>
         /// Gets an entity type name used in cache keys

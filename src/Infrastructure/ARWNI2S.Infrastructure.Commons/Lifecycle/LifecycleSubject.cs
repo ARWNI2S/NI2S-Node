@@ -104,7 +104,7 @@ namespace ARWNI2S.Infrastructure.Lifecycle
                 {
                     if (cancellationToken.IsCancellationRequested)
                     {
-                        throw new NI2SLifecycleCanceledException("Lifecycle start canceled by request");
+                        throw new LifecycleCanceledException("Lifecycle start canceled by request");
                     }
 
                     var stage = observerGroup.Key;
@@ -117,7 +117,7 @@ namespace ARWNI2S.Infrastructure.Lifecycle
                     OnStartStageCompleted(stage);
                 }
             }
-            catch (Exception ex) when (ex is not NI2SLifecycleCanceledException)
+            catch (Exception ex) when (ex is not LifecycleCanceledException)
             {
                 Logger.LogError(
                     (int)ErrorCode.LifecycleStartFailure,

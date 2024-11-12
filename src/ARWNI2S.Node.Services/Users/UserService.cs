@@ -29,7 +29,7 @@ namespace ARWNI2S.Node.Services.Users
         protected readonly IRepository<GenericAttribute> _gaRepository;
         protected readonly IShortTermCacheManager _shortTermCacheManager;
         protected readonly IStaticCacheManager _staticCacheManager;
-        protected readonly INodeContext _nodeContext;
+        protected readonly IClusterContext _nodeContext;
 
         #endregion
 
@@ -46,7 +46,7 @@ namespace ARWNI2S.Node.Services.Users
             IRepository<GenericAttribute> gaRepository,
             IShortTermCacheManager shortTermCacheManager,
             IStaticCacheManager staticCacheManager,
-            INodeContext nodeContext
+            IClusterContext nodeContext
             )
         {
             _userSettings = userSettings;

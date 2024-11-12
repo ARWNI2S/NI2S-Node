@@ -151,7 +151,7 @@ namespace ARWNI2S.Infrastructure.Collections.Sorted
         /// <returns>The cloned set.</returns>
         public OrderedSet<T> Clone()
         {
-            OrderedSet<T> newSet = new OrderedSet<T>(_comparer, _tree.Clone());
+            OrderedSet<T> newSet = new(_comparer, _tree.Clone());
             return newSet;
         }
 
@@ -170,7 +170,7 @@ namespace ARWNI2S.Infrastructure.Collections.Sorted
             if (!CollectionUtils.IsCloneableType(typeof(T), out bool itemIsValueType))
                 throw new InvalidOperationException(string.Format(LocalizedStrings.Collections_TypeNotCloneable, typeof(T).FullName));
 
-            OrderedSet<T> clone = new OrderedSet<T>(_comparer);
+            OrderedSet<T> clone = new(_comparer);
 
             // Clone each item, and add it to the new ordered set.
             foreach (T item in this)
@@ -763,7 +763,7 @@ namespace ARWNI2S.Infrastructure.Collections.Sorted
                 smaller = otherSet; larger = this;
             }
 
-            RedBlackTree<T> newTree = new RedBlackTree<T>(_comparer);
+            RedBlackTree<T> newTree = new(_comparer);
 
             foreach (T item in smaller)
             {

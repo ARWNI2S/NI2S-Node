@@ -6,7 +6,7 @@ namespace ARWNI2S.Node.Core.Events
     /// A container for entities that have been inserted.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public partial class EntityCreatedEvent<T> where T : INI2SEntity
+    public partial class EntityCreatedEvent<T> where T : IEntity
     {
         /// <summary>
         /// Ctor

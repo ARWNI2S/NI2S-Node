@@ -12,7 +12,7 @@ namespace ARWNI2S.Node.Services.Clustering
         /// </summary>
         /// <param name="node">Node</param>
         /// <returns>A task that represents the asynchronous operation</returns>
-        Task DeleteNodeAsync(NI2SNode node);
+        Task DeleteNodeAsync(ClusterNode node);
 
         /// <summary>
         /// Gets all nodes
@@ -21,7 +21,7 @@ namespace ARWNI2S.Node.Services.Clustering
         /// A task that represents the asynchronous operation
         /// The task result contains the nodes
         /// </returns>
-        Task<IList<NI2SNode>> GetAllNodesAsync(NodeState? nodeState = null);
+        Task<IList<ClusterNode>> GetAllNodesAsync(NodeState? nodeState = null);
 
         /// <summary>
         /// Gets all nodes
@@ -29,7 +29,7 @@ namespace ARWNI2S.Node.Services.Clustering
         /// <returns>
         /// The nodes
         /// </returns>
-        IList<NI2SNode> GetAllNodes();
+        IList<ClusterNode> GetAllNodes();
 
         /// <summary>
         /// Gets a node 
@@ -39,7 +39,7 @@ namespace ARWNI2S.Node.Services.Clustering
         /// A task that represents the asynchronous operation
         /// The task result contains the node
         /// </returns>
-        Task<NI2SNode> GetNodeByIdAsync(int nodeId);
+        Task<ClusterNode> GetNodeByIdAsync(int nodeId);
 
         /// <summary>
         /// Gets a node 
@@ -49,27 +49,27 @@ namespace ARWNI2S.Node.Services.Clustering
         /// A task that represents the asynchronous operation
         /// The task result contains the node
         /// </returns>
-        Task<NI2SNode> GetNodeByNodeIdAsync(Guid nodeId);
+        Task<ClusterNode> GetNodeByNodeIdAsync(Guid nodeId);
 
         /// <summary>
         /// Inserts a node
         /// </summary>
         /// <param name="node">Node</param>
         /// <returns>A task that represents the asynchronous operation</returns>
-        Task InsertNodeAsync(NI2SNode node);
+        Task InsertNodeAsync(ClusterNode node);
 
         /// <summary>
         /// Updates the node
         /// </summary>
         /// <param name="node">Node</param>
         /// <returns>A task that represents the asynchronous operation</returns>
-        Task UpdateNodeAsync(NI2SNode node);
+        Task UpdateNodeAsync(ClusterNode node);
 
         /// <summary>
         /// Updates the node
         /// </summary>
         /// <param name="node">Node</param>
-        void UpdateNode(NI2SNode node);
+        void UpdateNode(ClusterNode node);
 
         /// <summary>
         /// Indicates whether a node contains a specified host
@@ -77,7 +77,7 @@ namespace ARWNI2S.Node.Services.Clustering
         /// <param name="node">Node</param>
         /// <param name="host">Host</param>
         /// <returns>true - contains, false - no</returns>
-        bool ContainsHostValue(NI2SNode node, string host);
+        bool ContainsHostValue(ClusterNode node, string host);
 
         /// <summary>
         /// Gets current cluster map registration

@@ -453,7 +453,7 @@ namespace ARWNI2S.Infrastructure.Collections
             ArgumentNullException.ThrowIfNull(prefix);
 
             if (!SearchOrPrune(prefix, false, out var node))
-                return Enumerable.Empty<KeyValuePair<string, TValue>>();
+                return [];
 
             // depth-first traversal
             IEnumerable<KeyValuePair<string, TValue>> traverse(TrieNode n, string s)

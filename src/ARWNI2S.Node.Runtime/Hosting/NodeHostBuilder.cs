@@ -9,35 +9,6 @@ namespace ARWNI2S.Runtime.Hosting
 {
     public sealed class NodeHostBuilder : HostBuilder/*NodeServerHostBuilder<StringPackageInfo>*/, IHostBuilder
     {
-        //private NodeHostBuilder(string[] args)
-        //    : base(args) { }
-
-        //public override IHost Build()
-        //{
-        //    return base.Build();
-        //}
-
-        //protected override void RegisterBasicServices(HostBuilderContext builderContext, IServiceCollection servicesInHost, IServiceCollection services)
-        //{
-        //    base.RegisterBasicServices(builderContext, servicesInHost, services);
-        //}
-
-        //protected override void RegisterDefaultHostedService(IServiceCollection servicesInHost)
-        //{
-        //    base.RegisterDefaultHostedService(servicesInHost);
-        //}
-
-        //protected override void RegisterDefaultServices(HostBuilderContext builderContext, IServiceCollection servicesInHost, IServiceCollection services)
-        //{
-        //    services.TryAddSingleton<INodeContext, LocalNodeContext>();
-        //    services.TryAddSingleton<EngineLifecycle>();
-        //    services.TryAddFromExisting<IEngineLifecycleSubject, EngineLifecycle>();
-        //    services.TryAddFromExisting<IEngineLifecycle, EngineLifecycle>();
-
-        //    base.RegisterDefaultServices(builderContext, servicesInHost, services);
-        //}
-
-
         public static IHost CreateRuntimeHost(string[] args)
         {
             var host = Create(args).Build();

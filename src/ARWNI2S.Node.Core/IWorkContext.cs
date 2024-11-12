@@ -12,14 +12,14 @@ namespace ARWNI2S.Node.Core
         /// Gets the current user
         /// </summary>
         /// <returns>A task that represents the asynchronous operation</returns>
-        Task<INI2SUser> GetCurrentUserAsync();
+        Task<IUser> GetCurrentUserAsync();
 
         /// <summary>
         /// Sets the current user
         /// </summary>
         /// <param name="user">Current user</param>
         /// <returns>A task that represents the asynchronous operation</returns>
-        Task SetCurrentUserAsync(INI2SUser user = null);
+        Task SetCurrentUserAsync(IUser user = null);
 
         /// <summary>
         /// Gets current user working cultureInfo

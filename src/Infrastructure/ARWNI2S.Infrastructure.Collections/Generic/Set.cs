@@ -117,7 +117,7 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
         /// <returns>The cloned set.</returns>
         public Set<T> Clone()
         {
-            Set<T> newSet = new Set<T>(_equalityComparer, _hash.Clone(null));
+            Set<T> newSet = new(_equalityComparer, _hash.Clone(null));
             return newSet;
         }
 
@@ -136,7 +136,7 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
             if (!CollectionUtils.IsCloneableType(typeof(T), out bool itemIsValueType))
                 throw new InvalidOperationException(string.Format(LocalizedStrings.Collections_TypeNotCloneable, typeof(T).FullName));
 
-            Set<T> clone = new Set<T>(_equalityComparer);
+            Set<T> clone = new(_equalityComparer);
 
             // Clone each item, and add it to the new ordered set.
             foreach (T item in this)
@@ -600,7 +600,7 @@ namespace ARWNI2S.Infrastructure.Collections.Generic
                 smaller = otherSet; larger = this;
             }
 
-            Hash<T> newHash = new Hash<T>(_equalityComparer);
+            Hash<T> newHash = new(_equalityComparer);
 
             foreach (T item in smaller)
             {

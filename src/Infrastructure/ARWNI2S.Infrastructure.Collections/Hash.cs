@@ -605,7 +605,7 @@ namespace ARWNI2S.Infrastructure.Collections
         /// <returns>A shallow clone that contains the same items.</returns>
         public Hash<T> Clone(Converter<T, T> cloneItem)
         {
-            Hash<T> clone = new Hash<T>(_equalityComparer);
+            Hash<T> clone = new(_equalityComparer);
             clone._count = _count;
             clone._usedSlots = _usedSlots;
             clone._totalSlots = _totalSlots;

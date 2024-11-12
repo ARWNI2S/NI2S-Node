@@ -12,14 +12,14 @@ namespace ARWNI2S.Node.Services.Clustering
     {
         #region Fields
 
-        private readonly IRepository<NI2SNode> _nodeRepository;
-        private static readonly char[] separator = new[] { ',' };
+        private readonly IRepository<ClusterNode> _nodeRepository;
+        private static readonly char[] separator = [','];
 
         #endregion
 
         #region Ctor
 
-        public ClusteringService(IRepository<NI2SNode> nodeRepository)
+        public ClusteringService(IRepository<ClusterNode> nodeRepository)
         {
             _nodeRepository = nodeRepository;
         }
@@ -33,7 +33,7 @@ namespace ARWNI2S.Node.Services.Clustering
         /// </summary>
         /// <param name="node">Node</param>
         /// <returns>Comma-separated hosts</returns>
-        protected virtual string[] ParseHostValues(NI2SNode node)
+        protected virtual string[] ParseHostValues(ClusterNode node)
         {
             ArgumentNullException.ThrowIfNull(node);
 
@@ -61,7 +61,7 @@ namespace ARWNI2S.Node.Services.Clustering
         /// </summary>
         /// <param name="node">Node</param>
         /// <returns>A task that represents the asynchronous operation</returns>
-        public virtual async Task DeleteNodeAsync(NI2SNode node)
+        public virtual async Task DeleteNodeAsync(ClusterNode node)
         {
             ArgumentNullException.ThrowIfNull(node);
 
@@ -79,7 +79,7 @@ namespace ARWNI2S.Node.Services.Clustering
         /// A task that represents the asynchronous operation
         /// The task result contains the nodes
         /// </returns>
-        public virtual async Task<IList<NI2SNode>> GetAllNodesAsync(NodeState? nodeState = null)
+        public virtual async Task<IList<ClusterNode>> GetAllNodesAsync(NodeState? nodeState = null)
         {
             return await _nodeRepository.GetAllAsync(query =>
             {
@@ -96,7 +96,7 @@ namespace ARWNI2S.Node.Services.Clustering
         /// <returns>
         /// The nodes
         /// </returns>
-        public virtual IList<NI2SNode> GetAllNodes()
+        public virtual IList<ClusterNode> GetAllNodes()
         {
             return _nodeRepository.GetAll(query =>
             {
@@ -112,12 +112,12 @@ namespace ARWNI2S.Node.Services.Clustering
         /// A task that represents the asynchronous operation
         /// The task result contains the node
         /// </returns>
-        public virtual async Task<NI2SNode> GetNodeByIdAsync(int nodeId)
+        public virtual async Task<ClusterNode> GetNodeByIdAsync(int nodeId)
         {
             return await _nodeRepository.GetByIdAsync(nodeId, cache => default, false);
         }
 
-        public async Task<NI2SNode> GetNodeByNodeIdAsync(Guid nodeId)
+        public async Task<ClusterNode> GetNodeByNodeIdAsync(Guid nodeId)
         {
             var query = _nodeRepository.Table;
 
@@ -131,7 +131,7 @@ namespace ARWNI2S.Node.Services.Clustering
         /// </summary>
         /// <param name="node">Node</param>
         /// <returns>A task that represents the asynchronous operation</returns>
-        public virtual async Task InsertNodeAsync(NI2SNode node)
+        public virtual async Task InsertNodeAsync(ClusterNode node)
         {
             await _nodeRepository.InsertAsync(node);
         }
@@ -141,7 +141,7 @@ namespace ARWNI2S.Node.Services.Clustering
         /// </summary>
         /// <param name="node">Node</param>
         /// <returns>A task that represents the asynchronous operation</returns>
-        public virtual async Task UpdateNodeAsync(NI2SNode node)
+        public virtual async Task UpdateNodeAsync(ClusterNode node)
         {
             await _nodeRepository.UpdateAsync(node);
         }
@@ -150,7 +150,7 @@ namespace ARWNI2S.Node.Services.Clustering
         /// Updates the node
         /// </summary>
         /// <param name="node">Node</param>
-        public virtual void UpdateNode(NI2SNode node)
+        public virtual void UpdateNode(ClusterNode node)
         {
             _nodeRepository.Update(node);
         }
@@ -161,7 +161,7 @@ namespace ARWNI2S.Node.Services.Clustering
         /// <param name="node">Node</param>
         /// <param name="host">Host</param>
         /// <returns>true - contains, false - no</returns>
-        public virtual bool ContainsHostValue(NI2SNode node, string host)
+        public virtual bool ContainsHostValue(ClusterNode node, string host)
         {
             ArgumentNullException.ThrowIfNull(node);
 

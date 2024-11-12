@@ -67,7 +67,7 @@ namespace ARWNI2S.Node.Data.Migrations
 
                     return assembly == null || t.Assembly == assembly;
 
-                }) ?? Enumerable.Empty<IMigration>();
+                }) ?? [];
 
             return migrations
                 .Select(m => _migrationRunnerConventions.GetMigrationInfoForMigration(m))
@@ -96,7 +96,7 @@ namespace ARWNI2S.Node.Data.Migrations
                         return false;
 
                     return assembly == null || t.Assembly == assembly;
-                }) ?? Enumerable.Empty<IMigration>();
+                }) ?? [];
 
             return migrations
                 .Select(m => _migrationRunnerConventions.GetMigrationInfoForMigration(m))

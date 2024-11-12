@@ -157,7 +157,7 @@ namespace ARWNI2S.Infrastructure.Collections.Sorted
         /// <returns>The cloned bag.</returns>
         public OrderedBag<T> Clone()
         {
-            OrderedBag<T> newBag = new OrderedBag<T>(_comparer, _tree.Clone());
+            OrderedBag<T> newBag = new(_comparer, _tree.Clone());
             return newBag;
         }
 
@@ -176,7 +176,7 @@ namespace ARWNI2S.Infrastructure.Collections.Sorted
             if (!CollectionUtils.IsCloneableType(typeof(T), out bool itemIsValueType))
                 throw new InvalidOperationException(string.Format(LocalizedStrings.Collections_TypeNotCloneable, typeof(T).FullName));
 
-            OrderedBag<T> clone = new OrderedBag<T>(_comparer);
+            OrderedBag<T> clone = new(_comparer);
 
             // Clone each item, and add it to the new ordered bag.
             foreach (T item in this)
@@ -899,7 +899,7 @@ namespace ARWNI2S.Infrastructure.Collections.Sorted
                 smaller = otherBag; larger = this;
             }
 
-            RedBlackTree<T> newTree = new RedBlackTree<T>(_comparer);
+            RedBlackTree<T> newTree = new(_comparer);
 
             T previous = default;
             bool atBeginning = true;
@@ -1097,7 +1097,7 @@ namespace ARWNI2S.Infrastructure.Collections.Sorted
         public OrderedBag<T> SymmetricDifference(OrderedBag<T> otherBag)
         {
             CheckConsistentComparison(otherBag);
-            OrderedBag<T> result = new OrderedBag<T>(_comparer);
+            OrderedBag<T> result = new(_comparer);
             IEnumerator<T> enum1 = GetEnumerator(), enum2 = otherBag.GetEnumerator();
 
             bool valid1 = enum1.MoveNext();

@@ -1717,7 +1717,7 @@ namespace ARWNI2S.Infrastructure.Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Application cannot be found.
+        ///   Busca una cadena traducida similar a Engine cannot be found.
         /// </summary>
         internal static string DomainManager_AssemblyNotFound {
             get {
@@ -2230,7 +2230,7 @@ namespace ARWNI2S.Infrastructure.Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a INTERNAL FAILURE! Application mini-dump written to file .
+        ///   Busca una cadena traducida similar a INTERNAL FAILURE! Engine mini-dump written to file .
         /// </summary>
         internal static string Logger_MiniDumpCreated {
             get {

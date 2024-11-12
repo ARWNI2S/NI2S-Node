@@ -5,8 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Infrastructure\ILocalNodeDetails.cs" />
-    <Compile Remove="LocalNodeDetails.cs" />
+    <Compile Remove="NI2SHelper.cs" />
   </ItemGroup>
 
   <ItemGroup>

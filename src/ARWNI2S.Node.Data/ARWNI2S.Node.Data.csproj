@@ -5,29 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Mapping\Builders\Gameplay\**" />
-    <Compile Remove="Mapping\Builders\Gdpr\**" />
-    <Compile Remove="Mapping\Builders\Media\**" />
-    <Compile Remove="Mapping\Builders\Messages\**" />
-    <Compile Remove="Mapping\Builders\News\**" />
-    <EmbeddedResource Remove="Mapping\Builders\Gameplay\**" />
-    <EmbeddedResource Remove="Mapping\Builders\Gdpr\**" />
-    <EmbeddedResource Remove="Mapping\Builders\Media\**" />
-    <EmbeddedResource Remove="Mapping\Builders\Messages\**" />
-    <EmbeddedResource Remove="Mapping\Builders\News\**" />
-    <None Remove="Mapping\Builders\Gameplay\**" />
-    <None Remove="Mapping\Builders\Gdpr\**" />
-    <None Remove="Mapping\Builders\Media\**" />
-    <None Remove="Mapping\Builders\Messages\**" />
-    <None Remove="Mapping\Builders\News\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Remove="Mapping\Builders\Common\AddressAttributeBuilder.cs" />
-    <Compile Remove="Mapping\Builders\Common\AddressAttributeValueBuilder.cs" />
-    <Compile Remove="Mapping\Builders\Common\AddressBuilder.cs" />
-    <Compile Remove="Mapping\Builders\Directory\CountryBuilder.cs" />
-    <Compile Remove="Mapping\Builders\Directory\StateProvinceBuilder.cs" />
     <Compile Remove="Mapping\Builders\Users\ExternalAuthenticationRecordBuilder.cs" />
     <Compile Remove="Mapping\Builders\Users\UserAddressMappingBuilder.cs" />
     <Compile Remove="Mapping\Builders\Users\UserAttributeBuilder.cs" />

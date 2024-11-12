@@ -6,59 +6,50 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Configuration\**" />
-    <Compile Remove="Console\**" />
-    <Compile Remove="Data\**" />
-    <Compile Remove="EngineParts\**" />
+    <Compile Remove="ASP_TMP\**" />
+    <Compile Remove="ENDPOINTS\**" />
     <Compile Remove="Infrastructure\**" />
-    <Compile Remove="Middleware\**" />
-    <Compile Remove="Network\**" />
-    <Compile Remove="Security\**" />
-    <Compile Remove="Services\**" />
-    <Compile Remove="Simulation\**" />
-    <EmbeddedResource Remove="Configuration\**" />
-    <EmbeddedResource Remove="Console\**" />
-    <EmbeddedResource Remove="Data\**" />
-    <EmbeddedResource Remove="EngineParts\**" />
+    <Compile Remove="Profiling\**" />
+    <EmbeddedResource Remove="ASP_TMP\**" />
+    <EmbeddedResource Remove="ENDPOINTS\**" />
     <EmbeddedResource Remove="Infrastructure\**" />
-    <EmbeddedResource Remove="Middleware\**" />
-    <EmbeddedResource Remove="Network\**" />
-    <EmbeddedResource Remove="Security\**" />
-    <EmbeddedResource Remove="Services\**" />
-    <EmbeddedResource Remove="Simulation\**" />
-    <None Remove="Configuration\**" />
-    <None Remove="Console\**" />
-    <None Remove="Data\**" />
-    <None Remove="EngineParts\**" />
+    <EmbeddedResource Remove="Profiling\**" />
+    <None Remove="ASP_TMP\**" />
+    <None Remove="ENDPOINTS\**" />
     <None Remove="Infrastructure\**" />
-    <None Remove="Middleware\**" />
-    <None Remove="Network\**" />
-    <None Remove="Security\**" />
-    <None Remove="Services\**" />
-    <None Remove="Simulation\**" />
+    <None Remove="Profiling\**" />
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="EntryPoints.cs" />
+    <Compile Remove="Hosting\Builder\ConfigureNodeHostBuilder.cs" />
+    <Compile Remove="Hosting\Builder\HostingPathResolver.cs" />
+    <Compile Remove="Hosting\Builder\NodeHostBuilder.cs" />
+    <Compile Remove="Hosting\Builder\StartupLinkerOptions.cs" />
+    <Compile Remove="Hosting\DefaultEngineContext.cs" />
     <Compile Remove="Hosting\Extensions\GDESKServiceCollectionExtensions.cs" />
     <Compile Remove="Hosting\Extensions\HostBuilderExtensions.cs" />
+    <Compile Remove="Hosting\Extensions\HostExtensions.cs" />
     <Compile Remove="Hosting\Extensions\NodeServerHostBuilderExtensions.cs" />
     <Compile Remove="Hosting\HostBuilderAdapter.cs" />
+    <Compile Remove="Hosting\HostingEngine.cs" />
+    <Compile Remove="Hosting\Internal\NodeHost.cs" />
+    <Compile Remove="Hosting\Internal\NodeHostUtilities.cs" />
+    <Compile Remove="Hosting\ISupportsStartup.cs" />
+    <Compile Remove="Hosting\ISupportsUseDefaultServiceProvider.cs" />
     <Compile Remove="Hosting\MultipleServerHostBuilder.cs" />
+    <Compile Remove="Hosting\NodeHost.cs" />
+    <Compile Remove="Hosting\NodeHostBuilder.cs" />
+    <Compile Remove="Hosting\NodeHostBuilder.old.cs" />
     <Compile Remove="Hosting\NodeRuntimeHost.cs" />
     <Compile Remove="Hosting\NodeServerHostBuilder.cs" />
     <Compile Remove="Hosting\ServerHostBuilderAdapter.cs" />
+    <Compile Remove="LocalNodeContext.cs" />
+    <Compile Remove="NodeRuntimeService.cs" />
     <Compile Remove="NodeServerExtensions.cs" />
+    <Compile Remove="NodeWorkContext.cs" />
     <Compile Remove="RuntimeContext.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Include="Data\ConnectionStringOptionsExtensions.cs" />
-    <Compile Include="Infrastructure\ClusterStartup.cs" />
-    <Compile Include="Infrastructure\CommonStartup.cs" />
-    <Compile Include="Infrastructure\ErrorHandlerStartup.cs" />
-    <Compile Include="Infrastructure\LazyInstance.cs" />
-    <Compile Include="Infrastructure\NI2SStartup.cs" />
-    <Compile Include="Infrastructure\ProxyStartup.cs" />
+    <Compile Remove="RuntimeContextAccessor.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -71,7 +62,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Runtime\ARWNI2S.MVRM.Core\ARWNI2S.MVRM.Core.csproj" />
+    <ProjectReference Include="..\..\..\Runtime\ARWNI2S.Engine.Core\ARWNI2S.Engine.Core.csproj" />
+    <ProjectReference Include="..\..\..\Runtime\ARWNI2S.Network\ARWNI2S.Network.csproj" />
     <ProjectReference Include="..\ARWNI2S.Node.Core\ARWNI2S.Node.Core.csproj" />
     <ProjectReference Include="..\ARWNI2S.Node.Data\ARWNI2S.Node.Data.csproj" />
     <ProjectReference Include="..\ARWNI2S.Node.Services\ARWNI2S.Node.Services.csproj" />

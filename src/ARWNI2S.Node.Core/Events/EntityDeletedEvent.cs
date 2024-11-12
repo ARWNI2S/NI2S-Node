@@ -6,7 +6,7 @@ namespace ARWNI2S.Node.Core.Events
     /// A container for passing entities that have been deleted. This is not used for entities that are deleted logically via a bit column.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public partial class EntityDeletedEvent<T> where T : INI2SEntity
+    public partial class EntityDeletedEvent<T> where T : IEntity
     {
         /// <summary>
         /// Ctor

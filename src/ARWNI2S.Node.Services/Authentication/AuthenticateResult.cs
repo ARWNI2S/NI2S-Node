@@ -12,12 +12,15 @@ namespace ARWNI2S.Node.Services.Authentication
 
         // Métodos estáticos para crear instancias de resultado
         public static AuthenticateResult Success(ClaimsPrincipal principal, DateTime issuedUtc) =>
-            new AuthenticateResult { Succeeded = true, Principal = principal, IssuedUtc = issuedUtc };
+            new()
+            { Succeeded = true, Principal = principal, IssuedUtc = issuedUtc };
 
         public static AuthenticateResult Fail(string errorMessage) =>
-            new AuthenticateResult { Succeeded = false, ErrorMessage = errorMessage };
+            new()
+            { Succeeded = false, ErrorMessage = errorMessage };
 
         public static AuthenticateResult Warn(string warningMessage, ClaimsPrincipal principal, DateTime issuedUtc) =>
-            new AuthenticateResult { Succeeded = true, WarningMessage = warningMessage, Principal = principal, IssuedUtc = issuedUtc };
+            new()
+            { Succeeded = true, WarningMessage = warningMessage, Principal = principal, IssuedUtc = issuedUtc };
     }
 }

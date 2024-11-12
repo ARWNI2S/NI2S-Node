@@ -175,7 +175,7 @@ namespace ARWNI2S.Node.Services.Logging
         /// A task that represents the asynchronous operation
         /// The task result contains a log item
         /// </returns>
-        public virtual async Task<Log> InsertLogAsync(LogLevel logLevel, string shortMessage, string fullMessage = "", INI2SUser user = null)
+        public virtual async Task<Log> InsertLogAsync(LogLevel logLevel, string shortMessage, string fullMessage = "", IUser user = null)
         {
             //check ignore word/phrase list?
             if (IgnoreLog(shortMessage) || IgnoreLog(fullMessage))
@@ -206,7 +206,7 @@ namespace ARWNI2S.Node.Services.Logging
         /// <returns>
         /// Log item
         /// </returns>
-        public virtual Log InsertLog(LogLevel logLevel, string shortMessage, string fullMessage = "", INI2SUser user = null)
+        public virtual Log InsertLog(LogLevel logLevel, string shortMessage, string fullMessage = "", IUser user = null)
         {
             //check ignore word/phrase list?
             if (IgnoreLog(shortMessage) || IgnoreLog(fullMessage))
@@ -234,7 +234,7 @@ namespace ARWNI2S.Node.Services.Logging
         /// <param name="exception">Exception</param>
         /// <param name="user">User</param>
         /// <returns>A task that represents the asynchronous operation</returns>
-        public virtual async Task InformationAsync(string message, Exception exception = null, INI2SUser user = null)
+        public virtual async Task InformationAsync(string message, Exception exception = null, IUser user = null)
         {
             //don't log thread abort exception
             if (exception is ThreadAbortException)
@@ -250,7 +250,7 @@ namespace ARWNI2S.Node.Services.Logging
         /// <param name="message">Message</param>
         /// <param name="exception">Exception</param>
         /// <param name="user">User</param>
-        public virtual void Information(string message, Exception exception = null, INI2SUser user = null)
+        public virtual void Information(string message, Exception exception = null, IUser user = null)
         {
             //don't log thread abort exception
             if (exception is ThreadAbortException)
@@ -267,7 +267,7 @@ namespace ARWNI2S.Node.Services.Logging
         /// <param name="exception">Exception</param>
         /// <param name="user">User</param>
         /// <returns>A task that represents the asynchronous operation</returns>
-        public virtual async Task WarningAsync(string message, Exception exception = null, INI2SUser user = null)
+        public virtual async Task WarningAsync(string message, Exception exception = null, IUser user = null)
         {
             //don't log thread abort exception
             if (exception is ThreadAbortException)
@@ -283,7 +283,7 @@ namespace ARWNI2S.Node.Services.Logging
         /// <param name="message">Message</param>
         /// <param name="exception">Exception</param>
         /// <param name="user">User</param>
-        public virtual void Warning(string message, Exception exception = null, INI2SUser user = null)
+        public virtual void Warning(string message, Exception exception = null, IUser user = null)
         {
             //don't log thread abort exception
             if (exception is ThreadAbortException)
@@ -300,7 +300,7 @@ namespace ARWNI2S.Node.Services.Logging
         /// <param name="exception">Exception</param>
         /// <param name="user">User</param>
         /// <returns>A task that represents the asynchronous operation</returns>
-        public virtual async Task ErrorAsync(string message, Exception exception = null, INI2SUser user = null)
+        public virtual async Task ErrorAsync(string message, Exception exception = null, IUser user = null)
         {
             //don't log thread abort exception
             if (exception is ThreadAbortException)
@@ -316,7 +316,7 @@ namespace ARWNI2S.Node.Services.Logging
         /// <param name="message">Message</param>
         /// <param name="exception">Exception</param>
         /// <param name="user">User</param>
-        public virtual void Error(string message, Exception exception = null, INI2SUser user = null)
+        public virtual void Error(string message, Exception exception = null, IUser user = null)
         {
             //don't log thread abort exception
             if (exception is ThreadAbortException)

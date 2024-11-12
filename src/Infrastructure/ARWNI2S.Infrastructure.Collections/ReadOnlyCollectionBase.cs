@@ -355,7 +355,7 @@ namespace ARWNI2S.Infrastructure.Collections
         {
             const int MAXLENGTH = 250;
 
-            System.Text.StringBuilder builder = new System.Text.StringBuilder();
+            System.Text.StringBuilder builder = new();
 
             builder.Append('{');
 

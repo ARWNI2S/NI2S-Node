@@ -42,7 +42,7 @@ namespace ARWNI2S.Node.Services.Plugins
         /// A task that represents the asynchronous operation
         /// The task result contains the key
         /// </returns>
-        protected virtual async Task<string> GetKeyAsync(INI2SUser user, int nodeId, string systemName = null)
+        protected virtual async Task<string> GetKeyAsync(IUser user, int nodeId, string systemName = null)
         {
             return $"{nodeId}-{(user != null ? string.Join(',', await _userService.GetUserRoleIdsAsync((User)user)) : null)}-{systemName}";
         }
@@ -57,7 +57,7 @@ namespace ARWNI2S.Node.Services.Plugins
         /// A task that represents the asynchronous operation
         /// The task result contains the module
         /// </returns>
-        protected virtual async Task<TModule> LoadPrimaryModuleAsync(string systemName, INI2SUser user = null, int nodeId = 0)
+        protected virtual async Task<TModule> LoadPrimaryModuleAsync(string systemName, IUser user = null, int nodeId = 0)
         {
             //try to get a module by system name or return the first loaded one (it's necessary to have a primary active module)
             var module = await LoadModuleBySystemNameAsync(systemName, user, nodeId)
@@ -79,7 +79,7 @@ namespace ARWNI2S.Node.Services.Plugins
         /// A task that represents the asynchronous operation
         /// The task result contains the list of modules
         /// </returns>
-        public virtual async Task<IList<TModule>> LoadAllModulesAsync(INI2SUser user = null, int nodeId = 0)
+        public virtual async Task<IList<TModule>> LoadAllModulesAsync(IUser user = null, int nodeId = 0)
         {
             //get modules and put them into the dictionary to avoid further loading
             var key = await GetKeyAsync(user, nodeId);
@@ -100,7 +100,7 @@ namespace ARWNI2S.Node.Services.Plugins
         /// A task that represents the asynchronous operation
         /// The task result contains the module
         /// </returns>
-        public virtual async Task<TModule> LoadModuleBySystemNameAsync(string systemName, INI2SUser user = null, int nodeId = 0)
+        public virtual async Task<TModule> LoadModuleBySystemNameAsync(string systemName, IUser user = null, int nodeId = 0)
         {
             if (string.IsNullOrEmpty(systemName))
                 return null;
@@ -132,7 +132,7 @@ namespace ARWNI2S.Node.Services.Plugins
         /// A task that represents the asynchronous operation
         /// The task result contains the list of active modules
         /// </returns>
-        public virtual async Task<IList<TModule>> LoadActiveModulesAsync(List<string> systemNames, INI2SUser user = null, int nodeId = 0)
+        public virtual async Task<IList<TModule>> LoadActiveModulesAsync(List<string> systemNames, IUser user = null, int nodeId = 0)
         {
             if (systemNames == null)
                 return [];

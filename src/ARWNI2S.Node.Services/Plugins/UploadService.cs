@@ -1,4 +1,5 @@
 ﻿using ARWNI2S.Infrastructure;
+using ARWNI2S.Infrastructure.Engine;
 using ARWNI2S.Node.Core;
 using ARWNI2S.Node.Services.Common;
 using Microsoft.AspNetCore.Http;
@@ -18,7 +19,7 @@ namespace ARWNI2S.Node.Services.Plugins
         #region Fields
 
         private readonly IEngineFileProvider _fileProvider;
-        private readonly INodeContext _nodeContext;
+        private readonly IClusterContext _nodeContext;
         //private readonly IThemeProvider _themeProvider;
 
         #endregion
@@ -26,7 +27,7 @@ namespace ARWNI2S.Node.Services.Plugins
         #region Ctor
 
         public UploadService(IEngineFileProvider fileProvider,
-            INodeContext nodeContext//,
+            IClusterContext nodeContext//,
                                         //IThemeProvider themeProvider
             )
         {

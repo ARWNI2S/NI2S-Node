@@ -149,7 +149,7 @@ namespace ARWNI2S.Node.Core.Services.Helpers
         /// A task that represents the asynchronous operation
         /// The task result contains the user time zone; if user is null, then default node time zone
         /// </returns>
-        public virtual Task<TimeZoneInfo> GetUserTimeZoneAsync(INI2SUser user)
+        public virtual Task<TimeZoneInfo> GetUserTimeZoneAsync(IUser user)
         {
             if (!_dateTimeSettings.AllowUsersToSetTimeZone)
                 return Task.FromResult(DefaultNodeTimeZone);

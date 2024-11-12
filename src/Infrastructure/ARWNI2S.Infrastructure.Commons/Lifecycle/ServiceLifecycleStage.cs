@@ -1,7 +1,7 @@
 namespace ARWNI2S.Infrastructure.Lifecycle
 {
     /// <summary>
-    /// Lifecycle stages of an Orleans client or silo.
+    /// Lifecycle stages of an NI2S node or engine.
     /// </summary>
     public static class ServiceLifecycleStage
     {

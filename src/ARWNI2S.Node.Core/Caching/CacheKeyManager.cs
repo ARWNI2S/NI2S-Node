@@ -52,7 +52,7 @@ namespace ARWNI2S.Node.Core.Caching
         {
             return _keys.Prune(prefix, out var subtree)
                 ? subtree?.Keys
-                : Enumerable.Empty<string>();
+                : [];
         }
 
         /// <summary>

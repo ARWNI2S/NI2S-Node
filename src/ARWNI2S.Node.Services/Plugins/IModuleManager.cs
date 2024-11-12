@@ -17,7 +17,7 @@ namespace ARWNI2S.Node.Services.Plugins
         /// A task that represents the asynchronous operation
         /// The task result contains the list of modules
         /// </returns>
-        Task<IList<TModule>> LoadAllModulesAsync(INI2SUser user = null, int nodeId = 0);
+        Task<IList<TModule>> LoadAllModulesAsync(IUser user = null, int nodeId = 0);
 
         /// <summary>
         /// Load module by system name
@@ -29,7 +29,7 @@ namespace ARWNI2S.Node.Services.Plugins
         /// A task that represents the asynchronous operation
         /// The task result contains the module
         /// </returns>
-        Task<TModule> LoadModuleBySystemNameAsync(string systemName, INI2SUser user = null, int nodeId = 0);
+        Task<TModule> LoadModuleBySystemNameAsync(string systemName, IUser user = null, int nodeId = 0);
 
         /// <summary>
         /// Load active modules
@@ -41,7 +41,7 @@ namespace ARWNI2S.Node.Services.Plugins
         /// A task that represents the asynchronous operation
         /// The task result contains the list of active modules
         /// </returns>
-        Task<IList<TModule>> LoadActiveModulesAsync(List<string> systemNames, INI2SUser user = null, int nodeId = 0);
+        Task<IList<TModule>> LoadActiveModulesAsync(List<string> systemNames, IUser user = null, int nodeId = 0);
 
         /// <summary>
         /// Check whether the passed module is active
