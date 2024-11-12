@@ -8,8 +8,8 @@ using ARWNI2S.Node.Core.Infrastructure;
 using ARWNI2S.Node.Core.Network;
 using ARWNI2S.Node.Services.Clustering;
 using ARWNI2S.Node.Services.Network;
+using ARWNI2S.Runtime.Builder;
 using ARWNI2S.Runtime.Configuration.Options.Extensions;
-using ARWNI2S.Runtime.Hosting.Builder;
 using Azure.Data.Tables;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -80,7 +80,7 @@ namespace ARWNI2S.Runtime.Hosting.Extensions
             //    services.AddSingleton(resolver => resolver.GetRequiredService<IOptions<GDESKConfig>>().Value);
             //});
 
-            var mvrmCoreBuilder = services.AddMVRMCore();
+            var mvrmCoreBuilder = services.AddEngineCore();
 
             //initialize modules
             var moduleConfig = new ModuleConfig();

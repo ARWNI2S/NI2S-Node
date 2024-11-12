@@ -1,10 +1,10 @@
 ﻿using System.Diagnostics.Metrics;
 
-namespace ARWNI2S.Runtime.Hosting.Diagnostics
+namespace ARWNI2S.Runtime.Diagnostics
 {
     internal sealed class HostingMetrics : IDisposable
     {
-        public const string MeterName = "Microsoft.AspNetCore.Hosting";
+        public const string MeterName = "ARWNI2S.Runtime.Hosting";
 
         private readonly Meter _meter;
         private readonly UpDownCounter<long> _activeRequestsCounter;
@@ -23,7 +23,7 @@ namespace ARWNI2S.Runtime.Hosting.Diagnostics
                 "http.server.request.duration",
                 unit: "s",
                 description: "Duration of HTTP server requests."//,
-                //advice: new InstrumentAdvice<double> { HistogramBucketBoundaries = MetricsConstants.ShortSecondsBucketBoundaries }
+                                                                //advice: new InstrumentAdvice<double> { HistogramBucketBoundaries = MetricsConstants.ShortSecondsBucketBoundaries }
                 );
         }
 
@@ -111,18 +111,18 @@ namespace ARWNI2S.Runtime.Hosting.Diagnostics
                 : statusCode;
         }
 
-    //    private static readonly FrozenDictionary<string, string> KnownMethods = FrozenDictionary.ToFrozenDictionary(new[]
-    //    {
-    //    KeyValuePair.Create(HttpMethods.Connect, HttpMethods.Connect),
-    //    KeyValuePair.Create(HttpMethods.Delete, HttpMethods.Delete),
-    //    KeyValuePair.Create(HttpMethods.Get, HttpMethods.Get),
-    //    KeyValuePair.Create(HttpMethods.Head, HttpMethods.Head),
-    //    KeyValuePair.Create(HttpMethods.Options, HttpMethods.Options),
-    //    KeyValuePair.Create(HttpMethods.Patch, HttpMethods.Patch),
-    //    KeyValuePair.Create(HttpMethods.Post, HttpMethods.Post),
-    //    KeyValuePair.Create(HttpMethods.Put, HttpMethods.Put),
-    //    KeyValuePair.Create(HttpMethods.Trace, HttpMethods.Trace)
-    //}, StringComparer.OrdinalIgnoreCase);
+        //    private static readonly FrozenDictionary<string, string> KnownMethods = FrozenDictionary.ToFrozenDictionary(new[]
+        //    {
+        //    KeyValuePair.Create(HttpMethods.Connect, HttpMethods.Connect),
+        //    KeyValuePair.Create(HttpMethods.Delete, HttpMethods.Delete),
+        //    KeyValuePair.Create(HttpMethods.Get, HttpMethods.Get),
+        //    KeyValuePair.Create(HttpMethods.Head, HttpMethods.Head),
+        //    KeyValuePair.Create(HttpMethods.Options, HttpMethods.Options),
+        //    KeyValuePair.Create(HttpMethods.Patch, HttpMethods.Patch),
+        //    KeyValuePair.Create(HttpMethods.Post, HttpMethods.Post),
+        //    KeyValuePair.Create(HttpMethods.Put, HttpMethods.Put),
+        //    KeyValuePair.Create(HttpMethods.Trace, HttpMethods.Trace)
+        //}, StringComparer.OrdinalIgnoreCase);
 
         //private static string ResolveHttpMethod(string method)
         //{

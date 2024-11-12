@@ -1,5 +1,5 @@
-﻿using ARWNI2S.Runtime.Configuration.Options;
-using ARWNI2S.Runtime.Hosting.Builder;
+﻿using ARWNI2S.Runtime.Builder;
+using ARWNI2S.Runtime.Configuration.Options;
 using Microsoft.Extensions.Hosting;
 
 namespace ARWNI2S.Runtime.Hosting.Extensions

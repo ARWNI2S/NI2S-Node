@@ -1,6 +1,7 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using ARWNI2S.Runtime.Hosting;
+using Microsoft.Extensions.Configuration;
 
-namespace ARWNI2S.Runtime.Hosting.Builder
+namespace ARWNI2S.Runtime.Builder
 {
     /// <summary>
     /// Context containing the common services on the <see cref="INodeHost" />. Some properties may be null until set by the <see cref="INodeHost" />.

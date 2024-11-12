@@ -1,6 +1,7 @@
 ﻿using ARWNI2S.Infrastructure.Engine;
 using ARWNI2S.Infrastructure.Engine.Builder;
 using ARWNI2S.Runtime.Configuration.Options;
+using ARWNI2S.Runtime.Hosting;
 using ARWNI2S.Runtime.Hosting.Extensions;
 using ARWNI2S.Runtime.Hosting.Internal;
 using Microsoft.Extensions.Configuration;
@@ -11,7 +12,7 @@ using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 
-namespace ARWNI2S.Runtime.Hosting.Builder
+namespace ARWNI2S.Runtime.Builder
 {
     public sealed class NodeEngineBuilder : IHostApplicationBuilder
     {

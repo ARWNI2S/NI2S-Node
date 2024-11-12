@@ -1,7 +1,8 @@
 ﻿using ARWNI2S.Infrastructure.Engine.Features;
+using ARWNI2S.Infrastructure.EngineParts;
 using System.Reflection;
 
-namespace ARWNI2S.Infrastructure.EngineParts
+namespace ARWNI2S.Node.Core.Engine
 {
     /// <summary>
     /// Manages the parts and features of an NI2S application.

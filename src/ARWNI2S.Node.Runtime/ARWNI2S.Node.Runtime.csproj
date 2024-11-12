@@ -22,10 +22,10 @@
 
   <ItemGroup>
     <Compile Remove="EntryPoints.cs" />
-    <Compile Remove="Hosting\Builder\ConfigureNodeHostBuilder.cs" />
-    <Compile Remove="Hosting\Builder\HostingPathResolver.cs" />
-    <Compile Remove="Hosting\Builder\NodeHostBuilder.cs" />
-    <Compile Remove="Hosting\Builder\StartupLinkerOptions.cs" />
+    <Compile Remove="Builder\ConfigureNodeHostBuilder.cs" />
+    <Compile Remove="Builder\HostingPathResolver.cs" />
+    <Compile Remove="Builder\NodeHostBuilder.cs" />
+    <Compile Remove="Builder\StartupLinkerOptions.cs" />
     <Compile Remove="Hosting\DefaultEngineContext.cs" />
     <Compile Remove="Hosting\Extensions\GDESKServiceCollectionExtensions.cs" />
     <Compile Remove="Hosting\Extensions\HostBuilderExtensions.cs" />

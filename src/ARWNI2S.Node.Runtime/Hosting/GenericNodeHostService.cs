@@ -1,7 +1,7 @@
 ﻿using ARWNI2S.Infrastructure.Engine;
 using ARWNI2S.Runtime.Configuration.Options;
+using ARWNI2S.Runtime.Diagnostics;
 using ARWNI2S.Runtime.Hosting.Builder;
-using ARWNI2S.Runtime.Hosting.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;

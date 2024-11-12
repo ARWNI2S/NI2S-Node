@@ -1,11 +1,11 @@
 ﻿using System.Diagnostics.Tracing;
 using System.Runtime.CompilerServices;
 
-namespace ARWNI2S.Runtime.Hosting.Diagnostics
+namespace ARWNI2S.Runtime.Diagnostics
 {
     internal sealed class HostingEventSource : EventSource
     {
-        public static readonly HostingEventSource Log = new HostingEventSource();
+        public static readonly HostingEventSource Log = new();
 
         private IncrementingPollingCounter _requestsPerSecondCounter;
         private PollingCounter _totalRequestsCounter;

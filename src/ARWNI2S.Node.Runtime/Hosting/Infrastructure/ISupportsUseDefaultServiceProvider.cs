@@ -1,4 +1,4 @@
-﻿using ARWNI2S.Runtime.Hosting.Builder;
+﻿using ARWNI2S.Runtime.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ARWNI2S.Runtime.Hosting.Infrastructure
