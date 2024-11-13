@@ -5,7 +5,6 @@ using ARWNI2S.Node.Core.Infrastructure.Mapper;
 using AutoMapper;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using System.Reflection;
 
 namespace ARWNI2S.Node.Core.Infrastructure
@@ -27,7 +26,7 @@ namespace ARWNI2S.Node.Core.Infrastructure
             {
                 var accessor = ServiceProvider?.GetService<IEngineContextAccessor>();
                 var context = accessor?.EngineContext;
-                return context?.RequestServices ?? ServiceProvider;
+                return context?.EngineServices ?? ServiceProvider;
             }
             return scope.ServiceProvider;
         }
@@ -101,7 +100,7 @@ namespace ARWNI2S.Node.Core.Infrastructure
         /// Add and configure services
         /// </summary>
         /// <param name="services">Collection of service descriptors</param>
-        /// <param name="configuration">Configuration of the application</param>
+        /// <param name="configuration">Configuration of the engine</param>
         public virtual void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
             //register engine
@@ -109,11 +108,11 @@ namespace ARWNI2S.Node.Core.Infrastructure
 
             //find startup configurations provided by other assemblies
             var typeFinder = Singleton<ITypeFinder>.Instance;
-            var startupConfigurations = typeFinder.FindClassesOfType<INodeStartup>();
+            var startupConfigurations = typeFinder.FindClassesOfType<INI2SStartup>();
 
             //create and sort instances of startup configurations
             var instances = startupConfigurations
-                .Select(startup => (INodeStartup)Activator.CreateInstance(startup))
+                .Select(startup => (INI2SStartup)Activator.CreateInstance(startup))
                 .OrderBy(startup => startup.Order);
 
             //configure services
@@ -142,11 +141,11 @@ namespace ARWNI2S.Node.Core.Infrastructure
 
             //find startup configurations provided by other assemblies
             var typeFinder = Singleton<ITypeFinder>.Instance;
-            var startupConfigurations = typeFinder.FindClassesOfType<INodeStartup>();
+            var startupConfigurations = typeFinder.FindClassesOfType<INI2SStartup>();
 
             //create and sort instances of startup configurations
             var instances = startupConfigurations
-                .Select(startup => (INodeStartup)Activator.CreateInstance(startup))
+                .Select(startup => (INI2SStartup)Activator.CreateInstance(startup))
                 .OrderBy(startup => startup.Order);
 
             //configure request pipeline

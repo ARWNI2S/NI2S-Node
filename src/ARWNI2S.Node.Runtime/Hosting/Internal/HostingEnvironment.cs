@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.FileProviders;
 
-namespace ARWNI2S.Runtime.Hosting.Internal
+namespace ARWNI2S.Node.Hosting.Internal
 {
 #pragma warning disable CS0618 // Type or member is obsolete
     internal sealed class HostingEnvironment : IHostingEnvironment, Microsoft.Extensions.Hosting.IHostingEnvironment, INodeHostEnvironment

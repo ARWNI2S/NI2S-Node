@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-    <RootNamespace>ARWNI2S.Runtime</RootNamespace>
+    <RootNamespace>ARWNI2S.Node</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -21,18 +21,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="EntryPoints.cs" />
     <Compile Remove="Builder\ConfigureNodeHostBuilder.cs" />
     <Compile Remove="Builder\HostingPathResolver.cs" />
     <Compile Remove="Builder\NodeHostBuilder.cs" />
     <Compile Remove="Builder\StartupLinkerOptions.cs" />
-    <Compile Remove="Hosting\DefaultEngineContext.cs" />
     <Compile Remove="Hosting\Extensions\GDESKServiceCollectionExtensions.cs" />
     <Compile Remove="Hosting\Extensions\HostBuilderExtensions.cs" />
     <Compile Remove="Hosting\Extensions\HostExtensions.cs" />
     <Compile Remove="Hosting\Extensions\NodeServerHostBuilderExtensions.cs" />
     <Compile Remove="Hosting\HostBuilderAdapter.cs" />
-    <Compile Remove="Hosting\HostingEngine.cs" />
     <Compile Remove="Hosting\Internal\NodeHost.cs" />
     <Compile Remove="Hosting\Internal\NodeHostUtilities.cs" />
     <Compile Remove="Hosting\ISupportsStartup.cs" />
@@ -54,8 +51,9 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Storage.Blobs" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Memory" />
+    <PackageReference Include="Microsoft.Extensions.FileProviders.Composite" />
     <PackageReference Include="Microsoft.Extensions.Hosting" />
-    <PackageReference Include="Microsoft.Orleans.Client" />
     <PackageReference Include="Microsoft.Orleans.Clustering.AdoNet" />
     <PackageReference Include="Microsoft.Orleans.Clustering.AzureStorage" />
     <PackageReference Include="Microsoft.Orleans.Clustering.Redis" />
@@ -67,6 +65,11 @@
     <ProjectReference Include="..\ARWNI2S.Node.Core\ARWNI2S.Node.Core.csproj" />
     <ProjectReference Include="..\ARWNI2S.Node.Data\ARWNI2S.Node.Data.csproj" />
     <ProjectReference Include="..\ARWNI2S.Node.Services\ARWNI2S.Node.Services.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Diagnostics\" />
+    <Folder Include="Features\" />
   </ItemGroup>
 
 </Project>

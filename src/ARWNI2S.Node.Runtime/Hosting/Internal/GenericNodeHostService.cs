@@ -1,14 +1,15 @@
-﻿using ARWNI2S.Infrastructure.Engine;
-using ARWNI2S.Runtime.Configuration.Options;
-using ARWNI2S.Runtime.Diagnostics;
-using ARWNI2S.Runtime.Hosting.Builder;
+﻿using ARWNI2S.Engine.Hosting;
+using ARWNI2S.Engine.Hosting.Diagnostics;
+using ARWNI2S.Infrastructure.Engine;
+using ARWNI2S.Infrastructure.Engine.Builder;
+using ARWNI2S.Node.Configuration.Options;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Diagnostics;
 
-namespace ARWNI2S.Runtime.Hosting
+namespace ARWNI2S.Node.Hosting
 {
     internal sealed partial class GenericNodeHostService : IHostedService
     {
@@ -23,11 +24,11 @@ namespace ARWNI2S.Runtime.Hosting
                                      //IEnumerable<IStartupFilter> startupFilters,
                                      IConfiguration configuration,
                                      INodeHostEnvironment hostingEnvironment,
-                                     HostingMetrics hostingMetrics)
+                                     HostingEngineMetrics hostingMetrics)
         {
             Options = options.Value;
             Engine = engine;
-            Logger = loggerFactory.CreateLogger("ARWNI2S.Runtime.Hosting.Diagnostics");
+            Logger = loggerFactory.CreateLogger("ARWNI2S.Node.Hosting.Diagnostics");
             LifecycleLogger = loggerFactory.CreateLogger("ARWNI2S.Infrastructure.Lifecycle");
             DiagnosticListener = diagnosticListener;
             ActivitySource = activitySource;
@@ -53,23 +54,23 @@ namespace ARWNI2S.Runtime.Hosting
         //public IEnumerable<IStartupFilter> StartupFilters { get; }
         public IConfiguration Configuration { get; }
         public INodeHostEnvironment HostingEnvironment { get; }
-        public HostingMetrics HostingMetrics { get; }
+        public HostingEngineMetrics HostingMetrics { get; }
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {
-            HostingEventSource.Log.HostStart();
+            HostingEngineEventSource.Log.HostStart();
 
-            //var serverAddressesFeature = Server.Features.Get<IServerAddressesFeature>();
-            //var addresses = serverAddressesFeature?.Addresses;
+            //var engineAddressesFeature = Engine.Features.Get<IEngineAddressesFeature>();
+            //var addresses = engineAddressesFeature?.Addresses;
             //if (addresses != null && !addresses.IsReadOnly && addresses.Count == 0)
             //{
             //    // We support reading "urls" from app configuration
-            //    var urls = Configuration[NodeHostDefaults.ServerUrlsKey];
+            //    var urls = Configuration[NodeHostDefaults.EngineUrlsKey];
 
             //    // But fall back to host settings
             //    if (string.IsNullOrEmpty(urls))
             //    {
-            //        urls = Options.NodeHostOptions.ServerUrls;
+            //        urls = Options.NodeHostOptions.EngineUrls;
             //    }
 
             //    var httpPorts = Configuration[NodeHostDefaults.HttpPortsKey] ?? string.Empty;
@@ -101,11 +102,11 @@ namespace ARWNI2S.Runtime.Hosting
             //        // But fall back to host settings
             //        if (!string.IsNullOrEmpty(preferHostingUrlsConfig))
             //        {
-            //            serverAddressesFeature!.PreferHostingUrls = NodeHostUtilities.ParseBool(preferHostingUrlsConfig);
+            //            engineAddressesFeature!.PreferHostingUrls = preferHostingUrlsConfig.ParseBool();
             //        }
             //        else
             //        {
-            //            serverAddressesFeature!.PreferHostingUrls = Options.NodeHostOptions.PreferHostingUrls;
+            //            engineAddressesFeature!.PreferHostingUrls = Options.NodeHostOptions.PreferHostingUrls;
             //        }
 
             //        foreach (var value in urls.Split(';', StringSplitOptions.RemoveEmptyEntries))
@@ -115,47 +116,47 @@ namespace ARWNI2S.Runtime.Hosting
             //    }
             //}
 
-            //RequestDelegate? engine = null;
+            FrameDelegate engine = null;
 
-            //try
-            //{
-            //    var configure = Options.ConfigureEngine;
+            try
+            {
+                var configure = Options.ConfigureEngine;
 
-            //    if (configure == null)
-            //    {
-            //        throw new InvalidOperationException($"No engine configured. Please specify an engine via INodeHostBuilder.UseStartup, INodeHostBuilder.Configure, or specifying the startup assembly via {nameof(NodeHostDefaults.StartupAssemblyKey)} in the web host configuration.");
-            //    }
+                if (configure == null)
+                {
+                    throw new InvalidOperationException($"No engine configured. Please specify a engine via INodeHostBuilder.UseStartup, INodeHostBuilder.Configure, or specifying the startup assembly via {nameof(NodeHostDefaults.StartupAssemblyKey)} in the web host configuration.");
+                }
 
-            //    var builder = EngineBuilderFactory.CreateBuilder(Server.Features);
+                var builder = EngineBuilderFactory.CreateBuilder(Engine.Features);
 
-            //    foreach (var filter in Enumerable.Reverse(StartupFilters))
-            //    {
-            //        configure = filter.Configure(configure);
-            //    }
+                //foreach (var filter in Enumerable.Reverse(StartupFilters))
+                //{
+                //    configure = filter.Configure(configure);
+                //}
 
-            //    configure(builder);
+                configure(builder);
 
-            //    // Build the request pipeline
-            //    engine = builder.Build();
-            //}
-            //catch (Exception ex)
-            //{
-            //    Logger.EngineError(ex);
+                // Build the request pipeline
+                engine = builder.Build();
+            }
+            catch (Exception /*ex*/)
+            {
+                //Logger.EngineError(ex);
 
-            //    if (!Options.NodeHostOptions.CaptureStartupErrors)
-            //    {
-            //        throw;
-            //    }
+                if (!Options.NodeHostOptions.CaptureStartupErrors)
+                {
+                    throw;
+                }
 
-            //    var showDetailedErrors = HostingEnvironment.IsDevelopment() || Options.NodeHostOptions.DetailedErrors;
+                var showDetailedErrors = HostingEnvironment.IsDevelopment() || Options.NodeHostOptions.DetailedErrors;
 
-            //    engine = ErrorPageBuilder.BuildErrorPageEngine(HostingEnvironment.ContentRootFileProvider, Logger, showDetailedErrors, ex);
-            //}
+                //engine = ErrorPageBuilder.BuildErrorPageEngine(HostingEnvironment.ContentRootFileProvider, Logger, showDetailedErrors, ex);
+            }
 
-            //var httpEngine = new HostingEngine(engine, Logger, DiagnosticListener, ActivitySource, Propagator, HttpContextFactory, HostingEventSource.Log, HostingMetrics);
+            var niisEngine = new HostingEngine(engine, Logger, DiagnosticListener, ActivitySource, Propagator, EngineContextFactory, HostingEngineEventSource.Log, HostingMetrics);
 
-            //await Server.StartAsync(httpEngine, cancellationToken);
-            //HostingEventSource.Log.ServerReady();
+            await Engine.StartAsync(niisEngine, cancellationToken);
+            //HostingEngineEventSource.Log.EngineReady();
 
             //if (addresses != null)
             //{
@@ -165,22 +166,22 @@ namespace ARWNI2S.Runtime.Hosting
             //    }
             //}
 
-            //if (Logger.IsEnabled(LogLevel.Debug))
-            //{
-            //    foreach (var assembly in Options.NodeHostOptions.GetFinalHostingStartupAssemblies())
-            //    {
-            //        Log.StartupAssemblyLoaded(Logger, assembly);
-            //    }
-            //}
+            if (Logger.IsEnabled(LogLevel.Debug))
+            {
+                foreach (var assembly in Options.NodeHostOptions.GetFinalHostingStartupAssemblies())
+                {
+                    Log.StartupAssemblyLoaded(Logger, assembly);
+                }
+            }
 
-            //if (Options.HostingStartupExceptions != null)
-            //{
-            //    foreach (var exception in Options.HostingStartupExceptions.InnerExceptions)
-            //    {
-            //        Logger.HostingStartupAssemblyError(exception);
-            //    }
-            //}
-            await Task.Delay(100);
+            if (Options.HostingStartupExceptions != null)
+            {
+                foreach (var exception in Options.HostingStartupExceptions.InnerExceptions)
+                {
+                    //Logger.HostingStartupAssemblyError(exception);
+                }
+            }
+            //await Task.Delay(100);
         }
 
         public async Task StopAsync(CancellationToken cancellationToken)
@@ -191,7 +192,7 @@ namespace ARWNI2S.Runtime.Hosting
             }
             finally
             {
-                HostingEventSource.Log.HostStop();
+                HostingEngineEventSource.Log.HostStop();
             }
         }
 

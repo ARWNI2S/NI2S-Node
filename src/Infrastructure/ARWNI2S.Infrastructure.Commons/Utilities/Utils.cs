@@ -9,7 +9,7 @@ using System.Text;
 namespace ARWNI2S.Infrastructure.Utilities
 {
     /// <summary>
-    /// The Utils class contains a variety of utility methods for use in application and entity code.
+    /// The Utils class contains a variety of utility methods for use in engine and entity code.
     /// </summary>
     public static class Utils
     {

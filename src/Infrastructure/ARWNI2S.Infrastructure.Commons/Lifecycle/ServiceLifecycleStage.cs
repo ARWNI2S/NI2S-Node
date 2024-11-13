@@ -36,9 +36,9 @@ namespace ARWNI2S.Infrastructure.Lifecycle
         public const int AfterRuntimeGameServices = 8100;
 
         /// <summary>
-        /// Start application layer services
+        /// Start engine layer services
         /// </summary>
-        public const int ApplicationServices = 10000;
+        public const int EngineServices = 10000;
 
         /// <summary>
         /// Service will be active after this step.

@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Globalization;
 using System.Reflection;
 
-namespace ARWNI2S.Runtime.Hosting.Internal
+namespace ARWNI2S.Node.Hosting.Internal
 {
     internal sealed class ConfigureBuilder
     {

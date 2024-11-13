@@ -1,9 +1,9 @@
-﻿using ARWNI2S.Runtime.Builder;
-using ARWNI2S.Runtime.Configuration.Options;
-using ARWNI2S.Runtime.Hosting.Extensions;
+﻿using ARWNI2S.Node.Builder;
+using ARWNI2S.Node.Configuration.Options;
+using ARWNI2S.Node.Hosting.Extensions;
 using Microsoft.Extensions.Hosting;
 
-namespace ARWNI2S.Runtime.Hosting.Infrastructure
+namespace ARWNI2S.Node.Hosting.Infrastructure
 {
     /// <summary>
     /// An interface implemented by INodeHostBuilders that handle <see cref="GenericHostNodeHostBuilderExtensions.ConfigureNodeHost(IHostBuilder, Action{INodeHostBuilder})"/>
@@ -12,7 +12,7 @@ namespace ARWNI2S.Runtime.Hosting.Infrastructure
     public interface ISupportsConfigureNodeHost
     {
         /// <summary>
-        /// Adds and configures an ASP.NET Core node application.
+        /// Adds and configures an ASP.NET Core node enginelication.
         /// </summary>
         /// <param name="configure">The delegate that configures the <see cref="INodeHostBuilder"/>.</param>
         /// <param name="configureOptions">The delegate that configures the <see cref="NodeHostBuilderOptions"/>.</param>

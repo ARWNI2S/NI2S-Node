@@ -1,6 +1,6 @@
 ﻿using StackExchange.Redis;
 
-namespace ARWNI2S.Runtime.Configuration.Options.Extensions
+namespace ARWNI2S.Node.Configuration.Options.Extensions
 {
     public static class ConnectionStringOptionsExtensions
     {

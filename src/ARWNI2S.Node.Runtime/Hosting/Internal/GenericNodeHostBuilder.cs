@@ -1,8 +1,12 @@
-﻿using ARWNI2S.Infrastructure.Engine.Builder;
-using ARWNI2S.Runtime.Builder;
-using ARWNI2S.Runtime.Configuration.Options;
-using ARWNI2S.Runtime.Diagnostics;
-using ARWNI2S.Runtime.Hosting.Infrastructure;
+﻿using ARWNI2S.Engine;
+using ARWNI2S.Engine.Hosting.Diagnostics;
+using ARWNI2S.Infrastructure.Engine;
+using ARWNI2S.Infrastructure.Engine.Builder;
+using ARWNI2S.Infrastructure.Extensions;
+using ARWNI2S.Node.Builder;
+using ARWNI2S.Node.Configuration.Options;
+using ARWNI2S.Node.Hosting.Infrastructure;
+using ARWNI2S.Node.Hosting.Startup;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -10,11 +14,12 @@ using Microsoft.Extensions.Hosting;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.ExceptionServices;
 
-namespace ARWNI2S.Runtime.Hosting.Internal
+namespace ARWNI2S.Node.Hosting.Internal
 {
-    internal sealed class GenericNodeHostBuilder : NodeHostBuilderBase, ISupportsStartup
+    internal sealed class GenericNodeHostBuilder : NodeHostBuilderBase, ISupportsHostStartup
     {
         private object _startupObject;
         private readonly object _startupKey = new();
@@ -50,7 +55,7 @@ namespace ARWNI2S.Runtime.Hosting.Internal
                 var nodehostContext = GetNodeHostBuilderContext(context);
                 var nodeHostOptions = (NodeHostOptions)context.Properties[typeof(NodeHostOptions)];
 
-                // Add the IHostingEnvironment and IEngineLifetime from ARWNI2S.Runtime.Hosting
+                // Add the IHostingEnvironment and IEngineLifetime from ARWNI2S.Node.Hosting
                 services.AddSingleton(nodehostContext.HostingEnvironment);
 #pragma warning disable CS0618 // Type or member is obsolete
                 services.AddSingleton((IHostingEnvironment)nodehostContext.HostingEnvironment);
@@ -67,17 +72,17 @@ namespace ARWNI2S.Runtime.Hosting.Internal
 
                 // REVIEW: This is bad since we don't own this type. Anybody could add one of these and it would mess things up
                 // We need to flow this differently
-                services.TryAddSingleton(sp => new DiagnosticListener("ARWNI2S.Runtime"));
+                services.TryAddSingleton(sp => new DiagnosticListener("ARWNI2S.Node"));
                 services.TryAddSingleton<DiagnosticSource>(sp => sp.GetRequiredService<DiagnosticListener>());
-                services.TryAddSingleton(sp => new ActivitySource("ARWNI2S.Runtime"));
+                services.TryAddSingleton(sp => new ActivitySource("ARWNI2S.Node"));
                 services.TryAddSingleton(DistributedContextPropagator.Current);
 
-                //services.TryAddSingleton<IFrameContextFactory, DefaultNI2SContextFactory>();
+                services.TryAddSingleton<IEngineContextFactory, DefaultEngineContextFactory>();
                 //services.TryAddScoped<IMiddlewareFactory, MiddlewareFactory>();
-                //services.TryAddSingleton<IEngineBuilderFactory, EngineBuilderFactory>();
+                services.TryAddSingleton<IEngineBuilderFactory, EngineBuilderFactory>();
 
                 services.AddMetrics();
-                services.TryAddSingleton<HostingMetrics>();
+                services.TryAddSingleton<HostingEngineMetrics>();
 
                 // IMPORTANT: This needs to run *before* direct calls on the builder (like UseStartup)
                 _hostingStartupNodeHostBuilder?.ConfigureServices(nodehostContext, services);
@@ -104,7 +109,7 @@ namespace ARWNI2S.Runtime.Hosting.Internal
 
                 services.Configure<GenericNodeHostServiceOptions>(options =>
                 {
-                    options.ConfigureEngine = app =>
+                    options.ConfigureEngine = engine =>
                     {
                         // Throw if there was any errors initializing startup
                         capture.Throw();
@@ -140,15 +145,15 @@ namespace ARWNI2S.Runtime.Hosting.Internal
                         continue;
                     }
 
-                    //foreach (var attribute in assembly.GetCustomAttributes<HostingStartupAttribute>())
-                    //{
-                    //    var hostingStartup = (IHostingStartup)Activator.CreateInstance(attribute.HostingStartupType)!;
-                    //    hostingStartup.Configure(_hostingStartupNodeHostBuilder);
-                    //}
+                    foreach (var attribute in assembly.GetCustomAttributes<HostingStartupAttribute>())
+                    {
+                        var hostingStartup = (IHostingStartup)Activator.CreateInstance(attribute.HostingStartupType)!;
+                        hostingStartup.Configure(_hostingStartupNodeHostBuilder);
+                    }
                 }
                 catch (Exception ex)
                 {
-                    // Capture any errors that happen during startup
+                    // Capture any errors that hengineen during startup
                     exceptions.Add(new InvalidOperationException($"Startup assembly {assemblyName} failed to execute. See the inner exception for more details.", ex));
                 }
             }
@@ -218,38 +223,38 @@ namespace ARWNI2S.Runtime.Hosting.Internal
 
             try
             {
-                // We cannot support methods that return IServiceProvider as that is terminal and we need ConfigureServices to compose
-                //if (typeof(IStartup).IsAssignableFrom(startupType))
-                //{
-                //    throw new NotSupportedException($"{typeof(IStartup)} isn't supported");
-                //}
-                //if (StartupLoader.HasConfigureServicesIServiceProviderDelegate(startupType, context.HostingEnvironment.EnvironmentName))
-                //{
-                //    throw new NotSupportedException($"ConfigureServices returning an {typeof(IServiceProvider)} isn't supported.");
-                //}
+                //We cannot support methods that return IServiceProvider as that is terminal and we need ConfigureServices to compose
+                if (typeof(INodeStartup).IsAssignableFrom(startupType))
+                {
+                    throw new NotSupportedException($"{typeof(INodeStartup)} isn't supported");
+                }
+                if (StartupLoader.HasConfigureServicesIServiceProviderDelegate(startupType, context.HostingEnvironment.EnvironmentName))
+                {
+                    throw new NotSupportedException($"ConfigureServices returning an {typeof(IServiceProvider)} isn't supported.");
+                }
 
-                //instance ??= ActivatorUtilities.CreateInstance(new HostServiceProvider(nodeHostBuilderContext), startupType);
-                //context.Properties[_startupKey] = instance;
+                instance ??= ActivatorUtilities.CreateInstance(new HostServiceProvider(nodeHostBuilderContext), startupType);
+                context.Properties[_startupKey] = instance;
 
-                // Startup.ConfigureServices
-                //var configureServicesBuilder = StartupLoader.FindConfigureServicesDelegate(startupType, context.HostingEnvironment.EnvironmentName);
-                //var configureServices = configureServicesBuilder.Build(instance);
+                //Startup.ConfigureServices
+                var configureServicesBuilder = StartupLoader.FindConfigureServicesDelegate(startupType, context.HostingEnvironment.EnvironmentName);
+                var configureServices = configureServicesBuilder.Build(instance);
 
-                //configureServices(services);
+                configureServices(services);
 
-                // REVIEW: We're doing this in the callback so that we have access to the hosting environment
-                // Startup.ConfigureContainer
-                //var configureContainerBuilder = StartupLoader.FindConfigureContainerDelegate(startupType, context.HostingEnvironment.EnvironmentName);
-                //if (configureContainerBuilder.MethodInfo != null)
-                //{
-                //    // Store the builder in the property bag
-                //    _builder.Properties[typeof(ConfigureContainerBuilder)] = configureContainerBuilder;
+                //REVIEW: We're doing this in the callback so that we have access to the hosting environment
+                //Startup.ConfigureContainer
+                var configureContainerBuilder = StartupLoader.FindConfigureContainerDelegate(startupType, context.HostingEnvironment.EnvironmentName);
+                if (configureContainerBuilder.MethodInfo != null)
+                {
+                    // Store the builder in the property bag
+                    _builder.Properties[typeof(ConfigureContainerBuilder)] = configureContainerBuilder;
 
-                //    InvokeContainer(this, configureContainerBuilder);
-                //}
+                    InvokeContainer(this, configureContainerBuilder);
+                }
 
-                // Resolve Configure after calling ConfigureServices and ConfigureContainer
-                //configureBuilder = StartupLoader.FindConfigureDelegate(startupType, context.HostingEnvironment.EnvironmentName);
+                //Resolve Configure after calling ConfigureServices and ConfigureContainer
+                configureBuilder = StartupLoader.FindConfigureDelegate(startupType, context.HostingEnvironment.EnvironmentName);
             }
             catch (Exception ex) when (nodeHostOptions.CaptureStartupErrors)
             {
@@ -259,7 +264,7 @@ namespace ARWNI2S.Runtime.Hosting.Internal
             // Startup.Configure
             services.Configure<GenericNodeHostServiceOptions>(options =>
             {
-                options.ConfigureEngine = app =>
+                options.ConfigureEngine = engine =>
                 {
                     // Throw if there was any errors initializing startup
                     startupError?.Throw();
@@ -267,35 +272,35 @@ namespace ARWNI2S.Runtime.Hosting.Internal
                     // Execute Startup.Configure
                     if (instance != null && configureBuilder != null)
                     {
-                        configureBuilder.Build(instance)(app);
+                        configureBuilder.Build(instance)(engine);
                     }
                 };
             });
 
-            //[UnconditionalSuppressMessage("AOT", "IL3050:RequiresDynamicCode",
-            //    Justification = "There is a runtime check for ValueType startup container. It's unlikely anyone will use a ValueType here.")]
-            //static void InvokeContainer(GenericNodeHostBuilder genericNodeHostBuilder, ConfigureContainerBuilder configureContainerBuilder)
-            //{
-            //    var containerType = configureContainerBuilder.GetContainerType();
+            [UnconditionalSuppressMessage("AOT", "IL3050:RequiresDynamicCode",
+                Justification = "There is a runtime check for ValueType startup container. It's unlikely anyone will use a ValueType here.")]
+            static void InvokeContainer(GenericNodeHostBuilder genericNodeHostBuilder, ConfigureContainerBuilder configureContainerBuilder)
+            {
+                var containerType = configureContainerBuilder.GetContainerType();
 
-            //    // Configure container uses MakeGenericType with the container type. MakeGenericType + struct container type requires IsDynamicCodeSupported.
-            //    if (containerType.IsValueType && !RuntimeFeature.IsDynamicCodeSupported)
-            //    {
-            //        throw new InvalidOperationException("A ValueType TContainerBuilder isn't supported with AOT.");
-            //    }
+                // Configure container uses MakeGenericType with the container type. MakeGenericType + struct container type requires IsDynamicCodeSupported.
+                if (containerType.IsValueType && !RuntimeFeature.IsDynamicCodeSupported)
+                {
+                    throw new InvalidOperationException("A ValueType TContainerBuilder isn't supported with AOT.");
+                }
 
-            //    var actionType = typeof(Action<,>).MakeGenericType(typeof(HostBuilderContext), containerType);
+                var actionType = typeof(Action<,>).MakeGenericType(typeof(HostBuilderContext), containerType);
 
-            //    // Get the private ConfigureContainer method on this type then close over the container type
-            //    var configureCallback = typeof(GenericNodeHostBuilder).GetMethod(nameof(ConfigureContainerImpl), BindingFlags.NonPublic | BindingFlags.Instance)!
-            //                                     .MakeGenericMethod(containerType)
-            //                                     .CreateDelegate(actionType, genericNodeHostBuilder);
+                // Get the private ConfigureContainer method on this type then close over the container type
+                var configureCallback = typeof(GenericNodeHostBuilder).GetMethod(nameof(ConfigureContainerImpl), BindingFlags.NonPublic | BindingFlags.Instance)!
+                                                 .MakeGenericMethod(containerType)
+                                                 .CreateDelegate(actionType, genericNodeHostBuilder);
 
-            //    // _builder.ConfigureContainer<T>(ConfigureContainer);
-            //    typeof(IHostBuilder).GetMethod(nameof(IHostBuilder.ConfigureContainer))!
-            //        .MakeGenericMethod(containerType)
-            //        .InvokeWithoutWrappingExceptions(genericNodeHostBuilder._builder, [configureCallback]);
-            //}
+                // _builder.ConfigureContainer<T>(ConfigureContainer);
+                typeof(IHostBuilder).GetMethod(nameof(IHostBuilder.ConfigureContainer))!
+                    .MakeGenericMethod(containerType)
+                    .InvokeWithoutWrappingExceptions(genericNodeHostBuilder._builder, [configureCallback]);
+            }
         }
 
         private void ConfigureContainerImpl<TContainer>(HostBuilderContext context, TContainer container) where TContainer : notnull
@@ -320,7 +325,7 @@ namespace ARWNI2S.Runtime.Hosting.Internal
                 {
                     services.Configure<GenericNodeHostServiceOptions>(options =>
                     {
-                        options.ConfigureEngine = app => configure(app);
+                        options.ConfigureEngine = engine => configure(engine);
                     });
                 }
             });
@@ -344,7 +349,7 @@ namespace ARWNI2S.Runtime.Hosting.Internal
                     services.Configure<GenericNodeHostServiceOptions>(options =>
                     {
                         var nodehostBuilderContext = GetNodeHostBuilderContext(context);
-                        options.ConfigureEngine = app => configure(nodehostBuilderContext, app);
+                        options.ConfigureEngine = engine => configure(nodehostBuilderContext, engine);
                     });
                 }
             });

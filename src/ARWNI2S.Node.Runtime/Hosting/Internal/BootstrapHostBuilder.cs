@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Diagnostics;
 
-namespace ARWNI2S.Runtime.Hosting.Internal
+namespace ARWNI2S.Node.Hosting.Internal
 {
     internal sealed class BootstrapHostBuilder : IHostBuilder
     {

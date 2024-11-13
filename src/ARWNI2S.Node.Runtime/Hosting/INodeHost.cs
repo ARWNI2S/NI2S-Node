@@ -1,4 +1,4 @@
-﻿namespace ARWNI2S.Runtime.Hosting
+﻿namespace ARWNI2S.Node.Hosting
 {
     //
     // Resumen:

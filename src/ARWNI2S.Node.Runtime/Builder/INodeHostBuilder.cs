@@ -1,8 +1,8 @@
-﻿using ARWNI2S.Runtime.Hosting;
+﻿using ARWNI2S.Node.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace ARWNI2S.Runtime.Builder
+namespace ARWNI2S.Node.Builder
 {
     public interface INodeHostBuilder
     {

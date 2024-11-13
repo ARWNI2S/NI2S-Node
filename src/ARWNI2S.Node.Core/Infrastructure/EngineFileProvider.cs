@@ -604,7 +604,7 @@ namespace ARWNI2S.Node.Core.Infrastructure
         #region Properties
 
         /// <summary>
-        /// Gets or sets the absolute path to the directory that contains the application content files.
+        /// Gets or sets the absolute path to the directory that contains the engine content files.
         /// </summary>
         public string RootPath { get; }
 
@@ -1202,7 +1202,7 @@ namespace ARWNI2S.Node.Core.Infrastructure
     //    #region Properties
 
     //    /// <summary>
-    //    /// Gets or sets the absolute path to the directory that contains the web-servable application content files.
+    //    /// Gets or sets the absolute path to the directory that contains the web-servable engine content files.
     //    /// </summary>
     //    public string WebRootPath { get; }
 

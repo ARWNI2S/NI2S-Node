@@ -1,8 +1,8 @@
-﻿using ARWNI2S.Runtime.Configuration.Options;
+﻿using ARWNI2S.Node.Configuration.Options;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 
-namespace ARWNI2S.Runtime.Hosting.Extensions
+namespace ARWNI2S.Node.Hosting.Extensions
 {
     internal static class HostingEnvironmentExtensions
     {

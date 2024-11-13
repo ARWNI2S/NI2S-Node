@@ -1,9 +1,9 @@
 ﻿using ARWNI2S.Infrastructure.Engine;
 using ARWNI2S.Infrastructure.Engine.Builder;
-using ARWNI2S.Runtime.Configuration.Options;
-using ARWNI2S.Runtime.Hosting;
-using ARWNI2S.Runtime.Hosting.Extensions;
-using ARWNI2S.Runtime.Hosting.Internal;
+using ARWNI2S.Node.Configuration.Options;
+using ARWNI2S.Node.Hosting;
+using ARWNI2S.Node.Hosting.Extensions;
+using ARWNI2S.Node.Hosting.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.Metrics;
@@ -12,7 +12,7 @@ using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 
-namespace ARWNI2S.Runtime.Builder
+namespace ARWNI2S.Node.Builder
 {
     public sealed class NodeEngineBuilder : IHostApplicationBuilder
     {
@@ -96,7 +96,7 @@ namespace ARWNI2S.Runtime.Builder
         }
 
         /// <summary>
-        /// Provides information about the node hosting environment an engine is running.
+        /// Provides information about the node hosting environment a engine is running.
         /// </summary>
         public IHostEnvironment Environment { get; private set; }
 

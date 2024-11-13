@@ -2,5 +2,6 @@
 {
     public interface IEvent
     {
+        void RegisterForDisposeAsync(object target);
     }
 }

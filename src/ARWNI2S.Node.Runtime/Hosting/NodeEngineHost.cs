@@ -1,16 +1,16 @@
-﻿using ARWNI2S.Infrastructure.Engine;
+﻿using ARWNI2S.Engine.Hosting.Internal;
+using ARWNI2S.Infrastructure.Engine;
 using ARWNI2S.Infrastructure.Engine.Builder;
-using ARWNI2S.Runtime.Builder;
-using ARWNI2S.Runtime.Configuration.Options;
-using ARWNI2S.Runtime.Engine;
-using ARWNI2S.Runtime.Hosting.Internal;
+using ARWNI2S.Node.Builder;
+using ARWNI2S.Node.Configuration.Options;
+using ARWNI2S.Node.Engine;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics.CodeAnalysis;
 
-namespace ARWNI2S.Runtime.Hosting
+namespace ARWNI2S.Node.Hosting
 {
     public sealed class NodeEngineHost : IHost, IEngineBuilder, IMessageRelayBuilder, IAsyncDisposable
     {
@@ -131,7 +131,7 @@ namespace ARWNI2S.Runtime.Hosting
             _host.StopAsync(cancellationToken);
 
         /// <summary>
-        /// Runs an engine and returns a Task that only completes when the token is triggered or shutdown is triggered.
+        /// Runs a engine and returns a Task that only completes when the token is triggered or shutdown is triggered.
         /// </summary>
         /// <param name="url">The URL to listen to if the server hasn't been configured directly.</param>
         /// <returns>
@@ -144,7 +144,7 @@ namespace ARWNI2S.Runtime.Hosting
         }
 
         /// <summary>
-        /// Runs an engine and block the calling thread until host shutdown.
+        /// Runs a engine and block the calling thread until host shutdown.
         /// </summary>
         /// <param name="url">The URL to listen to if the server hasn't been configured directly.</param>
         public void Run([StringSyntax(StringSyntaxAttribute.Uri)] string url = null)
@@ -163,8 +163,8 @@ namespace ARWNI2S.Runtime.Hosting
         /// </summary>
         public ValueTask DisposeAsync() => ((IAsyncDisposable)_host).DisposeAsync();
 
-        internal FrameDelegate BuildRequestDelegate() => EngineBuilder.Build();
-        FrameDelegate IEngineBuilder.Build() => BuildRequestDelegate();
+        internal FrameDelegate BuildFrameDelegate() => EngineBuilder.Build();
+        FrameDelegate IEngineBuilder.Build() => BuildFrameDelegate();
 
         // REVIEW: Should this be wrapping another type?
         IEngineBuilder IEngineBuilder.New()

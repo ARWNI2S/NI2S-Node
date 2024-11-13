@@ -1,8 +1,8 @@
-﻿using ARWNI2S.Runtime.Builder;
-using ARWNI2S.Runtime.Configuration.Options;
+﻿using ARWNI2S.Node.Builder;
+using ARWNI2S.Node.Configuration.Options;
 using Microsoft.Extensions.Hosting;
 
-namespace ARWNI2S.Runtime.Hosting.Extensions
+namespace ARWNI2S.Node.Hosting.Extensions
 {
     public static class GenericHostBuilderExtensions
     {
@@ -14,7 +14,7 @@ namespace ARWNI2S.Runtime.Hosting.Extensions
         /// <remarks>
         /// The following defaults are applied to the <see cref="IHostBuilder"/>:
         /// <list type="bullet">
-        ///     <item><description>use Kestrel as the node server and configure it using the engine's configuration providers</description></item>
+        ///     <item><description>use Niis Kernel as the node engine and configure it using the engine's configuration providers</description></item>
         ///     <item><description>configure <see cref="IHostEnvironment.ContentRootFileProvider"/> to include static node assets from projects referenced by the entry assembly during development</description></item>
         ///     <item><description>adds the HostFiltering middleware</description></item>
         ///     <item><description>adds the ForwardedHeaders middleware if ARWNI2S_FORWARDEDHEADERS_ENABLED=true,</description></item>

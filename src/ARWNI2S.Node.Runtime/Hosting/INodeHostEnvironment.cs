@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 
-namespace ARWNI2S.Runtime.Hosting
+namespace ARWNI2S.Node.Hosting
 {
     /// <summary>
     /// Provides information about the node hosting environment an application is running in.

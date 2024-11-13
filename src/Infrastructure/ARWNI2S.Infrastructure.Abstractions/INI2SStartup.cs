@@ -7,7 +7,7 @@ namespace ARWNI2S.Infrastructure
     /// <summary>
     /// Represents object for the configuring services and middleware on application startup
     /// </summary>
-    public partial interface INodeStartup
+    public partial interface INI2SStartup
     {
         /// <summary>
         /// Add and configure any of the middleware

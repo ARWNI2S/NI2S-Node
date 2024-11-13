@@ -8,8 +8,8 @@ namespace ARWNI2S.Infrastructure.EngineParts
     [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = false)]
     public sealed class ProvideEnginePartFactoryAttribute : Attribute
     {
-        private readonly Type _applicationPartFactoryType;
-        private readonly string _applicationPartFactoryTypeName;
+        private readonly Type _enginePartFactoryType;
+        private readonly string _enginePartFactoryTypeName;
 
         /// <summary>
         /// Creates a new instance of <see cref="ProvideEnginePartFactoryAttribute"/> with the specified type.
@@ -17,7 +17,7 @@ namespace ARWNI2S.Infrastructure.EngineParts
         /// <param name="factoryType">The factory type.</param>
         public ProvideEnginePartFactoryAttribute(Type factoryType)
         {
-            _applicationPartFactoryType = factoryType ?? throw new ArgumentNullException(nameof(factoryType));
+            _enginePartFactoryType = factoryType ?? throw new ArgumentNullException(nameof(factoryType));
         }
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace ARWNI2S.Infrastructure.EngineParts
                 throw new ArgumentException(LocalizedStrings.ArgumentCannotBeNullOrEmpty, nameof(factoryTypeName));
             }
 
-            _applicationPartFactoryTypeName = factoryTypeName;
+            _enginePartFactoryTypeName = factoryTypeName;
         }
 
         /// <summary>
@@ -40,8 +40,8 @@ namespace ARWNI2S.Infrastructure.EngineParts
         /// <returns></returns>
         public Type GetFactoryType()
         {
-            return _applicationPartFactoryType ??
-                Type.GetType(_applicationPartFactoryTypeName!, throwOnError: true)!;
+            return _enginePartFactoryType ??
+                Type.GetType(_enginePartFactoryTypeName!, throwOnError: true)!;
         }
     }
 }

@@ -4,9 +4,9 @@ using ARWNI2S.Node.Core.Configuration;
 namespace ARWNI2S.Node.Core.Caching;
 
 /// <summary>
-/// Represents a per request cache manager
+/// Represents a per frame cache manager
 /// </summary>
-public partial class PerRequestCacheManager : CacheKeyService, IShortTermCacheManager
+public partial class PerFrameCacheManager : CacheKeyService, IShortTermCacheManager
 {
     #region Fields
 
@@ -16,7 +16,7 @@ public partial class PerRequestCacheManager : CacheKeyService, IShortTermCacheMa
 
     #region Ctor
 
-    public PerRequestCacheManager(NI2SSettings ni2sSettings) : base(ni2sSettings)
+    public PerFrameCacheManager(NI2SSettings ni2sSettings) : base(ni2sSettings)
     {
         _concurrentCollection = new ConcurrentTrie<object>();
     }

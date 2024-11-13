@@ -28,17 +28,17 @@ namespace ARWNI2S.Node.Core.Entities.Localization
         public bool AutomaticallyDetectLanguage { get; set; }
 
         /// <summary>
-        /// A value indicating whether to load all LocaleStringResource records on application startup
+        /// A value indicating whether to load all LocaleStringResource records on engine startup
         /// </summary>
         public bool LoadAllLocaleRecordsOnStartup { get; set; }
 
         /// <summary>
-        /// A value indicating whether to load all LocalizedProperty records on application startup
+        /// A value indicating whether to load all LocalizedProperty records on engine startup
         /// </summary>
         public bool LoadAllLocalizedPropertiesOnStartup { get; set; }
 
         /// <summary>
-        /// A value indicating whether to load all search engine friendly names (slugs) on application startup
+        /// A value indicating whether to load all search engine friendly names (slugs) on engine startup
         /// </summary>
         public bool LoadAllVirtualFileRecordsOnStartup { get; set; }
 

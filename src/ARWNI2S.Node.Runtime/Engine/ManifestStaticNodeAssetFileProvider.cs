@@ -6,7 +6,7 @@ using System.Collections;
 using System.Text.Json.Serialization;
 using System.Text.Json;
 
-namespace ARWNI2S.Runtime
+namespace ARWNI2S.Node
 {
     internal sealed partial class ManifestStaticNodeAssetFileProvider : IFileProvider
     {

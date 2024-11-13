@@ -1,7 +1,7 @@
-﻿using ARWNI2S.Runtime.Builder;
+﻿using ARWNI2S.Node.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace ARWNI2S.Runtime.Hosting.Infrastructure
+namespace ARWNI2S.Node.Hosting.Infrastructure
 {
     internal interface ISupportsUseDefaultServiceProvider
     {

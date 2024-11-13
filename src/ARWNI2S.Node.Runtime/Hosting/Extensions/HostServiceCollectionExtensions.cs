@@ -1,6 +1,8 @@
 ﻿using ARWNI2S.Engine.Hosting.Extensions;
 using ARWNI2S.Infrastructure;
 using ARWNI2S.Infrastructure.Configuration;
+using ARWNI2S.Node.Builder;
+using ARWNI2S.Node.Configuration.Options.Extensions;
 using ARWNI2S.Node.Core;
 using ARWNI2S.Node.Core.Caching;
 using ARWNI2S.Node.Core.Configuration;
@@ -8,8 +10,6 @@ using ARWNI2S.Node.Core.Infrastructure;
 using ARWNI2S.Node.Core.Network;
 using ARWNI2S.Node.Services.Clustering;
 using ARWNI2S.Node.Services.Network;
-using ARWNI2S.Runtime.Builder;
-using ARWNI2S.Runtime.Configuration.Options.Extensions;
 using Azure.Data.Tables;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,7 +18,7 @@ using Orleans.Configuration;
 using StackExchange.Redis;
 using System.Net;
 
-namespace ARWNI2S.Runtime.Hosting.Extensions
+namespace ARWNI2S.Node.Hosting.Extensions
 {
     /// <summary>
     /// Represents extensions of IServiceCollection
@@ -26,10 +26,10 @@ namespace ARWNI2S.Runtime.Hosting.Extensions
     public static class HostServiceCollectionExtensions
     {
         /// <summary>
-        /// Configure base application settings
+        /// Configure base enginelication settings
         /// </summary>
         /// <param name="services">Collection of service descriptors</param>
-        /// <param name="builder">A builder for applications and services</param>
+        /// <param name="builder">A builder for enginelications and services</param>
         public static void ConfigureEngineSettings(this IServiceCollection services,
             NodeEngineBuilder builder)
         {
@@ -61,10 +61,10 @@ namespace ARWNI2S.Runtime.Hosting.Extensions
         }
 
         /// <summary>
-        /// Add services to the application and configure service provider
+        /// Add services to the enginelication and configure service provider
         /// </summary>
         /// <param name="services">Collection of service descriptors</param>
-        /// <param name="builder">A builder for applications and services</param>
+        /// <param name="builder">A builder for enginelications and services</param>
         public static void ConfigureEngineServices(this IServiceCollection services,
             NodeEngineBuilder builder)
         {
@@ -73,7 +73,7 @@ namespace ARWNI2S.Runtime.Hosting.Extensions
 
             //add core services
             //services.AddGDESK(builder => {
-            //    //// Registrar GDESKConfig para cargarlo desde appsettings.json
+            //    //// Registrar GDESKConfig para cargarlo desde enginesettings.json
             //    //services.Configure<GDESKConfig>(config);
 
             //    // Registrar GDESKConfig como un servicio accesible desde el contenedor
@@ -190,7 +190,7 @@ namespace ARWNI2S.Runtime.Hosting.Extensions
                     }
                 });
             }
-       
+
 
 
         }
@@ -207,7 +207,7 @@ namespace ARWNI2S.Runtime.Hosting.Extensions
         }
 
         /// <summary>
-        /// Adds services required for application session state
+        /// Adds services required for enginelication session state
         /// </summary>
         /// <param name="services">Collection of service descriptors</param>
         public static void AddNI2SSession(this IServiceCollection services)
@@ -430,7 +430,7 @@ namespace ARWNI2S.Runtime.Hosting.Extensions
     //}
 
     ///// <summary>
-    ///// Add and configure MVRM for the application
+    ///// Add and configure MVRM for the enginelication
     ///// </summary>
     ///// <param name="services">Collection of service descriptors</param>
     ///// <returns>A builder for configuring MVRM services</returns>

@@ -15,12 +15,12 @@ namespace ARWNI2S.Infrastructure.EngineParts
         /// <summary>
         /// Gets the sequence of <see cref="EnginePart"/> instances that are created by this instance of <see cref="DefaultEnginePartFactory"/>.
         /// <para>
-        /// Applications may use this method to get the same behavior as this factory produces during MVRM's default part discovery.
+        /// Engines may use this method to get the same behavior as this factory produces during MVRM's default part discovery.
         /// </para>
         /// </summary>
         /// <param name="assembly">The <see cref="Assembly"/>.</param>
         /// <returns>The sequence of <see cref="EnginePart"/> instances.</returns>
-        public static IEnumerable<EnginePart> GetDefaultApplicationParts(Assembly assembly)
+        public static IEnumerable<EnginePart> GetDefaultEngineParts(Assembly assembly)
         {
             ArgumentNullException.ThrowIfNull(assembly);
 
@@ -28,9 +28,9 @@ namespace ARWNI2S.Infrastructure.EngineParts
         }
 
         /// <inheritdoc />
-        public override IEnumerable<EnginePart> GetApplicationParts(Assembly assembly)
+        public override IEnumerable<EnginePart> GetEngineParts(Assembly assembly)
         {
-            return GetDefaultApplicationParts(assembly);
+            return GetDefaultEngineParts(assembly);
         }
     }
 }

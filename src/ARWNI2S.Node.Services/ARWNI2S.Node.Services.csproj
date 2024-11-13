@@ -17,6 +17,8 @@
     <Compile Remove="Authentication\AuthenticationMiddleware.cs" />
     <Compile Remove="Authentication\CookieAuthenticationService.cs" />
     <Compile Remove="Authentication\External\ExternalAuthenticationService.cs" />
+    <Compile Remove="Authentication\External\IExternalAuthenticationRegistrar.cs" />
+    <Compile Remove="Authentication\External\IExternalAuthenticationService.cs" />
     <Compile Remove="Authentication\TokenAuthenticationService.cs" />
     <Compile Remove="Users\UserRegistrationService.cs" />
   </ItemGroup>

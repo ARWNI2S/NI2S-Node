@@ -1,11 +1,11 @@
-﻿using ARWNI2S.Runtime.Builder;
-using ARWNI2S.Runtime.Configuration.Options;
-using ARWNI2S.Runtime.Hosting.Infrastructure;
+﻿using ARWNI2S.Node.Builder;
+using ARWNI2S.Node.Configuration.Options;
+using ARWNI2S.Node.Hosting.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace ARWNI2S.Runtime.Hosting.Internal
+namespace ARWNI2S.Node.Hosting.Internal
 {
     /// <summary>
     /// A non-buildable <see cref="IHostBuilder"/> for <see cref="NodeEngineBuilder"/>.

@@ -1,4 +1,4 @@
-﻿namespace ARWNI2S.Runtime.Hosting.Infrastructure
+﻿namespace ARWNI2S.Node.Hosting.Infrastructure
 {
     internal static class HostingPathResolver
     {

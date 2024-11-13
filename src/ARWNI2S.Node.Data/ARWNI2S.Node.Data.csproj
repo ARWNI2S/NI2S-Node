@@ -5,6 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="DataProviders\Interceptors\**" />
+    <EmbeddedResource Remove="DataProviders\Interceptors\**" />
+    <None Remove="DataProviders\Interceptors\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Mapping\Builders\Users\ExternalAuthenticationRecordBuilder.cs" />
     <Compile Remove="Mapping\Builders\Users\UserAddressMappingBuilder.cs" />
     <Compile Remove="Mapping\Builders\Users\UserAttributeBuilder.cs" />
@@ -18,7 +24,6 @@
     <PackageReference Include="FluentMigrator.Runner" />
     <PackageReference Include="linq2db" />
     <PackageReference Include="Microsoft.Data.SqlClient" />
-    <PackageReference Include="MiniProfiler.AspNetCore" />
     <PackageReference Include="MySqlConnector" />
     <PackageReference Include="Npgsql" />
     <PackageReference Include="System.Configuration.ConfigurationManager" />

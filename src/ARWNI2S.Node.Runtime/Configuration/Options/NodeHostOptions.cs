@@ -1,11 +1,11 @@
 ﻿using ARWNI2S.Infrastructure.Extensions;
-using ARWNI2S.Runtime.Hosting;
+using ARWNI2S.Node.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using System.Globalization;
 using System.Reflection;
 
-namespace ARWNI2S.Runtime.Configuration.Options
+namespace ARWNI2S.Node.Configuration.Options
 {
     internal sealed class NodeHostOptions
     {

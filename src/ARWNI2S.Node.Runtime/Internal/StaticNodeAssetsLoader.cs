@@ -1,10 +1,10 @@
-﻿using ARWNI2S.Runtime.Hosting;
+﻿using ARWNI2S.Node.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.FileProviders;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
-namespace ARWNI2S.Runtime.Internal
+namespace ARWNI2S.Node.Internal
 {
     /// <summary>
     /// Loader for static web assets

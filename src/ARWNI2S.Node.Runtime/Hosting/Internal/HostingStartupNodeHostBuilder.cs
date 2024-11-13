@@ -1,16 +1,16 @@
 ﻿using ARWNI2S.Infrastructure.Engine.Builder;
-using ARWNI2S.Runtime.Builder;
-using ARWNI2S.Runtime.Configuration.Options;
-using ARWNI2S.Runtime.Hosting.Infrastructure;
+using ARWNI2S.Node.Builder;
+using ARWNI2S.Node.Configuration.Options;
+using ARWNI2S.Node.Hosting.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Diagnostics.CodeAnalysis;
 
-namespace ARWNI2S.Runtime.Hosting.Internal
+namespace ARWNI2S.Node.Hosting.Internal
 {
     // We use this type to capture calls to the INodeHostBuilder so the we can properly order calls to
     // to GenericHostNodeHostBuilder.
-    internal sealed class HostingStartupNodeHostBuilder : INodeHostBuilder, ISupportsStartup, ISupportsUseDefaultServiceProvider
+    internal sealed class HostingStartupNodeHostBuilder : INodeHostBuilder, ISupportsHostStartup, ISupportsUseDefaultServiceProvider
     {
         private readonly GenericNodeHostBuilder _builder;
         private Action<NodeHostBuilderContext, IConfigurationBuilder> _configureConfiguration;

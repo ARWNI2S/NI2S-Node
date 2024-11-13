@@ -1,18 +1,18 @@
 ﻿using ARWNI2S.Infrastructure.Engine.Builder;
-using ARWNI2S.Runtime.Builder;
-using ARWNI2S.Runtime.Configuration.Options;
-using ARWNI2S.Runtime.Hosting.Infrastructure;
+using ARWNI2S.Node.Builder;
+using ARWNI2S.Node.Configuration.Options;
+using ARWNI2S.Node.Hosting.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Diagnostics.CodeAnalysis;
 
-namespace ARWNI2S.Runtime.Hosting.Internal
+namespace ARWNI2S.Node.Hosting.Internal
 {
     /// <summary>
     /// A non-buildable <see cref="INodeHostBuilder"/> for <see cref="NodeEngineBuilder"/>.
     /// Use <see cref="NodeEngineBuilder.Build"/> to build the <see cref="NodeEngineBuilder"/>.
     /// </summary>
-    public sealed class ConfigureNodeHostBuilder : INodeHostBuilder, ISupportsStartup
+    public sealed class ConfigureNodeHostBuilder : INodeHostBuilder, ISupportsHostStartup
     {
         private readonly INodeHostEnvironment _environment;
         private readonly ConfigurationManager _configuration;
@@ -94,7 +94,7 @@ namespace ARWNI2S.Runtime.Hosting.Internal
         /// <inheritdoc />
         public INodeHostBuilder ConfigureServices(Action<IServiceCollection> configureServices)
         {
-            return ConfigureServices((NodeHostBuilderContext context, IServiceCollection services) => configureServices(services));
+            return ConfigureServices((context, services) => configureServices(services));
         }
 
         /// <inheritdoc />
@@ -162,22 +162,22 @@ namespace ARWNI2S.Runtime.Hosting.Internal
             return this;
         }
 
-        INodeHostBuilder ISupportsStartup.Configure(Action<IEngineBuilder> configure)
+        INodeHostBuilder ISupportsHostStartup.Configure(Action<IEngineBuilder> configure)
         {
             throw new NotSupportedException("Configure() is not supported by NodeEngineBuilder.NodeHost. Use the NodeEngine returned by NodeEngineBuilder.Build() instead.");
         }
 
-        INodeHostBuilder ISupportsStartup.Configure(Action<NodeHostBuilderContext, IEngineBuilder> configure)
+        INodeHostBuilder ISupportsHostStartup.Configure(Action<NodeHostBuilderContext, IEngineBuilder> configure)
         {
             throw new NotSupportedException("Configure() is not supported by NodeEngineBuilder.NodeHost. Use the NodeEngine returned by NodeEngineBuilder.Build() instead.");
         }
 
-        INodeHostBuilder ISupportsStartup.UseStartup([DynamicallyAccessedMembers(StartupLinkerOptions.Accessibility)] Type startupType)
+        INodeHostBuilder ISupportsHostStartup.UseStartup([DynamicallyAccessedMembers(StartupLinkerOptions.Accessibility)] Type startupType)
         {
             throw new NotSupportedException("UseStartup() is not supported by NodeEngineBuilder.NodeHost. Use the NodeEngine returned by NodeEngineBuilder.Build() instead.");
         }
 
-        INodeHostBuilder ISupportsStartup.UseStartup<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicMethods)] TStartup>(Func<NodeHostBuilderContext, TStartup> startupFactory)
+        INodeHostBuilder ISupportsHostStartup.UseStartup<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicMethods)] TStartup>(Func<NodeHostBuilderContext, TStartup> startupFactory)
         {
             throw new NotSupportedException("UseStartup() is not supported by NodeEngineBuilder.NodeHost. Use the NodeEngine returned by NodeEngineBuilder.Build() instead.");
         }

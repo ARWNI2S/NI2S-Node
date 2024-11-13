@@ -9,14 +9,13 @@ using FluentMigrator.Runner.Initialization;
 using FluentMigrator.Runner.Processors;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 
 namespace ARWNI2S.Node.Data
 {
     /// <summary>
     /// Represents object for the configuring DB context on application startup
     /// </summary>
-    public partial class NodeEngineDbStartup : INodeStartup
+    public partial class NodeEngineDbStartup : INI2SStartup
     {
         /// <summary>
         /// Add and configure any of the middleware

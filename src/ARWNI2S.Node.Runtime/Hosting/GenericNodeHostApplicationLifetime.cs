@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Hosting;
 
-namespace ARWNI2S.Runtime.Hosting
+namespace ARWNI2S.Node.Hosting
 {
 #pragma warning disable CS0618 // Type or member is obsolete
     internal sealed class GenericNodeHostApplicationLifetime : IApplicationLifetime

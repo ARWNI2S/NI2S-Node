@@ -2,6 +2,6 @@
 {
     public interface IEngineContextAccessor
     {
-        ExecutionContext EngineContext { get; }
+        EngineContext EngineContext { get; set; }
     }
 }

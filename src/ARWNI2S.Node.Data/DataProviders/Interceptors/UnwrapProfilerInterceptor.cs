@@ -1,6 +1,6 @@
 using LinqToDB;
 using LinqToDB.Interceptors;
-using StackExchange.Profiling.Data;
+//using StackExchange.Profiling.Data;
 using System.Data.Common;
 
 namespace ARWNI2S.Node.Data.DataProviders.Interceptors

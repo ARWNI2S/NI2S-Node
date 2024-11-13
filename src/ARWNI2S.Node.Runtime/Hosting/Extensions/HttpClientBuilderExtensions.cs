@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using System.Net;
 
-namespace ARWNI2S.Runtime.Hosting.Extensions
+namespace ARWNI2S.Node.Hosting.Extensions
 {
     /// <summary>
     /// Represents extensions of IHttpClientBuilder

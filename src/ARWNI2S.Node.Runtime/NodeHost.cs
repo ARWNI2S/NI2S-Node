@@ -1,11 +1,12 @@
-﻿using ARWNI2S.Runtime.Builder;
-using ARWNI2S.Runtime.Configuration.Options;
-using ARWNI2S.Runtime.Hosting;
-using ARWNI2S.Runtime.Internal;
+﻿using ARWNI2S.Engine.Options;
+using ARWNI2S.Node.Builder;
+using ARWNI2S.Node.Hosting;
+using ARWNI2S.Node.Hosting.Extensions;
+using ARWNI2S.Node.Internal;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace ARWNI2S.Runtime
+namespace ARWNI2S.Node
 {
     /// <summary>
     /// Provides convenience methods for creating instances of <see cref="INodeHost"/> and <see cref="INodeHostBuilder"/> with pre-configured defaults.
@@ -22,21 +23,21 @@ namespace ARWNI2S.Runtime
                 }
             });
 
-            //ConfigureNodeDefaultsWorker(
-            //    builder.UseKestrel(ConfigureKestrel),
-            //    services =>
-            //    {
-            //        services.AddRouting();
-            //    });
+            ConfigureNodeDefaultsWorker(
+                builder.UseEngineCore(ConfigureEngineCore),
+                services =>
+                {
+                    //services.AddRouting();
+                });
 
-            //builder
-            //    .UseIIS()
-            //    .UseIISIntegration();
+            builder
+                .UseNetwork()
+                .UseNI2SIntegration();
         }
 
-        private static void ConfigureKestrel(NodeHostBuilderContext builderContext, KestrelServerOptions options)
+        private static void ConfigureEngineCore(NodeHostBuilderContext builderContext, EngineCoreOptions options)
         {
-            //options.Configure(builderContext.Configuration.GetSection("Kestrel"), reloadOnChange: true);
+            options.Configure(builderContext.Configuration.GetSection("EngineCore"), reloadOnChange: true);
         }
 
         private static void ConfigureNodeDefaultsWorker(INodeHostBuilder builder, Action<IServiceCollection> configureRouting)
@@ -67,7 +68,7 @@ namespace ARWNI2S.Runtime
                 // This avoids the overhead of calling AddRoutingCore multiple times on app startup.
                 if (configureRouting == null)
                 {
-                    services.AddRoutingCore();
+                    //services.AddRoutingCore();
                 }
                 else
                 {

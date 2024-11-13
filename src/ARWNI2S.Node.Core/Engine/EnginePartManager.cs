@@ -5,7 +5,7 @@ using System.Reflection;
 namespace ARWNI2S.Node.Core.Engine
 {
     /// <summary>
-    /// Manages the parts and features of an NI2S application.
+    /// Manages the parts and features of an NI2S engine.
     /// </summary>
     public class EnginePartManager
     {
@@ -24,7 +24,7 @@ namespace ARWNI2S.Node.Core.Engine
         /// multiple <see cref="EnginePart"/> instances resolve equivalent feature values.
         /// </para>
         /// </summary>
-        public IList<EnginePart> ApplicationParts { get; } = [];
+        public IList<EnginePart> EngineParts { get; } = [];
 
         /// <summary>
         /// Populates the given <paramref name="feature"/> using the list of
@@ -42,13 +42,13 @@ namespace ARWNI2S.Node.Core.Engine
 
             foreach (var provider in FeatureProviders.OfType<IEngineFeatureProvider<TFeature>>())
             {
-                provider.PopulateFeature(ApplicationParts, feature);
+                provider.PopulateFeature(EngineParts, feature);
             }
         }
 
         internal void PopulateDefaultParts(string entryAssemblyName)
         {
-            var assemblies = GetApplicationPartAssemblies(entryAssemblyName);
+            var assemblies = GetEnginePartAssemblies(entryAssemblyName);
 
             var seenAssemblies = new HashSet<Assembly>();
 
@@ -56,33 +56,33 @@ namespace ARWNI2S.Node.Core.Engine
             {
                 if (!seenAssemblies.Add(assembly))
                 {
-                    // "assemblies" may contain duplicate values, but we want unique ApplicationPart instances.
+                    // "assemblies" may contain duplicate values, but we want unique EnginePart instances.
                     // Note that we prefer using a HashSet over Distinct since the latter isn't
                     // guaranteed to preserve the original ordering.
                     continue;
                 }
 
-                var partFactory = EnginePartFactory.GetApplicationPartFactory(assembly);
-                foreach (var applicationPart in partFactory.GetApplicationParts(assembly))
+                var partFactory = EnginePartFactory.GetEnginePartFactory(assembly);
+                foreach (var enginePart in partFactory.GetEngineParts(assembly))
                 {
-                    ApplicationParts.Add(applicationPart);
+                    EngineParts.Add(enginePart);
                 }
             }
         }
 
-        private static IEnumerable<Assembly> GetApplicationPartAssemblies(string entryAssemblyName)
+        private static IEnumerable<Assembly> GetEnginePartAssemblies(string entryAssemblyName)
         {
             var entryAssembly = Assembly.Load(new AssemblyName(entryAssemblyName));
 
-            // Use ApplicationPartAttribute to get the closure of direct or transitive dependencies
+            // Use EnginePartAttribute to get the closure of direct or transitive dependencies
             // that reference NI2S.
             var assembliesFromAttributes = entryAssembly.GetCustomAttributes<EnginePartAttribute>()
                 .Select(name => Assembly.Load(name.AssemblyName))
                 .OrderBy(assembly => assembly.FullName, StringComparer.Ordinal)
                 .SelectMany(GetAssemblyClosure);
 
-            // The SDK will not include the entry assembly as an application part. We'll explicitly list it
-            // and have it appear before all other assemblies \ ApplicationParts.
+            // The SDK will not include the entry assembly as an engine part. We'll explicitly list it
+            // and have it appear before all other assemblies \ EngineParts.
             return GetAssemblyClosure(entryAssembly)
                 .Concat(assembliesFromAttributes);
         }

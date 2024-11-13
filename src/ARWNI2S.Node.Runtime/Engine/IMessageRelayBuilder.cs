@@ -1,6 +1,6 @@
 ﻿using ARWNI2S.Infrastructure.Engine.Builder;
 
-namespace ARWNI2S.Runtime.Engine
+namespace ARWNI2S.Node.Engine
 {
     /// <summary>
     /// Defines a contract for a route builder in an application. A route builder specifies the routes for

@@ -1,15 +1,15 @@
 ﻿using Microsoft.Extensions.FileProviders;
 
-namespace ARWNI2S.Runtime.Hosting
+namespace ARWNI2S.Node.Hosting
 {
     /// <summary>
     /// Provides information about the node hosting environment an application is running in.
     /// <para>
     ///  This type is obsolete and will be removed in a future version.
-    ///  The recommended alternative is ARWNI2S.Runtime.Hosting.INodeHostEnvironment.
+    ///  The recommended alternative is ARWNI2S.Node.Hosting.INodeHostEnvironment.
     /// </para>
     /// </summary>
-    [Obsolete("This type is obsolete and will be removed in a future version. The recommended alternative is ARWNI2S.Runtime.Hosting.INodeHostEnvironment.", error: false)]
+    [Obsolete("This type is obsolete and will be removed in a future version. The recommended alternative is ARWNI2S.Node.Hosting.INodeHostEnvironment.", error: false)]
     public interface IHostingEnvironment
     {
         /// <summary>
