@@ -22,19 +22,32 @@
 
   <ItemGroup>
     <Compile Remove="Builder\ConfigureNodeHostBuilder.cs" />
+    <Compile Remove="Builder\EngineBuilderFactory.cs" />
     <Compile Remove="Builder\HostingPathResolver.cs" />
+    <Compile Remove="Builder\NiisBuilder.cs" />
+    <Compile Remove="Builder\NodeEngineBuilder.cs" />
     <Compile Remove="Builder\NodeHostBuilder.cs" />
     <Compile Remove="Builder\StartupLinkerOptions.cs" />
+    <Compile Remove="Configuration\Options\NodeEngineOptions.cs" />
+    <Compile Remove="EntryPoints.cs" />
     <Compile Remove="Hosting\Extensions\GDESKServiceCollectionExtensions.cs" />
+    <Compile Remove="Hosting\Extensions\GenericHostBuilderExtensions.cs" />
+    <Compile Remove="Hosting\Extensions\GenericHostNodeHostBuilderExtensions.cs" />
     <Compile Remove="Hosting\Extensions\HostBuilderExtensions.cs" />
     <Compile Remove="Hosting\Extensions\HostExtensions.cs" />
+    <Compile Remove="Hosting\Extensions\HostServiceCollectionExtensions.cs" />
+    <Compile Remove="Hosting\Extensions\NodeHostBuilderEngineExtensions.cs" />
     <Compile Remove="Hosting\Extensions\NodeServerHostBuilderExtensions.cs" />
     <Compile Remove="Hosting\HostBuilderAdapter.cs" />
+    <Compile Remove="Hosting\Internal\GenericNodeHostBuilder.cs" />
+    <Compile Remove="Hosting\Internal\GenericNodeHostService.cs" />
+    <Compile Remove="Hosting\Internal\HostingStartupNodeHostBuilder.cs" />
     <Compile Remove="Hosting\Internal\NodeHost.cs" />
     <Compile Remove="Hosting\Internal\NodeHostUtilities.cs" />
     <Compile Remove="Hosting\ISupportsStartup.cs" />
     <Compile Remove="Hosting\ISupportsUseDefaultServiceProvider.cs" />
     <Compile Remove="Hosting\MultipleServerHostBuilder.cs" />
+    <Compile Remove="Hosting\NodeEngineHost.cs" />
     <Compile Remove="Hosting\NodeHost.cs" />
     <Compile Remove="Hosting\NodeHostBuilder.cs" />
     <Compile Remove="Hosting\NodeHostBuilder.old.cs" />
@@ -42,6 +55,7 @@
     <Compile Remove="Hosting\NodeServerHostBuilder.cs" />
     <Compile Remove="Hosting\ServerHostBuilderAdapter.cs" />
     <Compile Remove="LocalNodeContext.cs" />
+    <Compile Remove="NodeHost.cs" />
     <Compile Remove="NodeRuntimeService.cs" />
     <Compile Remove="NodeServerExtensions.cs" />
     <Compile Remove="NodeWorkContext.cs" />
@@ -50,26 +64,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Storage.Blobs" />
-    <PackageReference Include="Microsoft.Extensions.Caching.Memory" />
     <PackageReference Include="Microsoft.Extensions.FileProviders.Composite" />
     <PackageReference Include="Microsoft.Extensions.Hosting" />
-    <PackageReference Include="Microsoft.Orleans.Clustering.AdoNet" />
-    <PackageReference Include="Microsoft.Orleans.Clustering.AzureStorage" />
-    <PackageReference Include="Microsoft.Orleans.Clustering.Redis" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Runtime\ARWNI2S.Engine.Core\ARWNI2S.Engine.Core.csproj" />
-    <ProjectReference Include="..\..\..\Runtime\ARWNI2S.Network\ARWNI2S.Network.csproj" />
     <ProjectReference Include="..\ARWNI2S.Node.Core\ARWNI2S.Node.Core.csproj" />
     <ProjectReference Include="..\ARWNI2S.Node.Data\ARWNI2S.Node.Data.csproj" />
     <ProjectReference Include="..\ARWNI2S.Node.Services\ARWNI2S.Node.Services.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Diagnostics\" />
-    <Folder Include="Features\" />
   </ItemGroup>
 
 </Project>

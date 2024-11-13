@@ -1,14 +1,9 @@
 ﻿using ARWNI2S.Node.Builder;
 using ARWNI2S.Node.Configuration.Options;
-using ARWNI2S.Node.Hosting.Extensions;
 using Microsoft.Extensions.Hosting;
 
 namespace ARWNI2S.Node.Hosting.Infrastructure
 {
-    /// <summary>
-    /// An interface implemented by INodeHostBuilders that handle <see cref="GenericHostNodeHostBuilderExtensions.ConfigureNodeHost(IHostBuilder, Action{INodeHostBuilder})"/>
-    /// directly.
-    /// </summary>
     public interface ISupportsConfigureNodeHost
     {
         /// <summary>

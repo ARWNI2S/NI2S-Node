@@ -9,8 +9,8 @@ using System.Diagnostics.CodeAnalysis;
 namespace ARWNI2S.Node.Hosting.Internal
 {
     /// <summary>
-    /// A non-buildable <see cref="INodeHostBuilder"/> for <see cref="NodeEngineBuilder"/>.
-    /// Use <see cref="NodeEngineBuilder.Build"/> to build the <see cref="NodeEngineBuilder"/>.
+    /// A non-buildable <see cref="INodeHostBuilder"/> for NodeEngineBuilder/>.
+    /// Use NodeEngineBuilder.Build to build the NodeEngineBuilder/>.
     /// </summary>
     public sealed class ConfigureNodeHostBuilder : INodeHostBuilder, ISupportsHostStartup
     {
@@ -29,7 +29,7 @@ namespace ARWNI2S.Node.Hosting.Internal
 
         INodeHost INodeHostBuilder.Build()
         {
-            throw new NotSupportedException($"Call {nameof(NodeEngineBuilder)}.{nameof(NodeEngineBuilder.Build)}() instead.");
+            throw new NotSupportedException($"Call NodeEngineBuilder.Build() instead.");
         }
 
         /// <inheritdoc />
