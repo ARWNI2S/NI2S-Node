@@ -5,11 +5,11 @@
     /// </summary>
     public interface IEngineBuilderFactory
     {
-        ///// <summary>
-        ///// Create an <see cref="IEngineBuilder" /> builder given a <paramref name="engineFeatures" />
-        ///// </summary>
-        ///// <param name="engineFeatures">An <see cref="IFeatureCollection"/> of NI2S features.</param>
-        ///// <returns>An <see cref="IEngineBuilder"/> configured with <paramref name="engineFeatures"/>.</returns>
+        /// <summary>
+        /// Create an <see cref="IEngineBuilder" /> builder given a <paramref name="engineFeatures" />
+        /// </summary>
+        /// <param name="engineFeatures">An <see cref="IFeatureCollection"/> of NI2S features.</param>
+        /// <returns>An <see cref="IEngineBuilder"/> configured with <paramref name="engineFeatures"/>.</returns>
         IEngineBuilder CreateBuilder(IFeatureCollection engineFeatures);
     }
 }

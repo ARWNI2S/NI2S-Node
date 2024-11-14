@@ -20,6 +20,7 @@
     <Compile Remove="Authentication\External\IExternalAuthenticationRegistrar.cs" />
     <Compile Remove="Authentication\External\IExternalAuthenticationService.cs" />
     <Compile Remove="Authentication\TokenAuthenticationService.cs" />
+    <Compile Remove="Clustering\ClusteringService.cs" />
     <Compile Remove="Plugins\IUploadService.cs" />
     <Compile Remove="Plugins\UploadService.cs" />
     <Compile Remove="Users\UserRegistrationService.cs" />
