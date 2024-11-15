@@ -6,6 +6,8 @@ using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("ARWNI2S.Runtime")]
 
+[assembly: InternalsVisibleTo("ARWNI2S.CodeGenerator")]
+
 [assembly: InternalsVisibleTo("ARWNI2S.Engine.Core")]
 [assembly: InternalsVisibleTo("ARWNI2S.Network.Core")]
 

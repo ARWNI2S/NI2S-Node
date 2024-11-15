@@ -11,11 +11,26 @@
         object Id { get; }
     }
 
+    public interface IDataEntity : IEntity
+    {
+        /// <summary>
+        /// Gets or sets the entity identifier
+        /// </summary>
+        new int Id { get; set; }
+
+        object IEntity.Id => Id;
+    }
+
     /// <summary>
     /// Represents the base interface for entities
     /// </summary>
-    public interface IEntityProxy : IEntity
+    public interface IObjectEntity : IEntity
     {
+        /// <summary>
+        /// Gets or sets the entity identifier
+        /// </summary>
+        public Guid UUID { get; }
 
+        object IEntity.Id => UUID;
     }
 }
