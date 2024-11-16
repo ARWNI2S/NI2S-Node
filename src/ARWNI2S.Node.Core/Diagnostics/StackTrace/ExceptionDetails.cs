@@ -1,4 +1,4 @@
-﻿namespace ARWNI2S.Infrastructure.Debug
+﻿namespace ARWNI2S.Node.Core.Diagnostics.StackTrace
 {
     /// <summary>
     /// Contains details for individual exception messages.

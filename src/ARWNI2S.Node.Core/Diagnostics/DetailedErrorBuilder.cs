@@ -4,11 +4,11 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
 using System.Reflection;
 
-namespace ARWNI2S.Node.Hosting.Diagnostics
+namespace ARWNI2S.Node.Core.Diagnostics
 {
     internal class DetailedErrorBuilder
     {
-        public static UpdateDelegate BuildErrorPageApplication(
+        public static UpdateDelegate BuildEngineErrorFrame(
              IFileProvider contentRootFileProvider,
              ILogger logger,
              bool showDetailedErrors,

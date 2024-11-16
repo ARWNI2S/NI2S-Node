@@ -1,6 +1,6 @@
-﻿using ARWNI2S.Infrastructure.Debug;
+﻿using ARWNI2S.Node.Core.Diagnostics.StackTrace;
 
-namespace ARWNI2S.Node.Hosting.Diagnostics
+namespace ARWNI2S.Node.Core.Diagnostics
 {
     internal class DetailedErrorModel
     {

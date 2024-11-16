@@ -82,11 +82,15 @@ namespace ARWNI2S.Infrastructure
 
         #region RESERVED UUIDS
 
-        public static readonly Guid _UUID_WORLD_ACTOR = new("00000001-0001-0001-0001-000000000001");
+        public static readonly Guid _UUID_CORE_SYSTEM = new("FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF");
+        public static readonly Guid _UUID_SYSTEM_HOST = new("00000001-0001-0001-0001-000000000001");
 
         #endregion
 
         #region EVENT TYPES
+
+        public static readonly int NULLEVENT_TYPE = 0;
+        public static readonly int NULLEVENT_CODE = 0;
 
         public static readonly int EVENTTYPE_ERRORCRITICAL = -9999;
 

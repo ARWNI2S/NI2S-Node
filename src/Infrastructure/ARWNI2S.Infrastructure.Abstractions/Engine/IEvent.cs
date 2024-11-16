@@ -17,7 +17,7 @@
 
         int EventTypeId { get; internal set; }
 
-        EventCacheMode CacheControl { get; internal set; };
+        EventCacheMode CacheControl { get; internal set; }
 
         string Tags { get; internal set; }
 

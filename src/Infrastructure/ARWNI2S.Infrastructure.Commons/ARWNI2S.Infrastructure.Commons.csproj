@@ -6,13 +6,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Dispatching\**" />
-    <EmbeddedResource Remove="Dispatching\**" />
-    <None Remove="Dispatching\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Remove="EngineParts\EnginePartManager.cs" />
+    <Compile Remove="Diagnostics\**" />
+    <EmbeddedResource Remove="Diagnostics\**" />
+    <None Remove="Diagnostics\**" />
   </ItemGroup>
 
   <ItemGroup>
