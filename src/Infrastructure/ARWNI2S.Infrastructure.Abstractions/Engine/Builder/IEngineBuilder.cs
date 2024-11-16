@@ -4,12 +4,14 @@
     {
         IServiceProvider EngineServices { get; set; }
 
+        IFeatureCollection EngineFeatures { get; }
+
         IDictionary<string, object> Properties { get; }
 
-        FrameDelegate Build();
+        UpdateDelegate Build();
 
         IEngineBuilder New();
 
-        IEngineBuilder Use(Func<FrameDelegate, FrameDelegate> middleware);
+        IEngineBuilder Use(Func<UpdateDelegate, UpdateDelegate> frameProcessor);
     }
 }

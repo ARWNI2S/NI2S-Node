@@ -1,5 +1,5 @@
-﻿using ARWNI2S.Node.Builder;
-using ARWNI2S.Node.Configuration.Options;
+﻿using ARWNI2S.Node.Hosting.Builder;
+using ARWNI2S.Node.Hosting.Configuration.Options;
 using Microsoft.Extensions.Hosting;
 
 namespace ARWNI2S.Node.Hosting.Infrastructure

@@ -1,4 +1,4 @@
-﻿namespace ARWNI2S.Node.Engine
+﻿namespace ARWNI2S.Node.Hosting.Engine
 {
     ///// <summary>
     ///// Provides a collection of <see cref="Endpoint"/> instances.

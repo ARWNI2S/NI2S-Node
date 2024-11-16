@@ -5,7 +5,7 @@ using Microsoft.Extensions.Hosting;
 using System.Globalization;
 using System.Reflection;
 
-namespace ARWNI2S.Node.Configuration.Options
+namespace ARWNI2S.Node.Hosting.Configuration.Options
 {
     internal sealed class NodeHostOptions
     {

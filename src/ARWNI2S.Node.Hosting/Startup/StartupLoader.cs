@@ -1,4 +1,4 @@
-﻿using ARWNI2S.Node.Configuration.Options;
+﻿using ARWNI2S.Node.Hosting.Configuration.Options;
 using ARWNI2S.Node.Hosting.Internal;
 using Microsoft.Extensions.DependencyInjection;
 using System.Diagnostics.CodeAnalysis;

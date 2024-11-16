@@ -2,66 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-    <RootNamespace>ARWNI2S.Node</RootNamespace>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Remove="ASP_TMP\**" />
-    <Compile Remove="ENDPOINTS\**" />
-    <Compile Remove="Infrastructure\**" />
-    <Compile Remove="Profiling\**" />
-    <EmbeddedResource Remove="ASP_TMP\**" />
-    <EmbeddedResource Remove="ENDPOINTS\**" />
-    <EmbeddedResource Remove="Infrastructure\**" />
-    <EmbeddedResource Remove="Profiling\**" />
-    <None Remove="ASP_TMP\**" />
-    <None Remove="ENDPOINTS\**" />
-    <None Remove="Infrastructure\**" />
-    <None Remove="Profiling\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Remove="Builder\ConfigureNodeHostBuilder.cs" />
-    <Compile Remove="Builder\EngineBuilderFactory.cs" />
-    <Compile Remove="Builder\HostingPathResolver.cs" />
-    <Compile Remove="Builder\NiisBuilder.cs" />
-    <Compile Remove="Builder\NodeEngineBuilder.cs" />
-    <Compile Remove="Builder\NodeHostBuilder.cs" />
-    <Compile Remove="Builder\StartupLinkerOptions.cs" />
-    <Compile Remove="Configuration\Options\NodeEngineOptions.cs" />
-    <Compile Remove="EntryPoints.cs" />
-    <Compile Remove="Hosting\Extensions\GDESKServiceCollectionExtensions.cs" />
-    <Compile Remove="Hosting\Extensions\GenericHostBuilderExtensions.cs" />
-    <Compile Remove="Hosting\Extensions\GenericHostNodeHostBuilderExtensions.cs" />
-    <Compile Remove="Hosting\Extensions\HostBuilderExtensions.cs" />
-    <Compile Remove="Hosting\Extensions\HostExtensions.cs" />
-    <Compile Remove="Hosting\Extensions\HostServiceCollectionExtensions.cs" />
-    <Compile Remove="Hosting\Extensions\NodeHostBuilderEngineExtensions.cs" />
-    <Compile Remove="Hosting\Extensions\NodeServerHostBuilderExtensions.cs" />
-    <Compile Remove="Hosting\HostBuilderAdapter.cs" />
-    <Compile Remove="Hosting\Internal\GenericNodeHostBuilder.cs" />
-    <Compile Remove="Hosting\Internal\GenericNodeHostService.cs" />
-    <Compile Remove="Hosting\Internal\HostingStartupNodeHostBuilder.cs" />
-    <Compile Remove="Hosting\Internal\NodeHost.cs" />
-    <Compile Remove="Hosting\Internal\NodeHostUtilities.cs" />
-    <Compile Remove="Hosting\ISupportsStartup.cs" />
-    <Compile Remove="Hosting\ISupportsUseDefaultServiceProvider.cs" />
-    <Compile Remove="Hosting\MultipleServerHostBuilder.cs" />
-    <Compile Remove="Hosting\NodeEngineHost.cs" />
-    <Compile Remove="Hosting\NodeHost.cs" />
-    <Compile Remove="Hosting\NodeHostBuilder.cs" />
-    <Compile Remove="Hosting\NodeHostBuilder.old.cs" />
-    <Compile Remove="Hosting\NodeRuntimeHost.cs" />
-    <Compile Remove="Hosting\NodeServerHostBuilder.cs" />
-    <Compile Remove="Hosting\ServerHostBuilderAdapter.cs" />
-    <Compile Remove="LocalNodeContext.cs" />
-    <Compile Remove="NodeHost.cs" />
-    <Compile Remove="NodeRuntimeService.cs" />
-    <Compile Remove="NodeServerExtensions.cs" />
-    <Compile Remove="NodeWorkContext.cs" />
-    <Compile Remove="RuntimeContext.cs" />
-    <Compile Remove="RuntimeContextAccessor.cs" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.FileProviders.Composite" />

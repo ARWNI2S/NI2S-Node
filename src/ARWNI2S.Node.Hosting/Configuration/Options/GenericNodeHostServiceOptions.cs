@@ -1,6 +1,6 @@
 ﻿using ARWNI2S.Infrastructure.Engine.Builder;
 
-namespace ARWNI2S.Node.Configuration.Options
+namespace ARWNI2S.Node.Hosting.Configuration.Options
 {
     internal sealed class GenericNodeHostServiceOptions
     {

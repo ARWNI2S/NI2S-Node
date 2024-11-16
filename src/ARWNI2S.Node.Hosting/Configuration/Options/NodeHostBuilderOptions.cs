@@ -1,4 +1,4 @@
-﻿namespace ARWNI2S.Node.Configuration.Options
+﻿namespace ARWNI2S.Node.Hosting.Configuration.Options
 {
     /// <summary>
     /// Builder options for use with ConfigureNodeHost.

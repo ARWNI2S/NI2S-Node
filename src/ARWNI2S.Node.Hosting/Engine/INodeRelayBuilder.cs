@@ -1,12 +1,12 @@
 ﻿using ARWNI2S.Infrastructure.Engine.Builder;
 
-namespace ARWNI2S.Node.Engine
+namespace ARWNI2S.Node.Hosting.Engine
 {
     /// <summary>
-    /// Defines a contract for a route builder in an application. A route builder specifies the routes for
-    /// an application.
+    /// Defines a contract for a realy builder in a node. A relay builder specifies the network
+    /// handlig for a node engine.
     /// </summary>
-    public interface IMessageRelayBuilder
+    public interface INodeRelayBuilder
     {
         /// <summary>
         /// Creates a new <see cref="IEngineBuilder"/>.

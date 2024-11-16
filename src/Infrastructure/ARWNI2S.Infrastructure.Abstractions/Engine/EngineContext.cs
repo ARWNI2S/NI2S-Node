@@ -16,6 +16,7 @@
         //public abstract IEvent Event { get; }
 
         //public abstract IEvent Callback { get; }
+        public abstract IEvent Callback { get; }
 
         ///// <summary>
         ///// Gets information about the underlying connection for this message.
@@ -47,6 +48,7 @@
         /// Gets or sets a unique identifier to represent this message in trace logs.
         /// </summary>
         public abstract string TraceIdentifier { get; set; }
+        public int Error { get; internal set; }
 
         ///// <summary>
         ///// Gets or sets the object used to manage user session data for this message.

@@ -1,4 +1,4 @@
-﻿using ARWNI2S.Node.Configuration.Options;
+﻿using ARWNI2S.Node.Hosting.Configuration.Options;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 

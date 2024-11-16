@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace ARWNI2S.Node.Builder
+namespace ARWNI2S.Node.Hosting.Builder
 {
     public interface INodeHostBuilder
     {

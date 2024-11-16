@@ -85,5 +85,11 @@ namespace ARWNI2S.Infrastructure
         public static readonly Guid _UUID_WORLD_ACTOR = new("00000001-0001-0001-0001-000000000001");
 
         #endregion
+
+        #region EVENT TYPES
+
+        public static readonly int EVENTTYPE_ERRORCRITICAL = -9999;
+
+        #endregion
     }
 }

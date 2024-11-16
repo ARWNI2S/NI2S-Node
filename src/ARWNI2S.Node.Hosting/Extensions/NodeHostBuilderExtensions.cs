@@ -1,5 +1,5 @@
 ﻿using ARWNI2S.Infrastructure.Engine.Builder;
-using ARWNI2S.Node.Builder;
+using ARWNI2S.Node.Hosting.Builder;
 using ARWNI2S.Node.Hosting.Infrastructure;
 using ARWNI2S.Node.Hosting.Startup;
 using Microsoft.Extensions.DependencyInjection;

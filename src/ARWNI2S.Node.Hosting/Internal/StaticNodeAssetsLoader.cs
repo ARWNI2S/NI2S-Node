@@ -4,7 +4,7 @@ using Microsoft.Extensions.FileProviders;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
-namespace ARWNI2S.Node.Internal
+namespace ARWNI2S.Node.Hosting.Internal
 {
     /// <summary>
     /// Loader for static web assets

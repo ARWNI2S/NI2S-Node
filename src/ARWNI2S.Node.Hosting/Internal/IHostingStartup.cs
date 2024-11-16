@@ -1,4 +1,4 @@
-﻿using ARWNI2S.Node.Builder;
+﻿using ARWNI2S.Node.Hosting.Builder;
 
 namespace ARWNI2S.Node.Hosting.Internal
 {

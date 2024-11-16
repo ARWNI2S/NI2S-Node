@@ -5,9 +5,8 @@
     /// </summary>
     public enum ErrorCode : int
     {
-        //TODO: Host Error Codes
-        //NodeHost = 90000,
-        //NodeHost_Error_090001 = NodeHost + 1,
+        NodeHost = 90000,
+        HostingStartupAssemblyException = NodeHost + 1,
         //NodeHost_Error_090002 = NodeHost + 2,
         //NodeHost_Error_090003 = NodeHost + 3,
         //NodeHost_Error_090004 = NodeHost + 4,
@@ -31,7 +30,7 @@
         //NodeAsyncTaskError = NodeHost + 90,
         //AsyncBufferAllocation = NodeHost + 91,
         //AsyncNodeException = NodeHost + 92,
-        //NodeNodeException = NodeHost + 93,
+        EngineStartupException = NodeHost + 93,
 
         //NodeHostConfigLoadError = NodeHost_Error_090003,
 
