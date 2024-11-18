@@ -6,7 +6,7 @@ namespace ARWNI2S.Node.Data.Mapping.Builders.Localization
     /// <summary>
     /// Represents a language entity builder
     /// </summary>
-    public partial class LanguageBuilder : ServerEntityBuilder<Language>
+    public partial class LanguageBuilder : DataEntityBuilder<Language>
     {
         #region Methods
 

@@ -8,7 +8,7 @@ namespace ARWNI2S.Node.Data.Mapping.Builders.Security
     /// <summary>
     /// Represents a ACL record entity builder
     /// </summary>
-    public partial class AclRecordBuilder : ServerEntityBuilder<AclRecord>
+    public partial class AclRecordBuilder : DataEntityBuilder<AclRecord>
     {
         #region Methods
 

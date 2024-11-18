@@ -5,7 +5,7 @@ namespace ARWNI2S.Node.Data.Mapping.Builders
     /// <summary>
     /// Represents database entity builder
     /// </summary>
-    public interface IEntityBuilder
+    public interface IDataEntityBuilder
     {
         /// <summary>
         /// Apply entity configuration

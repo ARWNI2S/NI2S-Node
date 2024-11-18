@@ -6,7 +6,7 @@ namespace ARWNI2S.Node.Data.Mapping.Builders.Directory
     /// <summary>
     /// Represents a measure weight entity builder
     /// </summary>
-    public partial class MeasureWeightBuilder : ServerEntityBuilder<MeasureWeight>
+    public partial class MeasureWeightBuilder : DataEntityBuilder<MeasureWeight>
     {
         #region Methods
 

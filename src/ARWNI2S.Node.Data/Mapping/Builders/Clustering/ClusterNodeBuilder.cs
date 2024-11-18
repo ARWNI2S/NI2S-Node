@@ -6,7 +6,7 @@ namespace ARWNI2S.Node.Data.Mapping.Builders.Clustering
     /// <summary>
     /// Represents a node entity builder
     /// </summary>
-    public partial class NodeBuilder : ServerEntityBuilder<ClusterNode>
+    public partial class ClusterNodeBuilder : DataEntityBuilder<ClusterNode>
     {
         #region Methods
 

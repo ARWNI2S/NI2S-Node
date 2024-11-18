@@ -8,7 +8,7 @@ namespace ARWNI2S.Node.Data.Mapping.Builders.Security
     /// <summary>
     /// Represents a permission record user role mapping entity builder
     /// </summary>
-    public partial class PermissionRecordUserRoleMappingBuilder : ServerEntityBuilder<PermissionRecordUserRoleMapping>
+    public partial class PermissionRecordUserRoleMappingBuilder : DataEntityBuilder<PermissionRecordUserRoleMapping>
     {
         #region Methods
 

@@ -9,7 +9,6 @@
         IDictionary<string, object> Properties { get; }
 
         UpdateDelegate Build();
-
         IEngineBuilder New();
 
         IEngineBuilder Use(Func<UpdateDelegate, UpdateDelegate> frameProcessor);

@@ -6,7 +6,7 @@ namespace ARWNI2S.Node.Data.Mapping.Builders.Directory
     /// <summary>
     /// Represents a currency entity builder
     /// </summary>
-    public partial class CurrencyBuilder : ServerEntityBuilder<Currency>
+    public partial class CurrencyBuilder : DataEntityBuilder<Currency>
     {
         #region Methods
 

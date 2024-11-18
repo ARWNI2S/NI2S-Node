@@ -7,7 +7,7 @@ namespace ARWNI2S.Node.Data.Mapping.Builders.Directory
     /// <summary>
     /// Represents a calendar measure time mapping entity builder
     /// </summary>
-    public partial class CalendarMeasureTimeMappingBuilder : ServerEntityBuilder<CalendarMeasureTimeMapping>
+    public partial class CalendarMeasureTimeMappingBuilder : DataEntityBuilder<CalendarMeasureTimeMapping>
     {
         #region Methods
 

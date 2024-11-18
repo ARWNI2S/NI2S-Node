@@ -8,7 +8,7 @@ namespace ARWNI2S.Node.Data.Mapping.Builders.Session
     /// <summary>
     /// Represents a ACL record entity builder
     /// </summary>
-    public partial class NodeUserSessionBuilder : ServerEntityBuilder<SessionRecord>
+    public partial class NodeUserSessionBuilder : DataEntityBuilder<SessionRecord>
     {
         #region Methods
 

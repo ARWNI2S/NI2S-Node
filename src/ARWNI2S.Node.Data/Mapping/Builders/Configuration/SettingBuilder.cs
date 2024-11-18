@@ -6,7 +6,7 @@ namespace ARWNI2S.Node.Data.Mapping.Builders.Configuration
     /// <summary>
     /// Represents a setting entity builder
     /// </summary>
-    public partial class SettingBuilder : ServerEntityBuilder<Setting>
+    public partial class SettingBuilder : DataEntityBuilder<Setting>
     {
         #region Methods
 

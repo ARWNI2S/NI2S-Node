@@ -132,11 +132,11 @@ namespace ARWNI2S.Node.Data.Extensions
         public static void RetrieveTableExpressions(this CreateTableExpressionBuilder builder, Type type)
         {
             var typeFinder = Singleton<ITypeFinder>.Instance
-                .FindClassesOfType(typeof(IEntityBuilder))
+                .FindClassesOfType(typeof(IDataEntityBuilder))
                 .FirstOrDefault(t => t.BaseType?.GetGenericArguments().Contains(type) ?? false);
 
             if (typeFinder != null)
-                (NodeEngineContext.Current.ResolveUnregistered(typeFinder) as IEntityBuilder)?.MapEntity(builder);
+                (NodeEngineContext.Current.ResolveUnregistered(typeFinder) as IDataEntityBuilder)?.MapEntity(builder);
 
             var expression = builder.Expression;
             if (!expression.Columns.Any(c => c.IsPrimaryKey))

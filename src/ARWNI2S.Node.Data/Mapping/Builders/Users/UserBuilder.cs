@@ -6,7 +6,7 @@ namespace ARWNI2S.Node.Data.Mapping.Builders.Users
     /// <summary>
     /// Represents a user entity builder
     /// </summary>
-    public partial class UserBuilder : ServerEntityBuilder<User>
+    public partial class UserBuilder : DataEntityBuilder<User>
     {
         #region Methods
 

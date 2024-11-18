@@ -7,7 +7,7 @@ namespace ARWNI2S.Node.Data.Mapping.Builders.Users
     /// <summary>
     /// Represents a user user role mapping entity builder
     /// </summary>
-    public partial class UserUserRoleMappingBuilder : ServerEntityBuilder<UserUserRoleMapping>
+    public partial class UserUserRoleMappingBuilder : DataEntityBuilder<UserUserRoleMapping>
     {
         #region Methods
 

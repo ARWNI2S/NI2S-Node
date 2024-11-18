@@ -6,7 +6,7 @@ namespace ARWNI2S.Node.Data.Mapping.Builders.Security
     /// <summary>
     /// Represents a permission record entity builder
     /// </summary>
-    public partial class PermissionRecordBuilder : ServerEntityBuilder<PermissionRecord>
+    public partial class PermissionRecordBuilder : DataEntityBuilder<PermissionRecord>
     {
         #region Methods
 

@@ -7,7 +7,7 @@ namespace ARWNI2S.Node.Data.Mapping.Builders.Localization
     /// <summary>
     /// Represents a localized property entity builder
     /// </summary>
-    public partial class LocalizedPropertyBuilder : ServerEntityBuilder<LocalizedProperty>
+    public partial class LocalizedPropertyBuilder : DataEntityBuilder<LocalizedProperty>
     {
         #region Methods
 

@@ -6,7 +6,7 @@ namespace ARWNI2S.Node.Data.Mapping.Builders.ScheduleTasks
     /// <summary>
     /// Represents a schedule task entity builder
     /// </summary>
-    public partial class ScheduleTaskBuilder : ServerEntityBuilder<ScheduleTask>
+    public partial class ScheduleTaskBuilder : DataEntityBuilder<ScheduleTask>
     {
         #region Methods
 

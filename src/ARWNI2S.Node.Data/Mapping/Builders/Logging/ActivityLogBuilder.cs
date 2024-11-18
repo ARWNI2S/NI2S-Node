@@ -8,7 +8,7 @@ namespace ARWNI2S.Node.Data.Mapping.Builders.Logging
     /// <summary>
     /// Represents a activity log entity builder
     /// </summary>
-    public partial class ActivityLogBuilder : ServerEntityBuilder<ActivityLog>
+    public partial class ActivityLogBuilder : DataEntityBuilder<ActivityLog>
     {
         #region Methods
 

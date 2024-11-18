@@ -6,7 +6,7 @@ namespace ARWNI2S.Node.Data.Mapping.Builders.Directory
     /// <summary>
     /// Represents a measure temperature entity builder
     /// </summary>
-    public partial class MeasureTemperatureBuilder : ServerEntityBuilder<MeasureTemperature>
+    public partial class MeasureTemperatureBuilder : DataEntityBuilder<MeasureTemperature>
     {
         #region Methods
 

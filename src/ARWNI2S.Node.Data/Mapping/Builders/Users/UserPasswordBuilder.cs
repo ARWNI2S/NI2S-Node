@@ -7,7 +7,7 @@ namespace ARWNI2S.Node.Data.Mapping.Builders.Users
     /// <summary>
     /// Represents a user password entity builder
     /// </summary>
-    public partial class UserPasswordBuilder : ServerEntityBuilder<UserPassword>
+    public partial class UserPasswordBuilder : DataEntityBuilder<UserPassword>
     {
         #region Methods
 

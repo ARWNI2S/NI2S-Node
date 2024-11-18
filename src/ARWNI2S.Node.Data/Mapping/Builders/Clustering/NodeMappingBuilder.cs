@@ -7,7 +7,7 @@ namespace ARWNI2S.Node.Data.Mapping.Builders.Clustering
     /// <summary>
     /// Represents a server mapping entity builder
     /// </summary>
-    public partial class NodeMappingBuilder : ServerEntityBuilder<NodeMapping>
+    public partial class NodeMappingBuilder : DataEntityBuilder<NodeMapping>
     {
         #region Methods
 

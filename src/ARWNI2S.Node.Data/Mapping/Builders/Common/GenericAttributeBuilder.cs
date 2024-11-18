@@ -6,7 +6,7 @@ namespace ARWNI2S.Node.Data.Mapping.Builders.Common
     /// <summary>
     /// Represents a generic attribute entity builder
     /// </summary>
-    public partial class GenericAttributeBuilder : ServerEntityBuilder<GenericAttribute>
+    public partial class GenericAttributeBuilder : DataEntityBuilder<GenericAttribute>
     {
         #region Methods
 

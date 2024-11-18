@@ -7,7 +7,7 @@ namespace ARWNI2S.Node.Data.Mapping.Builders.Localization
     /// <summary>
     /// Represents a locale string resource entity builder
     /// </summary>
-    public partial class LocaleStringResourceBuilder : ServerEntityBuilder<LocaleStringResource>
+    public partial class LocaleStringResourceBuilder : DataEntityBuilder<LocaleStringResource>
     {
         #region Methods
 
