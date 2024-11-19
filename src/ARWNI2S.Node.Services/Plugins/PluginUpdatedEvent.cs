@@ -1,19 +1,19 @@
 ﻿namespace ARWNI2S.Node.Services.Plugins
 {
     /// <summary>
-    /// Represents the module updated event
+    /// Represents the plugin updated event
     /// </summary>
-    public partial class ModuleUpdatedEvent
+    public partial class PluginUpdatedEvent
     {
         #region Ctor
 
         /// <summary>
         /// Ctor
         /// </summary>
-        /// <param name="module">Updated module</param>
-        public ModuleUpdatedEvent(ModuleDescriptor module)
+        /// <param name="plugin">Updated plugin</param>
+        public PluginUpdatedEvent(PluginDescriptor plugin)
         {
-            Module = module;
+            Plugin = plugin;
         }
 
         #endregion
@@ -21,9 +21,9 @@
         #region Properties
 
         /// <summary>
-        /// Updated module
+        /// Updated plugin
         /// </summary>
-        public ModuleDescriptor Module { get; }
+        public PluginDescriptor Plugin { get; }
 
         #endregion
     }

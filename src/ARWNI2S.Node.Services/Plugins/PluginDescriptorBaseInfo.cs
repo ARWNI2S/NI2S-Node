@@ -3,12 +3,12 @@
 namespace ARWNI2S.Node.Services.Plugins
 {
     /// <summary>
-    /// Represents base info of module descriptor
+    /// Represents base info of plugin descriptor
     /// </summary>
-    public partial class ModuleDescriptorBaseInfo : IComparable<ModuleDescriptorBaseInfo>
+    public partial class PluginDescriptorBaseInfo : IComparable<PluginDescriptorBaseInfo>
     {
         /// <summary>
-        /// Gets or sets the module system name
+        /// Gets or sets the plugin system name
         /// </summary>
         [JsonProperty(PropertyName = "SystemName")]
         public virtual string SystemName { get; set; }
@@ -20,27 +20,27 @@ namespace ARWNI2S.Node.Services.Plugins
         public virtual string Version { get; set; }
 
         /// <summary>
-        /// Compares this instance with a specified ModuleDescriptorBaseInfo object
+        /// Compares this instance with a specified PluginDescriptorBaseInfo object
         /// </summary>
-        /// <param name="other">The ModuleDescriptorBaseInfo to compare with this instance</param>
+        /// <param name="other">The PluginDescriptorBaseInfo to compare with this instance</param>
         /// <returns>An integer that indicates whether this instance precedes, follows, or appears in the same position in the sort order as the specified parameter</returns>
-        public int CompareTo(ModuleDescriptorBaseInfo other)
+        public int CompareTo(PluginDescriptorBaseInfo other)
         {
             return string.Compare(SystemName, other.SystemName, StringComparison.InvariantCultureIgnoreCase);
         }
 
         /// <summary>
-        /// Determines whether this instance and another specified ModuleDescriptor object have the same SystemName
+        /// Determines whether this instance and another specified PluginDescriptor object have the same SystemName
         /// </summary>
-        /// <param name="value">The ModuleDescriptor to compare to this instance</param>
+        /// <param name="value">The PluginDescriptor to compare to this instance</param>
         /// <returns>True if the SystemName of the value parameter is the same as the SystemName of this instance; otherwise, false</returns>
         public override bool Equals(object value)
         {
-            return SystemName?.Equals((value as ModuleDescriptorBaseInfo)?.SystemName) ?? false;
+            return SystemName?.Equals((value as PluginDescriptorBaseInfo)?.SystemName) ?? false;
         }
 
         /// <summary>
-        /// Returns the hash code for this module descriptor
+        /// Returns the hash code for this plugin descriptor
         /// </summary>
         /// <returns>A 32-bit signed integer hash code</returns>
         public override int GetHashCode()
@@ -49,10 +49,10 @@ namespace ARWNI2S.Node.Services.Plugins
         }
 
         /// <summary>
-        /// Gets a copy of base info of module descriptor
+        /// Gets a copy of base info of plugin descriptor
         /// </summary>
         [JsonIgnore]
-        public virtual ModuleDescriptorBaseInfo GetBaseInfoCopy =>
+        public virtual PluginDescriptorBaseInfo GetBaseInfoCopy =>
             new()
             { SystemName = SystemName, Version = Version };
     }

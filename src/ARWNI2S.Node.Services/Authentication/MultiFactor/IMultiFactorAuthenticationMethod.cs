@@ -5,7 +5,7 @@ namespace ARWNI2S.Node.Services.Authentication.MultiFactor
     /// <summary>
     /// Represents method for the multi-factor authentication
     /// </summary>
-    public partial interface IMultiFactorAuthenticationMethod : IModule
+    public partial interface IMultiFactorAuthenticationMethod : IPlugin
     {
         #region Methods
 
@@ -15,7 +15,7 @@ namespace ARWNI2S.Node.Services.Authentication.MultiFactor
         MultiFactorAuthenticationType Type { get; }
 
         /// <summary>
-        /// Gets a type of a view component for displaying module in public server
+        /// Gets a type of a view component for displaying plugin in public server
         /// </summary>
         /// <returns>View component type</returns>
         Type GetPublicViewComponent();

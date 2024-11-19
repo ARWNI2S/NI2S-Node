@@ -1,9 +1,9 @@
 ﻿namespace ARWNI2S.Node.Services.Plugins
 {
     /// <summary>
-    /// Represents an information about assembly which loaded by modules
+    /// Represents an information about assembly which loaded by plugins
     /// </summary>
-    public partial class ModuleLoadedAssemblyInfo
+    public partial class PluginLoadedAssemblyInfo
     {
         #region Ctor
 
@@ -12,7 +12,7 @@
         /// </summary>
         /// <param name="shortName">Assembly short name</param>
         /// <param name="assemblyInMemory">Assembly version</param>
-        public ModuleLoadedAssemblyInfo(string shortName, Version assemblyInMemory)
+        public PluginLoadedAssemblyInfo(string shortName, Version assemblyInMemory)
         {
             ShortName = shortName;
             References = [];
@@ -34,14 +34,14 @@
         public string ShortName { get; }
 
         /// <summary>
-        /// Gets a list of all mentioned module-assembly pairs
+        /// Gets a list of all mentioned plugin-assembly pairs
         /// </summary>
-        public List<(string ModuleName, Version AssemblyVersion)> References { get; }
+        public List<(string PluginName, Version AssemblyVersion)> References { get; }
 
         /// <summary>
-        /// Gets a list of modules that conflict with the loaded assembly version
+        /// Gets a list of plugins that conflict with the loaded assembly version
         /// </summary>
-        public IList<(string ModuleName, Version AssemblyVersion)> Collisions =>
+        public IList<(string PluginName, Version AssemblyVersion)> Collisions =>
             References.Where(reference => !reference.AssemblyVersion.Equals(AssemblyInMemory)).ToList();
 
         #endregion

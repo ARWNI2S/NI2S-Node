@@ -5,9 +5,9 @@ using ARWNI2S.Node.Services.Users;
 namespace ARWNI2S.Node.Services.Authentication.External
 {
     /// <summary>
-    /// Represents an authentication module module implementation
+    /// Represents an authentication plugin implementation
     /// </summary>
-    public partial class AuthenticationModuleManager : ModuleManager<IExternalAuthenticationMethod>, IAuthenticationModuleManager
+    public partial class AuthenticationPluginManager : PluginManager<IExternalAuthenticationMethod>, IAuthenticationPluginManager
     {
         #region Fields
 
@@ -17,9 +17,9 @@ namespace ARWNI2S.Node.Services.Authentication.External
 
         #region Ctor
 
-        public AuthenticationModuleManager(ExternalAuthenticationSettings externalAuthenticationSettings,
+        public AuthenticationPluginManager(ExternalAuthenticationSettings externalAuthenticationSettings,
             IUserService userService,
-            IModuleService moduleService) : base(userService, moduleService)
+            IPluginService pluginService) : base(userService, pluginService)
         {
             _externalAuthenticationSettings = externalAuthenticationSettings;
         }
@@ -31,15 +31,15 @@ namespace ARWNI2S.Node.Services.Authentication.External
         /// <summary>
         /// Load active authentication methods
         /// </summary>
-        /// <param name="user">Filter by user; pass null to load all modules</param>
-        /// <param name="nodeId">Filter by server; pass 0 to load all modules</param>
+        /// <param name="user">Filter by user; pass null to load all plugins</param>
+        /// <param name="nodeId">Filter by server; pass 0 to load all plugins</param>
         /// <returns>
         /// A task that represents the asynchronous operation
         /// The task result contains the list of active authentication methods
         /// </returns>
-        public virtual async Task<IList<IExternalAuthenticationMethod>> LoadActiveModulesAsync(User user = null, int nodeId = 0)
+        public virtual async Task<IList<IExternalAuthenticationMethod>> LoadActivePluginsAsync(User user = null, int nodeId = 0)
         {
-            return await LoadActiveModulesAsync(_externalAuthenticationSettings.ActiveAuthenticationMethodSystemNames, user, nodeId);
+            return await LoadActivePluginsAsync(_externalAuthenticationSettings.ActiveAuthenticationMethodSystemNames, user, nodeId);
         }
 
         /// <summary>
@@ -47,25 +47,25 @@ namespace ARWNI2S.Node.Services.Authentication.External
         /// </summary>
         /// <param name="authenticationMethod">Authentication method to check</param>
         /// <returns>Result</returns>
-        public virtual bool IsModuleActive(IExternalAuthenticationMethod authenticationMethod)
+        public virtual bool IsPluginActive(IExternalAuthenticationMethod authenticationMethod)
         {
-            return IsModuleActive(authenticationMethod, _externalAuthenticationSettings.ActiveAuthenticationMethodSystemNames);
+            return IsPluginActive(authenticationMethod, _externalAuthenticationSettings.ActiveAuthenticationMethodSystemNames);
         }
 
         /// <summary>
         /// Check whether the authentication method with the passed system name is active
         /// </summary>
         /// <param name="systemName">System name of authentication method to check</param>
-        /// <param name="user">Filter by user; pass null to load all modules</param>
-        /// <param name="nodeId">Filter by server; pass 0 to load all modules</param>
+        /// <param name="user">Filter by user; pass null to load all plugins</param>
+        /// <param name="nodeId">Filter by server; pass 0 to load all plugins</param>
         /// <returns>
         /// A task that represents the asynchronous operation
         /// The task result contains the result
         /// </returns>
-        public virtual async Task<bool> IsModuleActiveAsync(string systemName, User user = null, int nodeId = 0)
+        public virtual async Task<bool> IsPluginActiveAsync(string systemName, User user = null, int nodeId = 0)
         {
-            var authenticationMethod = await LoadModuleBySystemNameAsync(systemName, user, nodeId);
-            return IsModuleActive(authenticationMethod);
+            var authenticationMethod = await LoadPluginBySystemNameAsync(systemName, user, nodeId);
+            return IsPluginActive(authenticationMethod);
         }
 
         #endregion

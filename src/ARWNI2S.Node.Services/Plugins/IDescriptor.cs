@@ -1,7 +1,7 @@
 ﻿namespace ARWNI2S.Node.Services.Plugins
 {
     /// <summary>
-    /// Represents descriptor of the application extension (module or theme)
+    /// Represents descriptor of the application extension (plugin or theme)
     /// </summary>
     public partial interface IDescriptor
     {

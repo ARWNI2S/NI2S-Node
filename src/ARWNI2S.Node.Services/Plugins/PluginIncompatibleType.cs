@@ -1,9 +1,9 @@
 ﻿namespace ARWNI2S.Node.Services.Plugins
 {
-    public enum ModuleIncompatibleType
+    public enum PluginIncompatibleType
     {
         /// <summary>
-        /// The module isn't compatible with the current version
+        /// The plugin isn't compatible with the current version
         /// </summary>
         NotCompatibleWithCurrentVersion,
         /// <summary>

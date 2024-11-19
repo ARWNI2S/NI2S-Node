@@ -4,7 +4,7 @@
     /// Interface denoting plug-in attributes that are displayed throughout 
     /// the editing interface.
     /// </summary>
-    public interface IModule
+    public interface IPlugin
     {
         /// <summary>
         /// Gets a configuration page URL
@@ -12,34 +12,34 @@
         string GetConfigurationPageUrl();
 
         /// <summary>
-        /// Gets or sets the module descriptor
+        /// Gets or sets the plugin descriptor
         /// </summary>
-        ModuleDescriptor ModuleDescriptor { get; set; }
+        PluginDescriptor PluginDescriptor { get; set; }
 
         /// <summary>
-        /// Install module
+        /// Install plugin
         /// </summary>
         /// <returns>A task that represents the asynchronous operation</returns>
         Task InstallAsync();
 
         /// <summary>
-        /// Uninstall module
+        /// Uninstall plugin
         /// </summary>
         /// <returns>A task that represents the asynchronous operation</returns>
         Task UninstallAsync();
 
         /// <summary>
-        /// Update module
+        /// Update plugin
         /// </summary>
-        /// <param name="currentVersion">Current version of module</param>
-        /// <param name="targetVersion">New version of module</param>
+        /// <param name="currentVersion">Current version of plugin</param>
+        /// <param name="targetVersion">New version of plugin</param>
         /// <returns>A task that represents the asynchronous operation</returns>
         Task UpdateAsync(string currentVersion, string targetVersion);
 
         /// <summary>
-        /// Prepare module to the uninstallation
+        /// Prepare plugin to the uninstallation
         /// </summary>
         /// <returns>A task that represents the asynchronous operation</returns>
-        Task PrepareModuleToUninstallAsync();
+        Task PreparePluginToUninstallAsync();
     }
 }

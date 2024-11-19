@@ -24,9 +24,9 @@ namespace ARWNI2S.Node.Core.Configuration
         public string StaticFilesCacheControl { get; private set; } = "public,max-age=31536000";
 
         /// <summary>
-        /// Get or set the blacklist of static file extension for module directories
+        /// Get or set the blacklist of static file extension for plugin directories
         /// </summary>
-        public string ModuleStaticFileExtensionsBlacklist { get; private set; } = "";
+        public string PluginStaticFileExtensionsBlacklist { get; private set; } = "";
 
         /// <summary>
         /// Get or set a value indicating whether to use Autofac IoC container

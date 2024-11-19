@@ -6,7 +6,7 @@ namespace ARWNI2S.Node.Services.Directory
     /// <summary>
     /// Exchange rate provider interface
     /// </summary>
-    public partial interface IExchangeRateProvider : IModule
+    public partial interface IExchangeRateProvider : IPlugin
     {
         string ProviderBase { get; }
 

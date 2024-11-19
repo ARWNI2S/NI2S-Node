@@ -21,6 +21,5 @@
 
         string Tags { get; internal set; }
 
-        void RegisterForDisposeAsync(object target);
     }
 }

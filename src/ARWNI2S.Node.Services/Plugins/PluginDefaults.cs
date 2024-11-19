@@ -3,43 +3,43 @@
 namespace ARWNI2S.Node.Services.Plugins
 {
     /// <summary>
-    /// Represents default values related to modules
+    /// Represents default values related to plugins
     /// </summary>
-    public static partial class NI2SModuleDefaults
+    public static partial class PluginDefaults
     {
 
         /// <summary>
-        /// Gets the path to file that contains installed module system names
+        /// Gets the path to file that contains installed plugin system names
         /// </summary>
-        public static string ModulesInfoFilePath => "~/Node_Data/modules.json";
+        public static string PluginsInfoFilePath => "~/Node_Data/plugins.json";
 
         /// <summary>
-        /// Gets the path to modules folder
+        /// Gets the path to plugins folder
         /// </summary>
-        public static string Path => "~/Modules";
+        public static string Path => "~/Plugins";
 
         /// <summary>
-        /// Gets the path to modules folder
+        /// Gets the path to plugins folder
         /// </summary>
-        public static string UploadedPath => "~/Modules/Uploaded";
+        public static string UploadedPath => "~/Plugins/Uploaded";
 
         /// <summary>
-        /// Gets the modules folder name
+        /// Gets the plugins folder name
         /// </summary>
-        public static string PathName => "Modules";
+        public static string PathName => "Plugins";
 
         /// <summary>
-        /// Gets the path to modules refs folder
+        /// Gets the path to plugins refs folder
         /// </summary>
         public static string RefsPathName => "refs";
 
         /// <summary>
-        /// Gets the name of the module description file
+        /// Gets the name of the plugin description file
         /// </summary>
-        public static string DescriptionFileName => "module.json";
+        public static string DescriptionFileName => "plugin.json";
 
         /// <summary>
-        /// Gets the modules logo filename
+        /// Gets the plugins logo filename
         /// </summary>
         public static string LogoFileName => "logo";
 
@@ -59,16 +59,16 @@ namespace ARWNI2S.Node.Services.Plugins
         public static string UploadedItemsFileName => "uploadedItems.json";
 
         /// <summary>
-        /// Gets a key for caching modules for admin navigation
+        /// Gets a key for caching plugins for admin navigation
         /// </summary>
         /// <remarks>
         /// {0} : user identifier
         /// </remarks>
-        public static CacheKey AdminNavigationModulesCacheKey => new("ni2s.modules.adminnavigation.{0}", AdminNavigationModulesPrefix);
+        public static CacheKey AdminNavigationPluginsCacheKey => new("ni2s.plugins.adminnavigation.{0}", AdminNavigationPluginsPrefix);
 
         /// <summary>
         /// Gets a key pattern to clear cache
         /// </summary>
-        public static string AdminNavigationModulesPrefix => "ni2s.modules.adminnavigation.";
+        public static string AdminNavigationPluginsPrefix => "ni2s.plugins.adminnavigation.";
     }
 }

@@ -21,19 +21,19 @@ namespace ARWNI2S.Node.Hosting.Extensions
             hostingEnvironment.ContentRootPath = contentRootPath;
             hostingEnvironment.ContentRootFileProvider = new PhysicalFileProvider(hostingEnvironment.ContentRootPath);
 
-            var webRoot = options.NodeRoot;
-            if (webRoot == null)
+            var contentRoot = options.NodeRoot;
+            if (contentRoot == null)
             {
-                // Default to /wwwroot if it exists.
-                var wwwroot = Path.Combine(hostingEnvironment.ContentRootPath, "wwwroot");
-                if (Directory.Exists(wwwroot))
+                // Default to /Content if it exists.
+                var rootPath = Path.Combine(hostingEnvironment.ContentRootPath, "Content");
+                if (Directory.Exists(rootPath))
                 {
-                    hostingEnvironment.NodeRootPath = wwwroot;
+                    hostingEnvironment.NodeRootPath = rootPath;
                 }
             }
             else
             {
-                hostingEnvironment.NodeRootPath = Path.Combine(hostingEnvironment.ContentRootPath, webRoot);
+                hostingEnvironment.NodeRootPath = Path.Combine(hostingEnvironment.ContentRootPath, contentRoot);
             }
 
             if (!string.IsNullOrEmpty(hostingEnvironment.NodeRootPath))
@@ -75,11 +75,11 @@ namespace ARWNI2S.Node.Hosting.Extensions
             var webRoot = options.NodeRoot;
             if (webRoot == null)
             {
-                // Default to /wwwroot if it exists.
-                var wwwroot = Path.Combine(hostingEnvironment.ContentRootPath, "wwwroot");
-                if (Directory.Exists(wwwroot))
+                // Default to /Content if it exists.
+                var rootPath = Path.Combine(hostingEnvironment.ContentRootPath, "Content");
+                if (Directory.Exists(rootPath))
                 {
-                    hostingEnvironment.NodeRootPath = wwwroot;
+                    hostingEnvironment.NodeRootPath = rootPath;
                 }
             }
             else

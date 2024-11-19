@@ -969,60 +969,60 @@ namespace ARWNI2S.Node.Services.Localization
         }
 
         /// <summary>
-        /// Get localized friendly name of a module
+        /// Get localized friendly name of a plugin
         /// </summary>
-        /// <typeparam name="TModule">Module type</typeparam>
-        /// <param name="module">Module</param>
+        /// <typeparam name="TPlugin">Plugin type</typeparam>
+        /// <param name="plugin">Plugin</param>
         /// <param name="languageId">Language identifier</param>
         /// <param name="returnDefaultValue">A value indicating whether to return default value (if localized is not found)</param>
         /// <returns>
         /// A task that represents the asynchronous operation
         /// The task result contains the localized value
         /// </returns>
-        public virtual async Task<string> GetLocalizedFriendlyNameAsync<TModule>(TModule module, int languageId, bool returnDefaultValue = true)
-            where TModule : IModule
+        public virtual async Task<string> GetLocalizedFriendlyNameAsync<TPlugin>(TPlugin plugin, int languageId, bool returnDefaultValue = true)
+            where TPlugin : IPlugin
         {
-            if (module == null)
-                throw new ArgumentNullException(nameof(module));
+            if (plugin == null)
+                throw new ArgumentNullException(nameof(plugin));
 
-            if (module.ModuleDescriptor == null)
-                throw new ArgumentException("Module descriptor cannot be loaded");
+            if (plugin.PluginDescriptor == null)
+                throw new ArgumentException("Plugin descriptor cannot be loaded");
 
-            var systemName = module.ModuleDescriptor.SystemName;
+            var systemName = plugin.PluginDescriptor.SystemName;
             //localized value
-            var resourceName = $"{LocalizationServicesDefaults.ModuleNameLocaleStringResourcesPrefix}{systemName}";
+            var resourceName = $"{LocalizationServicesDefaults.PluginNameLocaleStringResourcesPrefix}{systemName}";
             var result = await GetResourceAsync(resourceName, languageId, false, string.Empty, true);
 
             //set default value if required
             if (string.IsNullOrEmpty(result) && returnDefaultValue)
-                result = module.ModuleDescriptor.FriendlyName;
+                result = plugin.PluginDescriptor.FriendlyName;
 
             return result;
         }
 
         /// <summary>
-        /// Save localized friendly name of a module
+        /// Save localized friendly name of a plugin
         /// </summary>
-        /// <typeparam name="TModule">Module</typeparam>
-        /// <param name="module">Module</param>
+        /// <typeparam name="TPlugin">Plugin</typeparam>
+        /// <param name="plugin">Plugin</param>
         /// <param name="languageId">Language identifier</param>
         /// <param name="localizedFriendlyName">Localized friendly name</param>
         /// <returns>A task that represents the asynchronous operation</returns>
-        public virtual async Task SaveLocalizedFriendlyNameAsync<TModule>(TModule module, int languageId, string localizedFriendlyName)
-            where TModule : IModule
+        public virtual async Task SaveLocalizedFriendlyNameAsync<TPlugin>(TPlugin plugin, int languageId, string localizedFriendlyName)
+            where TPlugin : IPlugin
         {
             if (languageId == 0)
                 throw new ArgumentOutOfRangeException(nameof(languageId), "Language ID should not be 0");
 
-            if (module == null)
-                throw new ArgumentNullException(nameof(module));
+            if (plugin == null)
+                throw new ArgumentNullException(nameof(plugin));
 
-            if (module.ModuleDescriptor == null)
-                throw new ArgumentException("Module descriptor cannot be loaded");
+            if (plugin.PluginDescriptor == null)
+                throw new ArgumentException("Plugin descriptor cannot be loaded");
 
-            var systemName = module.ModuleDescriptor.SystemName;
+            var systemName = plugin.PluginDescriptor.SystemName;
             //localized value
-            var resourceName = $"{LocalizationServicesDefaults.ModuleNameLocaleStringResourcesPrefix}{systemName}";
+            var resourceName = $"{LocalizationServicesDefaults.PluginNameLocaleStringResourcesPrefix}{systemName}";
             var resource = await GetLocaleStringResourceByNameAsync(resourceName, languageId, false);
 
             if (resource != null)

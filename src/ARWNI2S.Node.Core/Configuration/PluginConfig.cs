@@ -3,9 +3,9 @@
 namespace ARWNI2S.Node.Core.Configuration
 {
     /// <summary>
-    /// Represents module configuration parameters
+    /// Represents plugin configuration parameters
     /// </summary>
-    public partial class ModuleConfig : IConfig
+    public partial class PluginConfig : IConfig
     {
         /// <summary>
         /// Gets or sets a value indicating whether to load an assembly into the load-from context, bypassing some security checks.

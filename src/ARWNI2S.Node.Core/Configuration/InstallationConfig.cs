@@ -9,9 +9,9 @@ namespace ARWNI2S.Node.Core.Configuration
     {
 
         /// <summary>
-        /// Gets or sets a list of modules ignored during dragonCorp installation
+        /// Gets or sets a list of plugins ignored during NI2S installation
         /// </summary>
-        public string DisabledModules { get; private set; } = "*";
+        public string DisabledPlugins { get; private set; } = "*";
 
         /// <summary>
         /// Gets or sets a value indicating whether to download and setup the regional language pack during installation

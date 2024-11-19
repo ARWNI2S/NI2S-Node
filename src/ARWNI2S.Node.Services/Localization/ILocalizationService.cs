@@ -306,28 +306,28 @@ namespace ARWNI2S.Node.Services.Localization
         Task DeleteLocaleResourcesAsync(string resourceNamePrefix, int? languageId = null);
 
         /// <summary>
-        /// Get localized friendly name of a module
+        /// Get localized friendly name of a plugin
         /// </summary>
-        /// <typeparam name="TModule">Module type</typeparam>
-        /// <param name="module">Module</param>
+        /// <typeparam name="TPlugin">Plugin type</typeparam>
+        /// <param name="plugin">Plugin</param>
         /// <param name="languageId">Language identifier</param>
         /// <param name="returnDefaultValue">A value indicating whether to return default value (if localized is not found)</param>
         /// <returns>
         /// A task that represents the asynchronous operation
         /// The task result contains the localized value
         /// </returns>
-        Task<string> GetLocalizedFriendlyNameAsync<TModule>(TModule module, int languageId, bool returnDefaultValue = true)
-            where TModule : IModule;
+        Task<string> GetLocalizedFriendlyNameAsync<TPlugin>(TPlugin plugin, int languageId, bool returnDefaultValue = true)
+            where TPlugin : IPlugin;
 
         /// <summary>
-        /// Save localized friendly name of a module
+        /// Save localized friendly name of a plugin
         /// </summary>
-        /// <typeparam name="TModule">Module</typeparam>
-        /// <param name="module">Module</param>
+        /// <typeparam name="TPlugin">Plugin</typeparam>
+        /// <param name="plugin">Plugin</param>
         /// <param name="languageId">Language identifier</param>
         /// <param name="localizedFriendlyName">Localized friendly name</param>
         /// <returns>A task that represents the asynchronous operation</returns>
-        Task SaveLocalizedFriendlyNameAsync<TModule>(TModule module, int languageId, string localizedFriendlyName)
-            where TModule : IModule;
+        Task SaveLocalizedFriendlyNameAsync<TPlugin>(TPlugin plugin, int languageId, string localizedFriendlyName)
+            where TPlugin : IPlugin;
     }
 }

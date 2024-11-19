@@ -1,9 +1,9 @@
 namespace ARWNI2S.Node.Services.Plugins
 {
     /// <summary>
-    /// Represents a mode to load modules
+    /// Represents a mode to load plugins
     /// </summary>
-    public enum LoadModulesMode
+    public enum LoadPluginsMode
     {
         /// <summary>
         /// All (Installed and Not installed)

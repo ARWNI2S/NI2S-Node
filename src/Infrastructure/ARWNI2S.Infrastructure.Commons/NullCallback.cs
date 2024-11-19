@@ -16,11 +16,5 @@ namespace ARWNI2S.Infrastructure
         EventCacheMode IEvent.CacheControl { get => _cacheControl; set => _cacheControl = EventCacheMode.Disable; }
         string IEvent.Tags { get => _tags; set => _tags = value; }
 
-        private void RegisterForDisposeAsync(object target)
-        {
-
-        }
-
-        void IEvent.RegisterForDisposeAsync(object target) => RegisterForDisposeAsync(target);
     }
 }

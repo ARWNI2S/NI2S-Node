@@ -14,7 +14,7 @@ namespace ARWNI2S.Node.Services.Directory
         #region Fields
 
         private readonly CurrencySettings _currencySettings;
-        private readonly IExchangeRateModuleManager _exchangeRateModuleManager;
+        private readonly IExchangeRatePluginManager _exchangeRatePluginManager;
         private readonly IRepository<Currency> _currencyRepository;
         private readonly INodeMappingService _serverMappingService;
 
@@ -23,12 +23,12 @@ namespace ARWNI2S.Node.Services.Directory
         #region Ctor
 
         public CurrencyService(CurrencySettings currencySettings,
-            IExchangeRateModuleManager exchangeRateModuleManager,
+            IExchangeRatePluginManager exchangeRatePluginManager,
             IRepository<Currency> currencyRepository,
             INodeMappingService serverMappingService)
         {
             _currencySettings = currencySettings;
-            _exchangeRateModuleManager = exchangeRateModuleManager;
+            _exchangeRatePluginManager = exchangeRatePluginManager;
             _currencyRepository = currencyRepository;
             _serverMappingService = serverMappingService;
         }
@@ -145,7 +145,7 @@ namespace ARWNI2S.Node.Services.Directory
         /// </returns>
         public virtual async Task<IList<ExchangeRate>> GetCurrencyLiveRatesAsync(string currencyCode = null)
         {
-            var exchangeRateProvider = await _exchangeRateModuleManager.LoadCurrencyModuleAsync()
+            var exchangeRateProvider = await _exchangeRatePluginManager.LoadCurrencyPluginAsync()
                 ?? throw new NodeException("Active exchange rate provider cannot be loaded");
 
             currencyCode ??= (await GetCurrencyByIdAsync(_currencySettings.PrimaryExchangeRateCurrencyId))?.CurrencyCode

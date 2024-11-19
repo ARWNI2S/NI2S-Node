@@ -26,9 +26,9 @@ namespace ARWNI2S.Node.Services.Localization
         public static string PermissionLocaleStringResourcesPrefix => "Permission.";
 
         /// <summary>
-        /// Gets a prefix of locale resources for module friendly names 
+        /// Gets a prefix of locale resources for plugin friendly names 
         /// </summary>
-        public static string ModuleNameLocaleStringResourcesPrefix => "Modules.FriendlyName.";
+        public static string PluginNameLocaleStringResourcesPrefix => "Plugins.FriendlyName.";
 
         #endregion
 

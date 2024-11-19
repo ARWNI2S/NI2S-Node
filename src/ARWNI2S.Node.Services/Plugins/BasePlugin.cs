@@ -1,9 +1,9 @@
 ﻿namespace ARWNI2S.Node.Services.Plugins
 {
     /// <summary>
-    /// Base module
+    /// Base plugin
     /// </summary>
-    public abstract partial class BaseModule : IModule
+    public abstract partial class BasePlugin : IPlugin
     {
         /// <summary>
         /// Gets a configuration page URL
@@ -14,12 +14,12 @@
         }
 
         /// <summary>
-        /// Gets or sets the module descriptor
+        /// Gets or sets the plugin descriptor
         /// </summary>
-        public virtual ModuleDescriptor ModuleDescriptor { get; set; }
+        public virtual PluginDescriptor PluginDescriptor { get; set; }
 
         /// <summary>
-        /// Install module
+        /// Install plugin
         /// </summary>
         /// <returns>A task that represents the asynchronous operation</returns>
         public virtual Task InstallAsync()
@@ -28,7 +28,7 @@
         }
 
         /// <summary>
-        /// Uninstall module
+        /// Uninstall plugin
         /// </summary>
         /// <returns>A task that represents the asynchronous operation</returns>
         public virtual Task UninstallAsync()
@@ -37,10 +37,10 @@
         }
 
         /// <summary>
-        /// Update module
+        /// Update plugin
         /// </summary>
-        /// <param name="currentVersion">Current version of module</param>
-        /// <param name="targetVersion">New version of module</param>
+        /// <param name="currentVersion">Current version of plugin</param>
+        /// <param name="targetVersion">New version of plugin</param>
         /// <returns>A task that represents the asynchronous operation</returns>
         public virtual Task UpdateAsync(string currentVersion, string targetVersion)
         {
@@ -48,14 +48,14 @@
         }
 
         /// <summary>
-        /// Prepare module to the uninstallation
+        /// Prepare plugin to the uninstallation
         /// </summary>
         /// <returns>A task that represents the asynchronous operation</returns>
-        public virtual Task PrepareModuleToUninstallAsync()
+        public virtual Task PreparePluginToUninstallAsync()
         {
             //any can put any custom validation logic here
-            //throw an exception if this module cannot be uninstalled
-            //for example, requires some other certain modules to be uninstalled first
+            //throw an exception if this plugin cannot be uninstalled
+            //for example, requires some other certain plugins to be uninstalled first
             return Task.CompletedTask;
         }
     }

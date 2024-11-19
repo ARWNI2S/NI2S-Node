@@ -6,9 +6,9 @@ using ARWNI2S.Node.Services.Users;
 namespace ARWNI2S.Node.Services.Directory
 {
     /// <summary>
-    /// Represents an exchange rate module manager implementation
+    /// Represents an exchange rate plugin manager implementation
     /// </summary>
-    public partial class ExchangeRateModuleManager : ModuleManager<IExchangeRateProvider>, IExchangeRateModuleManager
+    public partial class ExchangeRatePluginManager : PluginManager<IExchangeRateProvider>, IExchangeRatePluginManager
     {
         #region Fields
 
@@ -19,10 +19,10 @@ namespace ARWNI2S.Node.Services.Directory
 
         #region Ctor
 
-        public ExchangeRateModuleManager(CurrencySettings currencySettings,
+        public ExchangeRatePluginManager(CurrencySettings currencySettings,
             //TokenSettings tokenSettings,
             IUserService userService,
-            IModuleService moduleService) : base(userService, moduleService)
+            IPluginService pluginService) : base(userService, pluginService)
         {
             _currencySettings = currencySettings;
             //_tokenSettings = tokenSettings;
@@ -35,20 +35,20 @@ namespace ARWNI2S.Node.Services.Directory
         /// <summary>
         /// Load primary active exchange rate provider
         /// </summary>
-        /// <param name="user">Filter by user; pass null to load all modules</param>
-        /// <param name="serverId">Filter by server; pass 0 to load all modules</param>
+        /// <param name="user">Filter by user; pass null to load all plugins</param>
+        /// <param name="serverId">Filter by server; pass 0 to load all plugins</param>
         /// <returns>
         /// A task that represents the asynchronous operation
         /// The task result contains the exchange rate provider
         /// </returns>
-        public virtual async Task<IExchangeRateProvider> LoadCurrencyModuleAsync(User user = null, int serverId = 0)
+        public virtual async Task<IExchangeRateProvider> LoadCurrencyPluginAsync(User user = null, int serverId = 0)
         {
-            return await LoadPrimaryModuleAsync(_currencySettings.ActiveExchangeRateProviderSystemName, user, serverId);
+            return await LoadPrimaryPluginAsync(_currencySettings.ActiveExchangeRateProviderSystemName, user, serverId);
         }
 
-        //public virtual async Task<IExchangeRateProvider> LoadTokenModuleAsync(User user = null, int serverId = 0)
+        //public virtual async Task<IExchangeRateProvider> LoadTokenPluginAsync(User user = null, int serverId = 0)
         //{
-        //    return await LoadPrimaryModuleAsync(_tokenSettings.ActiveExchangeRateProviderSystemName, user, serverId);
+        //    return await LoadPrimaryPluginAsync(_tokenSettings.ActiveExchangeRateProviderSystemName, user, serverId);
         //}
 
         /// <summary>
@@ -56,9 +56,9 @@ namespace ARWNI2S.Node.Services.Directory
         /// </summary>
         /// <param name="exchangeRateProvider">Exchange rate provider to check</param>
         /// <returns>Result</returns>
-        public virtual bool IsModuleActive(IExchangeRateProvider exchangeRateProvider)
+        public virtual bool IsPluginActive(IExchangeRateProvider exchangeRateProvider)
         {
-            return IsModuleActive(exchangeRateProvider, [_currencySettings.ActiveExchangeRateProviderSystemName/*, _tokenSettings.ActiveExchangeRateProviderSystemName*/]);
+            return IsPluginActive(exchangeRateProvider, [_currencySettings.ActiveExchangeRateProviderSystemName/*, _tokenSettings.ActiveExchangeRateProviderSystemName*/]);
         }
 
 
