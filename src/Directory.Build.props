@@ -17,7 +17,7 @@
 
   <PropertyGroup>
     <IsPackable Condition=" '$(IsPackable)'=='' ">false</IsPackable>
-    <IsFrameworkPart Condition=" '$(IsFrameworkPart)'=='' ">true</IsFrameworkPart>
+    <IsFrameworkPart Condition=" '$(IsFrameworkPart)'=='' ">false</IsFrameworkPart>
   </PropertyGroup>
 
   <PropertyGroup>
