@@ -133,84 +133,84 @@ namespace ARWNI2S.Node.Data
         /// Insert the entity entry
         /// </summary>
         /// <param name="entity">Entity entry</param>
-        /// <param name="publishEvent">Whether to publish event notification</param>
+        /// <param name="notify">Whether to notify</param>
         /// <returns>A task that represents the asynchronous operation</returns>
-        Task InsertAsync(TEntity entity, bool publishEvent = true);
+        Task InsertAsync(TEntity entity, bool notify = true);
 
         /// <summary>
         /// Insert the entity entry
         /// </summary>
         /// <param name="entity">Entity entry</param>
-        /// <param name="publishEvent">Whether to publish event notification</param>
-        void Insert(TEntity entity, bool publishEvent = true);
+        /// <param name="notify">Whether to notify</param>
+        void Insert(TEntity entity, bool notify = true);
 
         /// <summary>
         /// Insert entity entries
         /// </summary>
         /// <param name="entities">Entity entries</param>
-        /// <param name="publishEvent">Whether to publish event notification</param>
+        /// <param name="notify">Whether to notify</param>
         /// <returns>A task that represents the asynchronous operation</returns>
-        Task InsertAsync(IList<TEntity> entities, bool publishEvent = true);
+        Task InsertAsync(IList<TEntity> entities, bool notify = true);
 
         /// <summary>
         /// Insert entity entries
         /// </summary>
         /// <param name="entities">Entity entries</param>
-        /// <param name="publishEvent">Whether to publish event notification</param>
-        void Insert(IList<TEntity> entities, bool publishEvent = true);
+        /// <param name="notify">Whether to notify</param>
+        void Insert(IList<TEntity> entities, bool notify = true);
 
         /// <summary>
         /// Update the entity entry
         /// </summary>
         /// <param name="entity">Entity entry</param>
-        /// <param name="publishEvent">Whether to publish event notification</param>
+        /// <param name="notify">Whether to notify</param>
         /// <returns>A task that represents the asynchronous operation</returns>
-        Task UpdateAsync(TEntity entity, bool publishEvent = true);
+        Task UpdateAsync(TEntity entity, bool notify = true);
 
         /// <summary>
         /// Update the entity entry
         /// </summary>
         /// <param name="entity">Entity entry</param>
-        /// <param name="publishEvent">Whether to publish event notification</param>
-        void Update(TEntity entity, bool publishEvent = true);
+        /// <param name="notify">Whether to notify</param>
+        void Update(TEntity entity, bool notify = true);
 
         /// <summary>
         /// Update entity entries
         /// </summary>
         /// <param name="entities">Entity entries</param>
-        /// <param name="publishEvent">Whether to publish event notification</param>
+        /// <param name="notify">Whether to notify</param>
         /// <returns>A task that represents the asynchronous operation</returns>
-        Task UpdateAsync(IList<TEntity> entities, bool publishEvent = true);
+        Task UpdateAsync(IList<TEntity> entities, bool notify = true);
 
         /// <summary>
         /// Update entity entries
         /// </summary>
         /// <param name="entities">Entity entries</param>
-        /// <param name="publishEvent">Whether to publish event notification</param>
-        void Update(IList<TEntity> entities, bool publishEvent = true);
+        /// <param name="notify">Whether to notify</param>
+        void Update(IList<TEntity> entities, bool notify = true);
 
         /// <summary>
         /// Delete the entity entry
         /// </summary>
         /// <param name="entity">Entity entry</param>
-        /// <param name="publishEvent">Whether to publish event notification</param>
+        /// <param name="notify">Whether to notify</param>
         /// <returns>A task that represents the asynchronous operation</returns>
-        Task DeleteAsync(TEntity entity, bool publishEvent = true);
+        Task DeleteAsync(TEntity entity, bool notify = true);
 
         /// <summary>
         /// Delete the entity entry
         /// </summary>
         /// <param name="entity">Entity entry</param>
-        /// <param name="publishEvent">Whether to publish event notification</param>
-        void Delete(TEntity entity, bool publishEvent = true);
+        /// <param name="notify">Whether to notify</param>
+        void Delete(TEntity entity, bool notify = true);
 
         /// <summary>
         /// Delete entity entries
         /// </summary>
         /// <param name="entities">Entity entries</param>
-        /// <param name="publishEvent">Whether to publish event notification</param>
+        /// <param name="notify">Whether to notify</param>
         /// <returns>A task that represents the asynchronous operation</returns>
-        Task DeleteAsync(IList<TEntity> entities, bool publishEvent = true);
+        Task DeleteAsync(IList<TEntity> entities, bool notify = true);
 
         /// <summary>
         /// Delete entity entries by the passed predicate

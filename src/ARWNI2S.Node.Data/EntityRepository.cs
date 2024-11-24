@@ -3,8 +3,9 @@ using ARWNI2S.Node.Configuration;
 using ARWNI2S.Node.Core;
 using ARWNI2S.Node.Data.Entities;
 using ARWNI2S.Node.Data.Extensions;
-using ARWNI2S.Node.Events;
+using ARWNI2S.Node.Data.Notification;
 using ARWNI2S.Node.Infrastructure.Collections.Generic;
+using ARWNI2S.Node.Notification;
 using System.Linq.Expressions;
 using System.Transactions;
 
@@ -18,7 +19,7 @@ public partial class EntityRepository<TEntity> : IRepository<TEntity> where TEnt
 {
     #region Fields
 
-    protected readonly INodeEventPublisher _eventPublisher;
+    protected readonly INotifier _notifier;
     protected readonly INiisDataProvider _dataProvider;
     protected readonly IShortTermCacheManager _shortTermCacheManager;
     protected readonly IStaticCacheManager _staticCacheManager;
@@ -28,13 +29,13 @@ public partial class EntityRepository<TEntity> : IRepository<TEntity> where TEnt
 
     #region Ctor
 
-    public EntityRepository(INodeEventPublisher eventPublisher,
+    public EntityRepository(INotifier notifier,
         INiisDataProvider dataProvider,
         IShortTermCacheManager shortTermCacheManager,
         IStaticCacheManager staticCacheManager,
         NiisSettings niisSettings)
     {
-        _eventPublisher = eventPublisher;
+        _notifier = notifier;
         _dataProvider = dataProvider;
         _shortTermCacheManager = shortTermCacheManager;
         _staticCacheManager = staticCacheManager;
@@ -426,42 +427,42 @@ public partial class EntityRepository<TEntity> : IRepository<TEntity> where TEnt
     /// Insert the entity entry
     /// </summary>
     /// <param name="entity">Entity entry</param>
-    /// <param name="publishEvent">Whether to publish event notification</param>
+    /// <param name="notify">Whether to notify</param>
     /// <returns>A task that represents the asynchronous operation</returns>
-    public virtual async Task InsertAsync(TEntity entity, bool publishEvent = true)
+    public virtual async Task InsertAsync(TEntity entity, bool notify = true)
     {
         ArgumentNullException.ThrowIfNull(entity);
 
         await _dataProvider.InsertEntityAsync(entity);
 
-        //event notification
-        if (publishEvent)
-            await _eventPublisher.EntityInsertedAsync(entity);
+        //notification
+        if (notify)
+            await _notifier.EntityInsertedAsync(entity);
     }
 
     /// <summary>
     /// Insert the entity entry
     /// </summary>
     /// <param name="entity">Entity entry</param>
-    /// <param name="publishEvent">Whether to publish event notification</param>
-    public virtual void Insert(TEntity entity, bool publishEvent = true)
+    /// <param name="notify">Whether to notify</param>
+    public virtual void Insert(TEntity entity, bool notify = true)
     {
         ArgumentNullException.ThrowIfNull(entity);
 
         _dataProvider.InsertEntity(entity);
 
-        //event notification
-        if (publishEvent)
-            _eventPublisher.EntityInserted(entity);
+        //notification
+        if (notify)
+            _notifier.EntityInserted(entity);
     }
 
     /// <summary>
     /// Insert entity entries
     /// </summary>
     /// <param name="entities">Entity entries</param>
-    /// <param name="publishEvent">Whether to publish event notification</param>
+    /// <param name="notify">Whether to notify</param>
     /// <returns>A task that represents the asynchronous operation</returns>
-    public virtual async Task InsertAsync(IList<TEntity> entities, bool publishEvent = true)
+    public virtual async Task InsertAsync(IList<TEntity> entities, bool notify = true)
     {
         ArgumentNullException.ThrowIfNull(entities);
 
@@ -469,20 +470,20 @@ public partial class EntityRepository<TEntity> : IRepository<TEntity> where TEnt
         await _dataProvider.BulkInsertEntitiesAsync(entities);
         transaction.Complete();
 
-        if (!publishEvent)
+        if (!notify)
             return;
 
-        //event notification
+        //notification
         foreach (var entity in entities)
-            await _eventPublisher.EntityInsertedAsync(entity);
+            await _notifier.EntityInsertedAsync(entity);
     }
 
     /// <summary>
     /// Insert entity entries
     /// </summary>
     /// <param name="entities">Entity entries</param>
-    /// <param name="publishEvent">Whether to publish event notification</param>
-    public virtual void Insert(IList<TEntity> entities, bool publishEvent = true)
+    /// <param name="notify">Whether to notify</param>
+    public virtual void Insert(IList<TEntity> entities, bool notify = true)
     {
         ArgumentNullException.ThrowIfNull(entities);
 
@@ -490,12 +491,12 @@ public partial class EntityRepository<TEntity> : IRepository<TEntity> where TEnt
         _dataProvider.BulkInsertEntities(entities);
         transaction.Complete();
 
-        if (!publishEvent)
+        if (!notify)
             return;
 
-        //event notification
+        //notification
         foreach (var entity in entities)
-            _eventPublisher.EntityInserted(entity);
+            _notifier.EntityInserted(entity);
     }
 
     /// <summary>
@@ -516,42 +517,42 @@ public partial class EntityRepository<TEntity> : IRepository<TEntity> where TEnt
     /// Update the entity entry
     /// </summary>
     /// <param name="entity">Entity entry</param>
-    /// <param name="publishEvent">Whether to publish event notification</param>
+    /// <param name="notify">Whether to notify</param>
     /// <returns>A task that represents the asynchronous operation</returns>
-    public virtual async Task UpdateAsync(TEntity entity, bool publishEvent = true)
+    public virtual async Task UpdateAsync(TEntity entity, bool notify = true)
     {
         ArgumentNullException.ThrowIfNull(entity);
 
         await _dataProvider.UpdateEntityAsync(entity);
 
-        //event notification
-        if (publishEvent)
-            await _eventPublisher.EntityUpdatedAsync(entity);
+        //notification
+        if (notify)
+            await _notifier.EntityUpdatedAsync(entity);
     }
 
     /// <summary>
     /// Update the entity entry
     /// </summary>
     /// <param name="entity">Entity entry</param>
-    /// <param name="publishEvent">Whether to publish event notification</param>
-    public virtual void Update(TEntity entity, bool publishEvent = true)
+    /// <param name="notify">Whether to notify</param>
+    public virtual void Update(TEntity entity, bool notify = true)
     {
         ArgumentNullException.ThrowIfNull(entity);
 
         _dataProvider.UpdateEntity(entity);
 
-        //event notification
-        if (publishEvent)
-            _eventPublisher.EntityUpdated(entity);
+        //notification
+        if (notify)
+            _notifier.EntityUpdated(entity);
     }
 
     /// <summary>
     /// Update entity entries
     /// </summary>
     /// <param name="entities">Entity entries</param>
-    /// <param name="publishEvent">Whether to publish event notification</param>
+    /// <param name="notify">Whether to notify</param>
     /// <returns>A task that represents the asynchronous operation</returns>
-    public virtual async Task UpdateAsync(IList<TEntity> entities, bool publishEvent = true)
+    public virtual async Task UpdateAsync(IList<TEntity> entities, bool notify = true)
     {
         ArgumentNullException.ThrowIfNull(entities);
 
@@ -560,20 +561,20 @@ public partial class EntityRepository<TEntity> : IRepository<TEntity> where TEnt
 
         await _dataProvider.UpdateEntitiesAsync(entities);
 
-        //event notification
-        if (!publishEvent)
+        //notification
+        if (!notify)
             return;
 
         foreach (var entity in entities)
-            await _eventPublisher.EntityUpdatedAsync(entity);
+            await _notifier.EntityUpdatedAsync(entity);
     }
 
     /// <summary>
     /// Update entity entries
     /// </summary>
     /// <param name="entities">Entity entries</param>
-    /// <param name="publishEvent">Whether to publish event notification</param>
-    public virtual void Update(IList<TEntity> entities, bool publishEvent = true)
+    /// <param name="notify">Whether to notify</param>
+    public virtual void Update(IList<TEntity> entities, bool notify = true)
     {
         ArgumentNullException.ThrowIfNull(entities);
 
@@ -582,21 +583,21 @@ public partial class EntityRepository<TEntity> : IRepository<TEntity> where TEnt
 
         _dataProvider.UpdateEntities(entities);
 
-        //event notification
-        if (!publishEvent)
+        //notification
+        if (!notify)
             return;
 
         foreach (var entity in entities)
-            _eventPublisher.EntityUpdated(entity);
+            _notifier.EntityUpdated(entity);
     }
 
     /// <summary>
     /// Delete the entity entry
     /// </summary>
     /// <param name="entity">Entity entry</param>
-    /// <param name="publishEvent">Whether to publish event notification</param>
+    /// <param name="notify">Whether to notify</param>
     /// <returns>A task that represents the asynchronous operation</returns>
-    public virtual async Task DeleteAsync(TEntity entity, bool publishEvent = true)
+    public virtual async Task DeleteAsync(TEntity entity, bool notify = true)
     {
         ArgumentNullException.ThrowIfNull(entity);
 
@@ -612,17 +613,17 @@ public partial class EntityRepository<TEntity> : IRepository<TEntity> where TEnt
                 break;
         }
 
-        //event notification
-        if (publishEvent)
-            await _eventPublisher.EntityDeletedAsync(entity);
+        //notification
+        if (notify)
+            await _notifier.EntityDeletedAsync(entity);
     }
 
     /// <summary>
     /// Delete the entity entry
     /// </summary>
     /// <param name="entity">Entity entry</param>
-    /// <param name="publishEvent">Whether to publish event notification</param>
-    public virtual void Delete(TEntity entity, bool publishEvent = true)
+    /// <param name="notify">Whether to notify</param>
+    public virtual void Delete(TEntity entity, bool notify = true)
     {
         ArgumentNullException.ThrowIfNull(entity);
 
@@ -638,18 +639,18 @@ public partial class EntityRepository<TEntity> : IRepository<TEntity> where TEnt
                 break;
         }
 
-        //event notification
-        if (publishEvent)
-            _eventPublisher.EntityDeleted(entity);
+        //notification
+        if (notify)
+            _notifier.EntityDeleted(entity);
     }
 
     /// <summary>
     /// Delete entity entries
     /// </summary>
     /// <param name="entities">Entity entries</param>
-    /// <param name="publishEvent">Whether to publish event notification</param>
+    /// <param name="notify">Whether to notify</param>
     /// <returns>A task that represents the asynchronous operation</returns>
-    public virtual async Task DeleteAsync(IList<TEntity> entities, bool publishEvent = true)
+    public virtual async Task DeleteAsync(IList<TEntity> entities, bool notify = true)
     {
         ArgumentNullException.ThrowIfNull(entities);
 
@@ -658,12 +659,12 @@ public partial class EntityRepository<TEntity> : IRepository<TEntity> where TEnt
 
         await DeleteAsync(entities);
 
-        //event notification
-        if (!publishEvent)
+        //notification
+        if (!notify)
             return;
 
         foreach (var entity in entities)
-            await _eventPublisher.EntityDeletedAsync(entity);
+            await _notifier.EntityDeletedAsync(entity);
     }
 
     /// <summary>

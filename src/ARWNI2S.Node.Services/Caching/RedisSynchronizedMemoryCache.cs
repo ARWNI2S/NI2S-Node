@@ -69,7 +69,7 @@ namespace ARWNI2S.Node.Services.Caching
         protected string ChannelPrefix => $"__change@{_connection.GetDatabase().Database}__{_connection.Instance}__:";
 
         /// <summary>
-        /// Publish change event on key channel
+        /// Publish change notification on key channel
         /// </summary>
         /// <param name="key"></param>
         protected void PublishChangeEvent(object key)
@@ -94,10 +94,10 @@ namespace ARWNI2S.Node.Services.Caching
             switch (reason)
             {
                 case EvictionReason.Replaced:
-                case EvictionReason.TokenExpired: // e.g. clear cache event
+                case EvictionReason.TokenExpired: // e.g. clear cache notification
                     PublishChangeEvent(key);
                     break;
-                // don't publish here on removed, as it could be triggered by a redis event itself
+                // don't publish here on removed, as it could be triggered by a redis notification itself
                 default:
                     break;
             }
@@ -123,7 +123,7 @@ namespace ARWNI2S.Node.Services.Caching
         {
             _memoryCache.Remove(key);
 
-            //publish event manually instead of through eviction callback to avoid feedback loops
+            //notify manually instead of through eviction callback to avoid feedback loops
             PublishChangeEvent(key);
         }
 
