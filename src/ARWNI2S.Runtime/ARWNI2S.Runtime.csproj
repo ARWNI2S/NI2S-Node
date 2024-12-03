@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Node\Builder\**" />
+    <Compile Remove="Node\Configuration\**" />
+    <Compile Remove="Node\Hosting\**" />
+    <EmbeddedResource Remove="Node\Builder\**" />
+    <EmbeddedResource Remove="Node\Configuration\**" />
+    <EmbeddedResource Remove="Node\Hosting\**" />
+    <None Remove="Node\Builder\**" />
+    <None Remove="Node\Configuration\**" />
+    <None Remove="Node\Hosting\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Services\Plugins\IUploadService.cs" />
+    <Compile Remove="Services\Plugins\UploadService.cs" />
+    <Compile Remove="Services\Users\IUserRegistrationService.cs" />
+    <Compile Remove="Services\Users\UserRegistrationService.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ARWNI2S.Clustering\ARWNI2S.Clustering.csproj" />
+    <ProjectReference Include="..\ARWNI2S.Engine.Core\ARWNI2S.Engine.Core.csproj" />
+    <ProjectReference Include="..\ARWNI2S.Engine.Data\ARWNI2S.Engine.Data.csproj" />
+    <ProjectReference Include="..\ARWNI2S.Infrastructure\ARWNI2S.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

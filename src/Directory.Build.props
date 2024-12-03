@@ -17,7 +17,7 @@
 
   <PropertyGroup>
     <IsPackable Condition=" '$(IsPackable)'=='' ">false</IsPackable>
-    <IsFrameworkPart Condition=" '$(IsFrameworkPart)'=='' ">false</IsFrameworkPart>
+    <IsFrameworkPart Condition=" '$(IsFrameworkPart)'=='' ">true</IsFrameworkPart>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -27,6 +27,10 @@
   <PropertyGroup>
     <SourceLinkCreate>true</SourceLinkCreate>
     <SourceLinkOriginUrl>https://github.com/ARWNI2S/NI2S-Node</SourceLinkOriginUrl>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(IsFrameworkPart)'=='true' ">
+    <RootNamespace Condition=" '$(RootNamespace)'!='ARWNI2S.Data' AND '$(RootNamespace)'!='ARWNI2S.Data' ">ARWNI2S</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup Condition=" '$(IsFrameworkPart)'=='true' ">

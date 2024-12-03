@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>ARWNI2S.Data</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\Installation\**" />
+    <EmbeddedResource Remove="Migrations\Installation\**" />
+    <None Remove="Migrations\Installation\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentMigrator" />
+    <PackageReference Include="FluentMigrator.Runner" />
+    <PackageReference Include="linq2db" />
+    <PackageReference Include="Microsoft.Data.SqlClient" />
+    <PackageReference Include="MiniProfiler.Shared" />
+    <PackageReference Include="MySqlConnector" />
+    <PackageReference Include="Npgsql" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" />
+    <PackageReference Include="System.Linq.Async" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ARWNI2S.Abstractions\ARWNI2S.Abstractions.csproj" />
+    <ProjectReference Include="..\ARWNI2S.Engine.Core\ARWNI2S.Engine.Core.csproj" />
+  </ItemGroup>
+
+</Project>
