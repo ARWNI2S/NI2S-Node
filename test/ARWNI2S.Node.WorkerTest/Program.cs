@@ -1,16 +1,18 @@
+using ARWNI2S.Node.Extensions;
+using ARWNI2S.Node.Hosting;
+
 namespace ARWNI2S.Node.WorkerTest
 {
     public class Program
     {
         public static async Task Main(string[] args)
         {
-            //var niisHost = NI2SNodeHost.Create(args);
+            var niisHost = NodeEngine.Create(args);
 
-            //niisHost.ConfigureLocalNodeRuntime();
-            //await niisHost.StartEngineAsync();
+            niisHost.ConfigureLocalNodeRuntime();
+            await niisHost.StartEngineAsync();
 
-            //await niisHost.RunAsync();
-            await Task.CompletedTask;
+            await niisHost.RunAsync();
         }
 
         //public static void Main(string[] args)

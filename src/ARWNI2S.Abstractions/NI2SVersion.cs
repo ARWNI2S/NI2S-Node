@@ -1,10 +1,9 @@
-﻿#pragma warning disable IDE0130 // El espacio de nombres no coincide con la estructura de carpetas
-namespace ARWNI2S
+﻿namespace ARWNI2S
 {
     /// <summary>
     /// Represents NI2S version
     /// </summary>
-    public static class Version
+    public static class NI2SVersion
     {
         /// <summary>
         /// Gets the major framework version
@@ -33,4 +32,3 @@ namespace ARWNI2S
 #endif
     }
 }
-#pragma warning restore IDE0130 // El espacio de nombres no coincide con la estructura de carpetas

@@ -6,9 +6,23 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Engine\Builder\IEngineBuilderFactory.cs" />
+    <Compile Remove="Engine\Features\**" />
+    <Compile Remove="Engine\Parts\**" />
+    <EmbeddedResource Remove="Engine\Features\**" />
+    <EmbeddedResource Remove="Engine\Parts\**" />
+    <None Remove="Engine\Features\**" />
+    <None Remove="Engine\Parts\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Engine\Builder\INodeHostBuilder.cs" />
     <Compile Remove="Lifecycle\IEntityLifecycle.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Engine\Features\IEngineFeatureProvider.cs" />
+    <Compile Include="Engine\Parts\IEnginePart.cs" />
+    <Compile Include="Engine\Parts\IEnginePartTypeProvider.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -34,6 +48,10 @@
       <LastGenOutput>LocalizedStrings.Designer.cs</LastGenOutput>
       <Generator>ResXFileCodeGenerator</Generator>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Clustering\" />
   </ItemGroup>
 
 </Project>

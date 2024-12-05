@@ -1,7 +1,8 @@
 ﻿using ARWNI2S.Caching;
 using ARWNI2S.Configuration;
 using ARWNI2S.Engine;
-using ARWNI2S.Node.Builder;
+using ARWNI2S.Engine.Extensions;
+using ARWNI2S.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -20,17 +21,17 @@ namespace ARWNI2S.Node.Hosting.Extensions
         /// <param name="services">Collection of service descriptors</param>
         /// <param name="builder">A builder for enginelications and services</param>
         public static void ConfigureEngineSettings(this IServiceCollection services,
-            NI2SNodeHostBuilder builder)
+            IHostApplicationBuilder builder)
         {
             //let the operating system decide what TLS protocol version to use
             //see https://docs.microsoft.com/dotnet/framework/network-programming/tls
             ServicePointManager.SecurityProtocol = SecurityProtocolType.SystemDefault;
 
             //create default file provider
-            CommonHelper.DefaultFileProvider = new EngineFileProvider(builder.Environment);
+            CommonHelper.DefaultFileProvider = new NiisFileProvider(builder.Environment);
 
             //register type finder
-            var typeFinder = new NodeEngineTypeFinder();
+            var typeFinder = new NiisTypeFinder();
             Singleton<ITypeFinder>.Instance = typeFinder;
             services.AddSingleton<ITypeFinder>(typeFinder);
 
@@ -55,7 +56,7 @@ namespace ARWNI2S.Node.Hosting.Extensions
         /// <param name="services">Collection of service descriptors</param>
         /// <param name="builder">A builder for enginelications and services</param>
         public static void ConfigureEngineServices(this IServiceCollection services,
-            NI2SNodeHostBuilder builder)
+            IHostApplicationBuilder builder)
         {
             //add accessor to Context
             services.AddContextAccessor();
@@ -69,7 +70,7 @@ namespace ARWNI2S.Node.Hosting.Extensions
             niisCoreBuilder.PartManager.InitializePlugins(pluginConfig);
 
             //create engine and configure service provider
-            var engine = NiisEngineContext.Create();
+            var engine = NI2SEngineContext.Create();
 
             engine.ConfigureServices(services, builder.Configuration);
         }
@@ -97,80 +98,80 @@ namespace ARWNI2S.Node.Hosting.Extensions
         /// <param name="services">Collection of service descriptors</param>
         public static void AddNI2SRuntimeServices(this IServiceCollection services)
         {
-            var ni2sSettings = Singleton<NI2SSettings>.Instance;
-            var nodeConfig = ni2sSettings.Get<NodeConfig>();
+            //var ni2sSettings = Singleton<NI2SSettings>.Instance;
+            //var nodeConfig = ni2sSettings.Get<NodeConfig>();
 
-            // notice: Orleans Silo Nodes will throw exception if UseFrontline enabled.
-            // frontline services enables orleans client access, disable if no realtime simulation data is needed.
-            if (nodeConfig.NodeType == NodeType.Frontline)
-            {
-                var clusterConfig = ni2sSettings.Get<ClusterConfig>();
+            //// notice: Orleans Silo Nodes will throw exception if UseFrontline enabled.
+            //// frontline services enables orleans client access, disable if no realtime simulation data is needed.
+            //if (nodeConfig.NodeType == NodeType.Frontline)
+            //{
+            //    var clusterConfig = ni2sSettings.Get<ClusterConfig>();
 
-                services.AddOrleansClient(client =>
-                {
-                    client = client.Configure<ClusterOptions>(options =>
-                    {
-                        options.ClusterId = clusterConfig.ClusterId;
-                        options.ServiceId = clusterConfig.ServiceId;
-                    }).Configure<ClientMessagingOptions>(options =>
-                    {
-                        // Configurar el tiempo de espera para respuestas
-                        options.ResponseTimeout = TimeSpan.FromSeconds(60); // Timeout para mensajes
-                        options.ResponseTimeoutWithDebugger = TimeSpan.FromSeconds(180); // Timeout extendido si se está depurando
-                    });
+            //    services.AddOrleansClient(client =>
+            //    {
+            //        client = client.Configure<ClusterOptions>(options =>
+            //        {
+            //            options.ClusterId = clusterConfig.ClusterId;
+            //            options.ServiceId = clusterConfig.ServiceId;
+            //        }).Configure<ClientMessagingOptions>(options =>
+            //        {
+            //            // Configurar el tiempo de espera para respuestas
+            //            options.ResponseTimeout = TimeSpan.FromSeconds(60); // Timeout para mensajes
+            //            options.ResponseTimeoutWithDebugger = TimeSpan.FromSeconds(180); // Timeout extendido si se está depurando
+            //        });
 
 
-                    if (!clusterConfig.IsDevelopment)
-                    {
-                        switch (clusterConfig.SiloStorageClustering)
-                        {
-                            case SimulationClusteringType.AzureStorage:
-                                {
-                                    if (string.IsNullOrEmpty(clusterConfig.ConnectionString))
-                                        throw new NodeException("Unable to configure Azure storage clustering: missing connection string.");
+            //        if (!clusterConfig.IsDevelopment)
+            //        {
+            //            switch (clusterConfig.SiloStorageClustering)
+            //            {
+            //                case SimulationClusteringType.AzureStorage:
+            //                    {
+            //                        if (string.IsNullOrEmpty(clusterConfig.ConnectionString))
+            //                            throw new NodeException("Unable to configure Azure storage clustering: missing connection string.");
 
-                                    // Configurar el cluster Orleans
-                                    client = client.UseAzureStorageClustering(options => options.TableServiceClient = new TableServiceClient(clusterConfig.ConnectionString, options.ClientOptions));
-                                    break;
-                                }
-                            case SimulationClusteringType.Redis:
-                                {
-                                    if (string.IsNullOrEmpty(clusterConfig.ConnectionString))
-                                        throw new NodeException("Unable to configure Redis storage clustering: missing connection string.");
+            //                        // Configurar el cluster Orleans
+            //                        client = client.UseAzureStorageClustering(options => options.TableServiceClient = new TableServiceClient(clusterConfig.ConnectionString, options.ClientOptions));
+            //                        break;
+            //                    }
+            //                case SimulationClusteringType.Redis:
+            //                    {
+            //                        if (string.IsNullOrEmpty(clusterConfig.ConnectionString))
+            //                            throw new NodeException("Unable to configure Redis storage clustering: missing connection string.");
 
-                                    client = client.UseRedisClustering(options =>
-                                    {
-                                        // Configura los detalles de conexión a Redis
-                                        options.ConfigurationOptions = new ConfigurationOptions().ParseConnectionString(clusterConfig.ConnectionString);
-                                    });
-                                    break;
-                                }
-                            case SimulationClusteringType.SqlServer:
-                                {
-                                    if (string.IsNullOrEmpty(clusterConfig.ConnectionString))
-                                        throw new NodeException("Unable to configure SqlServer storage clustering: missing connection string.");
-                                    client = client.UseAdoNetClustering(options =>
-                                    {
-                                        options.Invariant = Constants.INVARIANT_NAME_SQL_SERVER;
-                                        options.ConnectionString = clusterConfig.ConnectionString;
-                                    });
-                                    break;
-                                }
-                            case SimulationClusteringType.Localhost:
-                            default:
-                                {
-                                    client.UseLocalhostClustering();
-                                    break;
-                                }
-                        }
+            //                        client = client.UseRedisClustering(options =>
+            //                        {
+            //                            // Configura los detalles de conexión a Redis
+            //                            options.ConfigurationOptions = new ConfigurationOptions().ParseConnectionString(clusterConfig.ConnectionString);
+            //                        });
+            //                        break;
+            //                    }
+            //                case SimulationClusteringType.SqlServer:
+            //                    {
+            //                        if (string.IsNullOrEmpty(clusterConfig.ConnectionString))
+            //                            throw new NodeException("Unable to configure SqlServer storage clustering: missing connection string.");
+            //                        client = client.UseAdoNetClustering(options =>
+            //                        {
+            //                            options.Invariant = Constants.INVARIANT_NAME_SQL_SERVER;
+            //                            options.ConnectionString = clusterConfig.ConnectionString;
+            //                        });
+            //                        break;
+            //                    }
+            //                case SimulationClusteringType.Localhost:
+            //                default:
+            //                    {
+            //                        client.UseLocalhostClustering();
+            //                        break;
+            //                    }
+            //            }
 
-                    }
-                    else
-                    {
-                        client.UseLocalhostClustering();
-                    }
-                });
-            }
+            //        }
+            //        else
+            //        {
+            //            client.UseLocalhostClustering();
+            //        }
+            //    });
+            //}
 
 
 
@@ -251,10 +252,10 @@ namespace ARWNI2S.Node.Hosting.Extensions
         public static void AddNI2SHttpClients(this IServiceCollection services)
         {
             //default client
-            services.AddHttpClient(HttpDefaults.DefaultHttpClient).WithProxy();
+            //services.AddHttpClient(HttpDefaults.DefaultHttpClient).WithProxy();
 
             //client to request current node
-            services.AddHttpClient<NodeHttpClient>();
+            //services.AddHttpClient<NodeHttpClient>();
 
             ////client to request dragonCorp official site
             //services.AddHttpClient<DraCoHttpClient>().WithProxy();

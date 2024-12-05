@@ -13,17 +13,21 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- System packages -->
-    <PackageVersion Include="Microsoft.Extensions.Http" Version="$(MicrosoftPackageLatestVersion)" />
     <PackageVersion Include="System.Configuration.ConfigurationManager" Version="$(MicrosoftPackageLatestVersion)" />
     <PackageVersion Include="System.IO.Pipelines" Version="$(MicrosoftPackageLatestVersion)" />
     <PackageVersion Include="System.Linq.Async" Version="6.0.1" />
     <!-- Microsoft packages -->
     <PackageVersion Include="Microsoft.Data.SqlClient" Version="5.2.2" />
+    <PackageVersion Include="Microsoft.Extensions.Caching.Memory" Version="$(MicrosoftPackageLatestVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.Caching.SqlServer" Version="$(MicrosoftPackageLatestVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="$(MicrosoftPackageLatestVersion)" />
     <PackageVersion Include="Microsoft.Extensions.Configuration.UserSecrets" Version="$(MicrosoftPackageLatestVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.FileProviders.Composite" Version="$(MicrosoftPackageLatestVersion)" />
     <PackageVersion Include="Microsoft.Extensions.Hosting" Version="$(MicrosoftPackageLatestVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.Http" Version="$(MicrosoftPackageLatestVersion)" />
+    <PackageVersion Include="Microsoft.Orleans.Core" Version="$(OrleansVersion)" />
     <!-- Abstractions packages -->
     <PackageVersion Include="Microsoft.Extensions.Caching.Abstractions" Version="$(MicrosoftPackageLatestVersion)" />
-    <PackageVersion Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="$(MicrosoftPackageLatestVersion)" />
     <PackageVersion Include="Microsoft.Extensions.Configuration.Abstractions" Version="$(MicrosoftPackageLatestVersion)" />
     <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="$(MicrosoftPackageLatestVersion)" />
     <PackageVersion Include="Microsoft.Extensions.FileProviders.Abstractions" Version="$(MicrosoftPackageLatestVersion)" />

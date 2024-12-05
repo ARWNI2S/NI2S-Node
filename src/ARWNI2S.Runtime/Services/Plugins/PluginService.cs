@@ -22,7 +22,7 @@ namespace ARWNI2S.Services.Plugins
 
         private readonly ClusteringSettings _nodeSettings;
         private readonly IUserService _userService;
-        //private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly INiisContextAccessor _niisContextAccessor;
         private readonly IMigrationManager _migrationManager;
         private readonly ILogService _logger;
         private readonly INiisFileProvider _fileProvider;
@@ -36,7 +36,7 @@ namespace ARWNI2S.Services.Plugins
 
         public PluginService(ClusteringSettings ni2sSettings,
             IUserService userService,
-            //IHttpContextAccessor httpContextAccessor,
+            INiisContextAccessor niisContextAccessor,
             IMigrationManager migrationManager,
             ILogService logger,
             INiisFileProvider fileProvider,
@@ -46,7 +46,7 @@ namespace ARWNI2S.Services.Plugins
         {
             _nodeSettings = ni2sSettings;
             _userService = userService;
-            //_httpContextAccessor = httpContextAccessor;
+            _niisContextAccessor = niisContextAccessor;
             _migrationManager = migrationManager;
             _logger = logger;
             _fileProvider = fileProvider;
@@ -337,7 +337,7 @@ namespace ARWNI2S.Services.Plugins
         //    if (string.IsNullOrWhiteSpace(logoExtension))
         //        return Task.FromResult<string>(null);
 
-        //    var pathBase = _httpContextAccessor.HttpContext.Request.PathBase.Value ?? string.Empty;
+        //    var pathBase = _niisContextAccessor.NiisContext.Request.PathBase.Value ?? string.Empty;
         //    var logoPathUrl = _mediaSettings.UseAbsoluteImagePath ? _webHelper.GetNodeLocation() : $"{pathBase}/";
 
         //    var logoUrl = $"{logoPathUrl}{PluginServicesDefaults.PathName}/" +

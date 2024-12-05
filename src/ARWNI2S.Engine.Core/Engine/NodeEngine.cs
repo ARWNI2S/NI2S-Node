@@ -1,5 +1,4 @@
 ﻿using ARWNI2S.Engine.Builder;
-using ARWNI2S.Extensibility;
 using ARWNI2S.Infrastructure;
 using ARWNI2S.Infrastructure.Mapper;
 using AutoMapper;
@@ -221,11 +220,6 @@ namespace ARWNI2S.Engine
         /// Service provider
         /// </summary>
         public virtual IServiceProvider ServiceProvider { get; protected set; }
-
-        /// <summary>
-        /// Engine modules
-        /// </summary>
-        public virtual IModuleCollection Modules { get; protected set; }
 
         #endregion
     }

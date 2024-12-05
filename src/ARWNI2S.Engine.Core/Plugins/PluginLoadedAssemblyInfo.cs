@@ -12,7 +12,7 @@
         /// </summary>
         /// <param name="shortName">Assembly short name</param>
         /// <param name="assemblyInMemory">Assembly version</param>
-        public PluginLoadedAssemblyInfo(string shortName, System.Version assemblyInMemory)
+        public PluginLoadedAssemblyInfo(string shortName, Version assemblyInMemory)
         {
             ShortName = shortName;
             References = [];
@@ -26,7 +26,7 @@
         /// <summary>
         /// Assembly in memory
         /// </summary>
-        public System.Version AssemblyInMemory { get; }
+        public Version AssemblyInMemory { get; }
 
         /// <summary>
         /// Gets the short assembly name
@@ -36,12 +36,12 @@
         /// <summary>
         /// Gets a list of all mentioned plugin-assembly pairs
         /// </summary>
-        public List<(string PluginName, System.Version AssemblyVersion)> References { get; }
+        public List<(string PluginName, Version AssemblyVersion)> References { get; }
 
         /// <summary>
         /// Gets a list of plugins that conflict with the loaded assembly version
         /// </summary>
-        public IList<(string PluginName, System.Version AssemblyVersion)> Collisions =>
+        public IList<(string PluginName, Version AssemblyVersion)> Collisions =>
             References.Where(reference => !reference.AssemblyVersion.Equals(AssemblyInMemory)).ToList();
 
         #endregion

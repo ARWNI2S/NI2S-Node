@@ -150,7 +150,7 @@ namespace ARWNI2S.Plugins
                     continue;
 
                 //ensure that plugin is compatible with the current version
-                if (!pluginDescriptor.SupportedVersions.Contains(Version.CURRENT_VERSION, StringComparer.InvariantCultureIgnoreCase))
+                if (!pluginDescriptor.SupportedVersions.Contains(NI2SVersion.CURRENT_VERSION, StringComparer.InvariantCultureIgnoreCase))
                 {
                     incompatiblePlugins.Add(pluginDescriptor.SystemName, PluginIncompatibleType.NotCompatibleWithCurrentVersion);
                     continue;

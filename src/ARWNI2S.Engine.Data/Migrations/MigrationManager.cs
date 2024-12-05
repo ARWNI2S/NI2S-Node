@@ -123,7 +123,7 @@ namespace ARWNI2S.Data.Migrations
 
 #if DEBUG
                 if (!string.IsNullOrEmpty(migrationInfo.Description) &&
-                    migrationInfo.Description.StartsWith(string.Format(NiisMigrationDefaults.UpdateMigrationDescriptionPrefix, Version.FULL_VERSION)))
+                    migrationInfo.Description.StartsWith(string.Format(NiisMigrationDefaults.UpdateMigrationDescriptionPrefix, NI2SVersion.FULL_VERSION)))
                     continue;
 #endif
                 try

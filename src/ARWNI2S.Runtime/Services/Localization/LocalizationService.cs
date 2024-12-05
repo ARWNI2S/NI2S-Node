@@ -471,7 +471,7 @@ namespace ARWNI2S.Services.Localization
             await xmlWriter.WriteStartDocumentAsync();
             await xmlWriter.WriteStartElementAsync("Language");
             await xmlWriter.WriteAttributeStringAsync("Name", language.Name);
-            await xmlWriter.WriteAttributeStringAsync("SupportedVersion", Version.CURRENT_VERSION);
+            await xmlWriter.WriteAttributeStringAsync("SupportedVersion", NI2SVersion.CURRENT_VERSION);
 
             var resources = await GetAllResourcesAsync(language.Id);
             foreach (var resource in resources)

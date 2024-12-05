@@ -7,6 +7,16 @@ namespace ARWNI2S.Configuration.Extensions
     /// </summary>
     public static class ServiceCollectionExtensions
     {
+        public static IServiceCollection Clone(this IServiceCollection serviceCollection)
+        {
+            IServiceCollection clone = new ServiceCollection();
+            foreach (var service in serviceCollection)
+            {
+                clone.Add(service);
+            }
+            return clone;
+        }
+
         /// <summary>
         /// Registers an existing registration of <typeparamref name="TImplementation"/> as a provider of service type <typeparamref name="TService"/>.
         /// </summary>

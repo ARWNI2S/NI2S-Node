@@ -49,4 +49,9 @@ namespace ARWNI2S.Infrastructure
         /// <returns>Resolved service</returns>
         object ResolveUnregistered(Type type);
     }
+
+    public interface INiisEngine<TContext>
+    {
+
+    }
 }
