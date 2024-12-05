@@ -2,6 +2,7 @@
 using ARWNI2S.Configuration;
 using ARWNI2S.Engine;
 using ARWNI2S.Engine.Builder;
+using ARWNI2S.Engine.Features;
 using ARWNI2S.Entities.Clustering;
 using ARWNI2S.Node.Builder;
 using ARWNI2S.Node.Configuration.Options;

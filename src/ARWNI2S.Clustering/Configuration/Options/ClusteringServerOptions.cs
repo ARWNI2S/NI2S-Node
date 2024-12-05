@@ -1,13 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using System.Diagnostics;
-using System.Net.Http;
-using System.Net;
 using System.Security.Cryptography.X509Certificates;
-using System.Text.Json;
 using System.Text;
 
 namespace ARWNI2S.Clustering.Configuration.Options

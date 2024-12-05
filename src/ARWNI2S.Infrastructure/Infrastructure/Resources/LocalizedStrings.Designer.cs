@@ -61,15 +61,6 @@ namespace ARWNI2S.Infrastructure.Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a ArgumentCannotBeNullOrEmpty.
-        /// </summary>
-        internal static string ArgumentCannotBeNullOrEmpty {
-            get {
-                return ResourceManager.GetString("ArgumentCannotBeNullOrEmpty", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Busca una cadena traducida similar a &quot;{0}. MESSAGE TRUNCATED AT THIS POINT!! Max message size = {1}&quot;.
         /// </summary>
         internal static string Logger_LogMessageTruncated_Format {

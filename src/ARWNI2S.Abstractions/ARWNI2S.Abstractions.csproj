@@ -15,14 +15,17 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="ApplicationParts\ApplicationPartAttribute.cs" />
+    <Compile Remove="ApplicationParts\ProvideApplicationPartFactoryAttribute.cs" />
+    <Compile Remove="ApplicationParts\RelatedAssemblyAttribute.cs" />
     <Compile Remove="Engine\Builder\INodeHostBuilder.cs" />
+    <Compile Remove="Engine\IEnginePartManager.cs" />
     <Compile Remove="Lifecycle\IEntityLifecycle.cs" />
+    <Compile Remove="Node\IFeatureCollection.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="Engine\Features\IEngineFeatureProvider.cs" />
-    <Compile Include="Engine\Parts\IEnginePart.cs" />
-    <Compile Include="Engine\Parts\IEnginePartTypeProvider.cs" />
+    <Compile Include="Engine\Features\IFeatureCollection.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -36,6 +39,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Resources\ErrorStrings.Designer.cs">
+      <DependentUpon>ErrorStrings.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
     <Compile Update="Resources\LocalizedStrings.Designer.cs">
       <DependentUpon>LocalizedStrings.resx</DependentUpon>
       <DesignTime>True</DesignTime>
@@ -44,6 +52,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="Resources\ErrorStrings.resx">
+      <LastGenOutput>ErrorStrings.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Resources\LocalizedStrings.resx">
       <LastGenOutput>LocalizedStrings.Designer.cs</LastGenOutput>
       <Generator>ResXFileCodeGenerator</Generator>

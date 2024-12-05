@@ -1,4 +1,5 @@
-﻿using ARWNI2S.ComponentModel;
+﻿using ARWNI2S.ApplicationParts;
+using ARWNI2S.ComponentModel;
 using ARWNI2S.Configuration;
 using ARWNI2S.Data.Mapping;
 using ARWNI2S.Infrastructure;
@@ -10,7 +11,7 @@ namespace ARWNI2S.Engine.Extensions
     /// <summary>
     /// Represents engine part manager extensions
     /// </summary>
-    public static partial class EnginePartManagerExtensions
+    public static partial class ApplicationPartManagerExtensions
     {
         #region Fields
 
@@ -24,7 +25,7 @@ namespace ARWNI2S.Engine.Extensions
 
         #region Ctor
 
-        static EnginePartManagerExtensions()
+        static ApplicationPartManagerExtensions()
         {
             //we use the default file provider, since the DI isn't initialized yet
             _fileProvider = CommonHelper.DefaultFileProvider;
@@ -106,7 +107,7 @@ namespace ARWNI2S.Engine.Extensions
         /// <param name="assemblyFile">Path to the assembly file</param>
         /// <param name="useUnsafeLoadAssembly">Indicating whether to load an assembly into the load-from context, bypassing some security checks</param>
         /// <returns>Assembly</returns>
-        private static Assembly AddEngineParts(IEnginePartManager enginePartManager, string assemblyFile, bool useUnsafeLoadAssembly)
+        private static Assembly AddApplicationParts(ApplicationPartManager enginePartManager, string assemblyFile, bool useUnsafeLoadAssembly)
         {
             //try to load a assembly
             Assembly assembly;
@@ -132,7 +133,7 @@ namespace ARWNI2S.Engine.Extensions
             }
 
             //register the plugin definition
-            enginePartManager.EngineParts.Add(new AssemblyPart(assembly));
+            enginePartManager.ApplicationParts.Add(new AssemblyPart(assembly));
 
             return assembly;
         }
@@ -145,7 +146,7 @@ namespace ARWNI2S.Engine.Extensions
         /// <param name="pluginConfig">Plugin config</param>
         /// <param name="fileProvider">Nop file provider</param>
         /// <returns>Assembly</returns>
-        private static Assembly PerformFileDeploy(this IEnginePartManager enginePartManager,
+        private static Assembly PerformFileDeploy(this ApplicationPartManager enginePartManager,
             string assemblyFile, PluginConfig pluginConfig, INiisFileProvider fileProvider)
         {
             //ensure for proper directory structure
@@ -155,7 +156,7 @@ namespace ARWNI2S.Engine.Extensions
                     $"The plugin directory for the {fileProvider.GetFileName(assemblyFile)} file exists in a directory outside of the allowed nopCommerce directory hierarchy");
 
             var assembly =
-                AddEngineParts(enginePartManager, assemblyFile, pluginConfig.UseUnsafeLoadAssembly);
+                AddApplicationParts(enginePartManager, assemblyFile, pluginConfig.UseUnsafeLoadAssembly);
 
             // delete the .deps file
             if (assemblyFile.EndsWith(".dll"))
@@ -227,7 +228,7 @@ namespace ARWNI2S.Engine.Extensions
         /// </summary>
         /// <param name="enginePartManager">Engine part manager</param>
         /// <param name="pluginConfig">Plugin config</param>
-        public static void InitializePlugins(this IEnginePartManager enginePartManager, PluginConfig pluginConfig)
+        public static void InitializePlugins(this ApplicationPartManager enginePartManager, PluginConfig pluginConfig)
         {
             ArgumentNullException.ThrowIfNull(enginePartManager);
 

@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 
-namespace ARWNI2S.Node
+namespace ARWNI2S.Engine.Features
 {
     /// <summary>
     /// Default implementation for <see cref="IFeatureCollection"/>.

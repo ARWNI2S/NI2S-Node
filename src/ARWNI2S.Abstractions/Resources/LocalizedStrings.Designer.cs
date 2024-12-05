@@ -61,6 +61,15 @@ namespace ARWNI2S.Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a ArgumentCannotBeNullOrEmpty.
+        /// </summary>
+        internal static string ArgumentCannotBeNullOrEmpty {
+            get {
+                return ResourceManager.GetString("ArgumentCannotBeNullOrEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a The argument may not be less than zero..
         /// </summary>
         internal static string Collections_ArgMustNotBeNegative {

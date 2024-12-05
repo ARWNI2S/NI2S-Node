@@ -28,8 +28,4 @@
     <SourceLinkOriginUrl>https://github.com/ARWNI2S/NI2S-Node</SourceLinkOriginUrl>
   </PropertyGroup>
 
-  <ItemGroup>
-    <AssemblyAttribute Include="ARWNI2S.Node.Metadata.FrameworkPartAttribute" />
-  </ItemGroup>
-
 </Project>

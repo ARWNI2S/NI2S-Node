@@ -1,7 +1,7 @@
-﻿using ARWNI2S.Configuration.Extensions;
-using ARWNI2S.Diagnostics;
+﻿using ARWNI2S.Diagnostics;
 using ARWNI2S.Engine;
 using ARWNI2S.Engine.Builder;
+using ARWNI2S.Engine.Features;
 using ARWNI2S.Entities.Clustering;
 using ARWNI2S.Node.Configuration.Options;
 using ARWNI2S.Node.Hosting.Diagnostics;

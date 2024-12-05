@@ -6,6 +6,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="ApplicationParts\**" />
+    <Compile Remove="Engine\Parts\**" />
+    <EmbeddedResource Remove="ApplicationParts\**" />
+    <EmbeddedResource Remove="Engine\Parts\**" />
+    <None Remove="ApplicationParts\**" />
+    <None Remove="Engine\Parts\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Engine\EnginePartManager.cs" />
+    <Compile Remove="Engine\Extensions\MvcApiExplorerMvcCoreBuilderExtensions.cs" />
+    <Compile Remove="Engine\Extensions\MvcCorsMvcCoreBuilderExtensions.cs" />
+    <Compile Remove="Engine\Extensions\MvcDataAnnotationsMvcCoreBuilderExtensions.cs" />
+    <Compile Remove="Engine\Extensions\MvcRazorPagesMvcCoreBuilderExtensions.cs" />
+    <Compile Remove="Node\FeatureCollection.cs" />
     <Compile Remove="Security\Secrets\SecretContractResolver.cs" />
     <Compile Remove="Security\Secrets\SecretValueProvider.cs" />
   </ItemGroup>
@@ -18,6 +33,7 @@
     <PackageReference Include="Microsoft.Extensions.Caching.SqlServer" />
     <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" />
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" />
+    <PackageReference Include="Microsoft.Orleans.Core" />
     <PackageReference Include="System.IO.Pipelines" />
   </ItemGroup>
 
@@ -30,6 +46,7 @@
 
   <ItemGroup>
     <Folder Include="Diagnostics\" />
+    <Folder Include="Engine\Features\" />
   </ItemGroup>
 
 </Project>

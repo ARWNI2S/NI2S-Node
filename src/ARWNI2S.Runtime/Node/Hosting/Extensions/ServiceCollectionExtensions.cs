@@ -416,7 +416,7 @@ namespace ARWNI2S.Node.Hosting.Extensions
     ///// </summary>
     ///// <param name="services">Collection of service descriptors</param>
     ///// <returns>A builder for configuring MVRM services</returns>
-    //public static IMvcBuilder AddNodeMvc(this IServiceCollection services)
+    //public static INiisBuilder AddNodeNiis(this IServiceCollection services)
     //{
     //    //add basic MVRM feature
     //    var mvrmBuilder = services.AddControllersWithViews();
@@ -445,7 +445,7 @@ namespace ARWNI2S.Node.Hosting.Extensions
     //    mvrmBuilder.AddNewtonsoftJson(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
 
     //    //set some options
-    //    mvrmBuilder.AddMvcOptions(options =>
+    //    mvrmBuilder.AddNiisOptions(options =>
     //    {
     //        //we'll use this until https://github.com/dotnet/aspnetcore/issues/6566 is solved 
     //        options.ModelBinderProviders.Insert(0, new InvariantNumberModelBinderProvider());

@@ -195,4 +195,7 @@
   <data name="Collections_WrongType" xml:space="preserve">
     <value>The value \"{0}\" isn't of type \"{1}\" and can't be used in this generic collection.</value>
   </data>
+  <data name="ArgumentCannotBeNullOrEmpty" xml:space="preserve">
+    <value>ArgumentCannotBeNullOrEmpty</value>
+  </data>
 </root>

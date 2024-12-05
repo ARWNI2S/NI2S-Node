@@ -4,7 +4,6 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <IsFrameworkPart>false</IsFrameworkPart>
     <UserSecretsId>dotnet-ARWNI2S.Node.WorkerTest-a679590a-708b-4d3a-8daf-ba3028855b36</UserSecretsId>
   </PropertyGroup>
 

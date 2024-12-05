@@ -1,8 +1,4 @@
 ﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Primitives;
-using System.Diagnostics;
-using System.Net;
-using System.Security.Cryptography.X509Certificates;
 
 namespace ARWNI2S.Clustering.Configuration.Options
 {
