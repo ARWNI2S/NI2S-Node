@@ -135,7 +135,7 @@ namespace ARWNI2S.Data.Extensions
                 .FirstOrDefault(t => t.BaseType?.GetGenericArguments().Contains(type) ?? false);
 
             if (typeFinder != null)
-                (NI2SEngineContext.Current.ResolveUnregistered(typeFinder) as IDataEntityBuilder)?.MapEntity(builder);
+                (NI2SContext.Current.ResolveUnregistered(typeFinder) as IDataEntityBuilder)?.MapEntity(builder);
 
             var expression = builder.Expression;
             if (!expression.Columns.Any(c => c.IsPrimaryKey))

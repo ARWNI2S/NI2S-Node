@@ -1,4 +1,4 @@
-﻿namespace ARWNI2S.Engine.Features
+﻿namespace ARWNI2S.Node.Features
 {
     /// <summary>
     /// Feature to uniquely identify a frame.

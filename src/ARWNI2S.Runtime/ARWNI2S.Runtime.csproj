@@ -6,28 +6,29 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Node\Builder\**" />
-    <Compile Remove="Node\Configuration\**" />
-    <Compile Remove="Node\Hosting\**" />
-    <EmbeddedResource Remove="Node\Builder\**" />
-    <EmbeddedResource Remove="Node\Configuration\**" />
-    <EmbeddedResource Remove="Node\Hosting\**" />
-    <None Remove="Node\Builder\**" />
-    <None Remove="Node\Configuration\**" />
-    <None Remove="Node\Hosting\**" />
+    <Compile Remove="Data\**" />
+    <Compile Remove="Diagnostics\**" />
+    <Compile Remove="Engine\**" />
+    <Compile Remove="ExportImport\**" />
+    <Compile Remove="Node\**" />
+    <Compile Remove="Services\**" />
+    <EmbeddedResource Remove="Data\**" />
+    <EmbeddedResource Remove="Diagnostics\**" />
+    <EmbeddedResource Remove="Engine\**" />
+    <EmbeddedResource Remove="ExportImport\**" />
+    <EmbeddedResource Remove="Node\**" />
+    <EmbeddedResource Remove="Services\**" />
+    <None Remove="Data\**" />
+    <None Remove="Diagnostics\**" />
+    <None Remove="Engine\**" />
+    <None Remove="ExportImport\**" />
+    <None Remove="Node\**" />
+    <None Remove="Services\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="Engine\Extensions\EnginePartManagerExtensions.cs" />
-    <Compile Remove="Engine\Extensions\NI2SServiceCollectionExtensions.cs" />
-    <Compile Remove="Services\Plugins\IUploadService.cs" />
-    <Compile Remove="Services\Plugins\UploadService.cs" />
-    <Compile Remove="Services\Users\IUserRegistrationService.cs" />
-    <Compile Remove="Services\Users\UserRegistrationService.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Include="Node\Hosting\Extensions\ServiceCollectionExtensions.cs" />
+    <Compile Remove="IClusterContext.cs" />
+    <Compile Remove="SystemKeywords.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -39,10 +40,6 @@
     <ProjectReference Include="..\ARWNI2S.Engine.Core\ARWNI2S.Engine.Core.csproj" />
     <ProjectReference Include="..\ARWNI2S.Engine.Data\ARWNI2S.Engine.Data.csproj" />
     <ProjectReference Include="..\ARWNI2S.Infrastructure\ARWNI2S.Infrastructure.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Node\Builder\" />
   </ItemGroup>
 
 </Project>

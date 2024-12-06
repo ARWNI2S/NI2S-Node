@@ -1,4 +1,4 @@
-﻿namespace ARWNI2S.Engine.Features
+﻿namespace ARWNI2S.Engine
 {
     /// <summary>
     /// Represents a collection of node features.

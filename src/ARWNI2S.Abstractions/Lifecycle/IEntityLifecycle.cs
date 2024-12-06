@@ -1,6 +1,6 @@
 using System.Buffers;
 
-namespace ARWNI2S.Abstractions.Lifecycle
+namespace ARWNI2S.Lifecycle
 {
     /// <summary>
     /// The observable entity lifecycle.

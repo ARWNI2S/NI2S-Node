@@ -6,59 +6,56 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Collections\CollectionExtension.cs" />
-    <Compile Remove="Collections\DictionaryExtension.cs" />
-    <Compile Remove="Collections\Extensions\CollectionExtensions.cs" />
-    <Compile Remove="Collections\Extensions\DictionaryExtensions.cs" />
-    <Compile Remove="Collections\Extensions\EnumerableExtensions.cs" />
-    <Compile Remove="Collections\Extensions\GenericCollectionExtensions.cs" />
-    <Compile Remove="Collections\Extensions\GenericListExtensions.cs" />
-    <Compile Remove="Collections\Extensions\TypeExtensions.cs" />
+    <Compile Remove="Collections\**" />
+    <Compile Remove="ComponentModel\**" />
+    <Compile Remove="Configuration\**" />
+    <Compile Remove="Diagnostics\**" />
+    <Compile Remove="Infrastructure\**" />
+    <Compile Remove="Interop\**" />
+    <Compile Remove="Logging\**" />
+    <Compile Remove="Reflection\**" />
+    <Compile Remove="Threading\**" />
+    <Compile Remove="Timing\**" />
+    <EmbeddedResource Remove="Collections\**" />
+    <EmbeddedResource Remove="ComponentModel\**" />
+    <EmbeddedResource Remove="Configuration\**" />
+    <EmbeddedResource Remove="Diagnostics\**" />
+    <EmbeddedResource Remove="Infrastructure\**" />
+    <EmbeddedResource Remove="Interop\**" />
+    <EmbeddedResource Remove="Logging\**" />
+    <EmbeddedResource Remove="Reflection\**" />
+    <EmbeddedResource Remove="Threading\**" />
+    <EmbeddedResource Remove="Timing\**" />
+    <None Remove="Collections\**" />
+    <None Remove="ComponentModel\**" />
+    <None Remove="Configuration\**" />
+    <None Remove="Diagnostics\**" />
+    <None Remove="Infrastructure\**" />
+    <None Remove="Interop\**" />
+    <None Remove="Logging\**" />
+    <None Remove="Reflection\**" />
+    <None Remove="Threading\**" />
+    <None Remove="Timing\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Constants.cs" />
+    <Compile Remove="ExceptionExtensions.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Collections\CopyOnWriteDictionary.cs" />
+    <Compile Include="Collections\Generic\PagedList.cs" />
+    <Compile Include="ComponentModel\ReaderWriteLockDisposable.cs" />
+    <Compile Include="Diagnostics\LogCode.cs" />
+    <Compile Include="Infrastructure\AppDomainTypeFinder.cs" />
+    <Compile Include="Infrastructure\SecureRandomNumberGenerator.cs" />
+    <Compile Include="Logging\Extensions\LoggingExtensions.cs" />
+    <Compile Include="Timing\ValueStopwatch.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ARWNI2S.Abstractions\ARWNI2S.Abstractions.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="Collections\Resources\LocalizedStrings.Designer.cs">
-      <DependentUpon>LocalizedStrings.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="Infrastructure\Resources\ErrorStrings.Designer.cs">
-      <DependentUpon>ErrorStrings.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="Infrastructure\Resources\LocalizedStrings.Designer.cs">
-      <DependentUpon>LocalizedStrings.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Update="Collections\Resources\LocalizedStrings.resx">
-      <LastGenOutput>LocalizedStrings.Designer.cs</LastGenOutput>
-      <Generator>ResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Infrastructure\Resources\ErrorStrings.resx">
-      <SubType>Designer</SubType>
-      <LastGenOutput>ErrorStrings.Designer.cs</LastGenOutput>
-      <Generator>ResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Infrastructure\Resources\LocalizedStrings.ca-es.resx">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Infrastructure\Resources\LocalizedStrings.es-es.resx">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Infrastructure\Resources\LocalizedStrings.resx">
-      <SubType>Designer</SubType>
-      <LastGenOutput>LocalizedStrings.Designer.cs</LastGenOutput>
-      <Generator>ResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

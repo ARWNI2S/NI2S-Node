@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace ARWNI2S.Engine.Features
+namespace ARWNI2S.Node.Features
 {
     /// <summary>
     /// Feature to access the <see cref="Activity"/> associated with a request.

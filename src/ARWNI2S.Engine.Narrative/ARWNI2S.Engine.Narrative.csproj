@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="NarrativeModuleInfo.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\ARWNI2S.Runtime\ARWNI2S.Runtime.csproj" />
   </ItemGroup>
 

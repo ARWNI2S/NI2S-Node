@@ -1,4 +1,4 @@
-﻿namespace ARWNI2S.Engine.Features
+﻿namespace ARWNI2S.Node.Features
 {
     /// <summary>
     /// Provides access to tags added to HTTP request duration metrics. This feature isn't set if the counter isn't enabled.

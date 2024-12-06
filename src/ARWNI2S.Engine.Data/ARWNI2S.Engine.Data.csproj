@@ -13,6 +13,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="DataModuleInfo.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="FluentMigrator" />
     <PackageReference Include="FluentMigrator.Runner" />
     <PackageReference Include="linq2db" />

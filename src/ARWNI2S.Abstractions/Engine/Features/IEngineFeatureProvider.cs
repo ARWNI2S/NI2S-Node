@@ -1,6 +1,6 @@
 ﻿using ARWNI2S.Engine.Parts;
 
-namespace ARWNI2S.Engine.Features
+namespace ARWNI2S.Node.Features
 {
     /// <summary>
     /// Marker interface for <see cref="IEngineFeatureProvider"/>

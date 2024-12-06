@@ -7,16 +7,24 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Builder\**" />
+    <Compile Remove="Configuration\**" />
     <Compile Remove="Data\**" />
+    <Compile Remove="Hosting\**" />
+    <Compile Remove="Http\**" />
     <Compile Remove="Settings\**" />
+    <EmbeddedResource Remove="Builder\**" />
+    <EmbeddedResource Remove="Configuration\**" />
     <EmbeddedResource Remove="Data\**" />
+    <EmbeddedResource Remove="Hosting\**" />
+    <EmbeddedResource Remove="Http\**" />
     <EmbeddedResource Remove="Settings\**" />
+    <None Remove="Builder\**" />
+    <None Remove="Configuration\**" />
     <None Remove="Data\**" />
+    <None Remove="Hosting\**" />
+    <None Remove="Http\**" />
     <None Remove="Settings\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Remove="Hosting\Extensions\HttpClientBuilderExtensions.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -26,6 +34,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ARWNI2S.Abstractions\ARWNI2S.Abstractions.csproj" />
+    <ProjectReference Include="..\ARWNI2S.Engine.Core\ARWNI2S.Engine.Core.csproj" />
     <ProjectReference Include="..\ARWNI2S.Infrastructure\ARWNI2S.Infrastructure.csproj" />
   </ItemGroup>
 

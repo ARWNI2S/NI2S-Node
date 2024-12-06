@@ -21,7 +21,7 @@ namespace ARWNI2S.Node.Hosting.Extensions
         /// <param name="services">Collection of service descriptors</param>
         /// <param name="builder">A builder for enginelications and services</param>
         public static void ConfigureEngineSettings(this IServiceCollection services,
-            IHostApplicationBuilder builder)
+            HostApplicationBuilder builder)
         {
             //let the operating system decide what TLS protocol version to use
             //see https://docs.microsoft.com/dotnet/framework/network-programming/tls

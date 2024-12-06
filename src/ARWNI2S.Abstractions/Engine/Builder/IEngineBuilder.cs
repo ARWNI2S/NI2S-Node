@@ -1,6 +1,4 @@
-﻿using ARWNI2S.Engine.Features;
-
-namespace ARWNI2S.Engine.Builder
+﻿namespace ARWNI2S.Engine.Builder
 {
     /// <summary>
     /// Defines a class that provides the mechanisms to configure a engine's request pipeline.
@@ -22,21 +20,23 @@ namespace ARWNI2S.Engine.Builder
 
         /// <summary>
         /// Gets a key/value collection that can be used to share data between processor.
-        /// </summary>
+        /// </summary>-
         IDictionary<string, object> Properties { get; }
 
         /// <summary>
-        /// Adds a update processor delegate to the engine's update pipeline.
+        /// Registers a module for the simulation engine.
         /// </summary>
-        /// <param name="processor">The update processor delegate.</param>
+        /// <typeparam name="TModule">The type of the module to register.</typeparam>
+        /// <param name="configuration">An optional configuration action for the module.</param>
         /// <returns>The <see cref="IEngineBuilder"/>.</returns>
-        IEngineBuilder Use(Func<UpdateDelegate, UpdateDelegate> processor);
+        IEngineBuilder RegisterModule<TModule>(Action<TModule> configuration = null)
+            where TModule : class, IEngineModule;
 
         /// <summary>
         /// Builds the delegate used by this engine to process HTTP requests.
         /// </summary>
         /// <returns>The request handling delegate.</returns>
-        UpdateDelegate Build();
+        INiisEngine Build();
 
         /// <summary>
         /// Creates a new <see cref="IEngineBuilder"/> that shares the <see cref="Properties"/> of this

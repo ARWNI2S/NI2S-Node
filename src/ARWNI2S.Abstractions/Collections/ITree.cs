@@ -1,6 +1,8 @@
-﻿namespace ARWNI2S.Collections
+﻿using System.Collections;
+
+namespace ARWNI2S.Collections
 {
-    public interface ITree
+    public interface ITree : ICollection
     {
     }
 

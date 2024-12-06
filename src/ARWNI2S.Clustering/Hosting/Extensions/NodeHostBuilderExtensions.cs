@@ -1,4 +1,7 @@
-﻿using ARWNI2S.Clustering.Configuration.Options;
+﻿using ARWNI2S.Clustering.Configuration;
+using ARWNI2S.Clustering.Configuration.Options;
+using ARWNI2S.Configuration;
+using ARWNI2S.Engine;
 using ARWNI2S.Node.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Orleans.Configuration;
@@ -24,13 +27,16 @@ namespace ARWNI2S.Clustering.Hosting.Extensions
 
         public static INodeHostBuilder UseOrleans(this INodeHostBuilder builder)
         {
+            var ni2sSettings = Singleton<NI2SSettings>.Instance;
+            var clusterConfig = ni2sSettings.Get<ClusterConfig>();
+
             builder.ConfigureServices(services =>
             {
                 // Configuración compartida de Orleans
                 services.Configure<ClusterOptions>(options =>
                 {
-                    options.ClusterId = "SimulationCluster";
-                    options.ServiceId = "SimulationService";
+                    options.ClusterId = clusterConfig.ClusterId;
+                    options.ServiceId = clusterConfig.ServiceId;
                 });
 
                 //// Configuración de serialización

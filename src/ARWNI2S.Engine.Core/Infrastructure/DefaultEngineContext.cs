@@ -1,14 +1,14 @@
-﻿using ARWNI2S.Engine.Builder;
-using ARWNI2S.Infrastructure;
+﻿using ARWNI2S.Engine;
+using ARWNI2S.Engine.Builder;
 using ARWNI2S.Infrastructure.Mapper;
 using AutoMapper;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
-namespace ARWNI2S.Engine
+namespace ARWNI2S.Infrastructure
 {
-    internal class NodeEngine : INiisEngine
+    internal class DefaultEngineContext : IEngineContext
     {
         #region Utilities
 
@@ -99,8 +99,8 @@ namespace ARWNI2S.Engine
         /// <param name="configuration">Configuration of the engine</param>
         public virtual void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
-            //register engine
-            services.AddSingleton<INiisEngine>(this);
+            //register engine context
+            services.AddSingleton<IEngineContext>(this);
 
             //find startup configurations provided by other assemblies
             var typeFinder = Singleton<ITypeFinder>.Instance;

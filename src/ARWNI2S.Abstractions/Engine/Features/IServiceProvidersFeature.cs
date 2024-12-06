@@ -1,4 +1,4 @@
-﻿namespace ARWNI2S.Engine.Features
+﻿namespace ARWNI2S.Node.Features
 {
     /// <summary>
     /// Provides acccess to the engine-scoped <see cref="IServiceProvider"/>.

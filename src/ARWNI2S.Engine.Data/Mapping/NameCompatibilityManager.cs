@@ -30,9 +30,9 @@ namespace ARWNI2S.Data.Mapping
 
                 var typeFinder = Singleton<ITypeFinder>.Instance;
                 var compatibilities = typeFinder.FindClassesOfType<INameCompatibility>()
-                    ?.Select(type => NI2SEngineContext.Current.ResolveUnregistered(type) as INameCompatibility).ToList() ?? [];
+                    ?.Select(type => NI2SContext.Current.ResolveUnregistered(type) as INameCompatibility).ToList() ?? [];
 
-                compatibilities.AddRange(AdditionalNameCompatibilities.Select(type => NI2SEngineContext.Current.ResolveUnregistered(type) as INameCompatibility));
+                compatibilities.AddRange(AdditionalNameCompatibilities.Select(type => NI2SContext.Current.ResolveUnregistered(type) as INameCompatibility));
 
                 foreach (var nameCompatibility in compatibilities.Distinct())
                 {

@@ -19,7 +19,7 @@ public partial class EntityRepository<TEntity> : IRepository<TEntity> where TEnt
 {
     #region Fields
 
-    protected readonly IEventPublisher _notifier;
+    protected readonly IEventPublisher _eventPublisher;
     protected readonly INiisDataProvider _dataProvider;
     protected readonly IShortTermCacheManager _shortTermCacheManager;
     protected readonly IStaticCacheManager _staticCacheManager;
@@ -35,7 +35,7 @@ public partial class EntityRepository<TEntity> : IRepository<TEntity> where TEnt
         IStaticCacheManager staticCacheManager,
         NI2SSettings niisSettings)
     {
-        _notifier = eventPublisher;
+        _eventPublisher = eventPublisher;
         _dataProvider = dataProvider;
         _shortTermCacheManager = shortTermCacheManager;
         _staticCacheManager = staticCacheManager;
@@ -437,7 +437,7 @@ public partial class EntityRepository<TEntity> : IRepository<TEntity> where TEnt
 
         //notification
         if (notify)
-            await _notifier.EntityInsertedAsync(entity);
+            await _eventPublisher.EntityInsertedAsync(entity);
     }
 
     /// <summary>
@@ -453,7 +453,7 @@ public partial class EntityRepository<TEntity> : IRepository<TEntity> where TEnt
 
         //notification
         if (notify)
-            _notifier.EntityInserted(entity);
+            _eventPublisher.EntityInserted(entity);
     }
 
     /// <summary>
@@ -475,7 +475,7 @@ public partial class EntityRepository<TEntity> : IRepository<TEntity> where TEnt
 
         //notification
         foreach (var entity in entities)
-            await _notifier.EntityInsertedAsync(entity);
+            await _eventPublisher.EntityInsertedAsync(entity);
     }
 
     /// <summary>
@@ -496,7 +496,7 @@ public partial class EntityRepository<TEntity> : IRepository<TEntity> where TEnt
 
         //notification
         foreach (var entity in entities)
-            _notifier.EntityInserted(entity);
+            _eventPublisher.EntityInserted(entity);
     }
 
     /// <summary>
@@ -527,7 +527,7 @@ public partial class EntityRepository<TEntity> : IRepository<TEntity> where TEnt
 
         //notification
         if (notify)
-            await _notifier.EntityUpdatedAsync(entity);
+            await _eventPublisher.EntityUpdatedAsync(entity);
     }
 
     /// <summary>
@@ -543,7 +543,7 @@ public partial class EntityRepository<TEntity> : IRepository<TEntity> where TEnt
 
         //notification
         if (notify)
-            _notifier.EntityUpdated(entity);
+            _eventPublisher.EntityUpdated(entity);
     }
 
     /// <summary>
@@ -566,7 +566,7 @@ public partial class EntityRepository<TEntity> : IRepository<TEntity> where TEnt
             return;
 
         foreach (var entity in entities)
-            await _notifier.EntityUpdatedAsync(entity);
+            await _eventPublisher.EntityUpdatedAsync(entity);
     }
 
     /// <summary>
@@ -588,7 +588,7 @@ public partial class EntityRepository<TEntity> : IRepository<TEntity> where TEnt
             return;
 
         foreach (var entity in entities)
-            _notifier.EntityUpdated(entity);
+            _eventPublisher.EntityUpdated(entity);
     }
 
     /// <summary>
@@ -615,7 +615,7 @@ public partial class EntityRepository<TEntity> : IRepository<TEntity> where TEnt
 
         //notification
         if (notify)
-            await _notifier.EntityDeletedAsync(entity);
+            await _eventPublisher.EntityDeletedAsync(entity);
     }
 
     /// <summary>
@@ -641,7 +641,7 @@ public partial class EntityRepository<TEntity> : IRepository<TEntity> where TEnt
 
         //notification
         if (notify)
-            _notifier.EntityDeleted(entity);
+            _eventPublisher.EntityDeleted(entity);
     }
 
     /// <summary>
@@ -664,7 +664,7 @@ public partial class EntityRepository<TEntity> : IRepository<TEntity> where TEnt
             return;
 
         foreach (var entity in entities)
-            await _notifier.EntityDeletedAsync(entity);
+            await _eventPublisher.EntityDeletedAsync(entity);
     }
 
     /// <summary>

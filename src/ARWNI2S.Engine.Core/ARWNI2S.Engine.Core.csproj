@@ -7,22 +7,60 @@
 
   <ItemGroup>
     <Compile Remove="ApplicationParts\**" />
-    <Compile Remove="Engine\Parts\**" />
+    <Compile Remove="Caching\**" />
+    <Compile Remove="Configuration\**" />
+    <Compile Remove="Core\**" />
+    <Compile Remove="Diagnostics\**" />
+    <Compile Remove="Engine\**" />
+    <Compile Remove="Lifecycle\**" />
+    <Compile Remove="Networking\**" />
+    <Compile Remove="Node\**" />
+    <Compile Remove="Plugins\**" />
+    <Compile Remove="Security\**" />
+    <Compile Remove="Threading\**" />
     <EmbeddedResource Remove="ApplicationParts\**" />
-    <EmbeddedResource Remove="Engine\Parts\**" />
+    <EmbeddedResource Remove="Caching\**" />
+    <EmbeddedResource Remove="Configuration\**" />
+    <EmbeddedResource Remove="Core\**" />
+    <EmbeddedResource Remove="Diagnostics\**" />
+    <EmbeddedResource Remove="Engine\**" />
+    <EmbeddedResource Remove="Lifecycle\**" />
+    <EmbeddedResource Remove="Networking\**" />
+    <EmbeddedResource Remove="Node\**" />
+    <EmbeddedResource Remove="Plugins\**" />
+    <EmbeddedResource Remove="Security\**" />
+    <EmbeddedResource Remove="Threading\**" />
     <None Remove="ApplicationParts\**" />
-    <None Remove="Engine\Parts\**" />
+    <None Remove="Caching\**" />
+    <None Remove="Configuration\**" />
+    <None Remove="Core\**" />
+    <None Remove="Diagnostics\**" />
+    <None Remove="Engine\**" />
+    <None Remove="Lifecycle\**" />
+    <None Remove="Networking\**" />
+    <None Remove="Node\**" />
+    <None Remove="Plugins\**" />
+    <None Remove="Security\**" />
+    <None Remove="Threading\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="Engine\EnginePartManager.cs" />
-    <Compile Remove="Engine\Extensions\MvcApiExplorerMvcCoreBuilderExtensions.cs" />
-    <Compile Remove="Engine\Extensions\MvcCorsMvcCoreBuilderExtensions.cs" />
-    <Compile Remove="Engine\Extensions\MvcDataAnnotationsMvcCoreBuilderExtensions.cs" />
-    <Compile Remove="Engine\Extensions\MvcRazorPagesMvcCoreBuilderExtensions.cs" />
-    <Compile Remove="Node\FeatureCollection.cs" />
-    <Compile Remove="Security\Secrets\SecretContractResolver.cs" />
-    <Compile Remove="Security\Secrets\SecretValueProvider.cs" />
+    <Compile Remove="Infrastructure\EngineActivator.cs" />
+    <Compile Remove="Infrastructure\NiisFileProvider.cs" />
+    <Compile Remove="Infrastructure\NiisTypeFinder.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Caching\CachingExtensions.cs" />
+    <Compile Include="Caching\DistributedCacheConfig.cs" />
+    <Compile Include="Caching\EntityCacheDefaults.cs" />
+    <Compile Include="Configuration\ConfigurationDefaults.cs" />
+    <Compile Include="Configuration\NI2SSettings.cs" />
+    <Compile Include="Configuration\SettingsHelper.cs" />
+    <Compile Include="Engine\NI2SContext.cs" />
+    <Compile Include="Engine\Singleton.cs" />
+    <Compile Include="Security\HashHelper.cs" />
+    <Compile Include="Security\Secrets\SecretAttribute.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -41,12 +79,6 @@
   <ItemGroup>
     <ProjectReference Include="..\ARWNI2S.Abstractions\ARWNI2S.Abstractions.csproj" />
     <ProjectReference Include="..\ARWNI2S.Infrastructure\ARWNI2S.Infrastructure.csproj" />
-  </ItemGroup>
-
-
-  <ItemGroup>
-    <Folder Include="Diagnostics\" />
-    <Folder Include="Engine\Features\" />
   </ItemGroup>
 
 </Project>

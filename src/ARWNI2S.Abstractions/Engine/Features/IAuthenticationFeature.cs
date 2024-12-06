@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 
-namespace ARWNI2S.Engine.Features
+namespace ARWNI2S.Node.Features
 {
     /// <summary>
     /// The authentication feature.

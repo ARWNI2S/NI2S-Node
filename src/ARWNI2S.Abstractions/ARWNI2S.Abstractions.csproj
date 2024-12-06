@@ -6,27 +6,97 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Engine\Features\**" />
-    <Compile Remove="Engine\Parts\**" />
-    <EmbeddedResource Remove="Engine\Features\**" />
-    <EmbeddedResource Remove="Engine\Parts\**" />
-    <None Remove="Engine\Features\**" />
-    <None Remove="Engine\Parts\**" />
+    <Compile Remove="ApplicationParts\**" />
+    <Compile Remove="Caching\**" />
+    <Compile Remove="Collections\**" />
+    <Compile Remove="Diagnostics\**" />
+    <Compile Remove="Engine\**" />
+    <Compile Remove="Entities\**" />
+    <Compile Remove="EventSourcing\**" />
+    <Compile Remove="Extensibility\**" />
+    <Compile Remove="Infrastructure\**" />
+    <Compile Remove="Memory\**" />
+    <Compile Remove="Node\Builder\**" />
+    <Compile Remove="Node\Hosting\**" />
+    <Compile Remove="Resources\**" />
+    <Compile Remove="Runtime\**" />
+    <Compile Remove="Timing\**" />
+    <EmbeddedResource Remove="ApplicationParts\**" />
+    <EmbeddedResource Remove="Caching\**" />
+    <EmbeddedResource Remove="Collections\**" />
+    <EmbeddedResource Remove="Diagnostics\**" />
+    <EmbeddedResource Remove="Engine\**" />
+    <EmbeddedResource Remove="Entities\**" />
+    <EmbeddedResource Remove="EventSourcing\**" />
+    <EmbeddedResource Remove="Extensibility\**" />
+    <EmbeddedResource Remove="Infrastructure\**" />
+    <EmbeddedResource Remove="Memory\**" />
+    <EmbeddedResource Remove="Node\Builder\**" />
+    <EmbeddedResource Remove="Node\Hosting\**" />
+    <EmbeddedResource Remove="Resources\**" />
+    <EmbeddedResource Remove="Runtime\**" />
+    <EmbeddedResource Remove="Timing\**" />
+    <None Remove="ApplicationParts\**" />
+    <None Remove="Caching\**" />
+    <None Remove="Collections\**" />
+    <None Remove="Diagnostics\**" />
+    <None Remove="Engine\**" />
+    <None Remove="Entities\**" />
+    <None Remove="EventSourcing\**" />
+    <None Remove="Extensibility\**" />
+    <None Remove="Infrastructure\**" />
+    <None Remove="Memory\**" />
+    <None Remove="Node\Builder\**" />
+    <None Remove="Node\Hosting\**" />
+    <None Remove="Resources\**" />
+    <None Remove="Runtime\**" />
+    <None Remove="Timing\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="ApplicationParts\ApplicationPartAttribute.cs" />
-    <Compile Remove="ApplicationParts\ProvideApplicationPartFactoryAttribute.cs" />
-    <Compile Remove="ApplicationParts\RelatedAssemblyAttribute.cs" />
-    <Compile Remove="Engine\Builder\INodeHostBuilder.cs" />
-    <Compile Remove="Engine\IEnginePartManager.cs" />
     <Compile Remove="Lifecycle\IEntityLifecycle.cs" />
-    <Compile Remove="Node\IFeatureCollection.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="Engine\Features\IFeatureCollection.cs" />
+    <Compile Include="Caching\CacheKey.cs" />
+    <Compile Include="Caching\ICacheKeyService.cs" />
+    <Compile Include="Caching\IShortTermCacheManager.cs" />
+    <Compile Include="Caching\IStaticCacheManager.cs" />
+    <Compile Include="Collections\Generic\IPagedList.cs" />
+    <Compile Include="Collections\IComposition.cs" />
+    <Compile Include="Collections\ITree.cs" />
+    <Compile Include="Collections\ITreeNode.cs" />
+    <Compile Include="Engine\Builder\IEngineBuilder.cs" />
+    <Compile Include="Engine\IEngineModule.cs" />
+    <Compile Include="Engine\IFeatureCollection.cs" />
+    <Compile Include="Engine\IEngineContext.cs" />
+    <Compile Include="Engine\INiisContextAccessor.cs" />
+    <Compile Include="Engine\INiisEngine.cs" />
+    <Compile Include="Entities\Clustering\ISupportNodeMapping.cs" />
+    <Compile Include="Entities\Globalization\ILocalizedEntity.cs" />
+    <Compile Include="Entities\IActorComponent.cs" />
+    <Compile Include="Entities\IActorComponents.cs" />
+    <Compile Include="Entities\IActorEntity.cs" />
+    <Compile Include="Entities\IDataEntity.cs" />
+    <Compile Include="Entities\IEntity.cs" />
+    <Compile Include="Entities\IEntityGrain.cs" />
+    <Compile Include="Entities\IObjectEntity.cs" />
+    <Compile Include="EventSourcing\IEventPublisher.cs" />
+    <Compile Include="Infrastructure\INiisFileProvider.cs" />
+    <Compile Include="Infrastructure\INiisStartup.cs" />
+    <Compile Include="Infrastructure\IStartupTask.cs" />
+    <Compile Include="Infrastructure\Mapper\IOrderedMapperProfile.cs" />
+    <Compile Include="Infrastructure\Metadata\FrameworkPartAttribute.cs" />
+    <Compile Include="Infrastructure\NiisContext.cs" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Node\" />
+  </ItemGroup>
+
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <OrleansCodeGenOutput>true</OrleansCodeGenOutput>
+  </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" />
@@ -36,34 +106,6 @@
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" />
     <PackageReference Include="Microsoft.Orleans.Core.Abstractions" />
     <PackageReference Include="Newtonsoft.Json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="Resources\ErrorStrings.Designer.cs">
-      <DependentUpon>ErrorStrings.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="Resources\LocalizedStrings.Designer.cs">
-      <DependentUpon>LocalizedStrings.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Update="Resources\ErrorStrings.resx">
-      <LastGenOutput>ErrorStrings.Designer.cs</LastGenOutput>
-      <Generator>ResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Resources\LocalizedStrings.resx">
-      <LastGenOutput>LocalizedStrings.Designer.cs</LastGenOutput>
-      <Generator>ResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Clustering\" />
   </ItemGroup>
 
 </Project>

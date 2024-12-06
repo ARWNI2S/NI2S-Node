@@ -100,7 +100,7 @@ namespace ARWNI2S.Data.DataProviders
         /// </summary>
         public virtual void InitializeDatabase()
         {
-            var migrationManager = NI2SEngineContext.Current.Resolve<IMigrationManager>();
+            var migrationManager = NI2SContext.Current.Resolve<IMigrationManager>();
 
             var targetAssembly = typeof(NodeEngineDbStartup).Assembly;
             migrationManager.ApplyUpMigrations(targetAssembly);

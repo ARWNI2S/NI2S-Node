@@ -6,7 +6,7 @@ namespace ARWNI2S.Engine
     /// <summary>
     /// Provides access to the singleton instance of the Node Engine.
     /// </summary>
-    public partial class NI2SEngineContext
+    public partial class NI2SContext
     {
         #region Methods
 
@@ -14,10 +14,10 @@ namespace ARWNI2S.Engine
         /// Create a static instance of the ARWNI2S engine.
         /// </summary>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public static INiisEngine Create()
+        public static IEngineContext Create()
         {
             //create NodeEngine as engine
-            return Singleton<INiisEngine>.Instance ?? (Singleton<INiisEngine>.Instance = new NodeEngine());
+            return Singleton<IEngineContext>.Instance ?? (Singleton<IEngineContext>.Instance = new DefaultEngineContext());
         }
 
         /// <summary>
@@ -25,9 +25,9 @@ namespace ARWNI2S.Engine
         /// </summary>
         /// <param name="engine">The engine to use.</param>
         /// <remarks>Only use this method if you know what you're doing.</remarks>
-        public static void Replace(INiisEngine engine)
+        public static void Replace(IEngineContext engine)
         {
-            Singleton<INiisEngine>.Instance = engine;
+            Singleton<IEngineContext>.Instance = engine;
         }
 
         #endregion
@@ -37,16 +37,16 @@ namespace ARWNI2S.Engine
         /// <summary>
         /// Gets the singleton ARWNI2S engine used to access ARWNI2S services.
         /// </summary>
-        public static INiisEngine Current
+        public static IEngineContext Current
         {
             get
             {
-                if (Singleton<INiisEngine>.Instance == null)
+                if (Singleton<IEngineContext>.Instance == null)
                 {
                     Create();
                 }
 
-                return Singleton<INiisEngine>.Instance;
+                return Singleton<IEngineContext>.Instance;
             }
         }
 

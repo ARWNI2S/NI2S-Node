@@ -1,28 +1,28 @@
-﻿using ARWNI2S.Engine.Features;
-using ARWNI2S.Infrastructure;
+﻿using ARWNI2S.Engine;
+using ARWNI2S.Entities;
 
-namespace ARWNI2S.Entities.Clustering
+namespace ARWNI2S.Clustering
 {
     /// <summary>
-    /// Represents a server.
+    /// Represents a NI2S cluster node.
     /// </summary>
     public interface INiisNode : IEntity, IDisposable
     {
         /// <summary>
-        /// A collection of HTTP features of the server.
+        /// A collection of features of the local node.
         /// </summary>
         IFeatureCollection Features { get; }
 
         /// <summary>
-        /// Start the server with an application.
+        /// Start the node with an application.
         /// </summary>
         /// <param name="application">An instance of <see cref="INiisEngine{TContext}"/>.</param>
         /// <typeparam name="TContext">The context associated with the application.</typeparam>
-        /// <param name="cancellationToken">Indicates if the server startup should be aborted.</param>
+        /// <param name="cancellationToken">Indicates if the node startup should be aborted.</param>
         Task StartAsync<TContext>(INiisEngine<TContext> application, CancellationToken cancellationToken) where TContext : notnull;
 
         /// <summary>
-        /// Stop processing requests and shut down the server, gracefully if possible.
+        /// Stop processing requests and shut down the node, gracefully if possible.
         /// </summary>
         /// <param name="cancellationToken">Indicates if the graceful shutdown should be aborted.</param>
         Task StopAsync(CancellationToken cancellationToken);
