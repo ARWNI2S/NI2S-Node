@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>ARWNI2S.Core</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Caching\ICacheKeyManager.cs" />
+    <Compile Remove="Caching\ILocker.cs" />
+    <Compile Remove="Caching\ISynchronizedMemoryCache.cs" />
+    <Compile Remove="Configuration\HostingConfig.cs" />
+    <Compile Remove="Plugins\IUploadService.cs" />
+    <Compile Remove="Plugins\PluginManager.cs" />
+    <Compile Remove="Plugins\PluginService.cs" />
+    <Compile Remove="Plugins\UploadService.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" />
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" />
+    <PackageReference Include="Microsoft.Extensions.FileProviders.Physical" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ARWNI2S.Abstractions\ARWNI2S.Abstractions.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Engine\Host\" />
+  </ItemGroup>
+
+</Project>

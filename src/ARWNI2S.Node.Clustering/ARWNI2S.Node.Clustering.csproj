@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>ARWNI2S.Clustering</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Services\ScheduleTasks\**" />
+    <EmbeddedResource Remove="Services\ScheduleTasks\**" />
+    <None Remove="Services\ScheduleTasks\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Services\ScheduleTasks\Caching\ScheduleTaskCacheEventConsumer.cs" />
+    <Compile Include="Services\ScheduleTasks\ClusterTaskScheduler.cs" />
+    <Compile Include="Services\ScheduleTasks\IScheduleTaskService.cs" />
+    <Compile Include="Services\ScheduleTasks\ScheduleTaskService.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ARWNI2S.Abstractions\ARWNI2S.Abstractions.csproj" />
+    <ProjectReference Include="..\ARWNI2S.Engine.Core\ARWNI2S.Engine.Core.csproj" />
+    <ProjectReference Include="..\ARWNI2S.Engine.Data\ARWNI2S.Engine.Data.csproj" />
+  </ItemGroup>
+
+</Project>

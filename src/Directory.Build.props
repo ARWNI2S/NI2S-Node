@@ -29,12 +29,8 @@
     <SourceLinkOriginUrl>https://github.com/ARWNI2S/NI2S-Node</SourceLinkOriginUrl>
   </PropertyGroup>
 
-  <PropertyGroup Condition=" '$(IsFrameworkPart)'=='true' ">
-    <RootNamespace>ARWNI2S</RootNamespace>
-  </PropertyGroup>
-
   <ItemGroup Condition=" '$(IsFrameworkPart)'=='true' ">
-    <AssemblyAttribute Include="ARWNI2S.Infrastructure.Metadata.FrameworkPartAttribute" />
+    <AssemblyAttribute Include="ARWNI2S.Metadata.FrameworkPartAttribute" />
   </ItemGroup>
 
 </Project>
