@@ -1,5 +1,7 @@
 ﻿using ARWNI2S.Core.Engine.Builder;
 using ARWNI2S.Core.Engine.Parts;
+using ARWNI2S.Core.Infrastructure;
+using ARWNI2S.Engine;
 using ARWNI2S.Engine.Builder;
 using ARWNI2S.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -61,6 +63,7 @@ namespace ARWNI2S.Core.Engine
 
         internal static void AddNI2SCoreServices(IServiceCollection services)
         {
+            services.TryAddSingleton<INiisFileProvider, NI2SFileProvider>();
             //services.TryAddEnumerable(ServiceDescriptor.Transient<IConfigureOptions<MvcOptions>, MvcCoreMvcOptionsSetup>());
             //services.TryAddEnumerable(ServiceDescriptor.Transient<IPostConfigureOptions<MvcOptions>, MvcCoreMvcOptionsSetup>());
             //services.TryAddEnumerable(ServiceDescriptor.Transient<IConfigureOptions<ApiBehaviorOptions>, ApiBehaviorOptionsSetup>());

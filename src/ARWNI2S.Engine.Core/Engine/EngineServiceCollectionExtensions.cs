@@ -1,6 +1,7 @@
-﻿using ARWNI2S.Core.Infrastructure;
+﻿using ARWNI2S.Core.Caching;
+using ARWNI2S.Core.Configuration;
+using ARWNI2S.Core.Infrastructure;
 using ARWNI2S.Engine;
-using ARWNI2S.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
@@ -11,14 +12,14 @@ namespace ARWNI2S.Core.Engine
     /// </summary>
     public static class EngineServiceCollectionExtensions
     {
-        /// <summary>
-        /// Registers a default file provider
-        /// </summary>
-        /// <param name="services">Collection of service descriptors</param>
-        public static void AddNI2SFileProvider(this IServiceCollection services, INiisHostEnvironment hostEnvironment)
-        {
-            services.TryAddSingleton<INiisFileProvider, NI2SFileProvider>();
-        }
+        ///// <summary>
+        ///// Registers a default file provider
+        ///// </summary>
+        ///// <param name="services">Collection of service descriptors</param>
+        //public static void AddNI2SFileProvider(this IServiceCollection services, INiisHostEnvironment hostEnvironment)
+        //{
+        //    services.TryAddSingleton<INiisFileProvider, NI2SFileProvider>();
+        //}
 
         public static ITypeFinder GetOrCreateTypeFinder(this IServiceCollection services)
         {
@@ -84,50 +85,50 @@ namespace ARWNI2S.Core.Engine
         //    });
         //}
 
-        ///// <summary>
-        ///// Adds services required for distributed cache
-        ///// </summary>
-        ///// <param name="services">Collection of service descriptors</param>
-        //public static void AddDistributedCache(this IServiceCollection services)
-        //{
-        //    var appSettings = Singleton<AppSettings>.Instance;
-        //    var distributedCacheConfig = appSettings.Get<DistributedCacheConfig>();
+        /// <summary>
+        /// Adds services required for distributed cache
+        /// </summary>
+        /// <param name="services">Collection of service descriptors</param>
+        public static void AddDistributedCache(this IServiceCollection services)
+        {
+            var appSettings = Singleton<NI2SSettings>.Instance;
+            var distributedCacheConfig = appSettings.Get<DistributedCacheConfig>();
 
-        //    if (!distributedCacheConfig.Enabled)
-        //        return;
+            if (!distributedCacheConfig.Enabled)
+                return;
 
-        //    switch (distributedCacheConfig.DistributedCacheType)
-        //    {
-        //        case DistributedCacheType.Memory:
-        //            services.AddDistributedMemoryCache();
-        //            break;
+            switch (distributedCacheConfig.DistributedCacheType)
+            {
+                case DistributedCacheType.Memory:
+                    services.AddDistributedMemoryCache();
+                    break;
 
-        //        case DistributedCacheType.SqlServer:
-        //            services.AddDistributedSqlServerCache(options =>
-        //            {
-        //                options.ConnectionString = distributedCacheConfig.ConnectionString;
-        //                options.SchemaName = distributedCacheConfig.SchemaName;
-        //                options.TableName = distributedCacheConfig.TableName;
-        //            });
-        //            break;
+                case DistributedCacheType.SqlServer:
+                    services.AddDistributedSqlServerCache(options =>
+                    {
+                        options.ConnectionString = distributedCacheConfig.ConnectionString;
+                        options.SchemaName = distributedCacheConfig.SchemaName;
+                        options.TableName = distributedCacheConfig.TableName;
+                    });
+                    break;
 
-        //        case DistributedCacheType.Redis:
-        //            services.AddStackExchangeRedisCache(options =>
-        //            {
-        //                options.Configuration = distributedCacheConfig.ConnectionString;
-        //                options.InstanceName = distributedCacheConfig.InstanceName ?? string.Empty;
-        //            });
-        //            break;
+                case DistributedCacheType.Redis:
+                    services.AddStackExchangeRedisCache(options =>
+                    {
+                        options.Configuration = distributedCacheConfig.ConnectionString;
+                        options.InstanceName = distributedCacheConfig.InstanceName ?? string.Empty;
+                    });
+                    break;
 
-        //        case DistributedCacheType.RedisSynchronizedMemory:
-        //            services.AddStackExchangeRedisCache(options =>
-        //            {
-        //                options.Configuration = distributedCacheConfig.ConnectionString;
-        //                options.InstanceName = distributedCacheConfig.InstanceName ?? string.Empty;
-        //            });
-        //            break;
-        //    }
-        //}
+                case DistributedCacheType.RedisSynchronizedMemory:
+                    services.AddStackExchangeRedisCache(options =>
+                    {
+                        options.Configuration = distributedCacheConfig.ConnectionString;
+                        options.InstanceName = distributedCacheConfig.InstanceName ?? string.Empty;
+                    });
+                    break;
+            }
+        }
 
         ///// <summary>
         ///// Adds data protection services
@@ -135,7 +136,7 @@ namespace ARWNI2S.Core.Engine
         ///// <param name="services">Collection of service descriptors</param>
         //public static void AddNopDataProtection(this IServiceCollection services)
         //{
-        //    var appSettings = Singleton<AppSettings>.Instance;
+        //    var appSettings = Singleton<NI2SSettings>.Instance;
         //    if (appSettings.Get<AzureBlobConfig>().Enabled && appSettings.Get<AzureBlobConfig>().StoreDataProtectionKeys)
         //    {
         //        var blobServiceClient = new BlobServiceClient(appSettings.Get<AzureBlobConfig>().ConnectionString);
@@ -219,7 +220,7 @@ namespace ARWNI2S.Core.Engine
 
         //    mvcBuilder.AddRazorRuntimeCompilation();
 
-        //    var appSettings = Singleton<AppSettings>.Instance;
+        //    var appSettings = Singleton<NI2SSettings>.Instance;
         //    if (appSettings.Get<CommonConfig>().UseSessionStateTempDataProvider)
         //    {
         //        //use session-based temp data provider
@@ -318,7 +319,7 @@ namespace ARWNI2S.Core.Engine
         ///// <param name="services">Collection of service descriptors</param>
         //public static void AddNopWebOptimizer(this IServiceCollection services)
         //{
-        //    var appSettings = Singleton<AppSettings>.Instance;
+        //    var appSettings = Singleton<NI2SSettings>.Instance;
         //    var woConfig = appSettings.Get<WebOptimizerConfig>();
 
         //    if (!woConfig.EnableCssBundling && !woConfig.EnableJavaScriptBundling)

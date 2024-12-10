@@ -7,16 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Services\ScheduleTasks\**" />
-    <EmbeddedResource Remove="Services\ScheduleTasks\**" />
-    <None Remove="Services\ScheduleTasks\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Include="Services\ScheduleTasks\Caching\ScheduleTaskCacheEventConsumer.cs" />
-    <Compile Include="Services\ScheduleTasks\ClusterTaskScheduler.cs" />
-    <Compile Include="Services\ScheduleTasks\IScheduleTaskService.cs" />
-    <Compile Include="Services\ScheduleTasks\ScheduleTaskService.cs" />
+    <Compile Remove="DataProtectionServiceCollectionExtensions.cs" />
+    <Compile Remove="EngineServiceCollectionExtensions.cs" />
   </ItemGroup>
 
   <ItemGroup>

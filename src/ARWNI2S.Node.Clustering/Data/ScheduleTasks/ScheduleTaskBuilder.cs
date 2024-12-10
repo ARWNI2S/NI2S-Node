@@ -1,7 +1,7 @@
-﻿using ARWNI2S.Clustering.Data.ScheduleTasks;
+﻿using ARWNI2S.Data.Mapping.Builders;
 using FluentMigrator.Builders.Create.Table;
 
-namespace ARWNI2S.Data.Mapping.Builders.ScheduleTasks
+namespace ARWNI2S.Clustering.Data.ScheduleTasks
 {
     /// <summary>
     /// Represents a schedule task entity builder

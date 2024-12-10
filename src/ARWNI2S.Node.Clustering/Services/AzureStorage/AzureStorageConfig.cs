@@ -2,7 +2,7 @@
 using ARWNI2S.Core.Configuration;
 using Newtonsoft.Json;
 
-namespace ARWNI2S.Clustering.CloudServices.AzureStorage
+namespace ARWNI2S.Clustering.Services.AzureStorage
 {
     /// <summary>
     /// Represents Azure Blob storage configuration parameters

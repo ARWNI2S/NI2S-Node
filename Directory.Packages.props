@@ -13,16 +13,19 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- System packages -->
+    <PackageVersion Include="Azure.Storage.Blobs" Version="12.23.0" />
     <PackageVersion Include="Microsoft.Extensions.Configuration" Version="9.0.0" />
     <PackageVersion Include="Microsoft.Extensions.FileProviders.Physical" Version="9.0.0" />
+    <PackageVersion Include="Nito.AsyncEx.Coordination" Version="5.1.2" />
     <PackageVersion Include="System.Configuration.ConfigurationManager" Version="$(MicrosoftPackageLatestVersion)" />
+    <PackageVersion Include="System.IO.FileSystem.AccessControl" Version="5.0.0" />
     <PackageVersion Include="System.IO.Pipelines" Version="$(MicrosoftPackageLatestVersion)" />
     <PackageVersion Include="System.Linq.Async" Version="6.0.1" />
     <!-- Microsoft packages -->
     <PackageVersion Include="Microsoft.Data.SqlClient" Version="5.2.2" />
-    <PackageVersion Include="Microsoft.Extensions.Caching.Memory" Version="$(MicrosoftPackageLatestVersion)" />
-    <PackageVersion Include="Microsoft.Extensions.Caching.SqlServer" Version="$(MicrosoftPackageLatestVersion)" />
-    <PackageVersion Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="$(MicrosoftPackageLatestVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.Caching.Memory" Version="9.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Caching.SqlServer" Version="9.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="9.0.0" />
     <PackageVersion Include="Microsoft.Extensions.Configuration.UserSecrets" Version="$(MicrosoftPackageLatestVersion)" />
     <PackageVersion Include="Microsoft.Extensions.FileProviders.Composite" Version="$(MicrosoftPackageLatestVersion)" />
     <PackageVersion Include="Microsoft.Extensions.Hosting" Version="$(MicrosoftPackageLatestVersion)" />
