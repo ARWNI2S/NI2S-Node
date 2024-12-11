@@ -15,7 +15,7 @@ namespace ARWNI2S.Clustering.Data
     /// <summary>
     /// Represents a node
     /// </summary>
-    public partial class NI2SNode : DataEntity
+    public partial class NI2SNode : DataEntity, INiisNode
     {
         public string Name { get; set; }
 

@@ -74,7 +74,7 @@ namespace ARWNI2S.Hosting
             set => EngineBuilder.EngineServices = value;
         }
 
-        internal IFeatureCollection NodeFeatures => _host.Services.GetRequiredService<INiisRelay>().Features;
+        internal IFeatureCollection NodeFeatures => _host.Services.GetRequiredService<IClusterServer>().Features;
         IFeatureCollection IEngineBuilder.NodeFeatures => NodeFeatures;
 
         internal IDictionary<string, object> Properties => EngineBuilder.Properties;
@@ -236,7 +236,7 @@ namespace ARWNI2S.Hosting
 
                 //update nopCommerce core and db
                 var migrationManager = engine.Resolve<IMigrationManager>();
-                var assembly = Assembly.GetAssembly(typeof(NI2SHostBuilderKestrelExtensions));
+                var assembly = Assembly.GetAssembly(typeof(NI2SHostBuilderClusterExtensions));
                 migrationManager.ApplyUpMigrations(assembly, MigrationProcessType.Update);
                 assembly = Assembly.GetAssembly(typeof(IMigrationManager));
                 migrationManager.ApplyUpMigrations(assembly, MigrationProcessType.Update);
@@ -320,7 +320,7 @@ namespace ARWNI2S.Hosting
             });
 
             ConfigureNI2SDefaultsWorker(
-                builder.UseKestrel(ConfigureKestrel),
+                builder.UseCluster(ConfigureKestrel),
                 (services, config) =>
                 {
                     //services.AddRouting()
@@ -331,7 +331,7 @@ namespace ARWNI2S.Hosting
             //    .UseIISIntegration();
         }
 
-        private static void ConfigureKestrel(NI2SHostBuilderContext builderContext, KestrelServerOptions options)
+        private static void ConfigureKestrel(NI2SHostBuilderContext builderContext, ClusterServerOptions options)
         {
             //options.Configure(builderContext.Configuration.GetSection("Kestrel"), reloadOnChange: true);
         }

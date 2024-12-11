@@ -28,13 +28,13 @@ namespace ARWNI2S.Clustering
 
             services.AddScoped<IClusteringService, ClusteringService>();
             services.AddScoped<INodeMappingService, NodeMappingService>();
+            services.AddScoped<IScheduleTaskService, ScheduleTaskService>();
 
-            //services.AddSingleton<ClusterManager>();
+            services.AddSingleton<NI2SClusterManager>();
 
-            //services.AddHostedService<NodeHealthMonitorService>();
+            services.AddHostedService<ClusterMonitorService>();
 
             services.AddSingleton<IClusterTaskScheduler, ClusterTaskScheduler>();
-
         }
     }
 }

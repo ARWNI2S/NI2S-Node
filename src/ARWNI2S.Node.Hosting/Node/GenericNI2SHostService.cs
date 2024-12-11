@@ -10,7 +10,7 @@ namespace ARWNI2S.Hosting.Node
     internal sealed partial class GenericNI2SHostService : IHostedService
     {
         public GenericNI2SHostService(NI2SSettings settings,
-                                     INiisRelay localNode,
+                                     IClusterServer localNode,
                                      ILoggerFactory loggerFactory,
                                      DiagnosticListener diagnosticListener,
                                      ActivitySource activitySource,
@@ -39,7 +39,7 @@ namespace ARWNI2S.Hosting.Node
         }
 
         public NI2SSettings Settings { get; }
-        public INiisRelay LocalNode { get; }
+        public IClusterServer LocalNode { get; }
         public ILogger Logger { get; }
         // Only for high level lifetime events
         public ILogger LifetimeLogger { get; }

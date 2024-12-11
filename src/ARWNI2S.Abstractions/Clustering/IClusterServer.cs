@@ -2,8 +2,11 @@
 
 namespace ARWNI2S.Clustering
 {
-    public interface INiisRelay : INiisNode
+    public interface IClusterServer
     {
+        Guid NodeId { get; }
+        INiisNode Node { get; }
+
         IFeatureCollection Features { get; }
     }
 }

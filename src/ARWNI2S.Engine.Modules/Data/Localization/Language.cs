@@ -1,3 +1,4 @@
+using ARWNI2S.Clustering.Data;
 using ARWNI2S.Data.Entities;
 
 namespace ARWNI2S.Core.Data.Localization
@@ -5,7 +6,7 @@ namespace ARWNI2S.Core.Data.Localization
     /// <summary>
     /// Represents a language
     /// </summary>
-    public partial class Language : DataEntity//, INodeMappingSupported
+    public partial class Language : DataEntity, INodeMappingSupported
     {
         /// <summary>
         /// Gets or sets the name
@@ -46,5 +47,8 @@ namespace ARWNI2S.Core.Data.Localization
         /// Gets or sets the display order
         /// </summary>
         public int DisplayOrder { get; set; }
+
+        /// <inheritdoc />
+        public bool LimitedToNodes { get; set; }
     }
 }

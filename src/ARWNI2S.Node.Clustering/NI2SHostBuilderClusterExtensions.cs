@@ -4,22 +4,23 @@ using ARWNI2S.Hosting;
 using ARWNI2S.Hosting.Builder;
 using ARWNI2S.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
-using System.Net;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Options;
 
 namespace ARWNI2S.Clustering
 {
     /// <summary>
     /// Kestrel <see cref="INiisHostBuilder"/> extensions.
     /// </summary>
-    public static class NI2SHostBuilderKestrelExtensions
+    public static class NI2SHostBuilderClusterExtensions
     {
         /// <summary>
-        /// In <see cref="UseKestrelCore(INiisHostBuilder)"/> scenarios, it may be necessary to explicitly
+        /// In <see cref="UseClusterCore(INiisHostBuilder)"/> scenarios, it may be necessary to explicitly
         /// opt in to certain HTTPS functionality.  For example, if <code>ARWNI2S_URLS</code> includes
-        /// an <code>https://</code> address, <see cref="UseKestrelHttpsConfiguration"/> will enable configuration
+        /// an <code>https://</code> address, <see cref="UseClusterNI2SConfiguration"/> will enable configuration
         /// of HTTPS on that endpoint.
         ///
-        /// Has no effect in <see cref="UseKestrel(INiisHostBuilder)"/> scenarios.
+        /// Has no effect in <see cref="UseCluster(INiisHostBuilder)"/> scenarios.
         /// </summary>
         /// <param name="hostBuilder">
         /// The Microsoft.AspNetCore.Hosting.INiisHostBuilder to configure.
@@ -27,11 +28,11 @@ namespace ARWNI2S.Clustering
         /// <returns>
         /// The Microsoft.AspNetCore.Hosting.INiisHostBuilder.
         /// </returns>
-        public static INiisHostBuilder UseKestrelHttpsConfiguration(this INiisHostBuilder hostBuilder)
+        public static INiisHostBuilder UseClusterNI2SConfiguration(this INiisHostBuilder hostBuilder)
         {
             return hostBuilder.ConfigureServices(services =>
             {
-                //services.AddSingleton<HttpsConfigurationService.IInitializer, HttpsConfigurationService.Initializer>();
+                services.AddSingleton<NI2SConfigurationService.IInitializer, NI2SConfigurationService.Initializer>();
             });
         }
 
@@ -44,11 +45,11 @@ namespace ARWNI2S.Clustering
         /// <returns>
         /// The Microsoft.AspNetCore.Hosting.INiisHostBuilder.
         /// </returns>
-        public static INiisHostBuilder UseKestrel(this INiisHostBuilder hostBuilder)
+        public static INiisHostBuilder UseCluster(this INiisHostBuilder hostBuilder)
         {
             return hostBuilder
-                .UseKestrelCore()
-                .UseKestrelHttpsConfiguration()
+                .UseClusterCore()
+                .UseClusterNI2SConfiguration()
                 //.UseQuic(options =>
                 //{
                 //    // Configure server defaults to match client defaults.
@@ -61,7 +62,7 @@ namespace ARWNI2S.Clustering
 
         /// <summary>
         /// Specify Kestrel as the server to be used by the web host.
-        /// Includes less automatic functionality than <see cref="UseKestrel(INiisHostBuilder)"/> to make trimming more effective
+        /// Includes less automatic functionality than <see cref="UseCluster(INiisHostBuilder)"/> to make trimming more effective
         /// (e.g. for <see href="https://aka.ms/aspnet/nativeaot">Native AOT</see> scenarios).  If the host ends up depending on
         /// some of the absent functionality, a best-effort attempt will be made to enable it on-demand.  Failing that, an
         /// exception with an informative error message will be raised when the host is started.
@@ -72,19 +73,19 @@ namespace ARWNI2S.Clustering
         /// <returns>
         /// The Microsoft.AspNetCore.Hosting.INiisHostBuilder.
         /// </returns>
-        public static INiisHostBuilder UseKestrelCore(this INiisHostBuilder hostBuilder)
+        public static INiisHostBuilder UseClusterCore(this INiisHostBuilder hostBuilder)
         {
             hostBuilder.ConfigureServices(services =>
             {
                 var settings = Singleton<NI2SSettings>.Instance;
 
-                //// Don't override an already-configured transport
-                //services.TryAddSingleton<IConnectionListenerFactory, SocketTransportFactory>();
+                // Don't override an already-configured transport
+                services.TryAddSingleton<IConnectionListenerFactory, ClusterTransportFactory>();
 
-                //services.AddTransient<IConfigureOptions<KestrelServerOptions>, KestrelServerOptionsSetup>();
-                //services.AddSingleton<IHttpsConfigurationService, HttpsConfigurationService>();
-                services.AddSingleton<INiisRelay, ClusterNode>();
-                //services.AddSingleton<KestrelMetrics>();
+                services.AddTransient<IConfigureOptions<ClusterServerOptions>, ClusterServerOptionsSetup>();
+                services.AddSingleton<INiisConfigurationService, NI2SConfigurationService>();
+                services.AddSingleton<IClusterServer, ClusterServer>();
+                services.AddSingleton<ClusterMetrics>();
             });
 
             if (OperatingSystem.IsWindows())
@@ -107,13 +108,13 @@ namespace ARWNI2S.Clustering
         /// <returns>
         /// The Microsoft.AspNetCore.Hosting.INiisHostBuilder.
         /// </returns>
-        public static INiisHostBuilder UseKestrel(this INiisHostBuilder hostBuilder, Action<KestrelServerOptions> options)
+        public static INiisHostBuilder UseCluster(this INiisHostBuilder hostBuilder, Action<ClusterServerOptions> options)
         {
-            return hostBuilder.UseKestrel().ConfigureKestrel(options);
+            return hostBuilder.UseCluster().ConfigureCluster(options);
         }
 
         /// <summary>
-        /// Configures Kestrel options but does not register an IServer. See <see cref="UseKestrel(INiisHostBuilder)"/>.
+        /// Configures Kestrel options but does not register an IServer. See <see cref="UseCluster(INiisHostBuilder)"/>.
         /// </summary>
         /// <param name="hostBuilder">
         /// The Microsoft.AspNetCore.Hosting.INiisHostBuilder to configure.
@@ -124,11 +125,11 @@ namespace ARWNI2S.Clustering
         /// <returns>
         /// The Microsoft.AspNetCore.Hosting.INiisHostBuilder.
         /// </returns>
-        public static INiisHostBuilder ConfigureKestrel(this INiisHostBuilder hostBuilder, Action<KestrelServerOptions> options)
+        public static INiisHostBuilder ConfigureCluster(this INiisHostBuilder hostBuilder, Action<ClusterServerOptions> options)
         {
             return hostBuilder.ConfigureServices(services =>
             {
-                //services.TryAddEnumerable(ServiceDescriptor.Transient<IConfigureOptions<KestrelServerOptions>, KestrelServerOptionsSetup>());
+                services.TryAddEnumerable(ServiceDescriptor.Transient<IConfigureOptions<ClusterServerOptions>, ClusterServerOptionsSetup>());
                 services.Configure(options);
             });
         }
@@ -143,13 +144,13 @@ namespace ARWNI2S.Clustering
         /// <returns>
         /// The Microsoft.AspNetCore.Hosting.INiisHostBuilder.
         /// </returns>
-        public static INiisHostBuilder UseKestrel(this INiisHostBuilder hostBuilder, Action<NI2SHostBuilderContext, KestrelServerOptions> configureOptions)
+        public static INiisHostBuilder UseCluster(this INiisHostBuilder hostBuilder, Action<NI2SHostBuilderContext, ClusterServerOptions> configureOptions)
         {
-            return hostBuilder.UseKestrel().ConfigureKestrel(configureOptions);
+            return hostBuilder.UseCluster().ConfigureCluster(configureOptions);
         }
 
         /// <summary>
-        /// Configures Kestrel options but does not register an IServer. See <see cref="UseKestrel(INiisHostBuilder)"/>.
+        /// Configures Kestrel options but does not register an IServer. See <see cref="UseCluster(INiisHostBuilder)"/>.
         /// </summary>
         /// <param name="hostBuilder">
         /// The Microsoft.AspNetCore.Hosting.INiisHostBuilder to configure.
@@ -158,14 +159,14 @@ namespace ARWNI2S.Clustering
         /// <returns>
         /// The Microsoft.AspNetCore.Hosting.INiisHostBuilder.
         /// </returns>
-        public static INiisHostBuilder ConfigureKestrel(this INiisHostBuilder hostBuilder, Action<NI2SHostBuilderContext, KestrelServerOptions> configureOptions)
+        public static INiisHostBuilder ConfigureCluster(this INiisHostBuilder hostBuilder, Action<NI2SHostBuilderContext, ClusterServerOptions> configureOptions)
         {
             ArgumentNullException.ThrowIfNull(configureOptions);
 
             return hostBuilder.ConfigureServices((context, services) =>
             {
-                //services.TryAddEnumerable(ServiceDescriptor.Transient<IConfigureOptions<KestrelServerOptions>, KestrelServerOptionsSetup>());
-                services.Configure<KestrelServerOptions>(options =>
+                services.TryAddEnumerable(ServiceDescriptor.Transient<IConfigureOptions<ClusterServerOptions>, ClusterServerOptionsSetup>());
+                services.Configure<ClusterServerOptions>(options =>
                 {
                     configureOptions(context, options);
                 });
