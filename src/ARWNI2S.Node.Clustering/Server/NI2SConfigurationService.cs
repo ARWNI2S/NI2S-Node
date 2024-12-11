@@ -1,4 +1,4 @@
-﻿namespace ARWNI2S.Clustering
+﻿namespace ARWNI2S.Clustering.Server
 {
     internal class NI2SConfigurationService : INiisConfigurationService
     {

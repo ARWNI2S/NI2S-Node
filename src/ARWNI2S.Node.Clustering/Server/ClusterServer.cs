@@ -1,12 +1,13 @@
-﻿using ARWNI2S.Clustering.Configuration;
-using ARWNI2S.Clustering.Data;
+﻿using ARWNI2S.Clustering.Data;
+using ARWNI2S.Clustering.Nodes.Features;
+using ARWNI2S.Configuration;
 using ARWNI2S.Engine.Features;
 
-namespace ARWNI2S.Clustering
+namespace ARWNI2S.Clustering.Server
 {
     internal class ClusterServer : IClusterServer
     {
-        private readonly ClusterServerOptions _options;
+        private readonly NI2SSettings _settings;
 
         public NodeFeatures Features { get; }
 
@@ -16,9 +17,9 @@ namespace ARWNI2S.Clustering
         IFeatureCollection IClusterServer.Features => Features;
         INiisNode IClusterServer.Node => Node;
 
-        public ClusterServer(ClusterServerOptions options)
+        public ClusterServer(NI2SSettings settings)
         {
-            _options = options;
+            _settings = settings;
         }
     }
 }

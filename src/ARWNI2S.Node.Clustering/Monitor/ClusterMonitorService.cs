@@ -1,4 +1,4 @@
-﻿namespace ARWNI2S.Clustering
+﻿namespace ARWNI2S.Clustering.Monitor
 {
     public partial class ClusterMonitorService : IClusterMonitorService
     {

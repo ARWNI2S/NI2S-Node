@@ -2,7 +2,7 @@
 using ARWNI2S.Configuration;
 using Microsoft.Extensions.Options;
 
-namespace ARWNI2S.Clustering
+namespace ARWNI2S.Clustering.Server
 {
     internal class ClusterServerOptionsSetup : IConfigureOptions<ClusterServerOptions>
     {
