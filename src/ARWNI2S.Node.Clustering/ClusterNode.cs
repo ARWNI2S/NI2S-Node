@@ -1,5 +1,4 @@
 ﻿using ARWNI2S.Engine;
-using ARWNI2S.Entities;
 
 namespace ARWNI2S.Clustering
 {

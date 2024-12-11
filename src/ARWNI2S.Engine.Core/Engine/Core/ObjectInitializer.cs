@@ -1,6 +1,4 @@
-﻿using ARWNI2S.Entities;
-
-namespace ARWNI2S.Engine.Core
+﻿namespace ARWNI2S.Engine.Core
 {
     public sealed class ObjectInitializer
     {

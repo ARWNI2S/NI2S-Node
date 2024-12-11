@@ -1,12 +1,13 @@
-﻿using System.Collections;
+﻿using ARWNI2S.Engine.Actor;
+using System.Collections;
 
-namespace ARWNI2S.Entities
+namespace ARWNI2S.Engine.Components
 {
     public sealed class ActorComponents : ICollection<IActorComponent>
     {
-        public int Count {  get; private set; }
+        public int Count { get; private set; }
 
-        public bool IsReadOnly {  get; private set; }
+        public bool IsReadOnly { get; private set; }
 
         public void Add(ActorComponent item)
         {

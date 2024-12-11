@@ -1,4 +1,4 @@
-﻿namespace ARWNI2S.Entities
+﻿namespace ARWNI2S.Engine
 {
     /// <summary>
     /// Represents the base interface for entities

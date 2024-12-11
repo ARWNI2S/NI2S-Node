@@ -1,6 +1,4 @@
-﻿using ARWNI2S.Engine.Actions;
-
-namespace ARWNI2S.Entities
+﻿namespace ARWNI2S.Engine.Actions
 {
     public class NI2SAction : NI2SObject, IAction
     {

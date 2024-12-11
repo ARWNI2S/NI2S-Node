@@ -1,7 +1,6 @@
-﻿
-using ARWNI2S.Engine.Core;
+﻿using ARWNI2S.Engine.Core;
 
-namespace ARWNI2S.Entities
+namespace ARWNI2S.Engine
 {
     public abstract class NI2SObject : IObjectEntity
     {

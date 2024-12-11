@@ -1,5 +1,5 @@
 ﻿using ARWNI2S.Configuration;
-using ARWNI2S.Entities;
+using ARWNI2S.Engine;
 using ARWNI2S.Infrastructure;
 using System.Globalization;
 using System.Text;

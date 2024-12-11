@@ -1,6 +1,7 @@
-﻿using ARWNI2S.Engine.Orleans;
+﻿using ARWNI2S.Engine.Components;
+using ARWNI2S.Engine.Orleans;
 
-namespace ARWNI2S.Entities
+namespace ARWNI2S.Engine.Actor
 {
     public abstract class NI2SActor : NI2SObject, IActorEntity
     {
