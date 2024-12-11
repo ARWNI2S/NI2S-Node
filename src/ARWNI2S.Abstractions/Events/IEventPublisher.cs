@@ -3,7 +3,7 @@
     /// <summary>
     /// Represents an event publisher
     /// </summary>
-    public partial interface INodeEventPublisher
+    public partial interface IEventPublisher
     {
         /// <summary>
         /// Publish event to consumers

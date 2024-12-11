@@ -189,7 +189,7 @@ namespace ARWNI2S.Core
             //services.AddSingleton<IRoutePublisher, RoutePublisher>();
             //services.AddScoped<IReviewTypeService, ReviewTypeService>();
 
-            services.AddSingleton<INodeEventPublisher, EventPublisher>();
+            services.AddSingleton<IEventPublisher, EventPublisher>();
             services.AddScoped<ISettingService, SettingService>();
 
             //services.AddScoped<IBBCodeHelper, BBCodeHelper>();

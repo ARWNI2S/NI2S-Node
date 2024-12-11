@@ -19,7 +19,7 @@ namespace ARWNI2S.Data
     {
         #region Fields
 
-        protected readonly INodeEventPublisher _eventPublisher;
+        protected readonly IEventPublisher _eventPublisher;
         protected readonly INiisDataProvider _dataProvider;
         protected readonly IShortTermCacheManager _shortTermCacheManager;
         protected readonly IStaticCacheManager _staticCacheManager;
@@ -29,7 +29,7 @@ namespace ARWNI2S.Data
 
         #region Ctor
 
-        public EntityRepository(INodeEventPublisher eventPublisher,
+        public EntityRepository(IEventPublisher eventPublisher,
             INiisDataProvider dataProvider,
             IShortTermCacheManager shortTermCacheManager,
             IStaticCacheManager staticCacheManager,

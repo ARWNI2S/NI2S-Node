@@ -15,7 +15,7 @@ namespace ARWNI2S.Data.Events
         /// <param name="eventPublisher">Event publisher</param>
         /// <param name="entity">Entity</param>
         /// <returns>A task that represents the asynchronous operation</returns>
-        public static async Task EntityInsertedAsync<T>(this INodeEventPublisher eventPublisher, T entity) where T : IEntity
+        public static async Task EntityInsertedAsync<T>(this IEventPublisher eventPublisher, T entity) where T : IEntity
         {
             await eventPublisher.PublishAsync(new EntityCreatedEvent<T>(entity));
         }
@@ -26,7 +26,7 @@ namespace ARWNI2S.Data.Events
         /// <typeparam name="T">Entity type</typeparam>
         /// <param name="eventPublisher">Event publisher</param>
         /// <param name="entity">Entity</param>
-        public static void EntityInserted<T>(this INodeEventPublisher eventPublisher, T entity) where T : IEntity
+        public static void EntityInserted<T>(this IEventPublisher eventPublisher, T entity) where T : IEntity
         {
             eventPublisher.Publish(new EntityCreatedEvent<T>(entity));
         }
@@ -38,7 +38,7 @@ namespace ARWNI2S.Data.Events
         /// <param name="eventPublisher">Event publisher</param>
         /// <param name="entity">Entity</param>
         /// <returns>A task that represents the asynchronous operation</returns>
-        public static async Task EntityUpdatedAsync<T>(this INodeEventPublisher eventPublisher, T entity) where T : IEntity
+        public static async Task EntityUpdatedAsync<T>(this IEventPublisher eventPublisher, T entity) where T : IEntity
         {
             await eventPublisher.PublishAsync(new EntityUpdatedEvent<T>(entity));
         }
@@ -49,7 +49,7 @@ namespace ARWNI2S.Data.Events
         /// <typeparam name="T">Entity type</typeparam>
         /// <param name="eventPublisher">Event publisher</param>
         /// <param name="entity">Entity</param>
-        public static void EntityUpdated<T>(this INodeEventPublisher eventPublisher, T entity) where T : IEntity
+        public static void EntityUpdated<T>(this IEventPublisher eventPublisher, T entity) where T : IEntity
         {
             eventPublisher.Publish(new EntityUpdatedEvent<T>(entity));
         }
@@ -61,7 +61,7 @@ namespace ARWNI2S.Data.Events
         /// <param name="eventPublisher">Event publisher</param>
         /// <param name="entity">Entity</param>
         /// <returns>A task that represents the asynchronous operation</returns>
-        public static async Task EntityDeletedAsync<T>(this INodeEventPublisher eventPublisher, T entity) where T : IEntity
+        public static async Task EntityDeletedAsync<T>(this IEventPublisher eventPublisher, T entity) where T : IEntity
         {
             await eventPublisher.PublishAsync(new EntityDeletedEvent<T>(entity));
         }
@@ -72,7 +72,7 @@ namespace ARWNI2S.Data.Events
         /// <typeparam name="T">Entity type</typeparam>
         /// <param name="eventPublisher">Event publisher</param>
         /// <param name="entity">Entity</param>
-        public static void EntityDeleted<T>(this INodeEventPublisher eventPublisher, T entity) where T : IEntity
+        public static void EntityDeleted<T>(this IEventPublisher eventPublisher, T entity) where T : IEntity
         {
             eventPublisher.Publish(new EntityDeletedEvent<T>(entity));
         }

@@ -6,7 +6,7 @@ namespace ARWNI2S.Core.Events
     /// <summary>
     /// Represents the event publisher implementation
     /// </summary>
-    public partial class EventPublisher : INodeEventPublisher
+    public partial class EventPublisher : IEventPublisher
     {
         #region Methods
 
