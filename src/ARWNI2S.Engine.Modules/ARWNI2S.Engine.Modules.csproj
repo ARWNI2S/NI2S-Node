@@ -6,12 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Data\Entities\**" />
-    <EmbeddedResource Remove="Data\Entities\**" />
-    <None Remove="Data\Entities\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Remove="Caching\CacheEventConsumer.cs" />
     <Compile Remove="Logging\IUserActivityService.cs" />
     <Compile Remove="Logging\UserActivityService.cs" />
@@ -28,10 +22,7 @@
     <ProjectReference Include="..\ARWNI2S.Abstractions\ARWNI2S.Abstractions.csproj" />
     <ProjectReference Include="..\ARWNI2S.Engine.Core\ARWNI2S.Engine.Core.csproj" />
     <ProjectReference Include="..\ARWNI2S.Engine.Data\ARWNI2S.Engine.Data.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Data\Entities\" />
+    <ProjectReference Include="..\ARWNI2S.Node.Clustering\ARWNI2S.Node.Clustering.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,6 +1,7 @@
 ﻿using ARWNI2S.Clustering.Configuration;
 using ARWNI2S.Clustering.Nodes.Configuration;
 using ARWNI2S.Clustering.Services;
+using ARWNI2S.Clustering.Services.ScheduleTasks;
 using ARWNI2S.Configuration;
 using ARWNI2S.Engine;
 using ARWNI2S.Engine.Builder;
@@ -31,6 +32,9 @@ namespace ARWNI2S.Clustering
             //services.AddSingleton<ClusterManager>();
 
             //services.AddHostedService<NodeHealthMonitorService>();
+
+            services.AddSingleton<IClusterTaskScheduler, ClusterTaskScheduler>();
+
         }
     }
 }

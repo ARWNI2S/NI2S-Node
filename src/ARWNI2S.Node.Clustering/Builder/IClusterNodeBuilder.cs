@@ -7,5 +7,6 @@ namespace ARWNI2S.Clustering.Builder
         IServiceProvider ServiceProvider { get; }
 
         IEngineBuilder CreateEngineBuilder();
+
     }
 }

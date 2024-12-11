@@ -24,7 +24,7 @@ namespace ARWNI2S.Clustering.Nodes.Configuration
     {
         public string NodeName { get; set; } = $"{Dns.GetHostName()}:{Environment.ProcessId}";
 
-        public Guid NodeId { get; set; } = new(CommonHelper.GenerateRandomGuidString());
+        public Guid? NodeId { get; set; } = new(CommonHelper.GenerateRandomGuidString());
 
         public ushort Port { get; set; } = 46600;
 

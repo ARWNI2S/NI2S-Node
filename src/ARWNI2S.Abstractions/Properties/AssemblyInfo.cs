@@ -24,3 +24,5 @@ using System.Runtime.InteropServices;
 
 [assembly: InternalsVisibleTo("ARWNI2S.Node.Clustering")]
 [assembly: InternalsVisibleTo("ARWNI2S.Node.Hosting")]
+
+[assembly: InternalsVisibleTo("ARWNI2S.Framework")]
