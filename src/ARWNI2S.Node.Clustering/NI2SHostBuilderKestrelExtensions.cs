@@ -74,10 +74,6 @@ namespace ARWNI2S.Clustering
         /// </returns>
         public static INiisHostBuilder UseKestrelCore(this INiisHostBuilder hostBuilder)
         {
-            //let the operating system decide what TLS protocol version to use
-            //see https://docs.microsoft.com/dotnet/framework/network-programming/tls
-            ServicePointManager.SecurityProtocol = SecurityProtocolType.SystemDefault;
-
             hostBuilder.ConfigureServices(services =>
             {
                 var settings = Singleton<NI2SSettings>.Instance;
