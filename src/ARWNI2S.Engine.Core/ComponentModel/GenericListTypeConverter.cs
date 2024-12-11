@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Globalization;
 
-namespace ARWNI2S.Core.ComponentModel
+namespace ARWNI2S.ComponentModel
 {
     /// <summary>
     /// Generic List type converted

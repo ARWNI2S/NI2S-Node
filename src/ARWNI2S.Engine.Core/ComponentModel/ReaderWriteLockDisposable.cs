@@ -1,4 +1,4 @@
-﻿namespace ARWNI2S.Core.ComponentModel
+﻿namespace ARWNI2S.ComponentModel
 {
     /// <summary>
     /// Reader/Write locker type

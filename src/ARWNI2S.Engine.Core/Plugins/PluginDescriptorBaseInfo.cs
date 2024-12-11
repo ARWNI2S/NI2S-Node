@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace ARWNI2S.Core.Plugins
+namespace ARWNI2S.Plugins
 {
     /// <summary>
     /// Represents base info of plugin descriptor

@@ -1,4 +1,4 @@
-﻿namespace ARWNI2S.Core.Plugins
+﻿namespace ARWNI2S.Plugins
 {
     /// <summary>
     /// Represents an information about plugins
@@ -48,7 +48,7 @@
         /// <summary>
         /// Gets or sets the list of plugin names which will be installed
         /// </summary>
-        IList<(string SystemName, Guid? UserGuid)> PluginNamesToInstall { get; set; }
+        IList<string> PluginNamesToInstall { get; set; }
 
         /// <summary>
         /// Gets or sets the list of assembly loaded collisions

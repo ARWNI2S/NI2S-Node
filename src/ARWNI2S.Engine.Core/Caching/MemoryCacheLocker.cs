@@ -1,7 +1,6 @@
-﻿using ARWNI2S.Caching;
-using Microsoft.Extensions.Caching.Memory;
+﻿using Microsoft.Extensions.Caching.Memory;
 
-namespace ARWNI2S.Core.Caching
+namespace ARWNI2S.Caching
 {
     /// <summary>
     /// A distributed cache manager that locks the acquisition task

@@ -1,7 +1,6 @@
-﻿using ARWNI2S.Engine.Parts;
-using System.Reflection;
+﻿using System.Reflection;
 
-namespace ARWNI2S.Core.Engine.Parts
+namespace ARWNI2S.Engine.Parts
 {
     /// <summary>
     /// Manages the parts and features of an MVC application.
@@ -9,21 +8,21 @@ namespace ARWNI2S.Core.Engine.Parts
     public class ApplicationPartManager : IApplicationPartManager
     {
         /// <summary>
-        /// Gets the list of <see cref="IApplicationFeatureProvider"/>s.
+        /// Gets the list of <see cref="IEngineFeatureProvider"/>s.
         /// </summary>
-        public IList<IApplicationFeatureProvider> FeatureProviders { get; } =
-            new List<IApplicationFeatureProvider>();
+        public IList<IEngineFeatureProvider> FeatureProviders { get; } =
+            [];
 
         /// <summary>
         /// Gets the list of <see cref="ApplicationPart"/> instances.
         /// <para>
         /// Instances in this collection are stored in precedence order. An <see cref="ApplicationPart"/> that appears
         /// earlier in the list has a higher precedence.
-        /// An <see cref="IApplicationFeatureProvider"/> may choose to use this an interface as a way to resolve conflicts when
+        /// An <see cref="IEngineFeatureProvider"/> may choose to use this an interface as a way to resolve conflicts when
         /// multiple <see cref="ApplicationPart"/> instances resolve equivalent feature values.
         /// </para>
         /// </summary>
-        public IList<ApplicationPart> ApplicationParts { get; } = new List<ApplicationPart>();
+        public IList<ApplicationPart> ApplicationParts { get; } = [];
 
         /// <summary>
         /// Populates the given <paramref name="feature"/> using the list of

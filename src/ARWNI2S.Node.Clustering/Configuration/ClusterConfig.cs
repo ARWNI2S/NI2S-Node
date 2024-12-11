@@ -1,5 +1,4 @@
 ﻿using ARWNI2S.Configuration;
-using ARWNI2S.Core.Configuration;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System.Runtime.Serialization;

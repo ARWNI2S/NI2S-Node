@@ -6,8 +6,6 @@
 
   <ItemGroup>
     <Compile Remove="Authentication\**" />
-    <Compile Remove="Caching\**" />
-    <Compile Remove="Clustering\**" />
     <Compile Remove="Common\**" />
     <Compile Remove="Configuration\**" />
     <Compile Remove="Directory\**" />
@@ -15,16 +13,12 @@
     <Compile Remove="ExportImport\**" />
     <Compile Remove="Installation\**" />
     <Compile Remove="Localization\**" />
-    <Compile Remove="Logging\**" />
     <Compile Remove="Network\**" />
-    <Compile Remove="Plugins\**" />
     <Compile Remove="ScheduleTasks\**" />
     <Compile Remove="Security\**" />
     <Compile Remove="Session\**" />
     <Compile Remove="Users\**" />
     <EmbeddedResource Remove="Authentication\**" />
-    <EmbeddedResource Remove="Caching\**" />
-    <EmbeddedResource Remove="Clustering\**" />
     <EmbeddedResource Remove="Common\**" />
     <EmbeddedResource Remove="Configuration\**" />
     <EmbeddedResource Remove="Directory\**" />
@@ -32,16 +26,12 @@
     <EmbeddedResource Remove="ExportImport\**" />
     <EmbeddedResource Remove="Installation\**" />
     <EmbeddedResource Remove="Localization\**" />
-    <EmbeddedResource Remove="Logging\**" />
     <EmbeddedResource Remove="Network\**" />
-    <EmbeddedResource Remove="Plugins\**" />
     <EmbeddedResource Remove="ScheduleTasks\**" />
     <EmbeddedResource Remove="Security\**" />
     <EmbeddedResource Remove="Session\**" />
     <EmbeddedResource Remove="Users\**" />
     <None Remove="Authentication\**" />
-    <None Remove="Caching\**" />
-    <None Remove="Clustering\**" />
     <None Remove="Common\**" />
     <None Remove="Configuration\**" />
     <None Remove="Directory\**" />
@@ -49,9 +39,7 @@
     <None Remove="ExportImport\**" />
     <None Remove="Installation\**" />
     <None Remove="Localization\**" />
-    <None Remove="Logging\**" />
     <None Remove="Network\**" />
-    <None Remove="Plugins\**" />
     <None Remove="ScheduleTasks\**" />
     <None Remove="Security\**" />
     <None Remove="Session\**" />

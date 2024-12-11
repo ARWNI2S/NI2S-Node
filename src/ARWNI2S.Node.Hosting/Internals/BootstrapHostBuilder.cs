@@ -9,9 +9,9 @@ namespace ARWNI2S.Hosting.Internals
     {
         private readonly HostApplicationBuilder _builder;
 
-        private readonly List<Action<IConfigurationBuilder>> _configureHostActions = new();
-        private readonly List<Action<HostBuilderContext, IConfigurationBuilder>> _configureAppActions = new();
-        private readonly List<Action<HostBuilderContext, IServiceCollection>> _configureServicesActions = new();
+        private readonly List<Action<IConfigurationBuilder>> _configureHostActions = [];
+        private readonly List<Action<HostBuilderContext, IConfigurationBuilder>> _configureAppActions = [];
+        private readonly List<Action<HostBuilderContext, IServiceCollection>> _configureServicesActions = [];
 
         public BootstrapHostBuilder(HostApplicationBuilder builder)
         {

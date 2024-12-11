@@ -1,11 +1,10 @@
-﻿using ARWNI2S.Caching;
-using ARWNI2S.Collections;
-using ARWNI2S.Core.Configuration;
+﻿using ARWNI2S.Collections;
+using ARWNI2S.Configuration;
 using Microsoft.Extensions.Caching.Distributed;
 using Newtonsoft.Json;
 using System.Collections.Concurrent;
 
-namespace ARWNI2S.Core.Caching
+namespace ARWNI2S.Caching
 {
     /// <summary>
     /// Represents a base distributed cache 

@@ -1,4 +1,4 @@
-﻿namespace ARWNI2S.Core.Infrastructure
+﻿namespace ARWNI2S.Infrastructure
 {
     /// <summary>
     /// Provides access to all "singletons" stored by <see cref="Singleton{T}"/>.

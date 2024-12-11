@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using System.Runtime.Loader;
 
-namespace ARWNI2S.Core.Engine.Parts
+namespace ARWNI2S.Engine.Parts
 {
     /// <summary>
     /// Specifies a assembly to load as part of MVC's assembly discovery mechanism.

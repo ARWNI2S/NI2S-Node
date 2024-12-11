@@ -1,7 +1,7 @@
 ﻿using ARWNI2S.Engine;
 using System.Reflection;
 
-namespace ARWNI2S.Core.Infrastructure
+namespace ARWNI2S.Infrastructure
 {
     /// <summary>
     /// Provides information about types in the current ni2s node. 

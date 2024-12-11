@@ -20,6 +20,7 @@ using System.Runtime.InteropServices;
 
 [assembly: InternalsVisibleTo("ARWNI2S.Engine.Core")]
 [assembly: InternalsVisibleTo("ARWNI2S.Engine.Data")]
+[assembly: InternalsVisibleTo("ARWNI2S.Engine.Modules")]
 
 [assembly: InternalsVisibleTo("ARWNI2S.Node.Clustering")]
 [assembly: InternalsVisibleTo("ARWNI2S.Node.Hosting")]

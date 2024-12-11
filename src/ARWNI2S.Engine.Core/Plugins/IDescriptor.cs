@@ -1,4 +1,4 @@
-﻿namespace ARWNI2S.Core.Plugins
+﻿namespace ARWNI2S.Plugins
 {
     /// <summary>
     /// Represents descriptor of the application extension (plugin or theme)

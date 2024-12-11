@@ -1,9 +1,7 @@
-﻿using ARWNI2S.Core.Engine.Parts;
-using ARWNI2S.Engine.Builder;
-using ARWNI2S.Engine.Parts;
+﻿using ARWNI2S.Engine.Parts;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace ARWNI2S.Core.Engine.Builder
+namespace ARWNI2S.Engine.Builder
 {
     /// <summary>
     /// Allows fine grained configuration of essential NI2S services.

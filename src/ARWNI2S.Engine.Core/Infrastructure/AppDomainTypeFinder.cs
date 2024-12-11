@@ -1,9 +1,10 @@
-﻿using ARWNI2S.Engine;
+﻿using ARWNI2S.Core;
+using ARWNI2S.Engine;
 using System.Diagnostics;
 using System.Reflection;
 using System.Text.RegularExpressions;
 
-namespace ARWNI2S.Core.Infrastructure
+namespace ARWNI2S.Infrastructure
 {
     /// <summary>
     /// A class that finds types needed by ARWNI2S by looping assemblies in the 

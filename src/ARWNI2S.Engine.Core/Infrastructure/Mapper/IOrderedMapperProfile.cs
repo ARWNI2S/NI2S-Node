@@ -1,4 +1,4 @@
-﻿namespace ARWNI2S.Core.Infrastructure.Mapper
+﻿namespace ARWNI2S.Infrastructure.Mapper
 {
     /// <summary>
     /// Mapper profile registrar interface

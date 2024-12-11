@@ -1,4 +1,4 @@
-﻿namespace ARWNI2S.Core.Configuration
+﻿namespace ARWNI2S.Configuration
 {
     public static class ConfigurationStringExtensions
     {

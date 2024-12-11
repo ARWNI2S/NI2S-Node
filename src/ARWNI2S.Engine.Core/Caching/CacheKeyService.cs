@@ -1,10 +1,10 @@
-﻿using ARWNI2S.Core.Configuration;
-using ARWNI2S.Core.Infrastructure;
+﻿using ARWNI2S.Configuration;
 using ARWNI2S.Entities;
+using ARWNI2S.Infrastructure;
 using System.Globalization;
 using System.Text;
 
-namespace ARWNI2S.Core.Caching
+namespace ARWNI2S.Caching
 {
     /// <summary>
     /// Represents the default cache key service implementation

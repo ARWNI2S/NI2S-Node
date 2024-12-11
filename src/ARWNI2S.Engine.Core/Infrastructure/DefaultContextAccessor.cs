@@ -1,6 +1,6 @@
 ﻿using ARWNI2S.Engine;
 
-namespace ARWNI2S.Core.Infrastructure
+namespace ARWNI2S.Infrastructure
 {
     internal class DefaultContextAccessor : INiisContextAccessor
     {

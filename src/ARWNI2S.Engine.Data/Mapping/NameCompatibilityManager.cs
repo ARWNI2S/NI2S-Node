@@ -1,7 +1,6 @@
-﻿using ARWNI2S.Core;
-using ARWNI2S.Core.ComponentModel;
-using ARWNI2S.Core.Infrastructure;
+﻿using ARWNI2S.ComponentModel;
 using ARWNI2S.Engine;
+using ARWNI2S.Infrastructure;
 
 namespace ARWNI2S.Data.Mapping
 {

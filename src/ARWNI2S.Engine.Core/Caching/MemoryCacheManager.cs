@@ -1,10 +1,9 @@
 ﻿using ARWNI2S.Caching;
-using ARWNI2S.Core.Caching;
-using ARWNI2S.Core.Configuration;
+using ARWNI2S.Configuration;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Primitives;
 
-namespace ARWNI2S.Core.Caching
+namespace ARWNI2S.Caching
 {
     /// <summary>
     /// Represents a memory cache manager 

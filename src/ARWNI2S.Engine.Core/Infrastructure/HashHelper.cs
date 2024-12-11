@@ -1,6 +1,6 @@
 ﻿using System.Security.Cryptography;
 
-namespace ARWNI2S.Core.Infrastructure
+namespace ARWNI2S.Infrastructure
 {
     /// <summary>
     /// Hash helper class

@@ -1,9 +1,10 @@
-﻿using ARWNI2S.Engine;
+﻿using ARWNI2S.Core;
+using ARWNI2S.Engine;
 using Newtonsoft.Json;
 using System.Reflection;
 using System.Text;
 
-namespace ARWNI2S.Core.Plugins
+namespace ARWNI2S.Plugins
 {
     /// <summary>
     /// Represents an information about plugins
@@ -201,7 +202,7 @@ namespace ARWNI2S.Core.Plugins
                     var needToDeploy = InstalledPlugins.Select(pd => pd.SystemName).Contains(pluginName);
 
                     //also, deploy if the plugin is only going to be installed now
-                    needToDeploy = needToDeploy || PluginNamesToInstall.Any(pluginInfo => pluginInfo.SystemName.Equals(pluginName));
+                    needToDeploy = needToDeploy || PluginNamesToInstall.Any(pluginInfo => pluginInfo.Equals(pluginName));
 
                     //finally, exclude from deploying the plugin that is going to be deleted
                     needToDeploy = needToDeploy && !PluginNamesToDelete.Contains(pluginName);
@@ -303,9 +304,7 @@ namespace ARWNI2S.Core.Plugins
         /// <summary>
         /// Gets or sets the list of plugin names which will be installed
         /// </summary>
-        public virtual IList<(string SystemName, Guid? UserGuid)> PluginNamesToInstall { get; set; } =
-            [];
-
+        public virtual IList<string> PluginNamesToInstall { get; set; } = [];
 
         /// <summary>
         /// Gets or sets the list of plugin which are not compatible with the current version

@@ -1,8 +1,7 @@
-﻿using ARWNI2S.Caching;
-using Microsoft.Extensions.Caching.Distributed;
+﻿using Microsoft.Extensions.Caching.Distributed;
 using Newtonsoft.Json;
 
-namespace ARWNI2S.Core.Caching
+namespace ARWNI2S.Caching
 {
     public partial class DistributedCacheLocker : ILocker
     {

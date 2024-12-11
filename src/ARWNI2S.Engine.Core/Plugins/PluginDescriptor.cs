@@ -1,8 +1,9 @@
-﻿using Newtonsoft.Json;
+﻿using ARWNI2S.Core;
+using Newtonsoft.Json;
 using System.Reflection;
 using System.Text;
 
-namespace ARWNI2S.Core.Plugins
+namespace ARWNI2S.Plugins
 {
     /// <summary>
     /// Represents a plugin descriptor

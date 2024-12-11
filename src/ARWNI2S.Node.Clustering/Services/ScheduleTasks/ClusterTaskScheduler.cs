@@ -1,7 +1,5 @@
 ﻿using ARWNI2S.Clustering.Data.ScheduleTasks;
-using ARWNI2S.Core;
-using ARWNI2S.Core.Configuration;
-using ARWNI2S.Core.Infrastructure;
+using ARWNI2S.Configuration;
 using ARWNI2S.Data;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -15,7 +13,7 @@ namespace ARWNI2S.Clustering.Services.ScheduleTasks
     {
         #region Fields
 
-        protected static readonly List<TaskThread> _taskThreads = new();
+        protected static readonly List<TaskThread> _taskThreads = [];
         protected readonly NI2SSettings _appSettings;
         private readonly IServiceScopeFactory _serviceScopeFactory;
         private Task _taskThread;
@@ -24,11 +22,11 @@ namespace ARWNI2S.Clustering.Services.ScheduleTasks
 
         #region Ctor
 
-        public ClusterTaskScheduler(NI2SSettings appSettings,
+        public ClusterTaskScheduler(NI2SSettings niisSettings,
             //IHttpClientFactory httpClientFactory,
             IServiceScopeFactory serviceScopeFactory)
         {
-            _appSettings = appSettings;
+            _appSettings = niisSettings;
             _serviceScopeFactory = serviceScopeFactory;
             //TaskThread.HttpClientFactory = httpClientFactory;
             TaskThread.ServiceScopeFactory = serviceScopeFactory;

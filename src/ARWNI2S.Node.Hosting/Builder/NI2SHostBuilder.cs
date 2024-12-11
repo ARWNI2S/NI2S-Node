@@ -1,5 +1,4 @@
-﻿using ARWNI2S.Core.Configuration;
-using ARWNI2S.Core.Engine.Builder;
+﻿using ARWNI2S.Configuration;
 using ARWNI2S.Engine.Builder;
 using ARWNI2S.Hosting.Configuration;
 using ARWNI2S.Hosting.Internals;
@@ -248,7 +247,7 @@ namespace ARWNI2S.Hosting.Builder
             _hostApplicationBuilder.Services.Add(_genericNiisHostServiceDescriptor);
             Host.ApplyServiceProviderFactory(_hostApplicationBuilder);
             _builtNodeEngineHost = new NI2SHost(_hostApplicationBuilder.Build());
-            _builtNodeEngineHost.ConfigureEngineFramework();
+            NI2SContext.Current.ConfigureEngine(_builtNodeEngineHost);
             return _builtNodeEngineHost;
         }
 

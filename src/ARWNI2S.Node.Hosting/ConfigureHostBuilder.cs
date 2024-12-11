@@ -1,6 +1,6 @@
-﻿using ARWNI2S.Core.Configuration;
-using ARWNI2S.Core.Infrastructure;
+﻿using ARWNI2S.Configuration;
 using ARWNI2S.Hosting.Builder;
+using ARWNI2S.Infrastructure;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,7 +18,7 @@ namespace ARWNI2S.Hosting
         private readonly IServiceCollection _services;
         private readonly HostBuilderContext _context;
 
-        private readonly List<Action<HostBuilderContext, object>> _configureContainerActions = new();
+        private readonly List<Action<HostBuilderContext, object>> _configureContainerActions = [];
         private IServiceProviderFactory<object> _serviceProviderFactory;
 
         internal ConfigureHostBuilder(

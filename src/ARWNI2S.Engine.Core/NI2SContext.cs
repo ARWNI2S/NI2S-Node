@@ -1,8 +1,8 @@
-﻿using ARWNI2S.Core.Infrastructure;
-using ARWNI2S.Engine;
+﻿using ARWNI2S.Engine;
+using ARWNI2S.Infrastructure;
 using System.Runtime.CompilerServices;
 
-namespace ARWNI2S.Core
+namespace ARWNI2S
 {
     /// <summary>
     /// Provides access to the singleton instance of the node engine context.

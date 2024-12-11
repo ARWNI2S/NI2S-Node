@@ -1,6 +1,6 @@
-﻿using ARWNI2S.Core.Caching;
+﻿using ARWNI2S.Caching;
 
-namespace ARWNI2S.Core.Plugins
+namespace ARWNI2S.Plugins
 {
     /// <summary>
     /// Represents default values related to plugins

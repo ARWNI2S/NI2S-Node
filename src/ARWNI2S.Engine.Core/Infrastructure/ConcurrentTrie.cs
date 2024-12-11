@@ -1,7 +1,7 @@
 ﻿using ARWNI2S.Collections;
 using System.Runtime.CompilerServices;
 
-namespace ARWNI2S.Core.Infrastructure
+namespace ARWNI2S.Infrastructure
 {
     /// <summary>
     /// A thread-safe implementation of a radix tree

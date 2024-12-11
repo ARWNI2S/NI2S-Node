@@ -10,7 +10,7 @@ namespace ARWNI2S.Clustering.Data.Migrations
 
         public override void Up()
         {
-            Create.Index("IX_NI2SNode_NodeId").OnTable(nameof(ClusterNode))
+            Create.Index("IX_NI2SNode_NodeId").OnTable(nameof(NI2SNode))
                 .OnColumn(nameof(NI2SNode.NodeId)).Unique()
                 .WithOptions().NonClustered();
 

@@ -1,6 +1,4 @@
-﻿using ARWNI2S.Collections.Generic;
-
-namespace ARWNI2S.Core.Collections.Generic
+﻿namespace ARWNI2S.Collections.Generic
 {
     /// <summary>
     /// Paged list

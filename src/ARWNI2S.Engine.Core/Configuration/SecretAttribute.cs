@@ -1,4 +1,4 @@
-﻿namespace ARWNI2S.Core.Configuration
+﻿namespace ARWNI2S.Configuration
 {
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = false)]
     public sealed class SecretAttribute : Attribute

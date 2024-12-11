@@ -1,6 +1,6 @@
 ﻿using ARWNI2S.Entities;
 
-namespace ARWNI2S.Core.Caching
+namespace ARWNI2S.Caching
 {
     /// <summary>
     /// Represents default values related to caching entities

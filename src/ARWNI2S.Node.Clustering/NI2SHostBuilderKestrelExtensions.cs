@@ -1,8 +1,8 @@
 ﻿using ARWNI2S.Clustering.Configuration;
-using ARWNI2S.Core.Configuration;
-using ARWNI2S.Core.Infrastructure;
+using ARWNI2S.Configuration;
 using ARWNI2S.Hosting;
 using ARWNI2S.Hosting.Builder;
+using ARWNI2S.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 using System.Net;
 

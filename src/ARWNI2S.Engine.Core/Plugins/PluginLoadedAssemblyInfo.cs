@@ -1,4 +1,4 @@
-﻿namespace ARWNI2S.Core.Plugins
+﻿namespace ARWNI2S.Plugins
 {
     /// <summary>
     /// Represents an information about assembly which loaded by plugins

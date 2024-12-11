@@ -1,6 +1,6 @@
-﻿using ARWNI2S.Core.Infrastructure;
-using ARWNI2S.Data.Entities;
+﻿using ARWNI2S.Data.Entities;
 using ARWNI2S.Data.Mapping;
+using ARWNI2S.Infrastructure;
 using LinqToDB;
 using LinqToDB.Data;
 using LinqToDB.DataProvider;

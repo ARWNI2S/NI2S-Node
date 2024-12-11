@@ -1,12 +1,12 @@
-﻿using ARWNI2S.Core.Infrastructure.Mapper;
-using ARWNI2S.Engine;
+﻿using ARWNI2S.Engine;
 using ARWNI2S.Engine.Builder;
+using ARWNI2S.Infrastructure.Mapper;
 using AutoMapper;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
-namespace ARWNI2S.Core.Infrastructure
+namespace ARWNI2S.Infrastructure
 {
     /// <summary>
     /// Represents NI2S™ system backend engine

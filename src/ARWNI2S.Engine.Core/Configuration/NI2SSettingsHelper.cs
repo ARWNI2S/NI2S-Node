@@ -1,11 +1,10 @@
-﻿using ARWNI2S.Configuration;
-using ARWNI2S.Core.Infrastructure;
-using ARWNI2S.Engine;
+﻿using ARWNI2S.Engine;
+using ARWNI2S.Infrastructure;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Text;
 
-namespace ARWNI2S.Core.Configuration
+namespace ARWNI2S.Configuration
 {
     /// <summary>
     /// Represents the ni2s settings helper

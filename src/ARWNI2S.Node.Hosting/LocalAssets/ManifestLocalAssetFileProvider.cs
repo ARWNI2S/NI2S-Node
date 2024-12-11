@@ -162,7 +162,7 @@ namespace ARWNI2S.Hosting.LocalAssets
             {
                 if (candidate.HasPatterns())
                 {
-                    patterns ??= new();
+                    patterns ??= [];
                     patterns.AddRange(candidate.Patterns);
                 }
                 if (candidate.HasChildren() && candidate.Children.TryGetValue(segments[i], out var child))

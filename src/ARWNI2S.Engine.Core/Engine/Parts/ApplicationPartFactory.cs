@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace ARWNI2S.Core.Engine.Parts
+namespace ARWNI2S.Engine.Parts
 {
     /// <summary>
     /// Specifies a contract for synthesizing one or more <see cref="ApplicationPart"/> instances

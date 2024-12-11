@@ -1,5 +1,5 @@
 ﻿using ARWNI2S.Clustering;
-using ARWNI2S.Core.Configuration;
+using ARWNI2S.Configuration;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;

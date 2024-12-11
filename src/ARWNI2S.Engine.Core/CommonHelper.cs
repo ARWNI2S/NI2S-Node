@@ -1,5 +1,5 @@
-﻿using ARWNI2S.Core.Infrastructure;
-using ARWNI2S.Engine;
+﻿using ARWNI2S.Engine;
+using ARWNI2S.Infrastructure;
 using System.ComponentModel;
 using System.Globalization;
 using System.Net;

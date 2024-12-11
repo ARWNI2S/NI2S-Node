@@ -1,4 +1,4 @@
-﻿namespace ARWNI2S.Core.Engine.Parts
+﻿namespace ARWNI2S.Engine.Parts
 {
     /// <summary>
     /// A part of an MVC application.

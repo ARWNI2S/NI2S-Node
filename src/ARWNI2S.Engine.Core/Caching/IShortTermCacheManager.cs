@@ -1,4 +1,4 @@
-﻿namespace ARWNI2S.Core.Caching
+﻿namespace ARWNI2S.Caching
 {
     /// <summary>
     /// Represents a manager for caching during an HTTP request (short term caching)

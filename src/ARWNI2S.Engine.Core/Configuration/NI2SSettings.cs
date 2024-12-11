@@ -1,8 +1,7 @@
-﻿using ARWNI2S.Configuration;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace ARWNI2S.Core.Configuration
+namespace ARWNI2S.Configuration
 {
     /// <summary>
     /// Represents the node settings

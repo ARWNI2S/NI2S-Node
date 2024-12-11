@@ -1,4 +1,4 @@
-﻿namespace ARWNI2S.Core.Configuration
+﻿namespace ARWNI2S.Configuration
 {
     /// <summary>
     /// Represents default values related to configuration services

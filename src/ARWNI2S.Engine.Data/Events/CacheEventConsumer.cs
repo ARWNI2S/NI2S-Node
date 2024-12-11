@@ -1,5 +1,4 @@
-﻿using ARWNI2S.Core;
-using ARWNI2S.Core.Caching;
+﻿using ARWNI2S.Caching;
 using ARWNI2S.Data.Entities;
 using ARWNI2S.Events;
 

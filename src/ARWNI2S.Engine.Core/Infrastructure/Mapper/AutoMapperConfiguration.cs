@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 
-namespace ARWNI2S.Core.Infrastructure.Mapper
+namespace ARWNI2S.Infrastructure.Mapper
 {
     /// <summary>
     /// AutoMapper configuration

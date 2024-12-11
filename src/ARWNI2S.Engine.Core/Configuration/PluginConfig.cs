@@ -1,6 +1,4 @@
-﻿using ARWNI2S.Configuration;
-
-namespace ARWNI2S.Core.Configuration
+﻿namespace ARWNI2S.Configuration
 {
     /// <summary>
     /// Represents plugin configuration parameters

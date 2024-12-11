@@ -5,7 +5,7 @@ using System.Runtime.Versioning;
 using System.Security.AccessControl;
 using System.Text;
 
-namespace ARWNI2S.Core.Infrastructure
+namespace ARWNI2S.Infrastructure
 {
     /// <summary>
     /// IO functions using the on-disk file system

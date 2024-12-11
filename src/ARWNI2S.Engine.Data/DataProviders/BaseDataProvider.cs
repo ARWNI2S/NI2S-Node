@@ -1,10 +1,9 @@
-﻿using ARWNI2S.Core;
-using ARWNI2S.Core.Infrastructure;
-using ARWNI2S.Data.Entities;
+﻿using ARWNI2S.Data.Entities;
 using ARWNI2S.Data.Extensions;
 using ARWNI2S.Data.Mapping;
 using ARWNI2S.Data.Migrations;
 using ARWNI2S.Engine;
+using ARWNI2S.Infrastructure;
 using FluentMigrator;
 using LinqToDB;
 using LinqToDB.Data;
@@ -104,7 +103,7 @@ namespace ARWNI2S.Data.DataProviders
         {
             var migrationManager = NI2SContext.Current.Resolve<IMigrationManager>();
 
-            var targetAssembly = typeof(NodeEngineDbStartup).Assembly;
+            var targetAssembly = typeof(BaseDataProvider).Assembly;
             migrationManager.ApplyUpMigrations(targetAssembly);
 
             var typeFinder = Singleton<ITypeFinder>.Instance;

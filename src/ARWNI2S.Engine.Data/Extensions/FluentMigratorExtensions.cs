@@ -1,9 +1,8 @@
-﻿using ARWNI2S.Core;
-using ARWNI2S.Core.Infrastructure;
-using ARWNI2S.Data.Entities;
+﻿using ARWNI2S.Data.Entities;
 using ARWNI2S.Data.Mapping;
 using ARWNI2S.Data.Mapping.Builders;
 using ARWNI2S.Engine;
+using ARWNI2S.Infrastructure;
 using FluentMigrator.Builders.Alter.Table;
 using FluentMigrator.Builders.Create;
 using FluentMigrator.Builders.Create.Table;

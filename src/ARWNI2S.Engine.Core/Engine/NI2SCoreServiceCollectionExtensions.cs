@@ -1,13 +1,14 @@
-﻿using ARWNI2S.Core.Engine.Builder;
-using ARWNI2S.Core.Engine.Parts;
-using ARWNI2S.Core.Infrastructure;
-using ARWNI2S.Engine;
+﻿using ARWNI2S.Configuration;
 using ARWNI2S.Engine.Builder;
+using ARWNI2S.Engine.Core;
+using ARWNI2S.Engine.Parts;
 using ARWNI2S.Hosting;
+using ARWNI2S.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using System.Buffers;
 
-namespace ARWNI2S.Core.Engine
+namespace ARWNI2S.Engine
 {
     public static class NI2SCoreServiceCollectionExtensions
     {
@@ -25,10 +26,10 @@ namespace ARWNI2S.Core.Engine
 
         private static void ConfigureDefaultFeatureProviders(ApplicationPartManager manager)
         {
-            //if (!manager.FeatureProviders.OfType<ControllerFeatureProvider>().Any())
-            //{
-            //    manager.FeatureProviders.Add(new ControllerFeatureProvider());
-            //}
+            if (!manager.FeatureProviders.OfType<ActorFeatureProvider>().Any())
+            {
+                manager.FeatureProviders.Add(new ActorFeatureProvider());
+            }
         }
 
         private static ApplicationPartManager GetApplicationPartManager(IServiceCollection services, INiisHostEnvironment environment)
@@ -49,7 +50,7 @@ namespace ARWNI2S.Core.Engine
 
         private static T GetServiceFromCollection<T>(IServiceCollection services)
         {
-            return (T)(services.LastOrDefault((ServiceDescriptor d) => d.ServiceType == typeof(T))?.ImplementationInstance);
+            return (T)(services.LastOrDefault((d) => d.ServiceType == typeof(T))?.ImplementationInstance);
         }
 
         //public static INiisCoreBuilder AddNI2SCore(this IServiceCollection services, Action<MvcOptions> setupAction)
@@ -66,47 +67,49 @@ namespace ARWNI2S.Core.Engine
             services.TryAddSingleton<INiisFileProvider, NI2SFileProvider>();
             //services.TryAddEnumerable(ServiceDescriptor.Transient<IConfigureOptions<MvcOptions>, MvcCoreMvcOptionsSetup>());
             //services.TryAddEnumerable(ServiceDescriptor.Transient<IPostConfigureOptions<MvcOptions>, MvcCoreMvcOptionsSetup>());
-            //services.TryAddEnumerable(ServiceDescriptor.Transient<IConfigureOptions<ApiBehaviorOptions>, ApiBehaviorOptionsSetup>());
+            //services.TryAddEnumerable(ServiceDescriptor.Transient<IConfigureOptions<AiBehaviorOptions>, AiBehaviorOptionsSetup>());
             //services.TryAddEnumerable(ServiceDescriptor.Transient<IConfigureOptions<RouteOptions>, MvcCoreRouteOptionsSetup>());
-            //services.TryAddSingleton<ApplicationModelFactory>();
-            //services.TryAddEnumerable(ServiceDescriptor.Transient<IApplicationModelProvider, DefaultApplicationModelProvider>());
-            //services.TryAddEnumerable(ServiceDescriptor.Transient<IApplicationModelProvider, ApiBehaviorApplicationModelProvider>());
-            //services.TryAddEnumerable(ServiceDescriptor.Transient<IActionDescriptorProvider, ControllerActionDescriptorProvider>());
-            //services.TryAddSingleton<IActionDescriptorCollectionProvider, DefaultActionDescriptorCollectionProvider>();
-            //services.TryAddSingleton<IActionSelector, ActionSelector>();
-            //services.TryAddSingleton<ActionConstraintCache>();
-            //services.TryAddEnumerable(ServiceDescriptor.Transient<IActionConstraintProvider, DefaultActionConstraintProvider>());
-            //services.TryAddEnumerable(ServiceDescriptor.Singleton<MatcherPolicy, ActionConstraintMatcherPolicy>());
-            //services.TryAddSingleton<IControllerFactory, DefaultControllerFactory>();
-            //services.TryAddTransient<IControllerActivator, DefaultControllerActivator>();
-            //services.TryAddSingleton<IControllerFactoryProvider, ControllerFactoryProvider>();
-            //services.TryAddSingleton<IControllerActivatorProvider, ControllerActivatorProvider>();
-            //services.TryAddEnumerable(ServiceDescriptor.Transient<IControllerPropertyActivator, DefaultControllerPropertyActivator>());
-            //services.TryAddSingleton<IActionInvokerFactory, ActionInvokerFactory>();
-            //services.TryAddEnumerable(ServiceDescriptor.Transient<IActionInvokerProvider, ControllerActionInvokerProvider>());
-            //services.TryAddSingleton<ControllerActionInvokerCache>();
-            //services.TryAddEnumerable(ServiceDescriptor.Singleton<IFilterProvider, DefaultFilterProvider>());
-            //services.TryAddSingleton<IActionResultTypeMapper, ActionResultTypeMapper>();
+            services.TryAddSingleton<EngineModelFactory>();
+            services.TryAddEnumerable(ServiceDescriptor.Transient<IEngineModelProvider, DefaultEngineModelProvider>());
+            services.TryAddEnumerable(ServiceDescriptor.Transient<IEngineModelProvider, AiBehaviorEngineModelProvider>());
+            services.TryAddEnumerable(ServiceDescriptor.Transient<IActionDescriptorProvider, ActorActionDescriptorProvider>());
+            services.TryAddSingleton<IActionDescriptorCollectionProvider, DefaultActionDescriptorCollectionProvider>();
+            services.TryAddSingleton<IActionSelector, ActionSelector>();
+            services.TryAddSingleton<ActionConstraintCache>();
+            services.TryAddEnumerable(ServiceDescriptor.Transient<IActionConstraintProvider, DefaultActionConstraintProvider>());
+            services.TryAddEnumerable(ServiceDescriptor.Singleton<MatcherPolicy, ActionConstraintMatcherPolicy>());
+            services.TryAddSingleton<IActorFactory, DefaultActorFactory>();
+            services.TryAddTransient<IActorActivator, DefaultActorActivator>();
+            services.TryAddSingleton<IActorFactoryProvider, ActorFactoryProvider>();
+            services.TryAddSingleton<IActorActivatorProvider, ActorActivatorProvider>();
+            services.TryAddEnumerable(ServiceDescriptor.Transient<IActorStateActivator, DefaultActorStateActivator>());
+            services.TryAddSingleton<IActionInvokerFactory, ActionInvokerFactory>();
+            services.TryAddEnumerable(ServiceDescriptor.Transient<IActionInvokerProvider, ActorActionInvokerProvider>());
+            services.TryAddSingleton<ActorActionInvokerCache>();
+            services.TryAddEnumerable(ServiceDescriptor.Singleton<IFilterProvider, DefaultFilterProvider>());
+            services.TryAddSingleton<IActionResultTypeMapper, ActionResultTypeMapper>();
+
             //services.TryAddTransient<RequestSizeLimitFilter>();
-            //services.TryAddTransient<DisableRequestSizeLimitFilter>();
+            //services.TryAddTransient<DisableRequestSizeLimitFilter>();Update
             //services.TryAddTransient<RequestFormLimitsFilter>();
-            //services.TryAddSingleton<IModelMetadataProvider, DefaultModelMetadataProvider>();
-            //services.TryAdd(ServiceDescriptor.Transient((Func<IServiceProvider, ICompositeMetadataDetailsProvider>)((IServiceProvider s) => new DefaultCompositeMetadataDetailsProvider(s.GetRequiredService<IOptions<MvcOptions>>().Value.ModelMetadataDetailsProviders))));
-            //services.TryAddSingleton<IModelBinderFactory, ModelBinderFactory>();
-            //services.TryAddSingleton((Func<IServiceProvider, IObjectModelValidator>)delegate (IServiceProvider s)
-            //{
-            //    MvcOptions value = s.GetRequiredService<IOptions<MvcOptions>>().Value;
-            //    return new DefaultObjectValidator(s.GetRequiredService<IModelMetadataProvider>(), value.ModelValidatorProviders, value);
-            //});
+            services.TryAddSingleton<IModelMetadataProvider, DefaultModelMetadataProvider>();
+            services.TryAdd(ServiceDescriptor.Transient((Func<IServiceProvider, ICompositeMetadataDetailsProvider>)((s) => new DefaultCompositeMetadataDetailsProvider(s.GetRequiredService<NI2SSettings>().Get<EngineConfig>().ModelMetadataDetailsProviders))));
+            services.TryAddSingleton<IModelBinderFactory, ModelBinderFactory>();
+            services.TryAddSingleton((Func<IServiceProvider, IObjectModelValidator>)delegate (IServiceProvider s)
+            {
+                var config = Singleton<NI2SSettings>.Instance.Get<EngineConfig>();
+                return new DefaultObjectValidator(s.GetRequiredService<IModelMetadataProvider>(), config.ModelValidatorProviders, config);
+            });
             //services.TryAddSingleton<ClientValidatorCache>();
-            //services.TryAddSingleton<ParameterBinder>();
-            //services.TryAddSingleton<MvcMarkerService, MvcMarkerService>();
-            //services.TryAddSingleton<ITypeActivatorCache, TypeActivatorCache>();
+            services.TryAddSingleton<ParameterBinder>();
+            services.TryAddSingleton<NI2SMarkerService, NI2SMarkerService>();
+            services.TryAddSingleton<ITypeActivatorCache, TypeActivatorCache>();
+
             //services.TryAddSingleton<IUrlHelperFactory, UrlHelperFactory>();
             //services.TryAddSingleton<IHttpRequestStreamReaderFactory, MemoryPoolHttpRequestStreamReaderFactory>();
             //services.TryAddSingleton<IHttpResponseStreamWriterFactory, MemoryPoolHttpResponseStreamWriterFactory>();
-            //services.TryAddSingleton(ArrayPool<byte>.Shared);
-            //services.TryAddSingleton(ArrayPool<char>.Shared);
+            services.TryAddSingleton(ArrayPool<byte>.Shared);
+            services.TryAddSingleton(ArrayPool<char>.Shared);
             //services.TryAddSingleton<OutputFormatterSelector, DefaultOutputFormatterSelector>();
             //services.TryAddSingleton<IActionResultExecutor<ObjectResult>, ObjectResultExecutor>();
             //services.TryAddSingleton<IActionResultExecutor<PhysicalFileResult>, PhysicalFileResultExecutor>();
@@ -120,27 +123,29 @@ namespace ARWNI2S.Core.Engine
             //services.TryAddSingleton<IActionResultExecutor<RedirectToPageResult>, RedirectToPageResultExecutor>();
             //services.TryAddSingleton<IActionResultExecutor<ContentResult>, ContentResultExecutor>();
             //services.TryAddSingleton<IActionResultExecutor<JsonResult>, SystemTextJsonResultExecutor>();
-            //services.TryAddSingleton<IClientErrorFactory, ProblemDetailsClientErrorFactory>();
+            services.TryAddSingleton<IRemoteErrorFactory, ProblemDetailsRemoteErrorFactory>();
             //services.TryAddSingleton<MvcRouteHandler>();
             //services.TryAddTransient<MvcAttributeRouteHandler>();
-            //services.TryAddSingleton<ControllerActionEndpointDataSourceFactory>();
-            //services.TryAddSingleton<OrderedEndpointsSequenceProviderCache>();
-            //services.TryAddSingleton<ControllerActionEndpointDataSourceIdProvider>();
-            //services.TryAddSingleton<ActionEndpointFactory>();
-            //services.TryAddSingleton<DynamicControllerEndpointSelectorCache>();
-            //services.TryAddEnumerable(ServiceDescriptor.Singleton<MatcherPolicy, DynamicControllerEndpointMatcherPolicy>());
-            //services.TryAddEnumerable(ServiceDescriptor.Singleton<IRequestDelegateFactory, ControllerRequestDelegateFactory>());
+            services.TryAddSingleton<ActorActionUpdateDataSourceFactory>();
+            services.TryAddSingleton<OrderedUpdatesSequenceProviderCache>();
+            services.TryAddSingleton<ActorActionUpdateDataSourceIdProvider>();
+            services.TryAddSingleton<ActionUpdateFactory>();
+            services.TryAddSingleton<DynamicActorUpdateSelectorCache>();
+            services.TryAddEnumerable(ServiceDescriptor.Singleton<MatcherPolicy, DynamicActorUpdateMatcherPolicy>());
+            services.TryAddEnumerable(ServiceDescriptor.Singleton<IUpdateDelegateFactory, ActorUpdateDelegateFactory>());
+
             //services.TryAddSingleton<MiddlewareFilterConfigurationProvider>();
             //services.TryAddSingleton<MiddlewareFilterBuilder>();
             //services.TryAddEnumerable(ServiceDescriptor.Singleton<IStartupFilter, MiddlewareFilterBuilderStartupFilter>());
-            //services.TryAddSingleton<ProblemDetailsFactory, DefaultProblemDetailsFactory>();
+            services.TryAddSingleton<ProblemDetailsFactory, DefaultProblemDetailsFactory>();
             //services.TryAddEnumerable(ServiceDescriptor.Singleton<IProblemDetailsWriter, DefaultApiProblemDetailsWriter>());
         }
 
         private static void ConfigureDefaultServices(IServiceCollection services)
         {
-            //services.AddRouting();
+            services.AddOptions();
+            services.AddMemoryCache();
+            services.AddDistributedCache();
         }
     }
-
 }

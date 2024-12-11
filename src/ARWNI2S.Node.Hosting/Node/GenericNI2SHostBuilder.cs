@@ -1,6 +1,5 @@
-﻿using ARWNI2S.Core;
-using ARWNI2S.Core.Configuration;
-using ARWNI2S.Core.Engine;
+﻿using ARWNI2S.Configuration;
+using ARWNI2S.Engine;
 using ARWNI2S.Engine.Builder;
 using ARWNI2S.Hosting.Builder;
 using ARWNI2S.Hosting.Configuration;
@@ -91,7 +90,7 @@ namespace ARWNI2S.Hosting.Node
 
             _builder.ConfigureServices((context, services) =>
             {
-                services.AddNI2SContextAccessor();
+                services.AddDefaultContextAccessor();
 
                 //initialize engine and plugins
                 services.AddNI2SCore().InitializePlugins(context.Configuration);

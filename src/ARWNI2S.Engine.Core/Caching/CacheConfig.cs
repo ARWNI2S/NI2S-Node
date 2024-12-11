@@ -1,6 +1,6 @@
 ﻿using ARWNI2S.Configuration;
 
-namespace ARWNI2S.Core.Caching
+namespace ARWNI2S.Caching
 {
     /// <summary>
     /// Represents cache configuration parameters

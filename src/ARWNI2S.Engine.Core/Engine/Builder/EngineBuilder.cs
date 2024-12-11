@@ -1,7 +1,4 @@
-﻿using ARWNI2S.Engine;
-using ARWNI2S.Engine.Builder;
-
-namespace ARWNI2S.Core.Engine.Builder
+﻿namespace ARWNI2S.Engine.Builder
 {
     internal class EngineBuilder : IEngineBuilder
     {

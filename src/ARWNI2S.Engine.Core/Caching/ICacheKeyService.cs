@@ -1,4 +1,4 @@
-﻿namespace ARWNI2S.Core.Caching
+﻿namespace ARWNI2S.Caching
 {
     /// <summary>
     /// Cache key service interface

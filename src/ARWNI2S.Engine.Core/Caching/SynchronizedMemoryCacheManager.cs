@@ -1,7 +1,6 @@
-﻿using ARWNI2S.Caching;
-using ARWNI2S.Core.Configuration;
+﻿using ARWNI2S.Configuration;
 
-namespace ARWNI2S.Core.Caching
+namespace ARWNI2S.Caching
 {
     /// <summary>
     /// Represents a memory cache manager with distributed synchronization

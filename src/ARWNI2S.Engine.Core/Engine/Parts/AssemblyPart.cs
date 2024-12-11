@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace ARWNI2S.Core.Engine.Parts
+namespace ARWNI2S.Engine.Parts
 {
     /// <summary>
     /// An <see cref="ApplicationPart"/> backed by an <see cref="System.Reflection.Assembly"/>.
