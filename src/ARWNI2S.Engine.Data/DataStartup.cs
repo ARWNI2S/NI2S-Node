@@ -15,7 +15,7 @@ namespace ARWNI2S.Data
     /// <summary>
     /// Represents object for the configuring DB context on application startup
     /// </summary>
-    public partial class DataStartup : INiisStartup
+    public partial class DataStartup : IInitializer
     {
         /// <summary>
         /// Add and configure any of the engine services
@@ -75,6 +75,6 @@ namespace ARWNI2S.Data
         /// <summary>
         /// Gets order of this startup configuration implementation
         /// </summary>
-        public int Order => StartupStage.DataStartup;
+        public int Order => InitStage.DbInit;
     }
 }

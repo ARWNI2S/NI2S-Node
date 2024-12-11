@@ -1,11 +1,10 @@
-﻿using ARWNI2S.Engine;
-using Microsoft.Extensions.FileProviders;
+﻿using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using System.Runtime.Versioning;
 using System.Security.AccessControl;
 using System.Text;
 
-namespace ARWNI2S.Infrastructure
+namespace ARWNI2S.Engine
 {
     /// <summary>
     /// IO functions using the on-disk file system

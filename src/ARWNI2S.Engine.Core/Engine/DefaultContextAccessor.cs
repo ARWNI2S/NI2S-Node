@@ -1,6 +1,4 @@
-﻿using ARWNI2S.Engine;
-
-namespace ARWNI2S.Infrastructure
+﻿namespace ARWNI2S.Engine
 {
     internal class DefaultContextAccessor : IFrameContextAccessor
     {

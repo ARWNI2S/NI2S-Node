@@ -1,6 +1,6 @@
 ﻿namespace ARWNI2S.Engine.Orleans
 {
-    public interface IActorGrain : INiisGrain
+    public interface ISceneGrain : INiisGrain
     {
     }
 }

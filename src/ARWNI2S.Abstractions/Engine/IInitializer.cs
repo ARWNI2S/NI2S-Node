@@ -7,7 +7,7 @@ namespace ARWNI2S.Engine
     /// <summary>
     /// Represents object for the configuring services and middleware on application startup
     /// </summary>
-    public partial interface INiisStartup
+    public partial interface IInitializer
     {
         /// <summary>
         /// Add and configure any of the engine services

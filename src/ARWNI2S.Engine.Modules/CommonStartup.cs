@@ -18,9 +18,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace ARWNI2S.Core
 {
-    public class CommonStartup : INiisStartup
+    public class CommonStartup : IInitializer
     {
-        public int Order => StartupStage.CommonStartup;
+        public int Order => InitStage.Initialization;
 
         public void ConfigureEngine(IEngineBuilder engineBuilder)
         {

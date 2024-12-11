@@ -5,6 +5,7 @@ using ARWNI2S.Data;
 using ARWNI2S.Data.Migrations;
 using ARWNI2S.Engine;
 using ARWNI2S.Engine.Builder;
+using ARWNI2S.Engine.Features;
 using ARWNI2S.Hosting.Builder;
 using ARWNI2S.Hosting.Configuration;
 using ARWNI2S.Hosting.LocalAssets;

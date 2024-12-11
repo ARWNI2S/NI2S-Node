@@ -1,12 +1,12 @@
-﻿using ARWNI2S.Engine;
-using ARWNI2S.Engine.Builder;
+﻿using ARWNI2S.Engine.Builder;
+using ARWNI2S.Infrastructure;
 using ARWNI2S.Infrastructure.Mapper;
 using AutoMapper;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
-namespace ARWNI2S.Infrastructure
+namespace ARWNI2S.Engine
 {
     /// <summary>
     /// Represents NI2S™ system backend engine
@@ -37,13 +37,13 @@ namespace ARWNI2S.Infrastructure
         {
             //find startup tasks provided by other assemblies
             var typeFinder = Singleton<ITypeFinder>.Instance;
-            var startupTasks = typeFinder.FindClassesOfType<IStartupTask>();
+            var startupTasks = typeFinder.FindClassesOfType<IPreInitTask>();
 
             //create and sort instances of startup tasks
             //we startup this interface even for not installed modules. 
             //otherwise, DbContext initializers won't run and a module installation won't work
             var instances = startupTasks
-                .Select(startupTask => (IStartupTask)Activator.CreateInstance(startupTask))
+                .Select(startupTask => (IPreInitTask)Activator.CreateInstance(startupTask))
                 .OrderBy(startupTask => startupTask.Order);
 
             //execute tasks
@@ -107,11 +107,11 @@ namespace ARWNI2S.Infrastructure
 
             //find startup configurations provided by other assemblies
             var typeFinder = Singleton<ITypeFinder>.Instance;
-            var startupConfigurations = typeFinder.FindClassesOfType<INiisStartup>();
+            var startupConfigurations = typeFinder.FindClassesOfType<IInitializer>();
 
             //create and sort instances of startup configurations
             var instances = startupConfigurations
-                .Select(startup => (INiisStartup)Activator.CreateInstance(startup))
+                .Select(startup => (IInitializer)Activator.CreateInstance(startup))
                 .OrderBy(startup => startup.Order);
 
             //configure services
@@ -140,11 +140,11 @@ namespace ARWNI2S.Infrastructure
 
             //find startup configurations provided by other assemblies
             var typeFinder = Singleton<ITypeFinder>.Instance;
-            var startupConfigurations = typeFinder.FindClassesOfType<INiisStartup>();
+            var startupConfigurations = typeFinder.FindClassesOfType<IInitializer>();
 
             //create and sort instances of startup configurations
             var instances = startupConfigurations
-                .Select(startup => (INiisStartup)Activator.CreateInstance(startup))
+                .Select(startup => (IInitializer)Activator.CreateInstance(startup))
                 .OrderBy(startup => startup.Order);
 
             //configure request pipeline

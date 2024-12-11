@@ -11,9 +11,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace ARWNI2S.Clustering
 {
-    public class ClusterStartup : INiisStartup
+    public class ClusterInitializer : IInitializer
     {
-        public int Order => StartupStage.ClusterStartup;
+        public int Order => InitStage.ClusterInit;
 
         public void ConfigureEngine(IEngineBuilder engineBuilder)
         {

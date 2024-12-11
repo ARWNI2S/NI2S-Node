@@ -1,4 +1,6 @@
-﻿namespace ARWNI2S.Engine.Builder
+﻿using ARWNI2S.Engine.Features;
+
+namespace ARWNI2S.Engine.Builder
 {
     internal class EngineBuilder : IEngineBuilder
     {
