@@ -3,9 +3,9 @@
 namespace ARWNI2S.Engine.Parts
 {
     /// <summary>
-    /// An <see cref="ApplicationPart"/> backed by an <see cref="System.Reflection.Assembly"/>.
+    /// An <see cref="EnginePart"/> backed by an <see cref="System.Reflection.Assembly"/>.
     /// </summary>
-    public class AssemblyPart : ApplicationPart, IApplicationPartTypeProvider
+    public class AssemblyPart : EnginePart, IApplicationPartTypeProvider
     {
         /// <summary>
         /// Initializes a new <see cref="AssemblyPart"/> instance.
@@ -17,12 +17,12 @@ namespace ARWNI2S.Engine.Parts
         }
 
         /// <summary>
-        /// Gets the <see cref="Assembly"/> of the <see cref="ApplicationPart"/>.
+        /// Gets the <see cref="Assembly"/> of the <see cref="EnginePart"/>.
         /// </summary>
         public Assembly Assembly { get; }
 
         /// <summary>
-        /// Gets the name of the <see cref="ApplicationPart"/>.
+        /// Gets the name of the <see cref="EnginePart"/>.
         /// </summary>
         public override string Name => Assembly.GetName().Name!;
 

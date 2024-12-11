@@ -1,11 +1,12 @@
-﻿namespace ARWNI2S.Engine.Parts
+﻿using ARWNI2S.Engine.Features;
+
+namespace ARWNI2S.Engine.Parts
 {
     public interface IApplicationPartManager
     {
-        //public IList<IApplicationFeatureProvider> FeatureProviders { get; } =
-        //    new List<IApplicationFeatureProvider>();
+        IList<IEngineFeatureProvider> FeatureProviders { get; }
 
-        //public IList<ApplicationPart> ApplicationParts { get; } = new List<ApplicationPart>();
+        IList<EnginePart> EngineParts { get; }
 
         void PopulateFeature<TFeature>(TFeature feature);
 

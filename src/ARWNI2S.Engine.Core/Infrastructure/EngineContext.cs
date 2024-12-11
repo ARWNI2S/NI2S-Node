@@ -23,8 +23,8 @@ namespace ARWNI2S.Infrastructure
         {
             if (scope == null)
             {
-                var accessor = ServiceProvider?.GetService<INiisContextAccessor>();
-                var context = accessor?.EngineContext;
+                var accessor = ServiceProvider?.GetService<IFrameContextAccessor>();
+                var context = accessor?.FrameContext;
                 return context?.EngineServices ?? ServiceProvider;
             }
             return scope.ServiceProvider;

@@ -3,7 +3,7 @@
 namespace ARWNI2S.Engine.Parts
 {
     /// <summary>
-    /// Specifies a contract for synthesizing one or more <see cref="ApplicationPart"/> instances
+    /// Specifies a contract for synthesizing one or more <see cref="EnginePart"/> instances
     /// from an <see cref="Assembly"/>.
     /// <para>
     /// By default, Mvc registers each application assembly that it discovers as an <see cref="AssemblyPart"/>.
@@ -14,10 +14,10 @@ namespace ARWNI2S.Engine.Parts
     public abstract class ApplicationPartFactory
     {
         /// <summary>
-        /// Gets one or more <see cref="ApplicationPart"/> instances for the specified <paramref name="assembly"/>.
+        /// Gets one or more <see cref="EnginePart"/> instances for the specified <paramref name="assembly"/>.
         /// </summary>
         /// <param name="assembly">The <see cref="Assembly"/>.</param>
-        public abstract IEnumerable<ApplicationPart> GetApplicationParts(Assembly assembly);
+        public abstract IEnumerable<EnginePart> GetApplicationParts(Assembly assembly);
 
         /// <summary>
         /// Gets the <see cref="ApplicationPartFactory"/> for the specified assembly.

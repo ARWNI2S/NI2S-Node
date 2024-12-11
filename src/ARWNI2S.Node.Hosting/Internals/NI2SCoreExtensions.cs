@@ -137,7 +137,7 @@ namespace ARWNI2S.Hosting.Internals
             }
 
             //register the plugin definition
-            applicationPartManager.ApplicationParts.Add(new AssemblyPart(assembly));
+            applicationPartManager.EngineParts.Add(new AssemblyPart(assembly));
 
             return assembly;
         }

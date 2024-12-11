@@ -1,6 +1,11 @@
 ﻿using ARWNI2S.Configuration;
+using ARWNI2S.Engine.Actions;
+using ARWNI2S.Engine.Actor;
+using ARWNI2S.Engine.Behavior;
 using ARWNI2S.Engine.Builder;
 using ARWNI2S.Engine.Core;
+using ARWNI2S.Engine.Diagnostics;
+using ARWNI2S.Engine.Model;
 using ARWNI2S.Engine.Parts;
 using ARWNI2S.Hosting;
 using ARWNI2S.Infrastructure;
@@ -85,7 +90,7 @@ namespace ARWNI2S.Engine
             services.TryAddSingleton<IActionInvokerFactory, ActionInvokerFactory>();
             services.TryAddEnumerable(ServiceDescriptor.Transient<IActionInvokerProvider, ActorActionInvokerProvider>());
             services.TryAddSingleton<ActorActionInvokerCache>();
-            services.TryAddEnumerable(ServiceDescriptor.Singleton<IFilterProvider, DefaultFilterProvider>());
+            //services.TryAddEnumerable(ServiceDescriptor.Singleton<IFilterProvider, DefaultFilterProvider>());
             services.TryAddSingleton<IActionResultTypeMapper, ActionResultTypeMapper>();
 
             //services.TryAddTransient<RequestSizeLimitFilter>();

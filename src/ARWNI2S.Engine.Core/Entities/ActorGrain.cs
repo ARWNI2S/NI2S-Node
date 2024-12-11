@@ -1,7 +1,7 @@
-﻿using ARWNI2S.Entities;
+﻿using ARWNI2S.Engine.Orleans;
 using Orleans;
 
-namespace ARWNI2S.Narrator.Framework
+namespace ARWNI2S.Entities
 {
     public class ActorGrain : Grain, IActorGrain
     {

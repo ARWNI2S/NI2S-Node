@@ -2,12 +2,12 @@
 
 namespace ARWNI2S.Infrastructure
 {
-    internal class DefaultContextAccessor : INiisContextAccessor
+    internal class DefaultContextAccessor : IFrameContextAccessor
     {
         private static readonly AsyncLocal<NI2SContextHolder> _niisContextCurrent = new();
 
         /// <inheritdoc/>
-        public INiisContext EngineContext
+        public IFrameContext FrameContext
         {
             get
             {
@@ -34,7 +34,7 @@ namespace ARWNI2S.Infrastructure
 
         private sealed class NI2SContextHolder
         {
-            public INiisContext EngineContext;
+            public IFrameContext EngineContext;
         }
     }
 }

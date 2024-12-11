@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using ARWNI2S.Engine.Features;
+using System.Reflection;
 
 namespace ARWNI2S.Engine.Parts
 {
@@ -14,19 +15,19 @@ namespace ARWNI2S.Engine.Parts
             [];
 
         /// <summary>
-        /// Gets the list of <see cref="ApplicationPart"/> instances.
+        /// Gets the list of <see cref="EnginePart"/> instances.
         /// <para>
-        /// Instances in this collection are stored in precedence order. An <see cref="ApplicationPart"/> that appears
+        /// Instances in this collection are stored in precedence order. An <see cref="EnginePart"/> that appears
         /// earlier in the list has a higher precedence.
         /// An <see cref="IEngineFeatureProvider"/> may choose to use this an interface as a way to resolve conflicts when
-        /// multiple <see cref="ApplicationPart"/> instances resolve equivalent feature values.
+        /// multiple <see cref="EnginePart"/> instances resolve equivalent feature values.
         /// </para>
         /// </summary>
-        public IList<ApplicationPart> ApplicationParts { get; } = [];
+        public IList<EnginePart> EngineParts { get; } = [];
 
         /// <summary>
         /// Populates the given <paramref name="feature"/> using the list of
-        /// <see cref="IApplicationFeatureProvider{TFeature}"/>s configured on the
+        /// <see cref="IEngineFeatureProvider{TFeature}"/>s configured on the
         /// <see cref="ApplicationPartManager"/>.
         /// </summary>
         /// <typeparam name="TFeature">The type of the feature.</typeparam>
@@ -38,9 +39,9 @@ namespace ARWNI2S.Engine.Parts
                 throw new ArgumentNullException(nameof(feature));
             }
 
-            foreach (var provider in FeatureProviders.OfType<IApplicationFeatureProvider<TFeature>>())
+            foreach (var provider in FeatureProviders.OfType<IEngineFeatureProvider<TFeature>>())
             {
-                provider.PopulateFeature(ApplicationParts, feature);
+                provider.PopulateFeature(EngineParts, feature);
             }
         }
 
@@ -63,7 +64,7 @@ namespace ARWNI2S.Engine.Parts
                 var partFactory = ApplicationPartFactory.GetApplicationPartFactory(assembly);
                 foreach (var applicationPart in partFactory.GetApplicationParts(assembly))
                 {
-                    ApplicationParts.Add(applicationPart);
+                    EngineParts.Add(applicationPart);
                 }
             }
         }

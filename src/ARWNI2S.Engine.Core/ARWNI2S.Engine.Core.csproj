@@ -16,6 +16,7 @@
     <Compile Remove="Caching\ILocker.cs" />
     <Compile Remove="Caching\ISynchronizedMemoryCache.cs" />
     <Compile Remove="Configuration\HostingConfig.cs" />
+    <Compile Remove="Engine\Core\DefaultFilterProvider.cs" />
     <Compile Remove="Plugins\IUploadService.cs" />
     <Compile Remove="Plugins\PluginManager.cs" />
     <Compile Remove="Plugins\PluginService.cs" />

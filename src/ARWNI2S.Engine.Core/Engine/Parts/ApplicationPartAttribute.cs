@@ -1,11 +1,11 @@
 ﻿namespace ARWNI2S.Engine.Parts
 {
     /// <summary>
-    /// Specifies an assembly to be added as an <see cref="ApplicationPart" />.
+    /// Specifies an assembly to be added as an <see cref="EnginePart" />.
     /// <para>
     /// In the ordinary case, MVC will generate <see cref="ApplicationPartAttribute" />
     /// instances on the entry assembly for each dependency that references MVC.
-    /// Each of these assemblies is treated as an <see cref="ApplicationPart" />.
+    /// Each of these assemblies is treated as an <see cref="EnginePart" />.
     /// </para>
     /// </summary>
     [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
