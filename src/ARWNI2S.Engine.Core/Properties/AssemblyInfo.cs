@@ -19,3 +19,4 @@ using System.Runtime.InteropServices;
 [assembly: Guid("710cd5d9-a98c-4d31-9e29-1793043c9e6a")]
 
 [assembly: InternalsVisibleTo("ARWNI2S.Node.Hosting")]
+

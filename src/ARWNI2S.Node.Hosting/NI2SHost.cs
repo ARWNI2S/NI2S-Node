@@ -159,7 +159,7 @@ namespace ARWNI2S.Hosting
         /// <param name="url">The URL to listen to if the server hasn't been configured directly.</param>
         public void Run([StringSyntax(StringSyntaxAttribute.Uri)] string url = null)
         {
-            Listen(url);
+            StartEngine();
             HostingAbstractionsHostExtensions.Run(this);
         }
 
@@ -198,30 +198,16 @@ namespace ARWNI2S.Hosting
 
         IEngineBuilder IClusterNodeBuilder.CreateEngineBuilder() => ((IEngineBuilder)this).New();
 
-        private void Listen(string url)
+        private void StartEngine()
         {
-            if (url is null)
-            {
-                return;
-            }
-
-            //var addresses = NodeFeatures.Get<IServerAddressesFeature>()?.Addresses;
-            //if (addresses is null)
-            //{
-            //    throw new InvalidOperationException($"Changing the URL is not supported because no valid {nameof(IServerAddressesFeature)} was found.");
-            //}
-            //if (addresses.IsReadOnly)
-            //{
-            //    throw new InvalidOperationException($"Changing the URL is not supported because {nameof(IServerAddressesFeature.Addresses)} {nameof(ICollection<string>.IsReadOnly)}.");
-            //}
-
-            //addresses.Clear();
-            //addresses.Add(url);
+            // Use a safe way to block async methods
+            var engineStartTask = StartEngineAsync();
+            engineStartTask.ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         private static async Task StartEngineAsync()
         {
-            var engine = NI2SContext.Current;
+            var engineContext = NI2SContext.Current;
 
             //further actions are performed only when the database is installed
             if (DataSettingsManager.IsDatabaseInstalled())
@@ -230,12 +216,12 @@ namespace ARWNI2S.Hosting
                 //await engine.Resolve<ILogger>().InformationAsync("Application started");
 
                 //install and update plugins
-                var pluginService = engine.Resolve<IPluginService>();
+                var pluginService = engineContext.Resolve<IPluginService>();
                 await pluginService.InstallPluginsAsync();
                 await pluginService.UpdatePluginsAsync();
 
                 //update nopCommerce core and db
-                var migrationManager = engine.Resolve<IMigrationManager>();
+                var migrationManager = engineContext.Resolve<IMigrationManager>();
                 var assembly = Assembly.GetAssembly(typeof(NI2SHostBuilderClusterExtensions));
                 migrationManager.ApplyUpMigrations(assembly, MigrationProcessType.Update);
                 assembly = Assembly.GetAssembly(typeof(IMigrationManager));
@@ -245,7 +231,7 @@ namespace ARWNI2S.Hosting
                 //var permissionService = engine.Resolve<IPermissionService>();
                 //await permissionService.InsertPermissionsAsync();
 
-                var taskScheduler = engine.Resolve<IClusterTaskScheduler>();
+                var taskScheduler = engineContext.Resolve<IClusterTaskScheduler>();
                 await taskScheduler.InitializeAsync();
                 await taskScheduler.StartSchedulerAsync();
             }

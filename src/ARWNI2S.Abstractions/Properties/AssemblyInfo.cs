@@ -26,3 +26,7 @@ using System.Runtime.InteropServices;
 [assembly: InternalsVisibleTo("ARWNI2S.Node.Hosting")]
 
 [assembly: InternalsVisibleTo("ARWNI2S.Framework")]
+[assembly: InternalsVisibleTo("ARWNI2S.Framework.Characters")]
+[assembly: InternalsVisibleTo("ARWNI2S.Framework.Narrative")]
+[assembly: InternalsVisibleTo("ARWNI2S.Framework.Physics")]
+[assembly: InternalsVisibleTo("ARWNI2S.Framework.Scenic")]

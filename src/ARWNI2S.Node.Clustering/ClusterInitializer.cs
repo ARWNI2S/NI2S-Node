@@ -1,5 +1,4 @@
-﻿using ARWNI2S.Clustering.Configuration;
-using ARWNI2S.Clustering.Monitor;
+﻿using ARWNI2S.Clustering.Monitor;
 using ARWNI2S.Clustering.Nodes.Configuration;
 using ARWNI2S.Clustering.Services;
 using ARWNI2S.Clustering.Services.ScheduleTasks;

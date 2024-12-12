@@ -23,5 +23,5 @@
   <ItemGroup>
     <Folder Include="Clustering\ScheduleTasks\" />
   </ItemGroup>
-
+  
 </Project>

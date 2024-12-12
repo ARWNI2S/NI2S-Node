@@ -17,7 +17,7 @@
     <PackageVersion Include="Microsoft.Extensions.Configuration" Version="9.0.0" />
     <PackageVersion Include="Microsoft.Extensions.FileProviders.Physical" Version="9.0.0" />
     <PackageVersion Include="Nito.AsyncEx.Coordination" Version="5.1.2" />
-    <PackageVersion Include="StackExchange.Redis" Version="2.7.27" />
+    <PackageVersion Include="StackExchange.Redis" Version="2.8.22" />
     <PackageVersion Include="System.Configuration.ConfigurationManager" Version="$(MicrosoftPackageLatestVersion)" />
     <PackageVersion Include="System.IO.FileSystem.AccessControl" Version="5.0.0" />
     <PackageVersion Include="System.IO.Pipelines" Version="$(MicrosoftPackageLatestVersion)" />
@@ -52,7 +52,7 @@
     <PackageVersion Include="MiniProfiler.Shared" Version="4.5.4" />
     <PackageVersion Include="MySqlConnector" Version="2.4.0" />
     <PackageVersion Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageVersion Include="Npgsql" Version="9.0.1" />
+    <PackageVersion Include="Npgsql" Version="9.0.2" />
     <!-- Test related packages -->
     <PackageVersion Include="xunit" Version="$(xUnitVersion)" />
     <PackageVersion Include="xunit.assert" Version="$(xUnitVersion)" />
