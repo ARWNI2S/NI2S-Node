@@ -1,8 +1,9 @@
-﻿using Newtonsoft.Json;
+﻿using ARWNI2S.Engine.Configuration;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System.Reflection;
 
-namespace ARWNI2S.Node.Core.Security.Secrets
+namespace ARWNI2S.Engine.Security.Secrets
 {
     internal sealed class SecretContractResolver : DefaultContractResolver
     {

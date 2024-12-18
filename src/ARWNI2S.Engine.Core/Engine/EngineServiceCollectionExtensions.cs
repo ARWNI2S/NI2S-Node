@@ -1,6 +1,4 @@
-﻿using ARWNI2S.Caching;
-using ARWNI2S.Configuration;
-using ARWNI2S.Infrastructure;
+﻿using ARWNI2S.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 

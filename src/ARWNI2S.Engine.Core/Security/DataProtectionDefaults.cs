@@ -1,4 +1,4 @@
-﻿namespace ARWNI2S.Security
+﻿namespace ARWNI2S.Engine.Security
 {
     /// <summary>
     /// Represents default values related to data protection

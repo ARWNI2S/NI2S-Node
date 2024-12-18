@@ -1,4 +1,4 @@
-﻿namespace ARWNI2S.Configuration
+﻿namespace ARWNI2S.Engine.Configuration
 {
     internal class EngineConfig : IConfig
     {

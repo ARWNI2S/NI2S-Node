@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System.Reflection;
 
-namespace ARWNI2S.Node.Core.Security.Secrets
+namespace ARWNI2S.Engine.Security.Secrets
 {
     internal class SecretValueProvider : IValueProvider
     {

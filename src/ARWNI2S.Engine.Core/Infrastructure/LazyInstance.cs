@@ -7,7 +7,7 @@
     public partial class LazyInstance<T> : Lazy<T> where T : class
     {
         public LazyInstance()
-            : base(() => NI2SContext.Current.Resolve<T>())
+            : base(() => EngineContext.Current.Resolve<T>())
         {
 
         }

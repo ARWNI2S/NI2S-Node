@@ -1,6 +1,6 @@
 ﻿using ARWNI2S.Configuration;
 
-namespace ARWNI2S.Core.Configuration
+namespace ARWNI2S.Engine.Configuration
 {
     /// <summary>
     /// Represents hosting configuration parameters

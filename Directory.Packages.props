@@ -21,9 +21,9 @@
     <PackageVersion Include="Microsoft.Data.SqlClient" Version="5.2.2" />
     <PackageVersion Include="Microsoft.Extensions.Caching.Memory" Version="$(MicrosoftPackageLatestVersion)" />
     <PackageVersion Include="Microsoft.Extensions.Caching.SqlServer" Version="$(MicrosoftPackageLatestVersion)" />
-    <PackageVersion Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="$(MicrosoftPackageLatestVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="9.0.0" />
     <PackageVersion Include="Microsoft.Extensions.Configuration" Version="$(MicrosoftPackageLatestVersion)" />
-    <PackageVersion Include="Microsoft.Extensions.Configuration.UserSecrets" Version="$(MicrosoftPackageLatestVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration.UserSecrets" Version="9.0.0" />
     <PackageVersion Include="Microsoft.Extensions.FileProviders.Composite" Version="$(MicrosoftPackageLatestVersion)" />
     <PackageVersion Include="Microsoft.Extensions.FileProviders.Physical" Version="$(MicrosoftPackageLatestVersion)" />
     <PackageVersion Include="Microsoft.Extensions.Hosting" Version="$(MicrosoftPackageLatestVersion)" />

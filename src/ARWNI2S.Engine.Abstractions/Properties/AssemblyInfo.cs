@@ -19,6 +19,7 @@ using System.Runtime.InteropServices;
 [assembly: Guid("5bf6dc05-19b6-46c8-ac47-5d580a4a0661")]
 
 [assembly: InternalsVisibleTo("ARWNI2S.Engine")]
+[assembly: InternalsVisibleTo("ARWNI2S.Engine.Core")]
 [assembly: InternalsVisibleTo("ARWNI2S.Engine.Data")]
 [assembly: InternalsVisibleTo("ARWNI2S.Node.Abstractions")]
 [assembly: InternalsVisibleTo("ARWNI2S.Node")]
