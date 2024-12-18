@@ -1,5 +1,4 @@
 ﻿using ARWNI2S.Core.Data.Localization;
-using ARWNI2S.Data.Entities;
 
 namespace ARWNI2S.Core.Data.Configuration
 {

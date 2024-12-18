@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\ARWNI2S.Node.Hosting\ARWNI2S.Node.Hosting.csproj" />
+    <ProjectReference Include="..\..\src\ARWNI2S.Node\ARWNI2S.Node.csproj" />
   </ItemGroup>
 
 </Project>

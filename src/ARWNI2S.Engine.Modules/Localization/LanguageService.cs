@@ -1,10 +1,5 @@
-﻿using ARWNI2S.Caching;
-using ARWNI2S.Clustering.Services;
-using ARWNI2S.Core.Configuration;
+﻿using ARWNI2S.Core.Configuration;
 using ARWNI2S.Core.Data.Localization;
-using ARWNI2S.Data;
-using ARWNI2S.Data.Extensions;
-using System.Globalization;
 
 namespace ARWNI2S.Core.Localization
 {

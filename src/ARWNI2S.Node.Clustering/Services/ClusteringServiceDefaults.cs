@@ -1,6 +1,4 @@
-﻿using ARWNI2S.Caching;
-
-namespace ARWNI2S.Clustering.Services
+﻿namespace ARWNI2S.Clustering.Services
 {
     /// <summary>
     /// Represents default values related to nodes services

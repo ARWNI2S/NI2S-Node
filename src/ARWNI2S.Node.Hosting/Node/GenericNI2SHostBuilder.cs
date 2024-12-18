@@ -1,15 +1,7 @@
-﻿using ARWNI2S.Configuration;
-using ARWNI2S.Engine;
-using ARWNI2S.Engine.Builder;
-using ARWNI2S.Hosting.Builder;
+﻿using ARWNI2S.Hosting.Builder;
 using ARWNI2S.Hosting.Configuration;
+using ARWNI2S.Hosting.Diagnostics;
 using ARWNI2S.Hosting.Internals;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.Extensions.Hosting;
-using System.Diagnostics;
-using System.Reflection;
 
 namespace ARWNI2S.Hosting.Node
 {
@@ -18,7 +10,7 @@ namespace ARWNI2S.Hosting.Node
         //private object _startupObject;
         //private readonly object _startupKey = new object();
 
-        //private AggregateException _hostingStartupErrors;
+        private AggregateException _hostingStartupErrors;
 
         public GenericNI2SHostBuilder(IHostBuilder builder, NI2SHostBuilderOptions options)
             : base(builder, options)
@@ -53,6 +45,14 @@ namespace ARWNI2S.Hosting.Node
                 //services.AddSingleton<IApplicationLifetime, GenericWebHostApplicationLifetime>();
 #pragma warning restore CS0618 // Type or member is obsolete
 
+                services.Configure<NI2SHostServiceOptions>(options =>
+                {
+                    // Set the options
+                    options.NI2SHostOptions = niisHostOptions;
+                    // Store and forward any startup errors
+                    options.HostingStartupExceptions = _hostingStartupErrors;
+                });
+
                 // REVIEW: This is bad since we don't own this type. Anybody could add one of these and it would mess things up
                 // We need to flow this differently
                 services.TryAddSingleton(sp => new DiagnosticListener("ARWNI2S"));
@@ -60,12 +60,12 @@ namespace ARWNI2S.Hosting.Node
                 services.TryAddSingleton(sp => new ActivitySource("ARWNI2S"));
                 services.TryAddSingleton(DistributedContextPropagator.Current);
 
-                //services.TryAddSingleton<IHttpContextFactory, DefaultHttpContextFactory>();
+                services.TryAddSingleton<INiisContextFactory, DefaultContextFactory>();
                 //services.TryAddScoped<IMiddlewareFactory, MiddlewareFactory>();
-                //services.TryAddSingleton<IEngineBuilderFactory, ApplicationBuilderFactory>();
+                services.TryAddSingleton<IEngineBuilderFactory, EngineBuilderFactory>();
 
                 services.AddMetrics();
-                //services.TryAddSingleton<HostingMetrics>();
+                services.TryAddSingleton<HostingMetrics>();
 
                 // IMPORTANT: This needs to run *before* direct calls on the builder (like UseStartup)
                 //_hostingStartupHostBuilder?.ConfigureServices(niishostContext, services);
@@ -96,6 +96,12 @@ namespace ARWNI2S.Hosting.Node
                 services.AddNI2SCore().InitializePlugins(context.Configuration);
 
                 NI2SContext.Create().ConfigureServices(services, context.Configuration);
+
+                services.Configure<NI2SHostServiceOptions>(options =>
+                {
+                    var ni2shostBuilderContext = GetNI2SHostBuilderContext(context);
+                    options.ConfigureEngine = engine => configure(ni2shostBuilderContext, engine);
+                });
             });
 
             return this;

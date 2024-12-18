@@ -23,7 +23,7 @@ namespace ARWNI2S.Engine
         {
             if (scope == null)
             {
-                var accessor = ServiceProvider?.GetService<IFrameContextAccessor>();
+                var accessor = ServiceProvider?.GetService<INiisContextAccessor>();
                 var context = accessor?.FrameContext;
                 return context?.EngineServices ?? ServiceProvider;
             }

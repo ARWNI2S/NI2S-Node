@@ -13,36 +13,34 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- System packages -->
-    <PackageVersion Include="Azure.Storage.Blobs" Version="12.23.0" />
-    <PackageVersion Include="Microsoft.Extensions.Configuration" Version="9.0.0" />
-    <PackageVersion Include="Microsoft.Extensions.FileProviders.Physical" Version="9.0.0" />
-    <PackageVersion Include="Nito.AsyncEx.Coordination" Version="5.1.2" />
-    <PackageVersion Include="StackExchange.Redis" Version="2.8.22" />
     <PackageVersion Include="System.Configuration.ConfigurationManager" Version="$(MicrosoftPackageLatestVersion)" />
     <PackageVersion Include="System.IO.FileSystem.AccessControl" Version="5.0.0" />
     <PackageVersion Include="System.IO.Pipelines" Version="$(MicrosoftPackageLatestVersion)" />
     <PackageVersion Include="System.Linq.Async" Version="6.0.1" />
     <!-- Microsoft packages -->
     <PackageVersion Include="Microsoft.Data.SqlClient" Version="5.2.2" />
-    <PackageVersion Include="Microsoft.Extensions.Caching.Memory" Version="9.0.0" />
-    <PackageVersion Include="Microsoft.Extensions.Caching.SqlServer" Version="9.0.0" />
-    <PackageVersion Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="9.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Caching.Memory" Version="$(MicrosoftPackageLatestVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.Caching.SqlServer" Version="$(MicrosoftPackageLatestVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="$(MicrosoftPackageLatestVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration" Version="$(MicrosoftPackageLatestVersion)" />
     <PackageVersion Include="Microsoft.Extensions.Configuration.UserSecrets" Version="$(MicrosoftPackageLatestVersion)" />
     <PackageVersion Include="Microsoft.Extensions.FileProviders.Composite" Version="$(MicrosoftPackageLatestVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.FileProviders.Physical" Version="$(MicrosoftPackageLatestVersion)" />
     <PackageVersion Include="Microsoft.Extensions.Hosting" Version="$(MicrosoftPackageLatestVersion)" />
     <PackageVersion Include="Microsoft.Extensions.Http" Version="$(MicrosoftPackageLatestVersion)" />
-    <PackageVersion Include="Microsoft.Orleans.Core" Version="9.0.1" />
     <!-- Abstractions packages -->
     <PackageVersion Include="Microsoft.Extensions.Caching.Abstractions" Version="9.0.0" />
-    <PackageVersion Include="Microsoft.Extensions.Configuration.Abstractions" Version="$(MicrosoftPackageLatestVersion)" />
-    <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="$(MicrosoftPackageLatestVersion)" />
-    <PackageVersion Include="Microsoft.Extensions.FileProviders.Abstractions" Version="$(MicrosoftPackageLatestVersion)" />
-    <PackageVersion Include="Microsoft.Extensions.Hosting.Abstractions" Version="$(MicrosoftPackageLatestVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.FileProviders.Abstractions" Version="9.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.0" />
     <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="$(MicrosoftPackageLatestVersion)" />
-    <PackageVersion Include="Microsoft.Orleans.Core.Abstractions" Version="9.0.1" />
     <!-- Azure packages -->
     <PackageVersion Include="Azure.Identity" Version="1.13.1" />
     <PackageVersion Include="Azure.Security.KeyVault.Secrets" Version="4.7.0" />
+    <PackageVersion Include="Azure.Storage.Blobs" Version="12.23.0" />
+    <!-- Orleans packages -->
+    <PackageVersion Include="Microsoft.Orleans.Core.Abstractions" Version="$(MicrosoftOrleansVersion)" />
     <!-- 3rd party packages -->
     <PackageVersion Include="Autofac.Extensions.DependencyInjection" Version="10.0.0" />
     <PackageVersion Include="AutoMapper" Version="13.0.1" />
@@ -52,7 +50,10 @@
     <PackageVersion Include="MiniProfiler.Shared" Version="4.5.4" />
     <PackageVersion Include="MySqlConnector" Version="2.4.0" />
     <PackageVersion Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageVersion Include="NetMQ" Version="4.0.1.13" />
+    <PackageVersion Include="Nito.AsyncEx.Coordination" Version="5.1.2" />
     <PackageVersion Include="Npgsql" Version="9.0.2" />
+    <PackageVersion Include="StackExchange.Redis" Version="2.8.22" />
     <!-- Test related packages -->
     <PackageVersion Include="xunit" Version="$(xUnitVersion)" />
     <PackageVersion Include="xunit.assert" Version="$(xUnitVersion)" />

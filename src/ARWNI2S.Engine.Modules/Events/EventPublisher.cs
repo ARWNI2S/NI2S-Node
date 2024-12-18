@@ -1,5 +1,4 @@
 ﻿using ARWNI2S.Core.Logging;
-using ARWNI2S.Events;
 
 namespace ARWNI2S.Core.Events
 {

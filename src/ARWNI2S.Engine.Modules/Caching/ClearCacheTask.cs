@@ -1,7 +1,4 @@
-﻿using ARWNI2S.Caching;
-using ARWNI2S.Clustering;
-
-namespace ARWNI2S.Core.Caching
+﻿namespace ARWNI2S.Core.Caching
 {
     /// <summary>
     /// Clear cache scheduled task implementation

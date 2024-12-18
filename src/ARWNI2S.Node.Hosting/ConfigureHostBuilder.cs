@@ -1,10 +1,4 @@
-﻿using ARWNI2S.Configuration;
-using ARWNI2S.Hosting.Builder;
-using ARWNI2S.Infrastructure;
-using Autofac.Extensions.DependencyInjection;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+﻿using ARWNI2S.Hosting.Builder;
 
 namespace ARWNI2S.Hosting
 {

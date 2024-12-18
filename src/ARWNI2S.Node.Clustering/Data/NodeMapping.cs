@@ -1,6 +1,4 @@
-﻿using ARWNI2S.Data.Entities;
-
-namespace ARWNI2S.Clustering.Data
+﻿namespace ARWNI2S.Clustering.Data
 {
     /// <summary>
     /// Represents a node mapping record

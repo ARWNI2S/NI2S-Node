@@ -1,8 +1,4 @@
 ﻿using ARWNI2S.Clustering.Data.ScheduleTasks;
-using ARWNI2S.Configuration;
-using ARWNI2S.Data;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 
 namespace ARWNI2S.Clustering.Services.ScheduleTasks
 {

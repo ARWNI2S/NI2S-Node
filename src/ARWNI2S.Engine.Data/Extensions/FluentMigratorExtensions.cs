@@ -2,7 +2,7 @@
 using ARWNI2S.Data.Mapping;
 using ARWNI2S.Data.Mapping.Builders;
 using ARWNI2S.Engine;
-using ARWNI2S.Infrastructure;
+using ARWNI2S.Engine.Infrastructure;
 using FluentMigrator.Builders.Alter.Table;
 using FluentMigrator.Builders.Create;
 using FluentMigrator.Builders.Create.Table;
@@ -136,7 +136,7 @@ namespace ARWNI2S.Data.Extensions
                 .FirstOrDefault(t => t.BaseType?.GetGenericArguments().Contains(type) ?? false);
 
             if (typeFinder != null)
-                (NI2SContext.Current.ResolveUnregistered(typeFinder) as IDataEntityBuilder)?.MapEntity(builder);
+                (EngineContext.Current.ResolveUnregistered(typeFinder) as IDataEntityBuilder)?.MapEntity(builder);
 
             var expression = builder.Expression;
             if (!expression.Columns.Any(c => c.IsPrimaryKey))

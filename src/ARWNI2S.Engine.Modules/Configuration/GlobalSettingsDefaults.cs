@@ -1,5 +1,4 @@
-﻿using ARWNI2S.Caching;
-using ARWNI2S.Core.Data.Configuration;
+﻿using ARWNI2S.Core.Data.Configuration;
 
 namespace ARWNI2S.Core.Configuration
 {

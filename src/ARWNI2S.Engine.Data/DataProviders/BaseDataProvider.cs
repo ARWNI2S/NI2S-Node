@@ -3,7 +3,7 @@ using ARWNI2S.Data.Extensions;
 using ARWNI2S.Data.Mapping;
 using ARWNI2S.Data.Migrations;
 using ARWNI2S.Engine;
-using ARWNI2S.Infrastructure;
+using ARWNI2S.Engine.Infrastructure;
 using FluentMigrator;
 using LinqToDB;
 using LinqToDB.Data;
@@ -101,7 +101,7 @@ namespace ARWNI2S.Data.DataProviders
         /// </summary>
         public virtual void InitializeDatabase()
         {
-            var migrationManager = NI2SContext.Current.Resolve<IMigrationManager>();
+            var migrationManager = EngineContext.Current.Resolve<IMigrationManager>();
 
             var targetAssembly = typeof(BaseDataProvider).Assembly;
             migrationManager.ApplyUpMigrations(targetAssembly);

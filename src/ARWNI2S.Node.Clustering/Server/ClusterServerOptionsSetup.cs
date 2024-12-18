@@ -1,6 +1,4 @@
 ﻿using ARWNI2S.Clustering.Configuration;
-using ARWNI2S.Configuration;
-using Microsoft.Extensions.Options;
 
 namespace ARWNI2S.Clustering.Server
 {

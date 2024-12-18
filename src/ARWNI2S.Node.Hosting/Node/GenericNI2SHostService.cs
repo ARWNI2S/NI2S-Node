@@ -1,44 +1,36 @@
-﻿using ARWNI2S.Clustering;
-using ARWNI2S.Configuration;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System.Diagnostics;
+﻿using ARWNI2S.Hosting.Diagnostics;
 
 namespace ARWNI2S.Hosting.Node
 {
     internal sealed partial class GenericNI2SHostService : IHostedService
     {
-        public GenericNI2SHostService(NI2SSettings settings,
+        public GenericNI2SHostService(IOptions<NI2SHostServiceOptions> options,
                                      IClusterServer localNode,
                                      ILoggerFactory loggerFactory,
                                      DiagnosticListener diagnosticListener,
                                      ActivitySource activitySource,
                                      DistributedContextPropagator propagator,
-                                     //IHttpContextFactory httpContextFactory,
-                                     //IEngineBuilderFactory applicationBuilderFactory,
-                                     //IEnumerable<IStartupFilter> startupFilters,
+                                     INiisContextFactory niisContextFactory,
+                                     IEngineBuilderFactory engineBuilderFactory,
                                      IConfiguration configuration,
-                                     INiisHostEnvironment hostingEnvironment//,
-                                                                            //HostingMetrics hostingMetrics
-            )
+                                     INiisHostEnvironment hostingEnvironment,
+                                     HostingMetrics hostingMetrics)
         {
-            Settings = settings;
+            Options = options.Value;
             LocalNode = localNode;
             Logger = loggerFactory.CreateLogger("ARWNI2S.Hosting.Diagnostics");
             LifetimeLogger = loggerFactory.CreateLogger("Microsoft.Hosting.Lifetime");
             DiagnosticListener = diagnosticListener;
             ActivitySource = activitySource;
             Propagator = propagator;
-            //HttpContextFactory = httpContextFactory;
-            //ApplicationBuilderFactory = applicationBuilderFactory;
-            //StartupFilters = startupFilters;
+            ContextFactory = niisContextFactory;
+            EngineBuilderFactory = engineBuilderFactory;
             Configuration = configuration;
             HostingEnvironment = hostingEnvironment;
-            //HostingMetrics = hostingMetrics;
+            HostingMetrics = hostingMetrics;
         }
 
-        public NI2SSettings Settings { get; }
+        public NI2SHostServiceOptions Options { get; }
         public IClusterServer LocalNode { get; }
         public ILogger Logger { get; }
         // Only for high level lifetime events
@@ -46,17 +38,16 @@ namespace ARWNI2S.Hosting.Node
         public DiagnosticListener DiagnosticListener { get; }
         public ActivitySource ActivitySource { get; }
         public DistributedContextPropagator Propagator { get; }
-        //public IHttpContextFactory HttpContextFactory { get; }
-        //public IEngineBuilderFactory ApplicationBuilderFactory { get; }
-        //public IEnumerable<IStartupFilter> StartupFilters { get; }
+        public INiisContextFactory ContextFactory { get; }
+        public IEngineBuilderFactory EngineBuilderFactory { get; }
+
         public IConfiguration Configuration { get; }
         public INiisHostEnvironment HostingEnvironment { get; }
-        //public HostingMetrics HostingMetrics { get; }
+        public HostingMetrics HostingMetrics { get; }
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {
-            await Task.CompletedTask;
-            //HostingEventSource.Log.HostStart();
+            HostingEventSource.Log.HostStart();
 
             //var serverAddressesFeature = LocalNode.Features.Get<ILocalNodeAddressesFeature>();
             //var addresses = serverAddressesFeature?.Addresses;
@@ -114,47 +105,42 @@ namespace ARWNI2S.Hosting.Node
             //    }
             //}
 
-            //RequestDelegate? application = null;
+            INiisEngine engine = null;
 
-            //try
-            //{
-            //    var configure = Options.ConfigureApplication;
+            try
+            {
+                var configure = Options.ConfigureEngine ?? throw new InvalidOperationException($"No application configured. Please specify an application via INiisHostBuilder.UseStartup, INiisHostBuilder.Configure.");
 
-            //    if (configure == null)
-            //    {
-            //        throw new InvalidOperationException($"No application configured. Please specify an application via INiisHostBuilder.UseStartup, INiisHostBuilder.Configure, or specifying the startup assembly via {nameof(WebHostDefaults.StartupAssemblyKey)} in the web host configuration.");
-            //    }
+                var builder = EngineBuilderFactory.CreateBuilder(LocalNode.Features);
 
-            //    var builder = ApplicationBuilderFactory.CreateBuilder(LocalNode.Features);
+                //foreach (var filter in Enumerable.Reverse(StartupFilters))
+                //{
+                //    configure = filter.Configure(configure);
+                //}
 
-            //    foreach (var filter in Enumerable.Reverse(StartupFilters))
-            //    {
-            //        configure = filter.Configure(configure);
-            //    }
+                configure(builder);
 
-            //    configure(builder);
+                // Build the request pipeline
+                engine = builder.Build();
+            }
+            catch (Exception /*ex*/)
+            {
+                //Logger.ApplicationError(ex);
 
-            //    // Build the request pipeline
-            //    application = builder.Build();
-            //}
-            //catch (Exception ex)
-            //{
-            //    Logger.ApplicationError(ex);
+                if (!Options.NI2SHostOptions.CaptureStartupErrors)
+                {
+                    throw;
+                }
 
-            //    if (!Options.WebHostOptions.CaptureStartupErrors)
-            //    {
-            //        throw;
-            //    }
+                var showDetailedErrors = HostingEnvironment.IsDevelopment() || Options.NI2SHostOptions.DetailedErrors;
 
-            //    var showDetailedErrors = HostingEnvironment.IsDevelopment() || Options.WebHostOptions.DetailedErrors;
+                //engine = ErrorPageBuilder.BuildErrorPageApplication(HostingEnvironment.ContentRootFileProvider, Logger, showDetailedErrors, ex);
+            }
 
-            //    application = ErrorPageBuilder.BuildErrorPageApplication(HostingEnvironment.ContentRootFileProvider, Logger, showDetailedErrors, ex);
-            //}
+            var ni2sEngine = new HostingEngine(engine, Logger, DiagnosticListener, ActivitySource, Propagator, ContextFactory, HostingEventSource.Log, HostingMetrics);
 
-            //var httpApplication = new HostingApplication(application, Logger, DiagnosticListener, ActivitySource, Propagator, HttpContextFactory, HostingEventSource.Log, HostingMetrics);
-
-            //await LocalNode.StartAsync(httpApplication, cancellationToken);
-            //HostingEventSource.Log.LocalNodeReady();
+            await LocalNode.StartAsync(ni2sEngine, cancellationToken);
+            HostingEventSource.Log.NodeReady();
 
             //if (addresses != null)
             //{
@@ -164,33 +150,33 @@ namespace ARWNI2S.Hosting.Node
             //    }
             //}
 
-            //if (Logger.IsEnabled(LogLevel.Debug))
-            //{
-            //    foreach (var assembly in Options.WebHostOptions.GetFinalHostingStartupAssemblies())
-            //    {
-            //        Log.StartupAssemblyLoaded(Logger, assembly);
-            //    }
-            //}
+            if (Logger.IsEnabled(LogLevel.Debug))
+            {
+                foreach (var assembly in Options.NI2SHostOptions.GetFinalHostingStartupAssemblies())
+                {
+                    Log.StartupAssemblyLoaded(Logger, assembly);
+                }
+            }
 
-            //if (Options.HostingStartupExceptions != null)
-            //{
-            //    foreach (var exception in Options.HostingStartupExceptions.InnerExceptions)
-            //    {
-            //        Logger.HostingStartupAssemblyError(exception);
-            //    }
-            //}
+            if (Options.HostingStartupExceptions != null)
+            {
+                foreach (var exception in Options.HostingStartupExceptions.InnerExceptions)
+                {
+                    //Logger.HostingStartupAssemblyError(exception);
+                }
+            }
         }
 
         public async Task StopAsync(CancellationToken cancellationToken)
         {
-            //try
-            //{
-            //    await LocalNode.StopAsync(cancellationToken);
-            //}
-            //finally
-            //{
-            //    HostingEventSource.Log.HostStop();
-            //}
+            try
+            {
+                await LocalNode.StopAsync(cancellationToken);
+            }
+            finally
+            {
+                HostingEventSource.Log.HostStop();
+            }
             await Task.CompletedTask;
         }
 

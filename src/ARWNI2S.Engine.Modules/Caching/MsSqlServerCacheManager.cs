@@ -1,11 +1,4 @@
-﻿using ARWNI2S.Caching;
-using ARWNI2S.Collections;
-using ARWNI2S.Configuration;
-using Microsoft.Data.SqlClient;
-using Microsoft.Extensions.Caching.Distributed;
-using System.Data;
-
-namespace ARWNI2S.Core.Caching
+﻿namespace ARWNI2S.Core.Caching
 {
     /// <summary>
     /// Represents a MsSql server distributed cache 

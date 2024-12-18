@@ -1,6 +1,4 @@
-﻿using ARWNI2S.Data.Entities;
-
-namespace ARWNI2S.Clustering.Data
+﻿namespace ARWNI2S.Clustering.Data
 {
     public enum NodeState : byte
     {

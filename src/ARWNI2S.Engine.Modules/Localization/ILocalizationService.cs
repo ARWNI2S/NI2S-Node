@@ -1,8 +1,4 @@
-﻿using ARWNI2S.Configuration;
-using ARWNI2S.Core.Data.Localization;
-using ARWNI2S.Data.Entities;
-using ARWNI2S.Plugins;
-using System.Linq.Expressions;
+﻿using ARWNI2S.Core.Data.Localization;
 
 namespace ARWNI2S.Core.Localization
 {

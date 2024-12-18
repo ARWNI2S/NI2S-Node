@@ -1,5 +1,4 @@
-﻿using ARWNI2S.Clustering;
-using ARWNI2S.Core.Data.Common;
+﻿using ARWNI2S.Core.Data.Common;
 
 namespace ARWNI2S.Core.Logging
 {

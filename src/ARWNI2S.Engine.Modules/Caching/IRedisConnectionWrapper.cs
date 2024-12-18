@@ -1,7 +1,4 @@
-﻿using StackExchange.Redis;
-using System.Net;
-
-namespace ARWNI2S.Core.Caching
+﻿namespace ARWNI2S.Core.Caching
 {
     /// <summary>
     /// Represents Redis connection wrapper

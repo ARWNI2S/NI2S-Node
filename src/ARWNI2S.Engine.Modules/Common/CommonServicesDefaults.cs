@@ -1,6 +1,4 @@
-﻿using ARWNI2S.Caching;
-
-namespace ARWNI2S.Core.Common
+﻿namespace ARWNI2S.Core.Common
 {
     /// <summary>
     /// Represents default values related to common services

@@ -39,6 +39,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="DataStartup.cs" />
     <Compile Remove="Migrations\Installation\Indexes.cs" />
     <Compile Remove="Migrations\Installation\Indexes.ml.cs" />
     <Compile Remove="Migrations\Installation\InstallationSchemaMigration.cs" />
@@ -57,12 +58,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ARWNI2S.Abstractions\ARWNI2S.Abstractions.csproj" />
-    <ProjectReference Include="..\ARWNI2S.Engine.Core\ARWNI2S.Engine.Core.csproj" />
+    <Folder Include="Migrations\Installation\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Migrations\Installation\" />
+    <ProjectReference Include="..\ARWNI2S.Engine.Abstractions\ARWNI2S.Engine.Abstractions.csproj" />
+    <ProjectReference Include="..\ARWNI2S.Engine\ARWNI2S.Engine.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,6 +1,4 @@
-﻿using ARWNI2S.Data.Entities;
-
-namespace ARWNI2S.Core.Data.Logging
+﻿namespace ARWNI2S.Core.Data.Logging
 {
     /// <summary>
     /// Represents an activity log record

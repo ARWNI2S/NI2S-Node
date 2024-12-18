@@ -1,5 +1,4 @@
 ﻿using ARWNI2S.Core.Data.Common;
-using ARWNI2S.Data.Entities;
 
 namespace ARWNI2S.Core.Common
 {

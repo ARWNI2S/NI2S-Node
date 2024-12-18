@@ -1,7 +1,6 @@
 ﻿using ARWNI2S.Data.Migrations;
-using ARWNI2S.Engine;
-using ARWNI2S.Engine.Builder;
-using ARWNI2S.Infrastructure;
+using ARWNI2S.Engine.Hosting;
+using ARWNI2S.Engine.Infrastructure;
 using FluentMigrator;
 using FluentMigrator.Runner;
 using FluentMigrator.Runner.Conventions;

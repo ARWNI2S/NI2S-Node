@@ -28,7 +28,7 @@ namespace ARWNI2S.Engine
         /// <param name="services">Collection of service descriptors</param>
         public static void AddDefaultContextAccessor(this IServiceCollection services)
         {
-            services.TryAddSingleton<IFrameContextAccessor, DefaultContextAccessor>();
+            services.TryAddSingleton<INiisContextAccessor, DefaultContextAccessor>();
         }
 
         /// <summary>

@@ -1,6 +1,4 @@
 ﻿using ARWNI2S.Core.Data.Localization;
-using ARWNI2S.Data.Entities;
-using System.Linq.Expressions;
 
 namespace ARWNI2S.Core.Localization
 {

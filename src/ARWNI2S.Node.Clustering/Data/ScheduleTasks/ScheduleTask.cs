@@ -1,6 +1,4 @@
-﻿using ARWNI2S.Data.Entities;
-
-namespace ARWNI2S.Clustering.Data.ScheduleTasks
+﻿namespace ARWNI2S.Clustering.Data.ScheduleTasks
 {
     /// <summary>
     /// Schedule task

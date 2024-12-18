@@ -1,17 +1,7 @@
-﻿using ARWNI2S.Caching;
-using ARWNI2S.Configuration;
-using ARWNI2S.Core.Configuration;
+﻿using ARWNI2S.Core.Configuration;
 using ARWNI2S.Core.Data.Localization;
 using ARWNI2S.Core.ExportImport;
 using ARWNI2S.Core.Logging;
-using ARWNI2S.Data;
-using ARWNI2S.Data.Entities;
-using ARWNI2S.Data.Extensions;
-using ARWNI2S.Plugins;
-using System.Linq.Expressions;
-using System.Reflection;
-using System.Text;
-using System.Xml;
 
 namespace ARWNI2S.Core.Localization
 {

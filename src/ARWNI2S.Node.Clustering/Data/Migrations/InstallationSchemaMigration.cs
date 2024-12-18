@@ -1,7 +1,4 @@
 ﻿using ARWNI2S.Clustering.Data.ScheduleTasks;
-using ARWNI2S.Data.Extensions;
-using ARWNI2S.Data.Migrations;
-using FluentMigrator;
 
 namespace ARWNI2S.Clustering.Data.Migrations
 {

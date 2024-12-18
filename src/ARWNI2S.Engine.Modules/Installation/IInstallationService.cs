@@ -1,6 +1,4 @@
-﻿using System.Globalization;
-
-namespace ARWNI2S.Core.Installation
+﻿namespace ARWNI2S.Core.Installation
 {
     /// <summary>
     /// Installation service

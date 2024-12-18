@@ -1,7 +1,4 @@
-﻿using ARWNI2S.Data.Entities;
-using Microsoft.Extensions.Logging;
-
-namespace ARWNI2S.Core.Data.Logging
+﻿namespace ARWNI2S.Core.Data.Logging
 {
     /// <summary>
     /// Represents a log record

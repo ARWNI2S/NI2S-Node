@@ -3,15 +3,21 @@
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
     <IsPackable>true</IsPackable>
+    <IsFrameworkPart>false</IsFrameworkPart>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ARWNI2S.Abstractions\ARWNI2S.Abstractions.csproj" />
-    <ProjectReference Include="..\ARWNI2S.Engine.Core\ARWNI2S.Engine.Core.csproj" />
-    <ProjectReference Include="..\ARWNI2S.Engine.Data\ARWNI2S.Engine.Data.csproj" />
-    <ProjectReference Include="..\ARWNI2S.Engine.Modules\ARWNI2S.Engine.Modules.csproj" />
-    <ProjectReference Include="..\ARWNI2S.Node.Clustering\ARWNI2S.Node.Clustering.csproj" />
-    <ProjectReference Include="..\ARWNI2S.Node.Hosting\ARWNI2S.Node.Hosting.csproj" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ARWNI2S.Engine.Abstractions\ARWNI2S.Engine.Abstractions.csproj" />
+    <ProjectReference Include="..\ARWNI2S.Engine\ARWNI2S.Engine.csproj" />
+    <ProjectReference Include="..\ARWNI2S.Node.Abstractions\ARWNI2S.Node.Abstractions.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Clustering\" />
   </ItemGroup>
 
 </Project>

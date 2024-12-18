@@ -1,9 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using System.Diagnostics;
-
-namespace ARWNI2S.Hosting.Internals
+﻿namespace ARWNI2S.Hosting.Internals
 {
     internal sealed class BootstrapHostBuilder : IHostBuilder
     {

@@ -1,6 +1,4 @@
 ﻿using ARWNI2S.Clustering.Data;
-using ARWNI2S.Data;
-using ARWNI2S.Data.Extensions;
 
 namespace ARWNI2S.Clustering.Services
 {

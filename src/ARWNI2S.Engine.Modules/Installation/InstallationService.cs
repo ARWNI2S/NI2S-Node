@@ -1,17 +1,12 @@
-﻿using ARWNI2S.Configuration;
-using ARWNI2S.Core.Data.Localization;
+﻿using ARWNI2S.Core.Data.Localization;
 using ARWNI2S.Core.Data.Logging;
-using ARWNI2S.Data;
-using ARWNI2S.Data.Entities;
-using ARWNI2S.Engine;
-using System.Globalization;
 
 namespace ARWNI2S.Core.Installation
 {
-	/// <summary>
-	/// Installation service
-	/// </summary>
-	public partial class InstallationService : IInstallationService
+    /// <summary>
+    /// Installation service
+    /// </summary>
+    public partial class InstallationService : IInstallationService
 	{
 		#region Fields
 

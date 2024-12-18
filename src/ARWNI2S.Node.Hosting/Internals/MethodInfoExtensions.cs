@@ -1,6 +1,4 @@
-﻿using System.Reflection;
-
-namespace ARWNI2S.Hosting.Internals
+﻿namespace ARWNI2S.Hosting.Internals
 {
     internal static class MethodInfoExtensions
     {

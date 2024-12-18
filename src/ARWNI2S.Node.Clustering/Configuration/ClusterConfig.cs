@@ -1,9 +1,4 @@
-﻿using ARWNI2S.Configuration;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using System.Runtime.Serialization;
-
-namespace ARWNI2S.Clustering.Configuration
+﻿namespace ARWNI2S.Clustering.Configuration
 {
     /// <summary>
     /// Represents simulation clustering type enumeration

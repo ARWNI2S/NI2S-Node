@@ -1,6 +1,4 @@
-﻿using ARWNI2S.Data.Entities;
-
-namespace ARWNI2S.Core.Data.Localization
+﻿namespace ARWNI2S.Core.Data.Localization
 {
     /// <summary>
     /// Represents a localized property

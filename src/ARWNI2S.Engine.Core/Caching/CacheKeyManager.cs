@@ -1,6 +1,4 @@
-﻿using ARWNI2S.Collections;
-
-namespace ARWNI2S.Caching
+﻿namespace ARWNI2S.Caching
 {
     /// <summary>
     /// Cache key manager

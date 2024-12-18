@@ -1,8 +1,4 @@
-﻿using ARWNI2S.Caching;
-using Microsoft.Extensions.Caching.Memory;
-using StackExchange.Redis;
-
-namespace ARWNI2S.Core.Caching
+﻿namespace ARWNI2S.Core.Caching
 {
     /// <summary>
     /// Represents a local in-memory cache with distributed synchronization by Redis

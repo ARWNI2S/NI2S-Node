@@ -1,6 +1,4 @@
-﻿using ARWNI2S.Data.Entities;
-
-namespace ARWNI2S.Core.Data.Common
+﻿namespace ARWNI2S.Core.Data.Common
 {
     /// <summary>
     /// Represents a generic attribute

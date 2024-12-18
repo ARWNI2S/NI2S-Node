@@ -1,8 +1,4 @@
-﻿using ARWNI2S.Caching;
-using ARWNI2S.Core.Data.Common;
-using ARWNI2S.Data;
-using ARWNI2S.Data.Entities;
-using ARWNI2S.Data.Extensions;
+﻿using ARWNI2S.Core.Data.Common;
 
 namespace ARWNI2S.Core.Common
 {

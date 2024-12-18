@@ -1,6 +1,7 @@
 ﻿using ARWNI2S.Data.DataProviders.LinqToDb;
 using ARWNI2S.Data.Entities;
 using ARWNI2S.Data.Mapping;
+using ARWNI2S.Engine;
 using LinqToDB;
 using LinqToDB.Common;
 using LinqToDB.Data;

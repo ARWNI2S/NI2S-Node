@@ -1,6 +1,4 @@
-﻿using ARWNI2S.Plugins;
-
-namespace ARWNI2S.Core.Plugins
+﻿namespace ARWNI2S.Core.Plugins
 {
     /// <summary>
     /// Represents a plugin manager implementation

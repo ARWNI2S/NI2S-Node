@@ -1,12 +1,5 @@
 ﻿using ARWNI2S.Clustering.Configuration;
 using ARWNI2S.Clustering.Server;
-using ARWNI2S.Configuration;
-using ARWNI2S.Hosting;
-using ARWNI2S.Hosting.Builder;
-using ARWNI2S.Infrastructure;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.Extensions.Options;
 
 namespace ARWNI2S.Clustering
 {

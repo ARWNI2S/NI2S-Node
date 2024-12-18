@@ -1,4 +1,4 @@
-﻿using ARWNI2S.Engine;
+﻿using ARWNI2S.Engine.Core;
 
 namespace ARWNI2S.Data.Events
 {
@@ -6,7 +6,7 @@ namespace ARWNI2S.Data.Events
     /// A container for entities that are updated.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public partial class EntityUpdatedEvent<T> where T : IEntity
+    public partial class EntityUpdatedEvent<T> where T : INiisEntity
     {
         /// <summary>
         /// Ctor

@@ -1,6 +1,7 @@
-﻿using ARWNI2S.Caching;
-using ARWNI2S.Data.Entities;
-using ARWNI2S.Events;
+﻿using ARWNI2S.Data.Entities;
+using ARWNI2S.Engine;
+using ARWNI2S.Engine.Caching;
+using ARWNI2S.Engine.Events;
 
 namespace ARWNI2S.Data.Events
 {
@@ -9,9 +10,9 @@ namespace ARWNI2S.Data.Events
     /// </summary>
     /// <typeparam name="TEntity">Entity type</typeparam>
     public abstract partial class CacheEventConsumer<TEntity> :
-        IConsumer<EntityCreatedEvent<TEntity>>,
-        IConsumer<EntityUpdatedEvent<TEntity>>,
-        IConsumer<EntityDeletedEvent<TEntity>>
+        IEventConsumer<EntityCreatedEvent<TEntity>>,
+        IEventConsumer<EntityUpdatedEvent<TEntity>>,
+        IEventConsumer<EntityDeletedEvent<TEntity>>
         where TEntity : DataEntity
     {
         #region Fields
@@ -24,7 +25,7 @@ namespace ARWNI2S.Data.Events
 
         protected CacheEventConsumer()
         {
-            _staticCacheManager = NI2SContext.Current.Resolve<IStaticCacheManager>();
+            _staticCacheManager = EngineContext.Current.Resolve<IStaticCacheManager>();
         }
 
         #endregion

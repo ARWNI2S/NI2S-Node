@@ -1,8 +1,4 @@
-﻿using ARWNI2S.Infrastructure;
-using Azure.Identity;
-using Azure.Security.KeyVault.Secrets;
-
-namespace ARWNI2S.Core.Configuration
+﻿namespace ARWNI2S.Core.Configuration
 {
     public partial class AzureKeyVaultService : IAzureKeyVaultService
     {

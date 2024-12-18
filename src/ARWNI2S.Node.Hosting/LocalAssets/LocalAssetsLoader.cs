@@ -1,9 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.FileProviders;
-using System.Diagnostics.CodeAnalysis;
-using System.Reflection;
-
-namespace ARWNI2S.Hosting.LocalAssets
+﻿namespace ARWNI2S.Hosting.LocalAssets
 {
     /// <summary>
     /// Loader for static web assets

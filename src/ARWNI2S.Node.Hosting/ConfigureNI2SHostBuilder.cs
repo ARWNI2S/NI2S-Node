@@ -1,6 +1,4 @@
 ﻿using ARWNI2S.Hosting.Builder;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace ARWNI2S.Hosting
 {

@@ -1,11 +1,4 @@
-﻿using ARWNI2S.Caching;
-using ARWNI2S.Collections;
-using ARWNI2S.Configuration;
-using Microsoft.Extensions.Caching.Distributed;
-using StackExchange.Redis;
-using System.Net;
-
-namespace ARWNI2S.Core.Caching
+﻿namespace ARWNI2S.Core.Caching
 {
     /// <summary>
     /// Represents a redis distributed cache 

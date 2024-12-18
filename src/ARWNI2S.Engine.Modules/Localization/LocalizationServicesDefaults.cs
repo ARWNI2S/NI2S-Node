@@ -1,5 +1,4 @@
-﻿using ARWNI2S.Caching;
-using ARWNI2S.Core.Data.Localization;
+﻿using ARWNI2S.Core.Data.Localization;
 
 namespace ARWNI2S.Core.Localization
 {

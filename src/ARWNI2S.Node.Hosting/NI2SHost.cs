@@ -1,22 +1,6 @@
-﻿using ARWNI2S.Clustering;
-using ARWNI2S.Clustering.Builder;
-using ARWNI2S.Clustering.Configuration;
-using ARWNI2S.Data;
-using ARWNI2S.Data.Migrations;
-using ARWNI2S.Engine;
-using ARWNI2S.Engine.Builder;
-using ARWNI2S.Engine.Features;
-using ARWNI2S.Hosting.Builder;
+﻿using ARWNI2S.Hosting.Builder;
 using ARWNI2S.Hosting.Configuration;
 using ARWNI2S.Hosting.LocalAssets;
-using ARWNI2S.Plugins;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
-using System.Reflection;
 
 namespace ARWNI2S.Hosting
 {
@@ -27,7 +11,6 @@ namespace ARWNI2S.Hosting
         internal const string GlobalNodeBuilderKey = "__GlobalNodeBuilder";
 
         private readonly IHost _host;
-        //private readonly List<EndpointDataSource> _dataSources = new();
 
         internal NI2SHost(IHost host)
         {
@@ -63,11 +46,6 @@ namespace ARWNI2S.Hosting
         /// </summary>
         public ILogger Logger { get; }
 
-        ///// <summary>
-        ///// The list of URLs that the HTTP server is bound to.
-        ///// </summary>
-        //public ICollection<string> Urls => NodeFeatures.GetRequiredFeature<IServerAddressesFeature>().Addresses;
-
         IServiceProvider IEngineBuilder.EngineServices
         {
             get => EngineBuilder.EngineServices;
@@ -79,9 +57,6 @@ namespace ARWNI2S.Hosting
 
         internal IDictionary<string, object> Properties => EngineBuilder.Properties;
         IDictionary<string, object> IEngineBuilder.Properties => Properties;
-
-        //internal ICollection<EndpointDataSource> DataSources => _dataSources;
-        //ICollection<EndpointDataSource> IClusterNodeBuilder.DataSources => DataSources;
 
         internal EngineBuilder EngineBuilder { get; }
 

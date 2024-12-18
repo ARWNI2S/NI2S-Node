@@ -1,12 +1,4 @@
-﻿using Microsoft.Extensions.FileProviders;
-using Microsoft.Extensions.FileSystemGlobbing;
-using Microsoft.Extensions.Primitives;
-using System.Collections;
-using System.Diagnostics.CodeAnalysis;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-
-namespace ARWNI2S.Hosting.LocalAssets
+﻿namespace ARWNI2S.Hosting.LocalAssets
 {
     internal sealed partial class ManifestLocalAssetFileProvider : IFileProvider
     {

@@ -1,5 +1,4 @@
 ﻿using ARWNI2S.Clustering.Data;
-using ARWNI2S.Data.Events;
 
 namespace ARWNI2S.Clustering.Caching
 {

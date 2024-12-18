@@ -1,5 +1,4 @@
 ﻿using ARWNI2S.Core.Data.Localization;
-using System.Globalization;
 
 namespace ARWNI2S.Core.Localization
 {

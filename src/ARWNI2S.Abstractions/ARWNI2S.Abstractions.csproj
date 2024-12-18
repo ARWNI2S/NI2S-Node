@@ -1,9 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <RootNamespace>ARWNI2S</RootNamespace>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Caching\**" />
+    <Compile Remove="Collections\**" />
+    <EmbeddedResource Remove="Caching\**" />
+    <EmbeddedResource Remove="Collections\**" />
+    <None Remove="Caching\**" />
+    <None Remove="Collections\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <Compile Remove="Engine\Core\IFilterProvider.cs" />

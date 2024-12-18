@@ -1,6 +1,4 @@
-﻿using ARWNI2S.Configuration;
-
-namespace ARWNI2S.Core.Data.Localization
+﻿namespace ARWNI2S.Core.Data.Localization
 {
     /// <summary>
     /// Localization settings

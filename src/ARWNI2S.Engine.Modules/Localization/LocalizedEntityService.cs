@@ -1,10 +1,4 @@
-﻿using ARWNI2S.Caching;
-using ARWNI2S.Core.Data.Localization;
-using ARWNI2S.Data;
-using ARWNI2S.Data.Entities;
-using ARWNI2S.Data.Extensions;
-using System.Linq.Expressions;
-using System.Reflection;
+﻿using ARWNI2S.Core.Data.Localization;
 
 
 namespace ARWNI2S.Core.Localization

@@ -1,6 +1,4 @@
-﻿using ARWNI2S.Configuration;
-
-namespace ARWNI2S.Clustering.Nodes.Configuration
+﻿namespace ARWNI2S.Clustering.Nodes.Configuration
 {
     /// <summary>
     /// Represents installation configuration parameters

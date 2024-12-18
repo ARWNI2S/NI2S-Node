@@ -1,16 +1,4 @@
-﻿using ARWNI2S.ComponentModel;
-using ARWNI2S.Configuration;
-using ARWNI2S.Core;
-using ARWNI2S.Data.Mapping;
-using ARWNI2S.Engine;
-using ARWNI2S.Engine.Builder;
-using ARWNI2S.Engine.Parts;
-using ARWNI2S.Infrastructure;
-using ARWNI2S.Plugins;
-using Microsoft.Extensions.Configuration;
-using System.Reflection;
-
-namespace ARWNI2S.Hosting.Internals
+﻿namespace ARWNI2S.Hosting.Internals
 {
     /// <summary>
     /// Represents application part manager extensions

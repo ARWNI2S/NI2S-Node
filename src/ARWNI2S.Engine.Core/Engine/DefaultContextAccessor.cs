@@ -1,11 +1,11 @@
 ﻿namespace ARWNI2S.Engine
 {
-    internal class DefaultContextAccessor : IFrameContextAccessor
+    internal class DefaultContextAccessor : INiisContextAccessor
     {
         private static readonly AsyncLocal<NI2SContextHolder> _niisContextCurrent = new();
 
         /// <inheritdoc/>
-        public IFrameContext FrameContext
+        public INiisContext FrameContext
         {
             get
             {
@@ -32,7 +32,7 @@
 
         private sealed class NI2SContextHolder
         {
-            public IFrameContext EngineContext;
+            public INiisContext EngineContext;
         }
     }
 }

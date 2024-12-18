@@ -1,4 +1,4 @@
-﻿using ARWNI2S.Configuration;
+﻿using ARWNI2S.Engine.Configuration;
 using FluentMigrator.Runner.Initialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;

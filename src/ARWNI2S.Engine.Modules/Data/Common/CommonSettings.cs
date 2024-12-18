@@ -1,6 +1,4 @@
-﻿using ARWNI2S.Configuration;
-
-namespace ARWNI2S.Core.Data.Common
+﻿namespace ARWNI2S.Core.Data.Common
 {
     /// <summary>
     /// Common settings

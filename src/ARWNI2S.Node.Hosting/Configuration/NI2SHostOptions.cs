@@ -1,10 +1,4 @@
-﻿using ARWNI2S.Configuration;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
-using System.Globalization;
-using System.Reflection;
-
-namespace ARWNI2S.Hosting.Configuration
+﻿namespace ARWNI2S.Hosting.Configuration
 {
     internal sealed class NI2SHostOptions
     {

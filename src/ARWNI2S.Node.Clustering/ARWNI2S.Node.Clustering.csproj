@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>ARWNI2S.Clustering</RootNamespace>
   </PropertyGroup>
@@ -13,8 +13,13 @@
     <Compile Remove="Nodes\NI2SPlacementDirector.cs" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="..\..\.editorconfig" Link=".editorconfig" />
+  </ItemGroup>
+
   <!--<ItemGroup>
     <PackageReference Include="Microsoft.Orleans.Core" />
+    <PackageReference Include="NetMQ" />
   </ItemGroup>-->
 
   <ItemGroup>

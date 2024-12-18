@@ -1,4 +1,4 @@
 ﻿namespace ARWNI2S.Engine
 {
-    public delegate Task UpdateDelegate(IFrameContext context);
+    public delegate Task UpdateDelegate(INiisContext context);
 }

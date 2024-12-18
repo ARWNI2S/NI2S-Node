@@ -1,7 +1,5 @@
 ﻿using ARWNI2S.Clustering.Data;
 using ARWNI2S.Clustering.Nodes.Features;
-using ARWNI2S.Configuration;
-using ARWNI2S.Engine.Features;
 
 namespace ARWNI2S.Clustering.Server
 {
@@ -20,6 +18,20 @@ namespace ARWNI2S.Clustering.Server
         public ClusterServer(NI2SSettings settings)
         {
             _settings = settings;
+        }
+
+        public async Task StartAsync(INiisEngine ni2sEngine, CancellationToken cancellationToken)
+        {
+            await Task.CompletedTask;
+        }
+
+        public async Task StopAsync(CancellationToken cancellationToken)
+        {
+            await Task.CompletedTask;
+        }
+
+        public void Dispose()
+        {
         }
     }
 }

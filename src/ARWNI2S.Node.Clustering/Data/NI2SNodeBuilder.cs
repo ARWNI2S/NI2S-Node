@@ -1,7 +1,4 @@
-﻿using ARWNI2S.Data.Mapping.Builders;
-using FluentMigrator.Builders.Create.Table;
-
-namespace ARWNI2S.Clustering.Data
+﻿namespace ARWNI2S.Clustering.Data
 {
     /// <summary>
     /// Represents a node entity builder

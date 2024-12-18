@@ -1,6 +1,4 @@
 ﻿using ARWNI2S.Hosting.Configuration;
-using Microsoft.Extensions.FileProviders;
-using Microsoft.Extensions.Hosting;
 
 namespace ARWNI2S.Hosting
 {

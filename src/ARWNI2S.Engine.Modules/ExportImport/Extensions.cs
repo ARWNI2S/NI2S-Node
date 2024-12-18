@@ -1,6 +1,4 @@
-﻿using System.Xml;
-
-namespace ARWNI2S.Core.ExportImport
+﻿namespace ARWNI2S.Core.ExportImport
 {
     /// <summary>
     /// Extensions

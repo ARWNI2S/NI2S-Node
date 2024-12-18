@@ -1,4 +1,4 @@
-﻿using ARWNI2S.Engine;
+﻿using ARWNI2S.Engine.Data;
 
 namespace ARWNI2S.Data.Entities
 {

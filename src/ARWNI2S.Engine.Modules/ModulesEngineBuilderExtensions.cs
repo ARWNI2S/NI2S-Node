@@ -1,6 +1,4 @@
-﻿using ARWNI2S.Engine.Builder;
-
-namespace ARWNI2S.Core
+﻿namespace ARWNI2S.Core
 {
     public static class ModulesEngineBuilderExtensions
     {

@@ -1,6 +1,4 @@
-﻿using ARWNI2S.Collections.Generic;
-using ARWNI2S.Core.Data.Logging;
-using Microsoft.Extensions.Logging;
+﻿using ARWNI2S.Core.Data.Logging;
 
 namespace ARWNI2S.Core.Logging
 {
