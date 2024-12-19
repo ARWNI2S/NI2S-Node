@@ -1,7 +1,7 @@
 ﻿using ARWNI2S.Engine;
+using ARWNI2S.Engine.Clustering;
 using ARWNI2S.Engine.Hosting;
 using ARWNI2S.Engine.Infrastructure;
-using ARWNI2S.Node.Clustering;
 using ARWNI2S.Node.Engine;
 using ARWNI2S.Node.Hosting;
 using ARWNI2S.Node.Hosting.Diagnostics;

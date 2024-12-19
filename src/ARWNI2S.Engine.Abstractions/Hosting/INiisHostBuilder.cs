@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-namespace ARWNI2S.Node.Hosting
+namespace ARWNI2S.Engine.Hosting
 {
     /// <summary>
     /// A builder for <see cref="INiisHost"/>.

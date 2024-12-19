@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 
-namespace ARWNI2S.Node.Hosting
+namespace ARWNI2S.Engine.Hosting
 {
     /// <summary>
     /// Context containing the common services on the <see cref="INiisHost" />. Some properties may be null until set by the <see cref="INiisHost" />.

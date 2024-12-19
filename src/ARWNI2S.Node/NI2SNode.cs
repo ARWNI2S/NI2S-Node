@@ -1,8 +1,8 @@
 ﻿using ARWNI2S.Engine;
+using ARWNI2S.Engine.Clustering;
 using ARWNI2S.Engine.Extensibility;
 using ARWNI2S.Engine.Hosting;
 using ARWNI2S.Node.Builder;
-using ARWNI2S.Node.Clustering;
 using ARWNI2S.Node.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

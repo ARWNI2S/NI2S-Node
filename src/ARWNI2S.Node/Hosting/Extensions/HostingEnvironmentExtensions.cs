@@ -1,5 +1,7 @@
-﻿using Microsoft.Extensions.FileProviders;
+﻿using ARWNI2S.Engine.Hosting;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
+using IHostingEnvironment = ARWNI2S.Engine.Hosting.IHostingEnvironment;
 
 namespace ARWNI2S.Node.Hosting.Extensions
 {

@@ -1,7 +1,7 @@
 ﻿using ARWNI2S.Engine;
 using ARWNI2S.Engine.Extensibility;
 
-namespace ARWNI2S.Node.Clustering
+namespace ARWNI2S.Engine.Clustering
 {
     public interface IClusterNode
     {

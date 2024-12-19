@@ -40,10 +40,10 @@ namespace ARWNI2S.Node.Hosting.Internals
                 var niishostContext = GetNI2SHostBuilderContext(context);
                 var niisHostOptions = (NI2SHostingOptions)context.Properties[typeof(NI2SHostingOptions)];
 
-                // Add the IHostingEnvironment and IApplicationLifetime from Microsoft.AspNetCore.Hosting
+                // Add the IHostingEnvironment and IApplicationLifetime from ARWNI2S.Engine.Hosting
                 services.AddSingleton(niishostContext.HostingEnvironment);
 #pragma warning disable CS0618 // Type or member is obsolete
-                services.AddSingleton((IHostingEnvironment)niishostContext.HostingEnvironment);
+                services.AddSingleton((ARWNI2S.Engine.Hosting.IHostingEnvironment)niishostContext.HostingEnvironment);
                 //HACK
                 //services.AddSingleton<IApplicationLifetime, GenericWebHostApplicationLifetime>();
 #pragma warning restore CS0618 // Type or member is obsolete

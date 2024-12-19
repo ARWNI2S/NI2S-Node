@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace ARWNI2S.Infrastructure.Memory
+namespace ARWNI2S.Engine.Memory
 {
     /// <summary>
     /// Represents a memory pool of objects.

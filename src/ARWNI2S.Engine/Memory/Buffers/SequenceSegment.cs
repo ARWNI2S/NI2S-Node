@@ -1,6 +1,6 @@
 using System.Buffers;
 
-namespace ARWNI2S.Infrastructure.Memory.Buffers
+namespace ARWNI2S.Engine.Memory.Buffers
 {
     public class SequenceSegment : ReadOnlySequenceSegment<byte>, IDisposable
     {

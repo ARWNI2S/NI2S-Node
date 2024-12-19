@@ -1,19 +1,18 @@
 ﻿using ARWNI2S.Engine.Hosting;
-using ARWNI2S.Node.Hosting;
 using ARWNI2S.Node.Hosting.Internals;
 
 namespace ARWNI2S.Node.Builder.Extensions
 {
     public static class NI2SHostBuilderExtensions
     {
-        public static INiisHostBuilder Configure(this INiisHostBuilder hostBuilder, Action<NI2SHostBuilderContext, IEngineBuilder> configureApp)
+        public static INiisHostBuilder Configure(this INiisHostBuilder hostBuilder, Action<NI2SHostBuilderContext, IEngineBuilder> configureEngine)
         {
-            ArgumentNullException.ThrowIfNull(configureApp, nameof(configureApp));
-            if (hostBuilder is not GenericNI2SHostBuilder genericBuilderp)
+            ArgumentNullException.ThrowIfNull(configureEngine, nameof(configureEngine));
+            if (hostBuilder is not GenericNI2SHostBuilder genericBuilder)
             {
                 throw new InvalidOperationException("hostBuilder is not GenericNI2SHostBuilder");
             }
-            return genericBuilderp.Configure(configureApp);
+            return genericBuilder.Configure(configureEngine);
 
             //    Action<NI2SHostBuilderContext, IEngineBuilder> configureApp2 = configureApp;
             //    ArgumentNullException.ThrowIfNull(configureApp2, "configureApp");

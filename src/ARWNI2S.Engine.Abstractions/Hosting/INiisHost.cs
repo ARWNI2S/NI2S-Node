@@ -1,4 +1,4 @@
-﻿namespace ARWNI2S.Node.Hosting
+﻿namespace ARWNI2S.Engine.Hosting
 {
     public interface INiisHost
     {
