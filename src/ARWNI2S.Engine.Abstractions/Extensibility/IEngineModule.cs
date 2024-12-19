@@ -19,9 +19,9 @@ namespace ARWNI2S.Engine.Extensibility
         /// <param name="engineBuilder">Builder for configuring an application's request pipeline</param>
         void ConfigureEngine(IEngineBuilder engineBuilder);
 
-        /// <summary>
-        /// Gets order of this startup configuration implementation
-        /// </summary>
-        int Order { get; }
+        ///// <summary>
+        ///// Gets order of this startup configuration implementation
+        ///// </summary>
+        //int Order { get; }
     }
 }

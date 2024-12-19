@@ -8,6 +8,7 @@ using ARWNI2S.Engine.Common.Data;
 using ARWNI2S.Engine.Infrastructure;
 using ARWNI2S.Engine.Localization;
 using ARWNI2S.Engine.Users.Data;
+using LinqToDB;
 
 namespace ARWNI2S.Engine.Users
 {

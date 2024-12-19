@@ -21,5 +21,12 @@ using System.Runtime.InteropServices;
 [assembly: InternalsVisibleTo("ARWNI2S.Engine")]
 [assembly: InternalsVisibleTo("ARWNI2S.Engine.Core")]
 [assembly: InternalsVisibleTo("ARWNI2S.Engine.Data")]
+[assembly: InternalsVisibleTo("ARWNI2S.Engine.Orleans")]
+[assembly: InternalsVisibleTo("ARWNI2S.Engine.Scenes")]
+
 [assembly: InternalsVisibleTo("ARWNI2S.Node.Abstractions")]
 [assembly: InternalsVisibleTo("ARWNI2S.Node")]
+
+[assembly: InternalsVisibleTo("ARWNI2S.Framework")]
+[assembly: InternalsVisibleTo("ARWNI2S.Frontline.Framework")]
+[assembly: InternalsVisibleTo("ARWNI2S.Narrator.Framework")]

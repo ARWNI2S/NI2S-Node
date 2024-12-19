@@ -1,6 +1,6 @@
-﻿namespace ARWNI2S.Node.Hosting
+﻿namespace ARWNI2S.Engine.Configuration
 {
-    public static class HostingConfigurationExtensions
+    public static class ConfigurationStringExtensions
     {
         public static bool ParseBool(this string value)
         {

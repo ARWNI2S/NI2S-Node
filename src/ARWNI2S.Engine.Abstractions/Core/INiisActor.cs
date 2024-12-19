@@ -1,6 +1,6 @@
 ﻿namespace ARWNI2S.Engine.Core
 {
-    internal interface INiisActor
+    internal interface INiisActor : INiisObject
     {
     }
 }

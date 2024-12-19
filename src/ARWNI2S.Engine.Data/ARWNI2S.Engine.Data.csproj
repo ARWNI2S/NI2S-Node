@@ -1,12 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
+    <!--<TargetFramework>net9.0</TargetFramework>-->
+    <TargetFrameworks>$(DefaultTargetFrameworks)</TargetFrameworks>
     <RootNamespace>ARWNI2S.Data</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="DataProviders\Interceptors\**" />
     <Compile Remove="Mapping\Builders\Common\**" />
     <Compile Remove="Mapping\Builders\Configuration\**" />
     <Compile Remove="Mapping\Builders\Directory\**" />
@@ -16,7 +16,6 @@
     <Compile Remove="Mapping\Builders\Security\**" />
     <Compile Remove="Mapping\Builders\Session\**" />
     <Compile Remove="Mapping\Builders\Users\**" />
-    <EmbeddedResource Remove="DataProviders\Interceptors\**" />
     <EmbeddedResource Remove="Mapping\Builders\Common\**" />
     <EmbeddedResource Remove="Mapping\Builders\Configuration\**" />
     <EmbeddedResource Remove="Mapping\Builders\Directory\**" />
@@ -26,7 +25,6 @@
     <EmbeddedResource Remove="Mapping\Builders\Security\**" />
     <EmbeddedResource Remove="Mapping\Builders\Session\**" />
     <EmbeddedResource Remove="Mapping\Builders\Users\**" />
-    <None Remove="DataProviders\Interceptors\**" />
     <None Remove="Mapping\Builders\Common\**" />
     <None Remove="Mapping\Builders\Configuration\**" />
     <None Remove="Mapping\Builders\Directory\**" />
@@ -51,6 +49,7 @@
     <PackageReference Include="FluentMigrator.Runner" />
     <PackageReference Include="linq2db" />
     <PackageReference Include="Microsoft.Data.SqlClient" />
+    <PackageReference Include="MiniProfiler.Shared" />
     <PackageReference Include="MySqlConnector" />
     <PackageReference Include="Npgsql" />
     <PackageReference Include="System.Configuration.ConfigurationManager" />
@@ -62,8 +61,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ARWNI2S.Engine.Abstractions\ARWNI2S.Engine.Abstractions.csproj" />
-    <ProjectReference Include="..\ARWNI2S.Engine\ARWNI2S.Engine.csproj" />
+    <ProjectReference Include="$(SourceRoot)src\ARWNI2S.Engine.Abstractions\ARWNI2S.Engine.Abstractions.csproj" />
+    <ProjectReference Include="$(SourceRoot)src\ARWNI2S.Engine\ARWNI2S.Engine.csproj" />
   </ItemGroup>
 
 </Project>

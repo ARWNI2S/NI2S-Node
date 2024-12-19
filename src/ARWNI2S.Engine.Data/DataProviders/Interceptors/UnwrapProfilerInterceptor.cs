@@ -1,9 +1,9 @@
 using LinqToDB;
 using LinqToDB.Interceptors;
-//using StackExchange.Profiling.Data;
+using StackExchange.Profiling.Data;
 using System.Data.Common;
 
-namespace ARWNI2S.Node.Data.DataProviders.Interceptors
+namespace ARWNI2S.Data.DataProviders.Interceptors
 {
     /// <summary>
     /// Represents a class allows MiniProfiler to collect SQL execution timings

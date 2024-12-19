@@ -2,6 +2,7 @@
 using ARWNI2S.Data.Migrations;
 using ARWNI2S.Engine.Infrastructure;
 using ARWNI2S.Engine.Logging;
+using LinqToDB;
 using System.Reflection;
 
 namespace ARWNI2S.Engine.Plugins
