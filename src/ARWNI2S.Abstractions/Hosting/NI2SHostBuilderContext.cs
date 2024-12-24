@@ -13,8 +13,13 @@ namespace ARWNI2S.Node.Hosting
         public INiisHostEnvironment HostingEnvironment { get; set; } = default!;
 
         /// <summary>
-        /// The <see cref="IConfiguration" /> containing the merged configuration of the application and the <see cref="INiisHost" />.
+        /// The <see cref="IConfiguration" /> containing the merged configuration of the engine and the <see cref="INiisHost" />.
         /// </summary>
         public IConfiguration Configuration { get; set; } = default!;
+
+        internal void AddSingleton<T1, T2>()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

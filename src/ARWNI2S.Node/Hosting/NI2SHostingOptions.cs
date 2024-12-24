@@ -1,5 +1,4 @@
-﻿using ARWNI2S.Configuration;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using System.Globalization;
 using System.Reflection;
@@ -15,20 +14,20 @@ namespace ARWNI2S.Node.Hosting
             string GetConfig(string key) => primaryConfiguration[key] ?? fallbackConfiguration?[key];
 
             EngineName = environment?.ApplicationName ?? GetConfig(NI2SHostingDefaults.ApplicationKey) ?? Assembly.GetEntryAssembly()?.GetName().Name ?? string.Empty;
-            StartupAssembly = GetConfig(NI2SHostingDefaults.StartupAssemblyKey);
-            DetailedErrors = GetConfig(NI2SHostingDefaults.DetailedErrorsKey).ParseBool();
-            CaptureStartupErrors = GetConfig(NI2SHostingDefaults.CaptureStartupErrorsKey).ParseBool();
+            //StartupAssembly = GetConfig(NI2SHostingDefaults.StartupAssemblyKey);
+            //DetailedErrors = GetConfig(NI2SHostingDefaults.DetailedErrorsKey).ParseBool();
+            //CaptureStartupErrors = GetConfig(NI2SHostingDefaults.CaptureStartupErrorsKey).ParseBool();
             Environment = environment?.EnvironmentName ?? GetConfig(NI2SHostingDefaults.EnvironmentKey);
-            NI2SRoot = GetConfig(NI2SHostingDefaults.NI2SRootKey);
+            NodeRoot = GetConfig(NI2SHostingDefaults.NodeRootKey);
             ContentRootPath = environment?.ContentRootPath ?? GetConfig(NI2SHostingDefaults.ContentRootKey);
-            PreventHostingStartup = GetConfig(NI2SHostingDefaults.PreventHostingStartupKey).ParseBool();
-            SuppressStatusMessages = GetConfig(NI2SHostingDefaults.SuppressStatusMessagesKey).ParseBool();
-            ServerUrls = GetConfig(NI2SHostingDefaults.ServerUrlsKey);
-            PreferHostingUrls = GetConfig(NI2SHostingDefaults.PreferHostingUrlsKey).ParseBool();
+            //PreventHostingStartup = GetConfig(NI2SHostingDefaults.PreventHostingStartupKey).ParseBool();
+            //SuppressStatusMessages = GetConfig(NI2SHostingDefaults.SuppressStatusMessagesKey).ParseBool();
+            //ServerUrls = GetConfig(NI2SHostingDefaults.ServerUrlsKey);
+            //PreferHostingUrls = GetConfig(NI2SHostingDefaults.PreferHostingUrlsKey).ParseBool();
 
             // Search the primary assembly and configured assemblies.
-            HostingStartupAssemblies = Split(EngineName, GetConfig(NI2SHostingDefaults.HostingStartupAssembliesKey));
-            HostingStartupExcludeAssemblies = Split(GetConfig(NI2SHostingDefaults.HostingStartupExcludeAssembliesKey));
+            //HostingStartupAssemblies = Split(EngineName, GetConfig(NI2SHostingDefaults.HostingStartupAssembliesKey));
+            //HostingStartupExcludeAssemblies = Split(GetConfig(NI2SHostingDefaults.HostingStartupExcludeAssembliesKey));
 
             var timeout = GetConfig(NI2SHostingDefaults.ShutdownTimeoutKey);
             if (!string.IsNullOrEmpty(timeout)
@@ -56,7 +55,7 @@ namespace ARWNI2S.Node.Hosting
 
         public string StartupAssembly { get; }
 
-        public string NI2SRoot { get; }
+        public string NodeRoot { get; }
 
         public string ContentRootPath { get; }
 

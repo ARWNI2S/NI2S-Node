@@ -12,7 +12,7 @@ namespace ARWNI2S.Lifecycle
     /// This type is usually used as the generic parameter in <see cref="ILifecycleParticipant{IActorLifecycle}"/> as
     /// a means of participating in the lifecycle stages of a actor activation.
     /// </remarks>
-    public interface INiisActorLifecycle : ILifecycleObservable
+    public interface IActorLifecycle : ILifecycleObservable
     {
         /// <summary>
         /// Registers a actor transition participant.

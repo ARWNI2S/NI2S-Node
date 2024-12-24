@@ -15,7 +15,7 @@ namespace ARWNI2S.Node.Builder
     public sealed class NI2SNodeBuilder : IHostApplicationBuilder
     {
         private readonly HostApplicationBuilder _hostApplicationBuilder;
-        private readonly ServiceDescriptor _genericNiisNodeServiceDescriptor;
+        private readonly ServiceDescriptor _niisNodeServiceDescriptor;
         private NI2SNode _builtNode;
 
 

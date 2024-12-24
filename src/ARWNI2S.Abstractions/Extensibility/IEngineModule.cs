@@ -1,10 +1,12 @@
 ﻿using ARWNI2S.Engine.Builder;
+using ARWNI2S.Lifecycle;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Orleans;
 
 namespace ARWNI2S.Extensibility
 {
-    public interface IEngineModule //: ILifecycleObserver<EngineLifecycle>
+    public interface IEngineModule : ILifecycleParticipant<IEngineLifecycle>
     {
         /// <summary>
         /// Add and configure any of the engine services

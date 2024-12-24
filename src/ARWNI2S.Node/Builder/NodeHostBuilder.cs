@@ -1,4 +1,5 @@
-﻿using ARWNI2S.Engine.Builder;
+﻿using ARWNI2S.Configuration;
+using ARWNI2S.Engine.Builder;
 using ARWNI2S.Node.Hosting;
 using ARWNI2S.Node.Hosting.Internal;
 using Microsoft.Extensions.Configuration;
@@ -23,9 +24,14 @@ namespace ARWNI2S.Node.Builder
         public ConfigurationManager Configuration => _hostApplicationBuilder.Configuration;
 
         /// <summary>
-        /// Provides information about the web hosting environment an application is running.
+        /// Provides information about the NI2S hosting environment a node engine is running.
         /// </summary>
         public INiisHostEnvironment Environment { get; private set; }
+
+        /// <summary>
+        /// Provides information about the NI2S hosting environment a node engine is running.
+        /// </summary>
+        public NodeSettings Settings { get; private set; }
 
         /// <summary>
         /// A collection of logging providers for the application to compose. This is useful for adding new logging providers.
@@ -42,41 +48,15 @@ namespace ARWNI2S.Node.Builder
         /// </summary>
         public IServiceCollection Services => _hostApplicationBuilder.Services;
 
-        /// <summary>
-        /// An <see cref="INiisHostBuilder"/> for configuring server specific properties, but not building.
-        /// To build after configuration, call <see cref="Build"/>.
-        /// </summary>
-        public ConfigureNodeHostBuilder NI2SHost { get; private set; }
-
-        ///// <summary>
-        ///// An <see cref="IHostBuilder"/> for configuring host specific properties, but not building.
-        ///// To build after configuration, call <see cref="Build"/>.
-        ///// </summary>
-        //public ConfigureHostBuilder Host { get; private set; }
-
         internal NodeHostBuilder(string[] args = null)
         {
             var configuration = new ConfigurationManager();
 
-            configuration.AddEnvironmentVariables(prefix: "NI2S_");
-
             _hostApplicationBuilder = new HostApplicationBuilder(new HostApplicationBuilderSettings
             {
                 Args = args,
-                //ApplicationName = options.ApplicationName,
-                //EnvironmentName = options.EnvironmentName,
-                //ContentRootPath = options.ContentRootPath,
                 Configuration = configuration,
             });
-
-            //// Set NI2SRootPath if necessary
-            //if (options.NI2SRootPath is not null)
-            //{
-            //    Configuration.AddInMemoryCollection(new[]
-            //    {
-            //        new KeyValuePair<string, string>(NI2SHostingDefaults.NI2SRootKey, options.NI2SRootPath),
-            //    });
-            //}
 
             // Run methods to configure web host defaults early to populate services
             var bootstrapHostBuilder = new BootstrapHostBuilder(_hostApplicationBuilder);
@@ -87,11 +67,6 @@ namespace ARWNI2S.Node.Builder
                 niisHostBuilder.Configure(ConfigureEngine);
 
                 InitializeHostSettings(niisHostBuilder);
-            },
-            options =>
-            {
-                // We've already applied "ARWNI2S_" environment variables to hosting config
-                options.SuppressEnvironmentConfiguration = true;
             });
 
             _genericNiisNodeServiceDescriptor = InitializeHosting(bootstrapHostBuilder);
@@ -101,12 +76,12 @@ namespace ARWNI2S.Node.Builder
         {
             //HACK
             niisHostBuilder.UseSetting(NI2SHostingDefaults.ApplicationKey, _hostApplicationBuilder.Environment.ApplicationName ?? "");
-            niisHostBuilder.UseSetting(NI2SHostingDefaults.PreventHostingStartupKey, Configuration[NI2SHostingDefaults.PreventHostingStartupKey]);
-            niisHostBuilder.UseSetting(NI2SHostingDefaults.HostingStartupAssembliesKey, Configuration[NI2SHostingDefaults.HostingStartupAssembliesKey]);
-            niisHostBuilder.UseSetting(NI2SHostingDefaults.HostingStartupExcludeAssembliesKey, Configuration[NI2SHostingDefaults.HostingStartupExcludeAssembliesKey]);
+            //niisHostBuilder.UseSetting(NI2SHostingDefaults.PreventHostingStartupKey, Configuration[NI2SHostingDefaults.PreventHostingStartupKey]);
+            //niisHostBuilder.UseSetting(NI2SHostingDefaults.HostingStartupAssembliesKey, Configuration[NI2SHostingDefaults.HostingStartupAssembliesKey]);
+            //niisHostBuilder.UseSetting(NI2SHostingDefaults.HostingStartupExcludeAssembliesKey, Configuration[NI2SHostingDefaults.HostingStartupExcludeAssembliesKey]);
         }
 
-        [MemberNotNull(nameof(Environment), nameof(Host), nameof(NI2SHost))]
+        [MemberNotNull(nameof(Environment), nameof(Settings)/*, nameof(NI2SHost)*/)]
         private ServiceDescriptor InitializeHosting(BootstrapHostBuilder bootstrapHostBuilder)
         {
             // This applies the config from ConfigureNI2SHostDefaults
@@ -115,13 +90,8 @@ namespace ARWNI2S.Node.Builder
 
             // Grab the NI2SHostBuilderContext from the property bag to use in the ConfigureNodeHostBuilder. Then
             // grab the INiisHostEnvironment from the niisHostContext. This also matches the instance in the IServiceCollection.
-            var niisHostContext = (NI2SHostBuilderContext)bootstrapHostBuilder.Properties[typeof(NI2SHostBuilderContext)];
-            Environment = niisHostContext.HostingEnvironment;
-
-            //Host = new ConfigureHostBuilder(bootstrapHostBuilder.Context, Configuration, Services);
-            NI2SHost = new ConfigureNodeHostBuilder(niisHostContext, Configuration, Services);
-
-            //HACK NI2SSettings = (NI2SSettings)bootstrapHostBuilder.Properties[typeof(NI2SSettings)];
+            Environment = ((NI2SHostBuilderContext)bootstrapHostBuilder.Properties[typeof(NI2SHostBuilderContext)]).HostingEnvironment;
+            Settings = (NodeSettings)bootstrapHostBuilder.Properties[typeof(NodeSettings)];
 
             return genericNI2SHostServiceDescriptor;
         }
@@ -139,7 +109,7 @@ namespace ARWNI2S.Node.Builder
             _hostApplicationBuilder.Services.Add(_genericNiisNodeServiceDescriptor);
             //HACK Host.ApplyServiceProviderFactory(_hostApplicationBuilder);
             _builtNode = new NI2SNode(_hostApplicationBuilder.Build());
-            //HACK EngineContext.Current.ConfigureEngine(_builtNodeEngineHost);
+            //HACK EngineContext.Current.ConfigureEngine(_builtNode);
             return _builtNode;
         }
 

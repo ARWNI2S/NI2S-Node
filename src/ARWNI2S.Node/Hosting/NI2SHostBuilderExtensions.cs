@@ -1,4 +1,5 @@
 ﻿using ARWNI2S.Engine.Builder;
+using ARWNI2S.Node.Assets;
 using ARWNI2S.Node.Builder;
 using ARWNI2S.Node.Hosting.Internal;
 using Microsoft.Extensions.Configuration;
@@ -12,30 +13,24 @@ namespace ARWNI2S.Node.Hosting
         internal static INiisHostBuilder Configure(this INiisHostBuilder hostBuilder, Action<NI2SHostBuilderContext, IEngineBuilder> configureEngine)
         {
             ArgumentNullException.ThrowIfNull(configureEngine, nameof(configureEngine));
-            if (hostBuilder is not NI2SHostBuilder genericBuilder)
-            {
-                throw new NotSupportedException("hostBuilder is not GenericNI2SHostBuilder");
-            }
-            return genericBuilder.ConfigureEngine(configureEngine);
+            if (hostBuilder is NI2SHostBuilder builder)
+                return builder.ConfigureEngine(configureEngine);
+
+            throw new NotSupportedException("hostBuilder is not NI2SHostBuilder");
         }
 
         public static INiisHostBuilder UseDefaultServiceProvider(this INiisHostBuilder hostBuilder, Action<ServiceProviderOptions> configure)
         {
-            Action<ServiceProviderOptions> configure2 = configure;
-            return hostBuilder.UseDefaultServiceProvider(delegate (NI2SHostBuilderContext context, ServiceProviderOptions options)
-            {
-                configure2(options);
-            });
+            return hostBuilder.UseDefaultServiceProvider((NI2SHostBuilderContext context, ServiceProviderOptions options) => configure(options));
         }
 
-        public static INiisHostBuilder UseDefaultServiceProvider(this INiisHostBuilder hostBuilder, Action<NI2SHostBuilderContext, ServiceProviderOptions> configure)
+        internal static INiisHostBuilder UseDefaultServiceProvider(this INiisHostBuilder hostBuilder, Action<NI2SHostBuilderContext, ServiceProviderOptions> configure)
         {
             ArgumentNullException.ThrowIfNull(configure, nameof(configure));
-            if (hostBuilder is not NodeHostBuilderBase builderBase)
-            {
-                throw new NotSupportedException("hostBuilder is not GenericNI2SHostBuilder");
-            }
-            return builderBase.UseDefaultServiceProvider(configure);
+            if (hostBuilder is NI2SHostBuilder builder)
+                return builder.UseDefaultServiceProvider(configure);
+
+            throw new NotSupportedException("hostBuilder is not NI2SHostBuilder");
         }
 
         public static INiisHostBuilder ConfigureAppConfiguration(this INiisHostBuilder hostBuilder, Action<IConfigurationBuilder> configureDelegate)
@@ -70,12 +65,11 @@ namespace ARWNI2S.Node.Hosting
 
         public static INiisHostBuilder UseLocalAssets(this INiisHostBuilder builder)
         {
-            builder.ConfigureNI2SConfiguration(delegate (NI2SHostBuilderContext context, IConfigurationBuilder configBuilder)
+            builder.ConfigureNI2SConfiguration(delegate (NI2SHostBuilderContext context, IConfigurationBuilder configBuilder) //2
             {
-                //HACK
-                //LocalAssetsLoader.UseLocalAssets(context.HostingEnvironment, context.Configuration);
+                NodeAssetsLoader.UseLocalAssets(context.HostingEnvironment, context.Configuration);
             });
             return builder;
-        }
+        }        
     }
 }

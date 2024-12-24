@@ -1,6 +1,6 @@
 using Orleans;
 
-namespace ARWNI2S.Engine.Lifecycle
+namespace ARWNI2S.Lifecycle
 {
     /// <summary>
     /// The observable silo lifecycle.

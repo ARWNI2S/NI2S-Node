@@ -1,7 +1,7 @@
 ﻿using ARWNI2S.Cluster;
 using ARWNI2S.Engine;
 using ARWNI2S.Engine.Builder;
-using ARWNI2S.Engine.Cluster;
+using ARWNI2S.Engine.Cluster.Builder;
 using ARWNI2S.Extensibility;
 using ARWNI2S.Node.Builder;
 using ARWNI2S.Node.Hosting;
@@ -141,50 +141,6 @@ namespace ARWNI2S.Node
         /// <returns>The <see cref="NodeHostBuilder"/>.</returns>
         public static NodeHostBuilder CreateBuilder(string[] args) =>
             new(args);
-
-        //internal static void ConfigureNI2SDefaults(INiisHostBuilder builder)
-        //{
-        //    builder.ConfigureNI2SConfiguration((ctx, cb) =>
-        //    {
-        //        if (ctx.HostingEnvironment.IsDevelopment())
-        //        {
-        //            LocalAssetsLoader.UseLocalAssets(ctx.HostingEnvironment, ctx.Configuration);
-        //        }
-        //    });
-
-        //    ConfigureNI2SDefaultsWorker(
-        //        builder.UseCluster(ConfigureCluster),
-        //        (services, config) =>
-        //        {
-        //            //services.AddRouting()
-        //        });
-
-        //    //builder
-        //    //    .UseIIS()
-        //    //    .UseIISIntegration();
-        //}
-
-        //private static void ConfigureCluster(NI2SHostBuilderContext builderContext, ClusterServerOptions options)
-        //{
-        //    //options.Configure(builderContext.Configuration.GetSection("Kestrel"), reloadOnChange: true);
-        //}
-
-        //private static void ConfigureNI2SDefaultsWorker(INiisHostBuilder builder, Action<IServiceCollection, IConfiguration> configureCluster)
-        //{
-        //    builder.ConfigureServices((hostingContext, services) =>
-        //    {
-
-
-        //        if (configureCluster == null)
-        //        {
-        //            //services.AddRoutingCore()
-        //        }
-        //        else
-        //        {
-        //            configureCluster(services, hostingContext.Configuration);
-        //        }
-        //    });
-        //}
 
         #endregion
 

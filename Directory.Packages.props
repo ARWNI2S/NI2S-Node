@@ -13,6 +13,7 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- System packages -->
+    <PackageVersion Include="Microsoft.Extensions.Configuration.Binder" Version="9.0.0" />
     <PackageVersion Include="Microsoft.Orleans.Core" Version="9.0.1" />
     <PackageVersion Include="System.Configuration.ConfigurationManager" Version="$(MicrosoftPackageLatestVersion)" />
     <PackageVersion Include="System.IO.FileSystem.AccessControl" Version="5.0.0" />
@@ -25,8 +26,8 @@
     <PackageVersion Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="9.0.0" />
     <PackageVersion Include="Microsoft.Extensions.Configuration" Version="$(MicrosoftPackageLatestVersion)" />
     <PackageVersion Include="Microsoft.Extensions.Configuration.UserSecrets" Version="9.0.0" />
-    <PackageVersion Include="Microsoft.Extensions.FileProviders.Composite" Version="$(MicrosoftPackageLatestVersion)" />
-    <PackageVersion Include="Microsoft.Extensions.FileProviders.Physical" Version="$(MicrosoftPackageLatestVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.FileProviders.Composite" Version="9.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.FileProviders.Physical" Version="9.0.0" />
     <PackageVersion Include="Microsoft.Extensions.Hosting" Version="9.0.0" />
     <PackageVersion Include="Microsoft.Extensions.Http" Version="$(MicrosoftPackageLatestVersion)" />
     <!-- Abstractions packages -->

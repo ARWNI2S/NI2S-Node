@@ -1,4 +1,6 @@
-namespace ARWNI2S.Node
+using ARWNI2S.Node;
+
+namespace EmptyNode.Docker
 {
     public class Program
     {
