@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!--<TargetFramework>net9.0</TargetFramework>-->
+    <TargetFrameworks>$(DefaultTargetFrameworks)</TargetFrameworks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Runtime\NodeAddress.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Hosting" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(SourceRoot)src\ARWNI2S.Engine.Abstractions\ARWNI2S.Engine.Abstractions.csproj" />
+    <ProjectReference Include="$(SourceRoot)src\ARWNI2S.Engine\ARWNI2S.Engine.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Runtime\" />
+  </ItemGroup>
+
+</Project>

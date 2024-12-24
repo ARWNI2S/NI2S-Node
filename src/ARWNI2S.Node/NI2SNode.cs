@@ -1,7 +1,8 @@
-﻿using ARWNI2S.Engine;
-using ARWNI2S.Engine.Clustering;
-using ARWNI2S.Engine.Extensibility;
-using ARWNI2S.Engine.Hosting;
+﻿using ARWNI2S.Cluster;
+using ARWNI2S.Engine;
+using ARWNI2S.Engine.Builder;
+using ARWNI2S.Engine.Cluster;
+using ARWNI2S.Extensibility;
 using ARWNI2S.Node.Builder;
 using ARWNI2S.Node.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -48,7 +49,7 @@ namespace ARWNI2S.Node
         #endregion
 
         internal EngineBuilder EngineBuilder { get; }
-        internal IModuleCollection NodeModules => _host.Services.GetRequiredService<IClusterNode>().Modules;
+        internal IModuleCollection NodeModules => _host.Services.GetRequiredService<INiisNode>().Modules;
         internal IDictionary<string, object> Properties => EngineBuilder.Properties;
 
         internal NI2SNode(IHost host)
@@ -124,30 +125,22 @@ namespace ARWNI2S.Node
         /// <param name="args">The command line arguments.</param>
         /// <returns>The <see cref="NI2SNode"/>.</returns>
         public static NI2SNode Create(string[] args = null) =>
-            new NI2SNodeBuilder(new() { Args = args }).Build();
+            new NodeHostBuilder(args).Build();
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="NI2SNodeBuilder"/> class with preconfigured defaults.
+        /// Initializes a new instance of the <see cref="NodeHostBuilder"/> class with preconfigured defaults.
         /// </summary>
-        /// <returns>The <see cref="NI2SNodeBuilder"/>.</returns>
-        public static NI2SNodeBuilder CreateBuilder() =>
-            new(new());
+        /// <returns>The <see cref="NodeHostBuilder"/>.</returns>
+        public static NodeHostBuilder CreateBuilder() =>
+            new();
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="NI2SNodeBuilder"/> class with preconfigured defaults.
+        /// Initializes a new instance of the <see cref="NodeHostBuilder"/> class with preconfigured defaults.
         /// </summary>
         /// <param name="args">The command line arguments.</param>
-        /// <returns>The <see cref="NI2SNodeBuilder"/>.</returns>
-        public static NI2SNodeBuilder CreateBuilder(string[] args) =>
-            new(new() { Args = args });
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="NI2SNodeBuilder"/> class with preconfigured defaults.
-        /// </summary>
-        /// <param name="options">The <see cref="NI2SNodeOptions"/> to configure the <see cref="NI2SNodeBuilder"/>.</param>
-        /// <returns>The <see cref="NI2SNodeBuilder"/>.</returns>
-        public static NI2SNodeBuilder CreateBuilder(NI2SNodeOptions options) =>
-            new(options);
+        /// <returns>The <see cref="NodeHostBuilder"/>.</returns>
+        public static NodeHostBuilder CreateBuilder(string[] args) =>
+            new(args);
 
         //internal static void ConfigureNI2SDefaults(INiisHostBuilder builder)
         //{

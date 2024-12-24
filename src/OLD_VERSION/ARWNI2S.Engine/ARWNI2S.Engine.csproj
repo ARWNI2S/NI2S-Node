@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!--<TargetFramework>net9.0</TargetFramework>-->
+    <TargetFrameworks>$(DefaultTargetFrameworks)</TargetFrameworks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Builder\**" />
+    <EmbeddedResource Remove="Builder\**" />
+    <None Remove="Builder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Runtime\UpdateFunction.Pool.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(SourceRoot)src\ARWNI2S.Engine.Abstractions\ARWNI2S.Engine.Abstractions.csproj" />
+  </ItemGroup>
+
+</Project>

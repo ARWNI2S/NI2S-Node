@@ -1,0 +1,49 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!--<TargetFramework>net9.0</TargetFramework>-->
+    <TargetFrameworks>$(DefaultTargetFrameworks)</TargetFrameworks>
+    <RootNamespace>ARWNI2S.Engine</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Engine\**" />
+    <Compile Remove="Infrastructure\**" />
+    <EmbeddedResource Remove="Engine\**" />
+    <EmbeddedResource Remove="Infrastructure\**" />
+    <None Remove="Engine\**" />
+    <None Remove="Infrastructure\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Caching\ClearCacheTask.cs" />
+    <Compile Remove="CommonStartup.cs" />
+    <Compile Remove="Configuration\EngineConfig.cs" />
+    <Compile Remove="Configuration\HostingConfig.cs" />
+    <Compile Remove="Configuration\PluginConfig.cs" />
+    <Compile Remove="Logging\Caching\ActivityLogCacheEventConsumer.cs" />
+    <Compile Remove="Logging\Caching\ActivityLogTypeCacheEventConsumer.cs" />
+    <Compile Remove="Logging\ClearLogTask.cs" />
+    <Compile Remove="Logging\Data\ActivityLog.cs" />
+    <Compile Remove="Logging\Data\ActivityLogType.cs" />
+    <Compile Remove="Logging\IUserActivityService.cs" />
+    <Compile Remove="Logging\UserActivityService.cs" />
+    <Compile Remove="Plugins\IUploadService.cs" />
+    <Compile Remove="Plugins\UploadService.cs" />
+    <Compile Remove="Users\DeleteGuestsTask.cs" />
+    <Compile Remove="Users\UserRegistrationService.cs" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="Azure.Security.KeyVault.Secrets" />
+    <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" />
+    <PackageReference Include="StackExchange.Redis" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(SourceRoot)src\ARWNI2S.Engine.Data\ARWNI2S.Engine.Data.csproj" />
+    <ProjectReference Include="$(SourceRoot)src\ARWNI2S.Engine\ARWNI2S.Engine.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>$(DefaultTargetFrameworks)</TargetFrameworks>
+    <IsFrameworkPart>false</IsFrameworkPart>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="engine\" />
+    <Folder Include="Infrastructure\" />
+    <Folder Include="Node_Data\" />
+    <Folder Include="plugins\" />
+    <Folder Include="root\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ARWNI2S.Node\ARWNI2S.Node.csproj" />
+  </ItemGroup>
+
+</Project>

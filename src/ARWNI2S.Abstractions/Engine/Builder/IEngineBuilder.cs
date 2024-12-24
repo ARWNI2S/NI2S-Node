@@ -1,16 +1,14 @@
-﻿using ARWNI2S.Engine.Features;
+﻿using ARWNI2S.Extensibility;
 
 namespace ARWNI2S.Engine.Builder
 {
     public interface IEngineBuilder
     {
         IServiceProvider EngineServices { get; set; }
+        IModuleCollection NodeModules { get; }
         IDictionary<string, object> Properties { get; }
-        IFeatureCollection NodeFeatures { get; }
 
         INiisEngine Build();
         IEngineBuilder New();
-
-        IEngineBuilder Use(Func<UpdateDelegate, UpdateDelegate> middleware);
     }
 }

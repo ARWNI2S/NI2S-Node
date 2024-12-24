@@ -1,25 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <!--<TargetFramework>net9.0</TargetFramework>-->
     <TargetFrameworks>$(DefaultTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Runtime\NodeAddress.cs" />
+    <Compile Remove="NI2SNodeOptions.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Hosting" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="$(SourceRoot)src\ARWNI2S.Engine.Abstractions\ARWNI2S.Engine.Abstractions.csproj" />
-    <ProjectReference Include="$(SourceRoot)src\ARWNI2S.Engine\ARWNI2S.Engine.csproj" />
+    <ProjectReference Include="..\ARWNI2S.Node.Runtime\ARWNI2S.Node.Runtime.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Runtime\" />
-  </ItemGroup>
-
 </Project>

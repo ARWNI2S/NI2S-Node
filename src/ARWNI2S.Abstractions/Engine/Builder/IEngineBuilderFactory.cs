@@ -1,9 +1,9 @@
-﻿using ARWNI2S.Engine.Features;
+﻿using ARWNI2S.Extensibility;
 
 namespace ARWNI2S.Engine.Builder
 {
     public interface IEngineBuilderFactory
     {
-        IEngineBuilder CreateBuilder(IFeatureCollection features);
+        IEngineBuilder CreateBuilder(IModuleCollection modules);
     }
 }

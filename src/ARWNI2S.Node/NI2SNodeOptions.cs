@@ -1,8 +1,5 @@
 ﻿namespace ARWNI2S.Node
 {
-    /// <summary>
-    /// Options for configuring the behavior for <see cref="NI2SNode.CreateBuilder(NI2SNodeOptions)"/>.
-    /// </summary>
     public class NI2SNodeOptions
     {
         /// <summary>
