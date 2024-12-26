@@ -1,0 +1,4 @@
+﻿[*.{cs,vb}]
+
+# IDE0130: El espacio de nombres no coincide con la estructura de carpetas
+dotnet_diagnostic.IDE0130.severity = silent

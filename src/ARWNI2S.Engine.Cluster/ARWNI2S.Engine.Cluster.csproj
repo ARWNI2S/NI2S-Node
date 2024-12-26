@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>$(DefaultTargetFrameworks)</TargetFrameworks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Lifecycle\TransitionContext.cs" />
+    <Compile Remove="Logging\ClusterTrace.Http3.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NetMQ" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(SourceRoot)src\ARWNI2S.Engine.Core\ARWNI2S.Engine.Core.csproj" />
+  </ItemGroup>
+
+</Project>
