@@ -5,9 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Lifecycle\ClusterClientLifecycleExtensions.cs" />
-    <Compile Remove="Lifecycle\ClusterLifecycleSubject.cs" />
     <Compile Remove="Lifecycle\TransitionContext.cs" />
+    <Compile Remove="Logging\ClusterTrace.Http3.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NetMQ" />
   </ItemGroup>
 
   <ItemGroup>

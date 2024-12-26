@@ -1,4 +1,4 @@
-﻿using ARWNI2S.Cluster;
+﻿using ARWNI2S.Engine.Cluster.Diagnostics;
 using ARWNI2S.Hosting;
 using ARWNI2S.Hosting.Builder;
 using Microsoft.Extensions.DependencyInjection;
@@ -78,10 +78,10 @@ namespace ARWNI2S.Engine.Cluster.Hosting
                 //// Don't override an already-configured transport
                 //services.TryAddSingleton<IConnectionListenerFactory, ClusterTransportFactory>();
 
-                //services.AddTransient<IConfigureOptions<ClusterNodeOptions>, ClusterServerOptionsSetup>();
+                //services.AddTransient<IConfigureOptions<ClusterNodeOptions>, ClusterNodeOptionsSetup>();
                 //services.AddSingleton<INiisConfigurationService, NI2SConfigurationService>();
-                services.AddSingleton<INiisNode, ClusterNodeImpl>();
-                //services.AddSingleton<ClusterMetrics>();
+                services.AddSingleton<IClusterNode, ClusterNodeImpl>();
+                services.AddSingleton<ClusterNodeMetrics>();
             });
 
             if (OperatingSystem.IsWindows())
@@ -125,7 +125,7 @@ namespace ARWNI2S.Engine.Cluster.Hosting
         {
             return hostBuilder.ConfigureServices(services =>
             {
-                //services.TryAddEnumerable(ServiceDescriptor.Transient<IConfigureOptions<ClusterNodeOptions>, ClusterServerOptionsSetup>());
+                //services.TryAddEnumerable(ServiceDescriptor.Transient<IConfigureOptions<ClusterNodeOptions>, ClusterNodeOptionsSetup>());
                 services.Configure(options);
             });
         }
@@ -161,7 +161,7 @@ namespace ARWNI2S.Engine.Cluster.Hosting
 
             return hostBuilder.ConfigureServices((context, services) =>//3.2
             {
-                //services.TryAddEnumerable(ServiceDescriptor.Transient<IConfigureOptions<ClusterNodeOptions>, ClusterServerOptionsSetup>());
+                //services.TryAddEnumerable(ServiceDescriptor.Transient<IConfigureOptions<ClusterNodeOptions>, ClusterNodeOptionsSetup>());
                 services.Configure<ClusterNodeOptions>(options =>
                 {
                     configureOptions(context, options);

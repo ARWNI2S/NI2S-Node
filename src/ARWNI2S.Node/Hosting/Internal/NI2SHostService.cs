@@ -1,4 +1,9 @@
-﻿using ARWNI2S.Hosting;
+﻿using ARWNI2S.Engine;
+using ARWNI2S.Engine.Builder;
+using ARWNI2S.Engine.Cluster;
+using ARWNI2S.Engine.Diagnostics;
+using ARWNI2S.Hosting;
+using ARWNI2S.Node.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -44,50 +49,50 @@ namespace ARWNI2S.Node.Hosting.Internal
 
 
         public NI2SHostService(IOptions<NI2SHostServiceOptions> options,
-                                     //IClusterNode localNode,
+                                     IClusterNode localNode,
                                      ILoggerFactory loggerFactory,
                                      DiagnosticListener diagnosticListener,
                                      ActivitySource activitySource,
                                      DistributedContextPropagator propagator,
-                                     //INiisContextFactory niisContextFactory,
-                                     //IEngineBuilderFactory engineBuilderFactory,
+                                     INiisContextFactory niisContextFactory,
+                                     IEngineBuilderFactory engineBuilderFactory,
                                      IConfiguration configuration,
-                                     INiisHostEnvironment hostingEnvironment//,
-                                     //HostingMetrics hostingMetrics
+                                     INiisHostEnvironment hostingEnvironment,
+                                     HostingMetrics hostingMetrics
             )
         {
             Options = options.Value;
-            //LocalNode = localNode;
+            LocalNode = localNode;
             Logger = loggerFactory.CreateLogger("ARWNI2S.Hosting.Diagnostics");
             LifetimeLogger = loggerFactory.CreateLogger("Microsoft.Hosting.Lifetime");
             DiagnosticListener = diagnosticListener;
             ActivitySource = activitySource;
             Propagator = propagator;
-            //ContextFactory = niisContextFactory;
-            //EngineBuilderFactory = engineBuilderFactory;
+            ContextFactory = niisContextFactory;
+            EngineBuilderFactory = engineBuilderFactory;
             Configuration = configuration;
             HostingEnvironment = hostingEnvironment;
-            //HostingMetrics = hostingMetrics;
+            HostingMetrics = hostingMetrics;
         }
 
         public NI2SHostServiceOptions Options { get; }
-        //public IClusterNode LocalNode { get; }
+        public IClusterNode LocalNode { get; }
         public ILogger Logger { get; }
         // Only for high level lifetime events
         public ILogger LifetimeLogger { get; }
         public DiagnosticListener DiagnosticListener { get; }
         public ActivitySource ActivitySource { get; }
         public DistributedContextPropagator Propagator { get; }
-        //public INiisContextFactory ContextFactory { get; }
-        //public IEngineBuilderFactory EngineBuilderFactory { get; }
+        public INiisContextFactory ContextFactory { get; }
+        public IEngineBuilderFactory EngineBuilderFactory { get; }
 
         public IConfiguration Configuration { get; }
         public INiisHostEnvironment HostingEnvironment { get; }
+        public HostingMetrics HostingMetrics { get; }
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {
-            await Task.CompletedTask;
-            //HostingEventSource.Log.HostStart();
+            HostingEventSource.Log.HostStart();
 
             //var serverAddressesFeature = LocalNode.Features.Get<ILocalNodeAddressesFeature>();
             //var addresses = serverAddressesFeature?.Addresses;
@@ -145,27 +150,27 @@ namespace ARWNI2S.Node.Hosting.Internal
             //    }
             //}
 
-            //INiisEngine engine = null;
+            INiisEngine engine = null;
 
             try
             {
-                //var configure = Options.ConfigureEngine ?? throw new InvalidOperationException($"No application configured. Please specify an application via INiisHostBuilder.UseStartup, INiisHostBuilder.Configure.");
+                var configure = Options.ConfigureEngine ?? throw new InvalidOperationException($"No application configured. Please specify an application via INiisHostBuilder.UseStartup, INiisHostBuilder.Configure.");
 
-                //var builder = EngineBuilderFactory.CreateBuilder(LocalNode.Modules);
+                var builder = EngineBuilderFactory.CreateBuilder(LocalNode.Modules);
 
                 //foreach (var filter in Enumerable.Reverse(StartupFilters))
                 //{
                 //    configure = filter.Configure(configure);
                 //}
 
-                //configure(builder);
+                configure(builder);
 
-                //// Build the request pipeline
-                //engine = builder.Build();
+                // Build the engine pipeline
+                engine = builder.Build();
             }
-            catch (Exception /*ex*/)
+            catch (Exception ex)
             {
-                //Logger.ApplicationError(ex);
+                Logger.EngineError(ex);
 
                 //if (!Options.HostingOptions.CaptureStartupErrors)
                 //{
@@ -177,10 +182,10 @@ namespace ARWNI2S.Node.Hosting.Internal
                 //engine = ErrorPageBuilder.BuildErrorPageApplication(HostingEnvironment.ContentRootFileProvider, Logger, showDetailedErrors, ex);
             }
 
-            //var ni2sEngine = new NodeEngine(engine, Logger, DiagnosticListener, ActivitySource, Propagator, ContextFactory, HostingEventSource.Log, HostingMetrics);
+            var engineHost = new EngineHost(engine, Logger, DiagnosticListener, ActivitySource, Propagator, ContextFactory, HostingEventSource.Log, HostingMetrics);
 
-            //await LocalNode.StartAsync(ni2sEngine, cancellationToken);
-            //HostingEventSource.Log.NodeReady();
+            await LocalNode.StartAsync(engineHost, cancellationToken);
+            HostingEventSource.Log.NodeReady();
 
             //if (addresses != null)
             //{
@@ -205,6 +210,7 @@ namespace ARWNI2S.Node.Hosting.Internal
             //        //Logger.HostingStartupAssemblyError(exception);
             //    }
             //}
+            await Task.CompletedTask;
         }
 
         public async Task StopAsync(CancellationToken cancellationToken)

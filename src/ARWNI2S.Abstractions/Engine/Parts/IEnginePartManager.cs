@@ -4,7 +4,7 @@ namespace ARWNI2S.Engine.Parts
 {
     public interface IEnginePartManager
     {
-        IList<IEngineModuleProvider> ModuleProviders { get; }
+        IList<IEngineServiceProvider> ServiceProviders { get; }
 
         IList<EnginePart> EngineParts { get; }
 

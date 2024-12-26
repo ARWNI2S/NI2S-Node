@@ -1,4 +1,7 @@
-﻿using ARWNI2S.Hosting.Builder;
+﻿using ARWNI2S.Engine.Extensibility;
+using ARWNI2S.Extensibility;
+using ARWNI2S.Hosting.Builder;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace ARWNI2S.Engine.Hosting
 {
@@ -8,7 +11,7 @@ namespace ARWNI2S.Engine.Hosting
         {
             builder.ConfigureServices((hostingContext, services) => //2
             {
-
+                services.AddSingleton<IEngineModuleManager, NI2SModuleManager>();
 
             });
 

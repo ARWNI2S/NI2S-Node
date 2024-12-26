@@ -38,6 +38,5 @@ namespace ARWNI2S.Engine.Configuration
         /// Gets or sets a value that indicates whether to use MiniProfiler services
         /// </summary>
         public bool MiniProfilerEnabled { get; private set; } = false;
-
     }
 }

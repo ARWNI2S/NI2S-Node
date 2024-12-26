@@ -1,4 +1,5 @@
 ﻿using ARWNI2S.Engine.Core.Builder;
+using ARWNI2S.Engine.Extensibility;
 using ARWNI2S.Engine.Hosting;
 using ARWNI2S.Engine.Parts;
 using ARWNI2S.Hosting;
@@ -16,17 +17,17 @@ namespace ARWNI2S.Engine.Core
             INiisHostEnvironment serviceFromCollection = GetServiceFromCollection<INiisHostEnvironment>(services);
             EnginePartManager applicationPartManager = GetEnginePartManager(services, serviceFromCollection);
             services.TryAddSingleton(applicationPartManager);
-            ConfigureDefaultModuleProviders(applicationPartManager);
+            ConfigureDefaultProviders(applicationPartManager);
             ConfigureDefaultServices(services);
             AddNI2SCoreServices(services);
             return new NI2SCoreBuilder(services, applicationPartManager);
         }
 
-        private static void ConfigureDefaultModuleProviders(EnginePartManager manager)
+        private static void ConfigureDefaultProviders(EnginePartManager manager)
         {
-            if (!manager.ModuleProviders.OfType<NI2SModuleProvider>().Any())
+            if (!manager.ServiceProviders.OfType<EntityServiceProvider>().Any())
             {
-                manager.ModuleProviders.Add(new NI2SModuleProvider());
+                manager.ServiceProviders.Add(new EntityServiceProvider());
             }
         }
 

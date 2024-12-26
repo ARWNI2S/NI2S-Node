@@ -36,7 +36,7 @@ namespace ARWNI2S.Engine.Builder
         /// <summary>
         /// Initializes a new instance of <see cref="ModuleCollection"/> with the specified defaults.
         /// </summary>
-        /// <param name="defaults">The feature defaults.</param>
+        /// <param name="defaults">The module defaults.</param>
         public ModuleCollection(IModuleCollection defaults)
         {
             _defaults = defaults;
@@ -100,7 +100,7 @@ namespace ARWNI2S.Engine.Builder
 
             if (_defaults != null)
             {
-                // Don't return features masked by the wrapper.
+                // Don't return modules masked by the wrapper.
                 foreach (var pair in _modules == null ? _defaults : _defaults.Except(_modules, ModuleKeyComparer))
                 {
                     yield return pair;
@@ -113,14 +113,14 @@ namespace ARWNI2S.Engine.Builder
         {
             if (typeof(TModule).IsValueType)
             {
-                var feature = this[typeof(TModule)];
-                if (feature is null && Nullable.GetUnderlyingType(typeof(TModule)) is null)
+                var module = this[typeof(TModule)];
+                if (module is null && Nullable.GetUnderlyingType(typeof(TModule)) is null)
                 {
                     throw new InvalidOperationException(
-                        $"{typeof(TModule).FullName} does not exist in the feature collection " +
-                        $"and because it is a struct the method can't return null. Use 'featureCollection[typeof({typeof(TModule).FullName})] is not null' to check if the feature exists.");
+                        $"{typeof(TModule).FullName} does not exist in the module collection " +
+                        $"and because it is a struct the method can't return null. Use 'moduleCollection[typeof({typeof(TModule).FullName})] is not null' to check if the module exists.");
                 }
-                return (TModule)feature;
+                return (TModule)module;
             }
             return (TModule)this[typeof(TModule)];
         }

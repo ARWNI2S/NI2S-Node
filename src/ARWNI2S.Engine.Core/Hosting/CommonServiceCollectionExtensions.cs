@@ -1,6 +1,7 @@
 ﻿using ARWNI2S.Configuration;
 using ARWNI2S.Engine.Caching;
 using ARWNI2S.Engine.Configuration;
+using ARWNI2S.Engine.Environment;
 using ARWNI2S.Environment;
 using ARWNI2S.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -42,13 +43,13 @@ namespace ARWNI2S.Engine.Hosting
 
             if (nodeSettings == null)
             {
-                nodeSettings = NodeSettingsHelper.SaveNodeSettings(configurations, NI2SFileProvider.Default, false);
+                nodeSettings = NI2SSettingsHelper.SaveNodeSettings(configurations, NI2SFileProvider.Default, false);
                 services.AddSingleton(nodeSettings);
             }
             else
             {
                 var needToUpdate = configurations.Any(conf => !nodeSettings.Configuration.ContainsKey(conf.Name));
-                NodeSettingsHelper.SaveNodeSettings(configurations, NI2SFileProvider.Default, needToUpdate);
+                NI2SSettingsHelper.SaveNodeSettings(configurations, NI2SFileProvider.Default, needToUpdate);
             }
 
             return nodeSettings;

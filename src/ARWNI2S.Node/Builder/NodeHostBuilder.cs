@@ -1,6 +1,7 @@
 ﻿using ARWNI2S.Configuration;
-using ARWNI2S.Engine;
 using ARWNI2S.Engine.Builder;
+using ARWNI2S.Environment;
+using ARWNI2S.Extensibility;
 using ARWNI2S.Hosting;
 using ARWNI2S.Hosting.Builder;
 using ARWNI2S.Node.Hosting;
@@ -122,8 +123,6 @@ namespace ARWNI2S.Node.Builder
             _hostApplicationBuilder.Services.Add(_genericNiisNodeServiceDescriptor);
             Host.ApplyServiceProviderFactory(_hostApplicationBuilder);
             _builtNode = new NI2SNode(_hostApplicationBuilder.Build());
-            //HACK
-            //EngineContext.Current.ConfigureEngine(_builtNode);
             return _builtNode;
         }
 
@@ -134,98 +133,115 @@ namespace ARWNI2S.Node.Builder
         {
             Debug.Assert(_builtNode is not null);
 
-            context.EngineContext.InitializeContext(engine);
+            // UseRouting called before WebApplication such as in a StartupFilter
+            // lets remove the property and reset it at the end so we don't mess with the routes in the filter
+            if (engine.Properties.TryGetValue(NI2SHostingDefaults.EngineBuilderKey, out var priorEngineBuilder))
+            {
+                engine.Properties.Remove(NI2SHostingDefaults.EngineBuilderKey);
+            }
 
-            //// UseRouting called before WebApplication such as in a StartupFilter
-            //// lets remove the property and reset it at the end so we don't mess with the routes in the filter
-            //if (app.Properties.TryGetValue(EndpointRouteBuilderKey, out var priorRouteBuilder))
+            if (allowDeveloperExceptionPage && context.HostingEnvironment.IsDevelopment())
+            {
+                //TODO: enable debugging here
+                //engine.UseDeveloperExceptionPage();
+            }
+
+            engine.Properties.Add(NI2SHostingDefaults.GlobalEngineBuilderKey, _builtNode);
+
+            //context.EngineContext.InitializeContext(engine);
+            context.EngineContext.InitializeContext(_builtNode);
+
+            //find startup configurations provided by other assemblies
+            var typeFinder = Singleton<ITypeFinder>.Instance;
+            var startupConfigurations = typeFinder.FindClassesOfType<IConfigureEngine>();
+
+            //create and sort instances of startup configurations
+            var instances = startupConfigurations
+                .Select(startup => (IConfigureEngine)Activator.CreateInstance(startup))
+                .Where(startup => startup != null)
+                .OrderBy(startup => startup.Order);
+
+            //configure request pipeline
+            foreach (var instance in instances)
+                instance.ConfigureEngine(_builtNode);
+
+            //Setup node engine startup
+            //if (_builtNode.NodeModules.Count() > 0)
             //{
-            //    app.Properties.Remove(EndpointRouteBuilderKey);
-            //}
-
-            //if (allowDeveloperExceptionPage && context.HostingEnvironment.IsDevelopment())
-            //{
-            //    app.UseDeveloperExceptionPage();
-            //}
-
-            //// Wrap the entire destination pipeline in UseRouting() and UseEndpoints(), essentially:
-            //// destination.UseRouting()
-            //// destination.Run(source)
-            //// destination.UseEndpoints()
-
-            //// Set the route builder so that UseRouting will use the WebApplication as the IClusterNodeBuilder for route matching
-            //app.Properties.Add(WebApplication.GlobalEndpointRouteBuilderKey, _builtApplication);
-
-            //// Only call UseRouting() if there are endpoints configured and UseRouting() wasn't called on the global route builder already
-            //if (_builtApplication.DataSources.Count > 0)
-            //{
-            //    // If this is set, someone called UseRouting() when a global route builder was already set
-            //    if (!_builtApplication.Properties.TryGetValue(EndpointRouteBuilderKey, out var localRouteBuilder))
+            //    if (!_builtNode.Properties.TryGetValue(NI2SHostingDefaults.EngineBuilderKey, out var localEngineBuilder))
             //    {
-            //        app.UseRouting();
-            //        // Middleware the needs to re-route will use this property to call UseRouting()
-            //        _builtApplication.Properties[UseRoutingKey] = app.Properties[UseRoutingKey];
+            //        engine.UseRelayer();
+            //        _builtNode.Properties[NI2SHostingDefaults.UseRelayerKey] = engine.Properties[NI2SHostingDefaults.UseRelayerKey];
             //    }
             //    else
             //    {
-            //        // UseEndpoints will be looking for the RouteBuilder so make sure it's set
-            //        app.Properties[EndpointRouteBuilderKey] = localRouteBuilder;
+            //        engine.Properties[NI2SHostingDefaults.EngineBuilderKey] = localEngineBuilder;
             //    }
             //}
 
             //// Process authorization and authentication middlewares independently to avoid
             //// registering middlewares for services that do not exist
-            //var serviceProviderIsService = _builtApplication.Services.GetService<IServiceProviderIsService>();
+            //var serviceProviderIsService = _builtNode.Services.GetService<IServiceProviderIsService>();
             //if (serviceProviderIsService?.IsService(typeof(IAuthenticationSchemeProvider)) is true)
             //{
             //    // Don't add more than one instance of the middleware
-            //    if (!_builtApplication.Properties.ContainsKey(AuthenticationMiddlewareSetKey))
+            //    if (!_builtNode.Properties.ContainsKey(AuthenticationMiddlewareSetKey))
             //    {
             //        // The Use invocations will set the property on the outer pipeline,
             //        // but we want to set it on the inner pipeline as well.
-            //        _builtApplication.Properties[AuthenticationMiddlewareSetKey] = true;
-            //        app.UseAuthentication();
+            //        _builtNode.Properties[AuthenticationMiddlewareSetKey] = true;
+            //        engine.UseAuthentication();
             //    }
             //}
 
             //if (serviceProviderIsService?.IsService(typeof(IAuthorizationHandlerProvider)) is true)
             //{
-            //    if (!_builtApplication.Properties.ContainsKey(AuthorizationMiddlewareSetKey))
+            //    if (!_builtNode.Properties.ContainsKey(AuthorizationMiddlewareSetKey))
             //    {
-            //        _builtApplication.Properties[AuthorizationMiddlewareSetKey] = true;
-            //        app.UseAuthorization();
+            //        _builtNode.Properties[AuthorizationMiddlewareSetKey] = true;
+            //        engine.UseAuthorization();
             //    }
             //}
 
             //// Wire the source pipeline to run in the destination pipeline
-            //var wireSourcePipeline = new WireSourcePipeline(_builtApplication);
-            //app.Use(wireSourcePipeline.CreateMiddleware);
+            //var wireSourcePipeline = new WireSourcePipeline(_builtNode);
+            //engine.Use(wireSourcePipeline.CreateMiddleware);
 
-            //if (_builtApplication.DataSources.Count > 0)
+            //if (_builtNode.DataSources.Count > 0)
             //{
             //    // We don't know if user code called UseEndpoints(), so we will call it just in case, UseEndpoints() will ignore duplicate DataSources
-            //    app.UseEndpoints(_ => { });
+            //    engine.UseEndpoints(_ => { });
             //}
 
-            //MergeMiddlewareDescriptions(app);
+            //MergeMiddlewareDescriptions(engine);
 
-            //// Copy the properties to the destination app builder
-            //foreach (var item in _builtApplication.Properties)
-            //{
-            //    app.Properties[item.Key] = item.Value;
-            //}
+            // Copy the properties to the destination engine builder
+            foreach (var item in _builtNode.Properties)
+            {
+                engine.Properties[item.Key] = item.Value;
+            }
 
-            //// Remove the route builder to clean up the properties, we're done adding routes to the pipeline
-            //app.Properties.Remove(WebApplication.GlobalEndpointRouteBuilderKey);
+            // Remove the route builder to clean up the properties, we're done adding routes to the pipeline
+            engine.Properties.Remove(NI2SHostingDefaults.GlobalEngineBuilderKey);
 
-            //// Reset route builder if it existed, this is needed for StartupFilters
-            //if (priorRouteBuilder is not null)
-            //{
-            //    app.Properties[EndpointRouteBuilderKey] = priorRouteBuilder;
-            //}
+            // Reset route builder if it existed, this is needed for StartupFilters
+            if (priorEngineBuilder is not null)
+            {
+                engine.Properties[NI2SHostingDefaults.EngineBuilderKey] = priorEngineBuilder;
+            }
         }
 
         void IHostApplicationBuilder.ConfigureContainer<TContainerBuilder>(IServiceProviderFactory<TContainerBuilder> factory, Action<TContainerBuilder> configure) =>
             _hostApplicationBuilder.ConfigureContainer(factory, configure);
+
+        //private class WireSourcePipeline
+        //{
+        //    private NI2SNode builtNode;
+
+        //    public WireSourcePipeline(NI2SNode builtNode)
+        //    {
+        //        this.builtNode = builtNode;
+        //    }
+        //}
     }
 }

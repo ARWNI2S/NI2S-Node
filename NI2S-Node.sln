@@ -26,6 +26,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{627A2388-A
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{CE75ABB0-CC50-479D-BD18-40B8413ADBFC}"
+	ProjectSection(SolutionItems) = preProject
+		build\ARWNI2S.Sdk\Sdk.props = build\ARWNI2S.Sdk\Sdk.props
+		build\ARWNI2S.Sdk\Sdk.targets = build\ARWNI2S.Sdk\Sdk.targets
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "configs", "configs", "{843D9052-CC16-40F6-857D-AAD674492F00}"
 EndProject

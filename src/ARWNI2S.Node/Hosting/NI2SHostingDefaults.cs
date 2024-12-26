@@ -33,10 +33,13 @@
         public static readonly string ShutdownTimeoutKey = "shutdownTimeoutSeconds";
 
 
+        public static readonly string EngineBuilderKey = "__EngineBuilder";
+       
         public static readonly string GlobalEngineBuilderKey = "__GlobalEngineBuilder";
 
         public static readonly string ModuleDescriptionsKey = "__ModuleDescriptions";
 
+        public static readonly string UseRelayerKey = "__UseRelayer";
 
 
 

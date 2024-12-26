@@ -17,7 +17,7 @@ namespace ARWNI2S.Engine.Caching
 
         #region Ctor
 
-        public PerFrameCacheManager(NodeSettings ni2sSettings) : base(ni2sSettings)
+        public PerFrameCacheManager(NodeSettings nodeSettings) : base(nodeSettings)
         {
             _concurrentCollection = new ConcurrentTrie<object>();
         }

@@ -1,6 +1,6 @@
-﻿using ARWNI2S.Cluster;
-using ARWNI2S.Engine;
+﻿using ARWNI2S.Engine;
 using ARWNI2S.Engine.Builder;
+using ARWNI2S.Engine.Cluster;
 using ARWNI2S.Engine.Cluster.Builder;
 using ARWNI2S.Extensibility;
 using ARWNI2S.Hosting;
@@ -50,7 +50,7 @@ namespace ARWNI2S.Node
         #endregion
 
         internal EngineBuilder EngineBuilder { get; }
-        internal IModuleCollection NodeModules => _host.Services.GetRequiredService<INiisNode>().Modules;
+        internal IModuleCollection NodeModules => _host.Services.GetRequiredService<IClusterNode>().Modules;
         internal IDictionary<string, object> Properties => EngineBuilder.Properties;
 
         internal NI2SNode(IHost host)

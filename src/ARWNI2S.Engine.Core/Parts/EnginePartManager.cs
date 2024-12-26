@@ -4,44 +4,43 @@ using System.Reflection;
 namespace ARWNI2S.Engine.Parts
 {
     /// <summary>
-    /// Manages the parts and features of an NI2S engine.
+    /// Manages the parts and modules of an NI2S engine.
     /// </summary>
     public class EnginePartManager : IEnginePartManager
     {
         /// <summary>
-        /// Gets the list of <see cref="IEngineModuleProvider"/>s.
+        /// Gets the list of <see cref="IEngineServiceProvider"/>s.
         /// </summary>
-        public IList<IEngineModuleProvider> ModuleProviders { get; } =
-            [];
+        public IList<IEngineServiceProvider> ServiceProviders { get; } = [];
 
         /// <summary>
         /// Gets the list of <see cref="EnginePart"/> instances.
         /// <para>
         /// Instances in this collection are stored in precedence order. An <see cref="EnginePart"/> that appears
         /// earlier in the list has a higher precedence.
-        /// An <see cref="IEngineModuleProvider"/> may choose to use this an interface as a way to resolve conflicts when
-        /// multiple <see cref="EnginePart"/> instances resolve equivalent feature values.
+        /// An <see cref="IEngineServiceProvider"/> may choose to use this an interface as a way to resolve conflicts when
+        /// multiple <see cref="EnginePart"/> instances resolve equivalent module values.
         /// </para>
         /// </summary>
         public IList<EnginePart> EngineParts { get; } = [];
 
         /// <summary>
-        /// Populates the given <paramref name="feature"/> using the list of
-        /// <see cref="IEngineModuleProvider{TModule}"/>s configured on the
+        /// Populates the given <paramref name="module"/> using the list of
+        /// <see cref="IEngineServiceProvider{TModule}"/>s configured on the
         /// <see cref="EnginePartManager"/>.
         /// </summary>
-        /// <typeparam name="TModule">The type of the feature.</typeparam>
-        /// <param name="feature">The feature instance to populate.</param>
-        public void PopulateModule<TModule>(TModule feature)
+        /// <typeparam name="TModule">The type of the module.</typeparam>
+        /// <param name="module">The module instance to populate.</param>
+        public void PopulateModule<TModule>(TModule module)
         {
-            if (feature == null)
+            if (module == null)
             {
-                throw new ArgumentNullException(nameof(feature));
+                throw new ArgumentNullException(nameof(module));
             }
 
-            foreach (var provider in ModuleProviders.OfType<IEngineModuleProvider<TModule>>())
+            foreach (var provider in ServiceProviders.OfType<IEngineServiceProvider<TModule>>())
             {
-                provider.PopulateModule(EngineParts, feature);
+                provider.PopulateModule(EngineParts, module);
             }
         }
 

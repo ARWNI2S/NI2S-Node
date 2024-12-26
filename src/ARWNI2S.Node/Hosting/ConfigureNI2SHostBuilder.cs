@@ -36,19 +36,19 @@ namespace ARWNI2S.Node.Hosting
         {
             var previousContentRoot = HostingPathResolver.ResolvePath(_context.HostingEnvironment.ContentRootPath);
             var previousContentRootConfig = _configuration[NI2SHostingDefaults.ContentRootKey];
-            var previousNiisRoot = HostingPathResolver.ResolvePath(_context.HostingEnvironment.NodeRootPath, previousContentRoot);
-            var previousNiisRootConfig = _configuration[NI2SHostingDefaults.NodeRootKey];
+            var previousNodeRoot = HostingPathResolver.ResolvePath(_context.HostingEnvironment.NodeRootPath, previousContentRoot);
+            var previousNodeRootConfig = _configuration[NI2SHostingDefaults.NodeRootKey];
             var previousApplication = _configuration[NI2SHostingDefaults.ApplicationKey];
             var previousEnvironment = _configuration[NI2SHostingDefaults.EnvironmentKey];
 
             // Run these immediately so that they are observable by the imperative code
             configureDelegate(_context, _configuration);
 
-            if (!string.Equals(previousNiisRootConfig, _configuration[NI2SHostingDefaults.NodeRootKey], StringComparison.OrdinalIgnoreCase)
-                && !string.Equals(HostingPathResolver.ResolvePath(previousNiisRoot, previousContentRoot), HostingPathResolver.ResolvePath(_configuration[NI2SHostingDefaults.NodeRootKey], previousContentRoot), StringComparison.OrdinalIgnoreCase))
+            if (!string.Equals(previousNodeRootConfig, _configuration[NI2SHostingDefaults.NodeRootKey], StringComparison.OrdinalIgnoreCase)
+                && !string.Equals(HostingPathResolver.ResolvePath(previousNodeRoot, previousContentRoot), HostingPathResolver.ResolvePath(_configuration[NI2SHostingDefaults.NodeRootKey], previousContentRoot), StringComparison.OrdinalIgnoreCase))
             {
                 // Diasllow changing the web root for consistency with other types.
-                throw new NotSupportedException($"The web root changed from \"{HostingPathResolver.ResolvePath(previousNiisRoot, previousContentRoot)}\" to \"{HostingPathResolver.ResolvePath(_configuration[NI2SHostingDefaults.NodeRootKey], previousContentRoot)}\". Changing the host configuration using NI2SHostBuilder.NI2SHost is not supported. Use NI2SHost.CreateBuilder(NI2SNodeOptions) instead.");
+                throw new NotSupportedException($"The web root changed from \"{HostingPathResolver.ResolvePath(previousNodeRoot, previousContentRoot)}\" to \"{HostingPathResolver.ResolvePath(_configuration[NI2SHostingDefaults.NodeRootKey], previousContentRoot)}\". Changing the host configuration using NI2SHostBuilder.NI2SHost is not supported. Use NI2SHost.CreateBuilder(NI2SNodeOptions) instead.");
             }
             else if (!string.Equals(previousApplication, _configuration[NI2SHostingDefaults.ApplicationKey], StringComparison.OrdinalIgnoreCase))
             {
@@ -100,15 +100,15 @@ namespace ARWNI2S.Node.Hosting
             }
 
             var previousContentRoot = HostingPathResolver.ResolvePath(_context.HostingEnvironment.ContentRootPath);
-            var previousNiisRoot = HostingPathResolver.ResolvePath(_context.HostingEnvironment.NodeRootPath);
+            var previousNodeRoot = HostingPathResolver.ResolvePath(_context.HostingEnvironment.NodeRootPath);
             var previousApplication = _configuration[NI2SHostingDefaults.ApplicationKey];
             var previousEnvironment = _configuration[NI2SHostingDefaults.EnvironmentKey];
 
             if (string.Equals(key, NI2SHostingDefaults.NodeRootKey, StringComparison.OrdinalIgnoreCase) &&
-                    !string.Equals(HostingPathResolver.ResolvePath(previousNiisRoot, previousContentRoot), HostingPathResolver.ResolvePath(value, previousContentRoot), StringComparison.OrdinalIgnoreCase))
+                    !string.Equals(HostingPathResolver.ResolvePath(previousNodeRoot, previousContentRoot), HostingPathResolver.ResolvePath(value, previousContentRoot), StringComparison.OrdinalIgnoreCase))
             {
                 // Disallow changing any host configuration
-                throw new NotSupportedException($"The web root changed from \"{HostingPathResolver.ResolvePath(previousNiisRoot, previousContentRoot)}\" to \"{HostingPathResolver.ResolvePath(value, previousContentRoot)}\". Changing the host configuration using NI2SHostBuilder.NI2SHost is not supported. Use NI2SHost.CreateBuilder(NI2SNodeOptions) instead.");
+                throw new NotSupportedException($"The web root changed from \"{HostingPathResolver.ResolvePath(previousNodeRoot, previousContentRoot)}\" to \"{HostingPathResolver.ResolvePath(value, previousContentRoot)}\". Changing the host configuration using NI2SHostBuilder.NI2SHost is not supported. Use NI2SHost.CreateBuilder(NI2SNodeOptions) instead.");
             }
             else if (string.Equals(key, NI2SHostingDefaults.ApplicationKey, StringComparison.OrdinalIgnoreCase) &&
                     !string.Equals(previousApplication, value, StringComparison.OrdinalIgnoreCase))

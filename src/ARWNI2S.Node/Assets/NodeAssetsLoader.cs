@@ -50,7 +50,7 @@ namespace ARWNI2S.Node.Assets
                     return File.OpenRead(candidate);
                 }
 
-                // A missing manifest might simply mean that the feature is not enabled, so we simply
+                // A missing manifest might simply mean that the module is not enabled, so we simply
                 // return early. Misconfigurations will be uncommon given that the entire process is automated
                 // at build time.
                 return default;

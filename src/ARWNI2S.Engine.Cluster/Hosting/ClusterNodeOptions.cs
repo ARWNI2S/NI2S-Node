@@ -2,5 +2,6 @@
 {
     public class ClusterNodeOptions
     {
+        public ClusterLimits Limits { get; } = new ClusterLimits();
     }
 }

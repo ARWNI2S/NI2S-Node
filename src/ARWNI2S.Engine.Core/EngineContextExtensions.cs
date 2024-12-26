@@ -21,11 +21,11 @@ namespace ARWNI2S.Engine
 
             //find startup configurations provided by other assemblies
             var typeFinder = Singleton<ITypeFinder>.Instance;
-            var modules = typeFinder.FindClassesOfType<IEngineModule>();
+            var modules = typeFinder.FindClassesOfType<IConfigureEngine>();
 
             //create and sort instances of startup configurations
             var instances = modules
-                .Select(startup => (IEngineModule)Activator.CreateInstance(startup))
+                .Select(startup => (IConfigureEngine)Activator.CreateInstance(startup))
                 .Where(startup => startup != null)
                 .OrderBy(startup => startup.Order);
 

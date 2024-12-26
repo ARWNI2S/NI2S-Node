@@ -8,7 +8,7 @@ namespace ARWNI2S.Engine.Configuration
     /// <summary>
     /// Represents the ni2s settings helper
     /// </summary>
-    public partial class NodeSettingsHelper
+    public partial class NI2SSettingsHelper
     {
         #region Fields
 

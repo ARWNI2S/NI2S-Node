@@ -13,7 +13,7 @@
     <PrivateRepositoryUrl>$(RepositoryUrl)</PrivateRepositoryUrl>
     <RepositoryUrl>$(RepositoryUrl)</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <LangVersion>12</LangVersion>
+    <LangVersion>13</LangVersion>
     <Features>strict</Features>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <DebugType>embedded</DebugType>

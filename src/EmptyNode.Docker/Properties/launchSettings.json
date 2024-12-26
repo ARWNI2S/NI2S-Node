@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "ARWNI2S.Node": {
+    "Empty Node": {
       "commandName": "Project",
       "environmentVariables": {
         "DOTNET_ENVIRONMENT": "Development"

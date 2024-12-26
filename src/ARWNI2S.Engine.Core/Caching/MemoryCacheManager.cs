@@ -32,8 +32,8 @@ namespace ARWNI2S.Engine.Caching
 
         #region Ctor
 
-        public MemoryCacheManager(NodeSettings ni2sSettings, IMemoryCache memoryCache, ICacheKeyManager cacheKeyManager)
-            : base(ni2sSettings)
+        public MemoryCacheManager(NodeSettings nodeSettings, IMemoryCache memoryCache, ICacheKeyManager cacheKeyManager)
+            : base(nodeSettings)
         {
             _memoryCache = memoryCache;
             _keyManager = cacheKeyManager;
