@@ -1,6 +1,10 @@
-﻿using ARWNI2S.Engine.Hosting;
-using ARWNI2S.Engine.Cluster.Hosting;
-using ARWNI2S.Node.Builder;
+﻿using ARWNI2S.Engine.Cluster.Hosting;
+using ARWNI2S.Engine.Core;
+using ARWNI2S.Engine.Core.Builder;
+using ARWNI2S.Engine.Hosting;
+using ARWNI2S.Engine.Plugins;
+using ARWNI2S.Hosting;
+using ARWNI2S.Hosting.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -18,7 +22,7 @@ namespace ARWNI2S.Node.Hosting.Internal
                 .UseNI2SNodeIntegration(),
                 (services, config) =>
                 {
-                    //services.AddRouting()
+                    services.AddRelayer();
                 });
 
         }
@@ -32,11 +36,13 @@ namespace ARWNI2S.Node.Hosting.Internal
         {
             builder.ConfigureServices((hostingContext, services) => //5
             {
-
+                services.AddContextAccessor();
+                //initialize engine and plugins
+                services.AddNI2SCore().InitializePlugins(hostingContext.Configuration);
 
                 if (configureCluster == null)
                 {
-                    //services.AddRoutingCore()
+                    services.AddRelayerCore();
                 }
                 else
                 {

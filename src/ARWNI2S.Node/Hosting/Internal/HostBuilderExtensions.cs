@@ -1,4 +1,5 @@
-﻿using ARWNI2S.Node.Builder;
+﻿using ARWNI2S.Hosting;
+using ARWNI2S.Hosting.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -27,7 +28,7 @@ namespace ARWNI2S.Node.Hosting.Internal
         /// <param name="builder">The <see cref="IHostBuilder" /> instance to configure.</param>
         /// <param name="configure">The configure callback</param>
         /// <returns>A reference to the <paramref name="builder"/> after the operation has completed.</returns>
-        public static IHostBuilder ConfigureNI2SHostDefaults(this IHostBuilder builder, Action<INiisHostBuilder> configure)
+        public static IHostBuilder ConfigureNI2SHostingDefaults(this IHostBuilder builder, Action<INiisHostBuilder> configure)
         {
             ArgumentNullException.ThrowIfNull(configure);
 
@@ -49,5 +50,44 @@ namespace ARWNI2S.Node.Hosting.Internal
             });
             return builder;
         }
+
+        //public static IHostBuilder ConfigureNodeServiceProvider(this IHostBuilder builder)
+        //{
+        //    //ArgumentNullException.ThrowIfNull(configure);
+
+        //    //return builder.ConfigureNI2SHost(niisHostBuilder =>
+        //    //{
+        //    //    DefaultNodeServices.ConfigureNI2SDefaults(niisHostBuilder);
+        //    //    configure(niisHostBuilder);
+        //    //});
+        //}
+
+        //private void ApplyServiceProviderFactory(HostApplicationBuilder hostApplicationBuilder)
+        //{
+        //    var useAutofac = Settings.Get<CommonConfig>().UseAutofac;
+
+        //    if (useAutofac)
+        //        UseServiceProviderFactory(new AutofacServiceProviderFactory());
+        //    else
+        //        this.UseDefaultServiceProvider(options =>
+        //        {
+        //            //we don't validate the scopes, since at the app start and the initial configuration we need 
+        //            //to resolve some services (registered as "scoped") through the root container
+        //            options.ValidateScopes = false;
+        //            options.ValidateOnBuild = true;
+        //        });
+
+
+        //    void ConfigureContainerBuilderAdapter(object containerBuilder)
+        //    {
+        //        foreach (var action in _configureContainerActions)
+        //        {
+        //            action(_context, containerBuilder);
+        //        }
+        //    }
+
+        //    hostApplicationBuilder.ConfigureContainer(_serviceProviderFactory, ConfigureContainerBuilderAdapter);
+        //}
+
     }
 }

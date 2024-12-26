@@ -1,6 +1,8 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using ARWNI2S.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using System.Diagnostics;
 
 namespace ARWNI2S.Node.Hosting.Internal
@@ -41,7 +43,7 @@ namespace ARWNI2S.Node.Hosting.Internal
 
 
 
-        public NI2SHostService(//IOptions<NI2SHostServiceOptions> options,
+        public NI2SHostService(IOptions<NI2SHostServiceOptions> options,
                                      //IClusterNode localNode,
                                      ILoggerFactory loggerFactory,
                                      DiagnosticListener diagnosticListener,
@@ -54,7 +56,7 @@ namespace ARWNI2S.Node.Hosting.Internal
                                      //HostingMetrics hostingMetrics
             )
         {
-            //Options = options.Value;
+            Options = options.Value;
             //LocalNode = localNode;
             Logger = loggerFactory.CreateLogger("ARWNI2S.Hosting.Diagnostics");
             LifetimeLogger = loggerFactory.CreateLogger("Microsoft.Hosting.Lifetime");
@@ -68,7 +70,7 @@ namespace ARWNI2S.Node.Hosting.Internal
             //HostingMetrics = hostingMetrics;
         }
 
-        //public NI2SHostServiceOptions Options { get; }
+        public NI2SHostServiceOptions Options { get; }
         //public IClusterNode LocalNode { get; }
         public ILogger Logger { get; }
         // Only for high level lifetime events

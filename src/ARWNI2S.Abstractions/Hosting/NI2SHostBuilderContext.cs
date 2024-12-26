@@ -1,6 +1,8 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using ARWNI2S.Engine;
+using Microsoft.Extensions.Configuration;
+using NI2SContext = ARWNI2S.Engine.EngineContext;
 
-namespace ARWNI2S.Node.Hosting
+namespace ARWNI2S.Hosting
 {
     /// <summary>
     /// Context containing the common services on the <see cref="INiisHost" />. Some properties may be null until set by the <see cref="INiisHost" />.
@@ -16,6 +18,8 @@ namespace ARWNI2S.Node.Hosting
         /// The <see cref="IConfiguration" /> containing the merged configuration of the engine and the <see cref="INiisHost" />.
         /// </summary>
         public IConfiguration Configuration { get; set; } = default!;
+
+        public IEngineContext EngineContext { get; set; } = NI2SContext.Current;
 
         internal void AddSingleton<T1, T2>()
         {

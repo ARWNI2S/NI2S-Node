@@ -1,5 +1,8 @@
 ﻿using ARWNI2S.Configuration;
+using ARWNI2S.Engine;
 using ARWNI2S.Engine.Builder;
+using ARWNI2S.Hosting;
+using ARWNI2S.Hosting.Builder;
 using ARWNI2S.Node.Hosting;
 using ARWNI2S.Node.Hosting.Internal;
 using Microsoft.Extensions.Configuration;
@@ -48,6 +51,17 @@ namespace ARWNI2S.Node.Builder
         /// </summary>
         public IServiceCollection Services => _hostApplicationBuilder.Services;
 
+        /// <summary>
+        /// An <see cref="IHostBuilder"/> for configuring host specific properties, but not building.
+        /// To build after configuration, call <see cref="Build"/>.
+        /// </summary>
+        public ConfigureHostBuilder Host { get; private set; }
+        /// <summary>
+        /// An <see cref="INiisHostBuilder"/> for configuring server specific properties, but not building.
+        /// To build after configuration, call <see cref="Build"/>.
+        /// </summary>
+        public ConfigureNI2SHostBuilder NI2SHost { get; private set; }
+
         internal NodeHostBuilder(string[] args = null)
         {
             var configuration = new ConfigurationManager();
@@ -61,7 +75,7 @@ namespace ARWNI2S.Node.Builder
             // Run methods to configure web host defaults early to populate services
             var bootstrapHostBuilder = new BootstrapHostBuilder(_hostApplicationBuilder);
 
-            bootstrapHostBuilder.ConfigureNI2SHostDefaults(niisHostBuilder =>
+            bootstrapHostBuilder.ConfigureNI2SHostingDefaults(niisHostBuilder =>
             {
                 // Runs inline.
                 niisHostBuilder.Configure(ConfigureEngine);
@@ -74,24 +88,24 @@ namespace ARWNI2S.Node.Builder
 
         private void InitializeHostSettings(INiisHostBuilder niisHostBuilder)
         {
-            //HACK
             niisHostBuilder.UseSetting(NI2SHostingDefaults.ApplicationKey, _hostApplicationBuilder.Environment.ApplicationName ?? "");
-            //niisHostBuilder.UseSetting(NI2SHostingDefaults.PreventHostingStartupKey, Configuration[NI2SHostingDefaults.PreventHostingStartupKey]);
-            //niisHostBuilder.UseSetting(NI2SHostingDefaults.HostingStartupAssembliesKey, Configuration[NI2SHostingDefaults.HostingStartupAssembliesKey]);
-            //niisHostBuilder.UseSetting(NI2SHostingDefaults.HostingStartupExcludeAssembliesKey, Configuration[NI2SHostingDefaults.HostingStartupExcludeAssembliesKey]);
         }
 
-        [MemberNotNull(nameof(Environment), nameof(Settings)/*, nameof(NI2SHost)*/)]
+        [MemberNotNull(nameof(Environment), nameof(Settings), nameof(Host), nameof(NI2SHost))]
         private ServiceDescriptor InitializeHosting(BootstrapHostBuilder bootstrapHostBuilder)
         {
-            // This applies the config from ConfigureNI2SHostDefaults
+            // This applies the config from ConfigureNI2SHostingDefaults
             // Grab the GenericNI2SHostService ServiceDescriptor so we can append it after any user-added IHostedServices during Build();
             var genericNI2SHostServiceDescriptor = bootstrapHostBuilder.RunDefaultCallbacks();
 
             // Grab the NI2SHostBuilderContext from the property bag to use in the ConfigureNodeHostBuilder. Then
             // grab the INiisHostEnvironment from the niisHostContext. This also matches the instance in the IServiceCollection.
-            Environment = ((NI2SHostBuilderContext)bootstrapHostBuilder.Properties[typeof(NI2SHostBuilderContext)]).HostingEnvironment;
+            var nodeHostContext = (NI2SHostBuilderContext)bootstrapHostBuilder.Properties[typeof(NI2SHostBuilderContext)];
+            Environment = nodeHostContext.HostingEnvironment;
             Settings = (NodeSettings)bootstrapHostBuilder.Properties[typeof(NodeSettings)];
+
+            Host = new ConfigureHostBuilder(bootstrapHostBuilder.Context, Configuration, Services);
+            NI2SHost = new ConfigureNI2SHostBuilder(nodeHostContext, Configuration, Services);
 
             return genericNI2SHostServiceDescriptor;
         }
@@ -104,12 +118,12 @@ namespace ARWNI2S.Node.Builder
 
         public NI2SNode Build()
         {
-            // ConfigureContainer callbacks run after ConfigureServices callbacks including the one that adds GenericNI2SHostService by default.
             // One nice side effect is this gives a way to configure an IHostedService that starts after the server and stops beforehand.
             _hostApplicationBuilder.Services.Add(_genericNiisNodeServiceDescriptor);
-            //HACK Host.ApplyServiceProviderFactory(_hostApplicationBuilder);
+            Host.ApplyServiceProviderFactory(_hostApplicationBuilder);
             _builtNode = new NI2SNode(_hostApplicationBuilder.Build());
-            //HACK EngineContext.Current.ConfigureEngine(_builtNode);
+            //HACK
+            //EngineContext.Current.ConfigureEngine(_builtNode);
             return _builtNode;
         }
 
@@ -120,6 +134,7 @@ namespace ARWNI2S.Node.Builder
         {
             Debug.Assert(_builtNode is not null);
 
+            context.EngineContext.InitializeContext(engine);
 
             //// UseRouting called before WebApplication such as in a StartupFilter
             //// lets remove the property and reset it at the end so we don't mess with the routes in the filter

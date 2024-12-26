@@ -11,5 +11,7 @@
         /// <param name="cancellationToken">The cancellation token which is canceled when the method must abort.</param>
         /// <returns>A <see cref="Task"/> representing the work performed.</returns>
         Task Execute(CancellationToken cancellationToken);
+
+        int Order { get; }
     }
 }

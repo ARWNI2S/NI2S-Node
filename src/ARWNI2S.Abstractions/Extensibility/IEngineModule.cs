@@ -1,12 +1,10 @@
 ﻿using ARWNI2S.Engine.Builder;
-using ARWNI2S.Lifecycle;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Orleans;
 
 namespace ARWNI2S.Extensibility
 {
-    public interface IEngineModule : ILifecycleParticipant<IEngineLifecycle>
+    public interface IEngineModule
     {
         /// <summary>
         /// Add and configure any of the engine services
@@ -20,5 +18,7 @@ namespace ARWNI2S.Extensibility
         /// </summary>
         /// <param name="engineBuilder">Builder for configuring an application's request pipeline</param>
         void ConfigureEngine(IEngineBuilder engineBuilder);
+
+        int Order { get; }
     }
 }

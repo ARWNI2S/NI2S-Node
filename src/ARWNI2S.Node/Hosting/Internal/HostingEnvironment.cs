@@ -1,4 +1,5 @@
 ﻿using ARWNI2S.Environment;
+using ARWNI2S.Hosting;
 using ARWNI2S.Node.Environment;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;

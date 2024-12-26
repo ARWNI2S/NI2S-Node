@@ -8,7 +8,7 @@ namespace ARWNI2S.Engine.Configuration
     /// <summary>
     /// Represents the ni2s settings helper
     /// </summary>
-    public partial class NI2SSettingsHelper
+    public partial class NodeSettingsHelper
     {
         #region Fields
 
@@ -23,7 +23,7 @@ namespace ARWNI2S.Engine.Configuration
         /// </summary>
         /// <param name="configurations">Configurations to save</param>
         /// <param name="fileProvider">File provider</param>
-        /// <param name="overwrite">Whether to overwrite ni2ssettings file</param>
+        /// <param name="overwrite">Whether to overwrite niissettings file</param>
         /// <returns>Node settings</returns>
         public static NodeSettings SaveNodeSettings(IList<IConfig> configurations, INiisFileProvider fileProvider, bool overwrite = true)
         {
@@ -31,10 +31,10 @@ namespace ARWNI2S.Engine.Configuration
 
             _configurationOrder ??= configurations.ToDictionary(config => config.Name, config => config.GetOrder());
 
-            //create ni2s settings
-            var ni2sSettings = Singleton<NodeSettings>.Instance ?? new NodeSettings();
-            ni2sSettings.Update(configurations);
-            Singleton<NodeSettings>.Instance = ni2sSettings;
+            //create node settings
+            var nodeSettings = Singleton<NodeSettings>.Instance ?? new NodeSettings();
+            nodeSettings.Update(configurations);
+            Singleton<NodeSettings>.Instance = nodeSettings;
 
             //create file if not exists
             var filePath = fileProvider.MapPath(ConfigDefaults.SettingsFilePath);
@@ -51,7 +51,7 @@ namespace ARWNI2S.Engine.Configuration
             }
 
             //sort configurations for display by order (e.g. data configuration with 0 will be the first)
-            ni2sSettings.Configuration = configuration
+            nodeSettings.Configuration = configuration
                 .SelectMany(outConfig => _configurationOrder.Where(inConfig => inConfig.Key == outConfig.Key).DefaultIfEmpty(),
                     (outConfig, inConfig) => new { OutConfig = outConfig, InConfig = inConfig })
                 .OrderBy(config => config.InConfig.Value)
@@ -61,11 +61,11 @@ namespace ARWNI2S.Engine.Configuration
             //save ni2s settings to the file
             if (!fileExists || overwrite)
             {
-                var text = JsonConvert.SerializeObject(ni2sSettings, Formatting.Indented);//, new JsonSerializerSettings { ContractResolver = new SecretContractResolver() });
+                var text = JsonConvert.SerializeObject(nodeSettings, Formatting.Indented);//, new JsonSerializerSettings { ContractResolver = new SecretContractResolver() });
                 fileProvider.WriteAllText(filePath, text, Encoding.UTF8);
             }
 
-            return ni2sSettings;
+            return nodeSettings;
         }
 
         #endregion

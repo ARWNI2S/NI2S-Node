@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "ARWNI2S.Node": {
+      "commandName": "Project"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
+    }
+  }
+}

@@ -3,6 +3,7 @@ using ARWNI2S.Engine;
 using ARWNI2S.Engine.Builder;
 using ARWNI2S.Engine.Cluster.Builder;
 using ARWNI2S.Extensibility;
+using ARWNI2S.Hosting;
 using ARWNI2S.Node.Builder;
 using ARWNI2S.Node.Hosting;
 using Microsoft.Extensions.Configuration;

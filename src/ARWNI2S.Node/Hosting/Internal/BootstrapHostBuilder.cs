@@ -12,7 +12,6 @@ namespace ARWNI2S.Node.Hosting.Internal
         private readonly List<Action<IConfigurationBuilder>> _configureHostActions = [];
         private readonly List<Action<HostBuilderContext, IConfigurationBuilder>> _configureAppActions = [];
         private readonly List<Action<HostBuilderContext, IServiceCollection>> _configureServicesActions = [];
-        private IServiceProviderFactory<object> _serviceProviderFactory;
 
         public BootstrapHostBuilder(HostApplicationBuilder builder)
         {
@@ -57,29 +56,28 @@ namespace ARWNI2S.Node.Hosting.Internal
 
         public IHost Build()
         {
-            // ConfigureNI2SHostDefaults should never call this.
+            // ConfigureNI2SHostingDefaults should never call this.
             throw new InvalidOperationException();
         }
 
         public IHostBuilder ConfigureContainer<TContainerBuilder>(Action<HostBuilderContext, TContainerBuilder> configureDelegate)
         {
-            // ConfigureNI2SHostDefaults should never call this.
+            // ConfigureNI2SHostingDefaults should never call this.
             throw new InvalidOperationException();
         }
 
         /// <inheritdoc />
         public IHostBuilder UseServiceProviderFactory<TContainerBuilder>(IServiceProviderFactory<TContainerBuilder> factory) where TContainerBuilder : notnull
         {
-            ArgumentNullException.ThrowIfNull(factory);
-
-            _serviceProviderFactory = new ServiceProviderFactoryAdapter<TContainerBuilder>(factory);
-            return this;
+            // ConfigureNI2SHostingDefaults should never call this.
+            throw new InvalidOperationException();
         }
 
         /// <inheritdoc />
         public IHostBuilder UseServiceProviderFactory<TContainerBuilder>(Func<HostBuilderContext, IServiceProviderFactory<TContainerBuilder>> factory) where TContainerBuilder : notnull
         {
-            return UseServiceProviderFactory(factory(Context));
+            // ConfigureNI2SHostingDefaults should never call this.
+            throw new InvalidOperationException();
         }
 
         public ServiceDescriptor RunDefaultCallbacks()
@@ -119,17 +117,5 @@ namespace ARWNI2S.Node.Hosting.Internal
             return genericNI2SHostServiceDescriptor ?? throw new InvalidOperationException($"NI2SHostService must exist in the {nameof(IServiceCollection)}");
         }
 
-        private sealed class ServiceProviderFactoryAdapter<TContainerBuilder> : IServiceProviderFactory<object> where TContainerBuilder : notnull
-        {
-            private readonly IServiceProviderFactory<TContainerBuilder> _serviceProviderFactory;
-
-            public ServiceProviderFactoryAdapter(IServiceProviderFactory<TContainerBuilder> serviceProviderFactory)
-            {
-                _serviceProviderFactory = serviceProviderFactory;
-            }
-
-            public object CreateBuilder(IServiceCollection services) => _serviceProviderFactory.CreateBuilder(services);
-            public IServiceProvider CreateServiceProvider(object containerBuilder) => _serviceProviderFactory.CreateServiceProvider((TContainerBuilder)containerBuilder);
-        }
     }
 }

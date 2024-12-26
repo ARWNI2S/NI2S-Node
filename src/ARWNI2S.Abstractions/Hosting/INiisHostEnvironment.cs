@@ -2,7 +2,7 @@
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 
-namespace ARWNI2S.Node.Hosting
+namespace ARWNI2S.Hosting
 {
     /// <summary>
     /// Provides information about the NI2S hosting environment an engine is running in.

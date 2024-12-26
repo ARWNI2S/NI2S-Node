@@ -1,8 +1,9 @@
-﻿using ARWNI2S.Engine.Cluster.Hosting;
-using ARWNI2S.Node.Builder;
+﻿using ARWNI2S.Cluster;
+using ARWNI2S.Hosting;
+using ARWNI2S.Hosting.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace ARWNI2S.Node.Hosting
+namespace ARWNI2S.Engine.Cluster.Hosting
 {
     /// <summary>
     /// Kestrel <see cref="INiisHostBuilder"/> extensions.
@@ -72,14 +73,14 @@ namespace ARWNI2S.Node.Hosting
         {
             hostBuilder.ConfigureServices(services =>//3
             {
-                //var settings = Singleton<NI2SSettings>.Instance;
+                //var settings = Singleton<NodeSettings>.Instance;
 
                 //// Don't override an already-configured transport
                 //services.TryAddSingleton<IConnectionListenerFactory, ClusterTransportFactory>();
 
                 //services.AddTransient<IConfigureOptions<ClusterNodeOptions>, ClusterServerOptionsSetup>();
                 //services.AddSingleton<INiisConfigurationService, NI2SConfigurationService>();
-                //services.AddSingleton<IClusterServer, ClusterServer>();
+                services.AddSingleton<INiisNode, ClusterNodeImpl>();
                 //services.AddSingleton<ClusterMetrics>();
             });
 

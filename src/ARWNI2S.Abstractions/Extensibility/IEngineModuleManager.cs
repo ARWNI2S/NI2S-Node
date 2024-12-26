@@ -4,6 +4,6 @@
     {
         IModuleCollection Modules { get; }
 
-
+        void Register(IEngineModule module);
     }
 }

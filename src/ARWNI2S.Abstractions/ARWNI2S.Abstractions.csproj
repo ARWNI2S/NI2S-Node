@@ -6,7 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Caching\ILocker.cs" />
     <Compile Remove="Exceptions\ClientNotAvailableException.cs" />
     <Compile Remove="Exceptions\GatewayTooBusyException.cs" />
     <Compile Remove="Exceptions\ActorExtensionNotInstalledException.cs" />

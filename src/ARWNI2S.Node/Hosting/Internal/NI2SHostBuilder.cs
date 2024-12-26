@@ -1,9 +1,12 @@
 ﻿using ARWNI2S.Configuration;
 using ARWNI2S.Engine;
 using ARWNI2S.Engine.Builder;
-using ARWNI2S.Engine.Configuration;
+using ARWNI2S.Engine.Extensibility;
 using ARWNI2S.Engine.Hosting;
-using ARWNI2S.Node.Builder;
+using ARWNI2S.Extensibility;
+using ARWNI2S.Hosting;
+using ARWNI2S.Hosting.Builder;
+using ARWNI2S.Node.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -17,11 +20,13 @@ namespace ARWNI2S.Node.Hosting.Internal
     {
         private readonly IHostBuilder _builder;
         private readonly IConfiguration _config;
-        //private AggregateException _hostingStartupErrors;
+        private readonly IEngineContext _engineContext;
+        private AggregateException _hostingStartupErrors;
 
-        public NI2SHostBuilder(IHostBuilder builder/*, HostBuilderOptions options*/)
-        //: base(builder, options)
+        public NI2SHostBuilder(IHostBuilder builder)
         {
+            _engineContext = EngineContext.Create();
+
             _builder = builder;
             var configBuilder = new ConfigurationBuilder()
                 .AddInMemoryCollection();
@@ -45,16 +50,25 @@ namespace ARWNI2S.Node.Hosting.Internal
                     var path = string.Format(ConfigDefaults.SettingsEnvironmentFilePath, context.HostingEnvironment.EnvironmentName);
                     config.AddJsonFile(path, true, true);
                 }
-                config.AddEnvironmentVariables(prefix: $"NI2S_{context.HostingEnvironment.ApplicationName.ToUpperInvariant().Replace(".", "_")}_");
             });
 
             _builder.ConfigureServices((context, services) => //1
             {
                 var niisContext = GetNI2SHostBuilderContext(context);
-                //var niisHostOptions = (NI2SHostingOptions)context.Properties[typeof(NI2SHostingOptions)];
+                var niisHostOptions = (NI2SHostingOptions)context.Properties[typeof(NI2SHostingOptions)];
 
                 // Add the INiisHostEnvironment
                 services.AddSingleton(niisContext.HostingEnvironment);
+
+                // TODO: ApplicationLifetime vs nodeLifecycle
+
+                services.Configure<NI2SHostServiceOptions>(options =>
+                {
+                    // Set the options
+                    options.HostingOptions = niisHostOptions;
+                    // Store and forward any startup errors
+                    options.HostingStartupExceptions = _hostingStartupErrors;
+                });
 
                 // REVIEW: This is bad since we don't own this type. Anybody could add one of these and it would mess things up
                 // We need to flow this differently
@@ -65,40 +79,25 @@ namespace ARWNI2S.Node.Hosting.Internal
 
                 //create default file provider
                 services.ConfigureFileProvider(niisContext.HostingEnvironment);
+
+                //configure and bind setings
                 if (!context.Properties.TryGetValue(typeof(NodeSettings), out var settingsVal))
                 {
-                    context.Properties[typeof(NodeSettings)] = services.ConfigureNodeSettings(context.Configuration);
+                    settingsVal = services.BindNodeSettings(context.Configuration);
                 }
+                context.Properties[typeof(NodeSettings)] = (NodeSettings)settingsVal;
 
-                // TODO: ApplicationLifetime vs nodeLifecycle
-
-                //HACK
-                //services.TryAddSingleton<INiisContextFactory, DefaultContextFactory>();
-                //services.TryAddScoped<IMiddlewareFactory, MiddlewareFactory>();
-                //services.TryAddSingleton<IEngineBuilderFactory, EngineBuilderFactory>();
+                services.TryAddSingleton<INiisContextFactory, EngineContextFactory>();
+                services.TryAddScoped<IProcessorFactory, ProcessorFactory>();
+                services.TryAddSingleton<IEngineBuilderFactory, EngineBuilderFactory>();
 
                 services.AddMetrics();
-                //HACK
-                //services.TryAddSingleton<HostingMetrics>();
-
-                //HACK
-                // IMPORTANT: This needs to run *before* direct calls on the builder (like UseStartup)
-                //_hostingStartupHostBuilder?.ConfigureServices(niishostContext, services);
-
-                // Support UseStartup(assemblyName)
-                //if (!string.IsNullOrEmpty(niisHostOptions.StartupAssembly))
-                //{
-                //ScanAssemblyAndRegisterStartup(context, services, niishostContext, niisHostOptions);
-                //}
-
-                //services.TryAddSingleton(InitializeNodeEngineSettings(context, niishostContext, services));
-
+                services.TryAddSingleton<HostingMetrics>();
             });
-
 
         }
 
-        public INiisHostBuilder ConfigureEngine(Action<NI2SHostBuilderContext, IEngineBuilder> configure)
+        internal INiisHostBuilder ConfigureEngine(Action<NI2SHostBuilderContext, IEngineBuilder> configure)
         {
             var startupAssemblyName = configure.GetMethodInfo().DeclaringType!.Assembly.GetName().Name!;
 
@@ -106,58 +105,18 @@ namespace ARWNI2S.Node.Hosting.Internal
 
             _builder.ConfigureServices((context, services) => //6
             {
-                //HACK
-                //services.AddDefaultContextAccessor();
+                _engineContext.ConfigureServices(services, context.Configuration);
 
-                ////initialize engine and plugins
-                //services.AddNI2SCore().InitializePlugins(context.Configuration);
+                services.Configure<NI2SHostServiceOptions>(options =>
+                {
+                    var ni2shostBuilderContext = GetNI2SHostBuilderContext(context);
+                    options.ConfigureEngine = engine => configure(ni2shostBuilderContext, engine);
+                });
 
-                //EngineContext.Create().ConfigureServices(services, context.Configuration);
-
-                //HACK
-                //services.Configure<NI2SHostServiceOptions>(options =>
-                //{
-                //    var ni2shostBuilderContext = GetNI2SHostBuilderContext(context);
-                //    options.ConfigureEngine = engine => configure(ni2shostBuilderContext, engine);
-                //});
             });
 
             return this;
         }
-
-        //        // This exists just so that we can use ActivatorUtilities.CreateInstance on the Startup class
-        //        private sealed class HostServiceProvider : IServiceProvider
-        //        {
-        //            private readonly NI2SHostBuilderContext _context;
-
-        //            public HostServiceProvider(NI2SHostBuilderContext context)
-        //            {
-        //                _context = context;
-        //            }
-
-        //            public object GetService(Type serviceType)
-        //            {
-        //                // The implementation of the HostingEnvironment supports both interfaces
-        //#pragma warning disable CS0618 // Type or member is obsolete
-        //                if (serviceType == typeof(Microsoft.Extensions.Hosting.IHostingEnvironment)
-        //                    || serviceType == typeof(IHostingEnvironment)
-        //#pragma warning restore CS0618 // Type or member is obsolete
-        //                        || serviceType == typeof(INiisHostEnvironment)
-        //                    || serviceType == typeof(IHostEnvironment)
-        //                    )
-        //                {
-        //                    return _context.HostingEnvironment;
-        //                }
-
-        //                if (serviceType == typeof(IConfiguration))
-        //                {
-        //                    return _context.Configuration;
-        //                }
-
-        //                return null;
-        //            }
-        //        }
-
 
         public INiisHost Build()
         {
@@ -214,6 +173,7 @@ namespace ARWNI2S.Node.Hosting.Internal
                 {
                     Configuration = context.Configuration,
                     HostingEnvironment = new HostingEnvironment(),
+                    EngineContext = _engineContext
                 };
                 niisHostBuilderContext.HostingEnvironment.Initialize(context.HostingEnvironment.ContentRootPath, options, baseEnvironment: context.HostingEnvironment);
                 context.Properties[typeof(NI2SHostBuilderContext)] = niisHostBuilderContext;
@@ -226,31 +186,6 @@ namespace ARWNI2S.Node.Hosting.Internal
             niisHostContext.Configuration = context.Configuration;
             return niisHostContext;
         }
-
-        //HACK
-        //protected NodeSettings InitializeNodeEngineSettings(HostBuilderContext context, NI2SHostBuilderContext niisContext, IServiceCollection services)
-        //{
-        //    ////create default file provider
-        //    //CommonHelper.DefaultFileProvider ??= new NI2SFileProvider(niisContext.HostingEnvironment);
-
-        //    if (!context.Properties.TryGetValue(typeof(NodeSettings), out var settingsVal))
-        //    {
-        //        //add configuration parameters
-        //        var configurations = services.GetOrCreateTypeFinder()
-        //            .FindClassesOfType<IConfig>()
-        //            .Select(configType => (IConfig)Activator.CreateInstance(configType))
-        //            .ToList();
-
-        //        foreach (var config in configurations)
-        //            context.Configuration.GetSection(config.Name).Bind(config, options => options.BindNonPublicProperties = true);
-
-        //        settingsVal = NI2SSettingsHelper.SaveNI2SSettings(configurations, NI2SFileProvider.Default, false);
-        //        context.Properties[typeof(NodeSettings)] = settingsVal;
-        //    }
-
-        //    var niisSettings = (NodeSettings)settingsVal;
-        //    return niisSettings;
-        //}
 
         public string GetSetting(string key)
         {
