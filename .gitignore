@@ -49,8 +49,6 @@ bld/
 .idea/
 # Obsidian cache/options directory
 .obsidian/
-# Uncomment if you have tasks that create the project's static files in wwwroot
-#wwwroot/
 
 # Visual Studio 2017 auto generated files
 Generated\ Files/
@@ -378,3 +376,46 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+
+#######################
+## NI2S specific
+###########
+glob:*.user
+*.patch
+*.hg
+src/EmptyNode/.config/*
+src/EmptyNode/Node_Data/Gmail/AuthStore/*
+!src/EmptyNode/Node_Data/Gmail/AuthStore/Index.htm
+src/EmptyNode/Node_Data/browscap.xml
+src/EmptyNode/Node_Data/additional.crawlers.xml
+src/EmptyNode/Node_Data/installedPlugins.json
+src/EmptyNode/Node_Data/plugins.json
+src/EmptyNode/Node_Data/dataSettings.json
+src/EmptyNode/Node_Data/appsettings.json
+src/EmptyNode/Node_Data/TempUploads/*
+!src/EmptyNode/Node_Data/TempUploads/Index.htm
+src/EmptyNode/Node_Data/DataProtectionKeys/*
+!src/EmptyNode/Node_Data/DataProtectionKeys/Index.htm
+src/EmptyNode/engine/*
+src/EmptyNode/plugins/*
+!src/EmptyNode/plugins/Uploaded
+src/EmptyNode/plugins/Uploaded/*
+!src/EmptyNode/plugins/Uploaded/placeholder.txt
+src/EmptyNode/Content/.well-known/*
+!src/EmptyNode/Content/.well-known/Index.htm
+src/EmptyNode/Content/bundles/*
+!src/EmptyNode/Content/bundles/Index.htm
+src/EmptyNode/Content/db_backups/*.bak
+!src/EmptyNode/Content/db_backups/Index.htm
+src/EmptyNode/Content/images/thumbs/*
+!src/EmptyNode/Content/images/thumbs/placeholder.txt
+src/EmptyNode/Content/images/uploaded/*
+!src/EmptyNode/Content/images/uploaded/placeholder.txt
+src/EmptyNode/Content/files/exportimport/*
+!src/EmptyNode/Content/files/exportimport/Index.htm
+src/EmptyNode/Content/lib_npm/cldr-data/main/*
+!src/EmptyNode/Content/lib_npm/cldr-data/main/en/
+!src/EmptyNode/Content/lib_npm/cldr-data/main/main.zip
+src/EmptyNode/Content/sitemaps/*
+!src/EmptyNode/Content/sitemaps/Index.htm
+src/packages/*
