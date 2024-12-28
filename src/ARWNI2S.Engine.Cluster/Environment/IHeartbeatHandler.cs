@@ -1,4 +1,4 @@
-﻿namespace ARWNI2S.Engine.Cluster.Environment
+﻿namespace ARWNI2S.Cluster.Environment
 {
     internal interface IHeartbeatHandler
     {

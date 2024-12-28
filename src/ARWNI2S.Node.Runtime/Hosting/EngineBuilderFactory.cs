@@ -26,5 +26,4 @@ namespace ARWNI2S.Node.Hosting
             return new EngineBuilder(_serviceProvider, nodeModules);
         }
     }
-
 }

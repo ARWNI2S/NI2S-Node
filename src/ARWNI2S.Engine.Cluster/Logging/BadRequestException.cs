@@ -1,4 +1,4 @@
-﻿namespace ARWNI2S.Engine.Cluster.Logging
+﻿namespace ARWNI2S.Cluster.Logging
 {
     public class BadRequestException : Exception
     {

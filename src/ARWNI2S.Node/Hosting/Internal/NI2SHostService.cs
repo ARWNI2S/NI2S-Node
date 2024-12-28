@@ -1,9 +1,8 @@
 ﻿using ARWNI2S.Engine;
 using ARWNI2S.Engine.Builder;
-using ARWNI2S.Engine.Cluster;
-using ARWNI2S.Engine.Diagnostics;
 using ARWNI2S.Hosting;
 using ARWNI2S.Node.Diagnostics;
+using ARWNI2S.Node.Hosting.Logging;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -49,7 +48,7 @@ namespace ARWNI2S.Node.Hosting.Internal
 
 
         public NI2SHostService(IOptions<NI2SHostServiceOptions> options,
-                                     IClusterNode localNode,
+                                     //IClusterNode localNode,
                                      ILoggerFactory loggerFactory,
                                      DiagnosticListener diagnosticListener,
                                      ActivitySource activitySource,
@@ -62,7 +61,7 @@ namespace ARWNI2S.Node.Hosting.Internal
             )
         {
             Options = options.Value;
-            LocalNode = localNode;
+            //LocalNode = localNode;
             Logger = loggerFactory.CreateLogger("ARWNI2S.Hosting.Diagnostics");
             LifetimeLogger = loggerFactory.CreateLogger("Microsoft.Hosting.Lifetime");
             DiagnosticListener = diagnosticListener;
@@ -76,7 +75,7 @@ namespace ARWNI2S.Node.Hosting.Internal
         }
 
         public NI2SHostServiceOptions Options { get; }
-        public IClusterNode LocalNode { get; }
+        //public IClusterNode LocalNode { get; }
         public ILogger Logger { get; }
         // Only for high level lifetime events
         public ILogger LifetimeLogger { get; }
@@ -156,7 +155,8 @@ namespace ARWNI2S.Node.Hosting.Internal
             {
                 var configure = Options.ConfigureEngine ?? throw new InvalidOperationException($"No application configured. Please specify an application via INiisHostBuilder.UseStartup, INiisHostBuilder.Configure.");
 
-                var builder = EngineBuilderFactory.CreateBuilder(LocalNode.Modules);
+                //var builder = EngineBuilderFactory.CreateBuilder(LocalNode.Modules);
+                var builder = EngineBuilderFactory.CreateBuilder(null);
 
                 //foreach (var filter in Enumerable.Reverse(StartupFilters))
                 //{
@@ -184,7 +184,7 @@ namespace ARWNI2S.Node.Hosting.Internal
 
             var engineHost = new EngineHost(engine, Logger, DiagnosticListener, ActivitySource, Propagator, ContextFactory, HostingEventSource.Log, HostingMetrics);
 
-            await LocalNode.StartAsync(engineHost, cancellationToken);
+            //await LocalNode.StartAsync(engineHost, cancellationToken);
             HostingEventSource.Log.NodeReady();
 
             //if (addresses != null)

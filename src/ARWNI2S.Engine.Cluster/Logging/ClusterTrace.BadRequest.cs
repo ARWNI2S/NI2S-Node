@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using ARWNI2S.Cluster.Logging;
+using Microsoft.Extensions.Logging;
 
 namespace ARWNI2S.Engine.Cluster.Logging
 {

@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace ARWNI2S.Engine.Cluster.Connection
+namespace ARWNI2S.Cluster.Connection
 {
     internal abstract class ResourceCounter
     {

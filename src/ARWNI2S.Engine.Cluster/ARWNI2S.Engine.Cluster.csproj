@@ -2,11 +2,42 @@
 
   <PropertyGroup>
     <TargetFrameworks>$(DefaultTargetFrameworks)</TargetFrameworks>
+    <RootNamespace>ARWNI2S.Cluster</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Connection\**" />
+    <Compile Remove="Diagnostics\**" />
+    <Compile Remove="Environment\**" />
+    <Compile Remove="Extensibility\**" />
+    <Compile Remove="Hosting\**" />
+    <Compile Remove="Logging\**" />
+    <Compile Remove="Networking\**" />
+    <Compile Remove="Relayer\**" />
+    <EmbeddedResource Remove="Connection\**" />
+    <EmbeddedResource Remove="Diagnostics\**" />
+    <EmbeddedResource Remove="Environment\**" />
+    <EmbeddedResource Remove="Extensibility\**" />
+    <EmbeddedResource Remove="Hosting\**" />
+    <EmbeddedResource Remove="Logging\**" />
+    <EmbeddedResource Remove="Networking\**" />
+    <EmbeddedResource Remove="Relayer\**" />
+    <None Remove="Connection\**" />
+    <None Remove="Diagnostics\**" />
+    <None Remove="Environment\**" />
+    <None Remove="Extensibility\**" />
+    <None Remove="Hosting\**" />
+    <None Remove="Logging\**" />
+    <None Remove="Networking\**" />
+    <None Remove="Relayer\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="ClusterNodeExtensions.cs" />
+    <Compile Remove="ClusterNodeImpl.cs" />
+    <Compile Remove="DateHeaderValueManager.cs" />
     <Compile Remove="Lifecycle\TransitionContext.cs" />
-    <Compile Remove="Logging\ClusterTrace.Http3.cs" />
+    <Compile Remove="ServiceContext.cs" />
   </ItemGroup>
 
   <ItemGroup>

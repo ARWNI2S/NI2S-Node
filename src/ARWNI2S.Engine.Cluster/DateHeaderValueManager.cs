@@ -1,6 +1,6 @@
-﻿using ARWNI2S.Engine.Cluster.Environment;
+﻿using ARWNI2S.Cluster.Environment;
 
-namespace ARWNI2S.Engine.Cluster
+namespace ARWNI2S.Cluster
 {
     internal class DateHeaderValueManager : IHeartbeatHandler
     {

@@ -1,4 +1,6 @@
-﻿namespace ARWNI2S.Engine.Cluster
+﻿using ARWNI2S.Engine;
+
+namespace ARWNI2S.Cluster
 {
     public static class ServiceClusterNodeExtensions
     {

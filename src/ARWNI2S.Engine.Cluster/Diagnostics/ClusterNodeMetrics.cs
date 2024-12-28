@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.Metrics;
 
-namespace ARWNI2S.Engine.Cluster.Diagnostics
+namespace ARWNI2S.Cluster.Diagnostics
 {
     internal sealed class ClusterNodeMetrics
     {

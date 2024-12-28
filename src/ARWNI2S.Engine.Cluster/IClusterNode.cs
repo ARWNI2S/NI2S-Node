@@ -1,7 +1,6 @@
-﻿using ARWNI2S.Cluster;
-using ARWNI2S.Extensibility;
+﻿using ARWNI2S.Extensibility;
 
-namespace ARWNI2S.Engine.Cluster
+namespace ARWNI2S.Cluster
 {
     public interface IClusterNode : INiisNode
     {

@@ -1,12 +1,12 @@
-﻿using ARWNI2S.Engine.Cluster.Connection;
-using ARWNI2S.Engine.Cluster.Diagnostics;
-using ARWNI2S.Engine.Cluster.Environment;
-using ARWNI2S.Engine.Cluster.Hosting;
+﻿using ARWNI2S.Cluster.Connection;
+using ARWNI2S.Cluster.Diagnostics;
+using ARWNI2S.Cluster.Environment;
+using ARWNI2S.Cluster.Hosting;
 using ARWNI2S.Engine.Cluster.Logging;
 using System.Diagnostics;
 using System.IO.Pipelines;
 
-namespace ARWNI2S.Engine.Cluster
+namespace ARWNI2S.Cluster
 {
     // Ideally this type should be readonly and initialized with a constructor.
     // Tests use TestServiceContext which inherits from this type and sets properties.

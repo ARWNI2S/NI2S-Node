@@ -7,11 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Infrastructure\" />
-    <Folder Include="Content\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <!-- We copy the entire \Node_Data directory. But we ignore JSON files and data protection keys  -->
     <Content Include="Node_Data\**" CopyToPublishDirectory="PreserveNewest" Exclude="Node_Data\*.json" />
     <Content Remove="Node_Data\*.json" />
@@ -75,7 +70,13 @@
   </PropertyGroup>
 
   <PropertyGroup>
+    <GameName Condition=" '$(GameName)'=='' ">Game</GameName>
     <RunWorkingDirectory Condition=" '$(RunWorkingDirectory)' == '' and '$(EnableDefaultRunWorkingDirectory)' != 'false' ">$(MSBuildProjectDirectory)</RunWorkingDirectory>
+    <IsFrameworkPart>false</IsFrameworkPart>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>ARWNI2S.$(GameName)</RootNamespace>
+    <StartupObject>$(RootNamespace).Program</StartupObject>
+    <AssemblyName>$(GameName).Node</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
     <ProjectCapability Include="SupportHierarchyContextSvc" />
@@ -83,6 +84,8 @@
     <ProjectCapability Include="DynamicFileNesting" />
     <ProjectCapability Include="LocalUserSecrets" />
     <ProjectCapability Include="DynamicFileNestingEnabled" />
+
+    <ProjectCapability Include="CustomContentFolder" />
   </ItemGroup>
 
 </Project>

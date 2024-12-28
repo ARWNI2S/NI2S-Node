@@ -1,7 +1,6 @@
 using ARWNI2S.Node;
-using System.Reflection;
 
-namespace EmptyNode
+namespace ARWNI2S.Game
 {
     public class Program
     {

@@ -1,5 +1,4 @@
-﻿
-namespace ARWNI2S.Engine.Cluster.Connection
+﻿namespace ARWNI2S.Cluster.Connection
 {
     internal interface IConnectionCompleteService
     {

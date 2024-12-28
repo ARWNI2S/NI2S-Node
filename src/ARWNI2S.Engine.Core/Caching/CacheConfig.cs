@@ -1,4 +1,6 @@
 ﻿using ARWNI2S.Configuration;
+using ARWNI2S.Engine.Configuration;
+using Newtonsoft.Json;
 
 namespace ARWNI2S.Engine.Caching
 {
@@ -7,6 +9,9 @@ namespace ARWNI2S.Engine.Caching
     /// </summary>
     public partial class CacheConfig : IConfig
     {
+        [JsonIgnore]
+        public string Name => NI2SConfigurationDefaults.GetConfigName<CacheConfig>();
+
         /// <summary>
         /// Gets or sets the default cache time in minutes
         /// </summary>

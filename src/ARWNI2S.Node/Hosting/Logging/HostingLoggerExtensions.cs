@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 
-namespace ARWNI2S.Engine.Diagnostics
+namespace ARWNI2S.Node.Hosting.Logging
 {
     internal static class HostingLoggerExtensions
     {

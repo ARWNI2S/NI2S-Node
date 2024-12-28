@@ -1,9 +1,9 @@
-﻿using ARWNI2S.Engine.Cluster.Diagnostics;
+﻿using ARWNI2S.Cluster.Diagnostics;
 using ARWNI2S.Hosting;
 using ARWNI2S.Hosting.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace ARWNI2S.Engine.Cluster.Hosting
+namespace ARWNI2S.Cluster.Hosting
 {
     /// <summary>
     /// Kestrel <see cref="INiisHostBuilder"/> extensions.

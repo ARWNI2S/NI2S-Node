@@ -1,7 +1,7 @@
 using ARWNI2S.Lifecycle;
 using Microsoft.Extensions.Logging;
 
-namespace ARWNI2S.Engine.Cluster.Lifecycle
+namespace ARWNI2S.Cluster.Lifecycle
 {
     /// <summary>
     /// Implementation of <see cref="IClusterNodeLifecycle"/>.

@@ -1,8 +1,8 @@
-﻿using ARWNI2S.Engine.Cluster.Environment;
+﻿using ARWNI2S.Cluster.Environment;
 using ARWNI2S.Engine.Cluster.Logging;
 using System.Collections.Concurrent;
 
-namespace ARWNI2S.Engine.Cluster.Connection
+namespace ARWNI2S.Cluster.Connection
 {
     internal sealed class ConnectionManager : IHeartbeatHandler
     {
@@ -25,43 +25,43 @@ namespace ARWNI2S.Engine.Cluster.Connection
             _walkCallback = WalkCallback;
         }
 
-        public long GetNewConnectionId() => Interlocked.Increment(ref _lastConnectionId);
+        //public long GetNewConnectionId() => Interlocked.Increment(ref _lastConnectionId);
 
-        /// <summary>
-        /// Connections that have been switched to a different protocol.
-        /// </summary>
-        public ResourceCounter UpgradedConnectionCount { get; }
+        ///// <summary>
+        ///// Connections that have been switched to a different protocol.
+        ///// </summary>
+        //public ResourceCounter UpgradedConnectionCount { get; }
 
         public void OnHeartbeat()
         {
             Walk(_walkCallback);
         }
 
-        private void WalkCallback(ClusterNodeConnection connection)
-        {
-            connection.TickHeartbeat();
-        }
+        //private void WalkCallback(ClusterNodeConnection connection)
+        //{
+        //    connection.TickHeartbeat();
+        //}
 
-        public void AddConnection(long id, ConnectionReference connectionReference)
-        {
-            if (!_connectionReferences.TryAdd(id, connectionReference))
-            {
-                throw new ArgumentException("Unable to add connection.", nameof(id));
-            }
-        }
+        //public void AddConnection(long id, ConnectionReference connectionReference)
+        //{
+        //    if (!_connectionReferences.TryAdd(id, connectionReference))
+        //    {
+        //        throw new ArgumentException("Unable to add connection.", nameof(id));
+        //    }
+        //}
 
-        public void RemoveConnection(long id)
-        {
-            if (!_connectionReferences.TryRemove(id, out var reference))
-            {
-                throw new ArgumentException("Unable to remove connection.", nameof(id));
-            }
+        //public void RemoveConnection(long id)
+        //{
+        //    if (!_connectionReferences.TryRemove(id, out var reference))
+        //    {
+        //        throw new ArgumentException("Unable to remove connection.", nameof(id));
+        //    }
 
-            if (reference.TryGetConnection(out var connection))
-            {
-                connection.Complete();
-            }
-        }
+        //    if (reference.TryGetConnection(out var connection))
+        //    {
+        //        connection.Complete();
+        //    }
+        //}
 
         public void Walk(Action<ClusterNodeConnection> callback)
         {
@@ -85,9 +85,9 @@ namespace ARWNI2S.Engine.Cluster.Connection
             }
         }
 
-        private static ResourceCounter GetCounter(long? number)
-            => number.HasValue
-                ? ResourceCounter.Quota(number.Value)
-                : ResourceCounter.Unlimited;
+        //private static ResourceCounter GetCounter(long? number)
+        //    => number.HasValue
+        //        ? ResourceCounter.Quota(number.Value)
+        //        : ResourceCounter.Unlimited;
     }
 }

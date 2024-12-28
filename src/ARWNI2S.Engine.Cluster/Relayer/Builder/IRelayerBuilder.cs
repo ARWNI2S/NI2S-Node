@@ -1,4 +1,4 @@
-﻿namespace ARWNI2S.Engine.Cluster.Relayer.Builder
+﻿namespace ARWNI2S.Cluster.Relayer.Builder
 {
     public interface IRelayerBuilder
     {

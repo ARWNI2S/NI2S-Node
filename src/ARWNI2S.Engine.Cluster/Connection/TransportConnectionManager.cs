@@ -1,7 +1,7 @@
 ﻿using Pipelines.Sockets.Unofficial;
 using System.Collections.Concurrent;
 
-namespace ARWNI2S.Engine.Cluster.Connection
+namespace ARWNI2S.Cluster.Connection
 {
     internal sealed class TransportConnectionManager
     {

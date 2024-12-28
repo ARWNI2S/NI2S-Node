@@ -1,6 +1,6 @@
 using Orleans;
 
-namespace ARWNI2S.Engine.Cluster.Lifecycle
+namespace ARWNI2S.Cluster.Lifecycle
 {
     /// <summary>
     /// A <see cref="ILifecycleObservable"/> marker type for client lifecycles.

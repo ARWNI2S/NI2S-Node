@@ -1,7 +1,7 @@
 ﻿
 namespace ARWNI2S.Extensibility
 {
-    public interface IEngineModule
+    public interface IEngineModule : IDescriptor
     {
     }
 }

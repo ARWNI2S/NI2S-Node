@@ -1,4 +1,4 @@
-﻿namespace ARWNI2S.Engine.Cluster.Builder
+﻿namespace ARWNI2S.Cluster.Builder
 {
     public interface IClusterNodeBuilder
     {

@@ -1,5 +1,6 @@
 ﻿using ARWNI2S.Engine.Data.Migrations;
 using ARWNI2S.Engine.Extensibility;
+using ARWNI2S.Lifecycle;
 using FluentMigrator;
 using FluentMigrator.Runner;
 using FluentMigrator.Runner.Conventions;
@@ -12,7 +13,10 @@ namespace ARWNI2S.Engine.Data
 {
     public class NI2SDataModule : EngineModule
     {
-        public override int Order => 0;
+        public override int Order => NI2SLifecycleStage.PreCoreInitialize;
+
+        public override string SystemName { get; set; } = nameof(NI2SDataModule);
+        public override string FriendlyName { get; set; } = "Data";
 
         public override void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {

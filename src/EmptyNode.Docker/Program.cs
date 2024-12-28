@@ -1,6 +1,6 @@
 using ARWNI2S.Node;
 
-namespace EmptyNode.Docker
+namespace ARWNI2S.Game
 {
     public class Program
     {

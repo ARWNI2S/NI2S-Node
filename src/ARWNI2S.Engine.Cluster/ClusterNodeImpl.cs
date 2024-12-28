@@ -1,10 +1,9 @@
-﻿using ARWNI2S.Cluster;
+﻿using ARWNI2S.Cluster.Connection;
+using ARWNI2S.Cluster.Diagnostics;
+using ARWNI2S.Cluster.Environment;
+using ARWNI2S.Cluster.Extensibility;
+using ARWNI2S.Cluster.Hosting;
 using ARWNI2S.Diagnostics;
-using ARWNI2S.Engine.Cluster.Connection;
-using ARWNI2S.Engine.Cluster.Diagnostics;
-using ARWNI2S.Engine.Cluster.Environment;
-using ARWNI2S.Engine.Cluster.Extensibility;
-using ARWNI2S.Engine.Cluster.Hosting;
 using ARWNI2S.Engine.Cluster.Logging;
 using ARWNI2S.Engine.Core;
 using ARWNI2S.Extensibility;
@@ -13,7 +12,7 @@ using Microsoft.Extensions.Options;
 using System.Diagnostics;
 using System.IO.Pipelines;
 
-namespace ARWNI2S.Engine.Cluster
+namespace ARWNI2S.Cluster
 {
     internal class ClusterNodeImpl : IClusterNode
     {
@@ -149,340 +148,340 @@ namespace ARWNI2S.Engine.Cluster
 
 
 
-        //        public IFeatureCollection Features { get; }
+    //        public IFeatureCollection Features { get; }
 
-        //        public ClusterNodeOptions Options => ServiceContext.NodeOptions;
+    //        public ClusterNodeOptions Options => ServiceContext.NodeOptions;
 
 
 
-        //        private AddressBindContext? AddressBindContext { get; set; }
+    //        private AddressBindContext? AddressBindContext { get; set; }
 
-        //        public async Task StartAsync<TContext>(IHttpApplication<TContext> application, CancellationToken cancellationToken) where TContext : notnull
-        //        {
-        //            try
-        //            {
-        //                ValidateOptions();
+    //        public async Task StartAsync<TContext>(IHttpApplication<TContext> application, CancellationToken cancellationToken) where TContext : notnull
+    //        {
+    //            try
+    //            {
+    //                ValidateOptions();
 
-        //                if (_hasStarted)
-        //                {
-        //                    // The server has already started and/or has not been cleaned up yet
-        //                    throw new InvalidOperationException(CoreStrings.ServerAlreadyStarted);
-        //                }
-        //                _hasStarted = true;
+    //                if (_hasStarted)
+    //                {
+    //                    // The server has already started and/or has not been cleaned up yet
+    //                    throw new InvalidOperationException(CoreStrings.ServerAlreadyStarted);
+    //                }
+    //                _hasStarted = true;
 
-        //                ServiceContext.Heartbeat?.Start();
+    //                ServiceContext.Heartbeat?.Start();
 
-        //                async Task OnBind(ListenOptions options, CancellationToken onBindCancellationToken)
-        //                {
-        //                    var hasHttp1 = options.Protocols.HasFlag(HttpProtocols.Http1);
-        //                    var hasHttp2 = options.Protocols.HasFlag(HttpProtocols.Http2);
-        //                    var hasHttp3 = options.Protocols.HasFlag(HttpProtocols.Http3);
-        //                    var hasTls = options.IsTls;
+    //                async Task OnBind(ListenOptions options, CancellationToken onBindCancellationToken)
+    //                {
+    //                    var hasHttp1 = options.Protocols.HasFlag(HttpProtocols.Http1);
+    //                    var hasHttp2 = options.Protocols.HasFlag(HttpProtocols.Http2);
+    //                    var hasHttp3 = options.Protocols.HasFlag(HttpProtocols.Http3);
+    //                    var hasTls = options.IsTls;
 
-        //                    // Filter out invalid combinations.
+    //                    // Filter out invalid combinations.
 
-        //                    if (!hasTls)
-        //                    {
-        //                        // Http/1 without TLS, no-op HTTP/2 and 3.
-        //                        if (hasHttp1)
-        //                        {
-        //                            if (options.ProtocolsSetExplicitly)
-        //                            {
-        //                                if (hasHttp2)
-        //                                {
-        //                                    Trace.Http2DisabledWithHttp1AndNoTls(options.EndPoint);
-        //                                }
-        //                                if (hasHttp3)
-        //                                {
-        //                                    Trace.Http3DisabledWithHttp1AndNoTls(options.EndPoint);
-        //                                }
-        //                            }
+    //                    if (!hasTls)
+    //                    {
+    //                        // Http/1 without TLS, no-op HTTP/2 and 3.
+    //                        if (hasHttp1)
+    //                        {
+    //                            if (options.ProtocolsSetExplicitly)
+    //                            {
+    //                                if (hasHttp2)
+    //                                {
+    //                                    Trace.Http2DisabledWithHttp1AndNoTls(options.EndPoint);
+    //                                }
+    //                                if (hasHttp3)
+    //                                {
+    //                                    Trace.Http3DisabledWithHttp1AndNoTls(options.EndPoint);
+    //                                }
+    //                            }
 
-        //                            hasHttp2 = false;
-        //                            hasHttp3 = false;
-        //                        }
-        //                        // Http/3 requires TLS. Note we only let it fall back to HTTP/1, not HTTP/2
-        //                        else if (hasHttp3)
-        //                        {
-        //                            throw new InvalidOperationException("HTTP/3 requires HTTPS.");
-        //                        }
-        //                    }
+    //                            hasHttp2 = false;
+    //                            hasHttp3 = false;
+    //                        }
+    //                        // Http/3 requires TLS. Note we only let it fall back to HTTP/1, not HTTP/2
+    //                        else if (hasHttp3)
+    //                        {
+    //                            throw new InvalidOperationException("HTTP/3 requires HTTPS.");
+    //                        }
+    //                    }
 
-        //                    // Quic isn't registered if it's not supported, throw if we can't fall back to 1 or 2
-        //                    if (hasHttp3 && _multiplexedTransportFactories.Count == 0 && !(hasHttp1 || hasHttp2))
-        //                    {
-        //                        throw new InvalidOperationException("Unable to bind an HTTP/3 endpoint. This could be because QUIC has not been configured using UseQuic, or the platform doesn't support QUIC or HTTP/3.");
-        //                    }
+    //                    // Quic isn't registered if it's not supported, throw if we can't fall back to 1 or 2
+    //                    if (hasHttp3 && _multiplexedTransportFactories.Count == 0 && !(hasHttp1 || hasHttp2))
+    //                    {
+    //                        throw new InvalidOperationException("Unable to bind an HTTP/3 endpoint. This could be because QUIC has not been configured using UseQuic, or the platform doesn't support QUIC or HTTP/3.");
+    //                    }
 
-        //                    // Disable adding alt-svc header if endpoint has configured not to or there is no
-        //                    // multiplexed transport factory, which happens if QUIC isn't supported.
-        //                    var addAltSvcHeader = !options.DisableAltSvcHeader && _multiplexedTransportFactories.Count > 0;
+    //                    // Disable adding alt-svc header if endpoint has configured not to or there is no
+    //                    // multiplexed transport factory, which happens if QUIC isn't supported.
+    //                    var addAltSvcHeader = !options.DisableAltSvcHeader && _multiplexedTransportFactories.Count > 0;
 
-        //                    var configuredEndpoint = options.EndPoint;
+    //                    var configuredEndpoint = options.EndPoint;
 
-        //                    // Add the HTTP middleware as the terminal connection middleware
-        //                    if (hasHttp1 || hasHttp2
-        //                        || options.Protocols == HttpProtocols.None) // TODO a test fails because it doesn't throw an exception in the right place
-        //                                                                    // when there is no HttpProtocols in KestrelServer, can we remove/change the test?
-        //                    {
-        //                        if (_transportFactories.Count == 0)
-        //                        {
-        //                            throw new InvalidOperationException($"Cannot start HTTP/1.x or HTTP/2 server if no {nameof(IConnectionListenerFactory)} is registered.");
-        //                        }
+    //                    // Add the HTTP middleware as the terminal connection middleware
+    //                    if (hasHttp1 || hasHttp2
+    //                        || options.Protocols == HttpProtocols.None) // TODO a test fails because it doesn't throw an exception in the right place
+    //                                                                    // when there is no HttpProtocols in KestrelServer, can we remove/change the test?
+    //                    {
+    //                        if (_transportFactories.Count == 0)
+    //                        {
+    //                            throw new InvalidOperationException($"Cannot start HTTP/1.x or HTTP/2 server if no {nameof(IConnectionListenerFactory)} is registered.");
+    //                        }
 
-        //                        options.UseHttpServer(ServiceContext, application, options.Protocols, addAltSvcHeader);
-        //                        var connectionDelegate = options.Build();
+    //                        options.UseHttpServer(ServiceContext, application, options.Protocols, addAltSvcHeader);
+    //                        var connectionDelegate = options.Build();
 
-        //                        // Add the connection limit middleware
-        //                        connectionDelegate = EnforceConnectionLimit(connectionDelegate, Options.Limits.MaxConcurrentConnections, Trace, ServiceContext.Metrics);
+    //                        // Add the connection limit middleware
+    //                        connectionDelegate = EnforceConnectionLimit(connectionDelegate, Options.Limits.MaxConcurrentConnections, Trace, ServiceContext.Metrics);
 
-        //                        options.EndPoint = await _transportManager.BindAsync(configuredEndpoint, connectionDelegate, options.EndpointConfig, onBindCancellationToken).ConfigureAwait(false);
-        //                    }
+    //                        options.EndPoint = await _transportManager.BindAsync(configuredEndpoint, connectionDelegate, options.EndpointConfig, onBindCancellationToken).ConfigureAwait(false);
+    //                    }
 
-        //                    if (hasHttp3 && _multiplexedTransportFactories.Count > 0)
-        //                    {
-        //                        // Check if a previous transport has changed the endpoint. If it has then the endpoint is dynamic and we can't guarantee it will work for other transports.
-        //                        // For more details, see https://github.com/dotnet/aspnetcore/issues/42982
-        //                        if (!configuredEndpoint.Equals(options.EndPoint))
-        //                        {
-        //                            Trace.LogError(CoreStrings.DynamicPortOnMultipleTransportsNotSupported);
-        //                        }
-        //                        else
-        //                        {
-        //                            options.UseHttp3Server(ServiceContext, application, options.Protocols, addAltSvcHeader);
-        //                            var multiplexedConnectionDelegate = ((IMultiplexedConnectionBuilder)options).Build();
+    //                    if (hasHttp3 && _multiplexedTransportFactories.Count > 0)
+    //                    {
+    //                        // Check if a previous transport has changed the endpoint. If it has then the endpoint is dynamic and we can't guarantee it will work for other transports.
+    //                        // For more details, see https://github.com/dotnet/aspnetcore/issues/42982
+    //                        if (!configuredEndpoint.Equals(options.EndPoint))
+    //                        {
+    //                            Trace.LogError(CoreStrings.DynamicPortOnMultipleTransportsNotSupported);
+    //                        }
+    //                        else
+    //                        {
+    //                            options.UseHttp3Server(ServiceContext, application, options.Protocols, addAltSvcHeader);
+    //                            var multiplexedConnectionDelegate = ((IMultiplexedConnectionBuilder)options).Build();
 
-        //                            // Add the connection limit middleware
-        //                            multiplexedConnectionDelegate = EnforceConnectionLimit(multiplexedConnectionDelegate, Options.Limits.MaxConcurrentConnections, Trace, ServiceContext.Metrics);
+    //                            // Add the connection limit middleware
+    //                            multiplexedConnectionDelegate = EnforceConnectionLimit(multiplexedConnectionDelegate, Options.Limits.MaxConcurrentConnections, Trace, ServiceContext.Metrics);
 
-        //                            options.EndPoint = await _transportManager.BindAsync(configuredEndpoint, multiplexedConnectionDelegate, options, onBindCancellationToken).ConfigureAwait(false);
-        //                        }
-        //                    }
-        //                }
+    //                            options.EndPoint = await _transportManager.BindAsync(configuredEndpoint, multiplexedConnectionDelegate, options, onBindCancellationToken).ConfigureAwait(false);
+    //                        }
+    //                    }
+    //                }
 
-        //                AddressBindContext = new AddressBindContext(_serverAddresses, Options, Trace, OnBind);
+    //                AddressBindContext = new AddressBindContext(_serverAddresses, Options, Trace, OnBind);
 
-        //                await BindAsync(cancellationToken).ConfigureAwait(false);
-        //            }
-        //            catch
-        //            {
-        //                // Don't log the error https://github.com/dotnet/aspnetcore/issues/29801
-        //                Dispose();
-        //                throw;
-        //            }
+    //                await BindAsync(cancellationToken).ConfigureAwait(false);
+    //            }
+    //            catch
+    //            {
+    //                // Don't log the error https://github.com/dotnet/aspnetcore/issues/29801
+    //                Dispose();
+    //                throw;
+    //            }
 
-        //            // Register the options with the event source so it can be logged (if necessary)
-        //            KestrelEventSource.Log.AddNodeOptions(Options);
-        //        }
+    //            // Register the options with the event source so it can be logged (if necessary)
+    //            KestrelEventSource.Log.AddNodeOptions(Options);
+    //        }
 
-        //        // Graceful shutdown if possible
-        //        public async Task StopAsync(CancellationToken cancellationToken)
-        //        {
-        //            if (Interlocked.Exchange(ref _stopping, 1) == 1)
-        //            {
-        //                await _stoppedTcs.Task.ConfigureAwait(false);
-        //                return;
-        //            }
+    //        // Graceful shutdown if possible
+    //        public async Task StopAsync(CancellationToken cancellationToken)
+    //        {
+    //            if (Interlocked.Exchange(ref _stopping, 1) == 1)
+    //            {
+    //                await _stoppedTcs.Task.ConfigureAwait(false);
+    //                return;
+    //            }
 
-        //            // Stop background heartbeat first.
-        //            // The heartbeat running as the server is shutting down could produce unexpected behavior.
-        //            ServiceContext.Heartbeat?.Dispose();
+    //            // Stop background heartbeat first.
+    //            // The heartbeat running as the server is shutting down could produce unexpected behavior.
+    //            ServiceContext.Heartbeat?.Dispose();
 
-        //            _stopCts.Cancel();
+    //            _stopCts.Cancel();
 
-        //#pragma warning disable CA2016 // Don't use cancellationToken when acquiring the semaphore. Dispose calls this with a pre-canceled token.
-        //            await _bindSemaphore.WaitAsync().ConfigureAwait(false);
-        //#pragma warning restore CA2016
+    //#pragma warning disable CA2016 // Don't use cancellationToken when acquiring the semaphore. Dispose calls this with a pre-canceled token.
+    //            await _bindSemaphore.WaitAsync().ConfigureAwait(false);
+    //#pragma warning restore CA2016
 
-        //            try
-        //            {
-        //                await _transportManager.StopAsync(cancellationToken).ConfigureAwait(false);
-        //            }
-        //            catch (Exception ex)
-        //            {
-        //                _stoppedTcs.TrySetException(ex);
-        //                throw;
-        //            }
-        //            finally
-        //            {
-        //                _configChangedRegistration?.Dispose();
-        //                _stopCts.Dispose();
-        //                _bindSemaphore.Release();
-        //            }
+    //            try
+    //            {
+    //                await _transportManager.StopAsync(cancellationToken).ConfigureAwait(false);
+    //            }
+    //            catch (Exception ex)
+    //            {
+    //                _stoppedTcs.TrySetException(ex);
+    //                throw;
+    //            }
+    //            finally
+    //            {
+    //                _configChangedRegistration?.Dispose();
+    //                _stopCts.Dispose();
+    //                _bindSemaphore.Release();
+    //            }
 
-        //            _stoppedTcs.TrySetResult();
+    //            _stoppedTcs.TrySetResult();
 
-        //            // Remove the options from the event source so we don't have a leak if
-        //            // the server is stopped and started again in the same process.
-        //            KestrelEventSource.Log.RemoveNodeOptions(Options);
-        //        }
+    //            // Remove the options from the event source so we don't have a leak if
+    //            // the server is stopped and started again in the same process.
+    //            KestrelEventSource.Log.RemoveNodeOptions(Options);
+    //        }
 
-        //        // Ungraceful shutdown
-        //        public void Dispose()
-        //        {
-        //            StopAsync(new CancellationToken(canceled: true)).GetAwaiter().GetResult();
-        //        }
+    //        // Ungraceful shutdown
+    //        public void Dispose()
+    //        {
+    //            StopAsync(new CancellationToken(canceled: true)).GetAwaiter().GetResult();
+    //        }
 
-        //        private async Task BindAsync(CancellationToken cancellationToken)
-        //        {
-        //            await _bindSemaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
+    //        private async Task BindAsync(CancellationToken cancellationToken)
+    //        {
+    //            await _bindSemaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
 
-        //            try
-        //            {
-        //                if (_stopping == 1)
-        //                {
-        //                    throw new InvalidOperationException("Kestrel has already been stopped.");
-        //                }
+    //            try
+    //            {
+    //                if (_stopping == 1)
+    //                {
+    //                    throw new InvalidOperationException("Kestrel has already been stopped.");
+    //                }
 
-        //                IChangeToken? reloadToken = null;
+    //                IChangeToken? reloadToken = null;
 
-        //                _serverAddresses.InternalCollection.PreventPublicMutation();
+    //                _serverAddresses.InternalCollection.PreventPublicMutation();
 
-        //                if (Options.ConfigurationLoader?.ReloadOnChange == true && (!_serverAddresses.PreferHostingUrls || _serverAddresses.InternalCollection.Count == 0))
-        //                {
-        //                    reloadToken = Options.ConfigurationLoader.GetReloadToken();
-        //                }
+    //                if (Options.ConfigurationLoader?.ReloadOnChange == true && (!_serverAddresses.PreferHostingUrls || _serverAddresses.InternalCollection.Count == 0))
+    //                {
+    //                    reloadToken = Options.ConfigurationLoader.GetReloadToken();
+    //                }
 
-        //                Options.ConfigurationLoader?.LoadInternal();
-        //                Options.ConfigurationLoader?.ProcessEndpointsToAdd();
+    //                Options.ConfigurationLoader?.LoadInternal();
+    //                Options.ConfigurationLoader?.ProcessEndpointsToAdd();
 
-        //                await AddressBinder.BindAsync(Options.GetListenOptions(), AddressBindContext!, _httpsConfigurationService.UseHttpsWithDefaults, cancellationToken).ConfigureAwait(false);
-        //                _configChangedRegistration = reloadToken?.RegisterChangeCallback(TriggerRebind, this);
-        //            }
-        //            finally
-        //            {
-        //                _bindSemaphore.Release();
-        //            }
-        //        }
+    //                await AddressBinder.BindAsync(Options.GetListenOptions(), AddressBindContext!, _httpsConfigurationService.UseHttpsWithDefaults, cancellationToken).ConfigureAwait(false);
+    //                _configChangedRegistration = reloadToken?.RegisterChangeCallback(TriggerRebind, this);
+    //            }
+    //            finally
+    //            {
+    //                _bindSemaphore.Release();
+    //            }
+    //        }
 
-        //        private static void TriggerRebind(object? state)
-        //        {
-        //            if (state is KestrelServerImpl server)
-        //            {
-        //                _ = server.RebindAsync();
-        //            }
-        //        }
+    //        private static void TriggerRebind(object? state)
+    //        {
+    //            if (state is KestrelServerImpl server)
+    //            {
+    //                _ = server.RebindAsync();
+    //            }
+    //        }
 
-        //        private async Task RebindAsync()
-        //        {
-        //            // Prevents from interfering with shutdown or other rebinds.
-        //            // All exceptions are caught and logged at the critical level.
-        //            await _bindSemaphore.WaitAsync();
+    //        private async Task RebindAsync()
+    //        {
+    //            // Prevents from interfering with shutdown or other rebinds.
+    //            // All exceptions are caught and logged at the critical level.
+    //            await _bindSemaphore.WaitAsync();
 
-        //            IChangeToken? reloadToken = null;
+    //            IChangeToken? reloadToken = null;
 
-        //            try
-        //            {
-        //                if (_stopping == 1)
-        //                {
-        //                    return;
-        //                }
+    //            try
+    //            {
+    //                if (_stopping == 1)
+    //                {
+    //                    return;
+    //                }
 
-        //                Debug.Assert(Options.ConfigurationLoader != null, "Rebind can only happen when there is a ConfigurationLoader.");
+    //                Debug.Assert(Options.ConfigurationLoader != null, "Rebind can only happen when there is a ConfigurationLoader.");
 
-        //                reloadToken = Options.ConfigurationLoader.GetReloadToken();
-        //                var (endpointsToStop, endpointsToStart) = Options.ConfigurationLoader.Reload();
+    //                reloadToken = Options.ConfigurationLoader.GetReloadToken();
+    //                var (endpointsToStop, endpointsToStart) = Options.ConfigurationLoader.Reload();
 
-        //                Trace.LogDebug("Config reload token fired. Checking for changes...");
+    //                Trace.LogDebug("Config reload token fired. Checking for changes...");
 
-        //                if (endpointsToStop.Count > 0)
-        //                {
-        //                    var urlsToStop = endpointsToStop.Select(lo => lo.EndpointConfig!.Url);
-        //                    if (Trace.IsEnabled(LogLevel.Information))
-        //                    {
-        //                        Trace.LogInformation("Config changed. Stopping the following endpoints: '{endpoints}'", string.Join("', '", urlsToStop));
-        //                    }
+    //                if (endpointsToStop.Count > 0)
+    //                {
+    //                    var urlsToStop = endpointsToStop.Select(lo => lo.EndpointConfig!.Url);
+    //                    if (Trace.IsEnabled(LogLevel.Information))
+    //                    {
+    //                        Trace.LogInformation("Config changed. Stopping the following endpoints: '{endpoints}'", string.Join("', '", urlsToStop));
+    //                    }
 
-        //                    // 5 is the default value for WebHost's "shutdownTimeoutSeconds", so use that.
-        //                    using var cts = CancellationTokenSource.CreateLinkedTokenSource(_stopCts.Token);
-        //                    cts.CancelAfter(TimeSpan.FromSeconds(5));
+    //                    // 5 is the default value for WebHost's "shutdownTimeoutSeconds", so use that.
+    //                    using var cts = CancellationTokenSource.CreateLinkedTokenSource(_stopCts.Token);
+    //                    cts.CancelAfter(TimeSpan.FromSeconds(5));
 
-        //                    // TODO: It would be nice to start binding to new endpoints immediately and reconfigured endpoints as soon
-        //                    // as the unbinding finished for the given endpoint rather than wait for all transports to unbind first.
-        //                    var configsToStop = new List<EndpointConfig>(endpointsToStop.Count);
-        //                    foreach (var lo in endpointsToStop)
-        //                    {
-        //                        configsToStop.Add(lo.EndpointConfig!);
-        //                    }
-        //                    await _transportManager.StopEndpointsAsync(configsToStop, cts.Token).ConfigureAwait(false);
+    //                    // TODO: It would be nice to start binding to new endpoints immediately and reconfigured endpoints as soon
+    //                    // as the unbinding finished for the given endpoint rather than wait for all transports to unbind first.
+    //                    var configsToStop = new List<EndpointConfig>(endpointsToStop.Count);
+    //                    foreach (var lo in endpointsToStop)
+    //                    {
+    //                        configsToStop.Add(lo.EndpointConfig!);
+    //                    }
+    //                    await _transportManager.StopEndpointsAsync(configsToStop, cts.Token).ConfigureAwait(false);
 
-        //                    foreach (var listenOption in endpointsToStop)
-        //                    {
-        //                        Options.OptionsInUse.Remove(listenOption);
-        //                        _serverAddresses.InternalCollection.Remove(listenOption.GetDisplayName());
-        //                    }
-        //                }
+    //                    foreach (var listenOption in endpointsToStop)
+    //                    {
+    //                        Options.OptionsInUse.Remove(listenOption);
+    //                        _serverAddresses.InternalCollection.Remove(listenOption.GetDisplayName());
+    //                    }
+    //                }
 
-        //                if (endpointsToStart.Count > 0)
-        //                {
-        //                    var urlsToStart = endpointsToStart.Select(lo => lo.EndpointConfig!.Url);
-        //                    if (Trace.IsEnabled(LogLevel.Information))
-        //                    {
-        //                        Trace.LogInformation("Config changed. Starting the following endpoints: '{endpoints}'", string.Join("', '", urlsToStart));
-        //                    }
+    //                if (endpointsToStart.Count > 0)
+    //                {
+    //                    var urlsToStart = endpointsToStart.Select(lo => lo.EndpointConfig!.Url);
+    //                    if (Trace.IsEnabled(LogLevel.Information))
+    //                    {
+    //                        Trace.LogInformation("Config changed. Starting the following endpoints: '{endpoints}'", string.Join("', '", urlsToStart));
+    //                    }
 
-        //                    foreach (var listenOption in endpointsToStart)
-        //                    {
-        //                        try
-        //                        {
-        //                            await listenOption.BindAsync(AddressBindContext!, _stopCts.Token).ConfigureAwait(false);
-        //                        }
-        //                        catch (Exception ex)
-        //                        {
-        //                            if (Trace.IsEnabled(LogLevel.Critical))
-        //                            {
-        //                                Trace.LogCritical(0, ex, "Unable to bind to '{url}' on config reload.", listenOption.EndpointConfig!.Url);
-        //                            }
-        //                        }
-        //                    }
-        //                }
-        //            }
-        //            catch (Exception ex)
-        //            {
-        //                Trace.LogCritical(0, ex, "Unable to reload configuration.");
-        //            }
-        //            finally
-        //            {
-        //                _configChangedRegistration = reloadToken?.RegisterChangeCallback(TriggerRebind, this);
-        //                _bindSemaphore.Release();
-        //            }
-        //        }
+    //                    foreach (var listenOption in endpointsToStart)
+    //                    {
+    //                        try
+    //                        {
+    //                            await listenOption.BindAsync(AddressBindContext!, _stopCts.Token).ConfigureAwait(false);
+    //                        }
+    //                        catch (Exception ex)
+    //                        {
+    //                            if (Trace.IsEnabled(LogLevel.Critical))
+    //                            {
+    //                                Trace.LogCritical(0, ex, "Unable to bind to '{url}' on config reload.", listenOption.EndpointConfig!.Url);
+    //                            }
+    //                        }
+    //                    }
+    //                }
+    //            }
+    //            catch (Exception ex)
+    //            {
+    //                Trace.LogCritical(0, ex, "Unable to reload configuration.");
+    //            }
+    //            finally
+    //            {
+    //                _configChangedRegistration = reloadToken?.RegisterChangeCallback(TriggerRebind, this);
+    //                _bindSemaphore.Release();
+    //            }
+    //        }
 
-        //        private void ValidateOptions()
-        //        {
-        //            if (Options.Limits.MaxRequestBufferSize.HasValue &&
-        //                Options.Limits.MaxRequestBufferSize < Options.Limits.MaxRequestLineSize)
-        //            {
-        //                throw new InvalidOperationException(
-        //                    CoreStrings.FormatMaxRequestBufferSmallerThanRequestLineBuffer(Options.Limits.MaxRequestBufferSize.Value, Options.Limits.MaxRequestLineSize));
-        //            }
+    //        private void ValidateOptions()
+    //        {
+    //            if (Options.Limits.MaxRequestBufferSize.HasValue &&
+    //                Options.Limits.MaxRequestBufferSize < Options.Limits.MaxRequestLineSize)
+    //            {
+    //                throw new InvalidOperationException(
+    //                    CoreStrings.FormatMaxRequestBufferSmallerThanRequestLineBuffer(Options.Limits.MaxRequestBufferSize.Value, Options.Limits.MaxRequestLineSize));
+    //            }
 
-        //            if (Options.Limits.MaxRequestBufferSize.HasValue &&
-        //                Options.Limits.MaxRequestBufferSize < Options.Limits.MaxRequestHeadersTotalSize)
-        //            {
-        //                throw new InvalidOperationException(
-        //                    CoreStrings.FormatMaxRequestBufferSmallerThanRequestHeaderBuffer(Options.Limits.MaxRequestBufferSize.Value, Options.Limits.MaxRequestHeadersTotalSize));
-        //            }
-        //        }
+    //            if (Options.Limits.MaxRequestBufferSize.HasValue &&
+    //                Options.Limits.MaxRequestBufferSize < Options.Limits.MaxRequestHeadersTotalSize)
+    //            {
+    //                throw new InvalidOperationException(
+    //                    CoreStrings.FormatMaxRequestBufferSmallerThanRequestHeaderBuffer(Options.Limits.MaxRequestBufferSize.Value, Options.Limits.MaxRequestHeadersTotalSize));
+    //            }
+    //        }
 
-        //        private static ConnectionDelegate EnforceConnectionLimit(ConnectionDelegate innerDelegate, long? connectionLimit, ClusterTrace trace, ClusterNodeMetrics metrics)
-        //        {
-        //            if (!connectionLimit.HasValue)
-        //            {
-        //                return innerDelegate;
-        //            }
+    //        private static ConnectionDelegate EnforceConnectionLimit(ConnectionDelegate innerDelegate, long? connectionLimit, ClusterTrace trace, ClusterNodeMetrics metrics)
+    //        {
+    //            if (!connectionLimit.HasValue)
+    //            {
+    //                return innerDelegate;
+    //            }
 
-        //            return new ConnectionLimitMiddleware<ConnectionContext>(c => innerDelegate(c), connectionLimit.Value, trace, metrics).OnConnectionAsync;
-        //        }
+    //            return new ConnectionLimitMiddleware<ConnectionContext>(c => innerDelegate(c), connectionLimit.Value, trace, metrics).OnConnectionAsync;
+    //        }
 
-        //        private static MultiplexedConnectionDelegate EnforceConnectionLimit(MultiplexedConnectionDelegate innerDelegate, long? connectionLimit, ClusterTrace trace, ClusterNodeMetrics metrics)
-        //        {
-        //            if (!connectionLimit.HasValue)
-        //            {
-        //                return innerDelegate;
-        //            }
+    //        private static MultiplexedConnectionDelegate EnforceConnectionLimit(MultiplexedConnectionDelegate innerDelegate, long? connectionLimit, ClusterTrace trace, ClusterNodeMetrics metrics)
+    //        {
+    //            if (!connectionLimit.HasValue)
+    //            {
+    //                return innerDelegate;
+    //            }
 
-        //            return new ConnectionLimitMiddleware<MultiplexedConnectionContext>(c => innerDelegate(c), connectionLimit.Value, trace, metrics).OnConnectionAsync;
-        //        }
-        //    }
-    }
+    //            return new ConnectionLimitMiddleware<MultiplexedConnectionContext>(c => innerDelegate(c), connectionLimit.Value, trace, metrics).OnConnectionAsync;
+    //        }
+    //    }
+}

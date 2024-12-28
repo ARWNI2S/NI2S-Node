@@ -6,9 +6,29 @@ namespace ARWNI2S.Lifecycle
     public static class NI2SLifecycleStage
     {
         /// <summary>
-        /// First valid stage in service's lifecycle
+        /// First valid stage in system's lifecycle
         /// </summary>
         public const int First = int.MinValue;
+
+        /// <summary>
+        /// Early host initialization
+        /// </summary>
+        public const int EarlyInitialize = -1;
+
+        /// <summary>
+        /// Core services
+        /// </summary>
+        public const int PreCoreInitialize = 10;
+
+        /// <summary>
+        /// Core services
+        /// </summary>
+        public const int CoreInitialize = 100;
+
+        /// <summary>
+        /// Core services
+        /// </summary>
+        public const int PostCoreInitialize = 1000;
 
         /// <summary>
         /// Initialize runtime

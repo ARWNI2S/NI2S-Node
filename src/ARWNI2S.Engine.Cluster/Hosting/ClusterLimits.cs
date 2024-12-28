@@ -1,4 +1,4 @@
-﻿namespace ARWNI2S.Engine.Cluster.Hosting
+﻿namespace ARWNI2S.Cluster.Hosting
 {
     public class ClusterLimits
     {

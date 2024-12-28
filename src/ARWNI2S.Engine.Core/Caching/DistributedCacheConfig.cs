@@ -1,4 +1,5 @@
 ﻿using ARWNI2S.Configuration;
+using ARWNI2S.Engine.Configuration;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System.Runtime.Serialization;
@@ -25,6 +26,9 @@ namespace ARWNI2S.Engine.Caching
     /// </summary>
     public partial class DistributedCacheConfig : IConfig
     {
+        [JsonIgnore]
+        public string Name => NI2SConfigurationDefaults.GetConfigName<DistributedCacheConfig>();
+
         /// <summary>
         /// Gets or sets a distributed cache type
         /// </summary>

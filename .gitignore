@@ -377,6 +377,27 @@ MigrationBackup/
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
 
+# SQL Server files
+Node_Data/*.mdf
+Node_Data/*.ldf
+
+#############
+## Windows detritus
+#############
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Mac crap
+.DS_Store
+
 #######################
 ## NI2S specific
 ###########
@@ -413,11 +434,38 @@ src/EmptyNode/Content/images/uploaded/*
 !src/EmptyNode/Content/images/uploaded/placeholder.txt
 src/EmptyNode/Content/files/exportimport/*
 !src/EmptyNode/Content/files/exportimport/Index.htm
-src/EmptyNode/Content/lib_npm/cldr-data/main/*
-!src/EmptyNode/Content/lib_npm/cldr-data/main/en/
-!src/EmptyNode/Content/lib_npm/cldr-data/main/main.zip
-src/EmptyNode/Content/sitemaps/*
-!src/EmptyNode/Content/sitemaps/Index.htm
+
+src/EmptyNode.Docker/.config/*
+src/EmptyNode.Docker/Node_Data/Gmail/AuthStore/*
+!src/EmptyNode.Docker/Node_Data/Gmail/AuthStore/Index.htm
+src/EmptyNode.Docker/Node_Data/browscap.xml
+src/EmptyNode.Docker/Node_Data/additional.crawlers.xml
+src/EmptyNode.Docker/Node_Data/installedPlugins.json
+src/EmptyNode.Docker/Node_Data/plugins.json
+src/EmptyNode.Docker/Node_Data/dataSettings.json
+src/EmptyNode.Docker/Node_Data/appsettings.json
+src/EmptyNode.Docker/Node_Data/TempUploads/*
+!src/EmptyNode.Docker/Node_Data/TempUploads/Index.htm
+src/EmptyNode.Docker/Node_Data/DataProtectionKeys/*
+!src/EmptyNode.Docker/Node_Data/DataProtectionKeys/Index.htm
+src/EmptyNode.Docker/engine/*
+src/EmptyNode.Docker/plugins/*
+!src/EmptyNode.Docker/plugins/Uploaded
+src/EmptyNode.Docker/plugins/Uploaded/*
+!src/EmptyNode.Docker/plugins/Uploaded/placeholder.txt
+src/EmptyNode.Docker/Content/.well-known/*
+!src/EmptyNode.Docker/Content/.well-known/Index.htm
+src/EmptyNode.Docker/Content/bundles/*
+!src/EmptyNode.Docker/Content/bundles/Index.htm
+src/EmptyNode.Docker/Content/db_backups/*.bak
+!src/EmptyNode.Docker/Content/db_backups/Index.htm
+src/EmptyNode.Docker/Content/images/thumbs/*
+!src/EmptyNode.Docker/Content/images/thumbs/placeholder.txt
+src/EmptyNode.Docker/Content/images/uploaded/*
+!src/EmptyNode.Docker/Content/images/uploaded/placeholder.txt
+src/EmptyNode.Docker/Content/files/exportimport/*
+!src/EmptyNode.Docker/Content/files/exportimport/Index.htm
+
 src/packages/*
 
 src/OLD_VERSION

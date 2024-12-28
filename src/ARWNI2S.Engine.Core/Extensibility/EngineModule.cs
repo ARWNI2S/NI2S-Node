@@ -10,7 +10,10 @@ namespace ARWNI2S.Engine.Extensibility
 {
     public abstract class EngineModule : EngineModuleBase, IEngineModule
     {
-        protected ITypeFinder TypeFinder => Singleton<ITypeFinder>.Instance;
+        public abstract string SystemName { get; set; }
+        public abstract string FriendlyName { get; set; }
+
+        protected readonly ITypeFinder TypeFinder = Singleton<ITypeFinder>.Instance;
 
         public override void ConfigureEngine(IEngineBuilder engineBuilder)
         {
@@ -23,7 +26,7 @@ namespace ARWNI2S.Engine.Extensibility
         public virtual int Order => NI2SLifecycleStage.RuntimeInitialize;
 
         public abstract void ConfigureServices(IServiceCollection services, IConfiguration configuration);
-        
+
         public abstract void ConfigureEngine(IEngineBuilder engineBuilder);
 
         public virtual void Participate(IEngineLifecycle lifecycle)

@@ -1,6 +1,6 @@
 ﻿using ARWNI2S.Extensibility;
 
-namespace ARWNI2S.Engine.Cluster.Extensibility
+namespace ARWNI2S.Cluster.Extensibility
 {
     internal static class EngineModuleManagerExtensions
     {

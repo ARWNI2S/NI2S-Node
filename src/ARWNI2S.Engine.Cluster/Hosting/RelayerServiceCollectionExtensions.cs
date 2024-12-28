@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace ARWNI2S.Engine.Cluster.Hosting
+namespace ARWNI2S.Cluster.Hosting
 {
     public static class RelayerServiceCollectionExtensions
     {

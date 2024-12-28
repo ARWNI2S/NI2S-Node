@@ -1,4 +1,4 @@
-﻿namespace ARWNI2S.Engine.Cluster.Diagnostics
+﻿namespace ARWNI2S.Cluster.Diagnostics
 {
     internal sealed class ConnectionMetricsContext
     {
