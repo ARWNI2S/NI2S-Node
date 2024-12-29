@@ -34,10 +34,15 @@
 
   <ItemGroup>
     <Compile Remove="ClusterNodeExtensions.cs" />
-    <Compile Remove="ClusterNodeImpl.cs" />
     <Compile Remove="DateHeaderValueManager.cs" />
     <Compile Remove="Lifecycle\TransitionContext.cs" />
     <Compile Remove="ServiceContext.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Hosting\ClusterLimits.cs" />
+    <Compile Include="Hosting\ClusterNodeHostBuilderExtensions.cs" />
+    <Compile Include="Hosting\ClusterNodeOptions.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -46,6 +51,10 @@
 
   <ItemGroup>
     <ProjectReference Include="$(SourceRoot)src\ARWNI2S.Engine.Core\ARWNI2S.Engine.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Settings\" />
   </ItemGroup>
 
 </Project>

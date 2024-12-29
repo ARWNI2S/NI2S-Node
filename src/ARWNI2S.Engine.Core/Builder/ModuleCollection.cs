@@ -109,7 +109,7 @@ namespace ARWNI2S.Engine.Builder
         }
 
         /// <inheritdoc />
-        public TModule Get<TModule>() where TModule : class,  IEngineModule
+        public TModule Get<TModule>() where TModule : class, IEngineModule
         {
             if (typeof(TModule).IsValueType)
             {
@@ -126,7 +126,7 @@ namespace ARWNI2S.Engine.Builder
         }
 
         /// <inheritdoc />
-        public void Set<TModule>(TModule instance) where TModule : class,  IEngineModule
+        public void Set<TModule>(TModule instance) where TModule : class, IEngineModule
         {
             this[typeof(TModule)] = instance;
         }

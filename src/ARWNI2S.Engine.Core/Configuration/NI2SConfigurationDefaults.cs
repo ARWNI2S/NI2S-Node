@@ -12,9 +12,9 @@ namespace ARWNI2S.Engine.Configuration
         {
             var name = typeof(TConfig).Name;
             if (name.EndsWith("Config"))
-                name.Replace("Config", "");
+                name = name.Replace("Config", "");
             else if (name.EndsWith("Configuration"))
-                name.Replace("Configuration", "");
+                name = name.Replace("Configuration", "");
 
             return name;
         }

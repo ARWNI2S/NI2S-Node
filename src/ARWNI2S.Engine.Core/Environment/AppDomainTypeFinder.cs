@@ -11,7 +11,7 @@ namespace ARWNI2S.Engine.Environment
     /// certain patterns are investigated and an optional list of assemblies
     /// referenced by <see cref="AssemblyNames"/> are always investigated.
     /// </summary>
-    [Obsolete($"{nameof(AppDomain)} is obsolete since .net7.0 version, use {nameof(ContextTypeFinder)} instead.")]
+    //[Obsolete($"{nameof(AppDomain)} is obsolete since .net7.0 version, use {nameof(ContextTypeFinder)} instead.")]
     public partial class AppDomainTypeFinder : ITypeFinder
     {
         #region Fields
@@ -188,7 +188,7 @@ namespace ARWNI2S.Engine.Environment
                     {
                         types = a.GetTypes();
                     }
-                    catch
+                    catch (Exception)
                     {
                         //Entity Framework 6 doesn't allow getting types (throws an exception)
                         if (!_ignoreReflectionErrors)

@@ -6,7 +6,7 @@
     /// </summary>
     /// <typeparam name="TResource"></typeparam>
     public interface IResourceManager<TResource> //: IEnumerable<TResource>
-        where TResource : IResource 
+        where TResource : IResource
     {
         /// <summary>
         /// 

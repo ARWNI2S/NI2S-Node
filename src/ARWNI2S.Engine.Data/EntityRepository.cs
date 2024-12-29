@@ -324,7 +324,7 @@ namespace ARWNI2S.Engine.Data
                 var query = AddDeletedFilter(Table, includeDeleted);
                 query = func != null ? func(query) : query;
 
-                return query.ToList();
+                return [.. query];
             }
 
             return GetEntities(getAll, getCacheKey);

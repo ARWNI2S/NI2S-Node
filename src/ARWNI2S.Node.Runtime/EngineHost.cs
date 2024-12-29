@@ -7,14 +7,14 @@ namespace ARWNI2S.Node
 {
     internal class EngineHost : INiisEngine
     {
-        private INiisEngine engine;
-        private ILogger logger;
-        private DiagnosticListener diagnosticListener;
-        private ActivitySource activitySource;
-        private DistributedContextPropagator propagator;
-        private INiisContextFactory contextFactory;
-        private object log;
-        private HostingMetrics hostingMetrics;
+        private readonly INiisEngine engine;
+        private readonly ILogger logger;
+        private readonly DiagnosticListener diagnosticListener;
+        private readonly ActivitySource activitySource;
+        private readonly DistributedContextPropagator propagator;
+        private readonly INiisContextFactory contextFactory;
+        private readonly object log;
+        private readonly HostingMetrics hostingMetrics;
 
         public EngineHost(INiisEngine engine, ILogger logger, DiagnosticListener diagnosticListener, ActivitySource activitySource, DistributedContextPropagator propagator, INiisContextFactory contextFactory, object log, HostingMetrics hostingMetrics)
         {

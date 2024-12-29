@@ -13,7 +13,7 @@ namespace ARWNI2S.Engine.Core
     {
         public static INiisCoreBuilder AddNI2SCore(this IServiceCollection services)
         {
-            ArgumentNullException.ThrowIfNull(services, "services");
+            ArgumentNullException.ThrowIfNull(services, nameof(services));
             INiisHostEnvironment serviceFromCollection = GetServiceFromCollection<INiisHostEnvironment>(services);
             EnginePartManager applicationPartManager = GetEnginePartManager(services, serviceFromCollection);
             services.TryAddSingleton(applicationPartManager);

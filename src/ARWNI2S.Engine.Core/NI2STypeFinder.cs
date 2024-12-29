@@ -7,7 +7,7 @@ namespace ARWNI2S.Engine
     /// Provides information about types in the current ni2s node. 
     /// Optionally this class can look at all assemblies in the bin folder.
     /// </summary>
-    public partial class NI2STypeFinder : ContextTypeFinder
+    public partial class NI2STypeFinder : AppDomainTypeFinder
     {
         #region Fields
 

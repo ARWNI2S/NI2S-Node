@@ -469,7 +469,7 @@ namespace ARWNI2S.Engine.Threading
                 try
                 {
                     // we can't know what is done during enumeration, so we need to make a copy of the children
-                    children = n.Children.Values.ToList();
+                    children = [.. n.Children.Values];
                 }
                 finally
                 {

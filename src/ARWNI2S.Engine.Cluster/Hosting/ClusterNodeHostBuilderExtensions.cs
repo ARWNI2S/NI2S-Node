@@ -1,5 +1,4 @@
-﻿using ARWNI2S.Cluster.Diagnostics;
-using ARWNI2S.Hosting;
+﻿using ARWNI2S.Hosting;
 using ARWNI2S.Hosting.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -81,7 +80,7 @@ namespace ARWNI2S.Cluster.Hosting
                 //services.AddTransient<IConfigureOptions<ClusterNodeOptions>, ClusterNodeOptionsSetup>();
                 //services.AddSingleton<INiisConfigurationService, NI2SConfigurationService>();
                 services.AddSingleton<IClusterNode, ClusterNodeImpl>();
-                services.AddSingleton<ClusterNodeMetrics>();
+                //services.AddSingleton<ClusterNodeMetrics>();
             });
 
             if (OperatingSystem.IsWindows())

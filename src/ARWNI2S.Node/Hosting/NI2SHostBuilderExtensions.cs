@@ -71,6 +71,6 @@ namespace ARWNI2S.Node.Hosting
                 NodeAssetsLoader.UseLocalAssets(context.HostingEnvironment, context.Configuration);
             });
             return builder;
-        }        
+        }
     }
 }
