@@ -412,7 +412,7 @@ src/EmptyNode/Node_Data/additional.crawlers.xml
 src/EmptyNode/Node_Data/installedPlugins.json
 src/EmptyNode/Node_Data/plugins.json
 src/EmptyNode/Node_Data/dataSettings.json
-src/EmptyNode/Node_Data/appsettings.json
+src/EmptyNode/Node_Data/nodesettings.json
 src/EmptyNode/Node_Data/TempUploads/*
 !src/EmptyNode/Node_Data/TempUploads/Index.htm
 src/EmptyNode/Node_Data/DataProtectionKeys/*
@@ -443,7 +443,7 @@ src/EmptyNode.Docker/Node_Data/additional.crawlers.xml
 src/EmptyNode.Docker/Node_Data/installedPlugins.json
 src/EmptyNode.Docker/Node_Data/plugins.json
 src/EmptyNode.Docker/Node_Data/dataSettings.json
-src/EmptyNode.Docker/Node_Data/appsettings.json
+src/EmptyNode.Docker/Node_Data/nodesettings.json
 src/EmptyNode.Docker/Node_Data/TempUploads/*
 !src/EmptyNode.Docker/Node_Data/TempUploads/Index.htm
 src/EmptyNode.Docker/Node_Data/DataProtectionKeys/*

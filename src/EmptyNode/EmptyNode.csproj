@@ -87,8 +87,5 @@
 
     <ProjectCapability Include="CustomContentFolder" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Node_Data\" />
-  </ItemGroup>
 
 </Project>
