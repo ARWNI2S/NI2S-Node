@@ -10,6 +10,7 @@
     <Compile Remove="Engine\Resources\AssetManager.cs" />
     <Compile Remove="Engine\Resources\HandleManager.cs" />
     <Compile Remove="Engine\Resources\IResourceHandle.cs" />
+    <Compile Remove="Engine\Resources\ResourceManagerBase.cs" />
   </ItemGroup>
 
   <ItemGroup>

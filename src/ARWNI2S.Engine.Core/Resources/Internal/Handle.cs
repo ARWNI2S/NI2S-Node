@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 namespace ARWNI2S.Engine.Resources.Internal
 {
     [StructLayout(LayoutKind.Explicit)]
-    internal struct Handle<TTag> where TTag : struct
+    internal struct Handle<TTag>
     {
         private const int MAX_BITS = 16;
         private const int MAX_VALUE = (1 << MAX_BITS) - 1;
@@ -21,10 +21,9 @@ namespace ARWNI2S.Engine.Resources.Internal
         private short _magic;
 
 
-        public Handle()
-        {
-            _handle = 0;
-        }
+        public Handle() { _handle = 0; }
+
+        internal Handle(int value) { _handle = value; }
 
         public void Init(int index)
         {

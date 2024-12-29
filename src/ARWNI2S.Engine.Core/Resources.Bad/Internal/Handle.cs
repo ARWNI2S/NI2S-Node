@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 namespace ARWNI2S.Engine.Resources.Internal
 {
     [StructLayout(LayoutKind.Explicit)]
-    internal struct Handle<TTag> where TTag : struct, IResourceInfo
+    internal struct Handle<TTag> where TTag : struct
     {
         private const int MAX_BITS = 16;
         private const int MAX_INDEX = (1 << MAX_BITS) - 1;

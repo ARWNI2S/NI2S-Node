@@ -13,6 +13,7 @@
     <Compile Remove="Resources.Bad\Internal\HandleManager.cs" />
     <Compile Remove="Resources.Bad\ResourceManager.cs" />
     <Compile Remove="Resources\Assets\NI2SAsset.cs" />
+    <Compile Remove="Resources\ResourceBase.cs" />
   </ItemGroup>
 
   <ItemGroup>

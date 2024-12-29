@@ -3,14 +3,10 @@
 namespace ARWNI2S.Engine.Resources.Internal
 {
     internal class HandleManager<TData, TTag>
-        where TData : class
-        where TTag : struct
     {
         private readonly List<TData> _userData = [];
         private readonly List<int> _magicNumbers = [];
         private readonly List<int> _freeSlots = [];
-
-        public HandleManager() { }
 
         public TData Acquire(ref Handle<TTag> handle)
         {
@@ -59,4 +55,7 @@ namespace ARWNI2S.Engine.Resources.Internal
 
         public bool HasUsedHandles { get { return UsedHandles == 0; } }
     }
+
+    internal class HandleManager<TData>
+        : HandleManager<TData, TData> { }
 }
