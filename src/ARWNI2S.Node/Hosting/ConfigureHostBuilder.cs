@@ -13,7 +13,7 @@ namespace ARWNI2S.Node.Hosting
     /// A non-buildable <see cref="IHostBuilder"/> for <see cref="NodeHostBuilder"/>.
     /// Use <see cref="NodeHostBuilder.Build"/> to build the <see cref="NodeHostBuilder"/>.
     /// </summary>
-    public sealed class ConfigureHostBuilder : IHostBuilder//TODO:, ISupportsConfigureNiisHost remove or add?
+    public sealed class ConfigureHostBuilder : IHostBuilder//TODO:, ISupportsConfigureNI2SHost remove or add?
     {
         private readonly ConfigurationManager _configuration;
         private readonly IServiceCollection _services;

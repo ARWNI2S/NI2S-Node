@@ -19,7 +19,7 @@ namespace ARWNI2S.Node.Builder
     public sealed class NodeHostBuilder : IHostApplicationBuilder
     {
         private readonly HostApplicationBuilder _hostApplicationBuilder;
-        private readonly ServiceDescriptor _genericNiisNodeServiceDescriptor;
+        private readonly ServiceDescriptor _genericNI2SNodeServiceDescriptor;
         private NI2SNode _builtNode;
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace ARWNI2S.Node.Builder
                 InitializeHostSettings(niisHostBuilder);
             });
 
-            _genericNiisNodeServiceDescriptor = InitializeHosting(bootstrapHostBuilder);
+            _genericNI2SNodeServiceDescriptor = InitializeHosting(bootstrapHostBuilder);
         }
 
         private void InitializeHostSettings(INiisHostBuilder niisHostBuilder)
@@ -120,7 +120,7 @@ namespace ARWNI2S.Node.Builder
         public NI2SNode Build()
         {
             // One nice side effect is this gives a way to configure an IHostedService that starts after the server and stops beforehand.
-            _hostApplicationBuilder.Services.Add(_genericNiisNodeServiceDescriptor);
+            _hostApplicationBuilder.Services.Add(_genericNI2SNodeServiceDescriptor);
             Host.ApplyServiceProviderFactory(_hostApplicationBuilder);
             _builtNode = new NI2SNode(_hostApplicationBuilder.Build());
             return _builtNode;

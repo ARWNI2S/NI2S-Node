@@ -33,6 +33,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{CE75ABB0
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "configs", "configs", "{843D9052-CC16-40F6-857D-AAD674492F00}"
+	ProjectSection(SolutionItems) = preProject
+		assets\nodesettings.Development.json = assets\nodesettings.Development.json
+		assets\nodesettings.json = assets\nodesettings.json
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "10 - Infrastructure", "10 - Infrastructure", "{6701F465-451F-4B4E-B61A-3CFB7C61B95C}"
 EndProject

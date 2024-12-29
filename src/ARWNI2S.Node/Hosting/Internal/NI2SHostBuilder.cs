@@ -107,8 +107,8 @@ namespace ARWNI2S.Node.Hosting.Internal
 
                 services.Configure<NI2SHostServiceOptions>(options =>
                 {
-                    var ni2shostBuilderContext = GetNI2SHostBuilderContext(context);
-                    options.ConfigureEngine = engine => configure(ni2shostBuilderContext, engine);
+                    var niishostBuilderContext = GetNI2SHostBuilderContext(context);
+                    options.ConfigureEngine = engine => configure(niishostBuilderContext, engine);
                 });
 
             });

@@ -64,11 +64,11 @@ namespace ARWNI2S.Engine.Plugins
         /// <remarks>
         /// {0} : user identifier
         /// </remarks>
-        public static CacheKey AdminNavigationPluginsCacheKey => new("ni2s.plugins.adminnavigation.{0}", AdminNavigationPluginsPrefix);
+        public static CacheKey AdminNavigationPluginsCacheKey => new("niis.plugins.adminnavigation.{0}", AdminNavigationPluginsPrefix);
 
         /// <summary>
         /// Gets a key pattern to clear cache
         /// </summary>
-        public static string AdminNavigationPluginsPrefix => "ni2s.plugins.adminnavigation.";
+        public static string AdminNavigationPluginsPrefix => "niis.plugins.adminnavigation.";
     }
 }

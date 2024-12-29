@@ -2,7 +2,7 @@
 
 namespace ARWNI2S.Engine.Actor
 {
-    public abstract class NiisActor : NiisObject
+    public abstract class NI2SActor : NI2SObject
     {
     }
 }

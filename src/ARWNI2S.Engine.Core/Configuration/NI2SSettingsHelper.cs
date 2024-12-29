@@ -6,7 +6,7 @@ using System.Text;
 namespace ARWNI2S.Engine.Configuration
 {
     /// <summary>
-    /// Represents the ni2s settings helper
+    /// Represents the niis settings helper
     /// </summary>
     public partial class NI2SSettingsHelper
     {
@@ -19,7 +19,7 @@ namespace ARWNI2S.Engine.Configuration
         #region Methods
 
         /// <summary>
-        /// Create ni2s settings with the passed configurations and save it to the file
+        /// Create niis settings with the passed configurations and save it to the file
         /// </summary>
         /// <param name="configurations">Configurations to save</param>
         /// <param name="fileProvider">File provider</param>
@@ -58,7 +58,7 @@ namespace ARWNI2S.Engine.Configuration
                 .Select(config => config.OutConfig)
                 .ToDictionary(config => config.Key, config => config.Value);
 
-            //save ni2s settings to the file
+            //save niis settings to the file
             if (!fileExists || overwrite)
             {
                 var text = JsonConvert.SerializeObject(nodeSettings, Formatting.Indented);//, new JsonSerializerSettings { ContractResolver = new SecretContractResolver() });

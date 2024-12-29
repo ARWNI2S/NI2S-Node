@@ -60,7 +60,7 @@ namespace ARWNI2S.Engine.Caching
         /// Gets or sets instance name. Used when distributed cache is enabled and DistributedCacheType property is set as Redis or RedisSynchronizedMemory.
         /// Useful when one wants to partition a single Redis store for use with multiple nodes, e.g. by setting InstanceName to "development" and "production".
         /// </summary>
-        public string InstanceName { get; private set; } = "ni2s";
+        public string InstanceName { get; private set; } = "niis";
 
         /// <inheritdoc/>
         public int GetOrder() => 2;

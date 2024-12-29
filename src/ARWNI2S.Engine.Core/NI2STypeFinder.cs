@@ -4,7 +4,7 @@ using System.Reflection;
 namespace ARWNI2S.Engine
 {
     /// <summary>
-    /// Provides information about types in the current ni2s node. 
+    /// Provides information about types in the current niis node. 
     /// Optionally this class can look at all assemblies in the bin folder.
     /// </summary>
     public partial class NI2STypeFinder : AppDomainTypeFinder

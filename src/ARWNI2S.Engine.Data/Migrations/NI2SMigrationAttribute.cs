@@ -20,9 +20,9 @@ namespace ARWNI2S.Engine.Data.Migrations
             return GetVersion(dateTime) + (int)migrationType;
         }
 
-        protected static string GetDescription(string ni2sVersion, UpdateMigrationType migrationType)
+        protected static string GetDescription(string niisVersion, UpdateMigrationType migrationType)
         {
-            return string.Format(NI2SMigrationDefaults.UpdateMigrationDescription, ni2sVersion, migrationType.ToString());
+            return string.Format(NI2SMigrationDefaults.UpdateMigrationDescription, niisVersion, migrationType.ToString());
         }
 
         #endregion
@@ -56,11 +56,11 @@ namespace ARWNI2S.Engine.Data.Migrations
         /// Initializes a new instance of the ServerMigrationAttribute class
         /// </summary>
         /// <param name="dateTime">The migration date time string to convert on version</param>
-        /// <param name="ni2sVersion">dragonCorp full version</param>
+        /// <param name="niisVersion">dragonCorp full version</param>
         /// <param name="migrationType">The migration type</param>
         /// <param name="targetMigrationProcess">The target migration process</param>
-        public NI2SMigrationAttribute(string dateTime, string ni2sVersion, UpdateMigrationType migrationType, MigrationProcessType targetMigrationProcess = MigrationProcessType.NoMatter) :
-            base(GetVersion(dateTime, migrationType), GetDescription(ni2sVersion, migrationType))
+        public NI2SMigrationAttribute(string dateTime, string niisVersion, UpdateMigrationType migrationType, MigrationProcessType targetMigrationProcess = MigrationProcessType.NoMatter) :
+            base(GetVersion(dateTime, migrationType), GetDescription(niisVersion, migrationType))
         {
             TargetMigrationProcess = targetMigrationProcess;
         }

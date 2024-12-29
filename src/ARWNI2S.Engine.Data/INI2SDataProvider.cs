@@ -230,9 +230,9 @@ namespace ARWNI2S.Engine.Data
         /// <summary>
         /// Build the connection string
         /// </summary>
-        /// <param name="ni2sConnectionString">Connection string info</param>
+        /// <param name="niisConnectionString">Connection string info</param>
         /// <returns>Connection string</returns>
-        string BuildConnectionString(INodeConnectionStringInfo ni2sConnectionString);
+        string BuildConnectionString(INodeConnectionStringInfo niisConnectionString);
 
         /// <summary>
         /// Set table identity (is supported)
