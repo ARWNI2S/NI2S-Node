@@ -6,19 +6,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Resources.Bad\**" />
     <Compile Remove="Resources\**" />
+    <EmbeddedResource Remove="Resources.Bad\**" />
     <EmbeddedResource Remove="Resources\**" />
+    <None Remove="Resources.Bad\**" />
     <None Remove="Resources\**" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Remove="Environment\ContextTypeFinder.cs" />
-    <Compile Remove="Resources.Bad\Assets\AssetInfo.cs" />
-    <Compile Remove="Resources.Bad\Assets\AssetManager.cs" />
-    <Compile Remove="Resources.Bad\Assets\NI2SAsset.cs" />
-    <Compile Remove="Resources.Bad\Internal\Handle.cs" />
-    <Compile Remove="Resources.Bad\Internal\HandleManager.cs" />
-    <Compile Remove="Resources.Bad\ResourceManager.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -38,9 +35,6 @@
 
   <ItemGroup>
     <Folder Include="Assets\" />
-    <Folder Include="Data\Mapping\" />
-    <Folder Include="Resources.Bad\Assets\" />
-    <Folder Include="Resources.Bad\Internal\" />
   </ItemGroup>
 
 </Project>

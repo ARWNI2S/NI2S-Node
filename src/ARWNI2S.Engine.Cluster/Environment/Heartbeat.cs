@@ -6,7 +6,7 @@ namespace ARWNI2S.Cluster.Environment
 {
     internal sealed class Heartbeat : IDisposable
     {
-        // Interval used by Kestrel server.
+        // Interval used by cluster node server.
         public static readonly TimeSpan Interval = TimeSpan.FromSeconds(1);
 
         private readonly IHeartbeatHandler[] _callbacks;

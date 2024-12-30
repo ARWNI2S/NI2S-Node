@@ -1,5 +1,11 @@
 ﻿namespace ARWNI2S
 {
+    internal interface IPureSingleton<T> : IDisposable
+        where T : class
+    {
+        static T Instance { get; }
+    }
+
     /// <summary>
     /// Provides access to all "singletons" stored by <see cref="Singleton{T}"/>.
     /// </summary>

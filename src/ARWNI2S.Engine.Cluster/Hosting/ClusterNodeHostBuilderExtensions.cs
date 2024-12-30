@@ -79,7 +79,7 @@ namespace ARWNI2S.Cluster.Hosting
 
                 //services.AddTransient<IConfigureOptions<ClusterNodeOptions>, ClusterNodeOptionsSetup>();
                 //services.AddSingleton<INiisConfigurationService, NI2SConfigurationService>();
-                services.AddSingleton<IClusterNode, ClusterNodeImpl>();
+                services.AddSingleton<IClusterNode, NI2SNodeLocal>();
                 //services.AddSingleton<ClusterNodeMetrics>();
             });
 

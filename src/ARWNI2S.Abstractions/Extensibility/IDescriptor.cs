@@ -1,7 +1,7 @@
 ﻿namespace ARWNI2S.Extensibility
 {
     /// <summary>
-    /// Represents descriptor of the application extension (plugin or theme)
+    /// Represents descriptor of the application extension (plugin or module)
     /// </summary>
     public partial interface IDescriptor
     {

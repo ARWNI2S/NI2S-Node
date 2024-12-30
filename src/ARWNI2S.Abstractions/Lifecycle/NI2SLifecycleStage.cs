@@ -1,7 +1,7 @@
 namespace ARWNI2S.Lifecycle
 {
     /// <summary>
-    /// Lifecycle stages of a NI2S node.
+    /// Lifecycle stages of a NI2S node engine.
     /// </summary>
     public static class NI2SLifecycleStage
     {

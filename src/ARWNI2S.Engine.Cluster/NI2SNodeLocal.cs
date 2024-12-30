@@ -1,87 +1,93 @@
-﻿using ARWNI2S.Engine.Core;
+﻿using ARWNI2S.Cluster.Extensibility;
+using ARWNI2S.Cluster.Hosting;
+using ARWNI2S.Engine.Core;
 using ARWNI2S.Extensibility;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using System.Diagnostics;
 
 namespace ARWNI2S.Cluster
 {
-    internal class ClusterNodeImpl : IClusterNode
+    internal class NI2SNodeLocal : IClusterNode
     {
         public IModuleCollection Modules { get; }
-        //private ServiceContext ServiceContext { get; }
+        private ServiceContext ServiceContext { get; }
         //private ClusterTrace Trace => ServiceContext.Log;
 
-        //public ClusterNodeImpl(
-        //    IOptions<ClusterNodeOptions> options,
-        //    IEngineModuleManager moduleManager,
-        //    //IEnumerable<IConnectionListenerFactory> transportFactories,
-        //    //IEnumerable<IMultiplexedConnectionListenerFactory> multiplexedFactories,
-        //    //IHttpsConfigurationService httpsConfigurationService,
-        //    ILoggerFactory loggerFactory,
-        //    ClusterNodeMetrics metrics)
-        //    : this(moduleManager/*transportFactories, multiplexedFactories, httpsConfigurationService*/, CreateServiceContext(options, loggerFactory, diagnosticSource: null, metrics))
-        //{
-        //}
+        public NI2SNodeLocal(
+            IOptions<ClusterNodeOptions> options,
+            IEngineModuleManager moduleManager,
+            //IEnumerable<IConnectionListenerFactory> transportFactories,
+            //IEnumerable<IMultiplexedConnectionListenerFactory> multiplexedFactories,
+            //IHttpsConfigurationService httpsConfigurationService,
+            ILoggerFactory loggerFactory
+            //ClusterNodeMetrics metrics
+            )
+            : this(moduleManager/*transportFactories, multiplexedFactories, httpsConfigurationService*/, CreateServiceContext(options, loggerFactory, diagnosticSource: null/*, metrics*/))
+        {
+        }
 
-        //internal ClusterNodeImpl(
-        //    IEngineModuleManager moduleManager,
-        //    //IEnumerable<IConnectionListenerFactory> transportFactories,
-        //    //IEnumerable<IMultiplexedConnectionListenerFactory> multiplexedFactories,
-        //    //IHttpsConfigurationService httpsConfigurationService,
-        //    ServiceContext serviceContext)
-        //{
-        //    //ArgumentNullException.ThrowIfNull(transportFactories);
+        internal NI2SNodeLocal(
+            IEngineModuleManager moduleManager,
+            //IEnumerable<IConnectionListenerFactory> transportFactories,
+            //IEnumerable<IMultiplexedConnectionListenerFactory> multiplexedFactories,
+            //IHttpsConfigurationService httpsConfigurationService,
+            ServiceContext serviceContext)
+        {
+            //ArgumentNullException.ThrowIfNull(transportFactories);
 
-        //    //_transportFactories = Enumerable.Reverse(transportFactories).ToList();
-        //    //_multiplexedTransportFactories = Enumerable.Reverse(multiplexedFactories).ToList();
-        //    //_httpsConfigurationService = httpsConfigurationService;
+            //_transportFactories = Enumerable.Reverse(transportFactories).ToList();
+            //_multiplexedTransportFactories = Enumerable.Reverse(multiplexedFactories).ToList();
+            //_httpsConfigurationService = httpsConfigurationService;
 
-        //    //if (_transportFactories.Count == 0 && _multiplexedTransportFactories.Count == 0)
-        //    //{
-        //    //    throw new InvalidOperationException(CoreStrings.TransportNotFound);
-        //    //}
+            //if (_transportFactories.Count == 0 && _multiplexedTransportFactories.Count == 0)
+            //{
+            //    throw new InvalidOperationException(CoreStrings.TransportNotFound);
+            //}
 
-        //    ServiceContext = serviceContext;
+            ServiceContext = serviceContext;
 
-        //    Modules = moduleManager.GetLocallyInstalledModules();
-        //    //_serverAddresses = new ServerAddressesFeature();
-        //    //Features.Set<IServerAddressesFeature>(_serverAddresses);
+            Modules = moduleManager.GetLocallyInstalledModules();
+            //_serverAddresses = new ServerAddressesFeature();
+            //Features.Set<IServerAddressesFeature>(_serverAddresses);
 
-        //    //_transportManager = new TransportManager(_transportFactories, _multiplexedTransportFactories, _httpsConfigurationService, ServiceContext);
-        //}
+            //_transportManager = new TransportManager(_transportFactories, _multiplexedTransportFactories, _httpsConfigurationService, ServiceContext);
+        }
 
-        //private static ServiceContext CreateServiceContext(IOptions<ClusterNodeOptions> options, ILoggerFactory loggerFactory, DiagnosticSource diagnosticSource, ClusterNodeMetrics metrics)
-        //{
-        //    ArgumentNullException.ThrowIfNull(options);
-        //    ArgumentNullException.ThrowIfNull(loggerFactory);
+        private static ServiceContext CreateServiceContext(IOptions<ClusterNodeOptions> options, ILoggerFactory loggerFactory, DiagnosticSource diagnosticSource/*, ClusterNodeMetrics metrics*/)
+        {
+            ArgumentNullException.ThrowIfNull(options);
+            ArgumentNullException.ThrowIfNull(loggerFactory);
 
-        //    var serverOptions = options.Value ?? new ClusterNodeOptions();
-        //    var trace = new ClusterTrace(loggerFactory);
-        //    var connectionManager = new ConnectionManager(
-        //        trace,
-        //        serverOptions.Limits.MaxConcurrentUpgradedConnections);
+            var serverOptions = options.Value ?? new ClusterNodeOptions();
+            //var trace = new ClusterTrace(loggerFactory);
+            //var connectionManager = new ConnectionManager(
+            //    trace,
+            //    serverOptions.Limits.MaxConcurrentUpgradedConnections);
 
-        //    var dateHeaderValueManager = new DateHeaderValueManager(TimeProvider.System);
+            //var dateHeaderValueManager = new DateHeaderValueManager(TimeProvider.System);
 
-        //    var heartbeat = new Heartbeat(
-        //        [dateHeaderValueManager, connectionManager],
-        //        TimeProvider.System,
-        //        DebuggerWrapper.Instance,
-        //        trace,
-        //        Heartbeat.Interval);
+            //var heartbeat = new Heartbeat(
+            //    [dateHeaderValueManager, connectionManager],
+            //    TimeProvider.System,
+            //    DebuggerWrapper.Instance,
+            //    trace,
+            //    Heartbeat.Interval);
 
-        //    return new ServiceContext
-        //    {
-        //        Log = trace,
-        //        Scheduler = PipeScheduler.ThreadPool,
-        //        //HttpParser = new HttpParser<Http1ParsingHandler>(trace.IsEnabled(LogLevel.Information), serverOptions.DisableHttp1LineFeedTerminators),
-        //        TimeProvider = TimeProvider.System,
-        //        //DateHeaderValueManager = dateHeaderValueManager,
-        //        ConnectionManager = connectionManager,
-        //        Heartbeat = heartbeat,
-        //        NodeOptions = serverOptions,
-        //        DiagnosticSource = diagnosticSource,
-        //        Metrics = metrics
-        //    };
-        //}
+            return new ServiceContext
+            {
+                //Log = trace,
+                //Scheduler = PipeScheduler.ThreadPool,
+                //HttpParser = new HttpParser<Http1ParsingHandler>(trace.IsEnabled(LogLevel.Information), serverOptions.DisableHttp1LineFeedTerminators),
+                //TimeProvider = TimeProvider.System,
+                //DateHeaderValueManager = dateHeaderValueManager,
+                //ConnectionManager = connectionManager,
+                //Heartbeat = heartbeat,
+                NodeOptions = serverOptions,
+                DiagnosticSource = diagnosticSource,
+                //Metrics = metrics
+            };
+        }
 
         Guid INiisNode.NodeId => throw new NotImplementedException();
 

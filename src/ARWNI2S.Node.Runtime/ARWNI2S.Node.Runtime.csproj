@@ -6,6 +6,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Data\**" />
+    <Compile Remove="Modules\**" />
+    <EmbeddedResource Remove="Data\**" />
+    <EmbeddedResource Remove="Modules\**" />
+    <None Remove="Data\**" />
+    <None Remove="Modules\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="$(SourceRoot)src\ARWNI2S.Engine.Core\ARWNI2S.Engine.Core.csproj" />
     <ProjectReference Include="$(SourceRoot)src\ARWNI2S.Engine.Data\ARWNI2S.Engine.Data.csproj" />
     <ProjectReference Include="$(SourceRoot)src\ARWNI2S.Engine.Cluster\ARWNI2S.Engine.Cluster.csproj" />

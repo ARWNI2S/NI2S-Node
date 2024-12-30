@@ -161,7 +161,7 @@ namespace ARWNI2S.Node.Builder
                 .Where(startup => startup != null)
                 .OrderBy(startup => startup.Order);
 
-            //configure request pipeline
+            //configure engine
             foreach (var instance in instances)
                 instance.ConfigureEngine(_builtNode);
 
