@@ -58,7 +58,7 @@ namespace ARWNI2S.Node.Hosting.Internal
                 // Add the INiisHostEnvironment
                 services.AddSingleton(niisContext.HostingEnvironment);
 
-                // TODO: ApplicationLifetime vs nodeLifecycle
+                //TODO: Lifetime-Lifecycle review
 
                 services.Configure<NI2SHostServiceOptions>(options =>
                 {
@@ -79,11 +79,11 @@ namespace ARWNI2S.Node.Hosting.Internal
                 services.ConfigureFileProvider(niisContext.HostingEnvironment);
 
                 //configure and bind setings
-                if (!context.Properties.TryGetValue(typeof(NodeSettings), out var settingsVal))
+                if (!context.Properties.TryGetValue(typeof(NI2SSettings), out var settingsVal))
                 {
                     settingsVal = services.BindNodeSettings(context.Configuration);
                 }
-                context.Properties[typeof(NodeSettings)] = (NodeSettings)settingsVal;
+                context.Properties[typeof(NI2SSettings)] = (NI2SSettings)settingsVal;
 
                 services.TryAddSingleton<INiisContextFactory, EngineContextFactory>();
                 services.TryAddScoped<IProcessorFactory, ProcessorFactory>();

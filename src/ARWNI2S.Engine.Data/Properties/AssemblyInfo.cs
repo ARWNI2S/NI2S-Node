@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // En proyectos de estilo SDK como este, varios atributos de ensamblado que definían
@@ -16,3 +17,8 @@ using System.Runtime.InteropServices;
 // en COM.
 
 [assembly: Guid("595e5200-9dc9-4fa6-9bab-6d2df57c6dc7")]
+
+[assembly: InternalsVisibleTo("ARWNI2S.Engine.Cluster")]
+
+[assembly: InternalsVisibleTo("ARWNI2S.Node.Runtime")]
+[assembly: InternalsVisibleTo("ARWNI2S.Node")]

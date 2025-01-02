@@ -65,7 +65,9 @@ namespace ARWNI2S.Cluster.Networking
                 return;
             }
 
-            var netMqMessage = new NetMQMessage(new[] { "CustomEvent", message });
+            var netMqMessage = new NetMQMessage();
+            netMqMessage.Append("CustomEvent");
+            netMqMessage.Append(message);
             _transporter.SendMessage(netMqMessage);
         }
 

@@ -1,3 +1,4 @@
+using ARWNI2S.Diagnostics;
 using ARWNI2S.Lifecycle;
 using ARWNI2S.Timers;
 using Microsoft.Extensions.Logging;
@@ -38,10 +39,10 @@ namespace ARWNI2S.Engine.Lifecycle
         {
             foreach (var stage in observers.GroupBy(o => o.Stage).OrderBy(s => s.Key))
             {
-                if (this.Logger.IsEnabled(LogLevel.Debug))
+                if (Logger.IsEnabled(LogLevel.Debug))
                 {
-                    this.Logger.LogDebug(
-                        10,//(int)ErrorCode.LifecycleStagesReport,
+                    Logger.LogDebug(
+                        EventCode.LifecycleStagesReport,
                         "Stage {Stage}: {Observers}",
                         GetStageName(stage.Key),
                         string.Join(", ", stage.Select(o => o.Name)));
@@ -75,10 +76,10 @@ namespace ARWNI2S.Engine.Lifecycle
         /// <inheritdoc />
         protected override void PerfMeasureOnStop(int stage, TimeSpan elapsed)
         {
-            if (this.Logger.IsEnabled(LogLevel.Debug))
+            if (Logger.IsEnabled(LogLevel.Debug))
             {
-                this.Logger.LogDebug(
-                    10,//(int)ErrorCode.SiloStartPerfMeasure,
+                Logger.LogDebug(
+                    EventCode.StopPerformanceMeasure,
                     "Stopping lifecycle stage '{Stage}' took '{Elapsed}'.",
                     GetStageName(stage),
                     elapsed);
@@ -88,10 +89,10 @@ namespace ARWNI2S.Engine.Lifecycle
         /// <inheritdoc />
         protected override void PerfMeasureOnStart(int stage, TimeSpan elapsed)
         {
-            if (this.Logger.IsEnabled(LogLevel.Debug))
+            if (Logger.IsEnabled(LogLevel.Debug))
             {
-                this.Logger.LogDebug(
-                    10,//(int)ErrorCode.SiloStartPerfMeasure,
+                Logger.LogDebug(
+                    EventCode.StartPerformanceMeasure,
                     "Starting lifecycle stage '{Stage}' took '{Elapsed}'",
                     GetStageName(stage),
                     elapsed);
@@ -101,7 +102,7 @@ namespace ARWNI2S.Engine.Lifecycle
         /// <inheritdoc />
         public override IDisposable Subscribe(string observerName, int stage, ILifecycleObserver observer)
         {
-            var monitoredObserver = new MonitoredObserver(observerName, stage, GetStageName(stage), observer, this.Logger);
+            var monitoredObserver = new MonitoredObserver(observerName, stage, GetStageName(stage), observer, Logger);
             observers.Add(monitoredObserver);
             return base.Subscribe(observerName, stage, monitoredObserver);
         }

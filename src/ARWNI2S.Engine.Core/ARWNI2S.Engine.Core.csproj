@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <Compile Remove="Environment\ContextTypeFinder.cs" />
+    <Compile Remove="Extensibility\SystemModule.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -34,7 +35,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Assets\" />
+    <Folder Include="Simulation\Composer\" />
   </ItemGroup>
 
 </Project>

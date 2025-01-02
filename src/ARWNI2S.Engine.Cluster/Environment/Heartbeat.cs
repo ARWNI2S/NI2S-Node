@@ -62,7 +62,7 @@ namespace ARWNI2S.Cluster.Environment
             }
             catch (Exception ex)
             {
-                _trace.LogError(0, ex, $"{nameof(Heartbeat)}.{nameof(OnHeartbeat)}");
+                _trace.LogError(ErrorCode.HeartbeatError, ex, $"{nameof(Heartbeat)}.{nameof(OnHeartbeat)}");
             }
         }
 

@@ -63,6 +63,12 @@ namespace ARWNI2S.Engine.Core
 
         internal static void AddNI2SCoreServices(IServiceCollection services)
         {
+
+
+
+
+
+
             ////services.TryAddEnumerable(ServiceDescriptor.Transient<IConfigureOptions<MvcOptions>, MvcCoreMvcOptionsSetup>());
             ////services.TryAddEnumerable(ServiceDescriptor.Transient<IPostConfigureOptions<MvcOptions>, MvcCoreMvcOptionsSetup>());
             ////services.TryAddEnumerable(ServiceDescriptor.Transient<IConfigureOptions<AiBehaviorOptions>, AiBehaviorOptionsSetup>());

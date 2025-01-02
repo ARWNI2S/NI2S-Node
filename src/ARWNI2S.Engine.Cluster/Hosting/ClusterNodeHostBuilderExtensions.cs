@@ -1,6 +1,9 @@
-﻿using ARWNI2S.Hosting;
+﻿using ARWNI2S.Cluster.Lifecycle;
+using ARWNI2S.Hosting;
 using ARWNI2S.Hosting.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+using Orleans;
 
 namespace ARWNI2S.Cluster.Hosting
 {
@@ -77,7 +80,12 @@ namespace ARWNI2S.Cluster.Hosting
                 //// Don't override an already-configured transport
                 //services.TryAddSingleton<IConnectionListenerFactory, ClusterTransportFactory>();
 
-                //services.AddTransient<IConfigureOptions<ClusterNodeOptions>, ClusterNodeOptionsSetup>();
+                services.AddTransient<IConfigureOptions<ClusterNodeOptions>, ClusterNodeOptionsSetup>();
+
+                services.AddSingleton<ClusterNodeLifecycle>();
+                services.AddSingleton<IClusterNodeLifecycle>(provider => provider.GetRequiredService<ClusterNodeLifecycle>());
+                services.AddSingleton<ILifecycleSubject>(provider => provider.GetRequiredService<ClusterNodeLifecycle>());
+
                 //services.AddSingleton<INiisConfigurationService, NI2SConfigurationService>();
                 services.AddSingleton<IClusterNode, NI2SNodeLocal>();
                 //services.AddSingleton<ClusterNodeMetrics>();

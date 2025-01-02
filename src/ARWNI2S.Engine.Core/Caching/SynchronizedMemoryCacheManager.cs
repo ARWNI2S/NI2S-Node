@@ -11,7 +11,7 @@ namespace ARWNI2S.Engine.Caching
     /// </remarks>
     public partial class SynchronizedMemoryCacheManager : MemoryCacheManager
     {
-        public SynchronizedMemoryCacheManager(NodeSettings nodeSettings,
+        public SynchronizedMemoryCacheManager(NI2SSettings nodeSettings,
             ISynchronizedMemoryCache memoryCache,
             ICacheKeyManager cacheKeyManager) : base(nodeSettings, memoryCache, cacheKeyManager)
         {

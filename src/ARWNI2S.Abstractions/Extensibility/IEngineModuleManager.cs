@@ -1,9 +1,9 @@
 ﻿namespace ARWNI2S.Extensibility
 {
-    public interface IEngineModuleManager
+    internal interface IEngineModuleManager
     {
         IModuleCollection Modules { get; }
 
-        void Register(IEngineModule module);
+        void Register(IEngineModule module, bool checkDependencies = true);
     }
 }

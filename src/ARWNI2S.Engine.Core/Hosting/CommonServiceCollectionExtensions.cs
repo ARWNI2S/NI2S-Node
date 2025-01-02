@@ -28,7 +28,7 @@ namespace ARWNI2S.Engine.Hosting
             services.AddScoped<INiisFileProvider, NI2SFileProvider>();
         }
 
-        public static NodeSettings BindNodeSettings(this IServiceCollection services, IConfiguration configuration)
+        public static NI2SSettings BindNodeSettings(this IServiceCollection services, IConfiguration configuration)
         {
             //add configuration parameters
             var configurations = services.GetOrCreateTypeFinder()
@@ -39,7 +39,7 @@ namespace ARWNI2S.Engine.Hosting
             foreach (var config in configurations)
                 configuration.GetSection(config.Name).Bind(config, options => options.BindNonPublicProperties = true);
 
-            var nodeSettings = Singleton<NodeSettings>.Instance;
+            var nodeSettings = Singleton<NI2SSettings>.Instance;
 
             if (nodeSettings == null)
             {
@@ -66,7 +66,7 @@ namespace ARWNI2S.Engine.Hosting
         /// <param name="services">Collection of service descriptors</param>
         public static void AddDistributedCache(this IServiceCollection services)
         {
-            var nodeSettings = Singleton<NodeSettings>.Instance;
+            var nodeSettings = Singleton<NI2SSettings>.Instance;
             var distributedCacheConfig = nodeSettings.Get<DistributedCacheConfig>();
 
             if (!distributedCacheConfig.Enabled)

@@ -121,7 +121,7 @@ namespace ARWNI2S.Engine.Data
             }
             else
             {
-                Singleton<DataConfig>.Instance = Singleton<NodeSettings>.Instance.Get<DataConfig>();
+                Singleton<DataConfig>.Instance = Singleton<NI2SSettings>.Instance.Get<DataConfig>();
             }
 
             return Singleton<DataConfig>.Instance;

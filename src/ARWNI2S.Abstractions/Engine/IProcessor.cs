@@ -1,6 +1,9 @@
-﻿namespace ARWNI2S.Engine
+﻿using ARWNI2S.Lifecycle;
+using Orleans;
+
+namespace ARWNI2S.Engine
 {
-    public interface IProcessor
+    public interface IProcessor : ILifecycleParticipant<IEngineLifecycle>
     {
     }
 }

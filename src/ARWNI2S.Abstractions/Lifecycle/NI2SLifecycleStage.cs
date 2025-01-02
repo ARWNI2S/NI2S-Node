@@ -48,17 +48,17 @@ namespace ARWNI2S.Lifecycle
         /// <summary>
         /// Start runtime services
         /// </summary>
-        public const int RuntimeGrainServices = 8000;
+        public const int RuntimeActorServices = 8000;
 
         /// <summary>
         /// After runtime services have started.
         /// </summary>
-        public const int AfterRuntimeGrainServices = 8100;
+        public const int AfterRuntimeActorServices = 8100;
 
         /// <summary>
-        /// Start application layer services
+        /// Start simulation layer services
         /// </summary>
-        public const int ApplicationServices = 10000;
+        public const int SimulationServices = 10000;
 
         /// <summary>
         /// Service will be active after this step.

@@ -1,7 +1,9 @@
+using ARWNI2S.Diagnostics;
 using ARWNI2S.Timers;
 using Microsoft.Extensions.Logging;
 using Orleans;
 using System.Collections.Immutable;
+using ErrorCode = ARWNI2S.Diagnostics.ErrorCode;
 
 namespace ARWNI2S.Lifecycle
 {
@@ -85,7 +87,7 @@ namespace ARWNI2S.Lifecycle
             if (Logger.IsEnabled(LogLevel.Trace))
             {
                 Logger.LogTrace(
-                    10,//(int)ErrorCode.SiloStartPerfMeasure,
+                    EventCode.StartPerformanceMeasure,
                     "Starting lifecycle stage '{Stage}' took '{Elapsed}'.",
                     GetStageName(stage),
                     elapsed);
@@ -112,7 +114,7 @@ namespace ARWNI2S.Lifecycle
                     var stopWatch = ValueStopwatch.StartNew();
                     await Task.WhenAll(observerGroup.Select(orderedObserver => CallOnStart(orderedObserver, cancellationToken)));
                     stopWatch.Stop();
-                    this.PerfMeasureOnStart(stage, stopWatch.Elapsed);
+                    PerfMeasureOnStart(stage, stopWatch.Elapsed);
 
                     OnStartStageCompleted(stage);
                 }
@@ -120,7 +122,7 @@ namespace ARWNI2S.Lifecycle
             catch (Exception ex) when (ex is not LifecycleCanceledException)
             {
                 Logger.LogError(
-                    10,//(int)ErrorCode.LifecycleStartFailure,
+                    ErrorCode.LifecycleStartFailure,
                     ex,
                     "Lifecycle start canceled due to errors at stage '{Stage}'.",
                     _highStage is { } highStage ? GetStageName(highStage) : "Unknown");
@@ -188,7 +190,7 @@ namespace ARWNI2S.Lifecycle
                     var stopwatch = ValueStopwatch.StartNew();
                     await Task.WhenAll(observerGroup.Select(orderedObserver => orderedObserver?.Observer is not null ? CallObserverStopAsync(orderedObserver.Observer, cancellationToken) : Task.CompletedTask));
                     stopwatch.Stop();
-                    this.PerfMeasureOnStop(stage, stopwatch.Elapsed);
+                    PerfMeasureOnStop(stage, stopwatch.Elapsed);
                 }
                 catch (Exception ex)
                 {
@@ -223,7 +225,7 @@ namespace ARWNI2S.Lifecycle
 
         public virtual IDisposable Subscribe(string observerName, int stage, ILifecycleObserver observer)
         {
-            if (observer == null) throw new ArgumentNullException(nameof(observer));
+            ArgumentNullException.ThrowIfNull(observer);
             if (_highStage.HasValue) throw new InvalidOperationException("Lifecycle has already been started.");
 
             var orderedObserver = new OrderedObserver(stage, observer);

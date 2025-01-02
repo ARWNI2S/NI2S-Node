@@ -6,7 +6,7 @@ namespace ARWNI2S.Configuration
     /// <summary>
     /// Represents the node settings
     /// </summary>
-    public sealed class NodeSettings
+    public sealed class NI2SSettings
     {
         #region Fields
 
@@ -16,7 +16,7 @@ namespace ARWNI2S.Configuration
 
         #region Ctor
 
-        public NodeSettings(IList<IConfig> configurations = null)
+        public NI2SSettings(IList<IConfig> configurations = null)
         {
             _configurations = configurations
                 ?.OrderBy(config => config.GetOrder())

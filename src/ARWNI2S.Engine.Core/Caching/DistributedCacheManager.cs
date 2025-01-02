@@ -31,7 +31,7 @@ namespace ARWNI2S.Engine.Caching
 
         #region Ctor
 
-        protected DistributedCacheManager(NodeSettings nodeSettings,
+        protected DistributedCacheManager(NI2SSettings nodeSettings,
             IDistributedCache distributedCache,
             ICacheKeyManager cacheKeyManager,
             IConcurrentCollection<object> concurrentCollection)

@@ -23,13 +23,13 @@ namespace ARWNI2S.Engine.Caching
 
         #region Fields
 
-        protected readonly NodeSettings _nodeSettings;
+        protected readonly NI2SSettings _nodeSettings;
 
         #endregion
 
         #region Ctor
 
-        protected CacheKeyService(NodeSettings nodeSettings)
+        protected CacheKeyService(NI2SSettings nodeSettings)
         {
             _nodeSettings = nodeSettings;
         }

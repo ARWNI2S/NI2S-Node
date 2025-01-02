@@ -1,4 +1,7 @@
-﻿using ARWNI2S.Engine.Data.Migrations;
+﻿using ARWNI2S.Configuration;
+using ARWNI2S.Engine.Builder;
+using ARWNI2S.Engine.Caching;
+using ARWNI2S.Engine.Data.Migrations;
 using ARWNI2S.Engine.Extensibility;
 using ARWNI2S.Lifecycle;
 using FluentMigrator;
@@ -11,12 +14,12 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace ARWNI2S.Engine.Data
 {
-    public class NI2SDataModule : EngineModule
+    internal class NI2SDataModule : FrameworkModule
     {
         public override int Order => NI2SLifecycleStage.PreCoreInitialize;
 
-        public override string SystemName { get; set; } = nameof(NI2SDataModule);
-        public override string FriendlyName { get; set; } = "Data";
+        public override string SystemName { get; set; } = nameof(NI2SDataModule).ToModuleName();
+        public override string FriendlyName { get; set; } = nameof(NI2SDataModule).ToFriendlyModuleName();
 
         public override void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
@@ -34,7 +37,6 @@ namespace ARWNI2S.Engine.Data
                 .AddScoped<IConnectionStringAccessor>(x => DataSettingsManager.LoadSettings())
                 .AddSingleton<IMigrationManager, MigrationManager>()
                 .AddSingleton<IConventionSet, NI2SConventionSet>()
-                //.AddTransient<IMappingEntityAccessor>(x => x.GetRequiredService<IDataProviderManager>().DataProvider)
                 .ConfigureRunner(rb =>
                     rb.WithVersionTable(new MigrationVersionInfo()).AddSqlServer().AddMySql5().AddPostgres()
                         // define the assembly containing the migrations
@@ -57,6 +59,15 @@ namespace ARWNI2S.Engine.Data
             var runner = scope.ServiceProvider.GetRequiredService<IMigrationManager>();
             foreach (var assembly in mAssemblies)
                 runner.ApplyUpMigrations(assembly, MigrationProcessType.NoDependencies);
+        }
+
+        public override void ConfigureEngine(IEngineBuilder engineBuilder)
+        {
+            var config = Singleton<NI2SSettings>.Instance.Get<CacheConfig>();
+
+            LinqToDB.Common.Configuration.Linq.DisableQueryCache = config.LinqDisableQueryCache;
+
+            base.ConfigureEngine(engineBuilder);
         }
     }
 }

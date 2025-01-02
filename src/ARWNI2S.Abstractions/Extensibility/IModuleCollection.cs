@@ -1,6 +1,6 @@
 ﻿namespace ARWNI2S.Extensibility
 {
-    public interface IModuleCollection : IEnumerable<KeyValuePair<Type, IEngineModule>>
+    public interface IModuleCollection : IEnumerable<KeyValuePair<Type, IModule>>
     {
         /// <summary>
         /// Indicates if the collection can be modified.
@@ -17,20 +17,20 @@
         /// </summary>
         /// <param name="key"></param>
         /// <returns>The requested module, or null if it is not present.</returns>
-        IEngineModule this[Type key] { get; set; }
+        IModule this[Type key] { get; set; }
 
         /// <summary>
         /// Retrieves the requested module from the collection.
         /// </summary>
         /// <typeparam name="TModule">The module key.</typeparam>
         /// <returns>The requested module, or null if it is not present.</returns>
-        TModule Get<TModule>() where TModule : class, IEngineModule;
+        TModule Get<TModule>() where TModule : class, IModule;
 
         /// <summary>
         /// Sets the given module in the collection.
         /// </summary>
         /// <typeparam name="TModule">The module key.</typeparam>
         /// <param name="instance">The module value.</param>
-        void Set<TModule>(TModule instance) where TModule : class, IEngineModule;
+        void Set<TModule>(TModule instance) where TModule : class, IModule;
     }
 }

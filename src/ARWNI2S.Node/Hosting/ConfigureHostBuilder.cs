@@ -118,7 +118,7 @@ namespace ARWNI2S.Node.Hosting
         {
             if (_serviceProviderFactory is null)
             {
-                var nodeSettings = (NodeSettings)_context.Properties[typeof(NodeSettings)];
+                var nodeSettings = (NI2SSettings)_context.Properties[typeof(NI2SSettings)];
 
                 if (nodeSettings.Get<CommonConfig>().UseAutofac)
                     UseServiceProviderFactory(new AutofacServiceProviderFactory());

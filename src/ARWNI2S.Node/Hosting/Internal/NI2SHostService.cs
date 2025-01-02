@@ -5,14 +5,16 @@ using ARWNI2S.Hosting;
 using ARWNI2S.Node.Diagnostics;
 using ARWNI2S.Node.Hosting.Logging;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Orleans;
 using System.Diagnostics;
 
 namespace ARWNI2S.Node.Hosting.Internal
 {
-    internal sealed partial class NI2SHostService : IHostedService
+    internal sealed partial class NI2SHostService : HostedLifecycleService
     {
         ///// <summary>
         ///// Initializes a new instance of the <see cref="ClusterClient"/> class.
@@ -50,7 +52,6 @@ namespace ARWNI2S.Node.Hosting.Internal
 
         public NI2SHostService(IOptions<NI2SHostServiceOptions> options,
                                      IClusterNode localNode,
-                                     ILoggerFactory loggerFactory,
                                      DiagnosticListener diagnosticListener,
                                      ActivitySource activitySource,
                                      DistributedContextPropagator propagator,
@@ -58,7 +59,9 @@ namespace ARWNI2S.Node.Hosting.Internal
                                      IEngineBuilderFactory engineBuilderFactory,
                                      IConfiguration configuration,
                                      INiisHostEnvironment hostingEnvironment,
-                                     HostingMetrics hostingMetrics)
+                                     HostingMetrics hostingMetrics,
+                                     ILoggerFactory loggerFactory,
+                                     ILifecycleSubject lifecycle) : base(loggerFactory, lifecycle)
         {
             Options = options.Value;
             LocalNode = localNode;
@@ -89,65 +92,9 @@ namespace ARWNI2S.Node.Hosting.Internal
         public INiisHostEnvironment HostingEnvironment { get; }
         public HostingMetrics HostingMetrics { get; }
 
-        public async Task StartAsync(CancellationToken cancellationToken)
+        public override async Task StartAsync(CancellationToken cancellationToken)
         {
             HostingEventSource.Log.HostStart();
-
-            //var serverAddressesFeature = LocalNode.Features.Get<ILocalNodeAddressesFeature>();
-            //var addresses = serverAddressesFeature?.Addresses;
-            //if (addresses != null && !addresses.IsReadOnly && addresses.Count == 0)
-            //{
-            //    // We support reading "urls" from app configuration
-            //    var urls = Configuration[WebHostDefaults.LocalNodeUrlsKey];
-
-            //    // But fall back to host settings
-            //    if (string.IsNullOrEmpty(urls))
-            //    {
-            //        urls = Options.WebHostOptions.LocalNodeUrls;
-            //    }
-
-            //    var httpPorts = Configuration[WebHostDefaults.HttpPortsKey] ?? string.Empty;
-            //    var httpsPorts = Configuration[WebHostDefaults.HttpsPortsKey] ?? string.Empty;
-            //    if (string.IsNullOrEmpty(urls))
-            //    {
-            //        // HTTP_PORTS and HTTPS_PORTS, these are lower priority than Urls.
-            //        static string ExpandPorts(string ports, string scheme)
-            //        {
-            //            return string.Join(';',
-            //                ports.Split(';', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries)
-            //                .Select(port => $"{scheme}://*:{port}"));
-            //        }
-
-            //        var httpUrls = ExpandPorts(httpPorts, Uri.UriSchemeHttp);
-            //        var httpsUrls = ExpandPorts(httpsPorts, Uri.UriSchemeHttps);
-            //        urls = $"{httpUrls};{httpsUrls}";
-            //    }
-            //    else if (!string.IsNullOrEmpty(httpPorts) || !string.IsNullOrEmpty(httpsPorts))
-            //    {
-            //        Logger.PortsOverridenByUrls(httpPorts, httpsPorts, urls);
-            //    }
-
-            //    if (!string.IsNullOrEmpty(urls))
-            //    {
-            //        // We support reading "preferHostingUrls" from app configuration
-            //        var preferHostingUrlsConfig = Configuration[WebHostDefaults.PreferHostingUrlsKey];
-
-            //        // But fall back to host settings
-            //        if (!string.IsNullOrEmpty(preferHostingUrlsConfig))
-            //        {
-            //            serverAddressesFeature!.PreferHostingUrls = WebHostUtilities.ParseBool(preferHostingUrlsConfig);
-            //        }
-            //        else
-            //        {
-            //            serverAddressesFeature!.PreferHostingUrls = Options.WebHostOptions.PreferHostingUrls;
-            //        }
-
-            //        foreach (var value in urls.Split(';', StringSplitOptions.RemoveEmptyEntries))
-            //        {
-            //            addresses.Add(value);
-            //        }
-            //    }
-            //}
 
             INiisEngine engine = null;
 
@@ -155,13 +102,7 @@ namespace ARWNI2S.Node.Hosting.Internal
             {
                 var configure = Options.ConfigureEngine ?? throw new InvalidOperationException($"No application configured. Please specify an application via INiisHostBuilder.UseStartup, INiisHostBuilder.Configure.");
 
-                //var builder = EngineBuilderFactory.CreateBuilder(LocalNode.Modules);
-                var builder = EngineBuilderFactory.CreateBuilder(null);
-
-                //foreach (var filter in Enumerable.Reverse(StartupFilters))
-                //{
-                //    configure = filter.Configure(configure);
-                //}
+                var builder = EngineBuilderFactory.CreateBuilder(LocalNode.Modules);
 
                 configure(builder);
 
@@ -172,14 +113,14 @@ namespace ARWNI2S.Node.Hosting.Internal
             {
                 Logger.EngineError(ex);
 
-                //if (!Options.HostingOptions.CaptureStartupErrors)
-                //{
-                //    throw;
-                //}
+                if (!Options.HostingOptions.CaptureStartupErrors)
+                {
+                    throw;
+                }
 
-                //var showDetailedErrors = HostingEnvironment.IsDevelopment() || Options.HostingOptions.DetailedErrors;
+                var showDetailedErrors = HostingEnvironment.IsDevelopment() || Options.HostingOptions.DetailedErrors;
 
-                //engine = ErrorPageBuilder.BuildErrorPageApplication(HostingEnvironment.ContentRootFileProvider, Logger, showDetailedErrors, ex);
+                engine = ErrorMessageBuilder.BuildErrorMessageApplication(HostingEnvironment.ContentRootFileProvider, Logger, showDetailedErrors, ex);
             }
 
             var engineHost = new EngineHost(engine, Logger, DiagnosticListener, ActivitySource, Propagator, ContextFactory, HostingEventSource.Log, HostingMetrics);
@@ -210,10 +151,10 @@ namespace ARWNI2S.Node.Hosting.Internal
             //        //Logger.HostingStartupAssemblyError(exception);
             //    }
             //}
-            await Task.CompletedTask;
+            await base.StartAsync(cancellationToken);
         }
 
-        public async Task StopAsync(CancellationToken cancellationToken)
+        public override async Task StopAsync(CancellationToken cancellationToken)
         {
             //try
             //{
@@ -223,7 +164,7 @@ namespace ARWNI2S.Node.Hosting.Internal
             //{
             //    HostingEventSource.Log.HostStop();
             //}
-            await Task.CompletedTask;
+            await base.StopAsync(cancellationToken);
         }
 
         private static partial class Log

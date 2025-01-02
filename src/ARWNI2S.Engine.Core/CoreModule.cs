@@ -6,12 +6,11 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace ARWNI2S.Engine
 {
-    public class CoreModule : EngineModule
+    internal class CoreModule : FrameworkModule
     {
         public override int Order => NI2SLifecycleStage.RuntimeInitialize - 1;
 
-        public override string SystemName { get; set; } = nameof(CoreModule);
-        public override string FriendlyName { get; set; } = "Core";
+        public override string SystemName => "NI2S.Core";
 
         public override void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
@@ -58,6 +57,7 @@ namespace ARWNI2S.Engine
             ////configure PDF
             //application.UseNopPdf();
 
+            //engineBuilder.EngineServices.GetRequiredService<IModuleManager>().FrameworkModules[typeof(CoreModule)] = this;
             base.ConfigureEngine(engineBuilder);
         }
     }

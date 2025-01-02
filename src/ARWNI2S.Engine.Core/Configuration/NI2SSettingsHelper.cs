@@ -25,16 +25,16 @@ namespace ARWNI2S.Engine.Configuration
         /// <param name="fileProvider">File provider</param>
         /// <param name="overwrite">Whether to overwrite niissettings file</param>
         /// <returns>Node settings</returns>
-        public static NodeSettings SaveNodeSettings(IList<IConfig> configurations, INiisFileProvider fileProvider, bool overwrite = true)
+        public static NI2SSettings SaveNodeSettings(IList<IConfig> configurations, INiisFileProvider fileProvider, bool overwrite = true)
         {
             ArgumentNullException.ThrowIfNull(configurations);
 
             _configurationOrder ??= configurations.ToDictionary(config => config.Name, config => config.GetOrder());
 
             //create node settings
-            var nodeSettings = Singleton<NodeSettings>.Instance ?? new NodeSettings();
+            var nodeSettings = Singleton<NI2SSettings>.Instance ?? new NI2SSettings();
             nodeSettings.Update(configurations);
-            Singleton<NodeSettings>.Instance = nodeSettings;
+            Singleton<NI2SSettings>.Instance = nodeSettings;
 
             //create file if not exists
             var filePath = fileProvider.MapPath(ConfigDefaults.SettingsFilePath);
@@ -42,7 +42,7 @@ namespace ARWNI2S.Engine.Configuration
             fileProvider.CreateFile(filePath);
 
             //get raw configuration parameters
-            var configuration = JsonConvert.DeserializeObject<NodeSettings>(fileProvider.ReadAllText(filePath, Encoding.UTF8))
+            var configuration = JsonConvert.DeserializeObject<NI2SSettings>(fileProvider.ReadAllText(filePath, Encoding.UTF8))
                 ?.Configuration
                 ?? [];
             foreach (var config in configurations)

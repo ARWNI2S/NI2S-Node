@@ -7,10 +7,13 @@
 
   <ItemGroup>
     <Compile Remove="Data\**" />
+    <Compile Remove="Lifecycle\**" />
     <Compile Remove="Modules\**" />
     <EmbeddedResource Remove="Data\**" />
+    <EmbeddedResource Remove="Lifecycle\**" />
     <EmbeddedResource Remove="Modules\**" />
     <None Remove="Data\**" />
+    <None Remove="Lifecycle\**" />
     <None Remove="Modules\**" />
   </ItemGroup>
 

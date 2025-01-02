@@ -35,7 +35,7 @@ namespace ARWNI2S.Node.Builder
         /// <summary>
         /// Provides information about the NI2S hosting environment a node engine is running.
         /// </summary>
-        public NodeSettings Settings { get; private set; }
+        public NI2SSettings Settings { get; private set; }
 
         /// <summary>
         /// A collection of logging providers for the application to compose. This is useful for adding new logging providers.
@@ -103,7 +103,7 @@ namespace ARWNI2S.Node.Builder
             // grab the INiisHostEnvironment from the niisHostContext. This also matches the instance in the IServiceCollection.
             var nodeHostContext = (NI2SHostBuilderContext)bootstrapHostBuilder.Properties[typeof(NI2SHostBuilderContext)];
             Environment = nodeHostContext.HostingEnvironment;
-            Settings = (NodeSettings)bootstrapHostBuilder.Properties[typeof(NodeSettings)];
+            Settings = (NI2SSettings)bootstrapHostBuilder.Properties[typeof(NI2SSettings)];
 
             Host = new ConfigureHostBuilder(bootstrapHostBuilder.Context, Configuration, Services);
             NI2SHost = new ConfigureNI2SHostBuilder(nodeHostContext, Configuration, Services);
@@ -166,54 +166,6 @@ namespace ARWNI2S.Node.Builder
                 instance.ConfigureEngine(_builtNode);
 
             //Setup node engine startup
-            //if (_builtNode.NodeModules.Count() > 0)
-            //{
-            //    if (!_builtNode.Properties.TryGetValue(NI2SHostingDefaults.EngineBuilderKey, out var localEngineBuilder))
-            //    {
-            //        engine.UseRelayer();
-            //        _builtNode.Properties[NI2SHostingDefaults.UseRelayerKey] = engine.Properties[NI2SHostingDefaults.UseRelayerKey];
-            //    }
-            //    else
-            //    {
-            //        engine.Properties[NI2SHostingDefaults.EngineBuilderKey] = localEngineBuilder;
-            //    }
-            //}
-
-            //// Process authorization and authentication middlewares independently to avoid
-            //// registering middlewares for services that do not exist
-            //var serviceProviderIsService = _builtNode.Services.GetService<IServiceProviderIsService>();
-            //if (serviceProviderIsService?.IsService(typeof(IAuthenticationSchemeProvider)) is true)
-            //{
-            //    // Don't add more than one instance of the middleware
-            //    if (!_builtNode.Properties.ContainsKey(AuthenticationMiddlewareSetKey))
-            //    {
-            //        // The Use invocations will set the property on the outer pipeline,
-            //        // but we want to set it on the inner pipeline as well.
-            //        _builtNode.Properties[AuthenticationMiddlewareSetKey] = true;
-            //        engine.UseAuthentication();
-            //    }
-            //}
-
-            //if (serviceProviderIsService?.IsService(typeof(IAuthorizationHandlerProvider)) is true)
-            //{
-            //    if (!_builtNode.Properties.ContainsKey(AuthorizationMiddlewareSetKey))
-            //    {
-            //        _builtNode.Properties[AuthorizationMiddlewareSetKey] = true;
-            //        engine.UseAuthorization();
-            //    }
-            //}
-
-            //// Wire the source pipeline to run in the destination pipeline
-            //var wireSourcePipeline = new WireSourcePipeline(_builtNode);
-            //engine.Use(wireSourcePipeline.CreateMiddleware);
-
-            //if (_builtNode.DataSources.Count > 0)
-            //{
-            //    // We don't know if user code called UseEndpoints(), so we will call it just in case, UseEndpoints() will ignore duplicate DataSources
-            //    engine.UseEndpoints(_ => { });
-            //}
-
-            //MergeMiddlewareDescriptions(engine);
 
             // Copy the properties to the destination engine builder
             foreach (var item in _builtNode.Properties)
@@ -233,15 +185,5 @@ namespace ARWNI2S.Node.Builder
 
         void IHostApplicationBuilder.ConfigureContainer<TContainerBuilder>(IServiceProviderFactory<TContainerBuilder> factory, Action<TContainerBuilder> configure) =>
             _hostApplicationBuilder.ConfigureContainer(factory, configure);
-
-        //private class WireSourcePipeline
-        //{
-        //    private NI2SNode builtNode;
-
-        //    public WireSourcePipeline(NI2SNode builtNode)
-        //    {
-        //        this.builtNode = builtNode;
-        //    }
-        //}
     }
 }

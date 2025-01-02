@@ -46,7 +46,10 @@ namespace ARWNI2S.Node.Hosting.Internal
             configure(createNI2SHostBuilder(builder));
             builder.ConfigureServices((HostBuilderContext context, IServiceCollection services) => //7 LAST
             {
-                services.AddHostedService<NI2SHostService>();
+                // Lifecycle
+                services.AddSingleton<IHostedLifecycleService, NI2SHostService>();
+                services.AddSingleton<IHostedService>(provider => provider.GetRequiredService<IHostedLifecycleService>());
+                //services.AddHostedService<NI2SHostService>();
             });
             return builder;
         }

@@ -1,5 +1,4 @@
-﻿using ARWNI2S.Cluster.Extensibility;
-using ARWNI2S.Cluster.Hosting;
+﻿using ARWNI2S.Cluster.Hosting;
 using ARWNI2S.Engine.Core;
 using ARWNI2S.Extensibility;
 using Microsoft.Extensions.Logging;
@@ -16,7 +15,7 @@ namespace ARWNI2S.Cluster
 
         public NI2SNodeLocal(
             IOptions<ClusterNodeOptions> options,
-            IEngineModuleManager moduleManager,
+            IModuleManager moduleManager,
             //IEnumerable<IConnectionListenerFactory> transportFactories,
             //IEnumerable<IMultiplexedConnectionListenerFactory> multiplexedFactories,
             //IHttpsConfigurationService httpsConfigurationService,
@@ -28,7 +27,7 @@ namespace ARWNI2S.Cluster
         }
 
         internal NI2SNodeLocal(
-            IEngineModuleManager moduleManager,
+            IModuleManager moduleManager,
             //IEnumerable<IConnectionListenerFactory> transportFactories,
             //IEnumerable<IMultiplexedConnectionListenerFactory> multiplexedFactories,
             //IHttpsConfigurationService httpsConfigurationService,
@@ -47,7 +46,7 @@ namespace ARWNI2S.Cluster
 
             ServiceContext = serviceContext;
 
-            Modules = moduleManager.GetLocallyInstalledModules();
+            Modules = moduleManager.NodeModules;
             //_serverAddresses = new ServerAddressesFeature();
             //Features.Set<IServerAddressesFeature>(_serverAddresses);
 

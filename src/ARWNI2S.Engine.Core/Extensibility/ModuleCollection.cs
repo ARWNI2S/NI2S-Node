@@ -1,7 +1,7 @@
 ﻿using ARWNI2S.Extensibility;
 using System.Collections;
 
-namespace ARWNI2S.Engine.Builder
+namespace ARWNI2S.Engine.Extensibility
 {
     /// <summary>
     /// Default implementation for <see cref="IModuleCollection"/>.
@@ -11,7 +11,7 @@ namespace ARWNI2S.Engine.Builder
         private static readonly KeyComparer ModuleKeyComparer = new KeyComparer();
         private readonly IModuleCollection _defaults;
         private readonly int _initialCapacity;
-        private IDictionary<Type, IEngineModule> _modules;
+        private IDictionary<Type, IModule> _modules;
         private volatile int _containerRevision;
 
         /// <summary>
@@ -25,7 +25,7 @@ namespace ARWNI2S.Engine.Builder
         /// Initializes a new instance of <see cref="ModuleCollection"/> with the specified initial capacity.
         /// </summary>
         /// <param name="initialCapacity">The initial number of elements that the collection can contain.</param>
-        /// <exception cref="System.ArgumentOutOfRangeException"><paramref name="initialCapacity"/> is less than 0</exception>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="initialCapacity"/> is less than 0</exception>
         public ModuleCollection(int initialCapacity)
         {
             ArgumentOutOfRangeException.ThrowIfNegative(initialCapacity);
@@ -52,7 +52,7 @@ namespace ARWNI2S.Engine.Builder
         public bool IsReadOnly { get { return false; } }
 
         /// <inheritdoc />
-        public IEngineModule this[Type key]
+        public IModule this[Type key]
         {
             get
             {
@@ -75,7 +75,7 @@ namespace ARWNI2S.Engine.Builder
 
                 if (_modules == null)
                 {
-                    _modules = new Dictionary<Type, IEngineModule>(_initialCapacity);
+                    _modules = new Dictionary<Type, IModule>(_initialCapacity);
                 }
                 _modules[key] = value;
                 _containerRevision++;
@@ -88,7 +88,7 @@ namespace ARWNI2S.Engine.Builder
         }
 
         /// <inheritdoc />
-        public IEnumerator<KeyValuePair<Type, IEngineModule>> GetEnumerator()
+        public IEnumerator<KeyValuePair<Type, IModule>> GetEnumerator()
         {
             if (_modules != null)
             {
@@ -109,7 +109,7 @@ namespace ARWNI2S.Engine.Builder
         }
 
         /// <inheritdoc />
-        public TModule Get<TModule>() where TModule : class, IEngineModule
+        public TModule Get<TModule>() where TModule : class, IModule
         {
             if (typeof(TModule).IsValueType)
             {
@@ -126,7 +126,7 @@ namespace ARWNI2S.Engine.Builder
         }
 
         /// <inheritdoc />
-        public void Set<TModule>(TModule instance) where TModule : class, IEngineModule
+        public void Set<TModule>(TModule instance) where TModule : class, IModule
         {
             this[typeof(TModule)] = instance;
         }
@@ -134,14 +134,14 @@ namespace ARWNI2S.Engine.Builder
         // Used by the debugger. Count over enumerable is required to get the correct value.
         private int GetCount() => this.Count();
 
-        private sealed class KeyComparer : IEqualityComparer<KeyValuePair<Type, IEngineModule>>
+        private sealed class KeyComparer : IEqualityComparer<KeyValuePair<Type, IModule>>
         {
-            public bool Equals(KeyValuePair<Type, IEngineModule> x, KeyValuePair<Type, IEngineModule> y)
+            public bool Equals(KeyValuePair<Type, IModule> x, KeyValuePair<Type, IModule> y)
             {
                 return x.Key.Equals(y.Key);
             }
 
-            public int GetHashCode(KeyValuePair<Type, IEngineModule> obj)
+            public int GetHashCode(KeyValuePair<Type, IModule> obj)
             {
                 return obj.Key.GetHashCode();
             }

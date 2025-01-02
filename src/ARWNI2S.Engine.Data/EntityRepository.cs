@@ -34,7 +34,7 @@ namespace ARWNI2S.Engine.Data
             INiisDataProvider dataProvider,
             IShortTermCacheManager shortTermCacheManager,
             IStaticCacheManager staticCacheManager,
-            NodeSettings nodeSettings)
+            NI2SSettings nodeSettings)
         {
             _eventPublisher = eventPublisher;
             _dataProvider = dataProvider;
