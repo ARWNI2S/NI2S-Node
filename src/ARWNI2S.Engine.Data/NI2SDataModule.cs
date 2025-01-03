@@ -23,6 +23,7 @@ namespace ARWNI2S.Engine.Data
 
         public override void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
+
             var mAssemblies = TypeFinder.FindClassesOfType<MigrationBase>()
                 .Select(t => t.Assembly)
                 .Where(assembly => !assembly.FullName.Contains("FluentMigrator.Runner"))

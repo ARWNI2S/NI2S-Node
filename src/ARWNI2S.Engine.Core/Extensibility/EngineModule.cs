@@ -1,4 +1,5 @@
 ﻿using ARWNI2S.Engine.Builder;
+using ARWNI2S.Engine.Lifecycle;
 using ARWNI2S.Extensibility;
 using ARWNI2S.Lifecycle;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,6 +33,7 @@ namespace ARWNI2S.Engine.Extensibility
         public override void ConfigureEngine(IEngineBuilder engineBuilder)
         {
             engineBuilder.EngineServices.GetRequiredService<IEngineModuleManager>().Register(this);
+            Participate(engineBuilder.EngineServices.GetRequiredService<IEngineLifecycleSubject>());
         }
 
         /// <summary>
@@ -69,6 +71,7 @@ namespace ARWNI2S.Engine.Extensibility
         public override void ConfigureEngine(IEngineBuilder engineBuilder)
         {
             engineBuilder.EngineServices.GetRequiredService<IModuleManager>().Register(this);
+            Participate(engineBuilder.EngineServices.GetRequiredService<IEngineLifecycleSubject>());
         }
     }
 }

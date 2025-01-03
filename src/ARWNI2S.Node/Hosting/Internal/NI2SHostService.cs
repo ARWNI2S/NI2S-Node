@@ -5,7 +5,6 @@ using ARWNI2S.Hosting;
 using ARWNI2S.Node.Diagnostics;
 using ARWNI2S.Node.Hosting.Logging;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -124,6 +123,7 @@ namespace ARWNI2S.Node.Hosting.Internal
             }
 
             var engineHost = new EngineHost(engine, Logger, DiagnosticListener, ActivitySource, Propagator, ContextFactory, HostingEventSource.Log, HostingMetrics);
+
 
             await LocalNode.StartAsync(engineHost, cancellationToken);
             HostingEventSource.Log.NodeReady();

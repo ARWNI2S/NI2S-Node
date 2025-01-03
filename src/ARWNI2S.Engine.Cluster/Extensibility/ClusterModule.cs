@@ -39,6 +39,7 @@ namespace ARWNI2S.Cluster
         public override void ConfigureEngine(IEngineBuilder engineBuilder)
         {
             engineBuilder.EngineServices.GetRequiredService<IModuleManager>().Register(this);
+            Participate(engineBuilder.EngineServices.GetRequiredService<IClusterNodeLifecycle>());
         }
 
         /// <summary>

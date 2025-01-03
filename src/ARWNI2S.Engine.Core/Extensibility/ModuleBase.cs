@@ -44,7 +44,8 @@ namespace ARWNI2S.Engine.Extensibility
         /// <param name="engineBuilder">The engine builde</param>
         public virtual void ConfigureEngine(IEngineBuilder engineBuilder)
         {
-            engineBuilder.EngineServices.GetRequiredService<IModuleManager>().Register(this);
+            var module = engineBuilder.EngineServices.GetKeyedService<IModule>(SystemName);
+            engineBuilder.EngineServices.GetRequiredService<IModuleManager>().Register(module);
         }
     }
 }
