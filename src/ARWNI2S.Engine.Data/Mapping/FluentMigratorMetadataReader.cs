@@ -71,7 +71,7 @@ namespace ARWNI2S.Engine.Data.Mapping
     //    protected T[] GetAttributes<T>(Type type, Type attributeType, MemberInfo memberInfo = null)
     //        where T : Attribute
     //    {
-    //        if (type.IsSubclassOf(typeof(BaseEntity)) && typeof(T) == attributeType && GetAttribute<T>(type, memberInfo) is T attr)
+    //        if (type.IsSubclassOf(typeof(DataEntity)) && typeof(T) == attributeType && GetAttribute<T>(type, memberInfo) is T attr)
     //        {
     //            return new[] { attr };
     //        }

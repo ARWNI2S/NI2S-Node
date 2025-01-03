@@ -81,8 +81,8 @@ namespace ARWNI2S.Engine.Caching
                 null => "null",
                 IEnumerable<INiisEntity> entities => CreateIdsHash(entities.Select(entity => entity.Id)),
                 INiisEntity entity => entity.Id,
-                //IEnumerable<BaseEntity> entities => CreateIdsHash(entities.Select(entity => entity.Id)),
-                //BaseEntity entity => entity.Id,
+                //IEnumerable<DataEntity> entities => CreateIdsHash(entities.Select(entity => entity.Id)),
+                //DataEntity entity => entity.Id,
                 decimal param => param.ToString(CultureInfo.InvariantCulture),
                 _ => parameter
             };

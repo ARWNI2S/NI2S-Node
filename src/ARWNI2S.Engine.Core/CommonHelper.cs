@@ -270,6 +270,26 @@ namespace ARWNI2S.Engine.Infrastructure
         }
 
         /// <summary>
+        /// Splits the camel-case word into separate one
+        /// </summary>
+        /// <param name="str">Input string</param>
+        /// <returns>Splitted string</returns>
+        public static string SplitCamelCaseWord(string str)
+        {
+            if (string.IsNullOrEmpty(str))
+                return string.Empty;
+
+            var result = str.ToCharArray()
+                .Select(p => p.ToString())
+                .Aggregate(string.Empty, (current, c) => current + (c == c.ToUpperInvariant() ? $" {c}" : c));
+
+            //ensure no spaces (e.g. when the first letter is upper case)
+            result = result.TrimStart();
+
+            return result;
+        }
+
+        /// <summary>
         /// Convert enum for front-end
         /// </summary>
         /// <param name="str">Input string</param>

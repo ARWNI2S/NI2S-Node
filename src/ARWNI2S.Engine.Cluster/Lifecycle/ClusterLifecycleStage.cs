@@ -1,4 +1,4 @@
-namespace ARWNI2S.Lifecycle
+namespace ARWNI2S.Cluster.Lifecycle
 {
     /// <summary>
     /// Lifecycle stages of a NI2S node engine.

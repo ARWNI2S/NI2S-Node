@@ -4,11 +4,10 @@ using ARWNI2S.Engine.Builder;
 using ARWNI2S.Engine.Data;
 using ARWNI2S.Engine.Extensibility;
 using ARWNI2S.Extensibility;
-using ARWNI2S.Lifecycle;
 using Microsoft.Extensions.DependencyInjection;
 using Orleans;
 
-namespace ARWNI2S.Cluster
+namespace ARWNI2S.Cluster.Extensibility
 {
     /// <summary>
     /// Represents a module that participates in the engine lifecycle

@@ -112,22 +112,22 @@ namespace ARWNI2S.Engine.Data.Extensions
         //    return source.ToAsyncEnumerable().SelectManyAwait(getAsyncEnumerable);
         //}
 
-        ///// <summary>
-        ///// Filters the elements of an async-enumerable sequence based on an asynchronous
-        ///// predicate
-        ///// </summary>
-        ///// <typeparam name="TSource"></typeparam>
-        ///// <param name="source">An async-enumerable sequence whose elements to filter</param>
-        ///// <param name="predicate">An asynchronous predicate to test each source element for a condition</param>
-        ///// <returns>
-        ///// An async-enumerable sequence that contains elements from the input sequence that
-        ///// satisfy the condition
-        ///// </returns>
-        //public static IAsyncEnumerable<TSource> WhereAwait<TSource>(this IEnumerable<TSource> source,
-        //    Func<TSource, ValueTask<bool>> predicate)
-        //{
-        //    return source.ToAsyncEnumerable().WhereAwait(predicate);
-        //}
+        /// <summary>
+        /// Filters the elements of an async-enumerable sequence based on an asynchronous
+        /// predicate
+        /// </summary>
+        /// <typeparam name="TSource"></typeparam>
+        /// <param name="source">An async-enumerable sequence whose elements to filter</param>
+        /// <param name="predicate">An asynchronous predicate to test each source element for a condition</param>
+        /// <returns>
+        /// An async-enumerable sequence that contains elements from the input sequence that
+        /// satisfy the condition
+        /// </returns>
+        public static IAsyncEnumerable<TSource> WhereAwait<TSource>(this IEnumerable<TSource> source,
+            Func<TSource, ValueTask<bool>> predicate)
+        {
+            return source.ToAsyncEnumerable().WhereAwait(predicate);
+        }
 
         ///// <summary>
         ///// Determines whether any element in an async-enumerable sequence satisfies a condition
