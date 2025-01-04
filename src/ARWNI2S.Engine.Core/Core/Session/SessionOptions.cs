@@ -1,6 +1,6 @@
 ﻿using ARWNI2S.Engine.Security.Token;
 
-namespace ARWNI2S.Engine.Session
+namespace ARWNI2S.Engine.Core.Session
 {
     /// <summary>
     /// Represents the session state options for the application.

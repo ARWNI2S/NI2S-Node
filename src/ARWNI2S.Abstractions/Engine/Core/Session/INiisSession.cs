@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace ARWNI2S.Engine.Session
+namespace ARWNI2S.Engine.Core.Session
 {
     /// <summary>
     /// Stores user data while the user browses a web application. Session state uses a store maintained by the application

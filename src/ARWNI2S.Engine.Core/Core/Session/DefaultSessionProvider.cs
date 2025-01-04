@@ -1,4 +1,4 @@
-﻿namespace ARWNI2S.Engine.Session
+﻿namespace ARWNI2S.Engine.Core.Session
 {
     internal class DefaultSessionProvider : ISessionProvider
     {

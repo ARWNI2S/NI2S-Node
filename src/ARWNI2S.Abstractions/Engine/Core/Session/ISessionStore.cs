@@ -1,4 +1,4 @@
-﻿namespace ARWNI2S.Engine.Session
+﻿namespace ARWNI2S.Engine.Core.Session
 {
     /// <summary>
     /// Storage for sessions that maintain user data while the user browses a web application.

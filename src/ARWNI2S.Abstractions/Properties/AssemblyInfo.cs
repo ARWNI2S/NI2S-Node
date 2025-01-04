@@ -19,7 +19,13 @@ using System.Runtime.InteropServices;
 [assembly: Guid("f9f577c5-9dee-440a-b156-64522ac7d4e6")]
 
 [assembly: InternalsVisibleTo("ARWNI2S.Engine.Core")]
-[assembly: InternalsVisibleTo("ARWNI2S.Engine.Cluster")]
 [assembly: InternalsVisibleTo("ARWNI2S.Engine.Data")]
+[assembly: InternalsVisibleTo("ARWNI2S.Engine.Cluster")]
+
 [assembly: InternalsVisibleTo("ARWNI2S.Node.Runtime")]
 [assembly: InternalsVisibleTo("ARWNI2S.Node")]
+
+[assembly: InternalsVisibleTo("ARWNI2S.Runtime.Narrator")]
+[assembly: InternalsVisibleTo("ARWNI2S.Runtime.Scenic")]
+
+[assembly: InternalsVisibleTo("ARWNI2S.Backend.Data")]
