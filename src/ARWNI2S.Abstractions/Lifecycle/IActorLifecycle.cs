@@ -1,5 +1,5 @@
 #nullable enable
-using ARWNI2S.Engine.Core.Actor;
+using ARWNI2S.Engine.Core;
 using Orleans;
 using System.Buffers;
 

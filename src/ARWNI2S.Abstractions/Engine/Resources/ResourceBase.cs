@@ -1,10 +1,12 @@
 ﻿using ARWNI2S.Engine.Core;
+using ARWNI2S.Engine.Resources.Internal;
 
 namespace ARWNI2S.Engine.Resources
 {
     public abstract class ResourceBase : IResource
     {
         private bool disposedValue;
+        private int _handle;
 
         protected ulong Id { get; }
         public Priority Priority { get; protected set; }
@@ -61,6 +63,11 @@ namespace ARWNI2S.Engine.Resources
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
         }
+
+
+        void IResource.SetHandle<TTag>(Handle<TTag> handle) { _handle = handle; }
+
+        Handle<TTag> IResource.GetHandle<TTag>() { return (Handle<TTag>)_handle; }
 
         object INiisEntity.Id => Id;
     }

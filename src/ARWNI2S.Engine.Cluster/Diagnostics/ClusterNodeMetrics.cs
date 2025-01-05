@@ -5,7 +5,7 @@ namespace ARWNI2S.Cluster.Diagnostics
     internal sealed class ClusterNodeMetrics
     {
         //        // Note: Dot separated instead of dash.
-        public const string MeterName = "ARWNI2S.Engine.Cluster.Node";
+        public const string MeterName = "ARWNI2S.Cluster.Node";
 
         //        public const string ErrorTypeAttributeName = "error.type";
 
@@ -14,60 +14,60 @@ namespace ARWNI2S.Cluster.Diagnostics
         //        public const string Http3 = "3";
 
         private readonly Meter _meter;
-        //        private readonly UpDownCounter<long> _activeConnectionsCounter;
-        //        private readonly Histogram<double> _connectionDuration;
-        //        private readonly Counter<long> _rejectedConnectionsCounter;
-        //        private readonly UpDownCounter<long> _queuedConnectionsCounter;
-        //        private readonly UpDownCounter<long> _queuedRequestsCounter;
-        //        private readonly UpDownCounter<long> _currentUpgradedRequestsCounter;
-        //        private readonly Histogram<double> _tlsHandshakeDuration;
-        //        private readonly UpDownCounter<long> _activeTlsHandshakesCounter;
+        private readonly UpDownCounter<long> _activeConnectionsCounter;
+        private readonly Histogram<double> _connectionDuration;
+        private readonly Counter<long> _rejectedConnectionsCounter;
+        private readonly UpDownCounter<long> _queuedConnectionsCounter;
+        private readonly UpDownCounter<long> _queuedRequestsCounter;
+        private readonly UpDownCounter<long> _currentUpgradedRequestsCounter;
+        private readonly Histogram<double> _tlsHandshakeDuration;
+        private readonly UpDownCounter<long> _activeTlsHandshakesCounter;
 
         public ClusterNodeMetrics(IMeterFactory meterFactory)
         {
             _meter = meterFactory.Create(MeterName);
 
-            //            _activeConnectionsCounter = _meter.CreateUpDownCounter<long>(
-            //                "kestrel.active_connections",
-            //                unit: "{connection}",
-            //                description: "Number of connections that are currently active on the server.");
+            _activeConnectionsCounter = _meter.CreateUpDownCounter<long>(
+                "kestrel.active_connections",
+                unit: "{connection}",
+                description: "Number of connections that are currently active on the server.");
 
-            //            _connectionDuration = _meter.CreateHistogram(
-            //                "kestrel.connection.duration",
-            //                unit: "s",
-            //                description: "The duration of connections on the server.",
-            //                advice: new InstrumentAdvice<double> { HistogramBucketBoundaries = MetricsConstants.LongSecondsBucketBoundaries });
+            _connectionDuration = _meter.CreateHistogram(
+                "kestrel.connection.duration",
+                unit: "s",
+                description: "The duration of connections on the server.",
+                advice: new InstrumentAdvice<double> { HistogramBucketBoundaries = MetricsConstants.LongSecondsBucketBoundaries });
 
-            //            _rejectedConnectionsCounter = _meter.CreateCounter<long>(
-            //               "kestrel.rejected_connections",
-            //                unit: "{connection}",
-            //                description: "Number of connections rejected by the server. Connections are rejected when the currently active count exceeds the value configured with MaxConcurrentConnections.");
+            _rejectedConnectionsCounter = _meter.CreateCounter<long>(
+               "kestrel.rejected_connections",
+                unit: "{connection}",
+                description: "Number of connections rejected by the server. Connections are rejected when the currently active count exceeds the value configured with MaxConcurrentConnections.");
 
-            //            _queuedConnectionsCounter = _meter.CreateUpDownCounter<long>(
-            //               "kestrel.queued_connections",
-            //                unit: "{connection}",
-            //                description: "Number of connections that are currently queued and are waiting to start.");
+            _queuedConnectionsCounter = _meter.CreateUpDownCounter<long>(
+               "kestrel.queued_connections",
+                unit: "{connection}",
+                description: "Number of connections that are currently queued and are waiting to start.");
 
-            //            _queuedRequestsCounter = _meter.CreateUpDownCounter<long>(
-            //               "kestrel.queued_requests",
-            //                unit: "{request}",
-            //                description: "Number of HTTP requests on multiplexed connections (HTTP/2 and HTTP/3) that are currently queued and are waiting to start.");
+            _queuedRequestsCounter = _meter.CreateUpDownCounter<long>(
+               "kestrel.queued_requests",
+                unit: "{request}",
+                description: "Number of HTTP requests on multiplexed connections (HTTP/2 and HTTP/3) that are currently queued and are waiting to start.");
 
-            //            _currentUpgradedRequestsCounter = _meter.CreateUpDownCounter<long>(
-            //               "kestrel.upgraded_connections",
-            //                unit: "{connection}",
-            //                description: "Number of HTTP connections that are currently upgraded (WebSockets). The number only tracks HTTP/1.1 connections.");
+            _currentUpgradedRequestsCounter = _meter.CreateUpDownCounter<long>(
+               "kestrel.upgraded_connections",
+                unit: "{connection}",
+                description: "Number of HTTP connections that are currently upgraded (WebSockets). The number only tracks HTTP/1.1 connections.");
 
-            //            _tlsHandshakeDuration = _meter.CreateHistogram(
-            //                "kestrel.tls_handshake.duration",
-            //                unit: "s",
-            //                description: "The duration of TLS handshakes on the server.",
-            //                advice: new InstrumentAdvice<double> { HistogramBucketBoundaries = MetricsConstants.ShortSecondsBucketBoundaries });
+            _tlsHandshakeDuration = _meter.CreateHistogram(
+                "kestrel.tls_handshake.duration",
+                unit: "s",
+                description: "The duration of TLS handshakes on the server.",
+                advice: new InstrumentAdvice<double> { HistogramBucketBoundaries = MetricsConstants.ShortSecondsBucketBoundaries });
 
-            //            _activeTlsHandshakesCounter = _meter.CreateUpDownCounter<long>(
-            //               "kestrel.active_tls_handshakes",
-            //                unit: "{handshake}",
-            //                description: "Number of TLS handshakes that are currently in progress on the server.");
+            _activeTlsHandshakesCounter = _meter.CreateUpDownCounter<long>(
+               "kestrel.active_tls_handshakes",
+                unit: "{handshake}",
+                description: "Number of TLS handshakes that are currently in progress on the server.");
         }
 
         //        public void ConnectionStart(ConnectionMetricsContext metricsContext)
@@ -510,5 +510,11 @@ namespace ARWNI2S.Cluster.Diagnostics
 
         //            return errorTypeValue != null;
         //        }
+    }
+
+    internal class MetricsConstants
+    {
+        public static IReadOnlyList<double> LongSecondsBucketBoundaries { get; internal set; }
+        public static IReadOnlyList<double> ShortSecondsBucketBoundaries { get; internal set; }
     }
 }

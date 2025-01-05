@@ -1,4 +1,5 @@
-﻿using ARWNI2S.Cluster.Hosting;
+﻿using ARWNI2S.Cluster.Entities;
+using ARWNI2S.Cluster.Hosting;
 using ARWNI2S.Engine.Core;
 using ARWNI2S.Extensibility;
 using Microsoft.Extensions.Logging;
@@ -9,6 +10,8 @@ namespace ARWNI2S.Cluster
 {
     internal class NI2SNodeLocal : IClusterNode
     {
+        private NodeInfo nodeInfo;
+
         public IModuleCollection Modules { get; }
         private ServiceContext ServiceContext { get; }
         //private ClusterTrace Trace => ServiceContext.Log;
@@ -20,8 +23,7 @@ namespace ARWNI2S.Cluster
             //IEnumerable<IMultiplexedConnectionListenerFactory> multiplexedFactories,
             //IHttpsConfigurationService httpsConfigurationService,
             ILoggerFactory loggerFactory
-            //ClusterNodeMetrics metrics
-            )
+            /*ClusterNodeMetrics metrics*/)
             : this(moduleManager/*transportFactories, multiplexedFactories, httpsConfigurationService*/, CreateServiceContext(options, loggerFactory, diagnosticSource: null/*, metrics*/))
         {
         }
@@ -88,9 +90,9 @@ namespace ARWNI2S.Cluster
             };
         }
 
-        Guid INiisNode.NodeId => throw new NotImplementedException();
-
-        object INiisEntity.Id => throw new NotImplementedException();
+        Guid INiisNode.NodeId => nodeInfo.NodeId;
+        object INiisEntity.Id => nodeInfo.NodeId;
+        public NodeType NodeType => nodeInfo.NodeType;
     }
 
 

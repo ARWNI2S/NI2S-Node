@@ -7,21 +7,18 @@
 
   <ItemGroup>
     <Compile Remove="Connection\**" />
-    <Compile Remove="Diagnostics\**" />
     <Compile Remove="Environment\**" />
     <Compile Remove="Extensibility\**" />
     <Compile Remove="Hosting\**" />
     <Compile Remove="Logging\**" />
     <Compile Remove="Relayer\**" />
     <EmbeddedResource Remove="Connection\**" />
-    <EmbeddedResource Remove="Diagnostics\**" />
     <EmbeddedResource Remove="Environment\**" />
     <EmbeddedResource Remove="Extensibility\**" />
     <EmbeddedResource Remove="Hosting\**" />
     <EmbeddedResource Remove="Logging\**" />
     <EmbeddedResource Remove="Relayer\**" />
     <None Remove="Connection\**" />
-    <None Remove="Diagnostics\**" />
     <None Remove="Environment\**" />
     <None Remove="Extensibility\**" />
     <None Remove="Hosting\**" />

@@ -1,7 +1,11 @@
-﻿using ARWNI2S.Cluster.Lifecycle;
+﻿using ARWNI2S.Cluster.Configuration;
+using ARWNI2S.Cluster.Diagnostics;
+using ARWNI2S.Cluster.Lifecycle;
+using ARWNI2S.Cluster.Networking.Connection;
 using ARWNI2S.Hosting;
 using ARWNI2S.Hosting.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
 using Orleans;
 
@@ -75,10 +79,8 @@ namespace ARWNI2S.Cluster.Hosting
         {
             hostBuilder.ConfigureServices(services =>//3
             {
-                //var settings = Singleton<NodeSettings>.Instance;
-
-                //// Don't override an already-configured transport
-                //services.TryAddSingleton<IConnectionListenerFactory, ClusterTransportFactory>();
+                // Don't override an already-configured transport
+                services.TryAddSingleton<IConnectionListenerFactory, ClusterTransportFactory>();
 
                 services.AddTransient<IConfigureOptions<ClusterNodeOptions>, ClusterNodeOptionsSetup>();
 
@@ -86,9 +88,9 @@ namespace ARWNI2S.Cluster.Hosting
                 services.AddSingleton<IClusterNodeLifecycle>(provider => provider.GetRequiredService<ClusterNodeLifecycle>());
                 services.AddSingleton<ILifecycleSubject>(provider => provider.GetRequiredService<ClusterNodeLifecycle>());
 
-                //services.AddSingleton<INiisConfigurationService, NI2SConfigurationService>();
+                services.AddSingleton<IClusterConfigurationService, ClusterConfigurationService>();
                 services.AddSingleton<IClusterNode, NI2SNodeLocal>();
-                //services.AddSingleton<ClusterNodeMetrics>();
+                services.AddSingleton<ClusterNodeMetrics>();
             });
 
             if (OperatingSystem.IsWindows())

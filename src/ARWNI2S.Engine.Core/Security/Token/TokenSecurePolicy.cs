@@ -1,4 +1,4 @@
-﻿namespace ARWNI2S.Engine
+﻿namespace ARWNI2S.Engine.Security.Token
 {
     public enum TokenSecurePolicy
     {

@@ -1,7 +1,7 @@
 ﻿namespace ARWNI2S.Engine.Core.Object
 {
-    public struct ObjectId
+    internal struct ObjectId
     {
-        public EntityId EntityId { get; set; }
+        public readonly EntityId EntityId { get; }
     }
 }

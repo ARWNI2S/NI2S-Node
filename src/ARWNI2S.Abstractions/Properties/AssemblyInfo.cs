@@ -28,4 +28,4 @@ using System.Runtime.InteropServices;
 [assembly: InternalsVisibleTo("ARWNI2S.Runtime.Narrator")]
 [assembly: InternalsVisibleTo("ARWNI2S.Runtime.Scenic")]
 
-[assembly: InternalsVisibleTo("ARWNI2S.Backend.Data")]
+//[assembly: InternalsVisibleTo("ARWNI2S.Backend.Data")]

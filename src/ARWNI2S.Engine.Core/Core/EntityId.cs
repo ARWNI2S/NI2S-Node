@@ -2,5 +2,6 @@
 {
     public struct EntityId
     {
+
     }
 }

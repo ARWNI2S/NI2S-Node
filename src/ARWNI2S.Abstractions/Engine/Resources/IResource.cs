@@ -1,5 +1,6 @@
 ﻿using ARWNI2S.Data;
 using ARWNI2S.Engine.Core;
+using ARWNI2S.Engine.Resources.Internal;
 
 namespace ARWNI2S.Engine.Resources
 {
@@ -27,7 +28,6 @@ namespace ARWNI2S.Engine.Resources
         /// </summary>
         /// <returns>Recreation result as boolean.</returns>
         bool Recreate();
-
         /// <summary>
         /// Returns resource size in bytes.
         /// </summary>
@@ -56,6 +56,9 @@ namespace ARWNI2S.Engine.Resources
         /// Gets or sets last access time
         /// </summary>
         TimeOnly LastAccess { get; }
+
+        internal void SetHandle<TTag>(Handle<TTag> handle) where TTag : class, IResource;
+        internal Handle<TTag> GetHandle<TTag>() where TTag : class, IResource;
     }
 
     /// <summary>
