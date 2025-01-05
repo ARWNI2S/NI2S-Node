@@ -2,7 +2,6 @@
 using ARWNI2S.Collections.Generic;
 using ARWNI2S.Configuration;
 using ARWNI2S.Engine.Caching;
-using ARWNI2S.Engine.Data.Entities;
 using ARWNI2S.Engine.Data.Events;
 using ARWNI2S.Engine.Data.Extensions;
 using ARWNI2S.Events;

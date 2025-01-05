@@ -1,6 +1,12 @@
 ﻿namespace ARWNI2S.Engine.Core
 {
-    internal interface IObjectFactory<TObject> where TObject : INiisObject
+    public interface IObjectFactory
+    {
+        TObject CreateInstance<TObject>() where TObject : INiisObject;
+        INiisObject CreateInstance(Type type);
+    }
+
+    public interface IObjectFactory<TObject> : IObjectFactory where TObject : INiisObject
     {
         TObject CreateInstance();
     }

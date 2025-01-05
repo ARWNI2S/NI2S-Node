@@ -1,5 +1,4 @@
 ﻿using ARWNI2S.Data.Mapping;
-using ARWNI2S.Engine.Data.Entities;
 using ARWNI2S.Engine.Data.Mapping.Builders;
 using ARWNI2S.Environment;
 using FluentMigrator.Builders.Alter.Table;

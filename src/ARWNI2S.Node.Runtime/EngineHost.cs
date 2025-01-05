@@ -26,14 +26,14 @@ namespace ARWNI2S.Node
 
         public EngineHost(INiisEngine engine, ILogger logger, DiagnosticListener diagnosticListener, ActivitySource activitySource, DistributedContextPropagator propagator, INiisContextFactory contextFactory, object log, HostingMetrics hostingMetrics)
         {
-            this._engine = engine;
-            this._logger = logger;
-            this._diagnosticListener = diagnosticListener;
-            this._activitySource = activitySource;
-            this._propagator = propagator;
-            this._contextFactory = contextFactory;
-            this._log = log;
-            this._hostingMetrics = hostingMetrics;
+            _engine = engine;
+            _logger = logger;
+            _diagnosticListener = diagnosticListener;
+            _activitySource = activitySource;
+            _propagator = propagator;
+            _contextFactory = contextFactory;
+            _log = log;
+            _hostingMetrics = hostingMetrics;
 
 
             var context = EngineContext.Current;
@@ -98,7 +98,7 @@ namespace ARWNI2S.Node
         {
             _logger.LogDebug("On Last Stage");
 
-            var context = EngineContext.Current;
+            //var context = EngineContext.Current;
 
             //further actions are performed only when the database is installed
             if (DataSettingsManager.IsDatabaseInstalled())
@@ -112,7 +112,7 @@ namespace ARWNI2S.Node
         {
             _logger.LogDebug("On Active");
 
-            var context = EngineContext.Current;
+            //var context = EngineContext.Current;
 
             //further actions are performed only when the database is installed
             if (DataSettingsManager.IsDatabaseInstalled())
@@ -128,7 +128,7 @@ namespace ARWNI2S.Node
         {
             _logger.LogDebug("On Become Active");
 
-            var context = EngineContext.Current;
+            //var context = EngineContext.Current;
 
             //further actions are performed only when the database is installed
             if (DataSettingsManager.IsDatabaseInstalled())
@@ -144,7 +144,7 @@ namespace ARWNI2S.Node
         {
             _logger.LogDebug("On Simulation Services");
 
-            var context = EngineContext.Current;
+            //var context = EngineContext.Current;
 
             //further actions are performed only when the database is installed
             if (DataSettingsManager.IsDatabaseInstalled())
@@ -158,7 +158,7 @@ namespace ARWNI2S.Node
         {
             _logger.LogDebug("On After Runtime Actor Services");
 
-            var context = EngineContext.Current;
+            //var context = EngineContext.Current;
 
             //further actions are performed only when the database is installed
             if (DataSettingsManager.IsDatabaseInstalled())
@@ -172,7 +172,7 @@ namespace ARWNI2S.Node
         {
             _logger.LogDebug("On Runtime Actor Services");
 
-            var context = EngineContext.Current;
+            //var context = EngineContext.Current;
 
             //further actions are performed only when the database is installed
             if (DataSettingsManager.IsDatabaseInstalled())
@@ -186,7 +186,7 @@ namespace ARWNI2S.Node
         {
             _logger.LogDebug("On Runtime Storage Services");
 
-            var context = EngineContext.Current;
+            //var context = EngineContext.Current;
 
             //further actions are performed only when the database is installed
             if (DataSettingsManager.IsDatabaseInstalled())
@@ -200,7 +200,7 @@ namespace ARWNI2S.Node
         {
             _logger.LogDebug("On Runtime Services");
 
-            var context = EngineContext.Current;
+            //var context = EngineContext.Current;
 
             //further actions are performed only when the database is installed
             if (DataSettingsManager.IsDatabaseInstalled())
@@ -214,7 +214,7 @@ namespace ARWNI2S.Node
         {
             _logger.LogDebug("On Runtime Initialize");
 
-            var context = EngineContext.Current;
+            //var context = EngineContext.Current;
 
             //further actions are performed only when the database is installed
             if (DataSettingsManager.IsDatabaseInstalled())
@@ -230,7 +230,7 @@ namespace ARWNI2S.Node
         {
             _logger.LogDebug("On Post-Core Initialize");
 
-            var context = EngineContext.Current;
+            //var context = EngineContext.Current;
 
             //further actions are performed only when the database is installed
             if (DataSettingsManager.IsDatabaseInstalled())
@@ -244,7 +244,7 @@ namespace ARWNI2S.Node
         {
             _logger.LogDebug("On Core Initialize");
 
-            var context = EngineContext.Current;
+            //var context = EngineContext.Current;
 
             //further actions are performed only when the database is installed
             if (DataSettingsManager.IsDatabaseInstalled())
@@ -286,7 +286,7 @@ namespace ARWNI2S.Node
         {
             _logger.LogDebug("On First Stage");
 
-            var context = EngineContext.Current;
+            //var context = EngineContext.Current;
 
             //further actions are performed only when the database is installed
             if (DataSettingsManager.IsDatabaseInstalled())
@@ -300,7 +300,7 @@ namespace ARWNI2S.Node
         {
             _logger.LogDebug("On Early Initialize");
 
-            var context = EngineContext.Current;
+            //var context = EngineContext.Current;
 
             //further actions are performed only when the database is installed
             if (DataSettingsManager.IsDatabaseInstalled())
@@ -314,7 +314,7 @@ namespace ARWNI2S.Node
 
         public void Start()
         {
-            var context = EngineContext.Current;
+            //var context = EngineContext.Current;
 
             //further actions are performed only when the database is installed
             if (DataSettingsManager.IsDatabaseInstalled())

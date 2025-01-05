@@ -50,25 +50,27 @@ namespace ARWNI2S.Cluster.Extensibility
             lifecycle.Subscribe(SystemName, Order, ct => OnStart(ct), ct => OnStop(ct));
         }
 
+        private Task OnStart(CancellationToken token)
+        {
+            return Task.Run(() => OnModuleStart(), token);
+        }
+
+        private Task OnStop(CancellationToken token)
+        {
+            return Task.Run(() => OnModuleStop(), token);
+        }
+
         /// <summary>
         /// Start the module
         /// </summary>
-        /// <param name="token">Cancellation token</param>
         /// <returns>A task</returns>
-        protected virtual Task OnStart(CancellationToken token)
-        {
-            return Task.CompletedTask;
-        }
+        protected virtual void OnModuleStart() { /*Do nothing.*/ }
 
         /// <summary>
         /// Stop the module
         /// </summary>
-        /// <param name="token">Cancellation token</param>
         /// <returns>A task</returns>
-        protected virtual Task OnStop(CancellationToken token)
-        {
-            return Task.CompletedTask;
-        }
+        protected virtual void OnModuleStop() { /*Do nothing.*/ }
     }
 
 }

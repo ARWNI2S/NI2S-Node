@@ -1,4 +1,5 @@
 ﻿using ARWNI2S.Engine.Core.Builder;
+using ARWNI2S.Engine.Core.Object;
 using ARWNI2S.Engine.Extensibility;
 using ARWNI2S.Engine.Hosting;
 using ARWNI2S.Engine.Parts;
@@ -63,10 +64,15 @@ namespace ARWNI2S.Engine.Core
 
         internal static void AddNI2SCoreServices(IServiceCollection services)
         {
+            services.AddSingleton<IObjectFactory<INiisObject>, DefaultObjectFactory>();
 
-
-
-
+            // Registrar el servicio genérico de resolución de factorías
+            services.AddTransient(typeof(IObjectFactory<>), sp =>
+            {
+                var requestedType = sp.GetService(typeof(IObjectFactory<>))?.GetType();
+                var specificFactory = sp.GetService(requestedType);
+                return specificFactory ?? sp.GetRequiredService<IObjectFactory<INiisObject>>();
+            });
 
 
             ////services.TryAddEnumerable(ServiceDescriptor.Transient<IConfigureOptions<MvcOptions>, MvcCoreMvcOptionsSetup>());

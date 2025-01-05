@@ -2,7 +2,7 @@
 
 namespace ARWNI2S.Node.Hosting
 {
-    internal class ProcessorFactory : IProcessorFactory
+    internal class ProcessorFactory : INiisProcessorFactory
     {
     }
 }

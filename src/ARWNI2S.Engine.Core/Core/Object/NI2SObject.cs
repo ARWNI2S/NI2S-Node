@@ -2,10 +2,15 @@
 {
     public abstract class NI2SObject : ObjectBase, INiisObject
     {
-        public static T New<T>() where T : NI2SObject
+        public static T New<T>() where T : INiisObject
         {
-            var factory = Singleton<IObjectFactory<T>>.Instance;
-            return factory.CreateInstance();
+            // Resolver la factoría específica o usar la predeterminada
+            var factory = EngineContext.Current.Resolve<IObjectFactory<T>>();
+
+            // Crear la instancia con el tipo concreto
+            return factory is IObjectFactory<T> specificFactory
+                ? specificFactory.CreateInstance()
+                : factory.CreateInstance<T>();
         }
     }
 }

@@ -3,7 +3,7 @@ using Orleans;
 
 namespace ARWNI2S.Engine
 {
-    public interface IProcessor : ILifecycleParticipant<IEngineLifecycle>
+    public interface INiisProcessor : ILifecycleParticipant<IEngineLifecycle>
     {
     }
 }

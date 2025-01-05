@@ -40,7 +40,7 @@ namespace ARWNI2S.Engine.Builder
         private const string ProcessorDescriptionsKey = "__ProcessorDescriptions";
         private const string RequestUnhandledKey = "__RequestUnhandled";
 
-        private readonly List</*Func<RequestDelegate, RequestDelegate>*/IProcessor> _components = new();
+        private readonly List</*Func<RequestDelegate, RequestDelegate>*/INiisProcessor> _components = new();
         private readonly List<string> _descriptions;
         private readonly IDebugger _debugger;
 
@@ -137,7 +137,7 @@ namespace ARWNI2S.Engine.Builder
         /// </summary>
         /// <param name="processor">The processor.</param>
         /// <returns>An instance of <see cref="IEngineBuilder"/> after the operation has completed.</returns>
-        public IEngineBuilder Use(/*Func<RequestDelegate, RequestDelegate>*/IProcessor processor)
+        public IEngineBuilder Use(/*Func<RequestDelegate, RequestDelegate>*/INiisProcessor processor)
         {
             _components.Add(processor);
             _descriptions?.Add(CreateProcessorDescription(processor));
@@ -145,7 +145,7 @@ namespace ARWNI2S.Engine.Builder
             return this;
         }
 
-        private static string CreateProcessorDescription(/*Func<RequestDelegate, RequestDelegate>*/IProcessor processor)
+        private static string CreateProcessorDescription(/*Func<RequestDelegate, RequestDelegate>*/INiisProcessor processor)
         {
             //if (processor.Target != null)
             //{

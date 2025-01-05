@@ -1,5 +1,4 @@
-﻿using ARWNI2S.Engine.Data.Entities;
-using FluentMigrator.Builders.Create.Table;
+﻿using FluentMigrator.Builders.Create.Table;
 
 namespace ARWNI2S.Engine.Data.Mapping.Builders
 {

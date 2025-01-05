@@ -1,5 +1,4 @@
-﻿using ARWNI2S.Engine.Data.Entities;
-using LinqToDB.Data;
+﻿using LinqToDB.Data;
 using System.Linq.Expressions;
 
 namespace ARWNI2S.Engine.Data

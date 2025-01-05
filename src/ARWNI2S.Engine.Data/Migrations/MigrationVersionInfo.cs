@@ -1,5 +1,4 @@
-﻿using ARWNI2S.Engine.Data.Entities;
-using FluentMigrator.Runner.VersionTableInfo;
+﻿using FluentMigrator.Runner.VersionTableInfo;
 
 namespace ARWNI2S.Engine.Data.Migrations
 {

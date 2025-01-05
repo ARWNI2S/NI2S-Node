@@ -1,7 +1,7 @@
 ﻿using ARWNI2S.Data;
 using ARWNI2S.Engine.Core;
 
-namespace ARWNI2S.Engine.Data.Entities
+namespace ARWNI2S.Engine.Data
 {
     /// <summary>
     /// Represents the base class for entities

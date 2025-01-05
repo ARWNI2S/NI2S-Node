@@ -86,7 +86,7 @@ namespace ARWNI2S.Node.Hosting.Internal
                 context.Properties[typeof(NI2SSettings)] = (NI2SSettings)settingsVal;
 
                 services.TryAddSingleton<INiisContextFactory, EngineContextFactory>();
-                services.TryAddScoped<IProcessorFactory, ProcessorFactory>();
+                services.TryAddScoped<INiisProcessorFactory, ProcessorFactory>();
                 services.TryAddSingleton<IEngineBuilderFactory, EngineBuilderFactory>();
 
                 services.AddMetrics();
