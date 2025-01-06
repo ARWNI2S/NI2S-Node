@@ -1,4 +1,5 @@
 ﻿using ARWNI2S.Caching;
+using ARWNI2S.Data;
 using ARWNI2S.Engine.Caching;
 using ARWNI2S.Events;
 
@@ -12,7 +13,7 @@ namespace ARWNI2S.Engine.Data.Events
         IEventConsumer<EntityCreatedEvent<TEntity>>,
         IEventConsumer<EntityUpdatedEvent<TEntity>>,
         IEventConsumer<EntityDeletedEvent<TEntity>>
-        where TEntity : DataEntity
+        where TEntity : class, IDataEntity
     {
         #region Fields
 
