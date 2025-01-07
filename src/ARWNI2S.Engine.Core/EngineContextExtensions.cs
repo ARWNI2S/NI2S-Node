@@ -16,7 +16,7 @@ namespace ARWNI2S.Engine
         /// <param name="configuration">Configuration of the application</param>
         public static void ConfigureServices(this IEngineContext context, IServiceCollection services, IConfiguration configuration)
         {
-            //register engine
+            //register engine context
             services.AddSingleton(context);
 
             //find startup configurations provided by other assemblies

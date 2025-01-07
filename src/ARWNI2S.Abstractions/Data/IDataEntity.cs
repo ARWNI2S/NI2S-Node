@@ -4,6 +4,6 @@ namespace ARWNI2S.Data
 {
     public interface IDataEntity : INiisEntity
     {
-        new int Id { get; }
+        new int Id { get; set; }
     }
 }

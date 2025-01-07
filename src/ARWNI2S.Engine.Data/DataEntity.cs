@@ -6,14 +6,11 @@ namespace ARWNI2S.Engine.Data
     /// <summary>
     /// Represents the base class for entities
     /// </summary>
-    public abstract partial class DataEntity : IDataEntity
+    public abstract partial class DataEntity : EntityBase, IDataEntity
     {
-        /// <summary>
-        /// Gets or sets the entity identifier
-        /// </summary>
-        public int Id { get; set; }
-
         object INiisEntity.Id => Id;
+
+        int IDataEntity.Id { get { return (int)base.Id; } set { base.Id = (EntityId)value; } }
     }
 
     /// <summary>

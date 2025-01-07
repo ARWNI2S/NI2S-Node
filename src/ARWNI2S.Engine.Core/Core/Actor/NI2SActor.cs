@@ -23,7 +23,7 @@ namespace ARWNI2S.Engine.Core.Actor
         }
 
         internal override ObjectId ObjectId => ActorId.ObjectId;
-        internal override EntityId EntityId => ActorId.EntityId;
+        internal override EntityId Id => ActorId.EntityId;
         object INiisEntity.Id => ActorId;
 
         IEnumerable<IActorComponent> INiisActor.Components => Components;

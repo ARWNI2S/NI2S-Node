@@ -1,4 +1,5 @@
-﻿using ARWNI2S.Data.Mapping;
+﻿using ARWNI2S.Data;
+using ARWNI2S.Data.Mapping;
 using ARWNI2S.Engine.Data.Extensions;
 using ARWNI2S.Engine.Data.Migrations;
 using FluentMigrator.Builders.Create.Table;
@@ -26,7 +27,7 @@ namespace ARWNI2S.Engine.Data.Mapping
         /// <returns>Mapped entity descriptor</returns>
         public static NI2SDataEntityDescriptor GetEntityDescriptor(Type entityType)
         {
-            if (!typeof(DataEntity).IsAssignableFrom(entityType))
+            if (!typeof(IDataEntity).IsAssignableFrom(entityType))
                 return null;
 
             return EntityDescriptors.GetOrAdd(entityType, t =>

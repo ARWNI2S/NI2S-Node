@@ -1,4 +1,5 @@
-﻿using ARWNI2S.Engine.Data.Mapping;
+﻿using ARWNI2S.Data;
+using ARWNI2S.Engine.Data.Mapping;
 using ARWNI2S.Engine.Security;
 using LinqToDB;
 using LinqToDB.Data;
@@ -164,7 +165,7 @@ namespace ARWNI2S.Engine.Data.DataProviders
         /// A task that represents the asynchronous operation
         /// The task result contains the integer identity; null if cannot get the result
         /// </returns>
-        public virtual async Task<int?> GetTableIdentAsync<TEntity>() where TEntity : DataEntity
+        public virtual async Task<int?> GetTableIdentAsync<TEntity>() where TEntity : class, IDataEntity
         {
             using var currentConnection = CreateDataConnection();
             var tableName = NI2SDataMappingSchema.GetEntityDescriptor(typeof(TEntity)).EntityName;
@@ -208,7 +209,7 @@ namespace ARWNI2S.Engine.Data.DataProviders
         /// <typeparam name="TEntity">Entity type</typeparam>
         /// <param name="ident">Identity value</param>
         /// <returns>A task that represents the asynchronous operation</returns>
-        public virtual async Task SetTableIdentAsync<TEntity>(int ident) where TEntity : DataEntity
+        public virtual async Task SetTableIdentAsync<TEntity>(int ident) where TEntity : class, IDataEntity
         {
             var currentIdent = await GetTableIdentAsync<TEntity>();
             if (!currentIdent.HasValue || ident <= currentIdent.Value)
@@ -255,23 +256,23 @@ namespace ARWNI2S.Engine.Data.DataProviders
         /// <summary>
         /// Build the connection string
         /// </summary>
-        /// <param name="nopConnectionString">Connection string info</param>
+        /// <param name="nodeConnectionString">Connection string info</param>
         /// <returns>Connection string</returns>
-        public virtual string BuildConnectionString(INodeConnectionStringInfo nopConnectionString)
+        public virtual string BuildConnectionString(INodeConnectionStringInfo nodeConnectionString)
         {
-            ArgumentNullException.ThrowIfNull(nopConnectionString);
+            ArgumentNullException.ThrowIfNull(nodeConnectionString);
 
-            if (nopConnectionString.IntegratedSecurity)
+            if (nodeConnectionString.IntegratedSecurity)
                 throw new NI2SException("Data provider supports connection only with login and password");
 
             var builder = new MySqlConnectionStringBuilder
             {
-                Server = nopConnectionString.ServerName,
+                Server = nodeConnectionString.ServerName,
                 //Cast DatabaseName to lowercase to avoid case-sensitivity problems
-                Database = nopConnectionString.DatabaseName.ToLowerInvariant(),
+                Database = nodeConnectionString.DatabaseName.ToLowerInvariant(),
                 AllowUserVariables = true,
-                UserID = nopConnectionString.Username,
-                Password = nopConnectionString.Password,
+                UserID = nodeConnectionString.Username,
+                Password = nodeConnectionString.Password,
                 UseXaTransactions = false
             };
 

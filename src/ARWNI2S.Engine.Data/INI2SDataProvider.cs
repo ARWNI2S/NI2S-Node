@@ -1,4 +1,5 @@
-﻿using LinqToDB.Data;
+﻿using ARWNI2S.Data;
+using LinqToDB.Data;
 using System.Linq.Expressions;
 
 namespace ARWNI2S.Engine.Data
@@ -44,7 +45,7 @@ namespace ARWNI2S.Engine.Data
         /// A task that represents the asynchronous operation
         /// The task result contains the entity
         /// </returns>
-        Task<TEntity> InsertEntityAsync<TEntity>(TEntity entity) where TEntity : DataEntity;
+        Task<TEntity> InsertEntityAsync<TEntity>(TEntity entity) where TEntity : class, IDataEntity;
 
         /// <summary>
         /// Insert a new entity
@@ -52,7 +53,7 @@ namespace ARWNI2S.Engine.Data
         /// <typeparam name="TEntity">Entity type</typeparam>
         /// <param name="entity">Entity</param>
         /// <returns>Entity</returns>
-        TEntity InsertEntity<TEntity>(TEntity entity) where TEntity : DataEntity;
+        TEntity InsertEntity<TEntity>(TEntity entity) where TEntity : class, IDataEntity;
 
         /// <summary>
         /// Updates record in table, using values from entity parameter. 
@@ -61,7 +62,7 @@ namespace ARWNI2S.Engine.Data
         /// <param name="entity">Entity with data to update</param>
         /// <typeparam name="TEntity">Entity type</typeparam>
         /// <returns>A task that represents the asynchronous operation</returns>
-        Task UpdateEntityAsync<TEntity>(TEntity entity) where TEntity : DataEntity;
+        Task UpdateEntityAsync<TEntity>(TEntity entity) where TEntity : class, IDataEntity;
 
         /// <summary>
         /// Updates record in table, using values from entity parameter. 
@@ -69,7 +70,7 @@ namespace ARWNI2S.Engine.Data
         /// </summary>
         /// <param name="entity">Entity with data to update</param>
         /// <typeparam name="TEntity">Entity type</typeparam>
-        void UpdateEntity<TEntity>(TEntity entity) where TEntity : DataEntity;
+        void UpdateEntity<TEntity>(TEntity entity) where TEntity : class, IDataEntity;
 
         /// <summary>
         /// Updates records in table, using values from entity parameter. 
@@ -78,7 +79,7 @@ namespace ARWNI2S.Engine.Data
         /// <param name="entities">Entities with data to update</param>
         /// <typeparam name="TEntity">Entity type</typeparam>
         /// <returns>A task that represents the asynchronous operation</returns>
-        Task UpdateEntitiesAsync<TEntity>(IEnumerable<TEntity> entities) where TEntity : DataEntity;
+        Task UpdateEntitiesAsync<TEntity>(IEnumerable<TEntity> entities) where TEntity : class, IDataEntity;
 
         /// <summary>
         /// Updates records in table, using values from entity parameter. 
@@ -86,7 +87,7 @@ namespace ARWNI2S.Engine.Data
         /// </summary>
         /// <param name="entities">Entities with data to update</param>
         /// <typeparam name="TEntity">Entity type</typeparam>
-        void UpdateEntities<TEntity>(IEnumerable<TEntity> entities) where TEntity : DataEntity;
+        void UpdateEntities<TEntity>(IEnumerable<TEntity> entities) where TEntity : class, IDataEntity;
 
         /// <summary>
         /// Deletes record in table. Record to delete identified
@@ -95,7 +96,7 @@ namespace ARWNI2S.Engine.Data
         /// <param name="entity">Entity for delete operation</param>
         /// <typeparam name="TEntity">Entity type</typeparam>
         /// <returns>A task that represents the asynchronous operation</returns>
-        Task DeleteEntityAsync<TEntity>(TEntity entity) where TEntity : DataEntity;
+        Task DeleteEntityAsync<TEntity>(TEntity entity) where TEntity : class, IDataEntity;
 
         /// <summary>
         /// Deletes record in table. Record to delete identified
@@ -103,7 +104,7 @@ namespace ARWNI2S.Engine.Data
         /// </summary>
         /// <param name="entity">Entity for delete operation</param>
         /// <typeparam name="TEntity">Entity type</typeparam>
-        void DeleteEntity<TEntity>(TEntity entity) where TEntity : DataEntity;
+        void DeleteEntity<TEntity>(TEntity entity) where TEntity : class, IDataEntity;
 
         /// <summary>
         /// Performs delete records in a table
@@ -111,14 +112,14 @@ namespace ARWNI2S.Engine.Data
         /// <param name="entities">Entities for delete operation</param>
         /// <typeparam name="TEntity">Entity type</typeparam>
         /// <returns>A task that represents the asynchronous operation</returns>
-        Task BulkDeleteEntitiesAsync<TEntity>(IList<TEntity> entities) where TEntity : DataEntity;
+        Task BulkDeleteEntitiesAsync<TEntity>(IList<TEntity> entities) where TEntity : class, IDataEntity;
 
         /// <summary>
         /// Performs delete records in a table
         /// </summary>
         /// <param name="entities">Entities for delete operation</param>
         /// <typeparam name="TEntity">Entity type</typeparam>
-        void BulkDeleteEntities<TEntity>(IList<TEntity> entities) where TEntity : DataEntity;
+        void BulkDeleteEntities<TEntity>(IList<TEntity> entities) where TEntity : class, IDataEntity;
 
         /// <summary>
         /// Performs delete records in a table by a condition
@@ -129,7 +130,7 @@ namespace ARWNI2S.Engine.Data
         /// A task that represents the asynchronous operation
         /// The task result contains the number of deleted records
         /// </returns>
-        Task<int> BulkDeleteEntitiesAsync<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : DataEntity;
+        Task<int> BulkDeleteEntitiesAsync<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class, IDataEntity;
 
         /// <summary>
         /// Performs delete records in a table by a condition
@@ -139,7 +140,7 @@ namespace ARWNI2S.Engine.Data
         /// <returns>
         /// The number of deleted records
         /// </returns>
-        int BulkDeleteEntities<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : DataEntity;
+        int BulkDeleteEntities<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class, IDataEntity;
 
         /// <summary>
         /// Performs bulk insert entities operation
@@ -147,14 +148,14 @@ namespace ARWNI2S.Engine.Data
         /// <typeparam name="TEntity">Entity type</typeparam>
         /// <param name="entities">Collection of Entities</param>
         /// <returns>A task that represents the asynchronous operation</returns>
-        Task BulkInsertEntitiesAsync<TEntity>(IEnumerable<TEntity> entities) where TEntity : DataEntity;
+        Task BulkInsertEntitiesAsync<TEntity>(IEnumerable<TEntity> entities) where TEntity : class, IDataEntity;
 
         /// <summary>
         /// Performs bulk insert entities operation
         /// </summary>
         /// <typeparam name="TEntity">Entity type</typeparam>
         /// <param name="entities">Collection of Entities</param>
-        void BulkInsertEntities<TEntity>(IEnumerable<TEntity> entities) where TEntity : DataEntity;
+        void BulkInsertEntities<TEntity>(IEnumerable<TEntity> entities) where TEntity : class, IDataEntity;
 
         /// <summary>
         /// Gets the name of a foreign key
@@ -180,7 +181,7 @@ namespace ARWNI2S.Engine.Data
         /// </summary>
         /// <typeparam name="TEntity">Entity type</typeparam>
         /// <returns>Queryable source</returns>
-        IQueryable<TEntity> GetTable<TEntity>() where TEntity : DataEntity;
+        IQueryable<TEntity> GetTable<TEntity>() where TEntity : class, IDataEntity;
 
         /// <summary>
         /// Get the current identity value
@@ -190,7 +191,7 @@ namespace ARWNI2S.Engine.Data
         /// A task that represents the asynchronous operation
         /// The task result contains the integer identity; null if cannot get the result
         /// </returns>
-        Task<int?> GetTableIdentAsync<TEntity>() where TEntity : DataEntity;
+        Task<int?> GetTableIdentAsync<TEntity>() where TEntity : class, IDataEntity;
 
         /// <summary>
         /// Checks if the specified database exists, returns true if database exists
@@ -239,7 +240,7 @@ namespace ARWNI2S.Engine.Data
         /// <typeparam name="TEntity">Entity</typeparam>
         /// <param name="ident">Identity value</param>
         /// <returns>A task that represents the asynchronous operation</returns>
-        Task SetTableIdentAsync<TEntity>(int ident) where TEntity : DataEntity;
+        Task SetTableIdentAsync<TEntity>(int ident) where TEntity : class, IDataEntity;
 
         /// <summary>
         /// Get hash values of a stored entity field
@@ -251,7 +252,7 @@ namespace ARWNI2S.Engine.Data
         /// <returns>Dictionary</returns>
         Task<IDictionary<int, string>> GetFieldHashesAsync<TEntity>(Expression<Func<TEntity, bool>> predicate,
             Expression<Func<TEntity, int>> keySelector,
-            Expression<Func<TEntity, object>> fieldSelector) where TEntity : DataEntity;
+            Expression<Func<TEntity, object>> fieldSelector) where TEntity : class, IDataEntity;
 
         /// <summary>
         /// Executes command asynchronously and returns number of affected records
@@ -293,7 +294,7 @@ namespace ARWNI2S.Engine.Data
         /// Truncates database table
         /// </summary>
         /// <param name="resetIdentity">Performs reset identity column</param>
-        Task TruncateAsync<TEntity>(bool resetIdentity = false) where TEntity : DataEntity;
+        Task TruncateAsync<TEntity>(bool resetIdentity = false) where TEntity : class, IDataEntity;
 
         #endregion
 

@@ -1,4 +1,5 @@
-﻿using ARWNI2S.Data.Mapping;
+﻿using ARWNI2S.Data;
+using ARWNI2S.Data.Mapping;
 using LinqToDB;
 using LinqToDB.Mapping;
 using LinqToDB.Metadata;
@@ -70,7 +71,7 @@ namespace ARWNI2S.Engine.Data.Mapping
     //    protected T[] GetAttributes<T>(Type type, Type attributeType, MemberInfo memberInfo = null)
     //        where T : Attribute
     //    {
-    //        if (type.IsSubclassOf(typeof(DataEntity)) && typeof(T) == attributeType && GetAttribute<T>(type, memberInfo) is T attr)
+    //        if (type.IsSubclassOf(typeof(IDataEntity)) && typeof(T) == attributeType && GetAttribute<T>(type, memberInfo) is T attr)
     //        {
     //            return new[] { attr };
     //        }
@@ -184,7 +185,7 @@ namespace ARWNI2S.Engine.Data.Mapping
         /// <returns>Array of mapping attributes.</returns>
         public MappingAttribute[] GetAttributes(Type type)
         {
-            if (!type.IsSubclassOf(typeof(DataEntity)))
+            if (!type.IsSubclassOf(typeof(IDataEntity)))
                 return [];
 
             var attribute = Types.GetOrAdd((type, null), _ =>
@@ -208,7 +209,7 @@ namespace ARWNI2S.Engine.Data.Mapping
         /// <returns>Array of attributes.</returns>
         public MappingAttribute[] GetAttributes(Type type, MemberInfo memberInfo)
         {
-            if (!type.IsSubclassOf(typeof(DataEntity)))
+            if (!type.IsSubclassOf(typeof(IDataEntity)))
                 return [];
 
             var entityDescriptor = NI2SDataMappingSchema.GetEntityDescriptor(type);

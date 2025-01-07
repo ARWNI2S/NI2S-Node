@@ -6,17 +6,22 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Core\Assets\**" />
     <Compile Remove="Resources.Bad\**" />
-    <Compile Remove="Resources\**" />
+    <Compile Remove="Resources\Assets\**" />
+    <EmbeddedResource Remove="Core\Assets\**" />
     <EmbeddedResource Remove="Resources.Bad\**" />
-    <EmbeddedResource Remove="Resources\**" />
+    <EmbeddedResource Remove="Resources\Assets\**" />
+    <None Remove="Core\Assets\**" />
     <None Remove="Resources.Bad\**" />
-    <None Remove="Resources\**" />
+    <None Remove="Resources\Assets\**" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Remove="Environment\ContextTypeFinder.cs" />
     <Compile Remove="Extensibility\SystemModule.cs" />
+    <Compile Remove="Resources\ResourceId.cs" />
+    <Compile Remove="Resources\ResourceManager.cs" />
   </ItemGroup>
 
   <ItemGroup>

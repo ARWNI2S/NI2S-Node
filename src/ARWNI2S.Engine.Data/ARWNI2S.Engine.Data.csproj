@@ -6,8 +6,11 @@
 
   <ItemGroup>
     <Compile Remove="DataProviders\Interceptors\**" />
+    <Compile Remove="Resources\**" />
     <EmbeddedResource Remove="DataProviders\Interceptors\**" />
+    <EmbeddedResource Remove="Resources\**" />
     <None Remove="DataProviders\Interceptors\**" />
+    <None Remove="Resources\**" />
   </ItemGroup>
 
   <ItemGroup>

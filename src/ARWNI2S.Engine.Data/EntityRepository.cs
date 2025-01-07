@@ -1,11 +1,11 @@
 ﻿using ARWNI2S.Caching;
 using ARWNI2S.Collections.Generic;
 using ARWNI2S.Configuration;
+using ARWNI2S.Data;
 using ARWNI2S.Engine.Caching;
 using ARWNI2S.Engine.Data.Events;
 using ARWNI2S.Engine.Data.Extensions;
 using ARWNI2S.Events;
-using LinqToDB;
 using System.Linq.Expressions;
 using System.Transactions;
 
@@ -15,7 +15,7 @@ namespace ARWNI2S.Engine.Data
     /// Represents the entity repository implementation
     /// </summary>
     /// <typeparam name="TEntity">Entity type</typeparam>
-    public partial class EntityRepository<TEntity> : IRepository<TEntity> where TEntity : DataEntity
+    public partial class EntityRepository<TEntity> : IRepository<TEntity> where TEntity : class, IDataEntity
     {
         #region Fields
 
@@ -141,7 +141,7 @@ namespace ARWNI2S.Engine.Data
         /// Soft-deletes <see cref="ISoftDeletedEntity"/> entities
         /// </summary>
         /// <param name="entities">Entities to delete</param>
-        protected virtual async Task DeleteAsync<T>(IList<T> entities) where T : ISoftDeletedEntity, TEntity
+        protected virtual async Task DeleteAsync<T>(IList<T> entities) where T : class, ISoftDeletedEntity, TEntity
         {
             foreach (var entity in entities)
                 entity.Deleted = true;

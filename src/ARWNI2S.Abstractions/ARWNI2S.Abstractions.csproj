@@ -6,11 +6,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Engine\Resources\Asset.cs" />
-    <Compile Remove="Engine\Resources\AssetManager.cs" />
-    <Compile Remove="Engine\Resources\HandleManager.cs" />
-    <Compile Remove="Engine\Resources\IResourceHandle.cs" />
-    <Compile Remove="Engine\Resources\ResourceManagerBase.cs" />
+    <Compile Remove="Engine\Resources\**" />
+    <EmbeddedResource Remove="Engine\Resources\**" />
+    <None Remove="Engine\Resources\**" />
   </ItemGroup>
 
   <ItemGroup>

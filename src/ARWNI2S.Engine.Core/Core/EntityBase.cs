@@ -2,8 +2,8 @@
 {
     public abstract class EntityBase : INiisEntity
     {
-        internal virtual EntityId EntityId { get; }
+        internal virtual EntityId Id { get; set; }
 
-        object INiisEntity.Id => EntityId;
+        object INiisEntity.Id => Id;
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace ARWNI2S.Engine.Resources.Internal
+namespace ARWNI2S.Engine.Environment.Internal
 {
     internal class HandleManager<TData, TTag>
     {
@@ -41,7 +41,7 @@ namespace ARWNI2S.Engine.Resources.Internal
 
         public TData Dereference(Handle<TTag> handle)
         {
-            if (handle.IsNull()) return default!;
+            if (handle.IsNull) return default!;
 
             int ix = handle.Index;
             if (ix >= _userData.Count || _magicNumbers[ix] != handle.Magic)
@@ -57,5 +57,6 @@ namespace ARWNI2S.Engine.Resources.Internal
     }
 
     internal class HandleManager<TData>
-        : HandleManager<TData, TData> { }
+        : HandleManager<TData, TData>
+    { }
 }

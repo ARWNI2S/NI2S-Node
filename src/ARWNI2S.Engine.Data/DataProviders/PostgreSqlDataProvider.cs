@@ -1,4 +1,6 @@
-﻿using ARWNI2S.Engine.Data.DataProviders.LinqToDb;
+﻿using ARWNI2S.Data;
+using ARWNI2S.Engine.Core;
+using ARWNI2S.Engine.Data.DataProviders.LinqToDb;
 using ARWNI2S.Engine.Data.Mapping;
 using LinqToDB;
 using LinqToDB.Common;
@@ -61,7 +63,7 @@ namespace ARWNI2S.Engine.Data.DataProviders
         /// <param name="dataConnection">A database connection object</param>
         /// <typeparam name="TEntity">Entity type</typeparam>
         /// <returns>Returns the name of the sequence, or NULL if no sequence is associated with the column</returns>
-        protected virtual string GetSequenceName<TEntity>(DataConnection dataConnection) where TEntity : DataEntity
+        protected virtual string GetSequenceName<TEntity>(DataConnection dataConnection) where TEntity : class, IDataEntity
         {
             ArgumentNullException.ThrowIfNull(dataConnection);
 
@@ -198,7 +200,7 @@ namespace ARWNI2S.Engine.Data.DataProviders
         /// A task that represents the asynchronous operation
         /// The task result contains the integer identity; null if cannot get the result
         /// </returns>
-        public virtual Task<int?> GetTableIdentAsync<TEntity>() where TEntity : DataEntity
+        public virtual Task<int?> GetTableIdentAsync<TEntity>() where TEntity : class, IDataEntity
         {
             using var currentConnection = CreateDataConnection();
 
@@ -216,7 +218,7 @@ namespace ARWNI2S.Engine.Data.DataProviders
         /// <typeparam name="TEntity">Entity type</typeparam>
         /// <param name="ident">Identity value</param>
         /// <returns>A task that represents the asynchronous operation</returns>
-        public virtual async Task SetTableIdentAsync<TEntity>(int ident) where TEntity : DataEntity
+        public virtual async Task SetTableIdentAsync<TEntity>(int ident) where TEntity : class, IDataEntity
         {
             var currentIdent = await GetTableIdentAsync<TEntity>();
             if (!currentIdent.HasValue || ident <= currentIdent.Value)
@@ -249,7 +251,7 @@ namespace ARWNI2S.Engine.Data.DataProviders
             using var dataContext = CreateDataConnection();
             try
             {
-                entity.Id = dataContext.InsertWithInt32Identity(entity);
+                entity.Id = (EntityId)dataContext.InsertWithInt32Identity(entity);
             }
             // Ignore when we try insert foreign entity via InsertWithInt32IdentityAsync method
             catch (SqlException ex) when (ex.Message.StartsWith("Identity field must be defined for"))
@@ -274,7 +276,7 @@ namespace ARWNI2S.Engine.Data.DataProviders
             using var dataContext = CreateDataConnection();
             try
             {
-                entity.Id = await dataContext.InsertWithInt32IdentityAsync(entity);
+                entity.Id = (EntityId)await dataContext.InsertWithInt32IdentityAsync(entity);
             }
             // Ignore when we try insert foreign entity via InsertWithInt32IdentityAsync method
             catch (SqlException ex) when (ex.Message.StartsWith("Identity field must be defined for"))
@@ -308,22 +310,22 @@ namespace ARWNI2S.Engine.Data.DataProviders
         /// <summary>
         /// Build the connection string
         /// </summary>
-        /// <param name="nopConnectionString">Connection string info</param>
+        /// <param name="nodeConnectionString">Connection string info</param>
         /// <returns>Connection string</returns>
-        public virtual string BuildConnectionString(INodeConnectionStringInfo nopConnectionString)
+        public virtual string BuildConnectionString(INodeConnectionStringInfo nodeConnectionString)
         {
-            ArgumentNullException.ThrowIfNull(nopConnectionString);
+            ArgumentNullException.ThrowIfNull(nodeConnectionString);
 
-            if (nopConnectionString.IntegratedSecurity)
+            if (nodeConnectionString.IntegratedSecurity)
                 throw new NI2SException("Data provider supports connection only with login and password");
 
             var builder = new NpgsqlConnectionStringBuilder
             {
-                Host = nopConnectionString.ServerName,
+                Host = nodeConnectionString.ServerName,
                 //Cast DatabaseName to lowercase to avoid case-sensitivity problems
-                Database = nopConnectionString.DatabaseName.ToLowerInvariant(),
-                Username = nopConnectionString.Username,
-                Password = nopConnectionString.Password,
+                Database = nodeConnectionString.DatabaseName.ToLowerInvariant(),
+                Username = nodeConnectionString.Username,
+                Password = nodeConnectionString.Password,
             };
 
             return builder.ConnectionString;

@@ -1,4 +1,5 @@
-﻿using ARWNI2S.Engine.Data.Mapping;
+﻿using ARWNI2S.Data;
+using ARWNI2S.Engine.Data.Mapping;
 using LinqToDB;
 using LinqToDB.Data;
 using LinqToDB.DataProvider;
@@ -158,7 +159,7 @@ namespace ARWNI2S.Engine.Data.DataProviders
         /// A task that represents the asynchronous operation
         /// The task result contains the integer identity; null if cannot get the result
         /// </returns>
-        public virtual Task<int?> GetTableIdentAsync<TEntity>() where TEntity : DataEntity
+        public virtual Task<int?> GetTableIdentAsync<TEntity>() where TEntity : class, IDataEntity
         {
             using var currentConnection = CreateDataConnection();
             var tableName = NI2SDataMappingSchema.GetEntityDescriptor(typeof(TEntity)).EntityName;
@@ -175,7 +176,7 @@ namespace ARWNI2S.Engine.Data.DataProviders
         /// <typeparam name="TEntity">Entity type</typeparam>
         /// <param name="ident">Identity value</param>
         /// <returns>A task that represents the asynchronous operation</returns>
-        public virtual async Task SetTableIdentAsync<TEntity>(int ident) where TEntity : DataEntity
+        public virtual async Task SetTableIdentAsync<TEntity>(int ident) where TEntity : class, IDataEntity
         {
             using var currentConnection = CreateDataConnection();
             var currentIdent = await GetTableIdentAsync<TEntity>();
@@ -255,25 +256,25 @@ namespace ARWNI2S.Engine.Data.DataProviders
         /// <summary>
         /// Build the connection string
         /// </summary>
-        /// <param name="nopConnectionString">Connection string info</param>
+        /// <param name="nodeConnectionString">Connection string info</param>
         /// <returns>Connection string</returns>
-        public virtual string BuildConnectionString(INodeConnectionStringInfo nopConnectionString)
+        public virtual string BuildConnectionString(INodeConnectionStringInfo nodeConnectionString)
         {
-            ArgumentNullException.ThrowIfNull(nopConnectionString);
+            ArgumentNullException.ThrowIfNull(nodeConnectionString);
 
             var builder = new SqlConnectionStringBuilder
             {
-                DataSource = nopConnectionString.ServerName,
-                InitialCatalog = nopConnectionString.DatabaseName,
+                DataSource = nodeConnectionString.ServerName,
+                InitialCatalog = nodeConnectionString.DatabaseName,
                 PersistSecurityInfo = false,
-                IntegratedSecurity = nopConnectionString.IntegratedSecurity,
+                IntegratedSecurity = nodeConnectionString.IntegratedSecurity,
                 TrustServerCertificate = true
             };
 
-            if (!nopConnectionString.IntegratedSecurity)
+            if (!nodeConnectionString.IntegratedSecurity)
             {
-                builder.UserID = nopConnectionString.Username;
-                builder.Password = nopConnectionString.Password;
+                builder.UserID = nodeConnectionString.Username;
+                builder.Password = nodeConnectionString.Password;
             }
 
             return builder.ConnectionString;

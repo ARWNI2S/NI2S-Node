@@ -1,6 +1,5 @@
 ﻿using ARWNI2S.Data;
 using ARWNI2S.Engine.Core;
-using ARWNI2S.Engine.Resources.Internal;
 
 namespace ARWNI2S.Engine.Resources
 {
@@ -10,55 +9,52 @@ namespace ARWNI2S.Engine.Resources
     public interface IResource
         : INiisEntity, IDisposable
     {
-        /// <summary>
-        /// Clear
-        /// </summary>
-        void Clear();
-        /// <summary>
-        /// Create
-        /// </summary>
-        /// <returns>Creation result as boolean.</returns>
-        bool Create();
-        /// <summary>
-        /// Destroy
-        /// </summary>
-        void Destroy();
-        /// <summary>
-        /// Refreate
-        /// </summary>
-        /// <returns>Recreation result as boolean.</returns>
-        bool Recreate();
-        /// <summary>
-        /// Returns resource size in bytes.
-        /// </summary>
-        int Size { get; }
-        /// <summary>
-        /// Returns disposed value.
-        /// </summary>
-        bool Disposed { get; }
+        ///// <summary>
+        ///// Clear
+        ///// </summary>
+        //void Clear();
+        ///// <summary>
+        ///// Create
+        ///// </summary>
+        ///// <returns>Creation result as boolean.</returns>
+        //bool Create();
+        ///// <summary>
+        ///// Destroy
+        ///// </summary>
+        //void Destroy();
+        ///// <summary>
+        ///// Refreate
+        ///// </summary>
+        ///// <returns>Recreation result as boolean.</returns>
+        //bool Recreate();
+        ///// <summary>
+        ///// Returns resource size in bytes.
+        ///// </summary>
+        //int Size { get; }
+        ///// <summary>
+        ///// Returns disposed value.
+        ///// </summary>
+        //bool Disposed { get; }
 
-        /// <summary>
-        /// Gets or sets priority
-        /// </summary>
-        Priority Priority { get; }
+        ///// <summary>
+        ///// Gets or sets priority
+        ///// </summary>
+        //Priority Priority { get; }
 
-        /// <summary>
-        /// Gets or sets reference count
-        /// </summary>
-        int ReferenceCount { get; }
+        ///// <summary>
+        ///// Gets or sets reference count
+        ///// </summary>
+        //int ReferenceCount { get; }
 
-        /// <summary>
-        /// Resource is locked
-        /// </summary>
-        bool Locked { get; }
+        ///// <summary>
+        ///// Resource is locked
+        ///// </summary>
+        //bool Locked { get; }
 
-        /// <summary>
-        /// Gets or sets last access time
-        /// </summary>
-        TimeOnly LastAccess { get; }
-
-        internal void SetHandle<TTag>(Handle<TTag> handle) where TTag : class, IResource;
-        internal Handle<TTag> GetHandle<TTag>() where TTag : class, IResource;
+        ///// <summary>
+        ///// Gets or sets last access time
+        ///// </summary>
+        //TimeOnly LastAccess { get; }
     }
 
     /// <summary>
@@ -69,8 +65,8 @@ namespace ARWNI2S.Engine.Resources
         where TData : class, IDataEntity
     {
         /// <summary>
-        /// Gets the inner data entity resource
+        /// Gets the resource's inner data entity
         /// </summary>
-        TData Inner { get; }
+        TData Data { get; }
     }
 }

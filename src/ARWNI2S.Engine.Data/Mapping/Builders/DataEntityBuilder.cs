@@ -1,4 +1,5 @@
-﻿using FluentMigrator.Builders.Create.Table;
+﻿using ARWNI2S.Data;
+using FluentMigrator.Builders.Create.Table;
 
 namespace ARWNI2S.Engine.Data.Mapping.Builders
 {
@@ -9,7 +10,7 @@ namespace ARWNI2S.Engine.Data.Mapping.Builders
     /// <remarks>
     /// Entity type <typeparamref name="TEntity"/> is needed to determine the right entity builder for a specific entity type
     /// </remarks>
-    public abstract partial class DataEntityBuilder<TEntity> : IDataEntityBuilder where TEntity : DataEntity
+    public abstract partial class DataEntityBuilder<TEntity> : IDataEntityBuilder where TEntity : class, IDataEntity
     {
         /// <summary>
         /// Apply entity configuration

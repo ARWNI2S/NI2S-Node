@@ -5,7 +5,7 @@
         internal virtual ObjectId ObjectId { get; }
 
 
-        internal override EntityId EntityId => ObjectId.EntityId;
+        internal override EntityId Id => ObjectId.EntityId;
         object INiisEntity.Id => ObjectId;
     }
 }
