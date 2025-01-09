@@ -41,6 +41,7 @@
 
   <ItemGroup>
     <Folder Include="Simulation\Composer\" />
+    <Folder Include="Simulation\Registry\" />
   </ItemGroup>
 
   <ItemGroup>

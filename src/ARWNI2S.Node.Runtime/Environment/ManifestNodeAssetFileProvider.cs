@@ -31,9 +31,6 @@ namespace ARWNI2S.Node.Environment
             _root = manifest.Root;
         }
 
-        // For testing purposes only
-        internal IFileProvider[] FileProviders => _fileProviders;
-
         public IDirectoryContents GetDirectoryContents(string subpath)
         {
             ArgumentNullException.ThrowIfNull(subpath);
@@ -77,7 +74,7 @@ namespace ARWNI2S.Node.Environment
                     GetCandidateFilesForNode(candidate, files);
                 }
 
-                return new LocalAssetsDirectoryContents(files as IEnumerable<IFileInfo> ?? Array.Empty<IFileInfo>());
+                return new LocalAssetsDirectoryContents(files as IEnumerable<IFileInfo> ?? []);
             }
 
             HashSet<IFileInfo> GetFilesForCandidatePatterns(string[] segments, LocalAssetNode candidate, HashSet<IFileInfo> files)
@@ -307,7 +304,7 @@ namespace ARWNI2S.Node.Environment
             internal static readonly StringComparer PathComparer =
                 OperatingSystem.IsWindows() ? StringComparer.OrdinalIgnoreCase : StringComparer.Ordinal;
 
-            public string[] ContentRoots { get; set; } = Array.Empty<string>();
+            public string[] ContentRoots { get; set; } = [];
 
             public LocalAssetNode Root { get; set; } = null!;
 
@@ -324,7 +321,7 @@ namespace ARWNI2S.Node.Environment
         [JsonSerializable(typeof(IDictionary<string, LocalAssetNode>))]
         internal sealed partial class SourceGenerationContext : JsonSerializerContext
         {
-            public static readonly SourceGenerationContext DefaultWithConverter = new SourceGenerationContext(new JsonSerializerOptions
+            public static readonly SourceGenerationContext DefaultWithConverter = new(new JsonSerializerOptions
             {
                 Converters = { new OSBasedCaseConverter() }
             });

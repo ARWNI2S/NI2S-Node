@@ -72,7 +72,7 @@ namespace ARWNI2S.Node.Assets
             var assembly = Assembly.Load(environment.ApplicationName);
             var assemblyLocation = assembly.Location;
             var basePath = string.IsNullOrEmpty(assemblyLocation) ? AppContext.BaseDirectory : Path.GetDirectoryName(assemblyLocation);
-            return Path.Combine(basePath!, $"{environment.ApplicationName}.staticwebassets.runtime.json");
+            return Path.Combine(basePath!, $"{environment.ApplicationName}.localassets.runtime.json");
         }
     }
 }

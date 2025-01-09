@@ -47,9 +47,9 @@ namespace ARWNI2S.Node.Hosting.Internal
             builder.ConfigureServices((HostBuilderContext context, IServiceCollection services) => //7 LAST
             {
                 // Lifecycle
-                services.AddSingleton<IHostedLifecycleService, NI2SHostService>();
-                services.AddSingleton<IHostedService>(provider => provider.GetRequiredService<IHostedLifecycleService>());
-                //services.AddHostedService<NI2SHostService>();
+                services.AddSingleton<NI2SHostService>();
+                services.AddSingleton<IHostedLifecycleService>(provider => provider.GetRequiredService<NI2SHostService>()); ;
+                services.AddSingleton<IHostedService>(provider => provider.GetRequiredService<NI2SHostService>());
             });
             return builder;
         }

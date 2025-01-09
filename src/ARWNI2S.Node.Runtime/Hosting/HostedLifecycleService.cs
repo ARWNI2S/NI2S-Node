@@ -7,43 +7,34 @@ namespace ARWNI2S.Node.Hosting
     internal abstract class HostedLifecycleService : IHostedLifecycleService
     {
         private readonly ILogger<HostedLifecycleService> _logger;
+        //private readonly SynchronizationContext _syncContext;
 
         public ILifecycleSubject Lifecycle { get; }
 
-        //public IEngineLifecycleSubject EngineLifecycle { get; }
-        //public IClusterNodeLifecycle NodeLifecycle { get; }
 
         public HostedLifecycleService(ILoggerFactory logger, ILifecycleSubject lifecycle)
         {
             _logger = logger.CreateLogger<HostedLifecycleService>();
             Lifecycle = lifecycle;
-        }
 
-        //public HostedLifecycleService(ILoggerFactory logger, IEngineLifecycleSubject engineLifecycle, IClusterNodeLifecycle nodeLifecycle)
-        //{
-        //    _logger = logger.CreateLogger<HostedLifecycleService>();
-        //    EngineLifecycle = engineLifecycle;
-        //    NodeLifecycle = nodeLifecycle;
-        //}
+            //_syncContext = SynchronizationContext.Current ?? new SynchronizationContext();
+        }
 
         public virtual Task StartingAsync(CancellationToken cancellationToken)
         {
-            _logger.LogDebug($"{nameof(HostedLifecycleService)}: {nameof(IHostedLifecycleService.StartingAsync)} - Thread: {System.Environment.CurrentManagedThreadId}");
+            _logger.LogInformation("{name}: {method} - Thread: {thread}", nameof(HostedLifecycleService), nameof(IHostedLifecycleService.StartingAsync), System.Environment.CurrentManagedThreadId);
             return Task.CompletedTask;
         }
 
         public virtual async Task StartAsync(CancellationToken cancellationToken)
         {
-            _logger.LogInformation("Starting Lifecycle Hosted Service");
+            _logger.LogInformation("{name}: {method} - Thread: {thread}", nameof(HostedLifecycleService), nameof(IHostedLifecycleService.StartAsync), System.Environment.CurrentManagedThreadId);
 
             try
             {
-                await Lifecycle.OnStart(cancellationToken);
-                //await EngineLifecycle.OnStart(cancellationToken);
-                _logger.LogInformation("Engine lifecycle started.");
-
-                //await NodeLifecycle.OnStart(cancellationToken);
-                //_logger.LogInformation("Node lifecycle started.");
+                //await Lifecycle.OnStart(cancellationToken);
+                await Lifecycle.OnStart(cancellationToken).ConfigureAwait(true);
+                _logger.LogInformation("Engine lifecycle started. - Thread: {thread}", System.Environment.CurrentManagedThreadId);
             }
             catch (Exception ex)
             {
@@ -54,29 +45,26 @@ namespace ARWNI2S.Node.Hosting
 
         public virtual Task StartedAsync(CancellationToken cancellationToken)
         {
-            _logger.LogDebug($"{nameof(HostedLifecycleService)}: {nameof(IHostedLifecycleService.StartedAsync)} - Thread: {System.Environment.CurrentManagedThreadId}");
+            _logger.LogInformation("{name}: {method} - Thread: {thread}", nameof(HostedLifecycleService), nameof(IHostedLifecycleService.StartedAsync), System.Environment.CurrentManagedThreadId);
             return Task.CompletedTask;
         }
 
 
         public virtual Task StoppingAsync(CancellationToken cancellationToken)
         {
-            _logger.LogDebug($"{nameof(HostedLifecycleService)}: {nameof(IHostedLifecycleService.StoppingAsync)} - Thread: {System.Environment.CurrentManagedThreadId}");
+            _logger.LogInformation("{name}: {method} - Thread: {thread}", nameof(HostedLifecycleService), nameof(IHostedLifecycleService.StoppingAsync), System.Environment.CurrentManagedThreadId);
             return Task.CompletedTask;
         }
 
         public virtual async Task StopAsync(CancellationToken cancellationToken)
         {
-            _logger.LogInformation("Stopping Lifecycle Hosted Service");
+            _logger.LogInformation("{name}: {method} - Thread: {thread}", nameof(HostedLifecycleService), nameof(IHostedLifecycleService.StopAsync), System.Environment.CurrentManagedThreadId);
 
             try
             {
-                //await NodeLifecycle.OnStop(cancellationToken);
-                //_logger.LogInformation("Node lifecycle stopped.");
-
-                //await EngineLifecycle.OnStop(cancellationToken);
-                await Lifecycle.OnStop(cancellationToken);
-                _logger.LogInformation("Engine lifecycle stopped.");
+                //await Lifecycle.OnStop(cancellationToken);
+                await Lifecycle.OnStop(cancellationToken).ConfigureAwait(true);
+                _logger.LogInformation("Engine lifecycle stopped. - Thread: {thread}", System.Environment.CurrentManagedThreadId);
             }
             catch (Exception ex)
             {
@@ -87,7 +75,7 @@ namespace ARWNI2S.Node.Hosting
 
         public virtual Task StoppedAsync(CancellationToken cancellationToken)
         {
-            _logger.LogDebug($"{nameof(HostedLifecycleService)}: {nameof(IHostedLifecycleService.StoppedAsync)} - Thread: {System.Environment.CurrentManagedThreadId}");
+            _logger.LogInformation("{name}: {method} - Thread: {thread}", nameof(HostedLifecycleService), nameof(IHostedLifecycleService.StoppedAsync), System.Environment.CurrentManagedThreadId);
             return Task.CompletedTask;
         }
     }

@@ -1,5 +1,4 @@
 ﻿using ARWNI2S.Data;
-using ARWNI2S.Engine.Core;
 using ARWNI2S.Engine.Data.Extensions;
 using ARWNI2S.Engine.Data.Mapping;
 using ARWNI2S.Engine.Data.Migrations;

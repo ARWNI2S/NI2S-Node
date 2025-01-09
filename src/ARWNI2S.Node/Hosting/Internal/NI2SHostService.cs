@@ -47,8 +47,6 @@ namespace ARWNI2S.Node.Hosting.Internal
         //    }
         //}
 
-
-
         public NI2SHostService(IOptions<NI2SHostServiceOptions> options,
                                      IClusterNode localNode,
                                      DiagnosticListener diagnosticListener,
