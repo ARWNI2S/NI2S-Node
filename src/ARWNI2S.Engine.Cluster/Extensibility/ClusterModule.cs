@@ -26,7 +26,7 @@ namespace ARWNI2S.Cluster.Extensibility
         /// <summary>
         /// Gets the module friendly name.
         /// </summary>
-        public override string FriendlyName { get => GetType().Name.ToFriendlyModuleName(); set => throw new NotImplementedException(); }
+        public override string DisplayName { get => GetType().Name.ToFriendlyModuleName(); set => throw new NotImplementedException(); }
 
         public override IList<string> ModuleDependencies => [nameof(NI2SDataModule).ToModuleName(),
                                                              nameof(NI2SNetworkModule).ToModuleName()];

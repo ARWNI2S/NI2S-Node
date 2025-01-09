@@ -150,7 +150,7 @@ namespace ARWNI2S
         /// </param>
         /// <exception cref="SerializationException">The class name is <see langword="null" /> or <see cref="P:System.Exception.HResult" /> is zero (0).</exception>
         /// <exception cref="ArgumentNullException"><paramref name="info" /> is <see langword="null" />.</exception>
-        [Obsolete]
+        [Obsolete("Legacy")]
         protected WrappedException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {

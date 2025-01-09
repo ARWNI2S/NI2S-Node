@@ -1,5 +1,4 @@
-﻿
-using ARWNI2S.Lifecycle;
+﻿using ARWNI2S.Lifecycle;
 using Orleans;
 
 namespace ARWNI2S.Extensibility

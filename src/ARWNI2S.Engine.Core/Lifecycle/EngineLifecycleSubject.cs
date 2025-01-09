@@ -29,7 +29,7 @@ namespace ARWNI2S.Engine.Lifecycle
         /// <param name="logger">The logger.</param>
         public EngineLifecycleSubject(ILogger<EngineLifecycleSubject> logger) : base(logger)
         {
-            observers = new List<MonitoredObserver>();
+            observers = [];
             highestCompletedStage = int.MinValue;
             lowestStoppedStage = int.MaxValue;
         }

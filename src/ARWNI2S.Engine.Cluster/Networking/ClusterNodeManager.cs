@@ -15,7 +15,7 @@ namespace ARWNI2S.Cluster.Networking
         {
             _beacon = new NetMQBeacon();
             _deadNodeTimeout = deadNodeTimeout;
-            _activeNodes = new Dictionary<string, DateTime>();
+            _activeNodes = [];
 
             _beacon.Configure(broadcastPort);
             _beacon.Subscribe("");
@@ -28,7 +28,7 @@ namespace ARWNI2S.Cluster.Networking
             NetMQTimer cleanupTimer = new(_deadNodeTimeout);
             cleanupTimer.Elapsed += ClearDeadNodes;
 
-            NetMQPoller poller = new() { _beacon, cleanupTimer };
+            NetMQPoller poller = [_beacon, cleanupTimer];
             poller.RunAsync();
         }
 

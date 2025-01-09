@@ -212,7 +212,7 @@ namespace ARWNI2S.Engine.Plugins
                 catch (ReflectionTypeLoadException exception)
                 {
                     //get all loader exceptions
-                    var error = exception.LoaderExceptions.Aggregate($"Plugin '{pluginDescriptor.FriendlyName}'. ",
+                    var error = exception.LoaderExceptions.Aggregate($"Plugin '{pluginDescriptor.DisplayName}'. ",
                         (message, nextMessage) => $"{message}{nextMessage?.Message ?? string.Empty}{System.Environment.NewLine}");
 
                     throw new NI2SException(error, exception);
@@ -220,7 +220,7 @@ namespace ARWNI2S.Engine.Plugins
                 catch (Exception exception)
                 {
                     //add a plugin name, this way we can easily identify a problematic plugin
-                    throw new NI2SException($"Plugin '{pluginDescriptor.FriendlyName}'. {exception.Message}", exception);
+                    throw new NI2SException($"Plugin '{pluginDescriptor.DisplayName}'. {exception.Message}", exception);
                 }
             }
 

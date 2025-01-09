@@ -42,7 +42,7 @@ namespace ARWNI2S.Engine.Simulation
                 return Task.CompletedTask;
 
             _Logger.LogTrace("Starting {ProcessorType}", GetType().Name);
-            
+
             return Task.Run(_threadManager.Run, token);
         }
 

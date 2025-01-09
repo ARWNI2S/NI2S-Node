@@ -10,7 +10,7 @@ namespace ARWNI2S.Cluster.Configuration
         [JsonIgnore]
         public string Name => NI2SConfigurationDefaults.GetConfigName<ClusterConfig>();
 
-        public string ClusterId { get; set; } = ClusterOptions,DefaultClusterId;
+        public string ClusterId { get; set; } = ClusterOptions.DefaultClusterId;
 
         public string ServiceId { get; set; } = ClusterOptions.DefaultServiceId;
 

@@ -79,10 +79,10 @@ namespace ARWNI2S.Engine.Plugins
         /// <summary>
         /// Returns the plugin as a string
         /// </summary>
-        /// <returns>Value of the FriendlyName</returns>
+        /// <returns>Value of the DisplayName</returns>
         public override string ToString()
         {
-            return FriendlyName;
+            return DisplayName;
         }
 
         /// <summary>
@@ -121,8 +121,8 @@ namespace ARWNI2S.Engine.Plugins
         /// <summary>
         /// Gets or sets the plugin friendly name
         /// </summary>
-        [JsonProperty(PropertyName = "FriendlyName")]
-        public virtual string FriendlyName { get; set; }
+        [JsonProperty(PropertyName = "DisplayName")]
+        public virtual string DisplayName { get; set; }
 
         /// <summary>
         /// Gets or sets the supported versions of dragonCorp

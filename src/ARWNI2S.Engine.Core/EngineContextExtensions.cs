@@ -1,6 +1,5 @@
 ﻿using ARWNI2S.Engine.Environment.Mapper;
 using ARWNI2S.Environment;
-using ARWNI2S.Extensibility;
 using AutoMapper;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,30 +15,15 @@ namespace ARWNI2S.Engine
         /// <param name="configuration">Configuration of the application</param>
         public static void ConfigureServices(this IEngineContext context, IServiceCollection services, IConfiguration configuration)
         {
-            //register engine context
+            //register engine context and services
             services.AddSingleton(context);
-
-            //find startup configurations provided by other assemblies
-            var typeFinder = Singleton<ITypeFinder>.Instance;
-            var modules = typeFinder.FindClassesOfType<IConfigureEngine>();
-
-            //create and sort instances of startup configurations
-            var instances = modules
-                .Select(startup => (IConfigureEngine)Activator.CreateInstance(startup))
-                .Where(startup => startup != null)
-                .OrderBy(startup => startup.Order);
-
-            //configure services
-            foreach (var instance in instances)
-                instance.ConfigureServices(services, configuration);
-
             services.AddSingleton(services);
 
             //register mapper configurations
             AddAutoMapper();
 
-            ////run startup tasks
-            //RunStartupTasks();
+            //////run startup tasks
+            ////RunStartupTasks();
 
             //resolve assemblies here. otherwise, plugins can throw an exception when rendering views
             AppDomain.CurrentDomain.AssemblyResolve += (object sender, ResolveEventArgs args) =>

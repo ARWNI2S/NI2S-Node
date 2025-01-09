@@ -127,26 +127,57 @@ namespace ARWNI2S.Node.Builder
         }
 
         private void ConfigureEngine(NI2SHostBuilderContext context, IEngineBuilder engine) =>
-            ConfigureEngine(context, engine, allowDeveloperExceptionPage: true);
+            ConfigureEngine(context, engine, enableExceptionReport: true);
 
-        private void ConfigureEngine(NI2SHostBuilderContext context, IEngineBuilder engine, bool allowDeveloperExceptionPage)
+        private void ConfigureEngine(NI2SHostBuilderContext context, IEngineBuilder engine, bool enableExceptionReport)
         {
             Debug.Assert(_builtNode is not null);
 
             // UseRouting called before WebApplication such as in a StartupFilter
             // lets remove the property and reset it at the end so we don't mess with the routes in the filter
-            if (engine.Properties.TryGetValue(NI2SHostingDefaults.EngineBuilderKey, out var priorEngineBuilder))
+            if (engine.Properties.TryGetValue(NI2SHostingDefaults.NodeBuilderKey, out var priorEngineBuilder))
             {
-                engine.Properties.Remove(NI2SHostingDefaults.EngineBuilderKey);
+                engine.Properties.Remove(NI2SHostingDefaults.NodeBuilderKey);
             }
 
-            if (allowDeveloperExceptionPage && context.HostingEnvironment.IsDevelopment())
+            if (enableExceptionReport && context.HostingEnvironment.IsDevelopment())
             {
-                //TODO: enable debugging here
-                //engine.UseDeveloperExceptionPage();
+                //TODO URGENT
+                //engine.UseDeveloperExceptionReport();
             }
 
-            engine.Properties.Add(NI2SHostingDefaults.GlobalEngineBuilderKey, _builtNode);
+            engine.Properties.Add(NI2SHostingDefaults.GlobalNodeBuilderKey, _builtNode);
+
+            //// Only call UseModules() if there are modules configured and UseModules() wasn't called on the global node builder already
+            //if (_builtNode.DataSources.Count > 0)
+            //{
+            //    // If this is set, someone called UseRouting() when a global route builder was already set
+            //    if (!_builtNode.Properties.TryGetValue(NI2SHostingDefaults.NodeBuilderKey, out var localNodeBuilder))
+            //    {
+            //        engine.UseModules();
+            //        // Middleware the needs to re-route will use this property to call UseRouting()
+            //        _builtNode.Properties[NI2SHostingDefaults.UseModulesKey] = engine.Properties[NI2SHostingDefaults.UseModulesKey];
+            //    }
+            //    else
+            //    {
+            //        // UseModules will be looking for the NodeBuilder so make sure it's set
+            //        engine.Properties[NI2SHostingDefaults.NodeBuilderKey] = localNodeBuilder;
+            //    }
+            //}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             //context.EngineContext.InitializeContext(engine);
             context.EngineContext.InitializeContext(_builtNode);
@@ -174,12 +205,12 @@ namespace ARWNI2S.Node.Builder
             }
 
             // Remove the route builder to clean up the properties, we're done adding routes to the pipeline
-            engine.Properties.Remove(NI2SHostingDefaults.GlobalEngineBuilderKey);
+            engine.Properties.Remove(NI2SHostingDefaults.GlobalNodeBuilderKey);
 
             // Reset route builder if it existed, this is needed for StartupFilters
             if (priorEngineBuilder is not null)
             {
-                engine.Properties[NI2SHostingDefaults.EngineBuilderKey] = priorEngineBuilder;
+                engine.Properties[NI2SHostingDefaults.NodeBuilderKey] = priorEngineBuilder;
             }
         }
 

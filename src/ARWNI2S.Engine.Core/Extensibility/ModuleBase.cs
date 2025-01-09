@@ -17,7 +17,7 @@ namespace ARWNI2S.Engine.Extensibility
         /// <summary>
         /// Gets or sets the module friendly name.
         /// </summary>
-        public abstract string FriendlyName { get; set; }
+        public abstract string DisplayName { get; set; }
 
         /// <summary>
         /// Gets the order of the module.

@@ -1,8 +1,7 @@
-﻿
-using System.Collections;
+﻿using System.Collections;
 using System.Diagnostics.CodeAnalysis;
 
-namespace ARWNI2S.Engine.Builder
+namespace ARWNI2S.Engine.Collections
 {
     internal sealed class CopyOnWriteDictionary<TKey, TValue> : IDictionary<TKey, TValue> where TKey : notnull
     {
@@ -33,11 +32,7 @@ namespace ARWNI2S.Engine.Builder
         {
             get
             {
-                if (_innerDictionary == null)
-                {
-                    _innerDictionary = new Dictionary<TKey, TValue>(_sourceDictionary,
-                                                                    _comparer);
-                }
+                _innerDictionary ??= new Dictionary<TKey, TValue>(_sourceDictionary, _comparer);
 
                 return _innerDictionary;
             }

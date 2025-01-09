@@ -5,7 +5,7 @@ namespace ARWNI2S.Node.Diagnostics
 {
     internal sealed class HostingEventSource : EventSource
     {
-        public static readonly HostingEventSource Log = new HostingEventSource();
+        public static readonly HostingEventSource Log = new();
 
         private IncrementingPollingCounter _requestsPerSecondCounter;
         private PollingCounter _totalRequestsCounter;

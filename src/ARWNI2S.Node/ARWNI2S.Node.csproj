@@ -8,6 +8,7 @@
     <Compile Remove="Builder\INiisHostBuilder.cs" />
     <Compile Remove="Hosting\INiisHost.cs" />
     <Compile Remove="Hosting\INiisHostEnvironment.cs" />
+    <Compile Remove="Hosting\Internal\HostApplicationBuilderExtensions.cs" />
     <Compile Remove="Hosting\Internal\HostBuilderOptions.cs" />
     <Compile Remove="Hosting\Internal\NodeHostBuilderBase.cs" />
     <Compile Remove="Hosting\NI2SHostBuilderContext.cs" />

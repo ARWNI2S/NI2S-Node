@@ -1,6 +1,4 @@
-﻿using ARWNI2S.Engine.Extensibility;
-using ARWNI2S.Engine.Lifecycle;
-using ARWNI2S.Extensibility;
+﻿using ARWNI2S.Engine.Lifecycle;
 using ARWNI2S.Hosting.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Orleans;
@@ -17,7 +15,6 @@ namespace ARWNI2S.Engine.Hosting
                 services.AddSingleton<IEngineLifecycleSubject>(provider => provider.GetRequiredService<EngineLifecycleSubject>());
                 services.AddSingleton<ILifecycleSubject>(provider => provider.GetRequiredService<EngineLifecycleSubject>());
 
-                services.AddSingleton<IEngineModuleManager, EngineModuleManager>();
             });
 
             return builder;

@@ -1,5 +1,5 @@
-﻿using NetMQ.Sockets;
-using NetMQ;
+﻿using NetMQ;
+using NetMQ.Sockets;
 
 namespace ARWNI2S.Cluster.Networking
 {
@@ -21,7 +21,7 @@ namespace ARWNI2S.Cluster.Networking
             _subscriber.Subscribe("");
             _subscriber.ReceiveReady += OnMessageReceived;
 
-            NetMQPoller poller = new() { _subscriber };
+            NetMQPoller poller = [_subscriber];
             poller.RunAsync();
         }
 

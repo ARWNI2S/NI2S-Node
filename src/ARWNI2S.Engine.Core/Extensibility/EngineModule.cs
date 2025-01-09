@@ -24,7 +24,7 @@ namespace ARWNI2S.Engine.Extensibility
         /// <summary>
         /// Gets the module friendly name.
         /// </summary>
-        public override string FriendlyName { get => GetType().Name.ToFriendlyModuleName(); set => throw new NotImplementedException(); }
+        public override string DisplayName { get => GetType().Name.ToFriendlyModuleName(); set => throw new NotImplementedException(); }
 
         /// <summary>
         /// Configure the engine to use the module

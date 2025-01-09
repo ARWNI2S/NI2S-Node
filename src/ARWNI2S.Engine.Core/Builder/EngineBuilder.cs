@@ -1,4 +1,5 @@
 ﻿using ARWNI2S.Diagnostics;
+using ARWNI2S.Engine.Collections;
 using ARWNI2S.Engine.Extensibility;
 using ARWNI2S.Extensibility;
 using System.Diagnostics;
@@ -40,7 +41,7 @@ namespace ARWNI2S.Engine.Builder
         private const string ProcessorDescriptionsKey = "__ProcessorDescriptions";
         private const string RequestUnhandledKey = "__RequestUnhandled";
 
-        private readonly List</*Func<RequestDelegate, RequestDelegate>*/INiisProcessor> _components = new();
+        private readonly List</*Func<RequestDelegate, RequestDelegate>*/INiisProcessor> _components = [];
         private readonly List<string> _descriptions;
         private readonly IDebugger _debugger;
 
@@ -71,7 +72,7 @@ namespace ARWNI2S.Engine.Builder
 
             if (_debugger.IsAttached)
             {
-                _descriptions = new();
+                _descriptions = [];
                 // Add component descriptions collection to properties so debugging tools can display
                 // a list of configured processor for an engine.
                 SetProperty(ProcessorDescriptionsKey, _descriptions);
@@ -84,7 +85,7 @@ namespace ARWNI2S.Engine.Builder
             _debugger = builder._debugger;
             if (_debugger.IsAttached)
             {
-                _descriptions = new();
+                _descriptions = [];
             }
         }
 

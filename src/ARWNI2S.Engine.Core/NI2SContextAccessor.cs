@@ -2,7 +2,7 @@
 {
     internal class NI2SContextAccessor : INiisContextAccessor
     {
-        private static readonly AsyncLocal<NI2SContextHolder> _niisContextCurrent = new AsyncLocal<NI2SContextHolder>();
+        private static readonly AsyncLocal<NI2SContextHolder> _niisContextCurrent = new();
 
         /// <inheritdoc/>
         public INiisContext NI2SContext

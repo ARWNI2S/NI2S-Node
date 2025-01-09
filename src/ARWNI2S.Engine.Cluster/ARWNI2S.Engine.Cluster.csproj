@@ -55,6 +55,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Orleans.Core" />
     <PackageReference Include="NetMQ" />
   </ItemGroup>
 

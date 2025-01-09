@@ -8,7 +8,7 @@ namespace ARWNI2S.Engine.Extensibility
     /// </summary>
     public class ModuleCollection : IModuleCollection
     {
-        private static readonly KeyComparer ModuleKeyComparer = new KeyComparer();
+        private static readonly KeyComparer ModuleKeyComparer = new();
         private readonly IModuleCollection _defaults;
         private readonly int _initialCapacity;
         private IDictionary<Type, IModule> _modules;

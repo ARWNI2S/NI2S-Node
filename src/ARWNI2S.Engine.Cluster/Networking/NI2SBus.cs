@@ -75,7 +75,7 @@ namespace ARWNI2S.Cluster.Networking
 
         private NI2SBus(int broadcastPort)
         {
-            m_nodes = new Dictionary<NodeKey, DateTime>();
+            m_nodes = [];
             m_broadcastPort = broadcastPort;
             m_actor = NetMQActor.Create(RunActor);
         }
@@ -134,7 +134,7 @@ namespace ARWNI2S.Cluster.Networking
                 timer.Elapsed += ClearDeadNodes;
 
                 // Create and configure the poller with all sockets and the timer
-                m_poller = new NetMQPoller { m_shim, m_subscriber, m_beacon, timer };
+                m_poller = [m_shim, m_subscriber, m_beacon, timer];
 
                 // signal the actor that we finished with configuration and
                 // ready to work

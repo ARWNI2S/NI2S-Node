@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <Compile Remove="Environment\ContextTypeFinder.cs" />
+    <Compile Remove="Extensibility\ModuleBuilder.cs" />
     <Compile Remove="Extensibility\SystemModule.cs" />
     <Compile Remove="Resources\ResourceId.cs" />
     <Compile Remove="Resources\ResourceManager.cs" />

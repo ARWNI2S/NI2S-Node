@@ -1,6 +1,6 @@
 ﻿namespace ARWNI2S.Engine.Extensibility
 {
-    internal static class ModulenameStringExtensions
+    internal static class ModuleNameStringExtensions
     {
         public static string ToModuleName(this string moduleName)
         {
@@ -14,7 +14,7 @@
                 result = result.Replace("NI2S", "");
             }
 
-            for(int i = 1; i < result.Length; i++)
+            for (int i = 1; i < result.Length; i++)
             {
                 if (char.IsUpper(result[i]))
                 {

@@ -19,6 +19,7 @@ namespace ARWNI2S.Node
     public sealed class NI2SNode : IHost, IEngineBuilder, IClusterNodeBuilder, IAsyncDisposable
     {
         private readonly IHost _host;
+        //private readonly List<ModuleDataSource> _dataSources = [];
 
         #region Properties
 
@@ -52,6 +53,7 @@ namespace ARWNI2S.Node
         internal EngineBuilder EngineBuilder { get; }
         internal IModuleCollection NodeModules => _host.Services.GetRequiredService<IClusterNode>().Modules;
         internal IDictionary<string, object> Properties => EngineBuilder.Properties;
+        //internal ICollection<ModuleDataSource> DataSources => _dataSources;
 
         internal NI2SNode(IHost host)
         {
@@ -59,7 +61,7 @@ namespace ARWNI2S.Node
             EngineBuilder = new EngineBuilder(host.Services, NodeModules);
             Logger = host.Services.GetRequiredService<ILoggerFactory>().CreateLogger(Environment.ApplicationName ?? nameof(NI2SNode));
 
-            Properties[NI2SHostingDefaults.GlobalEngineBuilderKey] = this;
+            Properties[NI2SHostingDefaults.GlobalNodeBuilderKey] = this;
         }
 
         internal INiisEngine BuildNodeEngine() => EngineBuilder.Build();
@@ -163,9 +165,19 @@ namespace ARWNI2S.Node
         {
             var newBuilder = EngineBuilder.New();
             // Remove the global engine builder so branched flows have their own discovery world
-            newBuilder.Properties.Remove(NI2SHostingDefaults.GlobalEngineBuilderKey);
+            newBuilder.Properties.Remove(NI2SHostingDefaults.GlobalNodeBuilderKey);
             return newBuilder;
         }
+
+        #endregion
+
+        #region IClusterNodeBuilder
+
+        IEngineBuilder IClusterNodeBuilder.CreateEngineBuilder() => ((IEngineBuilder)this).New();
+
+        //ICollection<ModuleDataSource> IClusterNodeBuilder.DataSources => DataSources;
+
+        IServiceProvider IClusterNodeBuilder.ServiceProvider => Services;
 
         #endregion
 

@@ -22,7 +22,7 @@ namespace ARWNI2S.Node.Hosting.Internal
                 .UseNI2SNodeIntegration(),
                 (services, config) =>
                 {
-                    //services.AddRelayer();
+                    services.AddModules(config);
                 });
 
         }
@@ -42,7 +42,7 @@ namespace ARWNI2S.Node.Hosting.Internal
 
                 if (configureCluster == null)
                 {
-                    //services.AddRelayerCore();
+                    services.AddModulesCore(hostingContext.Configuration);
                 }
                 else
                 {

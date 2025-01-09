@@ -81,7 +81,7 @@
         /// </summary>
         public IList<string> Extensions
         {
-            get => _extensions ??= new List<string>();
+            get => _extensions ??= [];
         }
 
         /// <summary>

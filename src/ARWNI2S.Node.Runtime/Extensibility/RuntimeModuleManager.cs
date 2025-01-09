@@ -49,7 +49,7 @@ namespace ARWNI2S.Node.Extensibility
             }
             else
             {
-                _logger.LogDebug($"Registering user module: {module.SystemName}");
+                _logger.LogDebug("Registering user module: {SystemName}", module.SystemName);
                 if (module.ModuleDependencies.Count > 0)
                 {
                     _logger.LogDebug($"Checking dependencies...");
@@ -65,7 +65,7 @@ namespace ARWNI2S.Node.Extensibility
 
                 UserModules[module.GetType()] = module;
 
-                _logger.LogInformation($"Module {module.SystemName} registered as user module.");
+                _logger.LogInformation("Module {SystemName} registered as user module.", module.SystemName);
             }
         }
 
@@ -77,10 +77,10 @@ namespace ARWNI2S.Node.Extensibility
             }
             else
             {
-                _logger.LogDebug($"Registering engine module: {module.SystemName}");
+                _logger.LogDebug("Registering engine module: {SystemName}", module.SystemName);
                 if (module.ModuleDependencies.Count > 0)
                 {
-                    _logger.LogDebug($"Checking dependencies...");
+                    _logger.LogDebug("Checking dependencies...");
                     foreach (var dependency in module.ModuleDependencies)
                     {
                         var found = GetAllModules().Where(m => m.Value.SystemName == dependency).ToArray();
@@ -100,10 +100,10 @@ namespace ARWNI2S.Node.Extensibility
 
         public void Register(FrameworkModule module)
         {
-            _logger.LogDebug($"Registering framework module: {module.SystemName}");
+            _logger.LogDebug("Registering framework module: {SystemName}",module.SystemName);
             if (module.ModuleDependencies.Count > 0)
             {
-                _logger.LogDebug($"Checking dependencies...");
+                _logger.LogDebug("Checking dependencies...");
                 foreach (var dependency in module.ModuleDependencies)
                 {
                     var found = GetAllModules().Where(m => m.Value.SystemName == dependency).ToArray();
@@ -116,15 +116,15 @@ namespace ARWNI2S.Node.Extensibility
 
             FrameworkModules[module.GetType()] = module;
 
-            _logger.LogInformation($"Module {module.SystemName} registered as framework module.");
+            _logger.LogInformation("Module {SystemName} registered as framework module.", module.SystemName);
         }
 
         public void Register(ClusterModule module)
         {
-            _logger.LogDebug($"Registering framework module: {module.SystemName}");
+            _logger.LogDebug("Registering framework module: {SystemName}", module.SystemName);
             if (module.ModuleDependencies.Count > 0)
             {
-                _logger.LogDebug($"Checking dependencies...");
+                _logger.LogDebug("Checking dependencies...");
                 foreach (var dependency in module.ModuleDependencies)
                 {
                     var found = GetAllModules().Where(m => m.Value.SystemName == dependency).ToArray();
@@ -137,7 +137,7 @@ namespace ARWNI2S.Node.Extensibility
 
             NodeModules[module.GetType()] = module;
 
-            _logger.LogInformation($"Module {module.SystemName} registered as framework module.");
+            _logger.LogInformation("Module {SystemName} registered as framework module.", module.SystemName);
         }
 
         private IEnumerable<KeyValuePair<Type, IModule>> GetAllModules()

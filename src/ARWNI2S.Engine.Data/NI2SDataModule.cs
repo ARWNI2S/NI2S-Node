@@ -19,7 +19,7 @@ namespace ARWNI2S.Engine.Data
         public override int Order => NI2SLifecycleStage.PreCoreInitialize;
 
         public override string SystemName { get; set; } = nameof(NI2SDataModule).ToModuleName();
-        public override string FriendlyName { get; set; } = nameof(NI2SDataModule).ToFriendlyModuleName();
+        public override string DisplayName { get; set; } = nameof(NI2SDataModule).ToFriendlyModuleName();
 
         public override void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
