@@ -10,6 +10,7 @@ namespace ARWNI2S.Cluster
 
         public override void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
+
         }
     }
 }
