@@ -42,12 +42,11 @@
     <Compile Include="Environment\NodeExceptions.cs" />
     <Compile Include="Environment\Heartbeat.cs" />
     <Compile Include="Environment\IHeartbeatHandler.cs" />
+    <Compile Include="Extensibility\ClusterNodeModuleExtensions.cs" />
+    <Compile Include="Extensibility\EngineBuilderNodeModuleExtensions.cs" />
     <Compile Include="Extensibility\IClusterModule.cs" />
     <Compile Include="Extensibility\ClusterModule.cs" />
-    <Compile Include="Hosting\ClusterLimits.cs" />
     <Compile Include="Hosting\ClusterNodeHostBuilderExtensions.cs" />
-    <Compile Include="Hosting\ClusterNodeOptions.cs" />
-    <Compile Include="Hosting\ClusterNodeOptionsSetup.cs" />
     <Compile Include="Logging\ClusterTrace.BadRequest.cs" />
     <Compile Include="Logging\ClusterTrace.Connections.cs" />
     <Compile Include="Logging\ClusterTrace.cs" />

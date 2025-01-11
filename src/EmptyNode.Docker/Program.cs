@@ -4,7 +4,7 @@ namespace ARWNI2S.Game
 {
     public class Program
     {
-        [MTAThread]
+        [STAThread]
         public static void Main(string[] args)
         {
             NI2SNode.Create(args).Run();

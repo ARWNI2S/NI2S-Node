@@ -1,4 +1,9 @@
-﻿using ARWNI2S.Engine.Builder;
+﻿// This file is used by Code Analysis to maintain SuppressMessage
+// attributes that are applied to this project.
+// Project-level suppressions either have no target or are given
+// a specific target and scoped to a namespace, type, member, etc.
+
+using ARWNI2S.Engine.Builder;
 using ARWNI2S.Hosting;
 using ARWNI2S.Hosting.Builder;
 using ARWNI2S.Node.Assets;
@@ -9,7 +14,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ARWNI2S.Node.Hosting
 {
-    public static class NI2SHostBuilderExtensions
+    internal static class NI2SHostBuilderExtensions
     {
         internal static INiisHostBuilder Configure(this INiisHostBuilder hostBuilder, Action<NI2SHostBuilderContext, IEngineBuilder> configureEngine)
         {
@@ -20,7 +25,7 @@ namespace ARWNI2S.Node.Hosting
             throw new NotSupportedException("hostBuilder is not NI2SHostBuilder");
         }
 
-        public static INiisHostBuilder UseDefaultServiceProvider(this INiisHostBuilder hostBuilder, Action<ServiceProviderOptions> configure)
+        internal static INiisHostBuilder UseDefaultServiceProvider(this INiisHostBuilder hostBuilder, Action<ServiceProviderOptions> configure)
         {
             return hostBuilder.UseDefaultServiceProvider((NI2SHostBuilderContext context, ServiceProviderOptions options) => configure(options));
         }
@@ -34,7 +39,7 @@ namespace ARWNI2S.Node.Hosting
             throw new NotSupportedException("hostBuilder is not NI2SHostBuilder");
         }
 
-        public static INiisHostBuilder ConfigureAppConfiguration(this INiisHostBuilder hostBuilder, Action<IConfigurationBuilder> configureDelegate)
+        internal static INiisHostBuilder ConfigureAppConfiguration(this INiisHostBuilder hostBuilder, Action<IConfigurationBuilder> configureDelegate)
         {
             Action<IConfigurationBuilder> configureDelegate2 = configureDelegate;
             return hostBuilder.ConfigureNI2SConfiguration(delegate (NI2SHostBuilderContext context, IConfigurationBuilder builder)
@@ -43,7 +48,7 @@ namespace ARWNI2S.Node.Hosting
             });
         }
 
-        public static INiisHostBuilder ConfigureLogging(this INiisHostBuilder hostBuilder, Action<ILoggingBuilder> configureLogging)
+        internal static INiisHostBuilder ConfigureLogging(this INiisHostBuilder hostBuilder, Action<ILoggingBuilder> configureLogging)
         {
             Action<ILoggingBuilder> configureLogging2 = configureLogging;
             return hostBuilder.ConfigureServices(delegate (IServiceCollection collection)
@@ -52,7 +57,7 @@ namespace ARWNI2S.Node.Hosting
             });
         }
 
-        public static INiisHostBuilder ConfigureLogging(this INiisHostBuilder hostBuilder, Action<NI2SHostBuilderContext, ILoggingBuilder> configureLogging)
+        internal static INiisHostBuilder ConfigureLogging(this INiisHostBuilder hostBuilder, Action<NI2SHostBuilderContext, ILoggingBuilder> configureLogging)
         {
             Action<NI2SHostBuilderContext, ILoggingBuilder> configureLogging2 = configureLogging;
             return hostBuilder.ConfigureServices(delegate (NI2SHostBuilderContext context, IServiceCollection collection)
@@ -64,7 +69,7 @@ namespace ARWNI2S.Node.Hosting
             });
         }
 
-        public static INiisHostBuilder UseLocalAssets(this INiisHostBuilder builder)
+        internal static INiisHostBuilder UseLocalAssets(this INiisHostBuilder builder)
         {
             builder.ConfigureNI2SConfiguration(delegate (NI2SHostBuilderContext context, IConfigurationBuilder configBuilder) //2
             {

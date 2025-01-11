@@ -1,6 +1,13 @@
-﻿using ARWNI2S.Cluster.Hosting;
+﻿// This file is used by Code Analysis to maintain SuppressMessage
+// attributes that are applied to this project.
+// Project-level suppressions either have no target or are given
+// a specific target and scoped to a namespace, type, member, etc.
+
+using ARWNI2S.Cluster.Configuration;
+using ARWNI2S.Cluster.Hosting;
 using ARWNI2S.Engine.Core;
 using ARWNI2S.Engine.Core.Builder;
+using ARWNI2S.Engine.Extensibility;
 using ARWNI2S.Engine.Hosting;
 using ARWNI2S.Engine.Plugins;
 using ARWNI2S.Hosting;
@@ -29,7 +36,7 @@ namespace ARWNI2S.Node.Hosting.Internal
 
         private static void ConfigureCluster(NI2SHostBuilderContext builderContext, ClusterNodeOptions options)
         {
-            //options.Configure(builderContext.Configuration.GetSection("Kestrel"), reloadOnChange: true);
+            options.Configure(builderContext.Configuration.GetSection("Orleans"), reloadOnChange: true);
         }
 
         private static INiisHostBuilder ConfigureNode(INiisHostBuilder builder, Action<IServiceCollection, IConfiguration> configureCluster)

@@ -1,4 +1,9 @@
-﻿using ARWNI2S.Configuration;
+﻿// This file is used by Code Analysis to maintain SuppressMessage
+// attributes that are applied to this project.
+// Project-level suppressions either have no target or are given
+// a specific target and scoped to a namespace, type, member, etc.
+
+using ARWNI2S.Configuration;
 using ARWNI2S.Engine.Builder;
 using ARWNI2S.Engine.Caching;
 using ARWNI2S.Engine.Data.Migrations;
@@ -18,8 +23,8 @@ namespace ARWNI2S.Engine.Data
     {
         public override int Order => NI2SLifecycleStage.PreCoreInitialize;
 
-        public override string SystemName { get; set; } = nameof(NI2SDataModule).ToModuleName();
-        public override string DisplayName { get; set; } = nameof(NI2SDataModule).ToFriendlyModuleName();
+        public override string SystemName { get; set; } = nameof(NI2SDataModule).ToModuleSystemName();
+        public override string DisplayName { get; set; } = nameof(NI2SDataModule).ToModuleDisplayName();
 
         public override void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {

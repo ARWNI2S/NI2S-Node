@@ -1,4 +1,9 @@
-﻿using ARWNI2S.Engine.Builder;
+﻿// This file is used by Code Analysis to maintain SuppressMessage
+// attributes that are applied to this project.
+// Project-level suppressions either have no target or are given
+// a specific target and scoped to a namespace, type, member, etc.
+
+using ARWNI2S.Engine.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ARWNI2S.Engine
@@ -24,69 +29,6 @@ namespace ARWNI2S.Engine
             }
             return scope.ServiceProvider;
         }
-
-        ///// <summary>
-        ///// Run startup tasks
-        ///// </summary>
-        //private void RunStartupTasks()
-        //{
-        //    //HACK
-        //    ////find startup tasks provided by other assemblies
-        //    //var typeFinder = Singleton<ITypeFinder>.Instance;
-        //    //var startupTasks = typeFinder.FindClassesOfType<IPreInitTask>();
-
-        //    ////create and sort instances of startup tasks
-        //    ////we startup this interface even for not installed modules. 
-        //    ////otherwise, DbContext initializers won't run and a module installation won't work
-        //    //var instances = startupTasks
-        //    //    .Select(startupTask => (IPreInitTask)Activator.CreateInstance(startupTask))
-        //    //    .OrderBy(startupTask => startupTask.Order);
-
-        //    ////execute tasks
-        //    //foreach (var task in instances)
-        //    //    task.Execute();
-        //}
-
-        ///// <summary>
-        ///// Register and configure AutoMapper
-        ///// </summary>
-        //private void AddAutoMapper()
-        //{
-        //    //HACK
-        //    ////find mapper configurations provided by other assemblies
-        //    //var typeFinder = Singleton<ITypeFinder>.Instance;
-        //    //var mapperConfigurations = typeFinder.FindClassesOfType<IOrderedMapperProfile>();
-
-        //    ////create and sort instances of mapper configurations
-        //    //var instances = mapperConfigurations
-        //    //    .Select(mapperConfiguration => (IOrderedMapperProfile)Activator.CreateInstance(mapperConfiguration))
-        //    //    .OrderBy(mapperConfiguration => mapperConfiguration.Order);
-
-        //    ////create AutoMapper configuration
-        //    //var config = new MapperConfiguration(cfg =>
-        //    //{
-        //    //    foreach (var instance in instances)
-        //    //    {
-        //    //        cfg.AddProfile(instance.GetType());
-        //    //    }
-        //    //});
-
-        //    ////register
-        //    //AutoMapperConfiguration.Init(config);
-        //}
-
-        //private Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
-        //{
-        //    //check for assembly already loaded
-        //    var assembly = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(a => a.FullName == args.Name);
-        //    if (assembly != null)
-        //        return assembly;
-
-        //    //get assembly from TypeFinder
-        //    var typeFinder = Singleton<ITypeFinder>.Instance;
-        //    assembly = typeFinder?.GetAssemblies().FirstOrDefault(a => a.FullName == args.Name);
-        //    return assembly;
-        //}
 
         #endregion
 

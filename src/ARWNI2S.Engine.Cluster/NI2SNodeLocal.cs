@@ -1,5 +1,10 @@
-﻿using ARWNI2S.Cluster.Entities;
-using ARWNI2S.Cluster.Hosting;
+﻿// This file is used by Code Analysis to maintain SuppressMessage
+// attributes that are applied to this project.
+// Project-level suppressions either have no target or are given
+// a specific target and scoped to a namespace, type, member, etc.
+
+using ARWNI2S.Cluster.Configuration;
+using ARWNI2S.Cluster.Entities;
 using ARWNI2S.Engine.Core;
 using ARWNI2S.Extensibility;
 using Microsoft.Extensions.Logging;
@@ -10,7 +15,7 @@ namespace ARWNI2S.Cluster
 {
     internal class NI2SNodeLocal : IClusterNode
     {
-        private NodeInfo nodeInfo;
+        private Node nodeInfo;
 
         public IModuleCollection Modules { get; }
         private ServiceContext ServiceContext { get; }
@@ -21,7 +26,7 @@ namespace ARWNI2S.Cluster
             IModuleManager moduleManager,
             //IEnumerable<IConnectionListenerFactory> transportFactories,
             //IEnumerable<IMultiplexedConnectionListenerFactory> multiplexedFactories,
-            //IHttpsConfigurationService httpsConfigurationService,
+            //IClusterConfigurationService httpsConfigurationService,
             ILoggerFactory loggerFactory
             /*ClusterNodeMetrics metrics*/)
             : this(moduleManager/*transportFactories, multiplexedFactories, httpsConfigurationService*/, CreateServiceContext(options, loggerFactory, diagnosticSource: null/*, metrics*/))
@@ -32,7 +37,7 @@ namespace ARWNI2S.Cluster
             IModuleManager moduleManager,
             //IEnumerable<IConnectionListenerFactory> transportFactories,
             //IEnumerable<IMultiplexedConnectionListenerFactory> multiplexedFactories,
-            //IHttpsConfigurationService httpsConfigurationService,
+            //IClusterConfigurationService httpsConfigurationService,
             ServiceContext serviceContext)
         {
             //ArgumentNullException.ThrowIfNull(transportFactories);
@@ -104,7 +109,7 @@ namespace ARWNI2S.Cluster
     //        private readonly TransportManager _transportManager;
     //        private readonly List<IConnectionListenerFactory> _transportFactories;
     //        private readonly List<IMultiplexedConnectionListenerFactory> _multiplexedTransportFactories;
-    //        private readonly IHttpsConfigurationService _httpsConfigurationService;
+    //        private readonly IClusterConfigurationService _httpsConfigurationService;
 
     //        private readonly SemaphoreSlim _bindSemaphore = new SemaphoreSlim(initialCount: 1);
     //        private bool _hasStarted;
@@ -119,7 +124,7 @@ namespace ARWNI2S.Cluster
     //        internal KestrelServerImpl(
     //            IEnumerable<IConnectionListenerFactory> transportFactories,
     //            IEnumerable<IMultiplexedConnectionListenerFactory> multiplexedFactories,
-    //            IHttpsConfigurationService httpsConfigurationService,
+    //            IClusterConfigurationService httpsConfigurationService,
     //            ServiceContext serviceContext)
     //        {
     //            ArgumentNullException.ThrowIfNull(transportFactories);
@@ -142,13 +147,9 @@ namespace ARWNI2S.Cluster
     //            _transportManager = new TransportManager(_transportFactories, _multiplexedTransportFactories, _httpsConfigurationService, ServiceContext);
     //        }
 
-
-
     //        public IFeatureCollection Features { get; }
 
     //        public ClusterNodeOptions Options => ServiceContext.NodeOptions;
-
-
 
     //        private AddressBindContext? AddressBindContext { get; set; }
 
@@ -287,7 +288,7 @@ namespace ARWNI2S.Cluster
 
     //#pragma warning disable CA2016 // Don't use cancellationToken when acquiring the semaphore. Dispose calls this with a pre-canceled token.
     //            await _bindSemaphore.WaitAsync().ConfigureAwait(false);
-    //#pragma warning restore CA2016
+    //#pragma warning renode CA2016
 
     //            try
     //            {

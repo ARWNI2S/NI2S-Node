@@ -1,6 +1,10 @@
-﻿using ARWNI2S.Engine.Collections;
+﻿// This file is used by Code Analysis to maintain SuppressMessage
+// attributes that are applied to this project.
+// Project-level suppressions either have no target or are given
+// a specific target and scoped to a namespace, type, member, etc.
+
+using ARWNI2S.Engine.Collections;
 using ARWNI2S.Engine.Core.Object;
-using Orleans;
 
 namespace ARWNI2S.Engine.Core.Actor
 {
@@ -8,7 +12,7 @@ namespace ARWNI2S.Engine.Core.Actor
     {
         internal ActorId ActorId { get; }
 
-        public INiisGrain Self { get; }
+        protected INiisGrain Self { get; }
 
         public ActorComponents Components { get; }
 

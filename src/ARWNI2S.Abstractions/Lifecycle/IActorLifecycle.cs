@@ -1,6 +1,10 @@
+// This file is used by Code Analysis to maintain SuppressMessage
+// attributes that are applied to this project.
+// Project-level suppressions either have no target or are given
+// a specific target and scoped to a namespace, type, member, etc.
+
 #nullable enable
 using ARWNI2S.Engine.Core;
-using Orleans;
 using System.Buffers;
 
 namespace ARWNI2S.Lifecycle
@@ -9,10 +13,10 @@ namespace ARWNI2S.Lifecycle
     /// The observable actor lifecycle.
     /// </summary>
     /// <remarks>
-    /// This type is usually used as the generic parameter in <see cref="ILifecycleParticipant{IActorLifecycle}"/> as
+    /// This type is usually used as the generic parameter in <see cref="Orleans.ILifecycleParticipant{IActorLifecycle}"/> as
     /// a means of participating in the lifecycle stages of a actor activation.
     /// </remarks>
-    public interface IActorLifecycle : ILifecycleObservable
+    public interface IActorLifecycle : Orleans.ILifecycleObservable
     {
         /// <summary>
         /// Registers a actor transition participant.

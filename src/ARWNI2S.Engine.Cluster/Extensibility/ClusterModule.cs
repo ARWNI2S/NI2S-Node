@@ -1,8 +1,14 @@
-﻿using ARWNI2S.Cluster.Lifecycle;
+﻿// This file is used by Code Analysis to maintain SuppressMessage
+// attributes that are applied to this project.
+// Project-level suppressions either have no target or are given
+// a specific target and scoped to a namespace, type, member, etc.
+
+using ARWNI2S.Cluster.Lifecycle;
 using ARWNI2S.Cluster.Networking;
 using ARWNI2S.Engine.Builder;
 using ARWNI2S.Engine.Data;
 using ARWNI2S.Engine.Extensibility;
+using ARWNI2S.Engine.Extensibility.Internals;
 using ARWNI2S.Extensibility;
 using Microsoft.Extensions.DependencyInjection;
 using Orleans;
@@ -22,14 +28,16 @@ namespace ARWNI2S.Cluster.Extensibility
         /// <summary>
         /// Gets the module system name.
         /// </summary>
-        public override string SystemName { get => GetType().Name.ToModuleName(); set => throw new NotImplementedException(); }
+        public override string SystemName { get => GetType().Name.ToModuleSystemName(); set => throw new NotImplementedException(); }
         /// <summary>
         /// Gets the module friendly name.
         /// </summary>
-        public override string DisplayName { get => GetType().Name.ToFriendlyModuleName(); set => throw new NotImplementedException(); }
+        public override string DisplayName { get => GetType().Name.ToModuleDisplayName(); set => throw new NotImplementedException(); }
 
-        public override IList<string> ModuleDependencies => [nameof(NI2SDataModule).ToModuleName(),
-                                                             nameof(NI2SNetworkModule).ToModuleName()];
+        public override IList<string> ModuleDependencies => [nameof(NI2SDataModule).ToModuleSystemName(),
+                                                             nameof(NI2SNetworkModule).ToModuleSystemName()];
+
+        public virtual IModuleDataSource DataSource { get; } = new EmptyDataSource();
 
         /// <summary>
         /// Configure the engine to use the module

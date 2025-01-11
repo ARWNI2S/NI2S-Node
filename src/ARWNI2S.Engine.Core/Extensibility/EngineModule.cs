@@ -1,4 +1,10 @@
-﻿using ARWNI2S.Engine.Builder;
+﻿// This file is used by Code Analysis to maintain SuppressMessage
+// attributes that are applied to this project.
+// Project-level suppressions either have no target or are given
+// a specific target and scoped to a namespace, type, member, etc.
+
+using ARWNI2S.Engine.Builder;
+using ARWNI2S.Engine.Extensibility.Internals;
 using ARWNI2S.Engine.Lifecycle;
 using ARWNI2S.Extensibility;
 using ARWNI2S.Lifecycle;
@@ -20,11 +26,15 @@ namespace ARWNI2S.Engine.Extensibility
         /// <summary>
         /// Gets the module system name.
         /// </summary>
-        public override string SystemName { get => GetType().Name.ToModuleName(); set => throw new NotImplementedException(); }
+        public override string SystemName { get => GetType().Name.ToModuleSystemName(); set => throw new NotImplementedException(); }
         /// <summary>
         /// Gets the module friendly name.
         /// </summary>
-        public override string DisplayName { get => GetType().Name.ToFriendlyModuleName(); set => throw new NotImplementedException(); }
+        public override string DisplayName { get => GetType().Name.ToModuleDisplayName(); set => throw new NotImplementedException(); }
+        /// <summary>
+        /// Gets the engine module builder data source.
+        /// </summary>
+        public virtual IModuleDataSource DataSource { get; } = new EmptyDataSource();
 
         /// <summary>
         /// Configure the engine to use the module

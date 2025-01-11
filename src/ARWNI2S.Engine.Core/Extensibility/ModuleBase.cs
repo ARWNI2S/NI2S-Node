@@ -1,4 +1,9 @@
-﻿using ARWNI2S.Engine.Builder;
+﻿// This file is used by Code Analysis to maintain SuppressMessage
+// attributes that are applied to this project.
+// Project-level suppressions either have no target or are given
+// a specific target and scoped to a namespace, type, member, etc.
+
+using ARWNI2S.Engine.Builder;
 using ARWNI2S.Environment;
 using ARWNI2S.Extensibility;
 using ARWNI2S.Lifecycle;
@@ -7,7 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace ARWNI2S.Engine.Extensibility
 {
-    public abstract class ModuleBase : IModule
+    public abstract class ModuleBase : IModule, IConfigureEngine
     {
         /// <summary>
         /// Gets or sets the module system name.

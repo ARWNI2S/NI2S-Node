@@ -1,4 +1,9 @@
-﻿using ARWNI2S.Cluster;
+﻿// This file is used by Code Analysis to maintain SuppressMessage
+// attributes that are applied to this project.
+// Project-level suppressions either have no target or are given
+// a specific target and scoped to a namespace, type, member, etc.
+
+using ARWNI2S.Cluster;
 using ARWNI2S.Cluster.Builder;
 using ARWNI2S.Engine;
 using ARWNI2S.Engine.Builder;
@@ -19,7 +24,7 @@ namespace ARWNI2S.Node
     public sealed class NI2SNode : IHost, IEngineBuilder, IClusterNodeBuilder, IAsyncDisposable
     {
         private readonly IHost _host;
-        //private readonly List<ModuleDataSource> _dataSources = [];
+        private readonly List<IModuleDataSource> _dataSources = [];
 
         #region Properties
 
@@ -53,7 +58,7 @@ namespace ARWNI2S.Node
         internal EngineBuilder EngineBuilder { get; }
         internal IModuleCollection NodeModules => _host.Services.GetRequiredService<IClusterNode>().Modules;
         internal IDictionary<string, object> Properties => EngineBuilder.Properties;
-        //internal ICollection<ModuleDataSource> DataSources => _dataSources;
+        internal ICollection<IModuleDataSource> DataSources => _dataSources;
 
         internal NI2SNode(IHost host)
         {
@@ -175,7 +180,7 @@ namespace ARWNI2S.Node
 
         IEngineBuilder IClusterNodeBuilder.CreateEngineBuilder() => ((IEngineBuilder)this).New();
 
-        //ICollection<ModuleDataSource> IClusterNodeBuilder.DataSources => DataSources;
+        ICollection<IModuleDataSource> IClusterNodeBuilder.DataSources => DataSources;
 
         IServiceProvider IClusterNodeBuilder.ServiceProvider => Services;
 

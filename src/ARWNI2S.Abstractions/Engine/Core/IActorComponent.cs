@@ -1,14 +1,8 @@
-﻿/* Cambio no fusionado mediante combinación del proyecto 'ARWNI2S.Abstractions (net9.0)'
-Antes:
-using ARWNI2S.Engine.Core.Object;
-Después:
-using ARWNI2S;
-using ARWNI2S.Engine;
-using ARWNI2S.Engine.Core;
-using ARWNI2S.Engine.Core;
-using ARWNI2S.Engine.Core.Actor;
-using ARWNI2S.Engine.Core.Object;
-*/
+﻿// This file is used by Code Analysis to maintain SuppressMessage
+// attributes that are applied to this project.
+// Project-level suppressions either have no target or are given
+// a specific target and scoped to a namespace, type, member, etc.
+
 namespace ARWNI2S.Engine.Core
 {
     public interface IActorComponent : INiisObject

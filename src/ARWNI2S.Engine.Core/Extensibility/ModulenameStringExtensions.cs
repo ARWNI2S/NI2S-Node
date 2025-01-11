@@ -1,8 +1,13 @@
-﻿namespace ARWNI2S.Engine.Extensibility
+﻿// This file is used by Code Analysis to maintain SuppressMessage
+// attributes that are applied to this project.
+// Project-level suppressions either have no target or are given
+// a specific target and scoped to a namespace, type, member, etc.
+
+namespace ARWNI2S.Engine.Extensibility
 {
     internal static class ModuleNameStringExtensions
     {
-        public static string ToModuleName(this string moduleName)
+        internal static string ToModuleSystemName(this string moduleName)
         {
             var result = moduleName;
             var hasNiisMark = false;
@@ -29,7 +34,7 @@
             return result;
         }
 
-        public static string ToFriendlyModuleName(this string moduleName)
+        internal static string ToModuleDisplayName(this string moduleName)
         {
             var result = moduleName;
             result = result.Replace("Module", "");

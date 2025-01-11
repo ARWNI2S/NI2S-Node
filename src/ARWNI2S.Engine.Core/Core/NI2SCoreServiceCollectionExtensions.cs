@@ -1,4 +1,9 @@
-﻿using ARWNI2S.Engine.Core.Builder;
+﻿// This file is used by Code Analysis to maintain SuppressMessage
+// attributes that are applied to this project.
+// Project-level suppressions either have no target or are given
+// a specific target and scoped to a namespace, type, member, etc.
+
+using ARWNI2S.Engine.Core.Builder;
 using ARWNI2S.Engine.Core.Object;
 using ARWNI2S.Engine.Extensibility;
 using ARWNI2S.Engine.Hosting;
@@ -10,9 +15,9 @@ using System.Buffers;
 
 namespace ARWNI2S.Engine.Core
 {
-    public static class NI2SCoreServiceCollectionExtensions
+    internal static class NI2SCoreServiceCollectionExtensions
     {
-        public static INiisCoreBuilder AddNI2SCore(this IServiceCollection services)
+        internal static INiisCoreBuilder AddNI2SCore(this IServiceCollection services)
         {
             ArgumentNullException.ThrowIfNull(services, nameof(services));
             INiisHostEnvironment serviceFromCollection = GetServiceFromCollection<INiisHostEnvironment>(services);

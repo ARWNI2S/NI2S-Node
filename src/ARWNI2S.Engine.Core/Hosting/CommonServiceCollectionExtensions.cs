@@ -1,4 +1,9 @@
-﻿using ARWNI2S.Configuration;
+﻿// This file is used by Code Analysis to maintain SuppressMessage
+// attributes that are applied to this project.
+// Project-level suppressions either have no target or are given
+// a specific target and scoped to a namespace, type, member, etc.
+
+using ARWNI2S.Configuration;
 using ARWNI2S.Engine.Caching;
 using ARWNI2S.Engine.Configuration;
 using ARWNI2S.Engine.Environment;
@@ -22,13 +27,13 @@ namespace ARWNI2S.Engine.Hosting
             return Singleton<ITypeFinder>.Instance;
         }
 
-        public static void ConfigureFileProvider(this IServiceCollection services, INiisHostEnvironment hostingEnvironment)
+        internal static void ConfigureFileProvider(this IServiceCollection services, INiisHostEnvironment hostingEnvironment)
         {
             NI2SFileProvider.Default = new NI2SFileProvider(hostingEnvironment);
             services.AddScoped<INiisFileProvider, NI2SFileProvider>();
         }
 
-        public static NI2SSettings BindNodeSettings(this IServiceCollection services, IConfiguration configuration)
+        internal static NI2SSettings BindNodeSettings(this IServiceCollection services, IConfiguration configuration)
         {
             //add configuration parameters
             var configurations = services.GetOrCreateTypeFinder()
@@ -55,7 +60,7 @@ namespace ARWNI2S.Engine.Hosting
             return nodeSettings;
         }
 
-        public static void AddContextAccessor(this IServiceCollection services)
+        internal static void AddContextAccessor(this IServiceCollection services)
         {
             services.AddSingleton<INiisContextAccessor, NI2SContextAccessor>();
         }
@@ -64,7 +69,7 @@ namespace ARWNI2S.Engine.Hosting
         /// Adds services required for distributed cache
         /// </summary>
         /// <param name="services">Collection of service descriptors</param>
-        public static void AddDistributedCache(this IServiceCollection services)
+        internal static void AddDistributedCache(this IServiceCollection services)
         {
             var nodeSettings = Singleton<NI2SSettings>.Instance;
             var distributedCacheConfig = nodeSettings.Get<DistributedCacheConfig>();

@@ -1,9 +1,14 @@
-﻿using ARWNI2S.Configuration;
+﻿// This file is used by Code Analysis to maintain SuppressMessage
+// attributes that are applied to this project.
+// Project-level suppressions either have no target or are given
+// a specific target and scoped to a namespace, type, member, etc.
+
+using ARWNI2S.Configuration;
 using ARWNI2S.Engine.Builder;
-using ARWNI2S.Environment;
-using ARWNI2S.Extensibility;
+using ARWNI2S.Engine.Hosting;
 using ARWNI2S.Hosting;
 using ARWNI2S.Hosting.Builder;
+using ARWNI2S.Node.Extensibility;
 using ARWNI2S.Node.Hosting;
 using ARWNI2S.Node.Hosting.Internal;
 using Microsoft.Extensions.Configuration;
@@ -148,55 +153,25 @@ namespace ARWNI2S.Node.Builder
 
             engine.Properties.Add(NI2SHostingDefaults.GlobalNodeBuilderKey, _builtNode);
 
-            //// Only call UseModules() if there are modules configured and UseModules() wasn't called on the global node builder already
-            //if (_builtNode.DataSources.Count > 0)
-            //{
-            //    // If this is set, someone called UseRouting() when a global route builder was already set
-            //    if (!_builtNode.Properties.TryGetValue(NI2SHostingDefaults.NodeBuilderKey, out var localNodeBuilder))
-            //    {
-            //        engine.UseModules();
-            //        // Middleware the needs to re-route will use this property to call UseRouting()
-            //        _builtNode.Properties[NI2SHostingDefaults.UseModulesKey] = engine.Properties[NI2SHostingDefaults.UseModulesKey];
-            //    }
-            //    else
-            //    {
-            //        // UseModules will be looking for the NodeBuilder so make sure it's set
-            //        engine.Properties[NI2SHostingDefaults.NodeBuilderKey] = localNodeBuilder;
-            //    }
-            //}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            //context.EngineContext.InitializeContext(engine);
             context.EngineContext.InitializeContext(_builtNode);
+            engine.ConfigureEngine();
 
-            //find startup configurations provided by other assemblies
-            var typeFinder = Singleton<ITypeFinder>.Instance;
-            var startupConfigurations = typeFinder.FindClassesOfType<IConfigureEngine>();
-
-            //create and sort instances of startup configurations
-            var instances = startupConfigurations
-                .Select(startup => (IConfigureEngine)Activator.CreateInstance(startup))
-                .Where(startup => startup != null)
-                .OrderBy(startup => startup.Order);
-
-            //configure engine
-            foreach (var instance in instances)
-                instance.ConfigureEngine(_builtNode);
-
-            //Setup node engine startup
+            // Only call UseModules() if there are modules configured and UseModules() wasn't called on the global node builder already
+            if (_builtNode.DataSources.Count > 0)
+            {
+                // If this is set, someone called UseRouting() when a global node builder was already set
+                if (!_builtNode.Properties.TryGetValue(NI2SHostingDefaults.NodeBuilderKey, out var localNodeBuilder))
+                {
+                    engine.UseModules();
+                    //// Middleware the needs to re-route will use this property to call UseRouting()
+                    _builtNode.Properties[NI2SHostingDefaults.UseModulesKey] = engine.Properties[NI2SHostingDefaults.UseModulesKey];
+                }
+                else
+                {
+                    // UseModules will be looking for the NodeBuilder so make sure it's set
+                    engine.Properties[NI2SHostingDefaults.NodeBuilderKey] = localNodeBuilder;
+                }
+            }
 
             // Copy the properties to the destination engine builder
             foreach (var item in _builtNode.Properties)

@@ -1,4 +1,9 @@
-﻿using System.Diagnostics.Metrics;
+﻿// This file is used by Code Analysis to maintain SuppressMessage
+// attributes that are applied to this project.
+// Project-level suppressions either have no target or are given
+// a specific target and scoped to a namespace, type, member, etc.
+
+using System.Diagnostics.Metrics;
 
 namespace ARWNI2S.Cluster.Diagnostics
 {
@@ -397,8 +402,8 @@ namespace ARWNI2S.Cluster.Diagnostics
         //                    version = "1.3";
         //                    return true;
         //            }
-        //#pragma warning restore SYSLIB0039 // Type or member is obsolete
-        //#pragma warning restore CS0618 // Type or member is obsolete
+        //#pragma warning renode SYSLIB0039 // Type or member is obsolete
+        //#pragma warning renode CS0618 // Type or member is obsolete
 
         //            name = null;
         //            version = null;

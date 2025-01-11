@@ -1,4 +1,9 @@
-﻿using ARWNI2S.Hosting;
+﻿// This file is used by Code Analysis to maintain SuppressMessage
+// attributes that are applied to this project.
+// Project-level suppressions either have no target or are given
+// a specific target and scoped to a namespace, type, member, etc.
+
+using ARWNI2S.Hosting;
 using ARWNI2S.Hosting.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -28,7 +33,7 @@ namespace ARWNI2S.Node.Hosting.Internal
         /// <param name="builder">The <see cref="IHostBuilder" /> instance to configure.</param>
         /// <param name="configure">The configure callback</param>
         /// <returns>A reference to the <paramref name="builder"/> after the operation has completed.</returns>
-        public static IHostBuilder ConfigureNI2SHostingDefaults(this IHostBuilder builder, Action<INiisHostBuilder> configure)
+        internal static IHostBuilder ConfigureNI2SHostingDefaults(this IHostBuilder builder, Action<INiisHostBuilder> configure)
         {
             ArgumentNullException.ThrowIfNull(configure);
 

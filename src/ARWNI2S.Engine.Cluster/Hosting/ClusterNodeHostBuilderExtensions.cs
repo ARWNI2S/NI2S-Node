@@ -1,4 +1,9 @@
-﻿using ARWNI2S.Cluster.Configuration;
+﻿// This file is used by Code Analysis to maintain SuppressMessage
+// attributes that are applied to this project.
+// Project-level suppressions either have no target or are given
+// a specific target and scoped to a namespace, type, member, etc.
+
+using ARWNI2S.Cluster.Configuration;
 using ARWNI2S.Cluster.Diagnostics;
 using ARWNI2S.Cluster.Lifecycle;
 using ARWNI2S.Cluster.Networking.Connection;
@@ -14,7 +19,7 @@ namespace ARWNI2S.Cluster.Hosting
     /// <summary>
     /// Kestrel <see cref="INiisHostBuilder"/> extensions.
     /// </summary>
-    public static class ClusterNodeHostBuilderExtensions
+    internal static class ClusterNodeHostBuilderExtensions
     {
         /// <summary>
         /// In <see cref="UseClusterCore(INiisHostBuilder)"/> scenarios, it may be necessary to explicitly
@@ -30,7 +35,7 @@ namespace ARWNI2S.Cluster.Hosting
         /// <returns>
         /// The Microsoft.AspNetCore.Hosting.INiisHostBuilder.
         /// </returns>
-        public static INiisHostBuilder UseClusterNI2SConfiguration(this INiisHostBuilder hostBuilder)
+        internal static INiisHostBuilder UseClusterNI2SConfiguration(this INiisHostBuilder hostBuilder)
         {
             return hostBuilder.ConfigureServices(services =>//3.1
             {
@@ -47,7 +52,7 @@ namespace ARWNI2S.Cluster.Hosting
         /// <returns>
         /// The Microsoft.AspNetCore.Hosting.INiisHostBuilder.
         /// </returns>
-        public static INiisHostBuilder UseClustering(this INiisHostBuilder hostBuilder)
+        internal static INiisHostBuilder UseClustering(this INiisHostBuilder hostBuilder)
         {
             return hostBuilder
                 .UseClusterCore()
@@ -75,7 +80,7 @@ namespace ARWNI2S.Cluster.Hosting
         /// <returns>
         /// The Microsoft.AspNetCore.Hosting.INiisHostBuilder.
         /// </returns>
-        public static INiisHostBuilder UseClusterCore(this INiisHostBuilder hostBuilder)
+        internal static INiisHostBuilder UseClusterCore(this INiisHostBuilder hostBuilder)
         {
             hostBuilder.ConfigureServices(services =>//3
             {
@@ -113,7 +118,7 @@ namespace ARWNI2S.Cluster.Hosting
         /// <returns>
         /// The Microsoft.AspNetCore.Hosting.INiisHostBuilder.
         /// </returns>
-        public static INiisHostBuilder UseClustering(this INiisHostBuilder hostBuilder, Action<ClusterNodeOptions> options)
+        internal static INiisHostBuilder UseClustering(this INiisHostBuilder hostBuilder, Action<ClusterNodeOptions> options)
         {
             return hostBuilder.UseClustering().ConfigureCluster(options);
         }
@@ -130,7 +135,7 @@ namespace ARWNI2S.Cluster.Hosting
         /// <returns>
         /// The Microsoft.AspNetCore.Hosting.INiisHostBuilder.
         /// </returns>
-        public static INiisHostBuilder ConfigureCluster(this INiisHostBuilder hostBuilder, Action<ClusterNodeOptions> options)
+        internal static INiisHostBuilder ConfigureCluster(this INiisHostBuilder hostBuilder, Action<ClusterNodeOptions> options)
         {
             return hostBuilder.ConfigureServices(services =>
             {
@@ -149,7 +154,7 @@ namespace ARWNI2S.Cluster.Hosting
         /// <returns>
         /// The Microsoft.AspNetCore.Hosting.INiisHostBuilder.
         /// </returns>
-        public static INiisHostBuilder UseClustering(this INiisHostBuilder hostBuilder, Action<NI2SHostBuilderContext, ClusterNodeOptions> configureOptions)
+        internal static INiisHostBuilder UseClustering(this INiisHostBuilder hostBuilder, Action<NI2SHostBuilderContext, ClusterNodeOptions> configureOptions)
         {
             return hostBuilder.UseClustering().ConfigureCluster(configureOptions);
         }
@@ -164,7 +169,7 @@ namespace ARWNI2S.Cluster.Hosting
         /// <returns>
         /// The Microsoft.AspNetCore.Hosting.INiisHostBuilder.
         /// </returns>
-        public static INiisHostBuilder ConfigureCluster(this INiisHostBuilder hostBuilder, Action<NI2SHostBuilderContext, ClusterNodeOptions> configureOptions)
+        internal static INiisHostBuilder ConfigureCluster(this INiisHostBuilder hostBuilder, Action<NI2SHostBuilderContext, ClusterNodeOptions> configureOptions)
         {
             ArgumentNullException.ThrowIfNull(configureOptions);
 

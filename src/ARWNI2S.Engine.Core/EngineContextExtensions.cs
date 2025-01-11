@@ -1,4 +1,9 @@
-﻿using ARWNI2S.Engine.Environment.Mapper;
+﻿// This file is used by Code Analysis to maintain SuppressMessage
+// attributes that are applied to this project.
+// Project-level suppressions either have no target or are given
+// a specific target and scoped to a namespace, type, member, etc.
+
+using ARWNI2S.Engine.Environment.Mapper;
 using ARWNI2S.Environment;
 using AutoMapper;
 using Microsoft.Extensions.Configuration;
@@ -6,14 +11,14 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace ARWNI2S.Engine
 {
-    public static class EngineContextExtensions
+    internal static class EngineContextExtensions
     {
         /// <summary>
         /// Add and configure services
         /// </summary>
         /// <param name="services">Collection of service descriptors</param>
         /// <param name="configuration">Configuration of the application</param>
-        public static void ConfigureServices(this IEngineContext context, IServiceCollection services, IConfiguration configuration)
+        internal static void ConfigureServices(this IEngineContext context, IServiceCollection services, IConfiguration configuration)
         {
             //register engine context and services
             services.AddSingleton(context);
