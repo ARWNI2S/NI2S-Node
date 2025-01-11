@@ -6,18 +6,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Configuration\Caching\**" />
     <Compile Remove="Connection\**" />
     <Compile Remove="Environment\**" />
     <Compile Remove="Extensibility\**" />
     <Compile Remove="Hosting\**" />
     <Compile Remove="Logging\**" />
     <Compile Remove="Relayer\**" />
+    <EmbeddedResource Remove="Configuration\Caching\**" />
     <EmbeddedResource Remove="Connection\**" />
     <EmbeddedResource Remove="Environment\**" />
     <EmbeddedResource Remove="Extensibility\**" />
     <EmbeddedResource Remove="Hosting\**" />
     <EmbeddedResource Remove="Logging\**" />
     <EmbeddedResource Remove="Relayer\**" />
+    <None Remove="Configuration\Caching\**" />
     <None Remove="Connection\**" />
     <None Remove="Environment\**" />
     <None Remove="Extensibility\**" />
@@ -28,7 +31,11 @@
 
   <ItemGroup>
     <Compile Remove="ClusterNodeExtensions.cs" />
+    <Compile Remove="Configuration\ISettingService.cs" />
+    <Compile Remove="Configuration\SettingsDefaults.cs" />
+    <Compile Remove="Configuration\SettingService.cs" />
     <Compile Remove="DateHeaderValueManager.cs" />
+    <Compile Remove="Entities\Setting.cs" />
     <Compile Remove="Lifecycle\TransitionContext.cs" />
     <Compile Remove="Networking\NodeBeacon.cs" />
     <Compile Remove="Networking\RequestClient.cs" />

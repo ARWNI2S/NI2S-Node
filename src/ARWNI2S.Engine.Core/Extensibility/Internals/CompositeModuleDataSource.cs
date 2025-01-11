@@ -1,14 +1,9 @@
-﻿// This file is used by Code Analysis to maintain SuppressMessage
-// attributes that are applied to this project.
-// Project-level suppressions either have no target or are given
-// a specific target and scoped to a namespace, type, member, etc.
-
-using ARWNI2S.Extensibility;
+﻿using ARWNI2S.Extensibility;
 using Microsoft.Extensions.Primitives;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 
 namespace ARWNI2S.Engine.Extensibility.Internals
 {

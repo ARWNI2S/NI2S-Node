@@ -1,6 +1,6 @@
-﻿using ARWNI2S.Configuration;
+﻿using ARWNI2S.Framework.Configuration;
 
-namespace ARWNI2S.Cluster.Entities
+namespace ARWNI2S.Cluster.Configuration
 {
     public class ClusterSettings : ISettings
     {

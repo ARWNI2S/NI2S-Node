@@ -1,9 +1,4 @@
-﻿// This file is used by Code Analysis to maintain SuppressMessage
-// attributes that are applied to this project.
-// Project-level suppressions either have no target or are given
-// a specific target and scoped to a namespace, type, member, etc.
-
-using ARWNI2S.Cluster.Extensibility;
+﻿using ARWNI2S.Cluster.Extensibility;
 using ARWNI2S.Engine.Extensibility;
 using ARWNI2S.Extensibility;
 using Microsoft.Extensions.Logging;
@@ -105,7 +100,7 @@ namespace ARWNI2S.Node.Extensibility
 
         public void Register(FrameworkModule module)
         {
-            _logger.LogDebug("Registering framework module: {SystemName}",module.SystemName);
+            _logger.LogDebug("Registering framework module: {SystemName}", module.SystemName);
             if (module.ModuleDependencies.Count > 0)
             {
                 _logger.LogDebug("Checking dependencies...");

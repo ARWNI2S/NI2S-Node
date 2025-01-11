@@ -1,4 +1,5 @@
 ﻿using ARWNI2S.Caching;
+using ARWNI2S.Cluster.Configuration;
 using ARWNI2S.Cluster.Entities;
 using ARWNI2S.Engine.Caching;
 using ARWNI2S.Engine.Data;
