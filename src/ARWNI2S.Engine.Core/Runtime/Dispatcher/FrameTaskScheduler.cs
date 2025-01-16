@@ -1,4 +1,4 @@
-﻿namespace ARWNI2S.Engine.Simulation.Dispatcher
+﻿namespace ARWNI2S.Engine.Runtime.Dispatcher
 {
     internal class FrameTaskScheduler : TaskScheduler
     {

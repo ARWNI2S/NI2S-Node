@@ -1,4 +1,5 @@
-﻿using ARWNI2S.Cluster.Entities;
+﻿using ARWNI2S.Caching;
+using ARWNI2S.Cluster.Entities;
 using ARWNI2S.Engine.Data;
 using ARWNI2S.Engine.Data.Extensions;
 
@@ -12,45 +13,48 @@ namespace ARWNI2S.Cluster.Nodes
         #region Fields
 
         protected readonly IRepository<Node> _nodeRepository;
-        private static readonly char[] _separator = [','];
+        private readonly IShortTermCacheManager _shortTermCacheManager;
+        //private static readonly char[] _separator = [','];
 
         #endregion
 
         #region Ctor
 
-        public NodeService(IRepository<Node> nodeRepository)
+        public NodeService(IRepository<Node> nodeRepository,
+            IShortTermCacheManager shortTermCacheManager)
         {
             _nodeRepository = nodeRepository;
+            _shortTermCacheManager = shortTermCacheManager;
         }
 
         #endregion
 
         #region Utilities
 
-        /// <summary>
-        /// Parse comma-separated Hosts
-        /// </summary>
-        /// <param name="node">NodeInfo</param>
-        /// <returns>Comma-separated hosts</returns>
-        protected virtual string[] ParseHostValues(Node node)
-        {
-            ArgumentNullException.ThrowIfNull(node);
+        ///// <summary>
+        ///// Parse comma-separated Hosts
+        ///// </summary>
+        ///// <param name="node">NodeInfo</param>
+        ///// <returns>Comma-separated hosts</returns>
+        //protected virtual string[] ParseHostValues(Node node)
+        //{
+        //    ArgumentNullException.ThrowIfNull(node);
 
-            var parsedValues = new List<string>();
-            if (string.IsNullOrEmpty(node.Addresses))
-                return parsedValues.ToArray();
+        //    var parsedValues = new List<string>();
+        //    if (string.IsNullOrEmpty(node.Addresses))
+        //        return parsedValues.ToArray();
 
-            var hosts = node.Addresses.Split(_separator, StringSplitOptions.RemoveEmptyEntries);
+        //    var hosts = node.Addresses.Split(_separator, StringSplitOptions.RemoveEmptyEntries);
 
-            foreach (var host in hosts)
-            {
-                var tmp = host.Trim();
-                if (!string.IsNullOrEmpty(tmp))
-                    parsedValues.Add(tmp);
-            }
+        //    foreach (var host in hosts)
+        //    {
+        //        var tmp = host.Trim();
+        //        if (!string.IsNullOrEmpty(tmp))
+        //            parsedValues.Add(tmp);
+        //    }
 
-            return [.. parsedValues];
-        }
+        //    return [.. parsedValues];
+        //}
 
         #endregion
 
@@ -104,14 +108,35 @@ namespace ARWNI2S.Cluster.Nodes
         /// <summary>
         /// Gets a node 
         /// </summary>
+        /// <param name="id">NodeInfo identifier</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation
+        /// The task result contains the node
+        /// </returns>
+        public virtual async Task<Node> GetNodeByIdAsync(int id)
+        {
+            return await _nodeRepository.GetByIdAsync(id, cache => default, false);
+        }
+
+        /// <summary>
+        /// Gets a node 
+        /// </summary>
         /// <param name="nodeId">NodeInfo identifier</param>
         /// <returns>
         /// A task that represents the asynchronous operation
         /// The task result contains the node
         /// </returns>
-        public virtual async Task<Node> GetNodeByIdAsync(int nodeId)
+        public async Task<Node> GetNodeByNodeIdAsync(Guid nodeId)
         {
-            return await _nodeRepository.GetByIdAsync(nodeId, cache => default, false);
+            if (nodeId == Guid.Empty)
+                return null;
+
+            var query = from n in _nodeRepository.Table
+                        where n.NodeId == nodeId
+                        orderby n.Id
+                        select n;
+
+            return await _shortTermCacheManager.GetAsync(async () => await query.FirstOrDefaultAsync(), NodeServicesDefaults.NodeByGuidCacheKey, nodeId);
         }
 
         /// <summary>
@@ -143,23 +168,23 @@ namespace ARWNI2S.Cluster.Nodes
             _nodeRepository.Update(node);
         }
 
-        /// <summary>
-        /// Indicates whether a node contains a specified host
-        /// </summary>
-        /// <param name="node">NodeInfo</param>
-        /// <param name="host">Host</param>
-        /// <returns>true - contains, false - no</returns>
-        public virtual bool ContainsHostValue(Node node, string host)
-        {
-            ArgumentNullException.ThrowIfNull(node);
+        ///// <summary>
+        ///// Indicates whether a node contains a specified host
+        ///// </summary>
+        ///// <param name="node">NodeInfo</param>
+        ///// <param name="host">Host</param>
+        ///// <returns>true - contains, false - no</returns>
+        //public virtual bool ContainsHostValue(Node node, string host)
+        //{
+        //    ArgumentNullException.ThrowIfNull(node);
 
-            if (string.IsNullOrEmpty(host))
-                return false;
+        //    if (string.IsNullOrEmpty(host))
+        //        return false;
 
-            var contains = ParseHostValues(node).Any(x => x.Equals(host, StringComparison.InvariantCultureIgnoreCase));
+        //    var contains = ParseHostValues(node).Any(x => x.Equals(host, StringComparison.InvariantCultureIgnoreCase));
 
-            return contains;
-        }
+        //    return contains;
+        //}
 
         /// <summary>
         /// Returns a list of names of not existing nodes
@@ -182,7 +207,7 @@ namespace ARWNI2S.Cluster.Nodes
             queryFilter = queryFilter.Except(filter).ToArray();
 
             //if some names not found
-            if (!queryFilter.Any())
+            if (queryFilter.Length == 0)
                 return [.. queryFilter];
 
             //filtering by IDs

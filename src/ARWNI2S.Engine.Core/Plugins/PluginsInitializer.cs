@@ -1,7 +1,7 @@
 ﻿using ARWNI2S.ComponentModel;
-using ARWNI2S.Data.Mapping;
 using ARWNI2S.Engine.Environment;
 using ARWNI2S.Engine.Parts;
+using ARWNI2S.Framework.Data.Mapping;
 using System.Reflection;
 
 namespace ARWNI2S.Engine.Plugins

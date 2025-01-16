@@ -1,4 +1,5 @@
-﻿using ARWNI2S.Engine.Builder;
+﻿using ARWNI2S.Configuration;
+using ARWNI2S.Engine.Builder;
 using ARWNI2S.Environment;
 using ARWNI2S.Extensibility;
 using ARWNI2S.Lifecycle;
@@ -30,6 +31,11 @@ namespace ARWNI2S.Engine.Extensibility
         /// Gets the global type finder.
         /// </summary>
         protected readonly ITypeFinder TypeFinder = Singleton<ITypeFinder>.Instance;
+
+        /// <summary>
+        /// Gets the global type finder.
+        /// </summary>
+        protected readonly NI2SSettings Settings = Singleton<NI2SSettings>.Instance;
 
         /// <summary>
         /// Add and configure any of the module services

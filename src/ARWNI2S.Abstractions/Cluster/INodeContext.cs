@@ -2,6 +2,7 @@
 {
     public interface INodeContext
     {
+        INiisNode GetCurrentNode();
         Task<INiisNode> GetCurrentNodeAsync();
     }
 }

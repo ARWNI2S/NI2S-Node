@@ -281,7 +281,7 @@ namespace ARWNI2S.Engine.Infrastructure
 
             var result = str.ToCharArray()
                 .Select(p => p.ToString())
-                .Aggregate(string.Empty, (current, c) => current + (c == c.ToUpperInvariant() ? $" {c}" : c));
+                .Aggregate(string.Empty, (current, c) => current + (c.Equals(c, StringComparison.InvariantCultureIgnoreCase) ? $" {c}" : c));
 
             //ensure no spaces (e.g. when the first letter is upper case)
             result = result.TrimStart();

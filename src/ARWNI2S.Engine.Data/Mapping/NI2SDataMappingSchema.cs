@@ -1,7 +1,7 @@
-﻿using ARWNI2S.Data;
-using ARWNI2S.Data.Mapping;
-using ARWNI2S.Engine.Data.Extensions;
+﻿using ARWNI2S.Engine.Data.Extensions;
 using ARWNI2S.Engine.Data.Migrations;
+using ARWNI2S.Framework.Data;
+using ARWNI2S.Framework.Data.Mapping;
 using FluentMigrator.Builders.Create.Table;
 using FluentMigrator.Expressions;
 using LinqToDB.Mapping;

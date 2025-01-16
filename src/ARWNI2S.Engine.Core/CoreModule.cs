@@ -1,5 +1,7 @@
 ﻿using ARWNI2S.Engine.Builder;
+using ARWNI2S.Engine.Configuration;
 using ARWNI2S.Engine.Extensibility;
+using ARWNI2S.Environment;
 using ARWNI2S.Lifecycle;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -38,6 +40,12 @@ namespace ARWNI2S.Engine
             //    //add constraint key for language
             //    options.ConstraintMap[NopRoutingDefaults.LanguageParameterTransformer] = typeof(LanguageParameterTransformer);
             //});
+
+            //register the Lazy resolver for .Net IoC
+            var useAutofac = Settings.Get<CommonConfig>().UseAutofac;
+            if (!useAutofac)
+                services.AddScoped(typeof(Lazy<>), typeof(LazyInstance<>));
+
         }
 
         public override void ConfigureEngine(IEngineBuilder engineBuilder)

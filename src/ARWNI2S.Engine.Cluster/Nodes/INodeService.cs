@@ -34,12 +34,22 @@ namespace ARWNI2S.Cluster.Nodes
         /// <summary>
         /// Gets a node 
         /// </summary>
+        /// <param name="id">NodeInfo identifier</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation
+        /// The task result contains the node
+        /// </returns>
+        Task<Node> GetNodeByIdAsync(int id);
+
+        /// <summary>
+        /// Gets a node 
+        /// </summary>
         /// <param name="nodeId">NodeInfo identifier</param>
         /// <returns>
         /// A task that represents the asynchronous operation
         /// The task result contains the node
         /// </returns>
-        Task<Node> GetNodeByIdAsync(int nodeId);
+        Task<Node> GetNodeByNodeIdAsync(Guid nodeId);
 
         /// <summary>
         /// Inserts a node
@@ -61,13 +71,13 @@ namespace ARWNI2S.Cluster.Nodes
         /// <param name="node">NodeInfo</param>
         void UpdateNode(Node node);
 
-        /// <summary>
-        /// Indicates whether a node contains a specified host
-        /// </summary>
-        /// <param name="node">NodeInfo</param>
-        /// <param name="host">Host</param>
-        /// <returns>true - contains, false - no</returns>
-        bool ContainsHostValue(Node node, string host);
+        ///// <summary>
+        ///// Indicates whether a node contains a specified host
+        ///// </summary>
+        ///// <param name="node">NodeInfo</param>
+        ///// <param name="host">Host</param>
+        ///// <returns>true - contains, false - no</returns>
+        //bool ContainsHostValue(Node node, string host);
 
         /// <summary>
         /// Returns a list of names of not existing nodes

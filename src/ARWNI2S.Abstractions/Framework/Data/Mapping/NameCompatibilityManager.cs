@@ -2,7 +2,7 @@
 using ARWNI2S.Engine;
 using ARWNI2S.Environment;
 
-namespace ARWNI2S.Data.Mapping
+namespace ARWNI2S.Framework.Data.Mapping
 {
     /// <summary>
     /// Helper class for maintaining backward compatibility of table naming

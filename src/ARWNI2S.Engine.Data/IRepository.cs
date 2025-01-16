@@ -1,6 +1,6 @@
 ﻿using ARWNI2S.Caching;
 using ARWNI2S.Collections.Generic;
-using ARWNI2S.Data;
+using ARWNI2S.Framework.Data;
 using System.Linq.Expressions;
 
 namespace ARWNI2S.Engine.Data

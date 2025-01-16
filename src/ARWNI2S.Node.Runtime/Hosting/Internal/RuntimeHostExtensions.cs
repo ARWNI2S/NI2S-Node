@@ -1,6 +1,6 @@
 ﻿using ARWNI2S.Cluster;
 
-namespace ARWNI2S.Node.Hosting
+namespace ARWNI2S.Node.Hosting.Internal
 {
     internal static class RuntimeHostExtensions
     {

@@ -1,7 +1,7 @@
-﻿using ARWNI2S.Data;
-using ARWNI2S.Engine.Core;
+﻿using ARWNI2S.Engine.Core;
 using ARWNI2S.Engine.Data.DataProviders.LinqToDb;
 using ARWNI2S.Engine.Data.Mapping;
+using ARWNI2S.Framework.Data;
 using LinqToDB;
 using LinqToDB.Common;
 using LinqToDB.Data;

@@ -1,4 +1,4 @@
-﻿using ARWNI2S.Data;
+﻿using ARWNI2S.Framework.Data;
 using LinqToDB.Data;
 using System.Linq.Expressions;
 

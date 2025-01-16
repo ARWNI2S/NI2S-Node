@@ -104,7 +104,7 @@ namespace ARWNI2S.Node.Hosting.Internal
             for (int i = _builder.Services.Count - 1; i >= 0; i--)
             {
                 var descriptor = _builder.Services[i];
-                if (descriptor.ServiceType == typeof(IHostedService))
+                if (descriptor.ServiceType == typeof(NI2SHostService))
                 {
                     Debug.Assert(descriptor.ImplementationType?.Name == "NI2SHostService");
 

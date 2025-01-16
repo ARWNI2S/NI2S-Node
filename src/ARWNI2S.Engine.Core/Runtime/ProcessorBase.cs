@@ -4,7 +4,7 @@ using ARWNI2S.Lifecycle;
 using Microsoft.Extensions.Logging;
 using Orleans;
 
-namespace ARWNI2S.Engine.Simulation
+namespace ARWNI2S.Engine.Runtime
 {
     public abstract class ProcessorBase : INiisProcessor
     {

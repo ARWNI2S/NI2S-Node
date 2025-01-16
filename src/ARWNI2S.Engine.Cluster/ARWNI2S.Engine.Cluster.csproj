@@ -30,8 +30,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Caching\CacheEventConsumer.cs" />
+    <Compile Remove="Caching\ClearCacheTask.cs" />
     <Compile Remove="ClusterNodeExtensions.cs" />
-    <Compile Remove="Configuration\ISettingService.cs" />
     <Compile Remove="Configuration\SettingsDefaults.cs" />
     <Compile Remove="Configuration\SettingService.cs" />
     <Compile Remove="DateHeaderValueManager.cs" />
@@ -40,6 +41,7 @@
     <Compile Remove="Networking\NodeBeacon.cs" />
     <Compile Remove="Networking\RequestClient.cs" />
     <Compile Remove="Networking\RequestServer.cs" />
+    <Compile Remove="TaskScheduler.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace ARWNI2S.Engine.Simulation.Dispatcher
+namespace ARWNI2S.Engine.Runtime.Dispatcher
 {
     internal class NI2SDispatchProxy : DispatchProxy
     {

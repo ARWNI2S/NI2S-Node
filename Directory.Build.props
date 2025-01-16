@@ -6,9 +6,14 @@
 
   <!-- Set common properties regarding assembly information -->
   <PropertyGroup>
-    <Authors>ManOguaR and the Dragon Corp. Games Team</Authors>
+    <Authors>ManOguaR and the Alternate Reallity Worlds Team</Authors>
     <Product>Narrative Interactive Intelligent Simulator</Product>
-    <Copyright>© Dragon Corp. Games All rights reserved.</Copyright>
+    <Copyright>© Alternate Reallity Worlds All rights reserved.</Copyright>
+    <PackageLicenseExpression>BSD-Protection</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/ARWNI2S/NI2S-Node</PackageProjectUrl>
+    <PackageIcon>logo_128.png</PackageIcon>
+    <PackageTags>NI2S Cloud-Computing Distributed-Simulation Orleans C# .NET</PackageTags>
+    <PackageReleaseNotes></PackageReleaseNotes>
     <PublicRepositoryUrl>https://github.com/ARWNI2S/NI2S-Node</PublicRepositoryUrl>
     <PrivateRepositoryUrl>$(RepositoryUrl)</PrivateRepositoryUrl>
     <RepositoryUrl>$(RepositoryUrl)</RepositoryUrl>
@@ -16,14 +21,20 @@
     <LangVersion>13</LangVersion>
     <Features>strict</Features>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <DebugType>embedded</DebugType>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>disable</Nullable>
+    <IncludePackageReferencesDuringMarkupCompilation>true</IncludePackageReferencesDuringMarkupCompilation>
+    <IncludeSymbols>false</IncludeSymbols>
+    <IncludeSource>false</IncludeSource>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TF_BUILD)' == 'true' or '$(GITHUB_ACTIONS)' == 'true'">
     <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="$(SourceRoot)assets/logo_128.png" Pack="true" Visible="false" PackagePath="/" />
+  </ItemGroup>
 
   <!-- Common compile parameters -->
   <PropertyGroup>
@@ -50,6 +61,11 @@
   </PropertyGroup>
 
   <!-- <Import Condition=" '$(NI2SNodeBuildTimeCodeGen)' == 'true' " Project="$(MSBuildThisFileDirectory)src/ARWNI2S.Node.CodeGenerator/build/ARWNI2S.Node.CodeGenerator.props" /> -->
+
+  <!-- Set output folder for created NuGet packages -->
+  <PropertyGroup>
+    <PackageOutputPath Condition=" '$(PackageOutputPath)'=='' ">$(SourceRoot)../Artifacts/$(Configuration)</PackageOutputPath>
+  </PropertyGroup>
 
   <!-- Set output folder for distributed test apps -->
   <!-- <PropertyGroup>

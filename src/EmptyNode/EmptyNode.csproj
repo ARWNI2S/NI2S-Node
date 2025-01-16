@@ -39,10 +39,6 @@
     <Content Update="**\*.config;**\*.json" CopyToOutputDirectory="Never" CopyToPublishDirectory="PreserveNewest" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\ARWNI2S.Node\ARWNI2S.Node.csproj" />
-  </ItemGroup>
-
   <PropertyGroup>
     <!--The common language runtime (CLR) supports two types of garbage collection:
       workstation garbage collection, which is available on all systems, and server garbage collection,
@@ -53,7 +49,7 @@
       Server garbage collection should be the fastest option for more than two processors.
       
       More details about GC you can see here: https://docs.microsoft.com/en-us/dotnet/standard/garbage-collection/fundamentals-->
-    <ServerGarbageCollection>false</ServerGarbageCollection>
+    <ServerGarbageCollection>true</ServerGarbageCollection>
     <!--In workstation or server garbage collection, you can enable concurrent garbage collection,
       which enables threads to run concurrently with a dedicated thread that performs the garbage
       collection for most of the duration of the collection.
@@ -66,9 +62,8 @@
       To improve performance when several processes are running, disable concurrent garbage collection.
       
       More details here: https://docs.microsoft.com/en-us/dotnet/standard/garbage-collection/fundamentals#concurrent-garbage-collection-->
-    <ConcurrentGarbageCollection>false</ConcurrentGarbageCollection>
+    <ConcurrentGarbageCollection>true</ConcurrentGarbageCollection>
   </PropertyGroup>
-
   <PropertyGroup>
     <GameName Condition=" '$(GameName)'=='' ">Game</GameName>
     <RunWorkingDirectory Condition=" '$(RunWorkingDirectory)' == '' and '$(EnableDefaultRunWorkingDirectory)' != 'false' ">$(MSBuildProjectDirectory)</RunWorkingDirectory>

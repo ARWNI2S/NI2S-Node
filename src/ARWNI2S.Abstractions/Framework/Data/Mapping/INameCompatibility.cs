@@ -1,4 +1,4 @@
-﻿namespace ARWNI2S.Data.Mapping
+﻿namespace ARWNI2S.Framework.Data.Mapping
 {
     /// <summary>
     /// Backward compatibility of table naming

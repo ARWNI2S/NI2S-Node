@@ -3,7 +3,7 @@ using ARWNI2S.Hosting.Builder;
 using ARWNI2S.Node.Extensibility;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace ARWNI2S.Node.Hosting
+namespace ARWNI2S.Node.Hosting.Internal
 {
     internal static class EngineHostBuilderExtensions
     {

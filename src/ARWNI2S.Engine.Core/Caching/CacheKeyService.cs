@@ -23,15 +23,15 @@ namespace ARWNI2S.Engine.Caching
 
         #region Fields
 
-        protected readonly NI2SSettings _nodeSettings;
+        protected readonly NI2SSettings _settings;
 
         #endregion
 
         #region Ctor
 
-        protected CacheKeyService(NI2SSettings nodeSettings)
+        protected CacheKeyService(NI2SSettings settings)
         {
-            _nodeSettings = nodeSettings;
+            _settings = settings;
         }
 
         #endregion
@@ -113,7 +113,7 @@ namespace ARWNI2S.Engine.Caching
         {
             var key = cacheKey.Create(CreateCacheKeyParameters, cacheKeyParameters);
 
-            key.CacheTime = _nodeSettings.Get<CacheConfig>().DefaultCacheTime;
+            key.CacheTime = _settings.Get<CacheConfig>().DefaultCacheTime;
 
             return key;
         }
@@ -128,7 +128,7 @@ namespace ARWNI2S.Engine.Caching
         {
             var key = cacheKey.Create(CreateCacheKeyParameters, cacheKeyParameters);
 
-            key.CacheTime = _nodeSettings.Get<CacheConfig>().ShortTermCacheTime;
+            key.CacheTime = _settings.Get<CacheConfig>().ShortTermCacheTime;
 
             return key;
         }

@@ -1,4 +1,4 @@
-﻿using ARWNI2S.Data;
+﻿using ARWNI2S.Framework.Data;
 using FluentMigrator.Builders.Create.Table;
 
 namespace ARWNI2S.Engine.Data.Mapping.Builders

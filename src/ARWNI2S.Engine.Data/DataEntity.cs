@@ -1,5 +1,5 @@
-﻿using ARWNI2S.Data;
-using ARWNI2S.Engine.Core;
+﻿using ARWNI2S.Engine.Core;
+using ARWNI2S.Framework.Data;
 
 namespace ARWNI2S.Engine.Data
 {

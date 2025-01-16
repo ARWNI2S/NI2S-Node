@@ -48,8 +48,8 @@ namespace ARWNI2S.Node.Hosting.Internal
             {
                 // Lifecycle
                 services.AddSingleton<NI2SHostService>();
-                services.AddSingleton<IHostedLifecycleService>(provider => provider.GetRequiredService<NI2SHostService>()); ;
                 services.AddSingleton<IHostedService>(provider => provider.GetRequiredService<NI2SHostService>());
+                services.AddSingleton<IHostedLifecycleService>(provider => provider.GetRequiredService<NI2SHostService>());
             });
             return builder;
         }

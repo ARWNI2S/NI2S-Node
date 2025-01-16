@@ -43,10 +43,6 @@
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\ARWNI2S.Node\ARWNI2S.Node.csproj" />
-  </ItemGroup>
-
   <PropertyGroup>
     <!--The common language runtime (CLR) supports two types of garbage collection:
       workstation garbage collection, which is available on all systems, and server garbage collection,
