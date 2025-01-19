@@ -8,8 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ARWNI2S.Node.Abstractions\ARWNI2S.Node.Abstractions.csproj" />
-    <ProjectReference Include="..\ARWNI2S.Node.Runtime\ARWNI2S.Node.Runtime.csproj" />
+    <ProjectReference Include="$(SourceRoot)src\ARWNI2S.Node.Abstractions\ARWNI2S.Node.Abstractions.csproj" />
+    <ProjectReference Include="$(SourceRoot)src\ARWNI2S.Node.Runtime\ARWNI2S.Node.Runtime.csproj" />
   </ItemGroup>
 
 </Project>

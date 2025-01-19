@@ -8,8 +8,11 @@
     <RootNamespace>ARWNI2S.Node</RootNamespace>
   </PropertyGroup>
 
-  <ItemGroup>
+  <ItemGroup Condition="$(NI2SFullBuild) == '' OR $(CoreSourceRoot) == ''">
     <PackageReference Include="ARWNI2S.Core.Abstractions" />
+  </ItemGroup>
+  <ItemGroup Condition="$(NI2SFullBuild) == 'true' AND $(CoreSourceRoot) != ''">
+    <ProjectReference Include="$(CoreSourceRoot)src\ARWNI2S.Abstractions\ARWNI2S.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>

@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ARWNI2S.Node.Abstractions\ARWNI2S.Node.Abstractions.csproj" />
+    <ProjectReference Include="$(SourceRoot)src\ARWNI2S.Node.Abstractions\ARWNI2S.Node.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>
