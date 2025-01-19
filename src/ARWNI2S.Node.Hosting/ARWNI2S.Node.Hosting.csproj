@@ -5,6 +5,7 @@
     <Title>ARWNI2S Node Hosting</Title>
     <Description>Node hosting infrastructure for ARWNI2S clustered node engine.</Description>
     <TargetFrameworks>$(DefaultTargetFrameworks)</TargetFrameworks>
+    <RootNamespace>ARWNI2S.Node</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

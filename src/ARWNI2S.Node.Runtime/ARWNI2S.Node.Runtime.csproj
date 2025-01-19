@@ -5,15 +5,18 @@
     <Title>ARWNI2S Node Runtime</Title>
     <Description>ARWNI2S node engine runtime.</Description>
     <TargetFrameworks>$(DefaultTargetFrameworks)</TargetFrameworks>
-    <RootNamespace>ARWNI2S.Node</RootNamespace>
+    <RootNamespace>ARWNI2S.Runtime</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ARWNI2S.Sdk" />
+    <ProjectReference Include="$(SourceRoot)src\ARWNI2S.Node.Abstractions\ARWNI2S.Node.Abstractions.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="$(SourceRoot)src\ARWNI2S.Node.Abstractions\ARWNI2S.Node.Abstractions.csproj" />
+  <ItemGroup Condition="$(NI2SFullBuild) == '' OR $(CoreSourceRoot) == ''">
+    <PackageReference Include="ARWNI2S.Sdk" />
+  </ItemGroup>
+  <ItemGroup Condition="$(NI2SFullBuild) == 'true' AND $(CoreSourceRoot) != ''">
+    <ProjectReference Include="$(CoreSourceRoot)src\ARWNI2S.Sdk\ARWNI2S.Sdk.csproj" />
   </ItemGroup>
 
 </Project>
