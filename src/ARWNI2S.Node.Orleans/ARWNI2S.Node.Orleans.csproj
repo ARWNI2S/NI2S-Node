@@ -10,4 +10,8 @@
     <PackageReference Include="Microsoft.Orleans.Server" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ARWNI2S.Node.Abstractions\ARWNI2S.Node.Abstractions.csproj" />
+  </ItemGroup>
+
 </Project>
