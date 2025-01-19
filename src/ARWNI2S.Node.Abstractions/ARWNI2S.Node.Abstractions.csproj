@@ -1,9 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+    <PackageId>ARWNI2S.Node.Abstractions</PackageId>
+    <Title>ARWNI2S Node Abstractions</Title>
+    <Description>Node runtime abstractions and base classes for ARWNI2S clustered node application.</Description>
+    <TargetFrameworks>$(DefaultTargetFrameworks)</TargetFrameworks>
+    <RootNamespace>ARWNI2S.Node</RootNamespace>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ARWNI2S.Core.Abstractions" />
+  </ItemGroup>
 
 </Project>

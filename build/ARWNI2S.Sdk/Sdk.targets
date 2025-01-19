@@ -1,9 +1,0 @@
-<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildSDKsPath)\Microsoft.NET.Sdk\Sdk.targets" />
-
-  <!-- Custom target to set the ContentRoot -->
-  <Target Name="SetContentRoot" BeforeTargets="Build">
-    <SetEnvironmentVariable Name="DOTNET_CONTENTROOT" Value="$(ContentRootPath)" />
-    <SetEnvironmentVariable Name="DOTNET_CWD" Value="$(CurrentDirectory)" />
-  </Target>
-</Project>

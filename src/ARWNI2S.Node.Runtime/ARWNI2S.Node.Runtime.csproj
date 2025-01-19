@@ -1,26 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <PackageId>ARWNI2S.Node.Runtime</PackageId>
+    <Title>ARWNI2S Node Runtime</Title>
+    <Description>ARWNI2S node engine runtime.</Description>
     <TargetFrameworks>$(DefaultTargetFrameworks)</TargetFrameworks>
     <RootNamespace>ARWNI2S.Node</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Data\**" />
-    <Compile Remove="Lifecycle\**" />
-    <Compile Remove="Modules\**" />
-    <EmbeddedResource Remove="Data\**" />
-    <EmbeddedResource Remove="Lifecycle\**" />
-    <EmbeddedResource Remove="Modules\**" />
-    <None Remove="Data\**" />
-    <None Remove="Lifecycle\**" />
-    <None Remove="Modules\**" />
+    <PackageReference Include="ARWNI2S.Sdk" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="$(SourceRoot)src\ARWNI2S.Engine.Core\ARWNI2S.Engine.Core.csproj" />
-    <ProjectReference Include="$(SourceRoot)src\ARWNI2S.Engine.Data\ARWNI2S.Engine.Data.csproj" />
-    <ProjectReference Include="$(SourceRoot)src\ARWNI2S.Engine.Cluster\ARWNI2S.Engine.Cluster.csproj" />
+    <ProjectReference Include="..\ARWNI2S.Node.Abstractions\ARWNI2S.Node.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>
