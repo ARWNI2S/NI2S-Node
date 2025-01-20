@@ -9,6 +9,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="UpdateRing\FrameProcessor.cs" />
+    <Compile Remove="UpdateRing\LevelUpdate.cs" />
+    <Compile Remove="UpdateRing\UpdateFunctionTask.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="$(SourceRoot)src\ARWNI2S.Node.Abstractions\ARWNI2S.Node.Abstractions.csproj" />
   </ItemGroup>
 

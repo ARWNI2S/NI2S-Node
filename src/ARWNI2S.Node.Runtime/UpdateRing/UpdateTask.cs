@@ -3,20 +3,24 @@ using ARWNI2S.Runtime.Simulation;
 
 namespace ARWNI2S.Runtime.UpdateRing
 {
-    public enum UpdateGroup : byte
+    public enum LevelUpdate : byte
     {
     }
 
+    public enum UpdateGroup : byte
+    {
+    }
+    
     /// <summary>
     /// Abstract Base class for all update functions.
     /// </summary>
-    internal abstract class UpdateFunction
+    internal abstract class UpdateTask
     {
         /// <summary>
         /// Defines the minimum update group for this update function. These groups determine the relative order of when objects update during a frame update.
         /// Given prerequisites, the update may be delayed.
         /// <see cref="UpdateGroup"/>
-        /// <see cref="UpdateFunction.AddPrerequisite"/>
+        /// <see cref="UpdateTask.AddPrerequisite"/>
         /// </summary>
         public UpdateGroup UpdateGroup { get; set; }
 
@@ -121,7 +125,7 @@ namespace ARWNI2S.Runtime.UpdateRing
             /// <summary>
             /// The next function in the cooling down list for updates with an interval
             /// </summary>
-            public UpdateFunction Next;
+            public UpdateTask Next;
 
             /// <summary> 
             /// If UpdateFrequency is greater than 0 and update state is CoolingDown, this is the time, 
@@ -149,12 +153,12 @@ namespace ARWNI2S.Runtime.UpdateRing
         /// <summary>
         /// Default ructor, intitalizes to reasonable defaults
         /// </summary>
-        public UpdateFunction() { }
+        public UpdateTask() { }
 
         /// <summary>
         /// Destructor, unregisters the update function
         /// </summary>
-        ~UpdateFunction() { }
+        ~UpdateTask() { }
 
         /// <summary> 
         /// Adds the update function to the primary list of update functions. 
@@ -194,7 +198,7 @@ namespace ARWNI2S.Runtime.UpdateRing
         /// tasks have been completed.  Only valid after TG_PreAsyncWork has started and then only until the UpdateFunction finishes
         /// execution
         /// </summary>
-        public GraphEventRef GetCompletionHandle() { return null; }
+        public GraphEvent GetCompletionHandle() { return null; }
 
         /// <summary> 
         /// Gets the action update group that this function will be elligible to start in.
@@ -213,14 +217,14 @@ namespace ARWNI2S.Runtime.UpdateRing
         ///  @param TargetObject - UObject containing this update function. Only used to verify that the other pointer is still usable
         /// @param TargetUpdateFunction - Actual update function to use as a prerequisite
         /// </summary>
-        public void AddPrerequisite(NI2SObject targetObject, UpdateFunction targetUpdateFunction) { }
+        public void AddPrerequisite(NI2SObject targetObject, UpdateTask targetUpdateFunction) { }
 
         /// <summary> 
         /// Removes a prerequisite that was previously added.
         /// @param TargetObject - UObject containing this update function. Only used to verify that the other pointer is still usable
         /// @param TargetUpdateFunction - Actual update function to use as a prerequisite
         /// </summary>
-        public void RemovePrerequisite(NI2SObject targetObject, UpdateFunction targetUpdateFunction) { }
+        public void RemovePrerequisite(NI2SObject targetObject, UpdateTask targetUpdateFunction) { }
 
         /// <summary> 
         /// Sets this function to hipri and all prerequisites recursively
@@ -250,7 +254,7 @@ namespace ARWNI2S.Runtime.UpdateRing
         ///  @param UpdateContext - context to update in
         /// @param StackForCycleDetection - Stack For Cycle Detection
         /// </summary>
-        protected internal void QueueUpdateFunctionParallel(UpdateContext updateContext, IList<UpdateFunction> stackForCycleDetection)
+        protected internal void QueueUpdateFunctionParallel(UpdateContext updateContext, IList<UpdateTask> stackForCycleDetection)
         {
 
         }
@@ -278,7 +282,7 @@ namespace ARWNI2S.Runtime.UpdateRing
         /// @param CurrentThread - thread we are executing on, useful to pass along as new tasks are created
         /// @param MyCompletionGraphEvent - completion event for this task. Useful for holding the completetion of this task until certain child tasks are complete.
         /// </summary>
-        protected internal abstract void ExecuteUpdate(float deltaTime, LevelUpdate updateType, Thread currentThread, GraphEventRef MyCompletionGraphEvent);
+        protected internal abstract void ExecuteUpdate(float deltaTime, LevelUpdate updateType, Thread currentThread, GraphEvent MyCompletionGraphEvent);
         /// <summary>
         /// Abstract function to describe this update. Used to print messages about illegal cycles in the dependency graph
         /// </summary>

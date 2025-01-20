@@ -2,79 +2,81 @@
 
 namespace ARWNI2S.Runtime.UpdateRing
 {
+    /// <summary>
+    /// This is small structure to hold prerequisite tick functions
+    /// </summary>
     internal class UpdatePrerequisite
     {
-        private WeakReference _prerequisiteObject;
+        private readonly NI2SObject _prerequisiteObject;
+        private readonly UpdateTask _prerequisiteFunction;
 
-        private UpdateFunction _prerequisiteUpdateFunction;
-
-        public UpdatePrerequisite()
+        /// <summary>
+        /// Pointer to the actual tick function and must be completed prior to our tick running.
+        /// </summary>
+        public UpdateTask PrerequisiteFunction
         {
-            _prerequisiteUpdateFunction = null;
+            get
+            {
+                if (NI2SObject.IsValid(_prerequisiteObject, true))
+                {
+                    return _prerequisiteFunction;
+                }
+                return null;
+            }
         }
 
-        public UpdatePrerequisite(NI2SObject targetObject, UpdateFunction targetUpdateFunction)
+        /// <summary>
+        /// Noop constructor.
+        /// </summary>
+        public UpdatePrerequisite()
+        {
+            _prerequisiteFunction = null;
+        }
+
+        /// <summary> 
+        /// Constructor
+        /// @param TargetObject - UObject containing this tick function. Only used to verify that the other pointer is still usable
+        /// @param TargetTickFunction - Actual tick function to use as a prerequisite
+        /// </summary>
+        public UpdatePrerequisite(NI2SObject targetObject, UpdateTask targetUpdateFunction)
         {
             ArgumentNullException.ThrowIfNull(targetObject, nameof(targetObject));
             ArgumentNullException.ThrowIfNull(targetUpdateFunction, nameof(targetUpdateFunction));
 
-            _prerequisiteObject = new WeakReference(targetObject);
-            _prerequisiteUpdateFunction = targetUpdateFunction;
+            _prerequisiteObject = targetObject;
+            _prerequisiteFunction = targetUpdateFunction;
+        }
+
+        /// <summary>
+        /// Equality operator, used to prevent duplicates and allow removal by value.
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
+        public static bool operator ==(UpdatePrerequisite left, UpdatePrerequisite right)
+        {
+            return left._prerequisiteObject == right._prerequisiteObject &&
+                left._prerequisiteFunction == right._prerequisiteFunction;
+        }
+
+        public static bool operator !=(UpdatePrerequisite left, UpdatePrerequisite right)
+        {
+            return !(left == right);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return _prerequisiteObject.GetHashCode() & _prerequisiteFunction.GetHashCode();
         }
     }
 }
-/////**
-//// * This is small structure to hold prerequisite tick functions
-//// */
-////USTRUCT()
-////struct FTickPrerequisite
-////{
-////    GENERATED_USTRUCT_BODY()
-
-////    /** Tick functions live inside of UObjects, so we need a separate weak pointer to the UObject solely for the purpose of determining if PrerequisiteTickFunction is still valid. */
-////    TWeakObjectPtr<class UObject> PrerequisiteObject;
-
-////	/** Pointer to the actual tick function and must be completed prior to our tick running. */
-////	struct FTickFunction*		PrerequisiteTickFunction;
-
-////	/** Noop constructor. */
-////	FTickPrerequisite()
-////    : PrerequisiteTickFunction(nullptr)
-////    {
-////    }
-////    /** 
-////		* Constructor
-////		* @param TargetObject - UObject containing this tick function. Only used to verify that the other pointer is still usable
-////		* @param TargetTickFunction - Actual tick function to use as a prerequisite
-////	**/
-////    FTickPrerequisite(UObject* TargetObject, struct FTickFunction& TargetTickFunction)
-////	: PrerequisiteObject(TargetObject)
-////	, PrerequisiteTickFunction(&TargetTickFunction)
-////    {
-////        check(PrerequisiteTickFunction);
-////    }
-////    /** Equality operator, used to prevent duplicates and allow removal by value. */
-////    bool operator ==(const FTickPrerequisite& Other) const
-////	{
-////		return PrerequisiteObject == Other.PrerequisiteObject &&
-////			PrerequisiteTickFunction == Other.PrerequisiteTickFunction;
-////	}
-////    /** Return the tick function, if it is still valid. Can be null if the tick function was null or the containing UObject has been garbage collected. */
-////    struct FTickFunction* Get()
-////    {
-////        if (PrerequisiteObject.IsValid(true))
-////        {
-////            return PrerequisiteTickFunction;
-////        }
-////        return nullptr;
-////    }
-
-////    const struct FTickFunction*Get() const
-////	{
-////		if (PrerequisiteObject.IsValid(true))
-////		{
-////			return PrerequisiteTickFunction;
-////		}
-////		return nullptr;
-////	}
-////};
