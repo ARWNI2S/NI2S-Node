@@ -1,7 +1,7 @@
 ﻿using ARWNI2S.Engine.Object;
 using ARWNI2S.Runtime.Simulation;
 
-namespace ARWNI2S.Runtime.UpdateRing
+namespace ARWNI2S.Runtime.Simulation.Update
 {
     public enum LevelUpdate : byte
     {
@@ -10,7 +10,7 @@ namespace ARWNI2S.Runtime.UpdateRing
     public enum UpdateGroup : byte
     {
     }
-    
+
     /// <summary>
     /// Abstract Base class for all update functions.
     /// </summary>
@@ -20,7 +20,7 @@ namespace ARWNI2S.Runtime.UpdateRing
         /// Defines the minimum update group for this update function. These groups determine the relative order of when objects update during a frame update.
         /// Given prerequisites, the update may be delayed.
         /// <see cref="UpdateGroup"/>
-        /// <see cref="UpdateTask.AddPrerequisite"/>
+        /// <see cref="AddPrerequisite"/>
         /// </summary>
         public UpdateGroup UpdateGroup { get; set; }
 
@@ -172,7 +172,7 @@ namespace ARWNI2S.Runtime.UpdateRing
         /// <summary>
         /// See if the update function is currently registered
         /// </summary>
-        public bool IsRegistered => (_internalData.IsValueCreated && _internalData.Value.Registered);
+        public bool IsRegistered => _internalData.IsValueCreated && _internalData.Value.Registered;
 
         /// <summary>
         /// Enables or disables this update function.
@@ -186,7 +186,7 @@ namespace ARWNI2S.Runtime.UpdateRing
         /// <summary>
         /// Returns whether it is valid to access this update function's completion handle
         /// </summary>
-        public bool CompletionHandleValid => (_internalData.IsValueCreated && _internalData.Value.TaskPointer != null);
+        public bool CompletionHandleValid => _internalData.IsValueCreated && _internalData.Value.TaskPointer != null;
 
         /// <summary>
         /// Update update interval in the system and overwrite the current cooldown if any.
@@ -204,13 +204,13 @@ namespace ARWNI2S.Runtime.UpdateRing
         /// Gets the action update group that this function will be elligible to start in.
         /// Only valid after TG_PreAsyncWork has started through the end of the frame.
         /// </summary>
-        public UpdateGroup ActualUpdateGroup => (_internalData.IsValueCreated ? _internalData.Value.StartUpdateGroup : UpdateGroup);
+        public UpdateGroup ActualUpdateGroup => _internalData.IsValueCreated ? _internalData.Value.StartUpdateGroup : UpdateGroup;
 
         /// <summary> 
         /// Gets the action update group that this function will be required to end in.
         /// Only valid after TG_PreAsyncWork has started through the end of the frame.
         /// </summary>
-        public UpdateGroup ActualEndUpdateGroup => (_internalData.IsValueCreated ? _internalData.Value.EndUpdateGroup : EndUpdateGroup);
+        public UpdateGroup ActualEndUpdateGroup => _internalData.IsValueCreated ? _internalData.Value.EndUpdateGroup : EndUpdateGroup;
 
         /// <summary> 
         /// Adds a update function to the list of prerequisites...in other words, adds the requirement that TargetUpdateFunction is called before this update function is 
@@ -237,7 +237,7 @@ namespace ARWNI2S.Runtime.UpdateRing
         /// </summary>
         public ICollection<UpdatePrerequisite> GetPrerequisites() { return _prerequisites; }
 
-        public float GetLastUpdateGameTime() { return (_internalData.IsValueCreated ? _internalData.Value.LastUpdateGameTimeSeconds : -1.0f); }
+        public float GetLastUpdateGameTime() { return _internalData.IsValueCreated ? _internalData.Value.LastUpdateGameTimeSeconds : -1.0f; }
 
         /// <summary>
         /// Queues a update function for execution from the game thread
@@ -270,7 +270,7 @@ namespace ARWNI2S.Runtime.UpdateRing
         /// <summary> 
         /// Logs the prerequisites
         /// </summary>
-        protected internal void ShowPrerequistes(int indent = 1) 
+        protected internal void ShowPrerequistes(int indent = 1)
         {
 
         }

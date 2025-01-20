@@ -9,9 +9,22 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="UpdateRing\FrameProcessor.cs" />
-    <Compile Remove="UpdateRing\LevelUpdate.cs" />
-    <Compile Remove="UpdateRing\UpdateFunctionTask.cs" />
+    <Compile Remove="Core\**" />
+    <Compile Remove="Engine\**" />
+    <Compile Remove="Simulation\**" />
+    <Compile Remove="Threading\**" />
+    <EmbeddedResource Remove="Core\**" />
+    <EmbeddedResource Remove="Engine\**" />
+    <EmbeddedResource Remove="Simulation\**" />
+    <EmbeddedResource Remove="Threading\**" />
+    <None Remove="Core\**" />
+    <None Remove="Engine\**" />
+    <None Remove="Simulation\**" />
+    <None Remove="Threading\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Name.cs" />
   </ItemGroup>
 
   <ItemGroup>

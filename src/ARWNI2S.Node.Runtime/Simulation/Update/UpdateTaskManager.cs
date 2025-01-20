@@ -1,4 +1,4 @@
-﻿namespace ARWNI2S.Runtime.UpdateRing
+﻿namespace ARWNI2S.Runtime.Simulation.Update
 {
     internal class UpdateTaskManager
     {

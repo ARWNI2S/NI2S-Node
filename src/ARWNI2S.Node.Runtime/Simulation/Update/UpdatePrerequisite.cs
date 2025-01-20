@@ -1,6 +1,6 @@
 ﻿using ARWNI2S.Engine.Object;
 
-namespace ARWNI2S.Runtime.UpdateRing
+namespace ARWNI2S.Runtime.Simulation.Update
 {
     /// <summary>
     /// This is small structure to hold prerequisite tick functions
